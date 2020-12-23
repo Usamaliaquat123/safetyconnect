@@ -28,5 +28,5 @@ class AppStore extends EventEmitter {
 }
 
 const AppStores = new AppStore();
-dispatcher.register();
+// dispatcher.register();
 export default AppStores;

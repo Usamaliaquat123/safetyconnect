@@ -1,14 +1,19 @@
-build-job:
-  stage: build
-  script:
-    - echo "Hey, $GITLAB_USER_LOGIN! bhai"
+image: node:v14.11.0
+# build-job:
+#   stage: build
+#   script:
+#     - echo "Hey, $GITLAB_USER_LOGIN! bhai"
+stages:
+  - build
+  - deploy
 
 test-job1:
-  stage: test
+  stage: build
   script:
-    - npm run tsc
-
-deploy-prod:
-  stage: deploy
-  script:
-    - echo "deploys something from the $CI_COMMIT_BRANCH branch."
+    - yarn
+    - yarn tsc
+    - echo "tsc build sucessfully "
+# deploy-prod:
+#   stage: deploy
+#   script:
+#     - echo "deploys something from the $CI_COMMIT_BRANCH branch."
