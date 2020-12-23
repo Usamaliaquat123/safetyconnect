@@ -13,6 +13,7 @@
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.8.10",
     "@react-navigation/stack": "^5.12.8",
+    "@types/flux": "^3.1.9",
     "@types/react-redux": "^7.1.12",
     "@types/redux-logger": "^3.0.8",
     "deepmerge": "^4.2.2",

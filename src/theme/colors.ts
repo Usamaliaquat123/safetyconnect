@@ -1,5 +1,7 @@
 export const colors = {
-  black: 'black',
-  white: 'white',
-  lightgrey: '#F0EFF5',
+  primary: '#112565',
+  secondary: '#FCFCFC',
+  textOpa: '#D9D3D6',
+  text: '#333337',
+  error: '#F14031',
 };
