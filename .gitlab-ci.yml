@@ -1,19 +1,51 @@
+stages:
+  - prepare
+  - build
+
 image: node:14.11.0
 # build-job:
 #   stage: build
 #   script:
 #     - echo "Hey, $GITLAB_USER_LOGIN! bhai"
-stages:
-  - build
-  - deploy
 
-test-job1:
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - ./node_modules/
+
+install:
+  stage: prepare
+  tags:
+    - docker
+  script:
+    - yarn install
+
+typescript-runner:
   stage: build
   script:
     - yarn
     - yarn tsc
     - echo "tsc build sucessfully "
-# deploy-prod:
+# build:
 #   stage: deploy
 #   script:
 #     - echo "deploys something from the $CI_COMMIT_BRANCH branch."
+
+build:android:debug:
+  stage: build
+  tags:
+    - android
+    - node
+    - react-native
+  before_script:
+    - ./dev-start.sh
+  script:
+    - ./scripts/build-android-debug.sh
+  artifacts:
+    paths:
+      - ./build/app-debug.apk
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}-android-ios
+    paths:
+      - ./node_modules/
+      - ./android/.gradle/
