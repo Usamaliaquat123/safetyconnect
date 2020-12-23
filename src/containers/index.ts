@@ -1,6 +1,4 @@
 // Authentication
 import Login from './auth/login/Login';
-
-export default {
-  Login,
-};
+import EditSOR from './home/SOR/Edit/EditSOR';
+export {Login, EditSOR};

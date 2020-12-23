@@ -1,0 +1,14 @@
+build-job:
+  stage: build
+  script:
+    - echo "Hey, $GITLAB_USER_LOGIN! bhai"
+
+test-job1:
+  stage: test
+  script:
+    - yarn tsc
+
+deploy-prod:
+  stage: deploy
+  script:
+    - echo "deploys something from the $CI_COMMIT_BRANCH branch."
