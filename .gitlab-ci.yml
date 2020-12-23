@@ -6,7 +6,7 @@ build-job:
 test-job1:
   stage: test
   script:
-    - yarn tsc
+    - npm run tsc
 
 deploy-prod:
   stage: deploy
