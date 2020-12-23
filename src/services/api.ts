@@ -11,6 +11,6 @@ export class Api {
   }
 
   post = async () => {
-    return 'asd'
-  }
+    return 'asd';
+  };
 }

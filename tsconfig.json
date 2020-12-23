@@ -9,7 +9,13 @@
       "moduleResolution": "node",
       "noEmit": true,
       "strict": true,
-      "target": "esnext"
+      "target": "esnext",
+      "baseUrl": "src",
+      "paths": {
+        "@theme/*" :["./theme/*"],
+        "@components/*" :["./components/*"],
+        "@service/*":["./services/*"] 
+      }
     },
     "exclude": [
       "node_modules",

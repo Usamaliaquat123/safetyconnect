@@ -6,17 +6,27 @@ class AppStore extends EventEmitter {
   }
 
   getAll_SOR = async (data: Object) => {
-    return await 200
+    return await 200;
   };
 
   createSOR = async (data: Object) => {
     return await 200;
   };
 
-
-  handleActions = 
+  handleActions = (actions: any) => {
+    switch (actions.type) {
+      case 'CREATE_SOR':
+        // creating sor
+        break;
+      case 'GET_SOR':
+        return;
+        break;
+      default:
+        break;
+    }
+  };
 }
 
 const AppStores = new AppStore();
-dispatcher.register()
+dispatcher.register();
 export default AppStores;

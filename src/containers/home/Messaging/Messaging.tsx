@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { connect } from 'react-redux';
-
-export interface AppProps {
+// import { connect } from 'react-redux';
+import styles from "./styles";
+export interface MessagingProps {
 }
 
-export default class App extends React.Component<AppProps, any> {
+export default class Messaging extends React.Component<MessagingProps, any> {
   render() {
     return (
       <View>
-         <Text>initialize the stuff</Text>
+         <Text>Messaging</Text>
       </View>
     );
   }
@@ -25,4 +25,4 @@ export default class App extends React.Component<AppProps, any> {
 //   };
 // }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(App);
+// export default connect(mapStateToProps, mapDispatchToProps)(Messaging);
