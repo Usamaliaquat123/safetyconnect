@@ -158,6 +158,42 @@ const styles = StyleSheet.create({
     margin: wp(1),
     // justifyContent: 'center',
   },
+  clasSorBtnV: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignSelf: 'center',
+  },
+  clasSorBtnWrap: {flexDirection: 'row', alignSelf: 'center'},
+  clasSorBtnTtl: {
+    textAlign: 'center',
+    fontSize: wp(3),
+    marginTop: wp(0.5),
+    marginLeft: wp(1),
+  },
+  // Involve Person
+  involvePContainer: {
+    marginTop: wp(5),
+  },
+  involvePText: {
+    fontWeight: 'bold',
+    color: colors.text,
+    fontSize: wp(3),
+  },
+  involvePTextOtional: {
+    fontStyle: 'italic',
+    fontWeight: 'normal',
+  },
+  involvePInput: {
+    marginTop: wp(2),
+    borderColor: colors.green,
+    borderWidth: wp(0.5),
+    padding: wp(2),
+    paddingLeft: wp(4),
+    paddingRight: wp(4),
+    borderRadius: wp(3),
+    fontSize: wp(3.5),
+    color: colors.text,
+  },
 });
 
 export default styles;

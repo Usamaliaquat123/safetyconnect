@@ -18,6 +18,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {color} from 'react-native-reanimated';
 export interface EditSORProps {}
 
 export default class EditSOR extends React.Component<EditSORProps, any> {
@@ -215,12 +216,7 @@ export default class EditSOR extends React.Component<EditSORProps, any> {
             {/* Classify SOR */}
             <View style={styles.clasSorContainer}>
               <Text style={styles.clasSorHeading}>Classify SOR</Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                  alignSelf: 'center',
-                }}>
+              <View style={styles.clasSorBtnV}>
                 {this.state.classifySorbtns.map((d: any, i: any) => (
                   <TouchableOpacity
                     onPress={() => {
@@ -236,7 +232,7 @@ export default class EditSOR extends React.Component<EditSORProps, any> {
                       {borderColor: d.color},
                       d.selected ? {backgroundColor: d.color} : {},
                     ]}>
-                    <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+                    <View style={styles.clasSorBtnWrap}>
                       <Icon
                         size={17}
                         name={d.icon}
@@ -244,19 +240,33 @@ export default class EditSOR extends React.Component<EditSORProps, any> {
                         color={d.selected ? '#fff' : d.color}
                       />
                       <Text
-                        style={{
-                          textAlign: 'center',
-                          fontSize: wp(3),
-                          marginTop: wp(0.5),
-                          marginLeft: wp(1),
-                          color: d.selected ? '#fff' : d.color,
-                        }}>
+                        style={[
+                          styles.clasSorBtnTtl,
+                          {
+                            color: d.selected ? '#fff' : d.color,
+                          },
+                        ]}>
                         {d.title}
                       </Text>
                     </View>
                   </TouchableOpacity>
                 ))}
               </View>
+            </View>
+            {/* Involved Persons */}
+            <View style={styles.involvePContainer}>
+              <Text style={styles.involvePText}>
+                Involved Person{' '}
+                <Text style={styles.involvePTextOtional}>(Optional)</Text>
+              </Text>
+              <TextInput
+                style={styles.involvePInput}
+                onChangeText={(e) => console.log(e)}
+                placeholder={'Enter person name /email'}
+              />
+              {/* <View style={}>
+
+              </View> */}
             </View>
           </View>
         </ScrollView>
