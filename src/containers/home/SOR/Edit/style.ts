@@ -110,15 +110,21 @@ const styles = StyleSheet.create({
     fontSize: wp(3.4),
   },
   obInput: {borderBottomWidth: 0},
-  obInputText: {fontSize: 15, fontWeight: 'bold'},
+  obInputText: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: colors.text,
+    opacity: 0.5,
+  },
   obText: {fontWeight: 'bold', fontSize: 12},
   suggHeading: {
     fontSize: wp(3.4),
-    marginTop: wp(5),
+    marginTop: wp(8),
     color: colors.text,
+    fontStyle: 'italic',
   },
   sugContainer: {
-    marginTop: wp(5),
+    marginTop: wp(2),
     marginBottom: wp(5),
   },
   sugItm: {
@@ -132,6 +138,7 @@ const styles = StyleSheet.create({
   },
   sugItmTxt: {
     fontSize: wp(3.5),
+
     color: colors.text,
   },
 });
