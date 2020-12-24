@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   headertle: {flexDirection: 'row'},
   headerSelect: {
-    paddingTop: wp(10),
+    marginTop: wp(10),
     flexDirection: 'row',
     // alignContent: 'stretch',
     justifyContent: 'space-between',
@@ -51,8 +51,30 @@ const styles = StyleSheet.create({
   },
   slctContainer: {
     position: 'absolute',
+    top: wp(5),
+    zIndex: wp(1),
+    left: wp(13),
     backgroundColor: colors.secondary,
-    padding: wp(5),
+    // padding: wp(5),
+    paddingLeft: wp(2),
+    paddingRight: wp(2),
+    paddingTop: wp(1),
+    paddingBottom: wp(1),
+    width: wp(22),
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
+  },
+  itemH: {
+    color: 'black',
+    fontSize: wp(3),
+    padding: wp(1),
   },
 });
 

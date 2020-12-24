@@ -1,5 +1,8 @@
 export const sor = {
   Observation: {
+    name: 'ABC Systems',
+    projects: ['lorem Ipsum', 'Magna', 'aliquip ', 'oluptate'],
+    locations: ['kaarchi', 'islamabad', 'lahore'],
     text:
       'Occaecat exercitation sint culpa officia nostrud incididunt amet et @karachi elit ea excepteur nostrud velit.',
     date: 1608751071751,
@@ -11,6 +14,6 @@ export const sor = {
   },
 };
 
-export const all_sor = {};
+export const all_sor = [];
 
 // export const popular
