@@ -11,7 +11,7 @@ import {
 import {sor} from '@service/mock';
 import styles from './style';
 import moment from 'moment';
-
+import {searchInSuggestions, filterLocation, classifySor} from '@utils/utils';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors} from '@theme/colors';
 import {
@@ -32,32 +32,19 @@ export default class EditSOR extends React.Component<EditSORProps, any> {
       project: sor.Observation.projects[0],
       curTime: '',
       suggestions: [],
+      classifySorbtns: classifySor,
     };
   }
 
-  filterLocation = (str: any) => {
-    return str.match(/@\S+/);
-  };
-  searchInSuggestions = (
-    str: string,
-    strArray: Array<string>,
-  ): Array<string> => {
-    for (var j = 0; j < strArray.length; j++) {
-      if (strArray[j].match(str)) return [strArray[j]];
-    }
-    return [];
-  };
   extractLocation = (str: string) => {
-    var location = this.filterLocation(str);
+    var location = filterLocation(str);
     if (location !== null) {
       this.setState({obserLocation: location[0].slice(1)});
     } else {
       this.setState({obserLocation: '@Add Location'});
     }
-    var srchArr = this.searchInSuggestions(str, sor.Observation.suggestions);
-    this.setState({suggestions: [...srchArr]});
-    console.log(this.state.suggestions);
-    this.setState({observationT: str});
+    var srchArr = searchInSuggestions(str, sor.Observation.suggestions);
+    this.setState({suggestions: [...srchArr], observationT: str});
   };
 
   componentDidMount = () => {
@@ -110,7 +97,6 @@ export default class EditSOR extends React.Component<EditSORProps, any> {
                 <Icon
                   onPress={() => {
                     this.setState({selectP: !this.state.selectP});
-                    console.log('sdsd');
                   }}
                   style={{padding: 3}}
                   size={10}
@@ -227,6 +213,51 @@ export default class EditSOR extends React.Component<EditSORProps, any> {
             ) : null}
 
             {/* Classify SOR */}
+            <View style={styles.clasSorContainer}>
+              <Text style={styles.clasSorHeading}>Classify SOR</Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  alignSelf: 'center',
+                }}>
+                {this.state.classifySorbtns.map((d: any, i: any) => (
+                  <TouchableOpacity
+                    onPress={() => {
+                      var classifySorbtns = [...this.state.classifySorbtns];
+                      classifySorbtns[i].selected = !this.state.classifySorbtns[
+                        i
+                      ].selected;
+                      classifySorbtns[i];
+                      this.setState(classifySorbtns);
+                    }}
+                    style={[
+                      styles.clasSorBtnCont,
+                      {borderColor: d.color},
+                      d.selected ? {backgroundColor: d.color} : {},
+                    ]}>
+                    <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+                      <Icon
+                        size={17}
+                        name={d.icon}
+                        type={d.type}
+                        color={d.selected ? '#fff' : d.color}
+                      />
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          fontSize: wp(3),
+                          marginTop: wp(0.5),
+                          marginLeft: wp(1),
+                          color: d.selected ? '#fff' : d.color,
+                        }}>
+                        {d.title}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
           </View>
         </ScrollView>
       </View>

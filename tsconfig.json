@@ -15,7 +15,8 @@
         "@theme/*" :["./theme/*"],
         "@components/*" :["./components/*"],
         "@container/*" :["./containers/*"],
-        "@service/*":["./services/*"] 
+        "@service/*":["./services/*"], 
+        "@utils/*":["./utils/*"] 
       }
     },
     "exclude": [

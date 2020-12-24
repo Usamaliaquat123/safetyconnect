@@ -7,8 +7,7 @@ export const sor = {
       'Occaecat exercitation sint culpa officia nostrud incididunt amet et @karachi elit ea excepteur nostrud velit.',
     date: 1608751071751,
     suggestions: [
-      'text',
-      'text',
+      'Elit veniam qui sit est eu fugiat consectetur.',
       'Elit veniam qui sit est eu fugiat consectetur.',
       'Officia reprehenderit mollit tempor esse.',
       'Ex adipisicing ullamco consequat irure duis.',

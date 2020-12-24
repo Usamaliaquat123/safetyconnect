@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: wp(10),
     borderTopRightRadius: wp(10),
   },
+  // OBSERVATION
   cnHeading: {
     color: colors.primary,
     fontWeight: 'bold',
@@ -117,6 +118,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   obText: {fontWeight: 'bold', fontSize: 12},
+  // SUGGESTIONS
   suggHeading: {
     fontSize: wp(3.4),
     marginTop: wp(8),
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
   },
   sugContainer: {
     marginTop: wp(2),
-    marginBottom: wp(5),
+    marginBottom: wp(3),
   },
   sugItm: {
     marginTop: wp(2),
@@ -133,13 +135,28 @@ const styles = StyleSheet.create({
     padding: wp(3),
     backgroundColor: colors.lightBlue,
     borderRadius: wp(5),
-    // paddingRight: wp(5),
-    // paddingLeft: wp(5),
   },
   sugItmTxt: {
     fontSize: wp(3.5),
-
     color: colors.text,
+  },
+  // Classify SOR
+  clasSorContainer: {},
+  clasSorHeading: {
+    fontSize: wp(3),
+    fontWeight: 'bold',
+    marginTop: wp(7),
+    marginBottom: wp(2),
+  },
+  clasSorBtnCont: {
+    borderRadius: wp(5),
+    borderWidth: wp(0.3),
+    padding: wp(5),
+    marginTop: wp(1),
+    alignSelf: 'stretch',
+    width: wp('38%'),
+    margin: wp(1),
+    // justifyContent: 'center',
   },
 });
 
