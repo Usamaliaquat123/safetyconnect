@@ -5,4 +5,5 @@ export const colors = {
   text: '#333337',
   error: '#F14031',
   green: '#4BA735',
+  lightBlue: '#EBEFF3',
 };

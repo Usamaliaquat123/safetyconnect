@@ -5,9 +5,11 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {color} from 'react-native-reanimated';
 
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: colors.primary},
+  // Header
   header: {
     padding: wp(5),
     paddingRight: wp(7),
@@ -43,12 +45,7 @@ const styles = StyleSheet.create({
     paddingLeft: 3,
     width: wp(20),
   },
-  content: {
-    backgroundColor: colors.secondary,
-    flex: 2,
-    borderTopLeftRadius: wp(10),
-    borderTopRightRadius: wp(10),
-  },
+
   slctContainer: {
     position: 'absolute',
     top: wp(5),
@@ -75,6 +72,67 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: wp(3),
     padding: wp(1),
+  },
+  avatarView: {
+    position: 'absolute',
+    right: 0,
+  },
+
+  // Content
+  content: {
+    padding: wp(10),
+    backgroundColor: colors.secondary,
+    flex: 2,
+    borderTopLeftRadius: wp(10),
+    borderTopRightRadius: wp(10),
+  },
+  cnHeading: {
+    color: colors.primary,
+    fontWeight: 'bold',
+    fontSize: wp(4),
+  },
+  observationDetail: {
+    borderRadius: wp(5),
+    padding: wp(4),
+    borderColor: colors.green,
+    borderWidth: wp(0.3),
+  },
+  observationT: {
+    fontWeight: 'bold',
+    fontSize: wp(3.4),
+    padding: wp(5),
+    paddingBottom: wp(2.5),
+    paddingLeft: wp(0),
+    color: colors.text,
+  },
+  obserttle: {
+    fontWeight: 'bold',
+    fontSize: wp(3.4),
+  },
+  obInput: {borderBottomWidth: 0},
+  obInputText: {fontSize: 15, fontWeight: 'bold'},
+  obText: {fontWeight: 'bold', fontSize: 12},
+  suggHeading: {
+    fontSize: wp(3.4),
+    marginTop: wp(5),
+    color: colors.text,
+  },
+  sugContainer: {
+    marginTop: wp(5),
+    marginBottom: wp(5),
+  },
+  sugItm: {
+    marginTop: wp(2),
+    marginBottom: wp(2),
+    padding: wp(3),
+    backgroundColor: colors.lightBlue,
+    borderRadius: wp(5),
+    // paddingRight: wp(5),
+    // paddingLeft: wp(5),
+  },
+  sugItmTxt: {
+    fontSize: wp(3.5),
+    color: colors.text,
   },
 });
 
