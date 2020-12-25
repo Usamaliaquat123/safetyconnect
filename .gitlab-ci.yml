@@ -28,10 +28,10 @@ before_script:
 
   - curl -sL https://deb.nodesource.com/setup_10.x | bash #Add Node Repo
   - apt-get install -y nodejs #Install NOde JS
-  - npm install -g react-native-cli #Install React-Native CLI
-  - npm install #Install npm packages
+  # - npm install -g react-native-cli #Install React-Native CLI
   - npm i -g yarn #add yarn pkg
-  - react-native link #Link the resources
+  - yarn #Install npm packages
+  # - react-native link #Link the resources
   - chmod +x android/gradlew #Provide permission for execution
 
 stages:
@@ -44,6 +44,7 @@ build_release_android:
     - 'echo $PLAY_STORE_JSON > /PlayJson/play-store-key.json' # copy git variable value to play-store-key.json file
     - yarn android-clean # bundle the app (Execute from package.json's script block)
     - yarn build-apk #create release app (Execute from package.json's script block)
+    - yarn generate-apk
     # - cd android && ./gradlew publishApkRelease  # navigate to android dir & publish app on play store
   only:
     - master #set trigger for CICD if push or merge in master branch
