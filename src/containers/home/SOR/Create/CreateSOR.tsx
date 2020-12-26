@@ -18,7 +18,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {color} from 'react-native-reanimated';
+import DocumentPicker from 'react-native-document-picker';
+
 export interface CreateSORProps {}
 
 export default class CreateSOR extends React.Component<CreateSORProps, any> {
@@ -33,6 +34,8 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
       project: sor.Observation.projects[0],
       curTime: '',
       suggestions: [],
+      involvePersonSuggestions: [],
+      involvePersonText: '',
       classifySorbtns: classifySor,
     };
   }
@@ -46,6 +49,20 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
     }
     var srchArr = searchInSuggestions(str, sor.Observation.suggestions);
     this.setState({suggestions: [...srchArr], observationT: str});
+  };
+  suggestInvolvePersons = (str: string) => {
+    var srchSug = searchInSuggestions(str, sor.Observation.emailSuggestions);
+    if (str == '') {
+      this.setState({
+        involvePersonSuggestions: [],
+        involvePersonText: str,
+      });
+    } else {
+      this.setState({
+        involvePersonSuggestions: [...srchSug],
+        involvePersonText: str,
+      });
+    }
   };
 
   componentDidMount = () => {
@@ -261,12 +278,26 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
               </Text>
               <TextInput
                 style={styles.involvePInput}
-                onChangeText={(e) => console.log(e)}
+                onChangeText={(e) => this.suggestInvolvePersons(e)}
                 placeholder={'Enter person name /email'}
               />
-              {/* <View style={}>
-
-              </View> */}
+              {this.state.involvePersonSuggestions.length != 0 ? (
+                <View style={styles.involveSuggestCont}>
+                  {this.state.involvePersonSuggestions.map((d: any) => (
+                    <View style={styles.involvePsuggCont}>
+                      <Avatar
+                        containerStyle={{marginRight: wp(3)}}
+                        rounded
+                        source={{
+                          uri:
+                            'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                        }}
+                      />
+                      <Text style={styles.involvePSt}>{d}</Text>
+                    </View>
+                  ))}
+                </View>
+              ) : null}
             </View>
           </View>
         </ScrollView>

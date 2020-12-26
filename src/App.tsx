@@ -1,15 +1,12 @@
 import * as React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { connect } from 'react-redux';
-import EditSOR  from "@container/home/SOR/Edit/EditSOR";
-export interface AppProps {
-}
+import {View, StyleSheet, Text} from 'react-native';
+import {connect} from 'react-redux';
+import CreateSOR from '@container/home/SOR/Create/CreateSOR';
+export interface AppProps {}
 
 export default class App extends React.Component<AppProps, any> {
   render() {
-    return (
-         <EditSOR />
-    );
+    return <CreateSOR />;
   }
 }
 

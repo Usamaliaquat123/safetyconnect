@@ -12,6 +12,11 @@ export const sor = {
       'Officia reprehenderit mollit tempor esse.',
       'Ex adipisicing ullamco consequat irure duis.',
     ],
+    emailSuggestions: [
+      'johndoe@codistan.org',
+      'janedoe@codistan.org',
+      'janesmith@codistan.org',
+    ],
   },
 };
 

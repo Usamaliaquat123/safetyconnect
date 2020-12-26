@@ -186,13 +186,31 @@ const styles = StyleSheet.create({
   involvePInput: {
     marginTop: wp(2),
     borderColor: colors.green,
-    borderWidth: wp(0.5),
+    borderWidth: wp(0.3),
     padding: wp(2),
     paddingLeft: wp(4),
     paddingRight: wp(4),
     borderRadius: wp(3),
     fontSize: wp(3.5),
     color: colors.text,
+  },
+  involveSuggestCont: {
+    borderColor: colors.green,
+    borderRadius: wp(3),
+    padding: wp(3),
+    borderWidth: wp(0.3),
+    marginTop: wp(1),
+  },
+  involvePsuggCont: {
+    borderColor: colors.textOpa,
+    borderBottomWidth: wp(0.1),
+    paddingTop: wp(3),
+    paddingBottom: wp(3),
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  involvePSt: {
+    fontSize: wp(3),
   },
 });
 
