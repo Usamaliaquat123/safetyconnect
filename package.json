@@ -7,7 +7,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "android-clean": "cd android && ./gradlew clean && cd ..",
-    "build-apk":"npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
+    "build-apk": "npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "generate-apk": "cd android && ./gradlew assembleRelease -x bundleReleaseJsAndAssets",
     "lint": "eslint ."
   },
@@ -25,6 +25,7 @@
     "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-native": "0.63.4",
+    "react-native-document-picker": "^4.2.0",
     "react-native-elements": "^3.0.1",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-reanimated": "^1.13.2",

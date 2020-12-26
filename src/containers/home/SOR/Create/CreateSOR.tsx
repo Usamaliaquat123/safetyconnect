@@ -19,9 +19,9 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {color} from 'react-native-reanimated';
-export interface EditSORProps {}
+export interface CreateSORProps {}
 
-export default class EditSOR extends React.Component<EditSORProps, any> {
+export default class CreateSOR extends React.Component<CreateSORProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -285,4 +285,4 @@ export default class EditSOR extends React.Component<EditSORProps, any> {
 //   };
 // }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(EditSOR);
+// export default connect(mapStateToProps, mapDispatchToProps)(CreateSOR);
