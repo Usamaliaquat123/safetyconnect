@@ -36,13 +36,21 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
       curTime: '',
       suggestions: [],
       involvePersonSuggestions: [],
+      actionRecommendations: [],
       filename: '',
       involvePersonText: '',
+      actionRecommendationsText: '',
       classifySorbtns: classifySor,
+      // esclateTo / submit To
+      SelectsubmitTo: false,
+      submitTo: sor.Observation.submitTo[0],
+      selectEsclateTo: false,
+      esclateTo: sor.Observation.esclateTo[0],
     };
   }
+
+  // Document Picker and update the state
   pickupDoc = async () => {
-    // Pick a single file
     try {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.allFiles],
@@ -53,12 +61,6 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
             ? res.name.substring(0, 8) + `...${res.type}`
             : res.name,
       });
-      console.log(
-        // res.uri,r
-        // res.type, // mime type
-        res.name,
-        // res.size,
-      );
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User cancelled the picker, exit any dialogs or menus and move on
@@ -67,6 +69,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
       }
     }
   };
+  // Extract Locations and Search in Suggestions Array
   extractLocation = (str: string) => {
     var location = filterLocation(str);
     if (location !== null) {
@@ -77,6 +80,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
     var srchArr = searchInSuggestions(str, sor.Observation.suggestions);
     this.setState({suggestions: [...srchArr], observationT: str});
   };
+  // Search in InvolvePersons Array
   suggestInvolvePersons = (str: string) => {
     var srchSug = searchInSuggestions(str, sor.Observation.emailSuggestions);
     if (str == '') {
@@ -91,8 +95,24 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
       });
     }
   };
+  // Search Action / Recommendation Suggestions
+  actionRecommendSuggestion = (str: string) => {
+    var srchSug = searchInSuggestions(str, sor.Observation.actionOrRecommended);
+    if (str == '') {
+      this.setState({
+        actionRecommendations: [],
+        actionRecommendationsText: str,
+      });
+    } else {
+      this.setState({
+        actionRecommendations: [...srchSug],
+        actionRecommendationsText: str,
+      });
+    }
+  };
 
   componentDidMount = () => {
+    // Time Update on every seconds
     setInterval(() => {
       this.setState({
         curTime: moment().format('LT'),
@@ -193,6 +213,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
               </TouchableOpacity>
             </View>
           </View>
+          {/* content */}
           <View style={styles.content}>
             <Text style={styles.cnHeading}>Create New SOR</Text>
             {/* Observation Details */}
@@ -310,19 +331,27 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
               />
               {this.state.involvePersonSuggestions.length != 0 ? (
                 <View style={styles.involveSuggestCont}>
-                  {this.state.involvePersonSuggestions.map((d: any) => (
-                    <View style={styles.involvePsuggCont}>
-                      <Avatar
-                        containerStyle={{marginRight: wp(3)}}
-                        rounded
-                        source={{
-                          uri:
-                            'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
-                        }}
-                      />
-                      <Text style={styles.involvePSt}>{d}</Text>
-                    </View>
-                  ))}
+                  {this.state.involvePersonSuggestions.map(
+                    (d: any, i: number) => (
+                      <View
+                        style={[
+                          styles.involvePsuggCont,
+                          this.state.involvePersonSuggestions.length == i + 1
+                            ? {borderBottomWidth: wp(0)}
+                            : null,
+                        ]}>
+                        <Avatar
+                          containerStyle={{marginRight: wp(3)}}
+                          rounded
+                          source={{
+                            uri:
+                              'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                          }}
+                        />
+                        <Text style={styles.involvePSt}>{d}</Text>
+                      </View>
+                    ),
+                  )}
                 </View>
               ) : null}
             </View>
@@ -358,6 +387,123 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                 style={{alignSelf: 'center', marginTop: wp(3)}}
                 onPress={(v: number) => console.log(v)}
               />
+            </View>
+            {/* Actions/Recommendation */}
+            <View style={styles.actionContainer}>
+              <Text style={styles.actionsRecHeading}>
+                Actions / Recommendation
+              </Text>
+              <TextInput
+                style={styles.actionInput}
+                value={this.state.actionRecommendationsText}
+                onChangeText={(e) => this.actionRecommendSuggestion(e)}
+                placeholder={'Enter person name /email'}
+              />
+              {this.state.actionRecommendations.length != 0 ? (
+                <View>
+                  <Text style={styles.actionSuggHeading}>Suggestions</Text>
+                  <View style={styles.ActionSugContainer}>
+                    {this.state.actionRecommendations.map((d: string) => (
+                      <TouchableOpacity
+                        onPress={() =>
+                          this.setState({actionRecommendationsText: d})
+                        }
+                        style={styles.ActionsugItm}>
+                        <Text style={styles.ActionsugItmTxt}>{d}</Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                </View>
+              ) : null}
+            </View>
+            {/* Submit To / Esclate To */}
+            <View style={styles.optnToggleContainer}>
+              <View>
+                <Text style={styles.sbBtnText}>Submit to</Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({
+                      SelectsubmitTo: !this.state.SelectsubmitTo,
+                    })
+                  }
+                  style={styles.optnselector}>
+                  <Text style={styles.optnselectorText}>
+                    {this.state.submitTo}
+                  </Text>
+                  <Icon
+                    // style={{padding: }}
+                    size={wp(5)}
+                    name="down"
+                    type="antdesign"
+                    color={colors.primary}
+                  />
+                </TouchableOpacity>
+                {this.state.SelectsubmitTo == true ? (
+                  <View style={styles.slctSEContainer}>
+                    {sor.Observation.submitTo.map((d, i) => (
+                      <Text
+                        onPress={() =>
+                          this.setState({submitTo: d, SelectsubmitTo: false})
+                        }
+                        style={[
+                          styles.seitemH,
+                          sor.Observation.esclateTo.length == i + 1
+                            ? {borderBottomWidth: wp(0)}
+                            : null,
+                        ]}>
+                        {d}
+                      </Text>
+                    ))}
+                  </View>
+                ) : null}
+              </View>
+              <View>
+                <Text style={styles.sbBtnText}>Escalate to</Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({
+                      selectEsclateTo: !this.state.selectEsclateTo,
+                    })
+                  }
+                  style={styles.optnselector}>
+                  <Text style={styles.optnselectorText}>
+                    {this.state.esclateTo}
+                  </Text>
+                  <Icon
+                    // style={{padding: }}
+                    size={wp(5)}
+                    name="down"
+                    type="antdesign"
+                    color={colors.primary}
+                  />
+                </TouchableOpacity>
+                {this.state.selectEsclateTo == true ? (
+                  <View style={styles.slctSEContainer}>
+                    {sor.Observation.esclateTo.map((d, i) => (
+                      <Text
+                        onPress={() => {
+                          this.setState({esclateTo: d, selectEsclateTo: false});
+                          console.log(i);
+                        }}
+                        style={[
+                          styles.seitemH,
+                          sor.Observation.esclateTo.length == i + 1
+                            ? {borderBottomWidth: wp(0)}
+                            : null,
+                        ]}>
+                        {d}
+                      </Text>
+                    ))}
+                  </View>
+                ) : null}
+              </View>
+            </View>
+            {/* Draft And Submit Btns */}
+            <View style={styles.submitsorbtn}>
+              <Text style={styles.submitsorbtntxt}>Save as Draft</Text>
+            </View>
+            <View style={styles.submitsorbtnSb}>
+              <Text style={styles.submitsorbtnSbtxt}>Submit</Text>
             </View>
           </View>
         </ScrollView>

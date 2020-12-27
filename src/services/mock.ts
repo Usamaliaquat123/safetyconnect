@@ -17,6 +17,13 @@ export const sor = {
       'janedoe@codistan.org',
       'janesmith@codistan.org',
     ],
+    actionOrRecommended: [
+      'Officia laboris incididunt quis id tempor.',
+      'Exercitation reprehenderit ea proident nostrud.',
+      'Ex voluptate amet ad quis anim ea commodo.',
+    ],
+    submitTo: ['John Doe', 'Jane Doe', 'zara'],
+    esclateTo: ['Lorem', 'Ipsum', 'Officia'],
   },
 };
 
