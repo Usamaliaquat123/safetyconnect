@@ -19,6 +19,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import DocumentPicker from 'react-native-document-picker';
+import Chart from '@components/chart/Chart';
 
 export interface CreateSORProps {}
 
@@ -298,6 +299,30 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                   ))}
                 </View>
               ) : null}
+            </View>
+
+            {/* Attachment / Upload files */}
+            <View style={styles.uploadBorder}>
+              <View style={styles.uploadBIcmTxt}>
+                <Icon
+                  style={{padding: 3}}
+                  size={wp(10)}
+                  name="file-text"
+                  type="feather"
+                  color={colors.primary}
+                />
+                <Text style={styles.uplaodText}>
+                  Drag and drop your files to start upload{' '}
+                </Text>
+              </View>
+              <View style={styles.uplaodBtn}>
+                <Text style={styles.uploadfileText}>Upload File</Text>
+              </View>
+            </View>
+            {/* Risk Chart*/}
+            <View>
+              <Text style={styles.RiskHeading}>Risk</Text>
+              <Chart style={{alignSelf: 'center', marginTop: wp(3)}} />
             </View>
           </View>
         </ScrollView>

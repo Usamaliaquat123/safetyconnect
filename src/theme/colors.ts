@@ -12,4 +12,11 @@ export const colors = {
     nearmiss: '#222222',
     lsr: '#172A68',
   },
+  riskIcons: {
+    yellow: '#F1E326',
+    lightGreen: '#89C33C',
+    darkGreen: '#009144',
+    orrange: '#FB9120',
+    red: '#F14030',
+  },
 };

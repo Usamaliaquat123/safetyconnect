@@ -6,6 +6,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {color} from 'react-native-reanimated';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: colors.primary},
@@ -211,6 +212,48 @@ const styles = StyleSheet.create({
   },
   involvePSt: {
     fontSize: wp(3),
+  },
+  RiskHeading: {
+    fontWeight: 'bold',
+    color: colors.text,
+    fontSize: wp(3),
+    marginTop: wp(10),
+  },
+  uploadBorder: {
+    borderRadius: wp(5),
+    padding: wp(5),
+    alignItems: 'center',
+    borderStyle: 'dashed',
+    borderWidth: wp(0.5),
+    marginTop: wp(10),
+    paddingLeft: wp(15),
+    paddingRight: wp(15),
+  },
+  uplaodText: {
+    fontWeight: 'bold',
+    fontSize: wp(3),
+    marginTop: wp(2),
+    color: colors.text,
+  },
+  uploadBIcmTxt: {
+    flexDirection: 'row',
+    paddingLeft: wp(5),
+    paddingRight: wp(5),
+    opacity: 0.5,
+  },
+  uplaodBtn: {
+    padding: wp(3),
+    marginTop: wp(3),
+    paddingLeft: wp(15),
+    paddingRight: wp(15),
+    borderWidth: wp(0.3),
+    borderRadius: wp(3),
+    borderColor: colors.primary,
+    alignItems: 'center',
+  },
+  uploadfileText: {
+    fontSize: wp(3),
+    color: colors.primary,
   },
 });
 
