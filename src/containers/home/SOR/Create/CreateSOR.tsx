@@ -36,11 +36,37 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
       curTime: '',
       suggestions: [],
       involvePersonSuggestions: [],
+      filename: '',
       involvePersonText: '',
       classifySorbtns: classifySor,
     };
   }
-
+  pickupDoc = async () => {
+    // Pick a single file
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.allFiles],
+      });
+      this.setState({
+        filename:
+          res.name.length > 7
+            ? res.name.substring(0, 8) + `...${res.type}`
+            : res.name,
+      });
+      console.log(
+        // res.uri,r
+        // res.type, // mime type
+        res.name,
+        // res.size,
+      );
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // User cancelled the picker, exit any dialogs or menus and move on
+      } else {
+        throw err;
+      }
+    }
+  };
   extractLocation = (str: string) => {
     var location = filterLocation(str);
     if (location !== null) {
@@ -315,14 +341,23 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                   Drag and drop your files to start upload{' '}
                 </Text>
               </View>
-              <View style={styles.uplaodBtn}>
+              {this.state.filename != '' ? (
+                <Text style={styles.uplaodText}>{this.state.filename}</Text>
+              ) : null}
+
+              <TouchableOpacity
+                onPress={() => this.pickupDoc()}
+                style={styles.uplaodBtn}>
                 <Text style={styles.uploadfileText}>Upload File</Text>
-              </View>
+              </TouchableOpacity>
             </View>
             {/* Risk Chart*/}
             <View>
               <Text style={styles.RiskHeading}>Risk</Text>
-              <Chart style={{alignSelf: 'center', marginTop: wp(3)}} />
+              <Chart
+                style={{alignSelf: 'center', marginTop: wp(3)}}
+                onPress={(v: number) => console.log(v)}
+              />
             </View>
           </View>
         </ScrollView>
