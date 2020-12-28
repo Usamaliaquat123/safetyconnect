@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
+  Animated,
 } from 'react-native';
 // import { connect } from 'react-redux';
 import {sor} from '@service/mock';
@@ -27,6 +28,9 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
+      // Animated View | Animations
+      initAnim: new Animated.Value(0),
+      // *****
       selectP: false,
       selectL: false,
       observationT: '',
@@ -121,13 +125,22 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
           : '@Add Location',
       });
     }, 1000);
+    this.AnimatedViews();
+  };
+
+  AnimatedViews = () => {
+    Animated.timing(this.state.initAnim, {
+      toValue: 1,
+      duration: 350,
+      useNativeDriver: true,
+    }).start();
   };
 
   componentWillUnmount = () => {};
 
   render() {
     return (
-      <View style={styles.container}>
+      <Animated.View style={[styles.container, {opacity: this.state.initAnim}]}>
         {/* Header */}
         <ScrollView>
           <View style={styles.header}>
@@ -214,7 +227,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
             </View>
           </View>
           {/* content */}
-          <View style={styles.content}>
+          <View style={[styles.content]}>
             <Text style={styles.cnHeading}>Create New SOR</Text>
             {/* Observation Details */}
             <Text style={styles.observationT}>Observation Detail</Text>
@@ -507,7 +520,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
             </View>
           </View>
         </ScrollView>
-      </View>
+      </Animated.View>
     );
   }
 }
