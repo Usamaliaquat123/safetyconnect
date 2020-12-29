@@ -1,4 +1,9 @@
-export const sor = {
+export const Create_sor = {
+  user: {
+    name: 'John Doe',
+    profile:
+      'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+  },
   Observation: {
     name: 'ABC Systems',
     projects: ['lorem Ipsum', 'Magna', 'aliquip ', 'oluptate'],
@@ -24,6 +29,14 @@ export const sor = {
     ],
     submitTo: ['John Doe', 'Jane Doe', 'zara'],
     esclateTo: ['Lorem', 'Ipsum', 'Officia'],
+  },
+};
+
+export const View_sor = {
+  user: {
+    name: 'John Doe',
+    profile:
+      'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
   },
 };
 

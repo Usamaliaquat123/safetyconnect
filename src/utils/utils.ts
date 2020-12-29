@@ -1,4 +1,8 @@
 import {colors} from '@theme/colors';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 export const classifySor: Array<any> = [
   {
     icon: 'warning',
@@ -46,4 +50,9 @@ export const searchInSuggestions = (
     }
   }
   return [];
+};
+
+export const setHeaderAllign = {
+  HEADER_MAX_HEIGHT: wp(65),
+  HEADER_MIN_HEIGHT: wp(70),
 };

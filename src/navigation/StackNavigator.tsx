@@ -1,4 +1,1 @@
-export const StackNavigator = {
-    
-}
-
+export const StackNavigator = {};

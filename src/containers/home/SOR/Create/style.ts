@@ -274,27 +274,7 @@ const styles = StyleSheet.create({
     fontSize: wp(3.5),
     color: colors.text,
   },
-  actionSuggHeading: {
-    fontSize: wp(3.4),
-    marginTop: wp(5),
-    color: colors.text,
-    fontStyle: 'italic',
-  },
-  ActionSugContainer: {
-    marginTop: wp(2),
-    marginBottom: wp(3),
-  },
-  ActionsugItm: {
-    marginTop: wp(2),
-    marginBottom: wp(2),
-    padding: wp(3),
-    backgroundColor: colors.lightBlue,
-    borderRadius: wp(5),
-  },
-  ActionsugItmTxt: {
-    fontSize: wp(3.5),
-    color: colors.text,
-  },
+
   sbBtnText: {fontSize: wp(3), fontWeight: 'bold', color: colors.text},
   optnToggleContainer: {marginTop: wp(10)},
   optnselector: {

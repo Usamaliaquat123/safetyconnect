@@ -9,7 +9,7 @@ import {
   Animated,
 } from 'react-native';
 // import { connect } from 'react-redux';
-import {sor} from '@service/mock';
+import {Create_sor} from '@service/mock';
 import styles from './style';
 import moment from 'moment';
 import {searchInSuggestions, filterLocation, classifySor} from '@utils/utils';
@@ -21,6 +21,7 @@ import {
 } from 'react-native-responsive-screen';
 import DocumentPicker from 'react-native-document-picker';
 import Chart from '@components/chart/Chart';
+import Suggestions from '@components/suggestions/Suggestions';
 
 export interface CreateSORProps {}
 
@@ -30,13 +31,14 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
     this.state = {
       // Animated View | Animations
       initAnim: new Animated.Value(0),
+      dropdownAnim: new Animated.Value(wp(0)),
       // *****
       selectP: false,
       selectL: false,
       observationT: '',
       obserLocation: '@Add Location',
-      currentlocation: sor.Observation.locations[0],
-      project: sor.Observation.projects[0],
+      currentlocation: Create_sor.Observation.locations[0],
+      project: Create_sor.Observation.projects[0],
       curTime: '',
       suggestions: [],
       involvePersonSuggestions: [],
@@ -47,9 +49,9 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
       classifySorbtns: classifySor,
       // esclateTo / submit To
       SelectsubmitTo: false,
-      submitTo: sor.Observation.submitTo[0],
+      submitTo: Create_sor.Observation.submitTo[0],
       selectEsclateTo: false,
-      esclateTo: sor.Observation.esclateTo[0],
+      esclateTo: Create_sor.Observation.esclateTo[0],
     };
   }
 
@@ -81,12 +83,15 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
     } else {
       this.setState({obserLocation: '@Add Location'});
     }
-    var srchArr = searchInSuggestions(str, sor.Observation.suggestions);
+    var srchArr = searchInSuggestions(str, Create_sor.Observation.suggestions);
     this.setState({suggestions: [...srchArr], observationT: str});
   };
   // Search in InvolvePersons Array
   suggestInvolvePersons = (str: string) => {
-    var srchSug = searchInSuggestions(str, sor.Observation.emailSuggestions);
+    var srchSug = searchInSuggestions(
+      str,
+      Create_sor.Observation.emailSuggestions,
+    );
     if (str == '') {
       this.setState({
         involvePersonSuggestions: [],
@@ -101,7 +106,10 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
   };
   // Search Action / Recommendation Suggestions
   actionRecommendSuggestion = (str: string) => {
-    var srchSug = searchInSuggestions(str, sor.Observation.actionOrRecommended);
+    var srchSug = searchInSuggestions(
+      str,
+      Create_sor.Observation.actionOrRecommended,
+    );
     if (str == '') {
       this.setState({
         actionRecommendations: [],
@@ -159,8 +167,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                 <Avatar
                   rounded
                   source={{
-                    uri:
-                      'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                    uri: Create_sor.user.profile,
                   }}
                 />
               </View>
@@ -184,7 +191,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                 />
                 {this.state.selectP == true ? (
                   <View style={styles.slctContainer}>
-                    {sor.Observation.projects.map((d) => (
+                    {Create_sor.Observation.projects.map((d) => (
                       <Text
                         onPress={() => this.setState({project: d})}
                         style={styles.itemH}>
@@ -214,7 +221,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                 />
                 {this.state.selectL == true ? (
                   <View style={[styles.slctContainer, {left: wp(15)}]}>
-                    {sor.Observation.locations.map((d) => (
+                    {Create_sor.Observation.locations.map((d) => (
                       <Text
                         onPress={() => this.setState({currentlocation: d})}
                         style={styles.itemH}>
@@ -277,18 +284,11 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
             </View>
             {/* Suggestions  */}
             {this.state.suggestions.length != 0 ? (
-              <View>
-                <Text style={styles.suggHeading}>Suggestions</Text>
-                <View style={styles.sugContainer}>
-                  {this.state.suggestions.map((d: string) => (
-                    <TouchableOpacity
-                      onPress={() => this.setState({observationT: d})}
-                      style={styles.sugItm}>
-                      <Text style={styles.sugItmTxt}>{d}</Text>
-                    </TouchableOpacity>
-                  ))}
-                </View>
-              </View>
+              <Suggestions
+                styles={{}}
+                arr={this.state.suggestions}
+                onPress={(d: any) => this.setState({observationT: d})}
+              />
             ) : null}
 
             {/* Classify SOR */}
@@ -338,6 +338,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                 <Text style={styles.involvePTextOtional}>(Optional)</Text>
               </Text>
               <TextInput
+                value={this.state.involvePersonText}
                 style={styles.involvePInput}
                 onChangeText={(e) => this.suggestInvolvePersons(e)}
                 placeholder={'Enter person name /email'}
@@ -346,7 +347,13 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                 <View style={styles.involveSuggestCont}>
                   {this.state.involvePersonSuggestions.map(
                     (d: any, i: number) => (
-                      <View
+                      <TouchableOpacity
+                        onPress={() =>
+                          this.setState({
+                            involvePersonText: d,
+                            involvePersonSuggestions: [],
+                          })
+                        }
                         style={[
                           styles.involvePsuggCont,
                           this.state.involvePersonSuggestions.length == i + 1
@@ -362,7 +369,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                           }}
                         />
                         <Text style={styles.involvePSt}>{d}</Text>
-                      </View>
+                      </TouchableOpacity>
                     ),
                   )}
                 </View>
@@ -412,21 +419,16 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                 onChangeText={(e) => this.actionRecommendSuggestion(e)}
                 placeholder={'Enter person name /email'}
               />
+
+              {/* Suggestions  */}
               {this.state.actionRecommendations.length != 0 ? (
-                <View>
-                  <Text style={styles.actionSuggHeading}>Suggestions</Text>
-                  <View style={styles.ActionSugContainer}>
-                    {this.state.actionRecommendations.map((d: string) => (
-                      <TouchableOpacity
-                        onPress={() =>
-                          this.setState({actionRecommendationsText: d})
-                        }
-                        style={styles.ActionsugItm}>
-                        <Text style={styles.ActionsugItmTxt}>{d}</Text>
-                      </TouchableOpacity>
-                    ))}
-                  </View>
-                </View>
+                <Suggestions
+                  styles={{}}
+                  arr={this.state.actionRecommendations}
+                  onPress={(d: any) =>
+                    this.setState({actionRecommendationsText: d})
+                  }
+                />
               ) : null}
             </View>
             {/* Submit To / Esclate To */}
@@ -453,14 +455,14 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                 </TouchableOpacity>
                 {this.state.SelectsubmitTo == true ? (
                   <View style={styles.slctSEContainer}>
-                    {sor.Observation.submitTo.map((d, i) => (
+                    {Create_sor.Observation.submitTo.map((d, i) => (
                       <Text
                         onPress={() =>
                           this.setState({submitTo: d, SelectsubmitTo: false})
                         }
                         style={[
                           styles.seitemH,
-                          sor.Observation.esclateTo.length == i + 1
+                          Create_sor.Observation.esclateTo.length == i + 1
                             ? {borderBottomWidth: wp(0)}
                             : null,
                         ]}>
@@ -492,7 +494,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                 </TouchableOpacity>
                 {this.state.selectEsclateTo == true ? (
                   <View style={styles.slctSEContainer}>
-                    {sor.Observation.esclateTo.map((d, i) => (
+                    {Create_sor.Observation.esclateTo.map((d, i) => (
                       <Text
                         onPress={() => {
                           this.setState({esclateTo: d, selectEsclateTo: false});
@@ -500,7 +502,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                         }}
                         style={[
                           styles.seitemH,
-                          sor.Observation.esclateTo.length == i + 1
+                          Create_sor.Observation.esclateTo.length == i + 1
                             ? {borderBottomWidth: wp(0)}
                             : null,
                         ]}>
