@@ -1,2 +1,2 @@
-import { StackNavigator } from './StackNavigator';
-export default { StackNavigator }
+import StackNavigator from './StackNavigator';
+export {StackNavigator};

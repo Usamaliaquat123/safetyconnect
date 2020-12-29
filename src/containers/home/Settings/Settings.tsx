@@ -1,15 +1,14 @@
 import * as React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 // import { connect } from 'react-redux';
-import styles from "./style";
-export interface SettingsProps {
-}
+import styles from './style';
+export interface SettingsProps {}
 
 export default class Settings extends React.Component<SettingsProps, any> {
   render() {
     return (
       <View>
-         <Text>Settings</Text>
+        <Text>Settings</Text>
       </View>
     );
   }

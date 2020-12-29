@@ -12,6 +12,8 @@
       "target": "esnext",
       "baseUrl": "src",
       "paths": {
+        "@navigation" :["./navigation/index"],
+        "@navigation/*" :["./navigation/*"],
         "@theme/*" :["./theme/*"],
         "@theme" :["./theme/index"],
         "@components" :["./components/index"],
