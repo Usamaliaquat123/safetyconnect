@@ -190,8 +190,9 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                 />
                 {this.state.selectP == true ? (
                   <View style={styles.slctContainer}>
-                    {Create_sor.Observation.projects.map((d) => (
+                    {Create_sor.Observation.projects.map((d, i) => (
                       <Text
+                        key={i}
                         onPress={() => this.setState({project: d})}
                         style={styles.itemH}>
                         {d.length > 7 ? d.substring(0, 8) + '...' : d}
@@ -220,8 +221,9 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                 />
                 {this.state.selectL == true ? (
                   <View style={[styles.slctContainer, {left: wp(15)}]}>
-                    {Create_sor.Observation.locations.map((d) => (
+                    {Create_sor.Observation.locations.map((d, i) => (
                       <Text
+                        key={i}
                         onPress={() => this.setState({currentlocation: d})}
                         style={styles.itemH}>
                         {d.length > 7 ? d.substring(0, 7) + '...' : d}
@@ -296,6 +298,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
               <View style={styles.clasSorBtnV}>
                 {this.state.classifySorbtns.map((d: any, i: any) => (
                   <TouchableOpacity
+                    key={i}
                     onPress={() => {
                       var classifySorbtns = [...this.state.classifySorbtns];
                       classifySorbtns[i].selected = !this.state.classifySorbtns[
@@ -347,6 +350,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                   {this.state.involvePersonSuggestions.map(
                     (d: any, i: number) => (
                       <TouchableOpacity
+                        key={i}
                         onPress={() =>
                           this.setState({
                             involvePersonText: d,
@@ -456,6 +460,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                   <View style={styles.slctSEContainer}>
                     {Create_sor.Observation.submitTo.map((d, i) => (
                       <Text
+                        key={i}
                         onPress={() =>
                           this.setState({submitTo: d, SelectsubmitTo: false})
                         }
@@ -495,6 +500,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                   <View style={styles.slctSEContainer}>
                     {Create_sor.Observation.esclateTo.map((d, i) => (
                       <Text
+                        key={i}
                         onPress={() => {
                           this.setState({esclateTo: d, selectEsclateTo: false});
                           console.log(i);

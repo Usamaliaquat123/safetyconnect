@@ -1,2 +1,3 @@
 import {Api} from './api';
-export default {Api};
+import {Create_sor, View_sor, all_sor, viewas} from './mock';
+export {Api, Create_sor, View_sor, all_sor, viewas};

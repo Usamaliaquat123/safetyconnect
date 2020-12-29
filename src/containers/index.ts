@@ -7,4 +7,15 @@ import Verify from './auth/verification/Verify';
 import Settings from './home/Settings/Settings';
 import Messaging from './home/Messaging/Messaging';
 import Splash from './splash/Splash';
-export {Login, CreateSOR, Signup, Forgot, Verify, Settings, Messaging, Splash};
+import Home from './home/index';
+export {
+  Login,
+  CreateSOR,
+  Signup,
+  Forgot,
+  Verify,
+  Settings,
+  Messaging,
+  Splash,
+  Home,
+};

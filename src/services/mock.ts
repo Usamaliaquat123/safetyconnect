@@ -39,6 +39,7 @@ export const View_sor = {
       'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
   },
 };
+export const viewas = ['Board View', 'List View'];
 
 export const all_sor = [];
 

@@ -12,6 +12,7 @@ import {
   Forgot,
   Splash,
   Messaging,
+  Home,
   Settings,
 } from '@containers';
 export interface StackNavigatorProps {}
@@ -26,6 +27,13 @@ export default class StackNavigator extends React.Component<
       <SafeAreaProvider>
         <NavigationContainer>
           <Stack.Navigator>
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={{
+                headerShown: false,
+              }}
+            />
             <Stack.Screen
               name="CreateSOR"
               component={CreateSOR}
