@@ -12,16 +12,15 @@ import {
 import {Create_sor} from '@service/mock';
 import styles from './style';
 import moment from 'moment';
-import {searchInSuggestions, filterLocation, classifySor} from '@utils/utils';
+import {searchInSuggestions, filterLocation, classifySor} from '@utils';
 import {Icon, Avatar} from 'react-native-elements';
-import {colors} from '@theme/colors';
+import {colors} from '@theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import DocumentPicker from 'react-native-document-picker';
-import Chart from '@components/chart/Chart';
-import Suggestions from '@components/suggestions/Suggestions';
+import {Chart, Suggestions} from '@components';
 
 export interface CreateSORProps {}
 

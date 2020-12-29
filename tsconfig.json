@@ -13,10 +13,14 @@
       "baseUrl": "src",
       "paths": {
         "@theme/*" :["./theme/*"],
+        "@theme" :["./theme/index"],
+        "@components" :["./components/index"],
         "@components/*" :["./components/*"],
-        "@container/*" :["./containers/*"],
+        "@containers" :["./containers/index"],
         "@service/*":["./services/*"], 
-        "@utils/*":["./utils/*"] 
+        "@service":["./services/index"], 
+        "@utils/*":["./utils/*"], 
+        "@utils":["./utils/index"] 
       }
     },
     "exclude": [
