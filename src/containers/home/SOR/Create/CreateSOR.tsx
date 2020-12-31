@@ -187,9 +187,9 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
               <View style={styles.leftSelector}>
                 <Text style={styles.hselectort}> Project : </Text>
                 <TouchableOpacity
-                  onPress={() => {
-                    this.setState({selectP: !this.state.selectP});
-                  }}
+                  // onPress={() => {
+                  //   this.setState({selectP: !this.state.selectP});
+                  // }}
                   style={styles.selector}>
                   <Text style={styles.selectorBox}>{this.state.project}</Text>
                 </TouchableOpacity>

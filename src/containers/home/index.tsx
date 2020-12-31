@@ -66,9 +66,10 @@ export default class Home extends React.Component<HomeProps, any> {
                 {/* <Text style={styles.hselectort}> Board View</Text> */}
                 <TouchableOpacity
                   style={styles.selector}
-                  onPress={() => {
-                    this.setState({selectP: !this.state.selectP});
-                  }}>
+                  // onPress={() => {
+                  //   this.setState({selectP: !this.state.selectP});
+                  // }}>
+                >
                   <Text style={styles.selectorBox}>{this.state.project}</Text>
                 </TouchableOpacity>
                 <Icon
