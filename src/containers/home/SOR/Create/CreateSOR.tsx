@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   Animated,
+  Easing,
 } from 'react-native';
 // import { connect } from 'react-redux';
 import {Create_sor} from '@service/mock';
@@ -22,7 +23,9 @@ import {
 import DocumentPicker from 'react-native-document-picker';
 import {Chart, Suggestions} from '@components';
 
-export interface CreateSORProps {}
+export interface CreateSORProps {
+  navigation: any;
+}
 
 export default class CreateSOR extends React.Component<CreateSORProps, any> {
   constructor(props: any) {
@@ -30,7 +33,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
     this.state = {
       // Animated View | Animations
       initAnim: new Animated.Value(0),
-      dropdownAnim: new Animated.Value(wp(0)),
+      contentAnim: new Animated.Value(80),
       // *****
       selectP: false,
       selectL: false,
@@ -136,10 +139,17 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
   };
 
   AnimatedViews = () => {
+    Animated.timing(this.state.contentAnim, {
+      toValue: wp(0),
+      duration: 1500,
+      easing: Easing.elastic(3),
+      useNativeDriver: false,
+    }).start();
+
     Animated.timing(this.state.initAnim, {
       toValue: 1,
-      duration: 350,
-      useNativeDriver: true,
+      duration: 1000,
+      useNativeDriver: false,
     }).start();
   };
 
@@ -153,6 +163,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
+                onPress={() => this.props.navigation.goBack()}
                 size={25}
                 name="arrow-back-outline"
                 type="ionicon"
@@ -175,13 +186,14 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
               {/* Project selector */}
               <View style={styles.leftSelector}>
                 <Text style={styles.hselectort}> Project : </Text>
-                <TouchableOpacity style={styles.selector}>
-                  <Text style={styles.selectorBox}>{this.state.project}</Text>
-                </TouchableOpacity>
-                <Icon
+                <TouchableOpacity
                   onPress={() => {
                     this.setState({selectP: !this.state.selectP});
                   }}
+                  style={styles.selector}>
+                  <Text style={styles.selectorBox}>{this.state.project}</Text>
+                </TouchableOpacity>
+                <Icon
                   style={{padding: 3}}
                   size={10}
                   name="down"
@@ -235,7 +247,13 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
             </View>
           </View>
           {/* content */}
-          <View style={[styles.content]}>
+          <Animated.View
+            style={[
+              styles.content,
+              {
+                marginTop: this.state.contentAnim,
+              },
+            ]}>
             <Text style={styles.cnHeading}>Create New SOR</Text>
             {/* Observation Details */}
             <Text style={styles.observationT}>Observation Detail</Text>
@@ -525,7 +543,7 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
             <View style={styles.submitsorbtnSb}>
               <Text style={styles.submitsorbtnSbtxt}>Submit</Text>
             </View>
-          </View>
+          </Animated.View>
         </ScrollView>
       </Animated.View>
     );

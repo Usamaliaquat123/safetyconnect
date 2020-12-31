@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   slctContainer: {
     position: 'absolute',
     top: wp(5),
-    zIndex: wp(1),
+    zIndex: 1,
     left: wp(13),
     backgroundColor: colors.secondary,
     // padding: wp(5),
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
 
     elevation: 3,
   },
+
   itemH: {
     color: 'black',
     fontSize: wp(3),
@@ -73,6 +74,71 @@ const styles = StyleSheet.create({
   avatarView: {
     position: 'absolute',
     right: 0,
+  },
+
+  // content
+  cardContainer: {
+    width: wp(70),
+    borderRadius: wp(3),
+    padding: wp(5),
+    // borderWidth: wp(0.1),
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    marginBottom: wp(10),
+    elevation: 1,
+  },
+  cardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  cardtime: {
+    fontSize: wp(3),
+    fontWeight: 'bold',
+    color: colors.text,
+  },
+  cardDate: {
+    fontSize: wp(3),
+    color: colors.text,
+    fontWeight: 'bold',
+  },
+  cardbadge: {
+    backgroundColor: colors.riskIcons.yellow,
+    padding: wp(5),
+    marginRight: wp(1),
+    justifyContent: 'center',
+    marginTop: wp(-2),
+    alignSelf: 'center',
+    borderRadius: wp(10),
+  },
+  cardBadgeText: {
+    fontSize: wp(3),
+    fontWeight: 'bold',
+    position: 'absolute',
+    alignSelf: 'center',
+  },
+  cardTitle: {
+    fontSize: wp(4),
+    color: colors.primary,
+    // fontWeight: 'bold',
+  },
+  cardBottom: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+  cardLocation: {
+    flexDirection: 'row',
+  },
+  cardBorderText: {
+    fontSize: wp(3),
+    color: colors.text,
+  },
+  cardRisk: {
+    flexDirection: 'row',
   },
 });
 

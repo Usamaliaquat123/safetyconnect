@@ -6,13 +6,20 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-interface Props {}
 
 export interface ChartProps {
-  style: Object;
+  style?: Object;
   onPress: Function;
 }
 
+export interface dingdong {}
+
+export interface malai {}
+
+export const testing = (animal: malai | dingdong): string => {
+  return '';
+};
+type asdad = object | string;
 class Chart extends React.Component<ChartProps, any> {
   constructor(props: any) {
     super(props);

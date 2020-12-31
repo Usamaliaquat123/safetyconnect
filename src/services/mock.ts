@@ -41,6 +41,43 @@ export const View_sor = {
 };
 export const viewas = ['Board View', 'List View'];
 
-export const all_sor = [];
+export const all_sor = [
+  {
+    date: 1609361909947,
+    observation:
+      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    risk: 16,
+    classify: 'Concern',
+    type: 'Drafts',
+    location: 'lorem Ipsum',
+  },
+  {
+    date: 1609361909947,
+    observation:
+      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    risk: 16,
+    classify: 'Concern',
+    type: 'Drafts',
+    location: 'lorem Ipsum',
+  },
+  {
+    date: 1609361909947,
+    observation:
+      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    risk: 16,
+    classify: 'Concern',
+    type: 'Drafts',
+    location: 'lorem Ipsum',
+  },
+  {
+    date: 1609361909947,
+    observation:
+      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    risk: 16,
+    classify: 'Concern',
+    type: 'Drafts',
+    location: 'lorem Ipsum',
+  },
+];
 
 // export const popular

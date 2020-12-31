@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
   header: {
     padding: wp(5),
     paddingRight: wp(7),
+    backgroundColor: colors.primary,
     paddingLeft: wp(7),
   },
   title: {
@@ -34,6 +35,7 @@ const styles = StyleSheet.create({
     marginTop: wp(10),
     flexDirection: 'row',
     // alignContent: 'stretch',
+    position: 'relative',
     justifyContent: 'space-between',
     width: wp(100),
   },
@@ -84,6 +86,7 @@ const styles = StyleSheet.create({
     padding: wp(10),
     backgroundColor: colors.secondary,
     flex: 2,
+    marginTop: wp(80),
     borderTopLeftRadius: wp(10),
     borderTopRightRadius: wp(10),
   },
@@ -301,6 +304,7 @@ const styles = StyleSheet.create({
     paddingRight: wp(2),
     paddingTop: wp(1),
     paddingBottom: wp(1),
+    marginBottom: wp(2),
     // width: wp(80),
     shadowColor: '#000',
     shadowOffset: {
