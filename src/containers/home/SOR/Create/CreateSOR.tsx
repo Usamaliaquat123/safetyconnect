@@ -319,10 +319,15 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
                     key={i}
                     onPress={() => {
                       var classifySorbtns = [...this.state.classifySorbtns];
-                      classifySorbtns[i].selected = !this.state.classifySorbtns[
-                        i
-                      ].selected;
-                      classifySorbtns[i];
+                      classifySorbtns.map((b: object, j: number) => {
+                        if (classifySorbtns[j] == d) {
+                          classifySorbtns[j].selected = !classifySorbtns[j]
+                            .selected;
+                        } else {
+                          classifySorbtns[j].selected = false;
+                        }
+                      });
+
                       this.setState(classifySorbtns);
                     }}
                     style={[

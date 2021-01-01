@@ -1,25 +1,19 @@
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
-import {colors} from '@theme/colors';
+import {colors} from '@theme';
+import {mapChart} from '@service';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {ThemeConsumer} from 'react-native-elements';
 
 export interface ChartProps {
   style?: Object;
   onPress: Function;
 }
 
-export interface dingdong {}
-
-export interface malai {}
-
-export const testing = (animal: malai | dingdong): string => {
-  return '';
-};
-type asdad = object | string;
 class Chart extends React.Component<ChartProps, any> {
   constructor(props: any) {
     super(props);
@@ -28,6 +22,33 @@ class Chart extends React.Component<ChartProps, any> {
     };
   }
 
+  clearValues = (i: number, val: Object, arr: Array<any>): Array<Object> => {
+    arr.map((j: object, i: number) => {
+      if (arr[i] == val) {
+        arr[i].selected = true;
+      } else {
+        arr[i].selected = false;
+      }
+    });
+
+    return arr;
+  };
+
+  onIconSelecte = (d: object, i: number, row: Array<Object>) => {
+    // console.log(row);
+    if (mapChart.r1 == row) {
+    } else if (mapChart.r2 == row) {
+      mapChart.r2[i].selected = true;
+      var chrt = [...mapChart.r2];
+      console.log(this.clearValues(i, d, mapChart.r2));
+      // console.log(this.clearValues(i, d, mapChart.r2));
+    } else if (mapChart.r3 == row) {
+    } else if (mapChart.r4 == row) {
+    } else if (mapChart.r5 == row) {
+    }
+
+    // console.log(mapChart);
+  };
   render() {
     return (
       <View style={this.props.style}>
@@ -35,190 +56,62 @@ class Chart extends React.Component<ChartProps, any> {
           <View style={styles.circleOpa}>
             <Text style={[styles.circleText, styles.ruler]}>5</Text>
           </View>
-          <TouchableOpacity
-            onPress={() => {
-              console.log(this.state.SelectedArr);
-              if (this.state.SelectedArr.length != 0) {
-                if (this.state.SelectedArr.filter((v: number) => v == 5)) {
-                  this.setState({
-                    SelectedArr: this.state.SelectedArr.filter(
-                      (v: number) => v !== 5,
-                    ),
-                  });
-                }
-              } else {
-                // console.log('eles');
-                this.setState({SelectedArr: [5]});
-                // this.setState({});
-              }
-              this.props.onPress(5);
-            }}
-            style={[
-              styles.circle,
-              this.state.SelectedArr.find((v: number) => {
-                return v == 5;
-              })
-                ? {opacity: 1}
-                : {opacity: 0.5},
-            ]}>
-            <Text style={styles.circleText}>5</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.circle,
-              {backgroundColor: colors.riskIcons.orrange},
-            ]}>
-            <Text style={styles.circleText}>10</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.circle,
-              {backgroundColor: colors.riskIcons.orrange},
-            ]}>
-            <Text style={styles.circleText}>15</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.circle, {backgroundColor: colors.riskIcons.red}]}>
-            <Text style={styles.circleText}>20</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.circle, {backgroundColor: colors.riskIcons.red}]}>
-            <Text style={styles.circleText}>25</Text>
-          </TouchableOpacity>
+          {mapChart.r1.map((d: any, i: number) => (
+            <TouchableOpacity
+              onPress={() => this.onIconSelecte(d, i, mapChart.r1)}
+              style={[styles.circle, {backgroundColor: d.color}]}>
+              <Text style={styles.circleText}>{d.value}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
         <View style={styles.rowCont}>
           <View style={styles.circleOpa}>
             <Text style={[styles.circleText, styles.ruler]}>4</Text>
           </View>
-          <TouchableOpacity
-            style={[
-              styles.circle,
-              {backgroundColor: colors.riskIcons.lightGreen},
-            ]}>
-            <Text style={styles.circleText}>4</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.circle}>
-            <Text style={styles.circleText}>8</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.circle,
-              {backgroundColor: colors.riskIcons.orrange},
-            ]}>
-            <Text style={styles.circleText}>12</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.circle,
-              {backgroundColor: colors.riskIcons.orrange},
-            ]}>
-            <Text style={styles.circleText}>16</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.circle, {backgroundColor: colors.riskIcons.red}]}>
-            <Text style={styles.circleText}>20</Text>
-          </TouchableOpacity>
+          {mapChart.r2.map((d: any, i: number) => (
+            <TouchableOpacity
+              onPress={() => this.onIconSelecte(d, i, mapChart.r2)}
+              style={[styles.circle, {backgroundColor: d.color}]}>
+              <Text style={styles.circleText}>{d.value}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
         <View style={styles.rowCont}>
           <Text style={styles.likelihoodText}>LIKELIHOOD</Text>
           <View style={styles.circleOpa}>
             <Text style={[styles.circleText, styles.ruler]}>3</Text>
           </View>
-          <TouchableOpacity
-            style={[
-              styles.circle,
-              {backgroundColor: colors.riskIcons.lightGreen},
-            ]}>
-            <Text style={styles.circleText}>3</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.circle}>
-            <Text style={styles.circleText}>6</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.circle}>
-            <Text style={styles.circleText}>9</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.circle,
-              {backgroundColor: colors.riskIcons.orrange},
-            ]}>
-            <Text style={styles.circleText}>12</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.circle,
-              {backgroundColor: colors.riskIcons.orrange},
-            ]}>
-            <Text style={styles.circleText}>16</Text>
-          </TouchableOpacity>
+          {mapChart.r3.map((d: any, i: number) => (
+            <TouchableOpacity
+              onPress={() => this.onIconSelecte(d, i, mapChart.r3)}
+              style={[styles.circle, {backgroundColor: d.color}]}>
+              <Text style={styles.circleText}>{d.value}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
         <View style={styles.rowCont}>
           <View style={styles.circleOpa}>
             <Text style={[styles.circleText, styles.ruler]}>2</Text>
           </View>
-          <TouchableOpacity
-            style={[
-              styles.circle,
-              {backgroundColor: colors.riskIcons.darkGreen},
-            ]}>
-            <Text style={styles.circleText}>2</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.circle,
-              {backgroundColor: colors.riskIcons.lightGreen},
-            ]}>
-            <Text style={styles.circleText}>4</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.circle}>
-            <Text style={styles.circleText}>6</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.circle}>
-            <Text style={styles.circleText}>8</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.circle,
-              {backgroundColor: colors.riskIcons.orrange},
-            ]}>
-            <Text style={styles.circleText}>10</Text>
-          </TouchableOpacity>
+          {mapChart.r4.map((d: any, i: number) => (
+            <TouchableOpacity
+              onPress={() => this.onIconSelecte(d, i, mapChart.r4)}
+              style={[styles.circle, {backgroundColor: d.color}]}>
+              <Text style={styles.circleText}>{d.value}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
         <View style={styles.rowCont}>
           <View style={styles.circleOpa}>
             <Text style={[styles.circleText, styles.ruler]}>1</Text>
           </View>
-          <TouchableOpacity
-            style={[
-              styles.circle,
-              {backgroundColor: colors.riskIcons.darkGreen},
-            ]}>
-            <Text style={styles.circleText}>1</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.circle,
-              {backgroundColor: colors.riskIcons.darkGreen},
-            ]}>
-            <Text style={styles.circleText}>2</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.circle,
-              {backgroundColor: colors.riskIcons.lightGreen},
-            ]}>
-            <Text style={styles.circleText}>3</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.circle,
-              {backgroundColor: colors.riskIcons.lightGreen},
-            ]}>
-            <Text style={styles.circleText}>4</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.circle}>
-            <Text style={styles.circleText}>5</Text>
-          </TouchableOpacity>
+          {mapChart.r5.map((d: any, i: number) => (
+            <TouchableOpacity
+              onPress={() => this.onIconSelecte(d, i, mapChart.r5)}
+              style={[styles.circle, {backgroundColor: d.color}]}>
+              <Text style={styles.circleText}>{d.value}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
         <View style={styles.rowCont}>
           <View style={styles.circleOpa}>

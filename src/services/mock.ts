@@ -1,3 +1,5 @@
+import {colors} from '@theme';
+
 export const Create_sor = {
   user: {
     name: 'John Doe',
@@ -32,6 +34,44 @@ export const Create_sor = {
   },
 };
 
+export const mapChart = {
+  r1: [
+    {value: 5, selected: false, color: colors.riskIcons.yellow},
+    {value: 10, selected: false, color: colors.riskIcons.orrange},
+    {value: 15, selected: false, color: colors.riskIcons.orrange},
+    {value: 20, selected: false, color: colors.riskIcons.red},
+    {value: 25, selected: false, color: colors.riskIcons.red},
+  ],
+  r2: [
+    {value: 4, selected: false, color: colors.riskIcons.lightGreen},
+    {value: 8, selected: false, color: colors.riskIcons.yellow},
+    {value: 12, selected: false, color: colors.riskIcons.orrange},
+    {value: 16, selected: false, color: colors.riskIcons.orrange},
+    {value: 20, selected: false, color: colors.riskIcons.red},
+  ],
+  r3: [
+    {value: 3, selected: false, color: colors.riskIcons.lightGreen},
+    {value: 6, selected: false, color: colors.riskIcons.yellow},
+    {value: 9, selected: false, color: colors.riskIcons.yellow},
+    {value: 12, selected: false, color: colors.riskIcons.orrange},
+    {value: 16, selected: false, color: colors.riskIcons.orrange},
+  ],
+  r4: [
+    {value: 2, selected: false, color: colors.riskIcons.darkGreen},
+    {value: 4, selected: false, color: colors.riskIcons.lightGreen},
+    {value: 6, selected: false, color: colors.riskIcons.yellow},
+    {value: 8, selected: false, color: colors.riskIcons.yellow},
+    {value: 10, selected: false, color: colors.riskIcons.orrange},
+  ],
+  r5: [
+    {value: 1, selected: false, color: colors.riskIcons.darkGreen},
+    {value: 2, selected: false, color: colors.riskIcons.darkGreen},
+    {value: 3, selected: false, color: colors.riskIcons.lightGreen},
+    {value: 4, selected: false, color: colors.riskIcons.lightGreen},
+    {value: 5, selected: false, color: colors.riskIcons.yellow},
+  ],
+};
+
 export const View_sor = {
   user: {
     name: 'John Doe',
@@ -42,6 +82,60 @@ export const View_sor = {
 export const viewas = ['Board View', 'List View'];
 
 export const all_sor = [
+  {
+    date: 1609361909947,
+    observation:
+      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    risk: 16,
+    classify: 'Concern',
+    type: 'Drafts',
+    location: 'lorem Ipsum',
+  },
+  {
+    date: 1609361909947,
+    observation:
+      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    risk: 16,
+    classify: 'Concern',
+    type: 'Drafts',
+    location: 'lorem Ipsum',
+  },
+  {
+    date: 1609361909947,
+    observation:
+      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    risk: 16,
+    classify: 'Concern',
+    type: 'Drafts',
+    location: 'lorem Ipsum',
+  },
+  {
+    date: 1609361909947,
+    observation:
+      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    risk: 16,
+    classify: 'Concern',
+    type: 'Drafts',
+    location: 'lorem Ipsum',
+  },
+  {
+    date: 1609361909947,
+    observation:
+      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    risk: 16,
+    classify: 'Concern',
+    type: 'Drafts',
+    location: 'lorem Ipsum',
+  },
+  {
+    date: 1609361909947,
+    observation:
+      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    risk: 16,
+    classify: 'Concern',
+    type: 'Drafts',
+    location: 'lorem Ipsum',
+  },
   {
     date: 1609361909947,
     observation:
