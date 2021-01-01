@@ -21,6 +21,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import styles from './styles';
+import {Chart} from '@components';
 export interface HomeProps {
   navigation: any;
 }
@@ -111,7 +112,10 @@ export default class Home extends React.Component<HomeProps, any> {
               type="material-community"
               color={colors.primary}
             />
-
+            <Chart
+              style={{alignSelf: 'center', marginTop: wp(3)}}
+              onPress={(v: number) => console.log(v)}
+            />
             {/* <ScrollView horizontal={true}>
               <ScrollView>
                 <Text>sdsds</Text>
