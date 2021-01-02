@@ -1,6 +1,21 @@
-import {createStoreHook} from 'react-redux';
-import dispatcher from '../dispatcher';
+import {createAction} from '@utils';
+import ActionTypes from '../ActionTypes';
+import {IThunkAction} from '../Store';
 
-// dispatcher.dispatch({ type : 'CREATE_SOR', data })
-export const create_sor = async () => {};
-export const get_sor = async () => {};
+const init = createAction(ActionTypes.INITIAL_DATA);
+
+export const initialApp = (): IThunkAction => {
+  return async (dispatch, getState) => {
+    dispatch(
+      init({
+        isLoading: true,
+      }),
+    );
+  };
+};
+
+const initialAppAction = {
+  initialApp,
+};
+
+export default initialAppAction;

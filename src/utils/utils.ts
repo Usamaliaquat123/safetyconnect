@@ -56,3 +56,8 @@ export const setHeaderAllign = {
   HEADER_MAX_HEIGHT: wp(65),
   HEADER_MIN_HEIGHT: wp(70),
 };
+
+export const createAction = (actionType: string) => (payload?: any) => ({
+  type: actionType,
+  payload: payload,
+});

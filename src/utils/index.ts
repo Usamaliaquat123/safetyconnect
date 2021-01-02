@@ -3,5 +3,12 @@ import {
   filterLocation,
   searchInSuggestions,
   setHeaderAllign,
+  createAction,
 } from './utils';
-export {classifySor, filterLocation, searchInSuggestions, setHeaderAllign};
+export {
+  classifySor,
+  filterLocation,
+  searchInSuggestions,
+  setHeaderAllign,
+  createAction,
+};

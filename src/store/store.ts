@@ -1,32 +1,54 @@
-import {EventEmitter} from 'events';
-import dispatcher from './dispatcher';
-class AppStore extends EventEmitter {
-  constructor() {
-    super();
-  }
+import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
+import {composeWithDevTools} from 'redux-devtools-extension';
+import thunk, {ThunkAction} from 'redux-thunk';
+import {IAction} from './ActionTypes';
+import InitialAppReducer, {
+  initialState as initState,
+} from './Reducers/InitialAppReducer';
+import ListReducer, {initialState as listState} from './Reducers/listReducers';
 
-  getAll_SOR = async (data: Object) => {
-    return await 200;
+export type RootState = {
+  init: typeof initState;
+  list: typeof listState;
+};
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  IAction<any> | any
+>;
+
+export type IThunkAction = AppThunk<void>;
+
+const devToolOption = {
+  name: 'SafetyConnect',
+  instanceId: 1,
+};
+
+function configureStore() {
+  const composeDevToolsWithOption = composeWithDevTools(devToolOption);
+  const composeEnhancers = (__DEV__ && composeDevToolsWithOption) || compose;
+  let rootReducer = combineReducers({
+    init: InitialAppReducer,
+    list: ListReducer,
+    // auto-plugin
+  });
+
+  const logger = (store: any) => (next: any) => (action: any) => {
+    console.group(action.type);
+    console.log('current state', store.getState());
+    console.log('dispatching', action);
+    const result = next(action);
+    console.log('next state', store.getState());
+    return result;
   };
 
-  createSOR = async (data: Object) => {
-    return await 200;
-  };
+  const middleware = [thunk, logger];
 
-  handleActions = (actions: any) => {
-    switch (actions.type) {
-      case 'CREATE_SOR':
-        // creating sor
-        break;
-      case 'GET_SOR':
-        return;
-        break;
-      default:
-        break;
-    }
-  };
+  const store = createStore(rootReducer, applyMiddleware(...middleware));
+
+  return store;
 }
 
-const AppStores = new AppStore();
-// dispatcher.register();
-export default AppStores;
+export default configureStore();
