@@ -15,46 +15,60 @@ import {
   Home,
   Settings,
 } from '@containers';
-export interface StackNavigatorProps {}
 
-const Stack = createStackNavigator();
-export default class StackNavigator extends React.Component<
-  StackNavigatorProps,
-  any
-> {
-  render() {
-    return (
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Home"
-              component={Home}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="CreateSOR"
-              component={CreateSOR}
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{
-                headerShown: false,
-              }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </SafeAreaProvider>
-    );
-  }
-}
+export type StackNavigatorProps = {
+  Home: undefined;
+  CreateSOR: undefined;
+};
+export type AuthNavigatorProp = {
+  Login: undefined;
+};
 
+const Stack = createStackNavigator<StackNavigatorProps>();
+const Auth = createStackNavigator<AuthNavigatorProp>();
+
+export const AuthStackNavigator = () => {
+  return (
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Auth.Navigator>
+          <Auth.Screen
+            name="Login"
+            component={Login}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Auth.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
+  );
+};
+
+export const MainStackNavigator = () => {
+  return (
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="CreateSOR"
+            component={CreateSOR}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
+  );
+};
 // const mapStateToProps = state => {
 //   return {
 //   };

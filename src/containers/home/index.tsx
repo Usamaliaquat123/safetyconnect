@@ -1,32 +1,35 @@
 import * as React from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors} from '@theme';
-// import {
-//   NavigationParams,
-//   NavigationScreenProp,
-//   NavigationState,
-// } from '@react-navigation/native';
-// import {NavigationScreenProp, NavigationParams} from '@react-navigation/stack';
+import {StackNavigationProp} from '@react-navigation/stack';
 import {Create_sor, View_sor, all_sor, viewas} from '@service';
-// import { connect } from 'react-redux';
+import {connect} from 'react-redux';
+import * as reduxActions from '../../store/Actions/AppActions';
+import {StackNavigatorProps} from '@nav';
+import {RouteProp} from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import styles from './styles';
 import {Chart} from '@components';
+import {bindActionCreators} from 'redux';
+
+type HomeScreenNavigationProp = StackNavigationProp<
+  StackNavigatorProps,
+  'Home'
+>;
+type HomeRouteProp = RouteProp<StackNavigatorProps, 'Home'>;
+
 export interface HomeProps {
-  navigation: any;
+  route: HomeRouteProp;
+  navigation: HomeScreenNavigationProp;
+  reduxActions: any;
+  reduxState: any;
 }
 
-export default class Home extends React.Component<HomeProps, any> {
+class Home extends React.Component<HomeProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -34,6 +37,7 @@ export default class Home extends React.Component<HomeProps, any> {
       project: viewas[0],
       selectP: false,
     };
+    // console.log(this.props.reduxState);
   }
 
   render() {
@@ -112,10 +116,10 @@ export default class Home extends React.Component<HomeProps, any> {
               type="material-community"
               color={colors.primary}
             />
-            <Chart
+            {/* <Chart
               style={{alignSelf: 'center', marginTop: wp(3)}}
               onPress={(v: number) => console.log(v)}
-            />
+            /> */}
             {/* <ScrollView horizontal={true}>
               <ScrollView>
                 <Text>sdsds</Text>
@@ -180,14 +184,16 @@ export default class Home extends React.Component<HomeProps, any> {
   }
 }
 
-// const mapStateToProps = state => {
-//   return {
-//   };
-// }
+const mapStateToProps = (state: any) => {
+  return {
+    reduxState: state.reducers,
+  };
+};
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//   };
-// }
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    reduxActions: bindActionCreators(reduxActions.default, dispatch),
+  };
+};
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

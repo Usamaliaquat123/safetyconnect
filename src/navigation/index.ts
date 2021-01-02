@@ -1,2 +1,12 @@
-import StackNavigator from './StackNavigator';
-export {StackNavigator};
+import {
+  MainStackNavigator,
+  AuthStackNavigator,
+  StackNavigatorProps,
+  AuthNavigatorProp,
+} from './StackNavigator';
+export {
+  MainStackNavigator,
+  AuthStackNavigator,
+  StackNavigatorProps,
+  AuthNavigatorProp,
+};
