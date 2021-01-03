@@ -1,7 +1,15 @@
 import * as React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {connect} from 'react-redux';
-
+import {Icon, Avatar} from 'react-native-elements';
+import {colors} from '@theme';
+import {View_sor} from '@service';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
@@ -23,8 +31,31 @@ export interface ViewSORProps {
 class ViewSOR extends React.Component<ViewSORProps, any> {
   render() {
     return (
-      <View>
-        <Text>ViewSOR</Text>
+      <View style={styles.container}>
+        <ScrollView>
+          <View style={styles.header}>
+            <View style={styles.headertle}>
+              <Icon
+                size={25}
+                name="arrow-back-outline"
+                type="ionicon"
+                color={colors.secondary}
+              />
+              <View>
+                <Text style={styles.title}>View SOR</Text>
+                <View style={styles.underScrore} />
+              </View>
+              <View style={styles.avatarView}>
+                <Avatar
+                  rounded
+                  source={{
+                    uri: View_sor.user.profile,
+                  }}
+                />
+              </View>
+            </View>
+          </View>
+        </ScrollView>
       </View>
     );
   }
