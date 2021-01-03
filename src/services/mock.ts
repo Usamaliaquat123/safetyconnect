@@ -77,6 +77,51 @@ export const View_sor = {
     name: 'John Doe',
     profile:
       'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+    classifyType: 'LSR',
+    observation:
+      'Aliqua deserunt laboris reprehenderit qui aliqua aute proident amet duis irure.',
+    date: 1609667502505,
+    InvolvedPersons: [
+      {id: 12, name: ' Jane Doe', photo: ''},
+      {id: 13, name: ' James Doe', photo: ''},
+    ],
+    observer: [
+      {id: 23, name: 'Jane Doe', photo: ''},
+      {id: 24, name: 'Jonna Doe', photo: ''},
+    ],
+    submittedTo: [
+      {id: 45, name: 'Jessica Doe', photo: ''},
+      {id: 48, name: 'Ela', photo: ''},
+    ],
+    EscalatedTo: [
+      {id: 65, name: 'Doe', photo: ''},
+      {id: 32, name: 'Ela', photo: ''},
+    ],
+
+    Risk: 16,
+    ActionAndRecommendation: [
+      {
+        status: 'In Progress',
+        observation:
+          'Adipisicing voluptate Lorem sint officia fugiat mollit nisi mollit.',
+        SubmittedTo: 'Jane Doe',
+        AssignedTo: 'Jane Doe',
+      },
+      {
+        status: 'Completed',
+        observation:
+          'Adipisicing voluptate Lorem sint officia fugiat mollit nisi mollit.',
+        SubmittedTo: 'Jane Doe',
+        AssignedTo: 'Jane Doe',
+      },
+    ],
+    Attachments: [
+      {
+        type: 'photo',
+        url: '',
+      },
+      {type: 'file', url: ''},
+    ],
   },
 };
 export const viewas = ['Board View', 'List View'];

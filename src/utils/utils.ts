@@ -1,4 +1,5 @@
 import {colors} from '@theme/colors';
+import {RNFetchBlob} from 'rn-fetch-blob';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -61,3 +62,24 @@ export const createAction = (actionType: string) => (payload?: any) => ({
   type: actionType,
   payload: payload,
 });
+
+const {config, fs} = RNFetchBlob;
+const d: Date = new Date();
+const PictureDir = fs.dirs.PictureDir;
+const options = {
+  fileCache: true,
+  addAndroidDownloads: {
+    useDownloadManager: true,
+    notification: false,
+    path: PictureDir + '/me_' + Math.floor(d.getMinutes() + d.getSeconds() / 2),
+    description: 'Downloading File',
+  },
+};
+export const downloadFile = (file: string) => {
+  return new Promise((resolve, reject) => {
+    config(options)
+      .fetch('GET', file)
+      .then((res: Object) => resolve(res))
+      .catch((err) => reject(err));
+  });
+};
