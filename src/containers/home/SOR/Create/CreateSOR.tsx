@@ -9,7 +9,7 @@ import {
   Animated,
   Easing,
 } from 'react-native';
-// import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import {Create_sor} from '@service/mock';
 import styles from './style';
 import moment from 'moment';
@@ -22,12 +22,24 @@ import {
 } from 'react-native-responsive-screen';
 import DocumentPicker from 'react-native-document-picker';
 import {Chart, Suggestions} from '@components';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigatorProps} from '@nav';
+import {RouteProp} from '@react-navigation/native';
+
+type CreateSORNavigationProp = StackNavigationProp<
+  StackNavigatorProps,
+  'CreateSOR'
+>;
+type CreateSORRouteProp = RouteProp<StackNavigatorProps, 'CreateSOR'>;
 
 export interface CreateSORProps {
-  navigation: any;
+  navigation: CreateSORNavigationProp;
+  route: CreateSORRouteProp;
+  reduxActions: any;
+  reduxState: any;
 }
 
-export default class CreateSOR extends React.Component<CreateSORProps, any> {
+class CreateSOR extends React.Component<CreateSORProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -555,14 +567,12 @@ export default class CreateSOR extends React.Component<CreateSORProps, any> {
   }
 }
 
-// const mapStateToProps = state => {
-//   return {
-//   };
-// }
+const mapStateToProps = (state: unknown) => {
+  return {};
+};
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//   };
-// }
+const mapDispatchToProps = (dispatch: unknown) => {
+  return {};
+};
 
-// export default connect(mapStateToProps, mapDispatchToProps)(CreateSOR);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateSOR);

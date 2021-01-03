@@ -29,18 +29,6 @@ export interface HomeProps {
   reduxState: any;
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    reduxState: state.reducers,
-  };
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    reduxActions: bindActionCreators(reduxActions.default, dispatch),
-  };
-};
-
 class Home extends React.Component<HomeProps, any> {
   constructor(props: any) {
     super(props);
@@ -195,5 +183,15 @@ class Home extends React.Component<HomeProps, any> {
     );
   }
 }
+const mapStateToProps = (state: any) => {
+  return {
+    reduxState: state.reducers,
+  };
+};
 
-export default connect()(Home);
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    reduxActions: bindActionCreators(reduxActions.default, dispatch),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

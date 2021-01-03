@@ -13,12 +13,16 @@ import {
   Splash,
   Messaging,
   Home,
+  ViewAll,
   Settings,
+  ViewSOR,
 } from '@containers';
 
 export type StackNavigatorProps = {
   Home: undefined;
   CreateSOR: undefined;
+  ViewAll: undefined;
+  ViewSOR: undefined;
 };
 export type AuthNavigatorProp = {
   Login: undefined;
@@ -60,6 +64,20 @@ export const MainStackNavigator = () => {
           <Stack.Screen
             name="CreateSOR"
             component={CreateSOR}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ViewAll"
+            component={ViewAll}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="ViewSOR"
+            component={ViewSOR}
             options={{
               headerShown: false,
             }}

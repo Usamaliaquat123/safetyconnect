@@ -8,6 +8,8 @@ import Settings from './home/Settings/Settings';
 import Messaging from './home/Messaging/Messaging';
 import Splash from './splash/Splash';
 import Home from './home/index';
+import ViewAll from './home/SOR/ViewAll/ViewAll';
+import ViewSOR from './home/SOR/View/ViewSOR';
 export {
   Login,
   CreateSOR,
@@ -18,4 +20,6 @@ export {
   Messaging,
   Splash,
   Home,
+  ViewAll,
+  ViewSOR,
 };
