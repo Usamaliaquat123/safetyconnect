@@ -15,7 +15,7 @@ import {
 import styles from './styles';
 import {Chart} from '@components';
 import {bindActionCreators} from 'redux';
-
+// import {connect} from '../../decorators/index';
 type HomeScreenNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'Home'
@@ -28,6 +28,18 @@ export interface HomeProps {
   reduxActions: any;
   reduxState: any;
 }
+
+const mapStateToProps = (state: any) => {
+  return {
+    reduxState: state.reducers,
+  };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    reduxActions: bindActionCreators(reduxActions.default, dispatch),
+  };
+};
 
 class Home extends React.Component<HomeProps, any> {
   constructor(props: any) {
@@ -184,16 +196,4 @@ class Home extends React.Component<HomeProps, any> {
   }
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    reduxState: state.reducers,
-  };
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    reduxActions: bindActionCreators(reduxActions.default, dispatch),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect()(Home);

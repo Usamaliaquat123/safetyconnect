@@ -22,7 +22,8 @@
         "@service/*":["./services/*"], 
         "@service":["./services/index"], 
         "@utils/*":["./utils/*"], 
-        "@utils":["./utils/index"] 
+        "@utils":["./utils/index"], 
+        "@deco":["./decorators/index"],
       }
     },
     "exclude": [
