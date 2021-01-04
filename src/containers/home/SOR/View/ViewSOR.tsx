@@ -4,12 +4,13 @@ import {
   StyleSheet,
   Text,
   ScrollView,
+  Image,
   TouchableOpacity,
 } from 'react-native';
 import moment from 'moment';
 import {connect} from 'react-redux';
-import {Icon, Avatar} from 'react-native-elements';
-import {colors} from '@theme';
+import {Icon, Avatar, Card} from 'react-native-elements';
+import {colors, GlStyles} from '@theme';
 import {View_sor} from '@service';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -205,6 +206,51 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       <Text style={styles.subAssuser}>{d.AssignedTo}</Text>
                     </Text>
                   </View>
+                </View>
+              ))}
+            </View>
+            <View style={styles.attachmentsContainer}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  alignSelf: 'center',
+                }}>
+                {View_sor.user.Attachments.map((d, i) => (
+                  <View style={styles.AttchimageContainer}>
+                    <Card.Image
+                      source={{
+                        uri:
+                          'https://cdn.technologyadvice.com/wp-content/uploads/2017/08/Fotolia_98303431_Subscription_Monthly_M-699x408.jpg',
+                      }}
+                      style={[GlStyles.images, {borderRadius: wp(5)}]}
+                      resizeMode={'contain'}
+                    />
+                  </View>
+                ))}
+              </View>
+              {View_sor.user.Attachments.map((d, i) => (
+                <View>
+                  {d.type == 'file' ? (
+                    <View style={styles.attachFileContainer}>
+                      <Icon
+                        name={'file-pdf'}
+                        type={'font-awesome-5'}
+                        size={wp(5)}
+                      />
+                      <Text style={styles.attchFileText}>Untitled1.pdf</Text>
+                      <Icon
+                        containerStyle={{
+                          position: 'absolute',
+                          right: wp(5),
+                          top: wp(5),
+                        }}
+                        name={'download'}
+                        type={'feather'}
+                        size={wp(5)}
+                      />
+                    </View>
+                  ) : null}
                 </View>
               ))}
             </View>

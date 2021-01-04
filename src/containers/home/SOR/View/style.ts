@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   },
   obvTextAction: {
     fontWeight: 'bold',
-    fontSize: wp(4),
+    fontSize: wp(3.5),
     marginTop: wp(3),
     color: colors.primary,
   },
@@ -166,6 +166,33 @@ const styles = StyleSheet.create({
   subAssuser: {
     // marginLeft: wp,
     // fontStyle: 'italic',
+  },
+  attachmentsContainer: {
+    marginTop: wp(5),
+    marginBottom: wp(10),
+    // flexWrap: 'wrap',
+    // flexDirection: 'row',
+    // alignSelf: 'center',
+  },
+  AttchimageContainer: {
+    width: wp(40),
+    height: wp(30),
+    borderRadius: wp(5),
+    margin: wp(1),
+  },
+  attachFileContainer: {
+    padding: wp(5),
+    borderRadius: wp(5),
+    backgroundColor: colors.lightBlue,
+    // justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+  attchFileText: {
+    fontSize: wp(3),
+    color: colors.text,
+    opacity: 0.7,
+    marginLeft: wp(5),
+    marginTop: wp(1),
   },
 });
 
