@@ -4,6 +4,9 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {color} from 'react-native-reanimated';
+import {withOrientation} from 'react-navigation';
 
 const styles = StyleSheet.create({
   container: {
@@ -36,6 +39,134 @@ const styles = StyleSheet.create({
   },
 
   headertle: {flexDirection: 'row'},
+  content: {
+    // flex: 3,
+    marginTop: wp(5),
+    backgroundColor: colors.secondary,
+    borderTopLeftRadius: wp(8),
+    borderTopRightRadius: wp(8),
+    padding: wp(8),
+    paddingLeft: wp(5),
+    paddingRight: wp(5),
+    // height: wp(150),
+  },
+  clasifyT: {
+    fontSize: wp(4),
+    fontWeight: 'bold',
+    marginTop: wp(1),
+    marginLeft: wp(2),
+    color: colors.primary,
+  },
+  classittleicon: {
+    flexDirection: 'row',
+  },
+  obserContainer: {marginTop: wp(3)},
+  observationText: {
+    fontWeight: 'bold',
+    color: colors.text,
+    fontSize: wp(5),
+  },
+  observationDate: {
+    fontSize: wp(3),
+    fontWeight: 'bold',
+    color: colors.text,
+    opacity: 0.5,
+    marginTop: wp(2),
+  },
+  tabs: {marginTop: wp(5)},
+  tabsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignSelf: 'center',
+  },
+
+  iconNametbs: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  obname: {
+    fontSize: wp(3.4),
+    color: colors.primary,
+    marginTop: wp(1),
+    marginLeft: wp(2),
+  },
+  obType: {
+    fontSize: wp(3.4),
+    fontWeight: 'bold',
+    marginTop: wp(4),
+  },
+  tbsCont: {
+    backgroundColor: colors.Viewcont,
+    padding: wp(5),
+    // width: wp(43),
+    // alignSelf: 'stretch',
+    width: wp('42%'),
+    margin: wp(1),
+    alignItems: 'center',
+    borderRadius: wp(3),
+  },
+  // Risk x Siverty
+  risk: {
+    marginTop: wp(5),
+  },
+  riskText: {
+    color: colors.primary,
+    fontWeight: 'bold',
+    fontSize: wp(4),
+  },
+  riskttle: {
+    fontStyle: 'italic',
+    fontSize: wp(3),
+    color: colors.primary,
+  },
+  riskIcon: {
+    margin: wp(2),
+    backgroundColor: colors.riskIcons.orrange,
+    borderRadius: wp(5),
+    padding: wp(5),
+  },
+  riskIconText: {
+    position: 'absolute',
+    top: wp(2.5),
+    left: wp(2.5),
+    fontWeight: 'bold',
+    fontSize: wp(4),
+  },
+  // action & recommendation
+  actionContainer: {marginTop: wp(5)},
+  actionText: {fontSize: wp(4), fontWeight: 'bold', color: colors.primary},
+  actionRecomCon: {
+    padding: wp(7),
+    marginTop: wp(3),
+    borderRadius: wp(4),
+    backgroundColor: colors.lightBlue,
+  },
+  inProgrssText: {
+    fontSize: wp(3.4),
+    color: colors.text,
+    fontWeight: 'bold',
+    opacity: 0.5,
+  },
+  obvTextAction: {
+    fontWeight: 'bold',
+    fontSize: wp(4),
+    marginTop: wp(3),
+    color: colors.primary,
+  },
+  subAss: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: wp(3),
+  },
+  subAssText: {
+    fontWeight: 'bold',
+    fontSize: wp(3),
+    // opacity: 0.5,
+  },
+  subAssuser: {
+    // marginLeft: wp,
+    // fontStyle: 'italic',
+  },
 });
 
 export default styles;

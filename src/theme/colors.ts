@@ -6,6 +6,7 @@ export const colors = {
   error: '#F14031',
   green: '#4BA735',
   lightBlue: '#EBEFF3',
+  lightGreen: '#F1F7ED',
   classify_sor_btns: {
     positive: '#4AA734',
     concern: '#FF0F0F',
@@ -19,4 +20,5 @@ export const colors = {
     orrange: '#FB9120',
     red: '#F14030',
   },
+  Viewcont: '#EDF1F5',
 };

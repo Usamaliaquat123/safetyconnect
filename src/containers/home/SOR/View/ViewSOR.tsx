@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+import moment from 'moment';
 import {connect} from 'react-redux';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors} from '@theme';
@@ -14,7 +15,7 @@ import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
-
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 type ViewSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'ViewSOR'
@@ -42,7 +43,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 color={colors.secondary}
               />
               <View>
-                <Text style={styles.title}>View SOR</Text>
+                <Text style={styles.title}>SOR Report</Text>
                 <View style={styles.underScrore} />
               </View>
               <View style={styles.avatarView}>
@@ -53,6 +54,159 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   }}
                 />
               </View>
+            </View>
+          </View>
+          <View style={styles.content}>
+            <View style={styles.classittleicon}>
+              <Icon
+                size={wp(7)}
+                name={
+                  View_sor.user.classifyType == 'LSR'
+                    ? 'aperture'
+                    : View_sor.user.classifyType == 'positive'
+                    ? 'check-circle'
+                    : View_sor.user.classifyType == 'concern'
+                    ? 'warning'
+                    : View_sor.user.classifyType == 'nearmiss'
+                    ? 'centercode'
+                    : 'frowno'
+                }
+                type={
+                  View_sor.user.classifyType == 'LSR'
+                    ? 'ionicon'
+                    : View_sor.user.classifyType == 'positive'
+                    ? 'font-awesome-5'
+                    : View_sor.user.classifyType == 'concern'
+                    ? 'antdesign'
+                    : View_sor.user.classifyType == 'nearmiss'
+                    ? 'font-awesome-5'
+                    : 'antdesign'
+                }
+                color={colors.primary}
+              />
+              <Text style={styles.clasifyT}>{View_sor.user.classifyType}</Text>
+            </View>
+            <View style={styles.obserContainer}>
+              <Text style={styles.observationText}>
+                {View_sor.user.observation}
+              </Text>
+              <Text style={styles.observationDate}>
+                {moment(View_sor.user.date).format('Do MMM, YYYY')}
+              </Text>
+            </View>
+            <View style={styles.tabs}>
+              <View style={styles.tabsContainer}>
+                {/* Observer */}
+                <View style={styles.tbsCont}>
+                  <View style={styles.iconNametbs}>
+                    <Avatar
+                      size={wp(7)}
+                      rounded
+                      source={{
+                        uri: View_sor.user.profile,
+                      }}
+                    />
+                    <Text style={styles.obname}>
+                      {View_sor.user.observer[0].name}
+                    </Text>
+                  </View>
+                  <Text style={styles.obType}>Observer</Text>
+                </View>
+                {/* Submitted to */}
+                <View style={styles.tbsCont}>
+                  <View style={styles.iconNametbs}>
+                    <Avatar
+                      size={wp(7)}
+                      rounded
+                      source={{
+                        uri: View_sor.user.profile,
+                      }}
+                    />
+                    <Text style={styles.obname}>
+                      {View_sor.user.submittedTo[0].name}
+                    </Text>
+                  </View>
+                  <Text style={styles.obType}>Submitted To</Text>
+                </View>
+              </View>
+              <View style={styles.tabsContainer}>
+                {/* Esclated to */}
+                <View style={styles.tbsCont}>
+                  <View style={styles.iconNametbs}>
+                    <Avatar
+                      size={wp(7)}
+                      rounded
+                      source={{
+                        uri: View_sor.user.profile,
+                      }}
+                    />
+                    <Text style={styles.obname}>
+                      {View_sor.user.EscalatedTo[0].name}
+                    </Text>
+                  </View>
+                  <Text style={styles.obType}>Escalated To</Text>
+                </View>
+                {/* Involved Person */}
+                <View style={styles.tbsCont}>
+                  <View style={styles.iconNametbs}>
+                    <Avatar
+                      size={wp(7)}
+                      rounded
+                      source={{
+                        uri: View_sor.user.profile,
+                      }}
+                    />
+                    <Text style={styles.obname}>
+                      {View_sor.user.InvolvedPersons[0].name}
+                    </Text>
+                  </View>
+                  <Text style={styles.obType}>Involved Person</Text>
+                </View>
+              </View>
+            </View>
+            <View style={styles.risk}>
+              <Text style={styles.riskText}>
+                Risk{' '}
+                <Text style={styles.riskttle}>(Severity x Likelihood)</Text>
+              </Text>
+              <View style={{flexDirection: 'row'}}>
+                <View style={styles.riskIcon}>
+                  <Text style={styles.riskIconText}>{View_sor.user.Risk}</Text>
+                </View>
+              </View>
+            </View>
+            <View style={styles.actionContainer}>
+              <Text style={styles.actionText}>Action / Recommendation</Text>
+              {View_sor.user.ActionAndRecommendation.map((d, i) => (
+                <View
+                  style={[
+                    styles.actionRecomCon,
+                    d.status == 'Completed'
+                      ? {backgroundColor: colors.lightGreen}
+                      : null,
+                  ]}>
+                  <Text style={styles.inProgrssText}>{d.status}</Text>
+                  <Text
+                    style={[
+                      styles.obvTextAction,
+                      d.status == 'Completed'
+                        ? {color: colors.text, opacity: 0.5}
+                        : null,
+                    ]}>
+                    {d.observation}
+                  </Text>
+                  <View style={styles.subAss}>
+                    <Text style={styles.subAssText}>
+                      Submitted by{'   '}
+                      <Text style={styles.subAssuser}>{d.SubmittedTo}</Text>
+                    </Text>
+                    <Text style={styles.subAssText}>
+                      Assigned by{'   '}
+                      <Text style={styles.subAssuser}>{d.AssignedTo}</Text>
+                    </Text>
+                  </View>
+                </View>
+              ))}
             </View>
           </View>
         </ScrollView>
