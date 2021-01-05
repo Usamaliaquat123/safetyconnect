@@ -35,21 +35,19 @@ export interface ViewSORProps {
 }
 
 class ViewSOR extends React.Component<ViewSORProps, any> {
-  protected animation = React.createRef();
-  protected photoAnim = React.createRef();
+  public animation: React.RefObject<HTMLInputElement>;
+  public photoAnim: React.RefObject<HTMLInputElement>;
   constructor(props: any) {
     super(props);
     this.state = {
       initAnim: new Animated.Value(0),
       contentAnim: new Animated.Value(80),
     };
+    this.animation = React.createRef();
+    this.photoAnim = React.createRef();
   }
 
   componentDidMount = () => {
-    // this.animation.play();
-    // Or set a specific startFrame and endFrame with:
-    // this.animation.play();
-    // this.animation.stop;
     this.AnimatedViews();
   };
   AnimatedViews = () => {
@@ -74,6 +72,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
+                onPress={() => this.props.navigation.goBack()}
                 size={25}
                 name="arrow-back-outline"
                 type="ionicon"

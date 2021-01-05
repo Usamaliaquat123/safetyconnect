@@ -77,7 +77,7 @@ const options = {
   },
 };
 
-const checkPermission = async (type: 'string') => {
+const checkPermission = async (type: string) => {
   const granted = await PermissionsAndroid.request(
     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
     {
