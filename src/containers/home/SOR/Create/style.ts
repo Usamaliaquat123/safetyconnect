@@ -41,18 +41,23 @@ const styles = StyleSheet.create({
   },
 
   hselectort: {color: colors.secondary, fontWeight: 'bold', fontSize: wp(3)},
-  selectorBox: {color: colors.secondary, fontSize: wp(3)},
+  selectorBox: {
+    color: colors.secondary,
+    fontSize: wp(3),
+    textAlignVertical: 'top',
+    padding: wp(0),
+  },
   rightSelector: {flexDirection: 'row', marginRight: wp(12)},
   leftSelector: {flexDirection: 'row'},
   selector: {
     paddingLeft: 3,
-    width: wp(20),
+    width: wp(22),
   },
 
   slctContainer: {
     position: 'absolute',
     top: wp(5),
-    zIndex: wp(1),
+    zIndex: 10,
     left: wp(13),
     backgroundColor: colors.secondary,
     // padding: wp(5),
@@ -85,8 +90,8 @@ const styles = StyleSheet.create({
   content: {
     padding: wp(10),
     backgroundColor: colors.secondary,
-    flex: 2,
-    marginTop: wp(80),
+    // flex: 2,
+    // marginTop: wp(80),
     borderTopLeftRadius: wp(10),
     borderTopRightRadius: wp(10),
   },
@@ -288,10 +293,13 @@ const styles = StyleSheet.create({
     borderWidth: wp(0.2),
     borderRadius: wp(3),
     padding: wp(3),
+    paddingBottom: wp(0),
     borderColor: colors.text,
   },
   optnselectorText: {
+    textAlignVertical: 'top',
     fontSize: wp(3),
+    padding: wp(0),
     color: colors.text,
   },
   slctSEContainer: {

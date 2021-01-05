@@ -4,10 +4,12 @@ import {Icon, Avatar} from 'react-native-elements';
 import {colors} from '@theme';
 import {connect} from 'react-redux';
 import styles from './styles';
-import {Create_sor, viewas} from '@service';
+import {Create_sor, viewas, all_sor} from '@service';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
+import Carousel from 'react-native-snap-carousel';
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -35,7 +37,14 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       selectP: false,
     };
   }
-
+  _renderItem = ({item, index}) => {
+    console.log(item);
+    return (
+      <View style={styles.slide}>
+        {/* // <Text style={styles.title}>{item.title}</Text> */}
+      </View>
+    );
+  };
   render() {
     return (
       <View style={{flex: 1, backgroundColor: colors.primary}}>
@@ -173,6 +182,16 @@ class ViewAll extends React.Component<ViewAllProps, any> {
               <Text>sdsd</Text>
             </ScrollView> */}
             {/* </ScrollView> */}
+
+            <Carousel
+              ref={(c) => {
+                this._carousel = c;
+              }}
+              data={all_sor}
+              renderItem={this._renderItem}
+              sliderWidth={wp(100)}
+              itemWidth={wp(30)}
+            />
           </View>
         </ScrollView>
       </View>

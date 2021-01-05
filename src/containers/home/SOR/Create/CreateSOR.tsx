@@ -46,9 +46,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       // Animated View | Animations
       initAnim: new Animated.Value(0),
       contentAnim: new Animated.Value(80),
+      // dropdownAnim: new Animated.Value(1),
       // *****
-      selectP: false,
       selectL: false,
+      projectSuggest: [],
+      exclateToArr: [],
       observationT: '',
       obserLocation: '@Add Location',
       currentlocation: Create_sor.Observation.locations[0],
@@ -63,6 +65,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       classifySorbtns: classifySor,
       // esclateTo / submit To
       SelectsubmitTo: false,
+      submitToArr: [],
       submitTo: Create_sor.Observation.submitTo[0],
       selectEsclateTo: false,
       esclateTo: Create_sor.Observation.esclateTo[0],
@@ -203,7 +206,18 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   //   this.setState({selectP: !this.state.selectP});
                   // }}
                   style={styles.selector}>
-                  <Text style={styles.selectorBox}>{this.state.project}</Text>
+                  <TextInput
+                    // onChange={(t: any) =>
+                    //   this.setState({
+                    //     projectSuggest: searchInSuggestions(
+                    //       t,
+                    //       Create_sor.Observation.projects,
+                    //     ),
+                    //   })
+                    // }
+                    style={styles.selectorBox}>
+                    {this.state.project}
+                  </TextInput>
                 </TouchableOpacity>
                 <Icon
                   style={{padding: 3}}
@@ -212,9 +226,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   type="antdesign"
                   color={colors.secondary}
                 />
-                {this.state.selectP == true ? (
+                {this.state.projectSuggest.length != 0 ? (
                   <View style={styles.slctContainer}>
-                    {Create_sor.Observation.projects.map((d, i) => (
+                    {this.state.projectSuggest.map((d: any, i: number) => (
                       <Text
                         key={i}
                         onPress={() => this.setState({project: d})}
@@ -439,50 +453,61 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </TouchableOpacity>
             </View>
             {/* Risk Chart*/}
-            <View>
-              <Text style={styles.RiskHeading}>Risk</Text>
-              <Chart
-                style={{alignSelf: 'center', marginTop: wp(3)}}
-                onPress={(v: number) => console.log(v)}
-              />
-            </View>
-            {/* Actions/Recommendation */}
-            <View style={styles.actionContainer}>
-              <Text style={styles.actionsRecHeading}>
-                Actions / Recommendation
-              </Text>
-              <TextInput
-                style={styles.actionInput}
-                value={this.state.actionRecommendationsText}
-                onChangeText={(e) => this.actionRecommendSuggestion(e)}
-                placeholder={'Enter person name /email'}
-              />
-
-              {/* Suggestions  */}
-              {this.state.actionRecommendations.length != 0 ? (
-                <Suggestions
-                  styles={{}}
-                  arr={this.state.actionRecommendations}
-                  onPress={(d: any) =>
-                    this.setState({actionRecommendationsText: d})
-                  }
+            {this.state.classifySorbtns[1].selected == false ? (
+              <View>
+                <Text style={styles.RiskHeading}>Risk</Text>
+                <Chart
+                  style={{alignSelf: 'center', marginTop: wp(3)}}
+                  onPress={(v: number) => console.log(v)}
                 />
-              ) : null}
-            </View>
+              </View>
+            ) : null}
+
+            {/* Actions/Recommendation */}
+            {this.state.classifySorbtns[1].selected == false ? (
+              <View style={styles.actionContainer}>
+                <Text style={styles.actionsRecHeading}>
+                  Actions / Recommendation
+                </Text>
+                <TextInput
+                  style={styles.actionInput}
+                  value={this.state.actionRecommendationsText}
+                  onChangeText={(e) => this.actionRecommendSuggestion(e)}
+                  placeholder={'Enter person name /email'}
+                />
+
+                {/* Suggestions  */}
+                {this.state.actionRecommendations.length != 0 ? (
+                  <Suggestions
+                    styles={{}}
+                    arr={this.state.actionRecommendations}
+                    onPress={(d: any) =>
+                      this.setState({actionRecommendationsText: d})
+                    }
+                  />
+                ) : null}
+              </View>
+            ) : null}
+
             {/* Submit To / Esclate To */}
             <View style={styles.optnToggleContainer}>
               <View>
                 <Text style={styles.sbBtnText}>Submit to</Text>
-                <TouchableOpacity
-                  onPress={() =>
-                    this.setState({
-                      SelectsubmitTo: !this.state.SelectsubmitTo,
-                    })
-                  }
-                  style={styles.optnselector}>
-                  <Text style={styles.optnselectorText}>
-                    {this.state.submitTo}
-                  </Text>
+                <View style={styles.optnselector}>
+                  <TextInput
+                    style={styles.optnselectorText}
+                    underlineColorAndroid="transparent"
+                    onChange={(v: any) =>
+                      this.setState({
+                        submitToArr: searchInSuggestions(
+                          v,
+                          Create_sor.Observation.submitTo,
+                        ),
+                        submitTo: v,
+                      })
+                    }
+                    value={this.state.submitTo}></TextInput>
+
                   <Icon
                     // style={{padding: }}
                     size={wp(5)}
@@ -490,39 +515,45 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     type="antdesign"
                     color={colors.primary}
                   />
-                </TouchableOpacity>
-                {this.state.SelectsubmitTo == true ? (
+                </View>
+                {this.state.submitToArr.length != 0 ? (
                   <View style={styles.slctSEContainer}>
-                    {Create_sor.Observation.submitTo.map((d, i) => (
-                      <Text
-                        key={i}
+                    {this.state.submitToArr.map((d: any, i: number) => (
+                      <TouchableOpacity
                         onPress={() =>
-                          this.setState({submitTo: d, SelectsubmitTo: false})
-                        }
-                        style={[
-                          styles.seitemH,
-                          Create_sor.Observation.esclateTo.length == i + 1
-                            ? {borderBottomWidth: wp(0)}
-                            : null,
-                        ]}>
-                        {d}
-                      </Text>
+                          this.setState({submitTo: d, submitToArr: []})
+                        }>
+                        <Text
+                          key={i}
+                          style={[
+                            styles.seitemH,
+                            this.state.submitToArr.length == i + 1
+                              ? {borderBottomWidth: wp(0)}
+                              : null,
+                          ]}>
+                          {d}
+                        </Text>
+                      </TouchableOpacity>
                     ))}
                   </View>
                 ) : null}
               </View>
               <View>
                 <Text style={styles.sbBtnText}>Escalate to</Text>
-                <TouchableOpacity
-                  onPress={() =>
-                    this.setState({
-                      selectEsclateTo: !this.state.selectEsclateTo,
-                    })
-                  }
-                  style={styles.optnselector}>
-                  <Text style={styles.optnselectorText}>
-                    {this.state.esclateTo}
-                  </Text>
+                <View style={styles.optnselector}>
+                  <TextInput
+                    underlineColorAndroid="transparent"
+                    onChange={(v: any) =>
+                      this.setState({
+                        exclateToArr: searchInSuggestions(
+                          v,
+                          Create_sor.Observation.esclateTo,
+                        ),
+                        esclateTo: v,
+                      })
+                    }
+                    style={styles.optnselectorText}
+                    value={this.state.esclateTo}></TextInput>
                   <Icon
                     // style={{padding: }}
                     size={wp(5)}
@@ -530,19 +561,19 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     type="antdesign"
                     color={colors.primary}
                   />
-                </TouchableOpacity>
-                {this.state.selectEsclateTo == true ? (
+                </View>
+                {this.state.exclateToArr.length != 0 ? (
                   <View style={styles.slctSEContainer}>
-                    {Create_sor.Observation.esclateTo.map((d, i) => (
+                    {this.state.exclateToArr.map((d: any, i: number) => (
                       <Text
                         key={i}
                         onPress={() => {
-                          this.setState({esclateTo: d, selectEsclateTo: false});
+                          this.setState({esclateTo: d, exclateToArr: []});
                           console.log(i);
                         }}
                         style={[
                           styles.seitemH,
-                          Create_sor.Observation.esclateTo.length == i + 1
+                          this.state.exclateToArr.length == i + 1
                             ? {borderBottomWidth: wp(0)}
                             : null,
                         ]}>

@@ -48,10 +48,9 @@ export const searchInSuggestions = (
   for (var j = 0; j < strArray.length; j++) {
     if (strArray[j].match(str)) {
       strArr.push(strArray[j]);
-      return strArr;
     }
   }
-  return [];
+  return strArr;
 };
 
 export const setHeaderAllign = {
