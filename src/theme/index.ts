@@ -1,4 +1,5 @@
 import {colors} from './colors';
 import {images} from './images';
 import {GlStyles} from './styles';
-export {colors, images, GlStyles};
+import {animation} from './animation';
+export {colors, images, GlStyles, animation};

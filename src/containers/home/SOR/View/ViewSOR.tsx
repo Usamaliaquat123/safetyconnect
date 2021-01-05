@@ -6,16 +6,20 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  Animated,
+  Easing,
 } from 'react-native';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import {Icon, Avatar, Card} from 'react-native-elements';
-import {colors, GlStyles} from '@theme';
+import {colors, GlStyles, animation} from '@theme';
 import {View_sor} from '@service';
+import {downloadFile} from '@utils';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
+import LottieView from 'lottie-react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 type ViewSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -31,10 +35,42 @@ export interface ViewSORProps {
 }
 
 class ViewSOR extends React.Component<ViewSORProps, any> {
+  protected animation = React.createRef();
+  protected photoAnim = React.createRef();
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      initAnim: new Animated.Value(0),
+      contentAnim: new Animated.Value(80),
+    };
+  }
+
+  componentDidMount = () => {
+    // this.animation.play();
+    // Or set a specific startFrame and endFrame with:
+    // this.animation.play();
+    // this.animation.stop;
+    this.AnimatedViews();
+  };
+  AnimatedViews = () => {
+    Animated.timing(this.state.contentAnim, {
+      toValue: wp(0),
+      duration: 1500,
+      easing: Easing.elastic(3),
+      useNativeDriver: false,
+    }).start();
+
+    Animated.timing(this.state.initAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: false,
+    }).start();
+  };
   render() {
+    console.log(this.state.contentAnim);
     return (
-      <View style={styles.container}>
-        <ScrollView>
+      <Animated.View style={[styles.container, {opacity: this.state.initAnim}]}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
@@ -57,7 +93,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               </View>
             </View>
           </View>
-          <View style={styles.content}>
+          <Animated.View
+            // <.View
+            style={[styles.content, {marginTop: this.state.contentAnim}]}>
             <View style={styles.classittleicon}>
               <Icon
                 size={wp(7)}
@@ -216,18 +254,46 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   flexWrap: 'wrap',
                   alignSelf: 'center',
                 }}>
-                {View_sor.user.Attachments.map((d, i) => (
-                  <View style={styles.AttchimageContainer}>
-                    <Card.Image
-                      source={{
-                        uri:
-                          'https://cdn.technologyadvice.com/wp-content/uploads/2017/08/Fotolia_98303431_Subscription_Monthly_M-699x408.jpg',
-                      }}
-                      style={[GlStyles.images, {borderRadius: wp(5)}]}
-                      resizeMode={'contain'}
-                    />
-                  </View>
-                ))}
+                {View_sor.user.Attachments.map((d, i) => {
+                  if (d.type == 'photo') {
+                    return (
+                      <View style={styles.AttchimageContainer}>
+                        <Image
+                          source={{
+                            uri:
+                              'https://cdn.technologyadvice.com/wp-content/uploads/2017/08/Fotolia_98303431_Subscription_Monthly_M-699x408.jpg',
+                          }}
+                          style={[GlStyles.images, {borderRadius: wp(5)}]}
+                          resizeMode={'contain'}
+                        />
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.photoAnim.play();
+                            downloadFile(d.url, d.type)
+                              .then((res: any) => {
+                                console.log(res);
+                              })
+                              .catch((err) => console.log(err));
+                          }}
+                          style={{
+                            position: 'absolute',
+                            right: wp(-2),
+                            top: wp(2),
+                            zIndex: wp(1),
+                          }}>
+                          <LottieView
+                            ref={(animation) => {
+                              this.photoAnim = animation;
+                            }}
+                            style={{width: wp(11)}}
+                            source={animation.download}
+                            loop={false}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    );
+                  }
+                })}
               </View>
               {View_sor.user.Attachments.map((d, i) => (
                 <View>
@@ -239,24 +305,38 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         size={wp(5)}
                       />
                       <Text style={styles.attchFileText}>Untitled1.pdf</Text>
-                      <Icon
-                        containerStyle={{
-                          position: 'absolute',
-                          right: wp(5),
-                          top: wp(5),
+
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.animation.play();
+                          downloadFile(d.url, d.type)
+                            .then((res: any) => {
+                              console.log(res);
+                            })
+                            .catch((err) => console.log(err));
                         }}
-                        name={'download'}
-                        type={'feather'}
-                        size={wp(5)}
-                      />
+                        style={{
+                          position: 'absolute',
+                          right: wp(1),
+                          top: wp(1.5),
+                        }}>
+                        <LottieView
+                          ref={(animation) => {
+                            this.animation = animation;
+                          }}
+                          style={{width: wp(15)}}
+                          source={animation.download}
+                          loop={false}
+                        />
+                      </TouchableOpacity>
                     </View>
                   ) : null}
                 </View>
               ))}
             </View>
-          </View>
+          </Animated.View>
         </ScrollView>
-      </View>
+      </Animated.View>
     );
   }
 }

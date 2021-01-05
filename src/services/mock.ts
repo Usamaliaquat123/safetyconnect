@@ -118,9 +118,14 @@ export const View_sor = {
     Attachments: [
       {
         type: 'photo',
-        url: '',
+        url:
+          'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
       },
-      {type: 'file', url: ''},
+      {
+        type: 'file',
+        url:
+          'https://github.com/facebook/flux/files/5763886/The_Ultimate_Guide_to_React_Native_Optimization_Ebook-Callstack.pdf',
+      },
     ],
   },
 };

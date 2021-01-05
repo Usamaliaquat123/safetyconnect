@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
   headertle: {flexDirection: 'row'},
   content: {
     // flex: 3,
-    marginTop: wp(5),
+    marginTop: wp(80),
+
     backgroundColor: colors.secondary,
     borderTopLeftRadius: wp(8),
     borderTopRightRadius: wp(8),
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
   observationText: {
     fontWeight: 'bold',
     color: colors.text,
-    fontSize: wp(5),
+    fontSize: wp(4),
   },
   observationDate: {
     fontSize: wp(3),
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     marginLeft: wp(2),
   },
   obType: {
-    fontSize: wp(3.4),
+    fontSize: wp(3),
     fontWeight: 'bold',
     marginTop: wp(4),
   },

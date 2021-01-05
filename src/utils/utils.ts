@@ -1,9 +1,10 @@
 import {colors} from '@theme/colors';
-// import {RNFetchBlob} from 'rn-fetch-blob';
+import RNFetchBlob from 'rn-fetch-blob';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {PermissionsAndroid} from 'react-native';
 export const classifySor: Array<any> = [
   {
     icon: 'warning',
@@ -63,23 +64,48 @@ export const createAction = (actionType: string) => (payload?: any) => ({
   payload: payload,
 });
 
-// const {config, fs} = RNFetchBlob;
-// const d: Date = new Date();
-// const PictureDir = fs.dirs.PictureDir;
-// const options = {
-//   fileCache: true,
-//   addAndroidDownloads: {
-//     useDownloadManager: true,
-//     notification: false,
-//     path: PictureDir + '/me_' + Math.floor(d.getMinutes() + d.getSeconds() / 2),
-//     description: 'Downloading File',
-//   },
-// };
-// export const downloadFile = (file: string) => {
-//   return new Promise((resolve, reject) => {
-//     config(options)
-//       .fetch('GET', file)
-//       .then((res: Object) => resolve(res))
-//       .catch((err) => reject(err));
-//   });
-// };
+const {config, fs} = RNFetchBlob;
+const d: Date = new Date();
+const PictureDir = fs.dirs.PictureDir;
+const options = {
+  fileCache: true,
+  addAndroidDownloads: {
+    useDownloadManager: true,
+    notification: false,
+    path: PictureDir + '/me_' + Math.floor(d.getMinutes() + d.getSeconds() / 2),
+    description: 'Downloading File',
+  },
+};
+
+const checkPermission = async (type: 'string') => {
+  const granted = await PermissionsAndroid.request(
+    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+    {
+      title: `Permission to download ${type}`,
+      message:
+        'Safety Client want to download some' + `${type} we need to access`,
+      buttonNeutral: 'Ask Me Later',
+      buttonNegative: 'no',
+      buttonPositive: 'sure',
+    },
+  );
+  return new Promise((resolve, reject) => {
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      resolve(true);
+    } else {
+      resolve(false);
+    }
+  });
+};
+export const downloadFile = (file: string, typee: string) => {
+  return new Promise((resolve, reject) => {
+    checkPermission(typee)
+      .then((res) =>
+        config(options)
+          .fetch('GET', file)
+          .then((res: any) => resolve(res))
+          .catch((err: any) => reject(err)),
+      )
+      .catch((err) => reject(err));
+  });
+};

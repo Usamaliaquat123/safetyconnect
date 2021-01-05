@@ -2,7 +2,7 @@
     "compilerOptions": {
       "allowJs": true,
       "allowSyntheticDefaultImports": true,
-      "esModuleInterop": true,
+      "esModuleInterop": false,
       // "isolatedModules": true,
       "jsx": "react",
       "lib": ["es6"],
@@ -11,6 +11,7 @@
       "strict": true,
       "target": "esnext",
       "baseUrl": "src",
+      
       "paths": {
         "@nav" :["./navigation/index"],
         "@nav/*" :["./navigation/*"],
