@@ -92,13 +92,31 @@ export const View_sor = {
   },
 };
 export const viewas = ['Board View', 'List View'];
+export const mapChart = [
+  {value: 5, color: colors.riskIcons.yellow},
+  {value: 10, color: colors.riskIcons.orrange},
+  {value: 15, color: colors.riskIcons.orrange},
+  {value: 20, color: colors.riskIcons.red},
+  {value: 25, color: colors.riskIcons.red},
+  {value: 4, color: colors.riskIcons.lightGreen},
+  {value: 8, color: colors.riskIcons.yellow},
+  {value: 12, color: colors.riskIcons.orrange},
+  {value: 16, color: colors.riskIcons.orrange},
+  {value: 3, color: colors.riskIcons.lightGreen},
+  {value: 6, color: colors.riskIcons.yellow},
+  {value: 9, color: colors.riskIcons.yellow},
+  {value: 2, color: colors.riskIcons.darkGreen},
+  {value: 1, color: colors.riskIcons.darkGreen},
+  {value: 4, color: colors.riskIcons.lightGreen},
+];
 
-export const all_sor = [
+export const draft = [
   {
     date: 1609361909947,
     observation:
       'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
-    risk: 16,
+    risk: 5,
+    color: colors.riskIcons.orrange,
     classify: 'Concern',
     type: 'Drafts',
     location: 'lorem Ipsum',
@@ -107,9 +125,76 @@ export const all_sor = [
     date: 1609361909947,
     observation:
       'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
-    risk: 16,
+    risk: 10,
+    classify: 'Concern',
+    color: colors.riskIcons.darkGreen,
+    type: 'Drafts',
+    location: 'lorem Ipsum',
+  },
+  {
+    date: 1609361909947,
+    observation:
+      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    risk: 15,
+    classify: 'Concern',
+    color: colors.riskIcons.lightGreen,
+    type: 'Drafts',
+    location: 'lorem Ipsum',
+  },
+];
+
+export const submitted = [
+  {
+    date: 1609361909947,
+    observation:
+      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    risk: 20,
+    classify: 'Concern',
+    color: colors.riskIcons.yellow,
+    type: 'Drafts',
+    location: 'lorem Ipsum',
+  },
+  {
+    date: 1609361909947,
+    observation:
+      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    risk: 25,
+    classify: 'Concern',
+    color: colors.riskIcons.darkGreen,
+    type: 'Drafts',
+    location: 'lorem Ipsum',
+  },
+  {
+    date: 1609361909947,
+    observation:
+      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    risk: 4,
+    color: colors.riskIcons.orrange,
     classify: 'Concern',
     type: 'Drafts',
+    location: 'lorem Ipsum',
+  },
+];
+
+export const notified = [
+  {
+    date: 1609361909947,
+    observation:
+      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    risk: 8,
+    classify: 'Concern',
+    color: colors.riskIcons.lightGreen,
+    type: 'Drafts',
+    location: 'lorem Ipsum',
+  },
+  {
+    date: 1609361909947,
+    observation:
+      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    risk: 12,
+    classify: 'Concern',
+    type: 'Drafts',
+    color: colors.riskIcons.orrange,
     location: 'lorem Ipsum',
   },
   {
@@ -118,69 +203,7 @@ export const all_sor = [
       'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
     risk: 16,
     classify: 'Concern',
-    type: 'Drafts',
-    location: 'lorem Ipsum',
-  },
-  {
-    date: 1609361909947,
-    observation:
-      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
-    risk: 16,
-    classify: 'Concern',
-    type: 'Drafts',
-    location: 'lorem Ipsum',
-  },
-  {
-    date: 1609361909947,
-    observation:
-      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
-    risk: 16,
-    classify: 'Concern',
-    type: 'Drafts',
-    location: 'lorem Ipsum',
-  },
-  {
-    date: 1609361909947,
-    observation:
-      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
-    risk: 16,
-    classify: 'Concern',
-    type: 'Drafts',
-    location: 'lorem Ipsum',
-  },
-  {
-    date: 1609361909947,
-    observation:
-      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
-    risk: 16,
-    classify: 'Concern',
-    type: 'Drafts',
-    location: 'lorem Ipsum',
-  },
-  {
-    date: 1609361909947,
-    observation:
-      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
-    risk: 16,
-    classify: 'Concern',
-    type: 'Drafts',
-    location: 'lorem Ipsum',
-  },
-  {
-    date: 1609361909947,
-    observation:
-      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
-    risk: 16,
-    classify: 'Concern',
-    type: 'Drafts',
-    location: 'lorem Ipsum',
-  },
-  {
-    date: 1609361909947,
-    observation:
-      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
-    risk: 16,
-    classify: 'Concern',
+    color: colors.riskIcons.red,
     type: 'Drafts',
     location: 'lorem Ipsum',
   },

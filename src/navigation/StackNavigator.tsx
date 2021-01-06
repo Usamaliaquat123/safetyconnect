@@ -55,12 +55,21 @@ export const MainStackNavigator = () => {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
+            name="ViewAll"
+            component={ViewAll}
+            options={{
+              headerShown: false,
+            }}
+          />
+
+          <Stack.Screen
             name="CreateSOR"
             component={CreateSOR}
             options={{
               headerShown: false,
             }}
           />
+
           <Stack.Screen
             name="ViewSOR"
             component={ViewSOR}
@@ -68,13 +77,7 @@ export const MainStackNavigator = () => {
               headerShown: false,
             }}
           />
-          <Stack.Screen
-            name="ViewAll"
-            component={ViewAll}
-            options={{
-              headerShown: false,
-            }}
-          />
+
           <Stack.Screen
             name="Home"
             component={Home}

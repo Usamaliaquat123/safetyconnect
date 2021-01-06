@@ -1,9 +1,10 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions, Platform} from 'react-native';
 import {colors} from '@theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+
 const styles = StyleSheet.create({
   header: {
     padding: wp(5),
@@ -33,7 +34,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: wp(100),
   },
-
+  content: {
+    flex: 2,
+    backgroundColor: colors.secondary,
+    borderTopLeftRadius: wp(10),
+    borderTopRightRadius: wp(10),
+  },
   hselectort: {color: colors.secondary, fontWeight: 'bold', fontSize: wp(3)},
   selectorBox: {color: colors.secondary, fontSize: wp(3)},
   rightSelector: {flexDirection: 'row', marginRight: wp(12)},
@@ -75,70 +81,59 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
   },
-
-  // content
-  cardContainer: {
-    width: wp(70),
-    borderRadius: wp(3),
-    padding: wp(5),
-    // borderWidth: wp(0.1),
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    marginBottom: wp(10),
-    elevation: 1,
-  },
-  cardHeader: {
+  // cards
+  notifiedTextContaienr: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingLeft: wp(10),
+    paddingRight: wp(5),
+    marginBottom: wp(3),
   },
-  cardtime: {
-    fontSize: wp(3),
-    fontWeight: 'bold',
-    color: colors.text,
-  },
-  cardDate: {
-    fontSize: wp(3),
-    color: colors.text,
-    fontWeight: 'bold',
-  },
-  cardbadge: {
-    backgroundColor: colors.riskIcons.yellow,
-    padding: wp(5),
-    marginRight: wp(1),
-    justifyContent: 'center',
-    marginTop: wp(-2),
-    alignSelf: 'center',
-    borderRadius: wp(10),
-  },
-  cardBadgeText: {
-    fontSize: wp(3),
-    fontWeight: 'bold',
-    position: 'absolute',
-    alignSelf: 'center',
-  },
-  cardTitle: {
+  notifiedText: {
     fontSize: wp(4),
+    fontWeight: 'bold',
     color: colors.primary,
-    // fontWeight: 'bold',
   },
-  cardBottom: {
+  cardConatiner: {
+    marginLeft: wp(5),
+    marginBottom: wp(5),
+    marginRight: wp(1),
+  },
+  // draft
+  draftTextContainer: {
+    flexDirection: 'row',
     justifyContent: 'space-between',
-    flexDirection: 'row',
+    paddingLeft: wp(8),
+    paddingRight: wp(5),
+    marginBottom: wp(3),
   },
-  cardLocation: {
-    flexDirection: 'row',
+  draftText: {
+    fontSize: wp(4),
+    fontWeight: 'bold',
+    color: colors.primary,
   },
-  cardBorderText: {
-    fontSize: wp(3),
-    color: colors.text,
+  draftCardContainer: {
+    marginLeft: wp(1),
+    marginBottom: wp(5),
+    marginRight: wp(1),
   },
-  cardRisk: {
+  // submite
+  submitTextContaienr: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: wp(3),
+    paddingLeft: wp(6),
+    paddingRight: wp(12),
+  },
+  submitText: {
+    fontSize: wp(4),
+    fontWeight: 'bold',
+    color: colors.primary,
+  },
+  submitCardContainer: {
+    marginLeft: wp(1),
+    marginBottom: wp(5),
+    marginRight: wp(7),
   },
 });
 

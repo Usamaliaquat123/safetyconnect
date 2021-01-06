@@ -1,15 +1,21 @@
 import * as React from 'react';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors} from '@theme';
 import {connect} from 'react-redux';
 import styles from './styles';
-import {Create_sor, viewas, all_sor} from '@service';
+import {Create_sor, viewas, notified, submitted, draft} from '@service';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
-import Carousel from 'react-native-snap-carousel';
 
+import {Card} from '@components';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -27,7 +33,20 @@ export interface ViewAllProps {
   reduxActions: any;
   reduxState: any;
 }
+const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
 
+function dp(percentage: any) {
+  const value = (percentage * viewportWidth) / 100;
+  return Math.round(value);
+}
+
+const slideWidth = dp(80);
+const itemHorizontalMargin = dp(2);
+
+export const sliderWidth = viewportWidth;
+export const itemWidth = slideWidth + itemHorizontalMargin * 2;
+
+const SLIDER_1_FIRST_ITEM = 1;
 class ViewAll extends React.Component<ViewAllProps, any> {
   constructor(props: any) {
     super(props);
@@ -35,20 +54,17 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       currentlocation: Create_sor.Observation.locations[0],
       project: viewas[0],
       selectP: false,
+      draft: draft,
+      notified: notified,
+      submitted: submitted,
+      slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
     };
   }
-  _renderItem = ({item, index}) => {
-    console.log(item);
-    return (
-      <View style={styles.slide}>
-        {/* // <Text style={styles.title}>{item.title}</Text> */}
-      </View>
-    );
-  };
+
   render() {
     return (
       <View style={{flex: 1, backgroundColor: colors.primary}}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
@@ -102,96 +118,101 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                   </View>
                 ) : null}
               </View>
+              <View style={styles.rightSelector}>
+                <Icon
+                  onPress={() => this.props.navigation.navigate('CreateSOR')}
+                  style={{padding: 3}}
+                  size={20}
+                  name="address-card"
+                  type="font-awesome-5"
+                  color={colors.secondary}
+                />
+              </View>
             </View>
           </View>
-          <View
-            style={{
-              flex: 2,
-              backgroundColor: colors.secondary,
-              borderTopLeftRadius: wp(10),
-              borderTopRightRadius: wp(10),
-              padding: wp(10),
-              height: wp(150),
-            }}>
-            <Icon
-              onPress={() => this.props.navigation.navigate('CreateSOR')}
-              style={{padding: 3}}
-              size={wp(15)}
-              name="file-certificate-outline"
-              type="material-community"
-              color={colors.primary}
-            />
-            {/* <Chart
-            style={{alignSelf: 'center', marginTop: wp(3)}}
-            onPress={(v: number) => console.log(v)}
-          /> */}
-            {/* <ScrollView horizontal={true}>
-            <ScrollView>
-              <Text>sdsds</Text>
-            </ScrollView>
-            <ScrollView style={{marginRight: wp(10), marginLeft: wp(10)}}>
-              <View style={styles.cardContainer}>
-                <View style={styles.cardHeader}>
-                  <Text style={styles.cardtime}>123</Text>
-                  <TouchableOpacity style={styles.cardbadge}>
-                    <Text style={styles.cardBadgeText}>4</Text>
-                  </TouchableOpacity>
-                  <Text style={styles.cardDate}>22/10/2020</Text>
+          <View style={styles.content}>
+            <ScrollView
+              style={{marginTop: wp(15)}}
+              showsHorizontalScrollIndicator={false}
+              snapToInterval={wp(83)}
+              decelerationRate="fast"
+              horizontal>
+              <View style={{paddingBottom: wp(10)}}>
+                <View style={styles.notifiedTextContaienr}>
+                  <Text style={styles.notifiedText}>Notified</Text>
+                  <Icon
+                    size={22}
+                    name="filter"
+                    type="ionicon"
+                    color={colors.primary}
+                  />
                 </View>
-                <View>
-                  <Text style={styles.cardTitle}>
-                    Consequat Lorem qui excepteur pariatur laborum amet
-                    officia incididunt dolore.
-                  </Text>
+                {this.state.notified.map((d: any, i: number) => (
+                  <Card
+                    data={d}
+                    onPress={(d: any) =>
+                      this.props.navigation.navigate('ViewSOR')
+                    }
+                    date={d.date}
+                    risk={d.risk}
+                    observation={d.observation}
+                    classify={d.classify}
+                    location={d.location}
+                    style={styles.cardConatiner}
+                  />
+                ))}
+              </View>
+              <View>
+                <View style={styles.draftTextContainer}>
+                  <Text style={styles.draftText}>Draft</Text>
+                  <Icon
+                    size={22}
+                    name="filter"
+                    type="ionicon"
+                    color={colors.primary}
+                  />
                 </View>
-                <View style={styles.cardBottom}>
-                  <View style={styles.cardRisk}>
-                    <Icon
-                      style={{padding: 3}}
-                      size={wp(3)}
-                      name="warning"
-                      type="antdesign"
-                      color={colors.riskIcons.red}
-                    />
-                    <Text
-                      style={[
-                        styles.cardBorderText,
-                        {color: colors.riskIcons.red},
-                      ]}>
-                      Concern
-                    </Text>
-                  </View>
-                  <View style={styles.cardLocation}>
-                    <Icon
-                      style={{padding: 3}}
-                      size={15}
-                      name="location"
-                      type="evilicon"
-                      color={colors.primary}
-                    />
-                    <Text style={styles.cardBorderText}>Lorem ipsum </Text>
-                  </View>
+                {this.state.draft.map((d: any, i: number) => (
+                  <Card
+                    data={d}
+                    onPress={(d: any) =>
+                      this.props.navigation.navigate('ViewSOR')
+                    }
+                    date={d.date}
+                    risk={d.risk}
+                    observation={d.observation}
+                    classify={d.classify}
+                    location={d.location}
+                    style={styles.draftCardContainer}
+                  />
+                ))}
+              </View>
+              <View>
+                <View style={styles.submitTextContaienr}>
+                  <Text style={styles.submitText}>Submitted</Text>
+                  <Icon
+                    size={22}
+                    name="filter"
+                    type="ionicon"
+                    color={colors.primary}
+                  />
                 </View>
+                {this.state.submitted.map((d: any, i: number) => (
+                  <Card
+                    data={d}
+                    onPress={(d: any) =>
+                      this.props.navigation.navigate('ViewSOR')
+                    }
+                    date={d.date}
+                    risk={d.risk}
+                    observation={d.observation}
+                    classify={d.classify}
+                    location={d.location}
+                    style={styles.submitCardContainer}
+                  />
+                ))}
               </View>
             </ScrollView>
-            <ScrollView>
-              <Text>sdsd</Text>
-              <Text>sdsd</Text>
-              <Text>sdsd</Text>
-              <Text>sdsd</Text>
-              <Text>sdsd</Text>
-            </ScrollView> */}
-            {/* </ScrollView> */}
-
-            <Carousel
-              ref={(c) => {
-                this._carousel = c;
-              }}
-              data={all_sor}
-              renderItem={this._renderItem}
-              sliderWidth={wp(100)}
-              itemWidth={wp(30)}
-            />
           </View>
         </ScrollView>
       </View>

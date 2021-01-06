@@ -32,6 +32,7 @@ export interface ViewSORProps {
   navigation: ViewSORNavigationProp;
   reduxActions: any;
   reduxState: any;
+  data: any;
 }
 
 class ViewSOR extends React.Component<ViewSORProps, any> {
