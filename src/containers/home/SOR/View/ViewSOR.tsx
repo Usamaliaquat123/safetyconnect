@@ -32,7 +32,6 @@ export interface ViewSORProps {
   navigation: ViewSORNavigationProp;
   reduxActions: any;
   reduxState: any;
-  data: any;
 }
 
 class ViewSOR extends React.Component<ViewSORProps, any> {
@@ -46,6 +45,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     };
     this.animation = React.createRef();
     this.photoAnim = React.createRef();
+    console.log(this.props.route.params.data);
   }
 
   componentDidMount = () => {

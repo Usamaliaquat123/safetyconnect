@@ -151,7 +151,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                   <Card
                     data={d}
                     onPress={(d: any) =>
-                      this.props.navigation.navigate('ViewSOR')
+                      this.props.navigation.navigate('ViewSOR', {data: d})
                     }
                     date={d.date}
                     risk={d.risk}
@@ -176,7 +176,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                   <Card
                     data={d}
                     onPress={(d: any) =>
-                      this.props.navigation.navigate('ViewSOR')
+                      this.props.navigation.navigate('ViewSOR', {data: d})
                     }
                     date={d.date}
                     risk={d.risk}
@@ -201,7 +201,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                   <Card
                     data={d}
                     onPress={(d: any) =>
-                      this.props.navigation.navigate('ViewSOR')
+                      this.props.navigation.navigate('ViewSOR', {data: d})
                     }
                     date={d.date}
                     risk={d.risk}
