@@ -1,19 +1,12 @@
 import * as React from 'react';
 import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
-import {Icon, Avatar} from 'react-native-elements';
 import {colors} from '@theme';
-import {Create_sor, View_sor, all_sor, viewas} from '@service';
 import {connect} from 'react-redux';
 import * as reduxActions from '../../store/Actions/AppActions';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 import styles from './styles';
-import {Chart} from '@components';
 import {bindActionCreators} from 'redux';
 // import {connect} from '../../decorators/index';
 type HomeScreenNavigationProp = StackNavigationProp<

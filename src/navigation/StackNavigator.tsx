@@ -23,6 +23,7 @@ export type StackNavigatorProps = {
   CreateSOR: undefined;
   ViewAll: undefined;
   ViewSOR: {data: Object};
+  Messaging: undefined;
 };
 export type AuthNavigatorProp = {
   Login: undefined;
@@ -54,6 +55,13 @@ export const MainStackNavigator = () => {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator>
+          <Stack.Screen
+            name="Messaging"
+            component={Messaging}
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen
             name="ViewAll"
             component={ViewAll}

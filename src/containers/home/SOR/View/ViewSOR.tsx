@@ -35,8 +35,8 @@ export interface ViewSORProps {
 }
 
 class ViewSOR extends React.Component<ViewSORProps, any> {
-  public animation: React.RefObject<HTMLInputElement>;
-  public photoAnim: React.RefObject<HTMLInputElement>;
+  public animation: any;
+  public photoAnim: any;
   constructor(props: any) {
     super(props);
     this.state = {
