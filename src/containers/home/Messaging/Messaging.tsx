@@ -6,9 +6,9 @@ import {colors} from '@theme';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
-import {View_sor} from '@service';
+import {View_sor, messagingUsers, groupConversation} from '@service';
 import {connect} from 'react-redux';
-import {Search} from '@components';
+import {Search, Header, User} from '@components';
 import styles from './styles';
 type MessagingNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -27,29 +27,10 @@ class Messaging extends React.Component<MessagingProps, any> {
     return (
       <View style={{flex: 1, backgroundColor: colors.primary}}>
         <ScrollView>
-          <View style={styles.header}>
-            <View style={styles.headertle}>
-              <Icon
-                onPress={() => this.props.navigation.goBack()}
-                size={25}
-                name="arrow-back-outline"
-                type="ionicon"
-                color={colors.secondary}
-              />
-              <View>
-                <Text style={styles.title}>Messaging</Text>
-                <View style={styles.underScrore} />
-              </View>
-              <View style={styles.avatarView}>
-                <Avatar
-                  rounded
-                  source={{
-                    uri: View_sor.user.profile,
-                  }}
-                />
-              </View>
-            </View>
-          </View>
+          <Header
+            onBackPress={() => this.props.navigation.goBack()}
+            profile={View_sor.user.profile}
+          />
           <View style={styles.content}>
             <Search
               onChange={(e: string) => console.log(e)}
@@ -58,6 +39,36 @@ class Messaging extends React.Component<MessagingProps, any> {
               placeHolder={'Searh messages'}
               iconType={'evilicon'}
             />
+            <View style={styles.conversationContainer}>
+              <Text style={styles.ttleConversation}>Conversations</Text>
+              <View style={styles.line} />
+              {messagingUsers.map((d) => (
+                <User
+                  id={d.userId}
+                  name={d.name}
+                  pendingsms={d.notseen}
+                  image={d.image}
+                  isOnline={d.isonline}
+                  onPress={(d: any) => console.log(d)}
+                />
+              ))}
+            </View>
+            {/* Group Conversation */}
+            <View style={styles.conversationContainer}>
+              <Text style={styles.ttleConversation}>Group Conversations</Text>
+              <View style={styles.line} />
+              {groupConversation.map((d) => (
+                <User
+                  id={d.userId}
+                  name={d.name}
+                  // pendingsms={d.notseen}
+                  image={d.image}
+                  isOnline={d.isonline}
+                  onPress={(d: any) => console.log(d)}
+                />
+              ))}
+            </View>
+            <View style={styles.line} />
           </View>
         </ScrollView>
       </View>

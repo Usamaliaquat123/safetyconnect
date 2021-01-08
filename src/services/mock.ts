@@ -209,4 +209,79 @@ export const notified = [
   },
 ];
 
+export const messagingUsers = [
+  {
+    name: 'Jane doe',
+    image:
+      'https://media-exp1.licdn.com/dms/image/C4D03AQEL1Mw4w1qbCw/profile-displayphoto-shrink_400_400/0/1600693321867?e=1615420800&v=beta&t=hSMwwBV6Nopz6Td0oXvnQuqGWW2W926ZUaCMC9SotVk',
+    isonline: true,
+    userId: 4,
+  },
+  {
+    name: 'Richards Roe',
+    image:
+      'https://media-exp1.licdn.com/dms/image/C4D03AQFCfWT8c2apmw/profile-displayphoto-shrink_400_400/0/1607076232918?e=1615420800&v=beta&t=KGTZlrDA3wPaI8XALMYYzrf1HGB55HU0wQEvDy9OT4c',
+    isonline: false,
+    userId: 5,
+  },
+  {
+    name: 'Usama ',
+    image:
+      'https://media-exp1.licdn.com/dms/image/C5603AQHGeQB42B1CcA/profile-displayphoto-shrink_400_400/0/1588740771758?e=1615420800&v=beta&t=zaFZX6B-viry_RC9K-VUqy83ywp48RlIyBAJFkByodA',
+    isonline: true,
+    notseen: 1,
+    userId: 6,
+  },
+  {
+    name: 'Noor',
+    isonline: true,
+    image:
+      'https://media-exp1.licdn.com/dms/image/C5103AQGE-VX358K7FQ/profile-displayphoto-shrink_400_400/0/1581048004131?e=1615420800&v=beta&t=rnNkPykieQHA2xQGENgkBP4H7qI_0b4t9iMO_wCIqaI',
+    userId: 7,
+  },
+  {
+    name: 'Javeria',
+    image:
+      'https://media-exp1.licdn.com/dms/image/C4D03AQGfuxWRWdlgVw/profile-displayphoto-shrink_400_400/0/1603355067087?e=1615420800&v=beta&t=EqS_Dglj86o0TOR3aIEKkOlgFWoo4dHKbJ4uA9ObAjs',
+    isonline: true,
+    userId: 9,
+  },
+  {
+    name: 'Anna - Remote',
+    image:
+      'https://media-exp1.licdn.com/dms/image/C4E03AQFTUDB-a5qa7Q/profile-displayphoto-shrink_400_400/0/1600851452365?e=1615420800&v=beta&t=ic43tX8ncbqo6LSNHAyj09i3EMIPD868wVxnkTdyOzg',
+    isonline: true,
+    userId: 8,
+  },
+  {
+    name: 'Zeerak',
+    image:
+      'https://media-exp1.licdn.com/dms/image/C5103AQH6zCGslF4AOg/profile-displayphoto-shrink_400_400/0/1583513527910?e=1615420800&v=beta&t=lItuncCwm_AF-9AVbPEwXXMTNvrge65-Ay7y-BWX62U',
+    isonline: false,
+    userId: 10,
+  },
+];
+
+export const groupConversation = [
+  {
+    name: 'Google',
+    image: 'https://blog.hubspot.com/hubfs/image8-2.jpg',
+    isonline: true,
+    userId: 22,
+  },
+  {
+    name: 'Facebook',
+    image:
+      'https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-facebook-circle-512.png',
+    isonline: true,
+    userId: 21,
+  },
+  {
+    name: 'Instagram Development Team',
+    image:
+      'https://www.adweek.com/wp-content/uploads/2018/02/instalogo-feaimage-page-2018.jpg',
+    isonline: true,
+    userId: 25,
+  },
+];
 // export const popular
