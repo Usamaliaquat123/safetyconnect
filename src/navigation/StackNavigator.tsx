@@ -59,15 +59,15 @@ export const MainStackNavigator = () => {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            name="Messaging"
-            component={Messaging}
+            name="Chat"
+            component={Chat}
             options={{
               headerShown: false,
             }}
           />
           <Stack.Screen
-            name="Chat"
-            component={Chat}
+            name="Messaging"
+            component={Messaging}
             options={{
               headerShown: false,
             }}

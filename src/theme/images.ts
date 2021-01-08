@@ -1,4 +1,4 @@
 export const images = {
-  // logo : require('./images/')
+  send: require('./images/send.png'),
   // ExerciseImage: require('../theme/images/exercise.png'),
 };
