@@ -1,7 +1,7 @@
 image: openjdk:8-jdk #Defining the Docker Image
 
 stages:
-  - prepare
+  # - prepare
   - build
 # # build-job:
 # #   stage: build
