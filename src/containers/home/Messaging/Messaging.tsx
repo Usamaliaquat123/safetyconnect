@@ -24,7 +24,7 @@ export interface MessagingProps {
 class Messaging extends React.Component<MessagingProps, any> {
   render() {
     return (
-      <View>
+      <View style={{flex: 1}}>
         <ScrollView>
           <View style={styles.header}>
             <View style={styles.headertle}>
@@ -49,6 +49,7 @@ class Messaging extends React.Component<MessagingProps, any> {
               </View>
             </View>
           </View>
+          <View></View>
         </ScrollView>
       </View>
     );

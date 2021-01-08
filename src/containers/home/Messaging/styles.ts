@@ -31,6 +31,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
   },
+  content: {
+    flex: 2,
+    backgroundColor: colors.secondary,
+  },
 });
 
 export default styles;
