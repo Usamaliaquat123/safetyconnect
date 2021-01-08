@@ -5,6 +5,7 @@ import {
   setHeaderAllign,
   createAction,
   downloadFile,
+  searchInObjects,
 } from './utils';
 export {
   classifySor,
@@ -12,5 +13,6 @@ export {
   searchInSuggestions,
   setHeaderAllign,
   createAction,
+  searchInObjects,
   downloadFile,
 };

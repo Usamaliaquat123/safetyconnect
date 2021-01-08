@@ -52,6 +52,16 @@ export const searchInSuggestions = (
   }
   return strArr;
 };
+// Messaging part
+export const searchInObjects = (k: string, arr: Array<any>) => {
+  var strArr = [];
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i].name === k) {
+      strArr.push(arr[i]);
+    }
+    return strArr;
+  }
+};
 
 export const setHeaderAllign = {
   HEADER_MAX_HEIGHT: wp(65),

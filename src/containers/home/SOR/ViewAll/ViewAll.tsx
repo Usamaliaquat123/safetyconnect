@@ -20,6 +20,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {Isor} from '@typings';
 
 type ViewAllNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -147,10 +148,10 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                     color={colors.primary}
                   />
                 </View>
-                {this.state.notified.map((d: any, i: number) => (
+                {this.state.notified.map((d: Isor, i: number) => (
                   <Card
                     data={d}
-                    onPress={(d: any) =>
+                    onPress={(d: Isor) =>
                       this.props.navigation.navigate('ViewSOR', {data: d})
                     }
                     date={d.date}
@@ -172,10 +173,10 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                     color={colors.primary}
                   />
                 </View>
-                {this.state.draft.map((d: any, i: number) => (
+                {this.state.draft.map((d: Isor, i: number) => (
                   <Card
                     data={d}
-                    onPress={(d: any) =>
+                    onPress={(d: Isor) =>
                       this.props.navigation.navigate('ViewSOR', {data: d})
                     }
                     date={d.date}
@@ -197,10 +198,10 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                     color={colors.primary}
                   />
                 </View>
-                {this.state.submitted.map((d: any, i: number) => (
+                {this.state.submitted.map((d: Isor, i: number) => (
                   <Card
                     data={d}
-                    onPress={(d: any) =>
+                    onPress={(d: Isor) =>
                       this.props.navigation.navigate('ViewSOR', {data: d})
                     }
                     date={d.date}

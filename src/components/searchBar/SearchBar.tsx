@@ -32,7 +32,7 @@ export default class Search extends React.Component<SearchProps, any> {
           placeholder={this.props.placeHolder}
           style={styles.searchInput}
           //   value={this.props.value}
-          onChange={(e) => this.props.onChange(e)}
+          onChange={(e) => this.props.onChange(e.nativeEvent.text)}
         />
       </View>
     );

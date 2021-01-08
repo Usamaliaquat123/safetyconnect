@@ -2,6 +2,7 @@ import * as React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {View, StyleSheet, Text} from 'react-native';
 import {AnyIfEmpty, connect} from 'react-redux';
+import {Isor} from '@typings';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {
@@ -22,7 +23,7 @@ export type StackNavigatorProps = {
   Home: undefined;
   CreateSOR: undefined;
   ViewAll: undefined;
-  ViewSOR: {data: Object};
+  ViewSOR: {data: Isor};
   Messaging: undefined;
 };
 export type AuthNavigatorProp = {

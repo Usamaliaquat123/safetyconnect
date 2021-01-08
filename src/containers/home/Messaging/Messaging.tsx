@@ -8,6 +8,7 @@ import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import {View_sor, messagingUsers, groupConversation} from '@service';
 import {connect} from 'react-redux';
+import {searchInObjects} from '@utils';
 import {Search, Header, User} from '@components';
 import styles from './styles';
 type MessagingNavigationProp = StackNavigationProp<
@@ -23,6 +24,17 @@ export interface MessagingProps {
   reduxState: any;
 }
 class Messaging extends React.Component<MessagingProps, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      loading: false,
+      users: messagingUsers,
+      group: groupConversation,
+    };
+  }
+
+  componentDidMount = () => {};
+
   render() {
     return (
       <View style={{flex: 1, backgroundColor: colors.primary}}>
@@ -42,7 +54,7 @@ class Messaging extends React.Component<MessagingProps, any> {
             <View style={styles.conversationContainer}>
               <Text style={styles.ttleConversation}>Conversations</Text>
               <View style={styles.line} />
-              {messagingUsers.map((d) => (
+              {this.state.users.map((d: any) => (
                 <User
                   id={d.userId}
                   name={d.name}
@@ -57,7 +69,7 @@ class Messaging extends React.Component<MessagingProps, any> {
             <View style={styles.conversationContainer}>
               <Text style={styles.ttleConversation}>Group Conversations</Text>
               <View style={styles.line} />
-              {groupConversation.map((d) => (
+              {this.state.group.map((d: any) => (
                 <User
                   id={d.userId}
                   name={d.name}

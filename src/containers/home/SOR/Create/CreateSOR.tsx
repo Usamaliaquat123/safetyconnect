@@ -332,7 +332,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               <Suggestions
                 styles={{}}
                 arr={this.state.suggestions}
-                onPress={(d: any) => this.setState({observationT: d})}
+                onPress={(d: string) => this.setState({observationT: d})}
               />
             ) : null}
 
