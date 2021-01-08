@@ -33,7 +33,13 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 2,
+
     backgroundColor: colors.secondary,
+    borderTopLeftRadius: wp(8),
+    borderTopRightRadius: wp(8),
+    padding: wp(8),
+    paddingLeft: wp(5),
+    paddingRight: wp(5),
   },
 });
 

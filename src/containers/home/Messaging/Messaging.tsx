@@ -8,6 +8,7 @@ import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import {View_sor} from '@service';
 import {connect} from 'react-redux';
+import {Search} from '@components';
 import styles from './styles';
 type MessagingNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -24,7 +25,7 @@ export interface MessagingProps {
 class Messaging extends React.Component<MessagingProps, any> {
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: colors.primary}}>
         <ScrollView>
           <View style={styles.header}>
             <View style={styles.headertle}>
@@ -49,7 +50,15 @@ class Messaging extends React.Component<MessagingProps, any> {
               </View>
             </View>
           </View>
-          <View></View>
+          <View style={styles.content}>
+            <Search
+              onChange={(e: string) => console.log(e)}
+              value={'Search messages'}
+              iconName={'search'}
+              placeHolder={'Searh messages'}
+              iconType={'evilicon'}
+            />
+          </View>
         </ScrollView>
       </View>
     );
