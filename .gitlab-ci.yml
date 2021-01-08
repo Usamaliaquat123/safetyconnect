@@ -66,6 +66,7 @@ install:
 typescript-runner:
   stage: build
   script:
+    - npm i -g yarn
     - yarn
     - yarn tsc
     - echo "tsc build sucessfully "
