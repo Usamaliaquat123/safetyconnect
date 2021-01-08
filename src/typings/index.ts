@@ -8,3 +8,10 @@ export interface Isor {
   type: string;
   location: string;
 }
+export interface Imessage {
+  name: string;
+  image: string;
+  notseen: number;
+  isonline: boolean;
+  userId: number;
+}

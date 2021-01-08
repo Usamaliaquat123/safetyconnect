@@ -17,7 +17,7 @@ export default class User extends React.Component<UserProps, any> {
   render() {
     return (
       <TouchableOpacity
-        onPress={() => this.props.onPress(this.props.id)}
+        onPress={() => this.props.onPress()}
         style={styles.userContainer}>
         <View>
           <Avatar

@@ -2,7 +2,7 @@ import * as React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {View, StyleSheet, Text} from 'react-native';
 import {AnyIfEmpty, connect} from 'react-redux';
-import {Isor} from '@typings';
+import {Isor, Imessage} from '@typings';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {
@@ -16,6 +16,7 @@ import {
   Home,
   ViewAll,
   Settings,
+  Chat,
   ViewSOR,
 } from '@containers';
 
@@ -25,6 +26,7 @@ export type StackNavigatorProps = {
   ViewAll: undefined;
   ViewSOR: {data: Isor};
   Messaging: undefined;
+  Chat: {data: Imessage};
 };
 export type AuthNavigatorProp = {
   Login: undefined;
@@ -59,6 +61,13 @@ export const MainStackNavigator = () => {
           <Stack.Screen
             name="Messaging"
             component={Messaging}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Chat"
+            component={Chat}
             options={{
               headerShown: false,
             }}

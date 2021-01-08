@@ -9,13 +9,14 @@ import {RouteProp} from '@react-navigation/native';
 import {View_sor, messagingUsers, groupConversation} from '@service';
 import {connect} from 'react-redux';
 import {searchInObjects} from '@utils';
+import {Imessage} from '@typings';
 import {Search, Header, User} from '@components';
 import styles from './styles';
 type MessagingNavigationProp = StackNavigationProp<
   StackNavigatorProps,
-  'ViewSOR'
+  'Messaging'
 >;
-type MessagingRouteProp = RouteProp<StackNavigatorProps, 'ViewSOR'>;
+type MessagingRouteProp = RouteProp<StackNavigatorProps, 'Messaging'>;
 
 export interface MessagingProps {
   route: MessagingRouteProp;
@@ -54,14 +55,16 @@ class Messaging extends React.Component<MessagingProps, any> {
             <View style={styles.conversationContainer}>
               <Text style={styles.ttleConversation}>Conversations</Text>
               <View style={styles.line} />
-              {this.state.users.map((d: any) => (
+              {this.state.users.map((d: Imessage) => (
                 <User
                   id={d.userId}
                   name={d.name}
                   pendingsms={d.notseen}
                   image={d.image}
                   isOnline={d.isonline}
-                  onPress={(d: any) => console.log(d)}
+                  onPress={() =>
+                    this.props.navigation.navigate('Chat', {data: d})
+                  }
                 />
               ))}
             </View>
@@ -69,14 +72,16 @@ class Messaging extends React.Component<MessagingProps, any> {
             <View style={styles.conversationContainer}>
               <Text style={styles.ttleConversation}>Group Conversations</Text>
               <View style={styles.line} />
-              {this.state.group.map((d: any) => (
+              {this.state.group.map((d: Imessage) => (
                 <User
                   id={d.userId}
                   name={d.name}
                   // pendingsms={d.notseen}
                   image={d.image}
                   isOnline={d.isonline}
-                  onPress={(d: any) => console.log(d)}
+                  onPress={() =>
+                    this.props.navigation.navigate('Chat', {data: d})
+                  }
                 />
               ))}
             </View>

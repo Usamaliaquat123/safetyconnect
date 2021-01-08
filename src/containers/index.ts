@@ -10,7 +10,9 @@ import Splash from './splash/Splash';
 import Home from './home/index';
 import ViewAll from './home/SOR/ViewAll/ViewAll';
 import ViewSOR from './home/SOR/View/ViewSOR';
+import Chat from './home/Messaging/chat/Chat';
 export {
+  Chat,
   Login,
   CreateSOR,
   Signup,
