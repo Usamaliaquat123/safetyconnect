@@ -45,6 +45,11 @@ const styles = StyleSheet.create({
     // alignSelf: 'center',
     // marginRight: 15,
   },
+  // message
+  messageTimeAndNameContainerRight: {},
+  messageTimeAndNameContainerLeft: {},
+  messageTime: {},
+  messageUsername: {},
 });
 
 export default styles;

@@ -21,4 +21,5 @@ export const colors = {
     red: '#F14030',
   },
   Viewcont: '#EDF1F5',
+  chatTextbg: '#EBF1F5',
 };
