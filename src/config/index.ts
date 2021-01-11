@@ -2,6 +2,9 @@
 
 import * as Sentry from "@sentry/react-native";
 
+
+
+
 // configure Sentry
 const configSentry = () => {
     return new Promise((resolve, reject) => {
