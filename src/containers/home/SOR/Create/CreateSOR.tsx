@@ -25,6 +25,7 @@ import {Chart, Suggestions} from '@components';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
+import { classifySorBtn } from "@typings";
 
 type CreateSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -228,7 +229,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 />
                 {this.state.projectSuggest.length != 0 ? (
                   <View style={styles.slctContainer}>
-                    {this.state.projectSuggest.map((d: any, i: number) => (
+                    {this.state.projectSuggest.map((d: string, i:number) => (
                       <Text
                         key={i}
                         onPress={() => this.setState({project: d})}
@@ -259,7 +260,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 />
                 {this.state.selectL == true ? (
                   <View style={[styles.slctContainer, {left: wp(15)}]}>
-                    {Create_sor.Observation.locations.map((d, i) => (
+                    {Create_sor.Observation.locations.map((d: string, i: number) => (
                       <Text
                         key={i}
                         onPress={() => this.setState({currentlocation: d})}
@@ -340,7 +341,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             <View style={styles.clasSorContainer}>
               <Text style={styles.clasSorHeading}>Classify SOR</Text>
               <View style={styles.clasSorBtnV}>
-                {this.state.classifySorbtns.map((d: any, i: any) => (
+                {this.state.classifySorbtns.map((d: classifySorBtn, i: number) => (
                   <TouchableOpacity
                     key={i}
                     onPress={() => {
@@ -397,7 +398,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               {this.state.involvePersonSuggestions.length != 0 ? (
                 <View style={styles.involveSuggestCont}>
                   {this.state.involvePersonSuggestions.map(
-                    (d: any, i: number) => (
+                    (d: string, i: number) => (
                       <TouchableOpacity
                         key={i}
                         onPress={() =>
@@ -481,7 +482,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   <Suggestions
                     styles={{}}
                     arr={this.state.actionRecommendations}
-                    onPress={(d: any) =>
+                    onPress={(d: string) =>
                       this.setState({actionRecommendationsText: d})
                     }
                   />
@@ -518,7 +519,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 </View>
                 {this.state.submitToArr.length != 0 ? (
                   <View style={styles.slctSEContainer}>
-                    {this.state.submitToArr.map((d: any, i: number) => (
+                    {this.state.submitToArr.map((d: string, i: number) => (
                       <TouchableOpacity
                         onPress={() =>
                           this.setState({submitTo: d, submitToArr: []})

@@ -15,6 +15,14 @@ export interface Imessage {
   isonline: boolean;
   userId: number;
 }
+// classify sor typings
+export interface classifySorBtn {
+  icon: string,
+  type: string,
+  title: string,
+  selected: boolean,
+  color: string,
+} 
 // Messages
 type renderFunction = (x: any) => JSX.Element;
 export interface IChat {

@@ -9,12 +9,17 @@ import {
   Send,
   SendProps,
   Bubble,
+  BubbleProps,
+  ComposerProps,
   Time,
+  InputToolbarProps,
+  TimeProps,
+  IMessage,
 } from 'react-native-gifted-chat';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
-import {Icon, Avatar} from 'react-native-elements';
+import {Icon, Avatar, } from 'react-native-elements';
 import styles from './styles';
 import {colors, images} from '@theme';
 import moment from 'moment';
@@ -71,18 +76,19 @@ class Chat extends React.Component<ChatProps, any> {
       ],
     };
   }
-  renderBubble = (props: any) => {
+  renderBubble = (props: BubbleProps<IMessage>) => {
+
     var sameUserInPrevMessage = false;
     if (
-      props.previousMessage.user !== undefined &&
-      props.previousMessage.user
+      props.previousMessage?.user !== undefined &&
+      props.previousMessage?.user
     ) {
-      props.previousMessage.user._id === props.currentMessage.user._id
+      props.previousMessage?.user._id === props.currentMessage?.user._id
         ? (sameUserInPrevMessage = true)
         : (sameUserInPrevMessage = false);
     }
 
-    var messageBelongsToCurrentUser = 2 == props.currentMessage.user._id;
+    var messageBelongsToCurrentUser = 2 == props.currentMessage?.user._id;
     return (
       <View>
         {!sameUserInPrevMessage && (
@@ -124,44 +130,45 @@ class Chat extends React.Component<ChatProps, any> {
       </View>
     );
   };
-  renderTime = (props: any) => {
-    return (
-      <Time
-        {...props}
-        timeTextStyle={{left: {color: colors.text}}}
-        containerStyle={{left: {backgroundColor: colors.secondary}}}
-      />
+  renderTime = (props: TimeProps<IMessage>) => (
+    <View>
+         <Time
+          {...props}
+          timeTextStyle={{left: {color: colors.text}}}
+          containerStyle={{left: {backgroundColor: colors.secondary}}}
+         />
+    
+      </View>
     );
-  };
+  
   componentDidMount = () => {};
-  renderInput = (props: any) => (
+  renderInput = (props: InputToolbarProps) => (
     <InputToolbar
       {...props}
       containerStyle={{
         borderTopColor: colors.textOpa,
         borderTopWidth: wp(0.2),
-        fontSize: wp(3),
         padding: wp(2),
         // marginRight: wp(10),
       }}
     />
   );
-  renderComposer = (props: any) => (
+  renderComposer = (props: ComposerProps) => (
     <Composer
       {...props}
       textInputStyle={{fontSize: wp(3.5), fontWeight: 'bold'}}
       placeholder={'Write a message...'}
     />
   );
-  renderSend = (props: any) => (
+  renderSend = (props: SendProps<IMessage>) => (
     <TouchableOpacity
       onPress={() => {
         if (props.text && props.onSend) {
           props.onSend(
             {
-              text: props.text.trim(),
-              user: props.user,
-              _id: props.messageIdGenerator(),
+              text: props.text?.trim(),
+              // user: props,
+              // _id: props.messageIdGenerator(),
             },
             true,
           );
@@ -183,7 +190,6 @@ class Chat extends React.Component<ChatProps, any> {
       <Text>sdsd</Text>
     </View>
   );
-  onSend = (messages: any) => {};
   render() {
     return (
       <View style={{flex: 1, backgroundColor: colors.secondary}}>
@@ -224,14 +230,12 @@ class Chat extends React.Component<ChatProps, any> {
         </View>
         {/* content */}
         <GiftedChat
-          renderBubble={(container: any) => this.renderBubble(container)}
-          renderSend={(sendIcon: any) => this.renderSend(sendIcon)}
+          renderBubble={(container: BubbleProps<IMessage>) => this.renderBubble(container)}
+          renderSend={(sendIcon: SendProps<IMessage>) => this.renderSend(sendIcon)}
           messages={this.state.messages}
-          renderInputToolbar={(Input: any) => this.renderInput(Input)}
-          renderFooter={this.renderFooter}
-          renderComposer={(composer: any) => this.renderComposer(composer)}
-          onSend={(messages) => this.onSend(messages)}
-          renderTime={(time: any) => this.renderTime(time)}
+          renderInputToolbar={(Input: InputToolbarProps) => this.renderInput(Input)}
+          renderComposer={(composer: ComposerProps) => this.renderComposer(composer)}
+          renderTime={(time: TimeProps<IMessage>) => this.renderTime(time)}
           user={{
             _id: 1,
           }}
