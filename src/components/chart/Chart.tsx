@@ -6,10 +6,13 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import { chartTy } from "@typings";
 interface Props {
   style: Object;
   onPress: Function;
 }
+
+
 
 const Chart = (props: Props) => {
   const [liklihood, setliklihood] = useState([
@@ -34,13 +37,13 @@ const Chart = (props: Props) => {
     const sev = [...severity];
     const lik = [...liklihood];
 
-    lik.map((d: any) => (d.selected = false));
-    sev.map((d: any) => (d.selected = false));
+    lik.map((d: chartTy) => (d.selected = false));
+    sev.map((d: chartTy) => (d.selected = false));
 
-    sev.map((d: any) => {
+    sev.map((d: chartTy) => {
       if (severityn == d.value) d.selected = true;
     });
-    lik.map((d: any, i: number) => {
+    lik.map((d: chartTy, i: number) => {
       if (likelihood == d.value) d.selected = true;
     });
     props.onPress(value);

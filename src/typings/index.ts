@@ -8,6 +8,9 @@ export interface Isor {
   type: string;
   location: string;
 }
+export interface chartTy {
+
+},
 export interface Imessage {
   name: string;
   image: string;
