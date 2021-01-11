@@ -119,12 +119,6 @@ class Chat extends React.Component<ChatProps, any> {
                 },
               }}
             />
-            {/* <Text style={styles.messageTime}>
-              {moment(props.currentMessage.createdAt).format('LT')}
-            </Text> */}
-            {/* <Text style={styles.messageUsername}>
-              {props.currentMessage.user.name}
-            </Text> */}
           </View>
         )}
       </View>
