@@ -26,6 +26,8 @@
         "@utils":["./utils/index"], 
         "@deco":["./decorators/index"],
         "@typings":["./typings/index"],
+        "@config":["./config"],
+        "@config/*":["./config/*"],
       }
     },
     "exclude": [
