@@ -134,8 +134,8 @@ class Chat extends React.Component<ChatProps, any> {
     <View>
          <Time
           {...props}
-          timeTextStyle={{left: {color: colors.text}}}
-          containerStyle={{left: {backgroundColor: colors.secondary}}}
+          timeTextStyle={{left: {color: colors.text}, right: {color: colors.text}}}
+          containerStyle={{left: {backgroundColor: colors.secondary}, right: {backgroundColor : colors.secondary}}}
          />
     
       </View>
