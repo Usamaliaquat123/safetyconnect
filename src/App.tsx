@@ -3,7 +3,7 @@ import {View, StyleSheet, Text} from 'react-native';
 import {Provider} from 'react-redux';
 import Store from './store/store';
 import {MainStackNavigator} from '@nav';
-import { configSentry } from "config";
+import { configSentry } from "@config";
 
 export interface AppProps {}
 

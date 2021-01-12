@@ -193,19 +193,19 @@ class Chat extends React.Component<ChatProps, any> {
               rounded
               containerStyle={styles.containerAvatar}
               source={{
-                uri: Create_sor.user.profile,
+                uri: this.props.route.params.data.image,
               }}
             />
-            {/* <View
+            <View
               style={[
                 styles.isonline,
                 this.props.route.params.data.isonline == false
                   ? {opacity: 0.7, backgroundColor: colors.riskIcons.orrange}
                   : null,
               ]}
-            /> */}
+            />
           </View>
-          <Text style={styles.userNameText}>Alyssa Carson</Text>
+          <Text style={styles.userNameText}>{this.props.route.params.data.name}</Text>
           <View style={styles.headRightIcon}>
             <Icon
               size={wp(6)}

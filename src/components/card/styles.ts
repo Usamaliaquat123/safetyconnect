@@ -97,15 +97,15 @@ const styles = StyleSheet.create({
     right: itemHorizontalMargin,
     bottom: 0,
     borderRadius: entryBorderRadius,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 1,
     },
-    shadowOpacity: 0.4,
-    shadowRadius: 0.5,
-
-    elevation: 6,
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    
+    elevation: 3,
   },
   slideInnerContainer: {
     width: itemWidth,

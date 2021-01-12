@@ -40,6 +40,7 @@ export const filterLocation = (str: any) => {
   return str.match(/@\S+/);
 };
 
+
 export const searchInSuggestions = (
   str: string,
   strArray: Array<string>,

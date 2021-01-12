@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   ScrollView,
   Dimensions,
+  Animated,
+  PanResponder
 } from 'react-native';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors} from '@theme';
@@ -62,7 +64,14 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     };
   }
 
+
+
+  componentDidMount = () => {
+  };
+  
+
   render() {
+    
     return (
       <View style={{flex: 1, backgroundColor: colors.primary}}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -126,6 +135,16 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                   size={20}
                   name="address-card"
                   type="font-awesome-5"
+                  color={colors.secondary}
+                />
+              </View>
+              <View style={styles.rightSelector}>
+                <Icon
+                  onPress={() => this.props.navigation.navigate('Messaging')}
+                  style={{padding: 3}}
+                  size={20}
+                  name="ios-chatbubbles"
+                  type="ionicon"
                   color={colors.secondary}
                 />
               </View>

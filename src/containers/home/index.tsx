@@ -2,7 +2,6 @@ import * as React from 'react';
 import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import {colors} from '@theme';
 import {connect} from 'react-redux';
-import * as reduxActions from '../../store/Actions/AppActions';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
@@ -44,7 +43,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    reduxActions: bindActionCreators(reduxActions.default, dispatch),
+    // reduxActions: bindActionCreators(reduxActions.default, dispatch),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
