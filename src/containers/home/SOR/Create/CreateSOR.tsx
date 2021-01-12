@@ -72,7 +72,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       esclateTo: Create_sor.Observation.esclateTo[0],
     };
   }
-
+  submitDraft = async () => {
+    // do shinhomet
+  }
   // Document Picker and update the state
   pickupDoc = async () => {
     try {
@@ -586,9 +588,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </View>
             </View>
             {/* Draft And Submit Btns */}
-            <View style={styles.submitsorbtn}>
+            <TouchableOpacity onPress={() => this.submitDraft()} style={styles.submitsorbtn}>
               <Text style={styles.submitsorbtntxt}>Save as Draft</Text>
-            </View>
+            </TouchableOpacity>
             <View style={styles.submitsorbtnSb}>
               <Text style={styles.submitsorbtnSbtxt}>Submit</Text>
             </View>

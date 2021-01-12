@@ -6,6 +6,9 @@ import {
   createAction,
   downloadFile,
   searchInObjects,
+  setAsncStorage,
+  mapAsyncStorage,
+  getAsyncStorage,
 } from './utils';
 export {
   classifySor,
@@ -15,4 +18,7 @@ export {
   createAction,
   searchInObjects,
   downloadFile,
+  setAsncStorage,
+  getAsyncStorage,
+  mapAsyncStorage
 };
