@@ -4,6 +4,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {PermissionsAndroid} from 'react-native';
 export const classifySor: Array<any> = [
   {
@@ -86,6 +88,21 @@ const options = {
     description: 'Downloading File',
   },
 };
+export const setAsncStorage = (key: string, d:   Array<Object>,) => {
+  return AsyncStorage.setItem(key, JSON.stringify(d))
+}
+export const mapAsyncStorage = (key: string,d: any)  => {
+    var arr : []
+    AsyncStorage.getItem(key).then((v: any) => {
+    arr = JSON.parse(v)
+    return arr.push(d)
+    }).catch(err => [err])    
+}
+
+export const getAsyncStorage = (key: string) : any => {
+  AsyncStorage.getItem(key).then(res => {return res})
+}
+
 
 const checkPermission = async (type: string) => {
   const granted = await PermissionsAndroid.request(
