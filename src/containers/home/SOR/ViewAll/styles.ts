@@ -50,17 +50,17 @@ const styles = StyleSheet.create({
   },
 
   slctContainer: {
-    position: 'absolute',
+    // position: 'absolute',
     top: wp(5),
-    zIndex: 1,
-    left: wp(13),
+    zIndex: wp(5),
+    // left: wp(13),
     backgroundColor: colors.secondary,
     // padding: wp(5),
     paddingLeft: wp(2),
     paddingRight: wp(2),
     paddingTop: wp(1),
     paddingBottom: wp(1),
-    width: wp(22),
+    // width: wp(22),
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -135,6 +135,63 @@ const styles = StyleSheet.create({
     marginBottom: wp(5),
     marginRight: wp(7),
   },
+
+    listHeader: {
+    flexDirection : "row",
+      paddingLeft: wp(3)
+  },
+  listDraftText: {
+    fontSize: wp(3.5),
+    fontWeight: "bold",
+    color: colors.text,
+    marginTop :wp(-1),
+    marginLeft: wp(5)
+  },
+  listViewContent: {
+marginTop: wp(5),
+marginLeft: wp(3),
+  },
+  listVwCntent: {
+    paddingLeft: wp(3),
+    paddingTop: wp(2),
+    paddingBottom: wp(2),
+    borderBottomWidth: wp(0.2) 
+  }
+  ,
+  listAvatars: {
+    marginTop: wp(-1),
+    flexDirection: "row", position: "absolute", right: wp(3)
+  },
+  listBottomView : {
+    flexDirection: "row",
+  
+    marginLeft: wp(8)
+  },
+  listUserTimeDate : {
+    fontSize: wp(2.5),
+    opacity:.5
+  }, 
+  listMomentLT: {
+    marginLeft: wp(3),
+    fontSize: wp(2.5),
+    opacity: 0.5,
+  },
+  listMomentDate:  {
+    marginLeft: wp(1),
+                              fontSize: wp(2.5),
+                              opacity: 0.5,
+  },
+  listAvatarLeft: {
+    position: 'absolute',
+    right: wp(4),
+  },
+
+  listObDesc : {
+    marginLeft: wp(3), fontSize: wp(3)
+
+  }
+
+
 });
 
 export default styles;

@@ -7,10 +7,11 @@ export interface Isor {
   color: string;
   type: string;
   location: string;
+  user1: string;
+  user2: string;
+  username : string
 }
-export interface chartTy {
 
-},
 export interface Imessage {
   name: string;
   image: string;

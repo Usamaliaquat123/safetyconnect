@@ -55,13 +55,13 @@ const styles = StyleSheet.create({
   },
   cardbadge: {
     backgroundColor: colors.riskIcons.yellow,
-    padding: wp(5),
+    padding: wp(4),
     marginRight: wp(1),
     justifyContent: 'center',
     marginTop: wp(-2),
     alignSelf: 'center',
     left: wp(30),
-    borderRadius: wp(10),
+    borderRadius: wp(2),
     position: 'absolute',
     top: wp(1),
   },
@@ -100,9 +100,9 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 8,
     },
-    shadowOpacity: 0.22,
+    shadowOpacity: 0.20,
     shadowRadius: 2.22,
     
     elevation: 3,
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     width: itemWidth,
     height: slideHeight,
     paddingHorizontal: itemHorizontalMargin,
-    paddingBottom: 18, // needed for shadow
+    // paddingBottom: wp(10), // needed for shadow
   },
 });
 

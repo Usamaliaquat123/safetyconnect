@@ -113,19 +113,27 @@ export const mapChart = [
 export const draft = [
   {
     date: 1609361909947,
+    username : "lorem Ipsum",
     observation:
-      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
     risk: 5,
     color: colors.riskIcons.orrange,
     classify: 'Concern',
     type: 'Drafts',
     location: 'lorem Ipsum',
+    user1: 'https://media-exp1.licdn.com/dms/image/C4E03AQFTUDB-a5qa7Q/profile-displayphoto-shrink_400_400/0/1600851452365?e=1615420800&v=beta&t=ic43tX8ncbqo6LSNHAyj09i3EMIPD868wVxnkTdyOzg',
+    user2:'https://media-exp1.licdn.com/dms/image/C4D03AQGfuxWRWdlgVw/profile-displayphoto-shrink_400_400/0/1603355067087?e=1615420800&v=beta&t=EqS_Dglj86o0TOR3aIEKkOlgFWoo4dHKbJ4uA9ObAjs' ,
+    
   },
   {
     date: 1609361909947,
+    username : "lorem Ipsum",
     observation:
-      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
-    risk: 10,
+    
+    'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    
+    user1: 'https://media-exp1.licdn.com/dms/image/C4E03AQFTUDB-a5qa7Q/profile-displayphoto-shrink_400_400/0/1600851452365?e=1615420800&v=beta&t=ic43tX8ncbqo6LSNHAyj09i3EMIPD868wVxnkTdyOzg',
+    user2:'https://media-exp1.licdn.com/dms/image/C4D03AQGfuxWRWdlgVw/profile-displayphoto-shrink_400_400/0/1603355067087?e=1615420800&v=beta&t=EqS_Dglj86o0TOR3aIEKkOlgFWoo4dHKbJ4uA9ObAjs' ,risk: 10,
     classify: 'Concern',
     color: colors.riskIcons.darkGreen,
     type: 'Drafts',
@@ -134,7 +142,10 @@ export const draft = [
   {
     date: 1609361909947,
     observation:
-      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    user1: 'https://media-exp1.licdn.com/dms/image/C4E03AQFTUDB-a5qa7Q/profile-displayphoto-shrink_400_400/0/1600851452365?e=1615420800&v=beta&t=ic43tX8ncbqo6LSNHAyj09i3EMIPD868wVxnkTdyOzg',
+    user2:'https://media-exp1.licdn.com/dms/image/C4D03AQGfuxWRWdlgVw/profile-displayphoto-shrink_400_400/0/1603355067087?e=1615420800&v=beta&t=EqS_Dglj86o0TOR3aIEKkOlgFWoo4dHKbJ4uA9ObAjs' , 
+    username : "lorem Ipsum",
     risk: 15,
     classify: 'Concern',
     color: colors.riskIcons.lightGreen,
@@ -147,29 +158,38 @@ export const submitted = [
   {
     date: 1609361909947,
     observation:
-      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
     risk: 20,
+    user1: 'https://media-exp1.licdn.com/dms/image/C4E03AQFTUDB-a5qa7Q/profile-displayphoto-shrink_400_400/0/1600851452365?e=1615420800&v=beta&t=ic43tX8ncbqo6LSNHAyj09i3EMIPD868wVxnkTdyOzg',
+    user2:'https://media-exp1.licdn.com/dms/image/C4D03AQGfuxWRWdlgVw/profile-displayphoto-shrink_400_400/0/1603355067087?e=1615420800&v=beta&t=EqS_Dglj86o0TOR3aIEKkOlgFWoo4dHKbJ4uA9ObAjs' ,
     classify: 'Concern',
     color: colors.riskIcons.yellow,
+    username : "lorem Ipsum",
     type: 'Drafts',
     location: 'lorem Ipsum',
   },
   {
     date: 1609361909947,
     observation:
-      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
     risk: 25,
+    user1: 'https://media-exp1.licdn.com/dms/image/C4E03AQFTUDB-a5qa7Q/profile-displayphoto-shrink_400_400/0/1600851452365?e=1615420800&v=beta&t=ic43tX8ncbqo6LSNHAyj09i3EMIPD868wVxnkTdyOzg',
+    user2:'https://media-exp1.licdn.com/dms/image/C4D03AQGfuxWRWdlgVw/profile-displayphoto-shrink_400_400/0/1603355067087?e=1615420800&v=beta&t=EqS_Dglj86o0TOR3aIEKkOlgFWoo4dHKbJ4uA9ObAjs' ,
     classify: 'Concern',
     color: colors.riskIcons.darkGreen,
     type: 'Drafts',
+    username : "lorem Ipsum",
     location: 'lorem Ipsum',
   },
   {
     date: 1609361909947,
     observation:
-      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
     risk: 4,
+    username : "lorem Ipsum",
     color: colors.riskIcons.orrange,
+    user1: 'https://media-exp1.licdn.com/dms/image/C4E03AQFTUDB-a5qa7Q/profile-displayphoto-shrink_400_400/0/1600851452365?e=1615420800&v=beta&t=ic43tX8ncbqo6LSNHAyj09i3EMIPD868wVxnkTdyOzg',
+    user2:'https://media-exp1.licdn.com/dms/image/C4D03AQGfuxWRWdlgVw/profile-displayphoto-shrink_400_400/0/1603355067087?e=1615420800&v=beta&t=EqS_Dglj86o0TOR3aIEKkOlgFWoo4dHKbJ4uA9ObAjs' ,
     classify: 'Concern',
     type: 'Drafts',
     location: 'lorem Ipsum',
@@ -180,34 +200,40 @@ export const notified = [
   {
     date: 1609361909947,
     observation:
-      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
     risk: 8,
-    classify: 'Concern',
+    classify: 'Positive',
+    username : "lorem Ipsum",
     color: colors.riskIcons.lightGreen,
-    type: 'Drafts',
+    type: 'Drafts',user1: 'https://media-exp1.licdn.com/dms/image/C4E03AQFTUDB-a5qa7Q/profile-displayphoto-shrink_400_400/0/1600851452365?e=1615420800&v=beta&t=ic43tX8ncbqo6LSNHAyj09i3EMIPD868wVxnkTdyOzg',
+    user2:'https://media-exp1.licdn.com/dms/image/C4D03AQGfuxWRWdlgVw/profile-displayphoto-shrink_400_400/0/1603355067087?e=1615420800&v=beta&t=EqS_Dglj86o0TOR3aIEKkOlgFWoo4dHKbJ4uA9ObAjs' ,
     location: 'lorem Ipsum',
   },
   {
     date: 1609361909947,
     observation:
-      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
     risk: 12,
     classify: 'Concern',
+    username : "lorem Ipsum",
     type: 'Drafts',
     color: colors.riskIcons.orrange,
-    location: 'lorem Ipsum',
+    location: 'lorem Ipsum',user1: 'https://media-exp1.licdn.com/dms/image/C4E03AQFTUDB-a5qa7Q/profile-displayphoto-shrink_400_400/0/1600851452365?e=1615420800&v=beta&t=ic43tX8ncbqo6LSNHAyj09i3EMIPD868wVxnkTdyOzg',
+    user2:'https://media-exp1.licdn.com/dms/image/C4D03AQGfuxWRWdlgVw/profile-displayphoto-shrink_400_400/0/1603355067087?e=1615420800&v=beta&t=EqS_Dglj86o0TOR3aIEKkOlgFWoo4dHKbJ4uA9ObAjs' ,
   },
   {
     date: 1609361909947,
     observation:
-      'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
+    'Deserunt labore culpa aliqua excepteur sunt officia fugiat magna sint non nisi nulla aliquip.',
     risk: 16,
     classify: 'Concern',
     color: colors.riskIcons.red,
+    username : "lorem Ipsum",
     type: 'Drafts',
     location: 'lorem Ipsum',
-  },
-];
+    user1: 'https://media-exp1.licdn.com/dms/image/C4E03AQFTUDB-a5qa7Q/profile-displayphoto-shrink_400_400/0/1600851452365?e=1615420800&v=beta&t=ic43tX8ncbqo6LSNHAyj09i3EMIPD868wVxnkTdyOzg',
+    user2:'https://media-exp1.licdn.com/dms/image/C4D03AQGfuxWRWdlgVw/profile-displayphoto-shrink_400_400/0/1603355067087?e=1615420800&v=beta&t=EqS_Dglj86o0TOR3aIEKkOlgFWoo4dHKbJ4uA9ObAjs' ,},
+  ];
 
 export const messagingUsers = [
   {
