@@ -6,6 +6,7 @@ import {
   ScrollView,
   Dimensions,
   Animated,
+  Easing,
   PanResponder,
 } from 'react-native';
 import {Icon, Avatar} from 'react-native-elements';
@@ -55,8 +56,14 @@ class ViewAll extends React.Component<ViewAllProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
+      AnimatedDown: new Animated.Value(0),
+      AnimatedOpac: new Animated.Value(0),
+
       currentlocation: Create_sor.Observation.locations[0],
       project: 'List View',
+      isNotified: false,
+      isDraft: false,
+      isSubmitted: false,
       selectP: true,
       draft: draft,
       notified: notified,
@@ -67,6 +74,34 @@ class ViewAll extends React.Component<ViewAllProps, any> {
 
   componentDidMount = () => {};
 
+  dropdownAnimated = (d: string) => {
+    Animated.timing(this.state.AnimatedDown, {
+      toValue: wp(20),
+      duration: 1500,
+      easing: Easing.elastic(3),
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(this.state.AnimatedOpac, {
+      toValue: 1,
+      duration: 1500,
+      easing: Easing.elastic(3),
+      useNativeDriver: false,
+    }).start();
+  };
+  closeDropDown = (d: string) => {
+    Animated.timing(this.state.AnimatedDown, {
+      toValue: wp(0),
+      duration: 1500,
+      easing: Easing.elastic(3),
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(this.state.AnimatedOpac, {
+      toValue: 0,
+      duration: 1500,
+      easing: Easing.elastic(3),
+      useNativeDriver: false,
+    }).start();
+  };
   render() {
     return (
       <View style={{flex: 1, backgroundColor: colors.primary}}>
@@ -155,18 +190,26 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                 <ScrollView
                   style={{marginTop: wp(15), padding: wp(3)}}
                   showsVerticalScrollIndicator={false}>
-                  <View style={{paddingBottom: wp(18)}}>
+                  <View style={{paddingBottom: wp(9)}}>
                     <View style={styles.listHeader}>
-                      <Icon
-                        onPress={() =>
-                          this.props.navigation.navigate('Messaging')
-                        }
-                        style={{marginTop: wp(3)}}
-                        size={wp(3.5)}
-                        name="down"
-                        type="antdesign"
-                      />
-                      <Text style={styles.listDraftText}>Drafts</Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          if (this.state.isDraft == true) {
+                            this.setState({isDraft: false});
+                            this.closeDropDown(this.state.isDraft);
+                          } else {
+                            this.setState({isDraft: true});
+                            this.dropdownAnimated(this.state.isDraft);
+                          }
+                        }}
+                        style={{flexDirection: 'row'}}>
+                        <Icon
+                          size={wp(3.5)}
+                          name={this.state.isDraft == true ? 'down' : 'up'}
+                          type="antdesign"
+                        />
+                        <Text style={styles.listDraftText}>Drafts</Text>
+                      </TouchableOpacity>
                       <View
                         style={{
                           position: 'absolute',
@@ -209,18 +252,21 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       ))}
                     </View>
                   </View>
-                  <View style={{paddingBottom: wp(18)}}>
+                  <View style={{paddingBottom: wp(10)}}>
                     <View style={styles.listHeader}>
-                      <Icon
-                        onPress={() =>
-                          this.props.navigation.navigate('Messaging')
-                        }
-                        style={{marginTop: wp(3)}}
-                        size={wp(3.5)}
-                        name="down"
-                        type="antdesign"
-                      />
-                      <Text style={styles.listDraftText}>Notified</Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.dropdownAnimated(this.state.isNotified);
+                          this.setState({isNotified: !this.state.isNotified});
+                        }}
+                        style={{flexDirection: 'row'}}>
+                        <Icon
+                          size={wp(3.5)}
+                          name={this.state.isNotified == true ? 'down' : 'up'}
+                          type="antdesign"
+                        />
+                        <Text style={styles.listDraftText}>Notified</Text>
+                      </TouchableOpacity>
                       <View
                         style={{
                           position: 'absolute',
@@ -229,6 +275,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                           marginTop: wp(-1),
                         }}>
                         <Icon size={wp(5)} name="filter" type="ionicon" />
+
                         <Text
                           style={{
                             paddingLeft: wp(1),

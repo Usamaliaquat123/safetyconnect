@@ -151,45 +151,7 @@ const styles = StyleSheet.create({
 marginTop: wp(5),
 marginLeft: wp(3),
   },
-  listVwCntent: {
-    paddingLeft: wp(3),
-    paddingTop: wp(2),
-    paddingBottom: wp(2),
-    borderBottomWidth: wp(0.2) 
-  }
-  ,
-  listAvatars: {
-    marginTop: wp(-1),
-    flexDirection: "row", position: "absolute", right: wp(3)
-  },
-  listBottomView : {
-    flexDirection: "row",
-  
-    marginLeft: wp(8)
-  },
-  listUserTimeDate : {
-    fontSize: wp(2.5),
-    opacity:.5
-  }, 
-  listMomentLT: {
-    marginLeft: wp(3),
-    fontSize: wp(2.5),
-    opacity: 0.5,
-  },
-  listMomentDate:  {
-    marginLeft: wp(1),
-                              fontSize: wp(2.5),
-                              opacity: 0.5,
-  },
-  listAvatarLeft: {
-    position: 'absolute',
-    right: wp(4),
-  },
-
-  listObDesc : {
-    marginLeft: wp(3), fontSize: wp(3)
-
-  }
+ 
 
 
 });
