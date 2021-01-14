@@ -22,4 +22,5 @@ export const colors = {
   },
   Viewcont: '#EDF1F5',
   chatTextbg: '#EBF1F5',
+  lightGrey:  "#CDD2D6"
 };

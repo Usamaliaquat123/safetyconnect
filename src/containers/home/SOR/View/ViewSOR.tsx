@@ -147,6 +147,40 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </Text>
               </View>
             </View>
+            <View style={styles.involveNortify}>
+              <View style={styles.notifiedSec}>
+                <Text style={styles.notifyPText}>Notified to : </Text>
+                {View_sor.user.InvolvedPersons.map((d, i) => (
+                  <View>
+                    <Avatar
+                      containerStyle={{marginLeft: wp(-(i + 1))}}
+                      size={wp(8)}
+                      rounded
+                      source={{
+                        uri: View_sor.user.profile,
+                      }}
+                    />
+                  </View>
+                ))}
+                <View style={styles.addCircle} />
+              </View>
+              <View style={styles.notifiedSec}>
+                <Text style={styles.invpText}>Involved People</Text>
+                {View_sor.user.InvolvedPersons.map((d, i) => (
+                  <View>
+                    <Avatar
+                      containerStyle={{marginLeft: wp(-(i + 1))}}
+                      size={wp(8)}
+                      rounded
+                      source={{
+                        uri: View_sor.user.profile,
+                      }}
+                    />
+                  </View>
+                ))}
+                <View style={styles.addCircle} />
+              </View>
+            </View>
             <View style={styles.tabs}>
               <View style={styles.tabsContainer}>
                 {/* Observer */}

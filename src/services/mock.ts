@@ -160,7 +160,7 @@ export const draft = [
     user2:'https://media-exp1.licdn.com/dms/image/C4D03AQGfuxWRWdlgVw/profile-displayphoto-shrink_400_400/0/1603355067087?e=1615420800&v=beta&t=EqS_Dglj86o0TOR3aIEKkOlgFWoo4dHKbJ4uA9ObAjs' , 
     username : "lorem Ipsum",
     risk: 15,
-    classify: 'Near Miss',
+    classify: 'LSR',
     color: colors.riskIcons.lightGreen,
     type: 'Drafts',
     location: 'lorem Ipsum',

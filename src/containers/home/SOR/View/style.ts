@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -88,7 +88,8 @@ const styles = StyleSheet.create({
   },
   subText:  {
     fontSize: wp(3),
-    color: colors.text
+    color: colors.text,
+    fontFamily:fonts.latoRegular
   },
   obvText:  {
     
@@ -96,6 +97,31 @@ const styles = StyleSheet.create({
     color: colors.text
   },
   tabs: {marginTop: wp(5)},
+  involveNortify : {
+marginTop: wp(10),
+  },
+  notifiedSec : { 
+    marginTop: wp(2),
+    flexDirection: "row"
+  },
+  invpText: {
+fontSize: wp(3.2),
+    marginTop: wp(1),
+marginRight: wp(10)
+  },
+  notifyPText: {
+fontSize: wp(3.2),
+    marginTop: wp(1),
+marginRight: wp(15)
+  },
+  addCircle : {
+    borderRadius : wp(10),
+    // padding:  wp(),
+    width: wp(8),
+    height: wp(8),
+    backgroundColor: colors.lightGrey,
+    marginLeft: wp(4)
+  },
   tabsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
