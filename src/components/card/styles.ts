@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   cardBottom: {
     justifyContent: 'space-between',
     flexDirection: 'row',
-    marginTop: wp(7),
+    marginTop: wp(6),
   },
   cardLocation: {
     flexDirection: 'row',

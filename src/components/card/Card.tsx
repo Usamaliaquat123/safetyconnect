@@ -91,22 +91,23 @@ export default class Card extends React.Component<CardProps, any> {
                   color={colors.primary}
                 />
                 <Text style={styles.cardBorderText}>{this.props.location}</Text>
-                <View>
-                  <Avatar
-                    size={wp(8)}
-                    rounded
-                    source={{
-                      uri: this.props.user1,
-                    }}
-                  />
-                  <Avatar
-                    size={wp(8)}
-                    rounded
-                    source={{
-                      uri: this.props.user1,
-                    }}
-                  />
-                </View>
+              </View>
+              <View style={{flexDirection: 'row', marginTop: wp(-2)}}>
+                <Avatar
+                  size={wp(8)}
+                  containerStyle={{marginRight: wp(-5)}}
+                  rounded
+                  source={{
+                    uri: this.props.user1,
+                  }}
+                />
+                <Avatar
+                  size={wp(8)}
+                  rounded
+                  source={{
+                    uri: this.props.user1,
+                  }}
+                />
               </View>
             </View>
             <View style={[this.props.even ? styles.radiusMaskEven : {}]} />
