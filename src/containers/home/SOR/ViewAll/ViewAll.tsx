@@ -65,7 +65,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       AnimatedDownSubmitted: new Animated.Value(0),
       AnimatedOpacSubmitted: new Animated.Value(0),
       currentlocation: Create_sor.Observation.locations[0],
-      project: 'List View',
+      project: 'Board View',
       isNotified: false,
       isDraft: false,
       isSubmited: false,
@@ -74,6 +74,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       notified: notified,
       submitted: submitted,
       slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
+      bottomWidth: wp(100),
     };
   }
 
@@ -109,7 +110,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
   };
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: colors.primary}}>
+      <View style={{backgroundColor: colors.primary}}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
@@ -193,7 +194,10 @@ class ViewAll extends React.Component<ViewAllProps, any> {
             {this.state.project == 'List View' ? (
               <View>
                 <ScrollView
-                  style={{marginTop: wp(15), padding: wp(3)}}
+                  style={{
+                    marginTop: wp(15),
+                    padding: wp(3),
+                  }}
                   showsVerticalScrollIndicator={false}>
                   <View style={{paddingBottom: wp(9)}}>
                     <View style={styles.listHeader}>
@@ -323,12 +327,17 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       </View>
                     ) : null}
                   </View>
-                  <View style={{paddingBottom: wp(10)}}>
+                  <View style={{paddingBottom: this.state.bottomWidth}}>
                     <View style={styles.listHeader}>
                       <TouchableOpacity
                         onPress={() => {
                           this.dropdownAnimated(this.state.isSubmited);
                           this.setState({isSubmited: !this.state.isSubmited});
+                          if (!this.state.isSubmited) {
+                            this.setState({bottomWidth: wp(40)});
+                          } else {
+                            this.setState({bottomWidth: wp(100)});
+                          }
                         }}
                         style={{flexDirection: 'row'}}>
                         <Icon
@@ -371,9 +380,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                             user2={d.user2}
                             observation={d.observation}
                             username={d.username}
-                            iconconf={classifySor.find(
-                              (e: any) => e.title == d.classify,
-                            )}
+                            iconconf={d.classify}
                             onPress={() =>
                               this.props.navigation.navigate('ViewSOR', {
                                 data: d,
@@ -389,7 +396,10 @@ class ViewAll extends React.Component<ViewAllProps, any> {
               </View>
             ) : (
               <ScrollView
-                style={{marginTop: wp(15)}}
+                style={{
+                  marginTop: wp(15),
+                  height: Dimensions.get('screen').height,
+                }}
                 showsHorizontalScrollIndicator={false}
                 snapToInterval={wp(83)}
                 decelerationRate="fast"
@@ -414,7 +424,12 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       risk={d.risk}
                       observation={d.observation}
                       classify={d.classify}
+                      iconConf={classifySor.find(
+                        (e: any) => e.title == d.classify,
+                      )}
                       location={d.location}
+                      user1={d.user1}
+                      user2={d.user2}
                       style={styles.cardConatiner}
                     />
                   ))}
@@ -441,6 +456,8 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       classify={d.classify}
                       location={d.location}
                       style={styles.draftCardContainer}
+                      user1={d.user1}
+                      user2={d.user2}
                     />
                   ))}
                 </View>
@@ -462,6 +479,8 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       }
                       date={d.date}
                       risk={d.risk}
+                      user1={d.user1}
+                      user2={d.user2}
                       observation={d.observation}
                       classify={d.classify}
                       location={d.location}

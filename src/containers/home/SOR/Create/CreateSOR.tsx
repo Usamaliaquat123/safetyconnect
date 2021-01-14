@@ -25,7 +25,7 @@ import {Chart, Suggestions} from '@components';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
-import { classifySorBtn } from "@typings";
+import {classifySorBtn} from '@typings';
 
 type CreateSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -74,7 +74,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   }
   submitDraft = async () => {
     // do shinhomet
-  }
+  };
   // Document Picker and update the state
   pickupDoc = async () => {
     try {
@@ -231,7 +231,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 />
                 {this.state.projectSuggest.length != 0 ? (
                   <View style={styles.slctContainer}>
-                    {this.state.projectSuggest.map((d: string, i:number) => (
+                    {this.state.projectSuggest.map((d: string, i: number) => (
                       <Text
                         key={i}
                         onPress={() => this.setState({project: d})}
@@ -262,14 +262,16 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 />
                 {this.state.selectL == true ? (
                   <View style={[styles.slctContainer, {left: wp(15)}]}>
-                    {Create_sor.Observation.locations.map((d: string, i: number) => (
-                      <Text
-                        key={i}
-                        onPress={() => this.setState({currentlocation: d})}
-                        style={styles.itemH}>
-                        {d.length > 7 ? d.substring(0, 7) + '...' : d}
-                      </Text>
-                    ))}
+                    {Create_sor.Observation.locations.map(
+                      (d: string, i: number) => (
+                        <Text
+                          key={i}
+                          onPress={() => this.setState({currentlocation: d})}
+                          style={styles.itemH}>
+                          {d.length > 7 ? d.substring(0, 7) + '...' : d}
+                        </Text>
+                      ),
+                    )}
                   </View>
                 ) : null}
               </TouchableOpacity>
@@ -343,46 +345,48 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             <View style={styles.clasSorContainer}>
               <Text style={styles.clasSorHeading}>Classify SOR</Text>
               <View style={styles.clasSorBtnV}>
-                {this.state.classifySorbtns.map((d: classifySorBtn, i: number) => (
-                  <TouchableOpacity
-                    key={i}
-                    onPress={() => {
-                      var classifySorbtns = [...this.state.classifySorbtns];
-                      classifySorbtns.map((b: object, j: number) => {
-                        if (classifySorbtns[j] == d) {
-                          classifySorbtns[j].selected = !classifySorbtns[j]
-                            .selected;
-                        } else {
-                          classifySorbtns[j].selected = false;
-                        }
-                      });
+                {this.state.classifySorbtns.map(
+                  (d: classifySorBtn, i: number) => (
+                    <TouchableOpacity
+                      key={i}
+                      onPress={() => {
+                        var classifySorbtns = [...this.state.classifySorbtns];
+                        classifySorbtns.map((b: object, j: number) => {
+                          if (classifySorbtns[j] == d) {
+                            classifySorbtns[j].selected = !classifySorbtns[j]
+                              .selected;
+                          } else {
+                            classifySorbtns[j].selected = false;
+                          }
+                        });
 
-                      this.setState(classifySorbtns);
-                    }}
-                    style={[
-                      styles.clasSorBtnCont,
-                      {borderColor: d.color},
-                      d.selected ? {backgroundColor: d.color} : {},
-                    ]}>
-                    <View style={styles.clasSorBtnWrap}>
-                      <Icon
-                        size={17}
-                        name={d.icon}
-                        type={d.type}
-                        color={d.selected ? '#fff' : d.color}
-                      />
-                      <Text
-                        style={[
-                          styles.clasSorBtnTtl,
-                          {
-                            color: d.selected ? '#fff' : d.color,
-                          },
-                        ]}>
-                        {d.title}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                ))}
+                        this.setState(classifySorbtns);
+                      }}
+                      style={[
+                        styles.clasSorBtnCont,
+                        {borderColor: d.color},
+                        d.selected ? {backgroundColor: d.color} : {},
+                      ]}>
+                      <View style={styles.clasSorBtnWrap}>
+                        <Icon
+                          size={17}
+                          name={d.icon}
+                          type={d.type}
+                          color={d.selected ? '#fff' : d.color}
+                        />
+                        <Text
+                          style={[
+                            styles.clasSorBtnTtl,
+                            {
+                              color: d.selected ? '#fff' : d.color,
+                            },
+                          ]}>
+                          {d.title}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  ),
+                )}
               </View>
             </View>
             {/* Involved Persons */}
@@ -588,7 +592,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </View>
             </View>
             {/* Draft And Submit Btns */}
-            <TouchableOpacity onPress={() => this.submitDraft()} style={styles.submitsorbtn}>
+            <TouchableOpacity
+              onPress={() => this.submitDraft()}
+              style={styles.submitsorbtn}>
               <Text style={styles.submitsorbtntxt}>Save as Draft</Text>
             </TouchableOpacity>
             <View style={styles.submitsorbtnSb}>

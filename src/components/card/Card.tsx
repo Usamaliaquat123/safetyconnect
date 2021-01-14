@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {colors} from '@theme';
-import {Icon} from 'react-native-elements';
+import {Icon, Avatar} from 'react-native-elements';
 import moment from 'moment';
 import {mapChart} from '@service';
 import styles from './styles';
@@ -17,6 +17,9 @@ export interface CardProps {
   classify?: string;
   location?: string;
   even?: boolean;
+  iconConf?: any;
+  user1: string;
+  user2: string;
   style?: Object;
   onPress: Function;
 }
@@ -26,6 +29,10 @@ export default class Card extends React.Component<CardProps, any> {
     super(props);
     this.state = {};
   }
+
+  componentDidMount = () => {
+    console.log(this.props.iconConf);
+  };
 
   render() {
     return (
@@ -84,6 +91,22 @@ export default class Card extends React.Component<CardProps, any> {
                   color={colors.primary}
                 />
                 <Text style={styles.cardBorderText}>{this.props.location}</Text>
+                <View>
+                  <Avatar
+                    size={wp(8)}
+                    rounded
+                    source={{
+                      uri: this.props.user1,
+                    }}
+                  />
+                  <Avatar
+                    size={wp(8)}
+                    rounded
+                    source={{
+                      uri: this.props.user1,
+                    }}
+                  />
+                </View>
               </View>
             </View>
             <View style={[this.props.even ? styles.radiusMaskEven : {}]} />

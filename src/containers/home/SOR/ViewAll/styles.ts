@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     padding: wp(5),
     paddingRight: wp(7),
     paddingLeft: wp(7),
-    flex: 1,
+    // flex: 1,
     backgroundColor: colors.primary,
   },
   title: {
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     width: wp(100),
   },
   content: {
-    flex: 1,
+    // flex: 2,
     backgroundColor: colors.secondary,
     borderTopLeftRadius: wp(10),
     borderTopRightRadius: wp(10)
