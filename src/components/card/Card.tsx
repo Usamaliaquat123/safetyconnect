@@ -14,7 +14,7 @@ export interface CardProps {
   date?: number;
   risk?: number;
   observation?: string;
-  classify?: string;
+  classify?: any;
   location?: string;
   even?: boolean;
   iconConf?: any;
@@ -70,21 +70,21 @@ export default class Card extends React.Component<CardProps, any> {
                 <Icon
                   style={{padding: 3}}
                   size={wp(3)}
-                  name="warning"
-                  type="antdesign"
-                  color={colors.riskIcons.red}
+                  name={this.props.iconConf.icon}
+                  type={this.props.iconConf.type}
+                  color={this.props.iconConf.color}
                 />
                 <Text
                   style={[
                     styles.cardBorderText,
-                    {color: colors.riskIcons.red},
+                    {color: this.props.iconConf.color},
                   ]}>
                   {this.props.classify}
                 </Text>
               </View>
               <View style={styles.cardLocation}>
                 <Icon
-                  style={{padding: 3}}
+                  style={{paddingRight: 3}}
                   size={wp(5)}
                   name="location"
                   type="evilicon"

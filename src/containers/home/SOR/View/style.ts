@@ -44,35 +44,56 @@ const styles = StyleSheet.create({
     marginTop: wp(80),
 
     backgroundColor: colors.secondary,
-    borderTopLeftRadius: wp(8),
-    borderTopRightRadius: wp(8),
+    borderTopLeftRadius: wp(6),
+    borderTopRightRadius: wp(6),
     padding: wp(8),
     paddingLeft: wp(5),
     paddingRight: wp(5),
     // height: wp(150),
   },
   clasifyT: {
-    fontSize: wp(4),
-    fontWeight: 'bold',
+    fontSize: wp(3.5),
     marginTop: wp(1),
     marginLeft: wp(2),
-    color: colors.primary,
+    color: colors.text,
   },
   classittleicon: {
     flexDirection: 'row',
   },
   obserContainer: {marginTop: wp(3)},
   observationText: {
-    fontWeight: 'bold',
-    color: colors.text,
-    fontSize: wp(4),
+    fontWeight: "800",
+    color: colors.primary,
+    fontSize: wp(3.5),
   },
   observationDate: {
-    fontSize: wp(3),
-    fontWeight: 'bold',
+    fontSize: wp(2.7),
+    fontWeight: '500',
     color: colors.text,
     opacity: 0.5,
-    marginTop: wp(2),
+    marginTop: wp(1),
+  },
+  subContainer:  {
+    flexDirection: "row",
+    marginTop: wp(3),
+
+  },
+  submittedTo : {
+    flexDirection: "row"
+  },
+  observerTo : {
+    flexDirection: "row",
+    position: "absolute",
+    right: 0
+  },
+  subText:  {
+    fontSize: wp(3),
+    color: colors.text
+  },
+  obvText:  {
+    
+    fontSize: wp(3),
+    color: colors.text
   },
   tabs: {marginTop: wp(5)},
   tabsContainer: {

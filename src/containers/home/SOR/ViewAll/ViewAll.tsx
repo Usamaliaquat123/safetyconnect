@@ -380,7 +380,9 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                             user2={d.user2}
                             observation={d.observation}
                             username={d.username}
-                            iconconf={d.classify}
+                            iconconf={classifySor.find(
+                              (e: any) => e.title == d.classify,
+                            )}
                             onPress={() =>
                               this.props.navigation.navigate('ViewSOR', {
                                 data: d,
@@ -430,7 +432,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       location={d.location}
                       user1={d.user1}
                       user2={d.user2}
-                      style={styles.cardConatiner}
+                      style={[styles.cardConatiner, {marginBottom: wp(10)}]}
                     />
                   ))}
                 </View>
@@ -454,8 +456,14 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       risk={d.risk}
                       observation={d.observation}
                       classify={d.classify}
+                      iconConf={classifySor.find(
+                        (e: any) => e.title == d.classify,
+                      )}
                       location={d.location}
-                      style={styles.draftCardContainer}
+                      style={[
+                        styles.draftCardContainer,
+                        {marginBottom: wp(10)},
+                      ]}
                       user1={d.user1}
                       user2={d.user2}
                     />
@@ -483,8 +491,14 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       user2={d.user2}
                       observation={d.observation}
                       classify={d.classify}
+                      iconConf={classifySor.find(
+                        (e: any) => e.title == d.classify,
+                      )}
                       location={d.location}
-                      style={styles.submitCardContainer}
+                      style={[
+                        styles.submitCardContainer,
+                        {marginBottom: wp(10)},
+                      ]}
                     />
                   ))}
                 </View>

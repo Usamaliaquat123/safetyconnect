@@ -98,7 +98,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             style={[styles.content, {marginTop: this.state.contentAnim}]}>
             <View style={styles.classittleicon}>
               <Icon
-                size={wp(7)}
+                size={wp(6)}
                 name={
                   View_sor.user.classifyType == 'LSR'
                     ? 'aperture'
@@ -121,7 +121,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     ? 'font-awesome-5'
                     : 'antdesign'
                 }
-                color={colors.primary}
+                color={colors.text}
               />
               <Text style={styles.clasifyT}>{View_sor.user.classifyType}</Text>
             </View>
@@ -132,6 +132,20 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               <Text style={styles.observationDate}>
                 {moment(View_sor.user.date).format('Do MMM, YYYY')}
               </Text>
+            </View>
+            <View style={styles.subContainer}>
+              <View style={styles.submittedTo}>
+                <Text style={styles.subText}>Submitted to : </Text>
+                <Text style={styles.obvText}>
+                  {View_sor.user.observer[0].name}
+                </Text>
+              </View>
+              <View style={styles.observerTo}>
+                <Text style={styles.obvText}>Observer : </Text>
+                <Text style={styles.obvText}>
+                  {View_sor.user.submittedTo[0].name}{' '}
+                </Text>
+              </View>
             </View>
             <View style={styles.tabs}>
               <View style={styles.tabsContainer}>
