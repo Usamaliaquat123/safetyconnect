@@ -5,13 +5,14 @@ import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
   } from 'react-native-responsive-screen';
-  
+  import { colors } from "@theme";
 const styles = StyleSheet.create({
     listVwCntent: {
-        paddingLeft: wp(3),
+        // paddingLeft: wp(),
         paddingTop: wp(4),
         paddingBottom: wp(4),
-        borderBottomWidth: wp(0.2) 
+        borderBottomWidth: wp(0.1),
+        borderBottomColor:colors.textOpa 
       }
       ,
       listAvatars: {

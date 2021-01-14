@@ -24,7 +24,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Isor, classifySorBtn} from '@typings';
-import Login from './../../../auth/login/Login';
 
 type ViewAllNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -56,14 +55,20 @@ class ViewAll extends React.Component<ViewAllProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      AnimatedDown: new Animated.Value(0),
-      AnimatedOpac: new Animated.Value(0),
-
+      // animation of drafts
+      AnimatedDownDraft: new Animated.Value(0),
+      AnimatedOpacDraft: new Animated.Value(0),
+      // animation of notified
+      AnimatedDownNotify: new Animated.Value(0),
+      AnimatedOpacNotify: new Animated.Value(0),
+      // animation of submitted
+      AnimatedDownSubmitted: new Animated.Value(0),
+      AnimatedOpacSubmitted: new Animated.Value(0),
       currentlocation: Create_sor.Observation.locations[0],
       project: 'List View',
       isNotified: false,
       isDraft: false,
-      isSubmitted: false,
+      isSubmited: false,
       selectP: true,
       draft: draft,
       notified: notified,
@@ -75,32 +80,32 @@ class ViewAll extends React.Component<ViewAllProps, any> {
   componentDidMount = () => {};
 
   dropdownAnimated = (d: string) => {
-    Animated.timing(this.state.AnimatedDown, {
-      toValue: wp(20),
-      duration: 1500,
-      easing: Easing.elastic(3),
-      useNativeDriver: false,
-    }).start();
-    Animated.timing(this.state.AnimatedOpac, {
-      toValue: 1,
-      duration: 1500,
-      easing: Easing.elastic(3),
-      useNativeDriver: false,
-    }).start();
+    // Animated.timing(this.state.AnimatedDown, {
+    //   toValue: wp(20),
+    //   duration: 1500,
+    //   easing: Easing.elastic(3),
+    //   useNativeDriver: false,
+    // }).start();
+    // Animated.timing(this.state.AnimatedOpac, {
+    //   toValue: 1,
+    //   duration: 1500,
+    //   easing: Easing.elastic(3),
+    //   useNativeDriver: false,
+    // }).start();
   };
   closeDropDown = (d: string) => {
-    Animated.timing(this.state.AnimatedDown, {
-      toValue: wp(0),
-      duration: 1500,
-      easing: Easing.elastic(3),
-      useNativeDriver: false,
-    }).start();
-    Animated.timing(this.state.AnimatedOpac, {
-      toValue: 0,
-      duration: 1500,
-      easing: Easing.elastic(3),
-      useNativeDriver: false,
-    }).start();
+    // Animated.timing(d, {
+    //   toValue: wp(0),
+    //   duration: 1500,
+    //   easing: Easing.elastic(3),
+    //   useNativeDriver: false,
+    // }).start();
+    // Animated.timing(this.state.AnimatedOpac, {
+    //   toValue: 0,
+    //   duration: 1500,
+    //   easing: Easing.elastic(3),
+    //   useNativeDriver: false,
+    // }).start();
   };
   render() {
     return (
@@ -213,7 +218,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       <View
                         style={{
                           position: 'absolute',
-                          right: 0,
+                          right: wp(4),
                           flexDirection: 'row',
                           marginTop: wp(-1),
                         }}>
@@ -229,28 +234,32 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                         </Text>
                       </View>
                     </View>
-                    <View style={styles.listViewContent}>
-                      {this.state.draft.map((d: Isor, i: number) => (
-                        <ListCard
-                          styles={
-                            this.state.draft.length == i + 1
-                              ? {borderBottomWidth: wp(0)}
-                              : null
-                          }
-                          user1={d.user1}
-                          user2={d.user2}
-                          observation={d.observation}
-                          username={d.username}
-                          iconconf={classifySor.find(
-                            (e: any) => e.title == d.classify,
-                          )}
-                          onPress={() =>
-                            this.props.navigation.navigate('ViewSOR', {data: d})
-                          }
-                          date={d.date}
-                        />
-                      ))}
-                    </View>
+                    {this.state.isDraft == true ? (
+                      <View style={styles.listViewContent}>
+                        {this.state.draft.map((d: Isor, i: number) => (
+                          <ListCard
+                            styles={
+                              this.state.draft.length == i + 1
+                                ? {borderBottomWidth: wp(0)}
+                                : null
+                            }
+                            user1={d.user1}
+                            user2={d.user2}
+                            observation={d.observation}
+                            username={d.username}
+                            iconconf={classifySor.find(
+                              (e: any) => e.title == d.classify,
+                            )}
+                            onPress={() =>
+                              this.props.navigation.navigate('ViewSOR', {
+                                data: d,
+                              })
+                            }
+                            date={d.date}
+                          />
+                        ))}
+                      </View>
+                    ) : null}
                   </View>
                   <View style={{paddingBottom: wp(10)}}>
                     <View style={styles.listHeader}>
@@ -270,7 +279,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       <View
                         style={{
                           position: 'absolute',
-                          right: 0,
+                          right: wp(4),
                           flexDirection: 'row',
                           marginTop: wp(-1),
                         }}>
@@ -287,28 +296,94 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                         </Text>
                       </View>
                     </View>
-                    <View style={styles.listViewContent}>
-                      {this.state.notified.map((d: Isor, i: number) => (
-                        <ListCard
-                          styles={
-                            this.state.draft.length == i + 1
-                              ? {borderBottomWidth: wp(0)}
-                              : null
-                          }
-                          user1={d.user1}
-                          user2={d.user2}
-                          observation={d.observation}
-                          username={d.username}
-                          iconconf={classifySor.find(
-                            (e: any) => e.title == d.classify,
-                          )}
-                          onPress={() =>
-                            this.props.navigation.navigate('ViewSOR', {data: d})
-                          }
-                          date={d.date}
+                    {this.state.isNotified == true ? (
+                      <View style={styles.listViewContent}>
+                        {this.state.notified.map((d: Isor, i: number) => (
+                          <ListCard
+                            styles={
+                              this.state.draft.length == i + 1
+                                ? {borderBottomWidth: wp(0)}
+                                : null
+                            }
+                            user1={d.user1}
+                            user2={d.user2}
+                            observation={d.observation}
+                            username={d.username}
+                            iconconf={classifySor.find(
+                              (e: any) => e.title == d.classify,
+                            )}
+                            onPress={() =>
+                              this.props.navigation.navigate('ViewSOR', {
+                                data: d,
+                              })
+                            }
+                            date={d.date}
+                          />
+                        ))}
+                      </View>
+                    ) : null}
+                  </View>
+                  <View style={{paddingBottom: wp(10)}}>
+                    <View style={styles.listHeader}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.dropdownAnimated(this.state.isSubmited);
+                          this.setState({isSubmited: !this.state.isSubmited});
+                        }}
+                        style={{flexDirection: 'row'}}>
+                        <Icon
+                          size={wp(3.5)}
+                          name={this.state.isSubmited == true ? 'down' : 'up'}
+                          type="antdesign"
                         />
-                      ))}
+                        <Text style={styles.listDraftText}>Submitted</Text>
+                      </TouchableOpacity>
+                      <View
+                        style={{
+                          position: 'absolute',
+                          right: wp(4),
+                          flexDirection: 'row',
+                          marginTop: wp(-1),
+                        }}>
+                        <Icon size={wp(5)} name="filter" type="ionicon" />
+
+                        <Text
+                          style={{
+                            paddingLeft: wp(1),
+                            fontSize: wp(3.5),
+                            marginTop: wp(0.6),
+                            fontWeight: 'bold',
+                          }}>
+                          Filter
+                        </Text>
+                      </View>
                     </View>
+                    {this.state.isSubmited == true ? (
+                      <View style={styles.listViewContent}>
+                        {this.state.submitted.map((d: Isor, i: number) => (
+                          <ListCard
+                            styles={
+                              this.state.draft.length == i + 1
+                                ? {borderBottomWidth: wp(0)}
+                                : null
+                            }
+                            user1={d.user1}
+                            user2={d.user2}
+                            observation={d.observation}
+                            username={d.username}
+                            iconconf={classifySor.find(
+                              (e: any) => e.title == d.classify,
+                            )}
+                            onPress={() =>
+                              this.props.navigation.navigate('ViewSOR', {
+                                data: d,
+                              })
+                            }
+                            date={d.date}
+                          />
+                        ))}
+                      </View>
+                    ) : null}
                   </View>
                 </ScrollView>
               </View>

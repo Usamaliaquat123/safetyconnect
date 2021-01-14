@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import {Icon, Avatar} from 'react-native-elements';
-import {colors} from '@theme';
 import styles from './styles';
 import {
   widthPercentageToDP as wp,
@@ -28,9 +27,7 @@ export interface ListCardProps {
 }
 
 export default class ListCard extends React.Component<ListCardProps, any> {
-  componentDidMount = () => {
-    console.log(this.props.iconconf);
-  };
+  componentDidMount = () => {};
   render() {
     return (
       <TouchableOpacity

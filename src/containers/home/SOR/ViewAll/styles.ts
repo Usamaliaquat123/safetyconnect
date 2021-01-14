@@ -35,10 +35,10 @@ const styles = StyleSheet.create({
     width: wp(100),
   },
   content: {
-    flex: 2,
+    flex: 1,
     backgroundColor: colors.secondary,
     borderTopLeftRadius: wp(10),
-    borderTopRightRadius: wp(10),
+    borderTopRightRadius: wp(10)
   },
   hselectort: {color: colors.secondary, fontWeight: 'bold', fontSize: wp(3)},
   selectorBox: {color: colors.secondary, fontSize: wp(3)},
