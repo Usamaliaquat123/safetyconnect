@@ -31,6 +31,7 @@ import {
       headertle: {flexDirection: 'row'},
     //  content
     content: {
+        height: hp(100),
         padding: wp(5),
         backgroundColor: colors.secondary,
         borderTopLeftRadius: wp(7),
@@ -63,10 +64,11 @@ alignItems:"center"
         fontWeight: "bold"
       },
       authInputs : {
-          fontSize: wp(3)
+          fontSize: wp(4)
       },
       forgetPassText:  {
         fontSize: wp(3),
+        opacity: .7,
         marginTop: wp(5),
       },
       eyeIconContainer : {
@@ -74,12 +76,12 @@ alignItems:"center"
         right: wp(3)
       },
       signinText:  {
-        fontSize: wp(3.4),
+        fontSize: wp(4),
         fontWeight:"bold",
         color: colors.secondary
       },
       signinTextGoogle:  {
-        fontSize: wp(3.4),
+        fontSize: wp(4),
         fontWeight:"bold",
         color: colors.primary
       },
@@ -94,7 +96,7 @@ alignItems:"center"
         borderRadius: wp(3)
       },
       siginwithGoogle:  {
-          marginTop: wp(10),
+          marginTop: wp(5),
           alignSelf:"center",
         backgroundColor: colors.secondary,
         justifyContent: "center",
@@ -117,9 +119,27 @@ alignItems:"center"
             marginTop: wp(2.3)
        },
        orText:  {
-           fontSize: wp(3),
+           fontSize: wp(3.8),
+           opacity: .5,
            marginLeft: wp(3),
            marginRight: wp(3)
+       },
+       dontHaveAccount: {
+           textAlign: "center",
+           fontSize: wp(3),
+           color: colors.text,
+           opacity: .7,
+           marginTop: wp(3)
+       },
+       createNewAccount: {
+           color: colors.text,
+           opacity: .7,
+           fontSize: wp(3.4),
+           fontWeight: "bold",
+           textAlign: "center"
+       },
+       createnewaccountContainer: {
+           marginTop: wp(3)
        }
  });
 

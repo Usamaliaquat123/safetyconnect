@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  TextInput,
 } from 'react-native';
 import {Avatar, Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
@@ -19,7 +20,6 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {TextInput} from 'react-native-gesture-handler';
 type LoginNavigationProp = StackNavigationProp<StackNavigatorProps, 'Login'>;
 type LoginRouteProp = RouteProp<StackNavigatorProps, 'Login'>;
 
@@ -81,6 +81,7 @@ class Login extends React.Component<LoginProps, any> {
                     : {borderColor: colors.textOpa},
                 ]}>
                 <TextInput
+                  secureTextEntry={true}
                   onFocus={() => this.setState({selectedInput: 2})}
                   style={styles.authInputs}
                   onChange={(e) => console.log(e)}
@@ -97,7 +98,7 @@ class Login extends React.Component<LoginProps, any> {
                 </View>
               </View>
             </View>
-            <Text style={styles.forgetPassText}>Forget Password? </Text>
+            <Text style={styles.forgetPassText}>Forget Password ? </Text>
             <TouchableOpacity style={styles.siginBtnContainer}>
               <Text style={styles.signinText}>Sign in </Text>
             </TouchableOpacity>
@@ -109,10 +110,15 @@ class Login extends React.Component<LoginProps, any> {
             </View>
             {/* Google Signin */}
             <TouchableOpacity style={styles.siginwithGoogle}>
-              <View style={{width: wp(7), height: wp(7), marginRight: wp(3)}}>
+              <View style={{width: wp(5), height: wp(5), marginRight: wp(3)}}>
                 <Image source={images.google} style={GlStyles.images} />
               </View>
               <Text style={styles.signinTextGoogle}>Continue with Google </Text>
+            </TouchableOpacity>
+            {/* Don't have a Acctouny */}
+            <Text style={styles.dontHaveAccount}>Don't have an Account ?</Text>
+            <TouchableOpacity style={styles.createnewaccountContainer}>
+              <Text style={styles.createNewAccount}>Create New Account</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

@@ -26,6 +26,7 @@ export type StackNavigatorProps = {
   ViewAll: undefined;
   ViewSOR: {data: Isor};
   Login: {data: undefined};
+  Signup: {data: undefined};
   Messaging: undefined;
   Chat: {data: Imessage};
 };
@@ -60,12 +61,20 @@ export const MainStackNavigator = () => {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
+            name="Signup"
+            component={Signup}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="Login"
             component={Login}
             options={{
               headerShown: false,
             }}
           />
+
           <Stack.Screen
             name="ViewAll"
             component={ViewAll}
