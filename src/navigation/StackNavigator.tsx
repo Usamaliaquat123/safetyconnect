@@ -58,8 +58,14 @@ export const MainStackNavigator = () => {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator>
-        
-        <Stack.Screen
+          <Stack.Screen
+            name="ViewSOR"
+            component={ViewSOR}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="ViewAll"
             component={ViewAll}
             options={{
@@ -73,26 +79,17 @@ export const MainStackNavigator = () => {
               headerShown: false,
             }}
           />
-        <Stack.Screen
-              name="Chat"
-              component={Chat}
-              options={{
-                headerShown: false,
-              }}
-            /> 
-          
-
           <Stack.Screen
-            name="CreateSOR"
-            component={CreateSOR}
+            name="Chat"
+            component={Chat}
             options={{
               headerShown: false,
             }}
           />
 
           <Stack.Screen
-            name="ViewSOR"
-            component={ViewSOR}
+            name="CreateSOR"
+            component={CreateSOR}
             options={{
               headerShown: false,
             }}

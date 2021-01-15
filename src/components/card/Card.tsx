@@ -30,9 +30,7 @@ export default class Card extends React.Component<CardProps, any> {
     this.state = {};
   }
 
-  componentDidMount = () => {
-    console.log(this.props.iconConf);
-  };
+  componentDidMount = () => {};
 
   render() {
     return (

@@ -118,8 +118,9 @@ marginRight: wp(15)
     borderRadius : wp(10),
     // padding:  wp(),
     width: wp(8),
+    justifyContent: "center",
     height: wp(8),
-    backgroundColor: colors.lightGrey,
+    backgroundColor: colors.primary,
     marginLeft: wp(4)
   },
   tabsContainer: {
@@ -160,7 +161,7 @@ marginRight: wp(15)
   riskText: {
     color: colors.primary,
     fontWeight: 'bold',
-    fontSize: wp(4),
+    fontSize: wp(3.4),
   },
   riskttle: {
     fontStyle: 'italic',
@@ -170,7 +171,7 @@ marginRight: wp(15)
   riskIcon: {
     margin: wp(2),
     backgroundColor: colors.riskIcons.orrange,
-    borderRadius: wp(5),
+    borderRadius: wp(1.3),
     padding: wp(5),
   },
   riskIconText: {
@@ -182,12 +183,17 @@ marginRight: wp(15)
   },
   // action & recommendation
   actionContainer: {marginTop: wp(5)},
-  actionText: {fontSize: wp(4), fontWeight: 'bold', color: colors.primary},
+  actionText: {fontSize: wp(3.5), fontWeight: 'bold', color: colors.primary},
+  sugForYouText :{
+    fontSize:wp(3),
+    color: colors.text,
+    fontWeight: "bold",
+    marginTop: wp(1)
+  },
   actionRecomCon: {
-    padding: wp(7),
+    padding: wp(3),
     marginTop: wp(3),
     borderRadius: wp(4),
-    backgroundColor: colors.lightBlue,
   },
   inProgrssText: {
     fontSize: wp(3.4),
@@ -196,8 +202,8 @@ marginRight: wp(15)
     opacity: 0.5,
   },
   obvTextAction: {
-    fontWeight: 'bold',
-    fontSize: wp(3.5),
+    // fontWeight: 'bold',
+    fontSize: wp(3.3),
     marginTop: wp(3),
     color: colors.primary,
   },
@@ -207,13 +213,19 @@ marginRight: wp(15)
     marginTop: wp(3),
   },
   subAssText: {
-    fontWeight: 'bold',
-    fontSize: wp(3),
-    // opacity: 0.5,
+    // fontWeight: 'bold',
+    fontSize: wp(2.8),
+    opacity: 0.5,
   },
   subAssuser: {
     // marginLeft: wp,
     // fontStyle: 'italic',
+  },
+  statusARText : {
+    color: colors.text,
+    opacity: .8,
+    fontSize: wp(3),
+    marginLeft:wp(3)
   },
   attachmentsContainer: {
     marginTop: wp(5),
@@ -225,12 +237,12 @@ marginRight: wp(15)
   AttchimageContainer: {
     width: wp(40),
     height: wp(30),
-    borderRadius: wp(5),
+    borderRadius: wp(3),
     margin: wp(1),
   },
   attachFileContainer: {
     padding: wp(5),
-    borderRadius: wp(5),
+    borderRadius: wp(3),
     backgroundColor: colors.lightBlue,
     // justifyContent: 'space-between',
     flexDirection: 'row',
@@ -242,6 +254,43 @@ marginRight: wp(15)
     marginLeft: wp(5),
     marginTop: wp(1),
   },
+  actionTypeElemAsdmin:  {
+    fontSize: wp(2.7),
+    opacity: 0.5,
+  },
+  addActionAndRecommendation:  {
+    borderWidth: wp(0.3),
+    borderRadius: wp(3),
+    marginTop : wp(3),
+    paddingLeft: wp(1),
+    borderColor: colors.lightGrey,
+    flexDirection: "row",
+    alignItems : "center"
+  },
+  textaddActionContainer: {
+    fontSize: wp(3.5)
+  },
+  // comments sections
+  commentsSections : {
+    marginTop :wp(4),
+    backgroundColor: colors.lightBlue,
+    padding: wp(3)
+  },
+  userComments: {
+    flexDirection: "row",
+
+  },
+  userCommentName : {
+    fontSize: wp(3),
+    fontWeight: "bold"
+  },
+  usercomment : {
+    fontSize: wp(3),
+
+  },
+  commentUser : {
+    marginTop: wp(3)
+  }
 });
 
 export default styles;

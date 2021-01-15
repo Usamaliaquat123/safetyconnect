@@ -34,6 +34,8 @@ export const Create_sor = {
   },
 };
 
+
+
 export const View_sor = {
   user: {
     name: 'John Doe',
@@ -44,12 +46,12 @@ export const View_sor = {
       'Aliqua deserunt laboris reprehenderit qui aliqua aute proident amet duis irure.',
     date: 1609667502505,
     InvolvedPersons: [
-      {id: 12, name: ' Jane Doe', photo: ''},
-      {id: 13, name: ' James Doe', photo: ''},
+      {id: 12, name: ' Jane Doe', photo: 'https://media-exp1.licdn.com/dms/image/C4E03AQFTUDB-a5qa7Q/profile-displayphoto-shrink_400_400/0/1600851452365?e=1615420800&v=beta&t=ic43tX8ncbqo6LSNHAyj09i3EMIPD868wVxnkTdyOzg'},
+      {id: 13, name: ' James Doe', photo: 'https://media-exp1.licdn.com/dms/image/C4E03AQFTUDB-a5qa7Q/profile-displayphoto-shrink_400_400/0/1600851452365?e=1615420800&v=beta&t=ic43tX8ncbqo6LSNHAyj09i3EMIPD868wVxnkTdyOzg'},
     ],
     observer: [
-      {id: 23, name: 'Jane Doe', photo: ''},
-      {id: 24, name: 'Jonna Doe', photo: ''},
+      {id: 23, name: 'Jane Doe', photo: 'https://media-exp1.licdn.com/dms/image/C4E03AQFTUDB-a5qa7Q/profile-displayphoto-shrink_400_400/0/1600851452365?e=1615420800&v=beta&t=ic43tX8ncbqo6LSNHAyj09i3EMIPD868wVxnkTdyOzg'},
+      {id: 24, name: 'Jonna Doe', photo: 'https://media-exp1.licdn.com/dms/image/C4E03AQFTUDB-a5qa7Q/profile-displayphoto-shrink_400_400/0/1600851452365?e=1615420800&v=beta&t=ic43tX8ncbqo6LSNHAyj09i3EMIPD868wVxnkTdyOzg'},
     ],
     submittedTo: [
       {id: 45, name: 'Jessica Doe', photo: ''},
@@ -63,32 +65,43 @@ export const View_sor = {
     Risk: 16,
     ActionAndRecommendation: [
       {
-        status: 'In Progress',
-        observation:
-          'Adipisicing voluptate Lorem sint officia fugiat mollit nisi mollit.',
-        SubmittedTo: 'Jane Doe',
-        AssignedTo: 'Jane Doe',
-      },
-      {
         status: 'Completed',
         observation:
           'Adipisicing voluptate Lorem sint officia fugiat mollit nisi mollit.',
         SubmittedTo: 'Jane Doe',
         AssignedTo: 'Jane Doe',
+        time : 1610636244237,
+        type: "Elimination"
+      },
+      {
+        status: 'Status',
+        type:"Administrative",
+        observation:
+        'Adipisicing voluptate Lorem sint officia fugiat mollit nisi mollit.',
+        SubmittedTo: 'Jane Doe',
+        AssignedTo: 'Jane Doe',
+        time : 1610636244239
       },
     ],
     Attachments: [
       {
         type: 'photo',
-        url:
-          'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+        url:'https://cdn.technologyadvice.com/wp-content/uploads/2017/08/Fotolia_98303431_Subscription_Monthly_M-699x408.jpg'
+      },
+      {
+        type: 'photo',
+        url:'https://cdn.technologyadvice.com/wp-content/uploads/2017/08/Fotolia_98303431_Subscription_Monthly_M-699x408.jpg'
       },
       {
         type: 'file',
-        url:
-          'https://github.com/facebook/flux/files/5763886/The_Ultimate_Guide_to_React_Native_Optimization_Ebook-Callstack.pdf',
+        url:'https://cdn.technologyadvice.com/wp-content/uploads/2017/08/Fotolia_98303431_Subscription_Monthly_M-699x408.jpg'
       },
     ],
+    comments: [
+      {user: "Faizan", comment:"Created SOR" , date: 1610696943490, image: ""},
+      {user: "Haider", comment:"Mark an action completed " , date: 1610696943490, image: ""},
+      {user: "Sawera", comment:"Faizan you need to revisit this action " , date: 1610696943490, image : ""}
+    ]
   },
 };
 export const viewas = ['Board View', 'List View'];

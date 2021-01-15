@@ -8,6 +8,7 @@ import {
   submitted,
   messagingUsers,
   groupConversation,
+  statusOfActions,
   notified,
 } from './mock';
 export {
@@ -16,6 +17,7 @@ export {
   View_sor,
   draft,
   viewas,
+  statusOfActions,
   mapChart,
   messagingUsers,
   groupConversation,
