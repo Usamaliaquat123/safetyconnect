@@ -25,9 +25,10 @@ export type StackNavigatorProps = {
   CreateSOR: undefined;
   ViewAll: undefined;
   ViewSOR: {data: Isor};
-  Login: {data: undefined};
-  Signup: {data: undefined};
+  Login: undefined;
+  Signup: undefined;
   Messaging: undefined;
+  Verify: undefined;
   Chat: {data: Imessage};
 };
 export type AuthNavigatorProp = {
@@ -60,6 +61,13 @@ export const MainStackNavigator = () => {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator>
+          <Stack.Screen
+            name="Verify"
+            component={Verify}
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen
             name="Signup"
             component={Signup}

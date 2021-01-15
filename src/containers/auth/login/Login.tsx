@@ -117,7 +117,9 @@ class Login extends React.Component<LoginProps, any> {
             </TouchableOpacity>
             {/* Don't have a Acctouny */}
             <Text style={styles.dontHaveAccount}>Don't have an Account ?</Text>
-            <TouchableOpacity style={styles.createnewaccountContainer}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Signup')}
+              style={styles.createnewaccountContainer}>
               <Text style={styles.createNewAccount}>Create New Account</Text>
             </TouchableOpacity>
           </View>

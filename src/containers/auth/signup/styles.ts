@@ -67,15 +67,6 @@ alignItems:"center"
       authInputs : {
           fontSize: wp(4)
       },
-      forgetPassText:  {
-        fontSize: wp(3),
-        opacity: .7,
-        marginTop: wp(5),
-      },
-      eyeIconContainer : {
-        position: "absolute",
-        right: wp(3)
-      },
       signinText:  {
         fontSize: wp(4),
         fontWeight:"bold",

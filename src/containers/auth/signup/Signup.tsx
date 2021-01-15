@@ -75,7 +75,9 @@ class Signup extends React.Component<SignupProps, any> {
             </TouchableOpacity>
             {/* Don't have a Acctouny */}
             <Text style={styles.dontHaveAccount}>Already a member ? </Text>
-            <TouchableOpacity style={styles.createnewaccountContainer}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Login')}
+              style={styles.createnewaccountContainer}>
               <Text style={styles.createNewAccount}>
                 Signin to your existing account!
               </Text>
