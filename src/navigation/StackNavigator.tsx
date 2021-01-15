@@ -25,11 +25,12 @@ export type StackNavigatorProps = {
   CreateSOR: undefined;
   ViewAll: undefined;
   ViewSOR: {data: Isor};
+  Login: {data: undefined};
   Messaging: undefined;
   Chat: {data: Imessage};
 };
 export type AuthNavigatorProp = {
-  Login: undefined;
+  // Login: undefined;
 };
 
 const Stack = createStackNavigator<StackNavigatorProps>();
@@ -40,13 +41,13 @@ export const AuthStackNavigator = () => {
     <SafeAreaProvider>
       <NavigationContainer>
         <Auth.Navigator>
-          <Auth.Screen
+          {/* <Auth.Screen
             name="Login"
             component={Login}
             options={{
               headerShown: false,
             }}
-          />
+          /> */}
         </Auth.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
@@ -59,8 +60,8 @@ export const MainStackNavigator = () => {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            name="CreateSOR"
-            component={CreateSOR}
+            name="Login"
+            component={Login}
             options={{
               headerShown: false,
             }}
@@ -72,6 +73,14 @@ export const MainStackNavigator = () => {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="CreateSOR"
+            component={CreateSOR}
+            options={{
+              headerShown: false,
+            }}
+          />
+
           <Stack.Screen
             name="Messaging"
             component={Messaging}

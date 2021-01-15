@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-// import {connect} from 'react-redux';
-
+import {connect} from 'react-redux';
+import styles from './styles';
 export interface SignupProps {}
 
-export default class Signup extends React.Component<SignupProps, any> {
+class Signup extends React.Component<SignupProps, any> {
   render() {
     return (
       <View>
@@ -14,14 +14,12 @@ export default class Signup extends React.Component<SignupProps, any> {
   }
 }
 
-// const mapStateToProps = state => {
-//   return {
-//   };
-// }
+const mapStateToProps = (state: any) => {
+  return {};
+};
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//   };
-// }
+const mapDispatchToProps = (dispatch: any) => {
+  return {};
+};
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
