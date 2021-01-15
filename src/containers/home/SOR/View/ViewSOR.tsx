@@ -507,19 +507,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   width: wp(45),
                   borderColor: colors.primary,
                   borderWidth: wp(0.3),
-                  padding: wp(3.5),
+                  padding: wp(4),
                   marginRight: wp(3),
                   borderRadius: wp(4),
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Text style={{fontSize: wp(3)}}>Save as Draft</Text>
+                <Text style={{color: colors.primary, fontSize: wp(3)}}>
+                  Save as Draft
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
                   width: wp(45),
                   backgroundColor: colors.primary,
-                  padding: wp(3.5),
+                  padding: wp(4),
                   justifyContent: 'center',
                   borderRadius: wp(4),
                   alignItems: 'center',
