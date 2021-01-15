@@ -23,7 +23,7 @@ const Chart = (props: Props) => {
     {
       value: 2,
       text: 'Likely',
-      selected: true,
+      selected: false,
       color: colors.riskIcons.likelihood.likely,
     },
     {
@@ -94,7 +94,18 @@ const Chart = (props: Props) => {
           </Text>
           {liklihood.map((d, i) => (
             <View>
-              <View
+              <TouchableOpacity
+                onPress={() => {
+                  var likelihoodarr = [...liklihood];
+                  likelihoodarr.map((b: object, j: number) => {
+                    if (likelihoodarr[j] == d) {
+                      likelihoodarr[j].selected = !likelihoodarr[j].selected;
+                    } else {
+                      likelihoodarr[j].selected = false;
+                    }
+                  });
+                  setliklihood(likelihoodarr);
+                }}
                 style={[
                   {
                     padding: wp(2),
@@ -126,7 +137,7 @@ const Chart = (props: Props) => {
                   }}>
                   {d.text}
                 </Text>
-              </View>
+              </TouchableOpacity>
             </View>
           ))}
         </View>
@@ -142,15 +153,31 @@ const Chart = (props: Props) => {
             SEVERITY
           </Text>
           <View style={{flexDirection: 'row', marginLeft: wp(3)}}>
-            {liklihood.map((d, i) => (
+            {severity.map((d, i) => (
               <View>
-                <View
-                  style={{
-                    padding: wp(2),
+                <TouchableOpacity
+                  onPress={() => {
+                    var severityArr = [...severity];
+                    severityArr.map((b: object, j: number) => {
+                      if (severityArr[j] == d) {
+                        severityArr[j].selected = !severityArr[j].selected;
+                      } else {
+                        severityArr[j].selected = false;
+                      }
+                    });
+                    setseverity(severityArr);
+                  }}
+                  style={[
+                    {
+                      padding: wp(2),
 
-                    borderRadius: wp(3),
-                    // marginLeft: wp(1),
-                  }}>
+                      borderRadius: wp(3),
+                      // marginLeft: wp(1),
+                    },
+                    d.selected == true
+                      ? {borderWidth: wp(0.2), borderRadius: wp(4)}
+                      : null,
+                  ]}>
                   <View
                     style={{
                       backgroundColor: d.color,
@@ -172,7 +199,7 @@ const Chart = (props: Props) => {
                     }}>
                     {d.text}
                   </Text>
-                </View>
+                </TouchableOpacity>
               </View>
             ))}
           </View>
