@@ -14,126 +14,169 @@ interface Props {
 
 const Chart = (props: Props) => {
   const [liklihood, setliklihood] = useState([
-    {value: 1, selected: false},
-    {value: 2, selected: false},
-    {value: 3, selected: false},
-    {value: 4, selected: false},
-    {value: 5, selected: false},
+    {
+      value: 1,
+      text: 'Rare',
+      selected: false,
+      color: colors.riskIcons.likelihood.Rare,
+    },
+    {
+      value: 2,
+      text: 'Likely',
+      selected: true,
+      color: colors.riskIcons.likelihood.likely,
+    },
+    {
+      value: 3,
+      text: 'Possible',
+      selected: false,
+      color: colors.riskIcons.likelihood.possibly,
+    },
+    {
+      value: 4,
+      text: 'Unlikely',
+      selected: false,
+      color: colors.riskIcons.likelihood.unlikely,
+    },
+    {
+      value: 5,
+      text: 'Rare',
+      selected: false,
+      color: colors.riskIcons.likelihood.Rare,
+    },
   ]);
   const [severity, setseverity] = useState([
-    {value: 1, selected: false},
-    {value: 2, selected: false},
-    {value: 3, selected: false},
-    {value: 4, selected: false},
-    {value: 5, selected: false},
+    {
+      value: 1,
+      text: 'low',
+      selected: false,
+      color: colors.riskIcons.severity.Rare,
+    },
+    {
+      value: 2,
+      text: 'Minor',
+      selected: false,
+      color: colors.riskIcons.severity.likely,
+    },
+    {
+      value: 3,
+      text: 'Moderate',
+      selected: false,
+      color: colors.riskIcons.severity.possibly,
+    },
+    {
+      value: 4,
+      text: 'Major',
+      selected: false,
+      color: colors.riskIcons.severity.unlikely,
+    },
+    {
+      value: 5,
+      text: 'Critical',
+      selected: false,
+      color: colors.riskIcons.severity.Rare,
+    },
   ]);
-  const selectRuler = (
-    likelihood: number,
-    severityn: number,
-    value: number,
-  ) => {
-    const sev = [...severity];
-    const lik = [...liklihood];
-
-    lik.map((d: chartTy) => (d.selected = false));
-    sev.map((d: chartTy) => (d.selected = false));
-
-    sev.map((d: chartTy) => {
-      if (severityn == d.value) d.selected = true;
-    });
-    lik.map((d: chartTy, i: number) => {
-      if (likelihood == d.value) d.selected = true;
-    });
-    props.onPress(value);
-    setliklihood(lik);
-    setseverity(sev);
-  };
 
   return (
     <View style={props.style}>
-      <View style={styles.rowCont}>
-        <View style={[styles.circleOpa]}>
-          <Text style={[styles.circleText, styles.ruler]}>lIKELIHOOD</Text>
+      <View style={{padding: wp(3)}}>
+        {/* Liklihood */}
+        <View style={{flexDirection: 'row'}}>
+          <Text
+            style={{
+              fontSize: wp(3),
+              fontWeight: 'bold',
+              marginTop: wp(-2),
+              alignSelf: 'center',
+            }}>
+            LIKELIHOOD
+          </Text>
+          {liklihood.map((d, i) => (
+            <View>
+              <View
+                style={[
+                  {
+                    padding: wp(2),
+
+                    // marginLeft: wp(1),
+                  },
+                  d.selected == true
+                    ? {borderWidth: wp(0.2), borderRadius: wp(4)}
+                    : null,
+                ]}>
+                <View
+                  style={{
+                    backgroundColor: d.color,
+                    alignItems: 'center',
+                    width: wp(10),
+                    height: wp(10),
+                    justifyContent: 'center',
+                    borderRadius: wp(3),
+                  }}>
+                  <Text style={{fontSize: wp(3.5), fontWeight: 'bold'}}>
+                    {d.value}
+                  </Text>
+                </View>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    fontSize: wp(2.7),
+                    opacity: 0.5,
+                  }}>
+                  {d.text}
+                </Text>
+              </View>
+            </View>
+          ))}
         </View>
-        <TouchableOpacity
-          onPress={() => selectRuler(2, 1, 2)}
-          style={[
-            styles.circle,
-            {backgroundColor: colors.riskIcons.darkGreen},
-          ]}>
-          <Text style={styles.circleText}>2</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => selectRuler(2, 2, 4)}
-          style={[
-            styles.circle,
-            {backgroundColor: colors.riskIcons.lightGreen},
-          ]}>
-          <Text style={styles.circleText}>4</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => selectRuler(2, 3, 6)}
-          style={styles.circle}>
-          <Text style={styles.circleText}>6</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => selectRuler(2, 4, 8)}
-          style={styles.circle}>
-          <Text style={styles.circleText}>8</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => selectRuler(2, 5, 10)}
-          style={[styles.circle, {backgroundColor: colors.riskIcons.orrange}]}>
-          <Text style={styles.circleText}>10</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.rowCont}>
-        <View
-          style={[
-            styles.circleOpa,
-            liklihood[0].selected == true
-              ? {backgroundColor: colors.textOpa, borderRadius: wp(10)}
-              : null,
-          ]}>
-          <Text style={[styles.circleText, styles.ruler]}>SEVERITY</Text>
+        {/* severity */}
+        <View style={{flexDirection: 'row'}}>
+          <Text
+            style={{
+              fontSize: wp(3),
+              fontWeight: 'bold',
+              alignSelf: 'center',
+              marginTop: wp(-2),
+            }}>
+            SEVERITY
+          </Text>
+          <View style={{flexDirection: 'row', marginLeft: wp(3)}}>
+            {liklihood.map((d, i) => (
+              <View>
+                <View
+                  style={{
+                    padding: wp(2),
+
+                    borderRadius: wp(3),
+                    // marginLeft: wp(1),
+                  }}>
+                  <View
+                    style={{
+                      backgroundColor: d.color,
+                      alignItems: 'center',
+                      width: wp(10),
+                      height: wp(10),
+                      justifyContent: 'center',
+                      borderRadius: wp(3),
+                    }}>
+                    <Text style={{fontSize: wp(3.5), fontWeight: 'bold'}}>
+                      {d.value}
+                    </Text>
+                  </View>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      fontSize: wp(2.7),
+                      opacity: 0.5,
+                    }}>
+                    {d.text}
+                  </Text>
+                </View>
+              </View>
+            ))}
+          </View>
         </View>
-        <TouchableOpacity
-          onPress={() => selectRuler(1, 1, 1)}
-          style={[
-            styles.circle,
-            {backgroundColor: colors.riskIcons.darkGreen},
-          ]}>
-          <Text style={styles.circleText}>1</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => selectRuler(1, 2, 2)}
-          style={[
-            styles.circle,
-            {backgroundColor: colors.riskIcons.darkGreen},
-          ]}>
-          <Text style={styles.circleText}>2</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => selectRuler(1, 3, 3)}
-          style={[
-            styles.circle,
-            {backgroundColor: colors.riskIcons.lightGreen},
-          ]}>
-          <Text style={styles.circleText}>3</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => selectRuler(1, 4, 4)}
-          style={[
-            styles.circle,
-            {backgroundColor: colors.riskIcons.lightGreen},
-          ]}>
-          <Text style={styles.circleText}>4</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => selectRuler(1, 5, 5)}
-          style={styles.circle}>
-          <Text style={styles.circleText}>5</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );

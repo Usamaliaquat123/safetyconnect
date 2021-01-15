@@ -245,7 +245,6 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
   uploadBIcmTxt: {
-    flexDirection: 'row',
     paddingLeft: wp(5),
     paddingRight: wp(5),
     opacity: 0.5,

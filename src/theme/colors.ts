@@ -19,6 +19,23 @@ export const colors = {
     darkGreen: '#009144',
     orrange: '#FB9120',
     red: '#F14030',
+// orignal
+    likelihood : {
+      rare:  "#C4E19E",
+      likely: "#F8F092",
+      possibly: "#F8F092",
+      unlikely: "#FC9121",
+      Rare: "#EA9189"
+    },
+    severity: {
+      rare:  "#C4E19E",
+      likely: "#F8F092",
+      possibly: "#F8F092",
+      unlikely: "#FDBD7A",
+      Rare: "#F14031"
+
+    }
+
   },
   Viewcont: '#EDF1F5',
   chatTextbg: '#EBF1F5',
