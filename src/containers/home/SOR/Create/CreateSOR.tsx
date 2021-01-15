@@ -376,6 +376,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             </View>
 
             {/* Attachment / Upload files */}
+            <View style={{flexDirection: 'row', marginTop: wp(5)}}>
+              <Text style={{fontSize: wp(3), fontWeight: 'bold'}}>
+                Attachments{' '}
+              </Text>
+              <Text style={{fontStyle: 'italic', fontSize: wp(3)}}>
+                (optional)
+              </Text>
+            </View>
             <View style={styles.uploadBorder}>
               <View style={styles.uploadBIcmTxt}>
                 <Icon

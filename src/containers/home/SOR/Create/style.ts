@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderStyle: 'dashed',
     borderWidth: wp(0.5),
-    marginTop: wp(10),
+    marginTop: wp(3),
     paddingLeft: wp(15),
     paddingRight: wp(15),
   },
