@@ -12,10 +12,10 @@ const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: colors.primary},
   // Header
   header: {
-    padding: wp(5),
-    paddingRight: wp(7),
+    padding: wp(7),
+    paddingTop: wp(10),
+    paddingBottom: wp(10),
     backgroundColor: colors.primary,
-    paddingLeft: wp(7),
   },
   title: {
     fontSize: wp(4),
@@ -88,12 +88,12 @@ const styles = StyleSheet.create({
 
   // Content
   content: {
-    padding: wp(10),
+    padding: wp(5),
     backgroundColor: colors.secondary,
     // flex: 2,
     // marginTop: wp(80),
-    borderTopLeftRadius: wp(10),
-    borderTopRightRadius: wp(10),
+    borderTopLeftRadius: wp(8),
+    borderTopRightRadius: wp(8),
   },
   // OBSERVATION
   cnHeading: {
@@ -171,12 +171,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignSelf: 'center',
+    justifyContent: "center"
   },
-  clasSorBtnWrap: {flexDirection: 'row', alignSelf: 'center'},
+  clasSorBtnWrap: { alignSelf: 'center'},
   clasSorBtnTtl: {
     textAlign: 'center',
     fontSize: wp(3),
-    marginTop: wp(0.5),
+    marginTop: wp(2),
     marginLeft: wp(1),
   },
   // Involve Person

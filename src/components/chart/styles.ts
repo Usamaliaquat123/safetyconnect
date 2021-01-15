@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   },
   circle: {
     backgroundColor: colors.riskIcons.yellow,
-    padding: wp(7),
+    padding: wp(4),
     marginRight: wp(1),
     justifyContent: 'center',
     alignSelf: 'center',

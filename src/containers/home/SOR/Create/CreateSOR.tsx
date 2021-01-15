@@ -188,7 +188,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 color={colors.secondary}
               />
               <View>
-                <Text style={styles.title}>ABC Systems</Text>
+                <Text style={styles.title}>SOR Report</Text>
                 <View style={styles.underScrore} />
               </View>
               <View style={styles.avatarView}>
@@ -199,82 +199,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   }}
                 />
               </View>
-            </View>
-            <View style={styles.headerSelect}>
-              {/* Project selector */}
-              <View style={styles.leftSelector}>
-                <Text style={styles.hselectort}> Project : </Text>
-                <TouchableOpacity
-                  // onPress={() => {
-                  //   this.setState({selectP: !this.state.selectP});
-                  // }}
-                  style={styles.selector}>
-                  <TextInput
-                    // onChange={(t: any) =>
-                    //   this.setState({
-                    //     projectSuggest: searchInSuggestions(
-                    //       t,
-                    //       Create_sor.Observation.projects,
-                    //     ),
-                    //   })
-                    // }
-                    style={styles.selectorBox}>
-                    {this.state.project}
-                  </TextInput>
-                </TouchableOpacity>
-                <Icon
-                  style={{padding: 3}}
-                  size={10}
-                  name="down"
-                  type="antdesign"
-                  color={colors.secondary}
-                />
-                {this.state.projectSuggest.length != 0 ? (
-                  <View style={styles.slctContainer}>
-                    {this.state.projectSuggest.map((d: string, i: number) => (
-                      <Text
-                        key={i}
-                        onPress={() => this.setState({project: d})}
-                        style={styles.itemH}>
-                        {d.length > 7 ? d.substring(0, 8) + '...' : d}
-                      </Text>
-                    ))}
-                  </View>
-                ) : null}
-              </View>
-              {/* Location selector */}
-
-              <TouchableOpacity
-                onPress={() => console.log('sds')}
-                style={styles.rightSelector}>
-                <Text style={styles.hselectort}> Location : </Text>
-                <TouchableOpacity style={styles.selector}>
-                  <Text style={styles.selectorBox}>
-                    {this.state.currentlocation}
-                  </Text>
-                </TouchableOpacity>
-                <Icon
-                  style={{padding: 3}}
-                  size={10}
-                  name="down"
-                  type="antdesign"
-                  color={colors.secondary}
-                />
-                {this.state.selectL == true ? (
-                  <View style={[styles.slctContainer, {left: wp(15)}]}>
-                    {Create_sor.Observation.locations.map(
-                      (d: string, i: number) => (
-                        <Text
-                          key={i}
-                          onPress={() => this.setState({currentlocation: d})}
-                          style={styles.itemH}>
-                          {d.length > 7 ? d.substring(0, 7) + '...' : d}
-                        </Text>
-                      ),
-                    )}
-                  </View>
-                ) : null}
-              </TouchableOpacity>
             </View>
           </View>
           {/* content */}
@@ -289,10 +213,23 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             {/* Observation Details */}
             <Text style={styles.observationT}>Observation Detail</Text>
             <View style={styles.observationDetail}>
-              <Text style={styles.obserttle}>
-                On {moment().format('MMMM DD')}, {moment().format('YYYY')} at
-                about {this.state.curTime} it was observed that
-              </Text>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={styles.obserttle}>On </Text>
+                <Icon
+                  size={15}
+                  name="calendar-clock"
+                  type="material-community"
+                  color={colors.primary}
+                />
+                <Text style={[styles.obserttle, {color: colors.primary}]}>
+                  {' '}
+                  {moment().format('MMMM DD')}, {moment().format('YYYY')}
+                </Text>
+                <Text style={styles.obserttle}>
+                  at about {this.state.curTime}
+                </Text>
+              </View>
+              <Text style={styles.obserttle}> it was observed that</Text>
               <TextInput
                 multiline={true}
                 value={this.state.observationT}
@@ -308,25 +245,18 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 and it happend at
               </Text>
               <View style={{flexDirection: 'row'}}>
-                <Icon
-                  style={{marginTop: wp(1)}}
-                  size={15}
-                  name="calendar-clock"
-                  type="material-community"
-                  color={'black'}
-                />
                 <Text
                   style={{
                     fontSize: wp(3),
-                    fontWeight: 'bold',
-                    marginTop: wp(1),
+                    opacity: 0.5,
+                    marginTop: wp(3),
                     marginLeft: wp(1),
                   }}>
-                  <Text style={{color: colors.primary}}>
+                  <Text style={{fontWeight: 'bold'}}>
                     {moment().format('MMMM DD, YYYY')}
                   </Text>{' '}
                   at about{' '}
-                  <Text style={{color: colors.primary}}>
+                  <Text style={{fontWeight: 'bold'}}>
                     {moment().format('LT')}
                   </Text>
                 </Text>
@@ -389,6 +319,16 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 )}
               </View>
             </View>
+            {/* Risk Chart*/}
+            {this.state.classifySorbtns[1].selected == false ? (
+              <View>
+                <Text style={styles.RiskHeading}>Risk</Text>
+                <Chart
+                  style={{alignSelf: 'center', marginTop: wp(3)}}
+                  onPress={(v: number) => console.log(v)}
+                />
+              </View>
+            ) : null}
             {/* Involved Persons */}
             <View style={styles.involvePContainer}>
               <Text style={styles.involvePText}>
@@ -459,16 +399,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 <Text style={styles.uploadfileText}>Upload File</Text>
               </TouchableOpacity>
             </View>
-            {/* Risk Chart*/}
-            {this.state.classifySorbtns[1].selected == false ? (
-              <View>
-                <Text style={styles.RiskHeading}>Risk</Text>
-                <Chart
-                  style={{alignSelf: 'center', marginTop: wp(3)}}
-                  onPress={(v: number) => console.log(v)}
-                />
-              </View>
-            ) : null}
 
             {/* Actions/Recommendation */}
             {this.state.classifySorbtns[1].selected == false ? (
