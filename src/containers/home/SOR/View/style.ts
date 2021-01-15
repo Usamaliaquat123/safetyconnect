@@ -46,9 +46,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     borderTopLeftRadius: wp(6),
     borderTopRightRadius: wp(6),
-    padding: wp(8),
-    paddingLeft: wp(5),
-    paddingRight: wp(5),
+    // padding: wp(8),
+    // paddingLeft: wp(5),
+    // paddingRight: wp(5),
+    paddingTop: wp(8),
+    paddingBottom: wp(8)
     // height: wp(150),
   },
   clasifyT: {
@@ -59,6 +61,11 @@ const styles = StyleSheet.create({
   },
   classittleicon: {
     flexDirection: 'row',
+  },
+  contentPadding : {
+    paddingLeft: wp(5),
+    paddingRight: wp(5)
+
   },
   obserContainer: {marginTop: wp(3)},
   observationText: {
@@ -274,22 +281,43 @@ marginRight: wp(15)
   commentsSections : {
     marginTop :wp(4),
     backgroundColor: colors.lightBlue,
-    padding: wp(3)
+    padding: wp(4),
+    paddingLeft: wp(6)
   },
   userComments: {
     flexDirection: "row",
-
+    marginBottom: wp(3),
+    alignItems: "center"
+    
   },
   userCommentName : {
     fontSize: wp(3),
-    fontWeight: "bold"
   },
   usercomment : {
+    fontSize: wp(2.7),
+  },
+  commentUser : {
+    marginTop: wp(2),
+    marginLeft: wp(3)
+  },
+  dateComments: {
+    position: "absolute",
+    right: wp(3 )
+  },
+  dateTextComment:  {
     fontSize: wp(3),
 
   },
-  commentUser : {
-    marginTop: wp(3)
+  commentTextInput: {
+    width: wp(80),
+    backgroundColor: colors.secondary,
+    borderRadius: wp(4),
+    alignItems: "center",
+    borderWidth : wp(0.2),
+    // padding: wp(1),
+    flexDirection: "row",
+    paddingLeft: wp(3),
+   borderColor: colors.lightGrey 
   }
 });
 

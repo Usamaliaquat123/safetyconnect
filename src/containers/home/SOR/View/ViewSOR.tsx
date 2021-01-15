@@ -113,300 +113,309 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           <Animated.View
             // <.View
             style={[styles.content, {marginTop: this.state.contentAnim}]}>
-            <View style={styles.classittleicon}>
-              <Icon
-                size={wp(6)}
-                name={
-                  View_sor.user.classifyType == 'LSR'
-                    ? 'aperture'
-                    : View_sor.user.classifyType == 'positive'
-                    ? 'check-circle'
-                    : View_sor.user.classifyType == 'concern'
-                    ? 'warning'
-                    : View_sor.user.classifyType == 'nearmiss'
-                    ? 'centercode'
-                    : 'frowno'
-                }
-                type={
-                  View_sor.user.classifyType == 'LSR'
-                    ? 'ionicon'
-                    : View_sor.user.classifyType == 'positive'
-                    ? 'font-awesome-5'
-                    : View_sor.user.classifyType == 'concern'
-                    ? 'antdesign'
-                    : View_sor.user.classifyType == 'nearmiss'
-                    ? 'font-awesome-5'
-                    : 'antdesign'
-                }
-                color={colors.text}
-              />
-              <Text style={styles.clasifyT}>{View_sor.user.classifyType}</Text>
-            </View>
-            <View style={styles.obserContainer}>
-              <Text style={styles.observationText}>
-                {View_sor.user.observation}
-              </Text>
-              <Text style={styles.observationDate}>
-                {moment(View_sor.user.date).format('Do MMM, YYYY')}
-              </Text>
-            </View>
-            <View style={styles.subContainer}>
-              <View style={styles.submittedTo}>
-                <Text style={styles.subText}>Submitted to : </Text>
-                <Text style={styles.obvText}>
-                  {View_sor.user.observer[0].name}
+            <View style={styles.contentPadding}>
+              <View style={styles.classittleicon}>
+                <Icon
+                  size={wp(6)}
+                  name={
+                    View_sor.user.classifyType == 'LSR'
+                      ? 'aperture'
+                      : View_sor.user.classifyType == 'positive'
+                      ? 'check-circle'
+                      : View_sor.user.classifyType == 'concern'
+                      ? 'warning'
+                      : View_sor.user.classifyType == 'nearmiss'
+                      ? 'centercode'
+                      : 'frowno'
+                  }
+                  type={
+                    View_sor.user.classifyType == 'LSR'
+                      ? 'ionicon'
+                      : View_sor.user.classifyType == 'positive'
+                      ? 'font-awesome-5'
+                      : View_sor.user.classifyType == 'concern'
+                      ? 'antdesign'
+                      : View_sor.user.classifyType == 'nearmiss'
+                      ? 'font-awesome-5'
+                      : 'antdesign'
+                  }
+                  color={colors.text}
+                />
+                <Text style={styles.clasifyT}>
+                  {View_sor.user.classifyType}
                 </Text>
               </View>
-              <View style={styles.observerTo}>
-                <Text style={styles.obvText}>Observer : </Text>
-                <Text style={styles.obvText}>
-                  {View_sor.user.submittedTo[0].name}{' '}
+              <View style={styles.obserContainer}>
+                <Text style={styles.observationText}>
+                  {View_sor.user.observation}
+                </Text>
+                <Text style={styles.observationDate}>
+                  {moment(View_sor.user.date).format('Do MMM, YYYY')}
                 </Text>
               </View>
-            </View>
-            <View style={styles.involveNortify}>
-              <View style={styles.notifiedSec}>
-                <Text style={styles.notifyPText}>Notified to : </Text>
-                {View_sor.user.InvolvedPersons.map((d, i) => (
-                  <View>
-                    <Avatar
-                      containerStyle={{marginLeft: wp(-(i + 1))}}
-                      size={wp(8)}
-                      rounded
-                      source={{
-                        uri: View_sor.user.profile,
-                      }}
+              <View style={styles.subContainer}>
+                <View style={styles.submittedTo}>
+                  <Text style={styles.subText}>Submitted to : </Text>
+                  <Text style={styles.obvText}>
+                    {View_sor.user.observer[0].name}
+                  </Text>
+                </View>
+                <View style={styles.observerTo}>
+                  <Text style={styles.obvText}>Observer : </Text>
+                  <Text style={styles.obvText}>
+                    {View_sor.user.submittedTo[0].name}{' '}
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.involveNortify}>
+                <View style={styles.notifiedSec}>
+                  <Text style={styles.notifyPText}>Notified to : </Text>
+                  {View_sor.user.InvolvedPersons.map((d, i) => (
+                    <View>
+                      <Avatar
+                        containerStyle={{marginLeft: wp(-(i + 1))}}
+                        size={wp(8)}
+                        rounded
+                        source={{
+                          uri: View_sor.user.profile,
+                        }}
+                      />
+                    </View>
+                  ))}
+                  <View
+                    style={[
+                      styles.addCircle,
+                      {backgroundColor: colors.lightGrey},
+                    ]}>
+                    <Icon
+                      onPress={() => this.props.navigation.goBack()}
+                      size={wp(3.5)}
+                      name="plus"
+                      type="antdesign"
+                      color={colors.primary}
                     />
                   </View>
+                </View>
+                <View style={styles.notifiedSec}>
+                  <Text style={styles.invpText}>Involved People</Text>
+                  {View_sor.user.observer.map((d, i) => (
+                    <View>
+                      <Avatar
+                        containerStyle={{marginLeft: wp(-(i + 1))}}
+                        size={wp(8)}
+                        rounded
+                        source={{
+                          uri: View_sor.user.profile,
+                        }}
+                      />
+                    </View>
+                  ))}
+                  <View style={styles.addCircle}>
+                    <Icon
+                      onPress={() => this.props.navigation.goBack()}
+                      size={wp(3.5)}
+                      name="plus"
+                      type="antdesign"
+                      color={colors.secondary}
+                    />
+                  </View>
+                </View>
+              </View>
+              <View style={styles.risk}>
+                <Text style={styles.riskText}>
+                  Risk{' '}
+                  <Text style={styles.riskttle}>(Severity x Likelihood)</Text>
+                </Text>
+                <View style={{flexDirection: 'row'}}>
+                  <View style={styles.riskIcon}>
+                    <Text style={styles.riskIconText}>
+                      {View_sor.user.Risk}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.actionContainer}>
+                <Text style={styles.actionText}>Action / Recommendation</Text>
+                <Text style={styles.sugForYouText}>Suggested for you</Text>
+                {View_sor.user.ActionAndRecommendation.map((d, i) => (
+                  <View
+                    style={[
+                      styles.actionRecomCon,
+                      d.status == 'Completed'
+                        ? {
+                            borderWidth: wp(0.2),
+                            backgroundColor: colors.lightBlue,
+                            borderColor: colors.primary,
+                          }
+                        : {
+                            borderWidth: wp(0.3),
+                            borderColor: colors.lightGrey,
+                          },
+                    ]}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Icon
+                        onPress={() => this.props.navigation.goBack()}
+                        size={wp(3.5)}
+                        name="checkcircle"
+                        type="antdesign"
+                        color={
+                          d.status == 'Completed'
+                            ? colors.green
+                            : colors.lightGrey
+                        }
+                      />
+                      <Text style={styles.statusARText}>{d.status}</Text>
+                      <View style={{position: 'absolute', right: wp(3)}}>
+                        <Text style={[styles.actionTypeElemAsdmin]}>
+                          {d.type}
+                        </Text>
+                      </View>
+                    </View>
+                    <Text
+                      style={[
+                        styles.obvTextAction,
+                        d.status == 'Completed'
+                          ? {color: colors.text, opacity: 0.5}
+                          : null,
+                      ]}>
+                      {d.observation}
+                    </Text>
+                    <View style={styles.subAss}>
+                      <Text style={styles.subAssText}>
+                        Assigned to:{' '}
+                        <Text style={styles.subAssuser}>{d.AssignedTo}</Text>
+                      </Text>
+                      <Text style={styles.subAssText}>
+                        {moment(d.time).format('MMM DD YYYY')}
+                      </Text>
+                    </View>
+                  </View>
                 ))}
+              </View>
+              <View style={styles.addActionAndRecommendation}>
+                <TextInput
+                  onChange={(e) => console.log(e)}
+                  style={styles.textaddActionContainer}
+                  placeholder={'Add action / recommendation here'}
+                />
                 <View
-                  style={[
-                    styles.addCircle,
-                    {backgroundColor: colors.lightGrey},
-                  ]}>
+                  style={{
+                    position: 'absolute',
+                    right: wp(3),
+                    padding: wp(2),
+                    borderRadius: wp(2),
+                    backgroundColor: colors.lightGrey,
+                  }}>
                   <Icon
-                    onPress={() => this.props.navigation.goBack()}
-                    size={wp(3.5)}
-                    name="plus"
+                    size={wp(4)}
+                    name="arrowright"
                     type="antdesign"
                     color={colors.primary}
                   />
                 </View>
               </View>
-              <View style={styles.notifiedSec}>
-                <Text style={styles.invpText}>Involved People</Text>
-                {View_sor.user.observer.map((d, i) => (
-                  <View>
-                    <Avatar
-                      containerStyle={{marginLeft: wp(-(i + 1))}}
-                      size={wp(8)}
-                      rounded
-                      source={{
-                        uri: View_sor.user.profile,
-                      }}
-                    />
-                  </View>
-                ))}
-                <View style={styles.addCircle}>
-                  <Icon
-                    onPress={() => this.props.navigation.goBack()}
-                    size={wp(3.5)}
-                    name="plus"
-                    type="antdesign"
-                    color={colors.secondary}
-                  />
-                </View>
-              </View>
-            </View>
-            <View style={styles.risk}>
-              <Text style={styles.riskText}>
-                Risk{' '}
-                <Text style={styles.riskttle}>(Severity x Likelihood)</Text>
-              </Text>
-              <View style={{flexDirection: 'row'}}>
-                <View style={styles.riskIcon}>
-                  <Text style={styles.riskIconText}>{View_sor.user.Risk}</Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.actionContainer}>
-              <Text style={styles.actionText}>Action / Recommendation</Text>
-              <Text style={styles.sugForYouText}>Suggested for you</Text>
-              {View_sor.user.ActionAndRecommendation.map((d, i) => (
+              <View style={styles.attachmentsContainer}>
+                <Text style={{fontSize: wp(3), fontWeight: 'bold'}}>
+                  Attachments
+                </Text>
                 <View
-                  style={[
-                    styles.actionRecomCon,
-                    d.status == 'Completed'
-                      ? {
-                          borderWidth: wp(0.2),
-                          backgroundColor: colors.lightBlue,
-                          borderColor: colors.primary,
-                        }
-                      : {
-                          borderWidth: wp(0.3),
-                          borderColor: colors.lightGrey,
-                        },
-                  ]}>
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Icon
-                      onPress={() => this.props.navigation.goBack()}
-                      size={wp(3.5)}
-                      name="checkcircle"
-                      type="antdesign"
-                      color={
-                        d.status == 'Completed'
-                          ? colors.green
-                          : colors.lightGrey
-                      }
-                    />
-                    <Text style={styles.statusARText}>{d.status}</Text>
-                    <View style={{position: 'absolute', right: wp(3)}}>
-                      <Text style={[styles.actionTypeElemAsdmin]}>
-                        {d.type}
-                      </Text>
-                    </View>
-                  </View>
-                  <Text
-                    style={[
-                      styles.obvTextAction,
-                      d.status == 'Completed'
-                        ? {color: colors.text, opacity: 0.5}
-                        : null,
-                    ]}>
-                    {d.observation}
-                  </Text>
-                  <View style={styles.subAss}>
-                    <Text style={styles.subAssText}>
-                      Assigned to:{' '}
-                      <Text style={styles.subAssuser}>{d.AssignedTo}</Text>
-                    </Text>
-                    <Text style={styles.subAssText}>
-                      {moment(d.time).format('MMM DD YYYY')}
-                    </Text>
-                  </View>
+                  style={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    alignSelf: 'center',
+                  }}>
+                  {View_sor.user.Attachments.map((d, i) => {
+                    if (d.type == 'photo') {
+                      return (
+                        <TouchableOpacity
+                          onPress={() => this.setState({imageViewer: true})}
+                          style={styles.AttchimageContainer}>
+                          <Image
+                            source={{
+                              uri:
+                                'https://cdn.technologyadvice.com/wp-content/uploads/2017/08/Fotolia_98303431_Subscription_Monthly_M-699x408.jpg',
+                            }}
+                            style={[GlStyles.images, {borderRadius: wp(5)}]}
+                            resizeMode={'contain'}
+                          />
+                          <View
+                            // onPress={() => {
+                            //   this.photoAnim.play();
+                            //   downloadFile(d.url, d.type)
+                            //     .then((res: any) => {
+                            //       console.log(res);
+                            //     })
+                            //     .catch((err) => console.log(err));
+                            // }}
+                            style={{
+                              position: 'absolute',
+                              right: wp(-2),
+                              top: wp(2),
+                              zIndex: wp(1),
+                            }}>
+                            <LottieView
+                              ref={(animation) => {
+                                this.photoAnim = animation;
+                              }}
+                              style={{width: wp(11)}}
+                              source={animation.download}
+                              loop={false}
+                            />
+                          </View>
+                        </TouchableOpacity>
+                      );
+                    }
+                  })}
                 </View>
-              ))}
-            </View>
-            <View style={styles.addActionAndRecommendation}>
-              <TextInput
-                onChange={(e) => console.log(e)}
-                style={styles.textaddActionContainer}
-                placeholder={'Add action / recommendation here'}
-              />
-              <View
-                style={{
-                  position: 'absolute',
-                  right: wp(3),
-                  padding: wp(2),
-                  borderRadius: wp(2),
-                  backgroundColor: colors.lightGrey,
-                }}>
-                <Icon
-                  size={wp(4)}
-                  name="arrowright"
-                  type="antdesign"
-                  color={colors.primary}
-                />
-              </View>
-            </View>
-            <View style={styles.attachmentsContainer}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                  alignSelf: 'center',
-                }}>
-                {View_sor.user.Attachments.map((d, i) => {
-                  if (d.type == 'photo') {
-                    return (
-                      <TouchableOpacity
-                        onPress={() => this.setState({imageViewer: true})}
-                        style={styles.AttchimageContainer}>
-                        <Image
-                          source={{
-                            uri:
-                              'https://cdn.technologyadvice.com/wp-content/uploads/2017/08/Fotolia_98303431_Subscription_Monthly_M-699x408.jpg',
+                {View_sor.user.Attachments.map((d, i) => (
+                  <View>
+                    {d.type == 'file' ? (
+                      <View style={styles.attachFileContainer}>
+                        <View style={{width: wp(10)}}>
+                          <Image
+                            source={images.pdf}
+                            style={{width: wp(5), height: wp(7)}}
+                          />
+                        </View>
+                        <Text style={styles.attchFileText}>Untitled1.pdf</Text>
+
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.animation.play();
+                            downloadFile(d.url, d.type)
+                              .then((res: any) => {
+                                console.log(res);
+                              })
+                              .catch((err) => console.log(err));
                           }}
-                          style={[GlStyles.images, {borderRadius: wp(5)}]}
-                          resizeMode={'contain'}
-                        />
-                        <View
-                          // onPress={() => {
-                          //   this.photoAnim.play();
-                          //   downloadFile(d.url, d.type)
-                          //     .then((res: any) => {
-                          //       console.log(res);
-                          //     })
-                          //     .catch((err) => console.log(err));
-                          // }}
                           style={{
                             position: 'absolute',
-                            right: wp(-2),
-                            top: wp(2),
-                            zIndex: wp(1),
+                            right: wp(1),
+                            top: wp(1.5),
                           }}>
                           <LottieView
                             ref={(animation) => {
-                              this.photoAnim = animation;
+                              this.animation = animation;
                             }}
-                            style={{width: wp(11)}}
+                            style={{width: wp(15)}}
                             source={animation.download}
                             loop={false}
                           />
-                        </View>
-                      </TouchableOpacity>
-                    );
-                  }
-                })}
-              </View>
-              {View_sor.user.Attachments.map((d, i) => (
-                <View>
-                  {d.type == 'file' ? (
-                    <View style={styles.attachFileContainer}>
-                      <View style={{width: wp(10)}}>
-                        <Image
-                          source={images.pdf}
-                          style={{width: wp(5), height: wp(7)}}
-                        />
+                        </TouchableOpacity>
                       </View>
-                      <Text style={styles.attchFileText}>Untitled1.pdf</Text>
-
-                      <TouchableOpacity
-                        onPress={() => {
-                          this.animation.play();
-                          downloadFile(d.url, d.type)
-                            .then((res: any) => {
-                              console.log(res);
-                            })
-                            .catch((err) => console.log(err));
-                        }}
-                        style={{
-                          position: 'absolute',
-                          right: wp(1),
-                          top: wp(1.5),
-                        }}>
-                        <LottieView
-                          ref={(animation) => {
-                            this.animation = animation;
-                          }}
-                          style={{width: wp(15)}}
-                          source={animation.download}
-                          loop={false}
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  ) : null}
-                </View>
-              ))}
+                    ) : null}
+                  </View>
+                ))}
+              </View>
+              {/* Map Integration */}
+              <View></View>
+              {/* comments sections */}
             </View>
-            {/* Map Integration */}
-            <View></View>
-            {/* comments sections */}
             <View style={styles.commentsSections}>
               {View_sor.user.comments.map((d, i) => (
                 <View style={styles.userComments}>
                   <Avatar
-                    size={wp(8)}
+                    size={wp(6)}
                     rounded
                     source={{
                       uri: d.image,
@@ -416,8 +425,109 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     <Text style={styles.userCommentName}>{d.user}</Text>
                     <Text style={styles.usercomment}>{d.comment}</Text>
                   </View>
+                  <View style={styles.dateComments}>
+                    <Text style={styles.dateTextComment}>
+                      {moment(d.date).fromNow()}
+                    </Text>
+                  </View>
                 </View>
               ))}
+              <View style={{flexDirection: 'row'}}>
+                <Avatar
+                  containerStyle={{marginRight: wp(2)}}
+                  size={wp(6)}
+                  rounded
+                  source={{
+                    uri:
+                      'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                  }}
+                />
+
+                <View style={styles.commentTextInput}>
+                  <TextInput
+                    style={{fontSize: wp(3)}}
+                    onChange={(e) => console.log(e)}
+                    placeholder={'Your commendt here '}
+                  />
+                  <View
+                    style={{
+                      position: 'absolute',
+                      right: wp(3),
+                      flexDirection: 'row',
+                    }}>
+                    <View
+                      style={{
+                        backgroundColor: colors.lightBlue,
+                        padding: wp(2),
+                        marginRight: wp(2),
+                        borderRadius: wp(3),
+                      }}>
+                      <Icon
+                        size={wp(5)}
+                        name="attachment"
+                        type="entypo"
+                        color={colors.primary}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        padding: wp(2),
+                        borderRadius: wp(3),
+                        backgroundColor: colors.lightBlue,
+                      }}>
+                      <Icon
+                        size={wp(5)}
+                        name="arrowright"
+                        type="antdesign"
+                        color={colors.primary}
+                      />
+                    </View>
+                  </View>
+                </View>
+              </View>
+              <View style={{marginLeft: wp(10), marginTop: wp(3)}}>
+                <Text
+                  style={{
+                    fontSize: wp(2.7),
+                    opacity: 0.5,
+                  }}>
+                  Upload files will appear here
+                </Text>
+              </View>
+            </View>
+            {/* Submit btns  */}
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginTop: wp(5),
+              }}>
+              <TouchableOpacity
+                style={{
+                  width: wp(45),
+                  borderColor: colors.primary,
+                  borderWidth: wp(0.3),
+                  padding: wp(3.5),
+                  marginRight: wp(3),
+                  borderRadius: wp(4),
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text style={{fontSize: wp(3)}}>Save as Draft</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  width: wp(45),
+                  backgroundColor: colors.primary,
+                  padding: wp(3.5),
+                  justifyContent: 'center',
+                  borderRadius: wp(4),
+                  alignItems: 'center',
+                }}>
+                <Text style={{fontSize: wp(3), color: colors.secondary}}>
+                  Submit
+                </Text>
+              </TouchableOpacity>
             </View>
           </Animated.View>
         </ScrollView>
