@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.primary
     },
     header: {
-        padding: wp(7),
+        padding: wp(1),
         paddingTop: wp(10),
         paddingBottom: wp(8),
         backgroundColor: colors.primary,

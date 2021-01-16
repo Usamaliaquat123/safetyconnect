@@ -136,6 +136,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     splits {
         abi {
@@ -200,11 +201,7 @@ compile project(':react-native-vector-icons')
         exclude group:'com.facebook.flipper'
         exclude group:'com.squareup.okhttp3', module:'okhttp'
     }
-implementation(project(':react-native-maps')){      
-     exclude group: 'com.google.android.gms', module: 'play-services-base'       
-      exclude group: 'com.google.android.gms', module: 'play-services-maps'    
-      }implementation 'com.google.android.gms:play-services-base:12.0.0'
-      implementation 'com.google.android.gms:play-services-maps:12.0.0'
+
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.flipper'
     }

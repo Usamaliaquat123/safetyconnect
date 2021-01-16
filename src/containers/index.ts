@@ -12,9 +12,11 @@ import ViewAll from './home/SOR/ViewAll/ViewAll';
 import ViewSOR from './home/SOR/View/ViewSOR';
 import CreatePass from "./auth/createPassword/CreatePass";
 import Chat from './home/Messaging/chat/Chat';
+import TellAboutYou from './auth/tellAboutYou/TellAboutYou';
 export {
   Chat,
   Login,
+  TellAboutYou,
   CreateSOR,
   Signup,
   Forgot,

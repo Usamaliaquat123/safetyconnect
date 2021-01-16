@@ -19,6 +19,7 @@ import {
   Settings,
   Chat,
   ViewSOR,
+  TellAboutYou,
 } from '@containers';
 
 export type StackNavigatorProps = {
@@ -64,6 +65,13 @@ export const MainStackNavigator = () => {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator>
+          <Stack.Screen
+            name="tellAboutYou"
+            component={TellAboutYou}
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen
             name="CreatePass"
             component={CreatePass}
