@@ -14,6 +14,7 @@ import {
   Splash,
   Messaging,
   Home,
+  CreatePass,
   ViewAll,
   Settings,
   Chat,
@@ -25,11 +26,13 @@ export type StackNavigatorProps = {
   CreateSOR: undefined;
   ViewAll: undefined;
   ViewSOR: {data: Isor};
-  Login: undefined;
-  Signup: undefined;
   Messaging: undefined;
   Verify: undefined;
   Chat: {data: Imessage};
+  Login: undefined;
+  Signup: undefined;
+  CreatePass: undefined;
+  tellAboutYou: undefined;
 };
 export type AuthNavigatorProp = {
   // Login: undefined;
@@ -61,6 +64,13 @@ export const MainStackNavigator = () => {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator>
+          <Stack.Screen
+            name="CreatePass"
+            component={CreatePass}
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen
             name="Verify"
             component={Verify}
