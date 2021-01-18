@@ -6,7 +6,9 @@ import {
   createAction,
   downloadFile,
   searchInObjects,
-  setAsncStorage,
+  setAsncStorage
+  ,imagePicker,
+  cameraCapture,
   mapAsyncStorage,
   getAsyncStorage,
 } from './utils';
@@ -19,6 +21,8 @@ export {
   searchInObjects,
   downloadFile,
   setAsncStorage,
+  cameraCapture,
   getAsyncStorage,
+  imagePicker,
   mapAsyncStorage
 };

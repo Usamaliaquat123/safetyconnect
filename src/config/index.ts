@@ -1,7 +1,7 @@
 
 
 import * as Sentry from "@sentry/react-native";
-
+// import { withAuthenticator } from 'aws-amplify-react-native';
 
 
 
@@ -18,6 +18,14 @@ const configSentry = () => {
     }        
     })
 }
+
+
+// configure aws auth
+
+
+
+
+
 
 
 export  {configSentry};

@@ -20,12 +20,8 @@ import {StackNavigatorProps} from '@nav';
 import {Avatar, Icon} from 'react-native-elements';
 import {colors, images, GlStyles} from '@theme';
 import {RouteProp} from '@react-navigation/native';
-import * as ImagePicker from 'react-native-image-picker/src';
-
-import {
-  launchCamera,
-  launchImageLibrary,
-} from 'react-native-image-picker/src/index';
+import {imagePicker, cameraCapture} from '@utils';
+import Modal from 'react-native-modal';
 
 type TellAboutYouNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -37,6 +33,7 @@ export interface TellAboutYouProps {
   navigation: TellAboutYouNavigationProp;
   route: TellAboutYouRouteProp;
   reduxActions: any;
+  photoModal: false;
   reduxState: any;
 }
 
@@ -48,6 +45,10 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
       selected: 1,
     };
   }
+
+  componentDidMount = () => {};
+
+  imgCap = (sr: string) => {};
   render() {
     return (
       <View style={styles.container}>
@@ -64,7 +65,9 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
           <View style={styles.content}>
             <Text style={styles.headingContainer}>Tell about yourself</Text>
             {/* Photo Seclector  */}
-            <View style={styles.imageUploadContainer}>
+            <TouchableOpacity
+              onPress={() => console.log('sds')}
+              style={styles.imageUploadContainer}>
               {this.state.uploadedImage == '' ? (
                 <View style={styles.imagenotUpoad}>
                   <View style={styles.imagenotuploadContainer}>
@@ -89,7 +92,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   }}
                 />
               )}
-            </View>
+            </TouchableOpacity>
             <View style={styles.inputsContainer}>
               {/*Industry selectionv   */}
               <Text style={styles.emailTextContainer}>Industry</Text>
@@ -158,6 +161,50 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
               <Text style={styles.signinText}>Continue</Text>
             </TouchableOpacity>
           </View>
+          <Modal
+            isVisible={this.state.photoModal}
+            onBackdropPress={() => this.setState({photoModal: false})}>
+            <View
+              style={{
+                backgroundColor: colors.secondary,
+                justifyContent: 'center',
+                borderRadius: wp(8),
+                padding: wp(10),
+              }}>
+              <TouchableOpacity style={styles.takeaPhotoContainer}>
+                <Icon
+                  size={wp(5)}
+                  name="camerao"
+                  type="antdesign"
+                  color={colors.primary}
+                />
+                <Text style={styles.takeaPhotoModal}>Take a photo</Text>
+                <Icon
+                  containerStyle={{position: 'absolute', right: wp(0)}}
+                  size={wp(5)}
+                  name="right"
+                  type="antdesign"
+                  color={colors.primary}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.takeaPhotoContainer}>
+                <Icon
+                  size={wp(5)}
+                  name="photo"
+                  type="font-awesome"
+                  color={colors.primary}
+                />
+                <Text style={styles.takeaPhotoModal}>Upload a photo</Text>
+                <Icon
+                  size={wp(5)}
+                  name="right"
+                  containerStyle={{position: 'absolute', right: wp(0)}}
+                  type="antdesign"
+                  color={colors.primary}
+                />
+              </TouchableOpacity>
+            </View>
+          </Modal>
         </ScrollView>
       </View>
     );

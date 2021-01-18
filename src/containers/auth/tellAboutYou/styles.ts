@@ -166,6 +166,22 @@ alignItems:"center"
         width:wp(32),
         height: wp(32),
       }
+      ,
+
+
+
+  // modal configuration
+
+  takeaPhotoModal : {
+    fontSize: wp(4),
+    fontWeight: "bold",
+    marginLeft: wp(10)
+  },
+  takeaPhotoContainer: {
+    marginTop: wp(10),
+
+    flexDirection: 'row',
+  }
 })
 
 export default styles

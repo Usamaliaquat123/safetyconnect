@@ -21,7 +21,7 @@ export const classifySor: Array<Object> = [
     type: 'font-awesome-5',
     selected: false,
     title: 'Positive',
-    color: colors.classify_sor_btns.positive,
+    color: colors.classify_sor_btns.positive,     
   },
   {
     icon: 'aperture',
@@ -155,7 +155,7 @@ export const imagePicker = () => {
 export const cameraCapture = () => {
   return new Promise((resolve, reject) => {
     try {
-      ImagePicker.launchCamera({saveToPhotos: true}, (res: ImagePicker.ImagePickerResponse) => {
+      ImagePicker.launchCamera({mediaType: "photo"}, (res: ImagePicker.ImagePickerResponse) => {
         resolve(res)
       })
     } catch (error) {
