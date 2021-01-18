@@ -33,7 +33,6 @@ export interface TellAboutYouProps {
   navigation: TellAboutYouNavigationProp;
   route: TellAboutYouRouteProp;
   reduxActions: any;
-  photoModal: false;
   reduxState: any;
 }
 
@@ -42,6 +41,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
     super(props);
     this.state = {
       uploadedImage: '',
+      photoModal: false,
       selected: 1,
     };
   }
@@ -50,13 +50,21 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
 
   imgCap = (str: string) => {
     if (str == 'upload') {
-      cameraCapture()
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
-    } else {
       imagePicker()
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .then((res) => {
+          this.setState({photoModal: false});
+        })
+        .catch((err) => {
+          this.setState({photoModal: false});
+        });
+    } else {
+      cameraCapture()
+        .then((res) => {
+          this.setState({photoModal: false});
+        })
+        .catch((err) => {
+          this.setState({photoModal: false});
+        });
     }
   };
   render() {
@@ -75,16 +83,13 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
           <View style={styles.content}>
             <Text style={styles.headingContainer}>Tell about yourself</Text>
             {/* Photo Seclector  */}
-            <TouchableOpacity
-              onPress={() => console.log('sds')}
-              style={styles.imageUploadContainer}>
+            <TouchableOpacity style={styles.imageUploadContainer}>
               {this.state.uploadedImage == '' ? (
                 <TouchableOpacity
                   onPress={() => this.setState({photoModal: true})}
                   style={styles.imagenotUpoad}>
                   <View style={styles.imagenotuploadContainer}>
                     <Icon
-                      onPress={() => this.props.navigation.goBack()}
                       size={wp(13)}
                       containerStyle={{opacity: 0.5}}
                       name="camera"
@@ -185,20 +190,22 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
               }}>
               <TouchableOpacity
                 onPress={() => this.imgCap('take')}
-                style={styles.takeaPhotoContainer}>
+                style={[styles.takeaPhotoContainer, {marginTop: wp(1)}]}>
                 <Icon
                   size={wp(5)}
                   name="camerao"
                   type="antdesign"
                   color={colors.primary}
                 />
-                <Text style={styles.takeaPhotoModal}>Take a photo</Text>
+                <Text style={[styles.selectText, {marginLeft: wp(10)}]}>
+                  Take a photo
+                </Text>
                 <Icon
                   containerStyle={{position: 'absolute', right: wp(0)}}
                   size={wp(5)}
                   name="right"
                   type="antdesign"
-                  color={colors.primary}
+                  color={colors.text}
                 />
               </TouchableOpacity>
               <TouchableOpacity
@@ -208,9 +215,11 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   size={wp(5)}
                   name="photo"
                   type="font-awesome"
-                  color={colors.primary}
+                  color={colors.text}
                 />
-                <Text style={styles.takeaPhotoModal}>Upload a photo</Text>
+                <Text style={[styles.selectText, {marginLeft: wp(10)}]}>
+                  Upload a photo
+                </Text>
                 <Icon
                   size={wp(5)}
                   name="right"
