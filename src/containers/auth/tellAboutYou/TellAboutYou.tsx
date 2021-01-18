@@ -43,6 +43,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
       uploadedImage: '',
       photoModal: false,
       selected: 1,
+      photo: '',
     };
   }
 
@@ -51,16 +52,18 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
   imgCap = (str: string) => {
     if (str == 'upload') {
       imagePicker()
-        .then((res) => {
-          this.setState({photoModal: false});
+        .then((res: any) => {
+          console.log(res);
+          this.setState({photoModal: false, uploadedImage: res.uri});
         })
         .catch((err) => {
           this.setState({photoModal: false});
         });
     } else {
       cameraCapture()
-        .then((res) => {
-          this.setState({photoModal: false});
+        .then((res: any) => {
+          console.log(res);
+          this.setState({photoModal: false, uploadedImage: res.uri});
         })
         .catch((err) => {
           this.setState({photoModal: false});
@@ -105,7 +108,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   size={'xlarge'}
                   rounded
                   source={{
-                    uri: View_sor.user.profile,
+                    uri: this.state.uploadedImage,
                   }}
                 />
               )}

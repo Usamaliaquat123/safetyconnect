@@ -1,7 +1,7 @@
 
 
 import * as Sentry from "@sentry/react-native";
-// import { withAuthenticator } from 'aws-amplify-react-native';
+import { Auth } from 'aws-amplify';
 
 
 
@@ -20,12 +20,20 @@ const configSentry = () => {
 }
 
 
-// configure aws auth
+// configure aws auther 
+ export const authSignup = async (email :string, password: string) => {
+    return new Promise((resolve, reject) => {
+         Auth.signUp({
+            username: email,
+            password: password,
+            attributes: {
+              email: email
+            }
+          }).then(res => {
+            resolve(res);
+    }).catch(err => reject(err))
+})
+ } 
 
 
-
-
-
-
-
-export  {configSentry};
+export    {configSentry}

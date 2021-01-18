@@ -155,7 +155,7 @@ export const imagePicker = () => {
 export const cameraCapture = () => {
   return new Promise((resolve, reject) => {
     try {
-      ImagePicker.launchCamera({mediaType: "photo"}, (res: ImagePicker.ImagePickerResponse) => {
+      ImagePicker.launchCamera({saveToPhotos: true, mediaType: "photo"}, (res: ImagePicker.ImagePickerResponse) => {
         resolve(res)
       })
     } catch (error) {
