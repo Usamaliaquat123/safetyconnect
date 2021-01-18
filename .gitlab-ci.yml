@@ -12,6 +12,7 @@ assembleDebug:
     - echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
     - apt-get update -qq && apt-get install -qq --no-install-recommends nodejs yarn && rm -rf /var/lib/apt/lists/*
   script:
+    - yarn
     - npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
     - ./android/gradlew assembleRelease -x bundleReleaseJsAndAssets
     - cp android/app/build/outputs/apk/debug/app-debug.apk app-debug.apk
