@@ -48,7 +48,17 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
 
   componentDidMount = () => {};
 
-  imgCap = (sr: string) => {};
+  imgCap = (str: string) => {
+    if (str == 'upload') {
+      cameraCapture()
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    } else {
+      imagePicker()
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    }
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -69,7 +79,9 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
               onPress={() => console.log('sds')}
               style={styles.imageUploadContainer}>
               {this.state.uploadedImage == '' ? (
-                <View style={styles.imagenotUpoad}>
+                <TouchableOpacity
+                  onPress={() => this.setState({photoModal: true})}
+                  style={styles.imagenotUpoad}>
                   <View style={styles.imagenotuploadContainer}>
                     <Icon
                       onPress={() => this.props.navigation.goBack()}
@@ -82,7 +94,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     <Text style={styles.uploadPicText}>Upload</Text>
                     <Text style={styles.uploadPicText}>Picture</Text>
                   </View>
-                </View>
+                </TouchableOpacity>
               ) : (
                 <Avatar
                   size={'xlarge'}
@@ -171,7 +183,9 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                 borderRadius: wp(8),
                 padding: wp(10),
               }}>
-              <TouchableOpacity style={styles.takeaPhotoContainer}>
+              <TouchableOpacity
+                onPress={() => this.imgCap('take')}
+                style={styles.takeaPhotoContainer}>
                 <Icon
                   size={wp(5)}
                   name="camerao"
@@ -187,7 +201,9 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   color={colors.primary}
                 />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.takeaPhotoContainer}>
+              <TouchableOpacity
+                onPress={() => this.imgCap('upload')}
+                style={styles.takeaPhotoContainer}>
                 <Icon
                   size={wp(5)}
                   name="photo"
