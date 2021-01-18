@@ -1,4 +1,6 @@
 import {colors} from '@theme/colors';
+import * as ImagePicker from 'react-native-image-picker/src';
+
 import RNFetchBlob from 'rn-fetch-blob';
 import {
   widthPercentageToDP as wp,
@@ -135,3 +137,29 @@ export const downloadFile = (file: string, typee: string) => {
       .catch((err) => reject(err));
   });
 };
+
+// Image picker
+export const imagePicker = () => {
+  return new Promise((resolve, reject) => {
+    try {
+      ImagePicker.launchImageLibrary({mediaType: "photo"}, (res: ImagePicker.ImagePickerResponse) => {
+        resolve(res)
+      })
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+// Camera capture
+export const cameraCapture = () => {
+  return new Promise((resolve, reject) => {
+    try {
+      ImagePicker.launchCamera({saveToPhotos: true}, (res: ImagePicker.ImagePickerResponse) => {
+        resolve(res)
+      })
+    } catch (error) {
+      reject(error)  
+    }
+  })
+}

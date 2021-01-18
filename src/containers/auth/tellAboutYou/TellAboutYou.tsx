@@ -12,6 +12,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {View_sor} from '@service';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -19,6 +20,13 @@ import {StackNavigatorProps} from '@nav';
 import {Avatar, Icon} from 'react-native-elements';
 import {colors, images, GlStyles} from '@theme';
 import {RouteProp} from '@react-navigation/native';
+import * as ImagePicker from 'react-native-image-picker/src';
+
+import {
+  launchCamera,
+  launchImageLibrary,
+} from 'react-native-image-picker/src/index';
+
 type TellAboutYouNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'CreatePass'
@@ -74,6 +82,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                 </View>
               ) : (
                 <Avatar
+                  size={'xlarge'}
                   rounded
                   source={{
                     uri: View_sor.user.profile,
