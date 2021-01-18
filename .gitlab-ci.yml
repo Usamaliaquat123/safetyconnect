@@ -36,8 +36,9 @@ assembleDebug:
     - yarn
   script:
     - npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
-    - ./android/gradlew assembleRelease -x bundleReleaseJsAndAssets
-    - cp android/app/build/outputs/apk/debug/app-debug.apk app-debug.apk
+    - cd android
+    - ./gradlew assembleRelease -x bundleReleaseJsAndAssets
+    - cp android/app/build/outputs/apk/release/app-release.apk app-release.apk
   artifacts:
     paths:
-    - app-debug.apk
+    - app-release.apk
