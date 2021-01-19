@@ -137,10 +137,12 @@ export const downloadFile = (file: string, typee: string) => {
       .catch((err) => reject(err));
   });
 };
+// online
 export const checkPermissionOfCamea = async (type: string) => {
   const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
     title: `Permissions to use camera  ${type}`,
     message:
+
       'Safety Client want to granted access to camera',
     buttonNeutral: 'Ask Me Later',
     buttonNegative: 'no',

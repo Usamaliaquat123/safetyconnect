@@ -1,5 +1,12 @@
 import * as React from 'react';
-import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity,
+  Modal,
+} from 'react-native';
 import {connect} from 'react-redux';
 import {Create_sor} from '@service';
 import {
@@ -17,12 +24,16 @@ import {
   IMessage,
 } from 'react-native-gifted-chat';
 import {StackNavigationProp} from '@react-navigation/stack';
+import Video from 'react-native-video';
+
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import {Icon, Avatar} from 'react-native-elements';
 import styles from './styles';
 import {colors, images} from '@theme';
 import moment from 'moment';
+
+import ImageViewer from 'react-native-image-zoom-viewer';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -42,6 +53,9 @@ class Chat extends React.Component<ChatProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
+      imageViewer: false,
+      images: [],
+      isVideoFullscreen: false,
       messages: [
         {
           _id: 2,
@@ -60,7 +74,6 @@ class Chat extends React.Component<ChatProps, any> {
           text: 'Hello raazia',
           // Image props.
           image: [
-            'https://user-images.githubusercontent.com/33973828/104999836-62342e80-59e2-11eb-8224-a2869128c350.png',
             'https://user-images.githubusercontent.com/33973828/104999836-62342e80-59e2-11eb-8224-a2869128c350.png',
             'https://user-images.githubusercontent.com/33973828/104999836-62342e80-59e2-11eb-8224-a2869128c350.png',
           ],
@@ -102,7 +115,7 @@ class Chat extends React.Component<ChatProps, any> {
 
     var messageBelongsToCurrentUser = 2 == props.currentMessage?.user._id;
 
-    console.log(props.currentMessage?.image);
+    console.log(props.currentMessage?.video);
     return (
       <View>
         {messageBelongsToCurrentUser == true ? (
@@ -141,15 +154,18 @@ class Chat extends React.Component<ChatProps, any> {
               style={{
                 position: 'relative',
                 flexWrap: 'wrap',
-                width: wp(50),
-                flexDirection: 'row',
+                width: wp(10),
               }}>
               {props.currentMessage?.image != undefined ? (
-                <View style={{}}>
+                <View style={{flexDirection: 'row'}}>
                   {props.currentMessage.image.map((d, i) => (
                     <TouchableOpacity
-                      style={{flexDirection: 'row'}}
-                      onPress={() => console.log('s')}>
+                      onPress={() => {
+                        this.state.images.push({url: d});
+                        this.setState({
+                          imageViewer: true,
+                        });
+                      }}>
                       <Image
                         style={{
                           width: wp(20),
@@ -159,6 +175,36 @@ class Chat extends React.Component<ChatProps, any> {
                         }}
                         source={{uri: d}}
                       />
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              ) : null}
+              {props.currentMessage?.video != undefined ? (
+                <View style={{flexDirection: 'row'}}>
+                  {props.currentMessage.video.map((d, i) => (
+                    <TouchableOpacity
+                      style={{backgroundColor: 'black', borderRadius: wp(3)}}
+                      onPress={() => {
+                        // this.state.images.push({url: d});
+                        // this.setState({
+                        //   imageViewer: true,
+                        // });
+                      }}>
+                      <View>
+                        <Text>{d}</Text>
+                        <Video
+                          source={{uri: d}} // Can be a URL or a local file.
+                          ref={(ref) => {
+                            this.player = ref;
+                          }} // Store reference
+                          // onBuffer={this.onBuffer} // Callback when remote video is buffering
+                          // onError={this.videoError} // Callback when video cannot be loaded
+                          // onVideoLoad={this.onVideoLoad} //callback when video loaded
+                          // onVideoProgress={this.onVideoProcess} //Callback on video progress
+                          // onVideoLoadStart={this.onVideoLoadStart} // Callback when video is loading start
+                          // fullscreen={true} // Boolean | is video is full screen
+                        />
+                      </View>
                     </TouchableOpacity>
                   ))}
                 </View>
@@ -345,6 +391,29 @@ class Chat extends React.Component<ChatProps, any> {
             _id: 1,
           }}
         />
+
+        <Modal
+          visible={this.state.imageViewer}
+          transparent={true}
+          style={{backgroundColor: colors.secondary}}>
+          <TouchableOpacity
+            onPress={() => this.setState({imageViewer: false})}
+            style={{backgroundColor: colors.secondary, alignItems: 'flex-end'}}>
+            <Icon
+              containerStyle={{marginTop: wp(3), marginRight: wp(3)}}
+              name={'cross'}
+              type={'entypo'}
+              color={colors.lightGrey}
+              size={wp(5)}
+            />
+          </TouchableOpacity>
+          <ImageViewer
+            style={{backgroundColor: colors.secondary}}
+            flipThreshold={100}
+            onCancel={() => console.log('sdsd')}
+            imageUrls={this.state.images}
+          />
+        </Modal>
       </View>
     );
   }

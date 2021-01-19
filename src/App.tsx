@@ -4,6 +4,7 @@ import {Provider} from 'react-redux';
 import Store from './store/store';
 import {MainStackNavigator} from '@nav';
 import {configSentry} from '@config';
+import {NetworkProvider} from 'react-native-offline';
 
 export interface AppProps {}
 
@@ -16,7 +17,9 @@ export default class App extends React.Component<AppProps, any> {
   render() {
     return (
       <Provider store={Store}>
-        <MainStackNavigator />
+        <NetworkProvider>
+          <MainStackNavigator />
+        </NetworkProvider>
       </Provider>
     );
   }
