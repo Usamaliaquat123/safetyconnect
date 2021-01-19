@@ -19,7 +19,7 @@ import {
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
-import {Icon, Avatar, } from 'react-native-elements';
+import {Icon, Avatar} from 'react-native-elements';
 import styles from './styles';
 import {colors, images} from '@theme';
 import moment from 'moment';
@@ -77,7 +77,6 @@ class Chat extends React.Component<ChatProps, any> {
     };
   }
   renderBubble = (props: BubbleProps<IMessage>) => {
-
     var sameUserInPrevMessage = false;
     if (
       props.previousMessage?.user !== undefined &&
@@ -89,16 +88,48 @@ class Chat extends React.Component<ChatProps, any> {
     }
 
     var messageBelongsToCurrentUser = 2 == props.currentMessage?.user._id;
+
+    console.log(messageBelongsToCurrentUser);
     return (
       <View>
-        {!sameUserInPrevMessage && (
+        {messageBelongsToCurrentUser == true ? (
           <View
-            style={
-              messageBelongsToCurrentUser
-                ? styles.messageTimeAndNameContainerRight
-                : styles.messageTimeAndNameContainerLeft
-            }>
-            <Bubble
+          // style={
+          //   messageBelongsToCurrentUser
+          //     ? styles.messageTimeAndNameContainerRight
+          //     : styles.messageTimeAndNameContainerLeft
+          // }
+          >
+            <View
+              style={{
+                backgroundColor: colors.lightBlue,
+                borderTopLeftRadius: wp(3),
+                borderBottomLeftRadius: wp(3),
+                padding: wp(3),
+                borderTopRightRadius: wp(2),
+                borderBottomRightRadius: wp(2),
+                alignContent: 'center',
+              }}>
+              <View
+                style={{
+                  width: 0,
+                  position: 'absolute',
+                  left: wp(-2),
+                  top: wp(2),
+                  borderTopWidth: wp(3),
+                  borderTopColor: 'transparent',
+                  borderRightColor: colors.lightBlue,
+                  borderRightWidth: wp(3),
+                  borderBottomWidth: wp(3),
+                  borderBottomColor: 'transparent',
+                }}></View>
+              <Text>{props.currentMessage?.text}</Text>
+            </View>
+            <Text style={{fontSize: wp(2.5), marginLeft: wp(2), opacity: 0.5}}>
+              {moment(props.currentMessage?.createdAt.toString()).format('LT')}
+            </Text>
+
+            {/* <Bubble
               {...props}
               textStyle={{
                 right: {
@@ -118,23 +149,67 @@ class Chat extends React.Component<ChatProps, any> {
                   backgroundColor: colors.chatTextbg,
                 },
               }}
-            />
+            /> */}
+          </View>
+        ) : (
+          <View style={{marginBottom: wp(5)}}>
+            <View
+              style={{
+                backgroundColor: colors.lightBlue,
+                borderTopRightRadius: wp(3),
+                borderBottomRightRadius: wp(3),
+                padding: wp(3),
+                alignContent: 'center',
+                borderBottomLeftRadius: wp(2),
+                borderTopLeftRadius: wp(2),
+              }}>
+              <View
+                style={{
+                  width: 0,
+                  position: 'absolute',
+                  right: wp(-2),
+                  top: wp(2),
+                  borderTopWidth: wp(3),
+                  borderTopColor: 'transparent',
+                  borderLeftColor: colors.lightBlue,
+                  borderLeftWidth: wp(3),
+                  borderBottomWidth: wp(3),
+                  borderBottomColor: 'transparent',
+                }}></View>
+              <Text>{props.currentMessage?.text}</Text>
+            </View>
+            <Text
+              style={{
+                fontSize: wp(2.5),
+                position: 'absolute',
+                bottom: wp(-3.5),
+                right: 0,
+                marginRight: wp(2),
+                opacity: 0.5,
+              }}>
+              {moment(props.currentMessage?.createdAt.toString()).format('LT')}
+            </Text>
           </View>
         )}
       </View>
     );
   };
-  renderTime = (props: TimeProps<IMessage>) => (
-    <View>
-         <Time
-          {...props}
-          timeTextStyle={{left: {color: colors.text}, right: {color: colors.text}}}
-          containerStyle={{left: {backgroundColor: colors.secondary}, right: {backgroundColor : colors.secondary}}}
-         />
-    
-      </View>
-    );
-  
+  // renderTime = (props: TimeProps<IMessage>) => (
+  //   <View>
+  //     <Time
+  //       {...props}
+  //       timeTextStyle={{
+  //         left: {color: colors.text},
+  //         right: {color: colors.text},
+  //       }}
+  //       containerStyle={{
+  //         left: {backgroundColor: colors.secondary},
+  //         right: {backgroundColor: colors.secondary},
+  //       }}
+  //     />
+  //   </View>
+  // );
+
   componentDidMount = () => {};
   renderInput = (props: InputToolbarProps) => (
     <InputToolbar
@@ -155,29 +230,39 @@ class Chat extends React.Component<ChatProps, any> {
     />
   );
   renderSend = (props: SendProps<IMessage>) => (
-    <TouchableOpacity
-      onPress={() => {
-        if (props.text && props.onSend) {
-          props.onSend(
-            {
-              text: props.text?.trim(),
-              // user: props,
-              // _id: props.messageIdGenerator(),
-            },
-            true,
-          );
-        }
-      }}>
-      <View style={{width: wp(6), height: wp(6), marginBottom: wp(2.5)}}>
-        <Image
-          source={images.send}
-          style={{
-            width: '100%',
-            height: '100%',
-          }}
-        />
-      </View>
-    </TouchableOpacity>
+    <View style={{flexDirection: 'row'}}>
+      <Icon
+        onPress={() => console.log('sds')}
+        containerStyle={{marginRight: wp(3)}}
+        size={wp(4)}
+        name="attachment"
+        type="entypo"
+        color={colors.primary}
+      />
+      <TouchableOpacity
+        onPress={() => {
+          if (props.text && props.onSend) {
+            props.onSend(
+              {
+                text: props.text?.trim(),
+                // user: props,
+                // _id: props.(),
+              },
+              true,
+            );
+          }
+        }}>
+        <View style={{width: wp(5), height: wp(5), marginBottom: wp(2.5)}}>
+          <Image
+            source={images.send}
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+          />
+        </View>
+      </TouchableOpacity>
+    </View>
   );
   renderFooter = () => (
     <View>
@@ -205,7 +290,9 @@ class Chat extends React.Component<ChatProps, any> {
               ]}
             />
           </View>
-          <Text style={styles.userNameText}>{this.props.route.params.data.name}</Text>
+          <Text style={styles.userNameText}>
+            {this.props.route.params.data.name}
+          </Text>
           <View style={styles.headRightIcon}>
             <Icon
               size={wp(6)}
@@ -224,12 +311,19 @@ class Chat extends React.Component<ChatProps, any> {
         </View>
         {/* content */}
         <GiftedChat
-          renderBubble={(container: BubbleProps<IMessage>) => this.renderBubble(container)}
-          renderSend={(sendIcon: SendProps<IMessage>) => this.renderSend(sendIcon)}
+          renderBubble={(container: BubbleProps<IMessage>) =>
+            this.renderBubble(container)
+          }
+          renderSend={(sendIcon: SendProps<IMessage>) =>
+            this.renderSend(sendIcon)
+          }
           messages={this.state.messages}
-          renderInputToolbar={(Input: InputToolbarProps) => this.renderInput(Input)}
-          renderComposer={(composer: ComposerProps) => this.renderComposer(composer)}
-          renderTime={(time: TimeProps<IMessage>) => this.renderTime(time)}
+          renderInputToolbar={(Input: InputToolbarProps) =>
+            this.renderInput(Input)
+          }
+          renderComposer={(composer: ComposerProps) =>
+            this.renderComposer(composer)
+          }
           user={{
             _id: 1,
           }}

@@ -66,6 +66,20 @@ export const MainStackNavigator = () => {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
+            name="Messaging"
+            component={Messaging}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Chat"
+            component={Chat}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="tellAboutYou"
             component={TellAboutYou}
             options={{
@@ -116,20 +130,6 @@ export const MainStackNavigator = () => {
             }}
           />
 
-          <Stack.Screen
-            name="Messaging"
-            component={Messaging}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Chat"
-            component={Chat}
-            options={{
-              headerShown: false,
-            }}
-          />
           <Stack.Screen
             name="ViewSOR"
             component={ViewSOR}
