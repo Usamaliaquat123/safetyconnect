@@ -10,12 +10,15 @@ import {
   profileSetupSelections,
   groupConversation,
   notified,
+  
 } from './mock';
+import {messages  } from "./messaging_mock";
 export {
   Api,
   Create_sor,
   View_sor,
   draft,
+  messages,
   viewas,
   mapChart,
   messagingUsers,

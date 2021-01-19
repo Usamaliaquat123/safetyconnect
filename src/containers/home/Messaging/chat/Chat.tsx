@@ -45,8 +45,10 @@ class Chat extends React.Component<ChatProps, any> {
       messages: [
         {
           _id: 2,
+          // You can also add a video prop:
           text: 'Hello usama',
-          createdAt: new Date(),
+          createdAt: 1611039685053,
+
           user: {
             _id: 1,
             name: 'Usaam',
@@ -56,7 +58,17 @@ class Chat extends React.Component<ChatProps, any> {
         {
           _id: 1,
           text: 'Hello raazia',
-          createdAt: new Date(),
+          // Image props.
+          image: [
+            'https://user-images.githubusercontent.com/33973828/104999836-62342e80-59e2-11eb-8224-a2869128c350.png',
+            'https://user-images.githubusercontent.com/33973828/104999836-62342e80-59e2-11eb-8224-a2869128c350.png',
+            'https://user-images.githubusercontent.com/33973828/104999836-62342e80-59e2-11eb-8224-a2869128c350.png',
+          ],
+          // You can also add a video prop:
+          video: [
+            'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+          ],
+          createdAt: 1611039702641,
           user: {
             _id: 2,
             name: 'React Native',
@@ -65,8 +77,9 @@ class Chat extends React.Component<ChatProps, any> {
         },
         {
           _id: 1,
+          // You can also add a video prop:
           text: 'Hello raazias',
-          createdAt: new Date(),
+          createdAt: 1611039703308,
           user: {
             _id: 2,
             name: 'React Native',
@@ -89,23 +102,19 @@ class Chat extends React.Component<ChatProps, any> {
 
     var messageBelongsToCurrentUser = 2 == props.currentMessage?.user._id;
 
-    console.log(messageBelongsToCurrentUser);
+    console.log(props.currentMessage?.image);
     return (
       <View>
         {messageBelongsToCurrentUser == true ? (
-          <View
-          // style={
-          //   messageBelongsToCurrentUser
-          //     ? styles.messageTimeAndNameContainerRight
-          //     : styles.messageTimeAndNameContainerLeft
-          // }
-          >
+          <View>
             <View
               style={{
+                position: 'relative',
                 backgroundColor: colors.lightBlue,
                 borderTopLeftRadius: wp(3),
                 borderBottomLeftRadius: wp(3),
                 padding: wp(3),
+                // width: wp(50),
                 borderTopRightRadius: wp(2),
                 borderBottomRightRadius: wp(2),
                 alignContent: 'center',
@@ -126,30 +135,35 @@ class Chat extends React.Component<ChatProps, any> {
               <Text>{props.currentMessage?.text}</Text>
             </View>
             <Text style={{fontSize: wp(2.5), marginLeft: wp(2), opacity: 0.5}}>
-              {moment(props.currentMessage?.createdAt.toString()).format('LT')}
+              {moment(props.currentMessage?.createdAt).format('LT')}
             </Text>
-
-            {/* <Bubble
-              {...props}
-              textStyle={{
-                right: {
-                  color: colors.text,
-                  fontSize: wp(3.5),
-                },
-                left: {
-                  color: colors.text,
-                  fontSize: wp(3.5),
-                },
-              }}
-              wrapperStyle={{
-                left: {
-                  backgroundColor: colors.chatTextbg,
-                },
-                right: {
-                  backgroundColor: colors.chatTextbg,
-                },
-              }}
-            /> */}
+            <View
+              style={{
+                position: 'relative',
+                flexWrap: 'wrap',
+                width: wp(50),
+                flexDirection: 'row',
+              }}>
+              {props.currentMessage?.image != undefined ? (
+                <View style={{}}>
+                  {props.currentMessage.image.map((d, i) => (
+                    <TouchableOpacity
+                      style={{flexDirection: 'row'}}
+                      onPress={() => console.log('s')}>
+                      <Image
+                        style={{
+                          width: wp(20),
+                          height: wp(20),
+                          borderRadius: wp(3),
+                          marginRight: wp(2),
+                        }}
+                        source={{uri: d}}
+                      />
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              ) : null}
+            </View>
           </View>
         ) : (
           <View style={{marginBottom: wp(5)}}>
@@ -187,7 +201,7 @@ class Chat extends React.Component<ChatProps, any> {
                 marginRight: wp(2),
                 opacity: 0.5,
               }}>
-              {moment(props.currentMessage?.createdAt.toString()).format('LT')}
+              {moment(props.currentMessage?.createdAt).format('LT')}
             </Text>
           </View>
         )}
@@ -229,41 +243,44 @@ class Chat extends React.Component<ChatProps, any> {
       placeholder={'Write a message...'}
     />
   );
-  renderSend = (props: SendProps<IMessage>) => (
-    <View style={{flexDirection: 'row'}}>
-      <Icon
-        onPress={() => console.log('sds')}
-        containerStyle={{marginRight: wp(3)}}
-        size={wp(4)}
-        name="attachment"
-        type="entypo"
-        color={colors.primary}
-      />
-      <TouchableOpacity
-        onPress={() => {
-          if (props.text && props.onSend) {
-            props.onSend(
-              {
-                text: props.text?.trim(),
-                // user: props,
-                // _id: props.(),
-              },
-              true,
-            );
-          }
-        }}>
-        <View style={{width: wp(5), height: wp(5), marginBottom: wp(2.5)}}>
-          <Image
-            source={images.send}
-            style={{
-              width: '100%',
-              height: '100%',
-            }}
-          />
-        </View>
-      </TouchableOpacity>
-    </View>
-  );
+  renderSend = (props: SendProps<IMessage>) => {
+    // console.log(props.text.)
+    return (
+      <View style={{flexDirection: 'row'}}>
+        <Icon
+          onPress={() => console.log('sds')}
+          containerStyle={{marginRight: wp(3)}}
+          size={wp(4)}
+          name="attachment"
+          type="entypo"
+          color={colors.primary}
+        />
+        <TouchableOpacity
+          onPress={() => {
+            if (props.text && props.onSend) {
+              props.onSend(
+                {
+                  text: props.text?.trim(),
+                  // user: props,
+                  // _id: props.(),
+                },
+                true,
+              );
+            }
+          }}>
+          <View style={{width: wp(5), height: wp(5), marginBottom: wp(2.5)}}>
+            <Image
+              source={images.send}
+              style={{
+                width: '100%',
+                height: '100%',
+              }}
+            />
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  };
   renderFooter = () => (
     <View>
       <Text>sdsd</Text>
