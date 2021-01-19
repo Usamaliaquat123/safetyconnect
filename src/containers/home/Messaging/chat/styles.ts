@@ -45,6 +45,84 @@ const styles = StyleSheet.create({
     // alignSelf: 'center',
     // marginRight: 15,
   },
+
+
+
+  // left container message
+  leftContainer: {
+    backgroundColor: colors.lightBlue,
+    borderTopRightRadius: wp(3),
+    borderBottomRightRadius: wp(3),
+    padding: wp(3),
+    alignContent: 'center',
+    borderBottomLeftRadius: wp(2),
+    borderTopLeftRadius: wp(2),
+  },
+  // container of arrow
+  containerOfArrow: {
+    width: 0,
+    position: 'absolute',
+    right: wp(-2),
+    top: wp(2),
+    borderTopWidth: wp(3),
+    borderTopColor: 'transparent',
+    borderLeftColor: colors.lightBlue,
+    borderLeftWidth: wp(3),
+    borderBottomWidth: wp(3),
+    borderBottomColor: 'transparent',
+  },
+  // container of date
+  LeftContainerOfDate: {
+    fontSize: wp(2.5),
+    position: 'absolute',
+    bottom: wp(-3.5),
+    right: 0,
+    marginRight: wp(2),
+    opacity: 0.5,
+  },
+
+// container OF Imagetainer
+containerOfImage : {
+  position: 'relative',
+  flexWrap: 'wrap',
+  width: wp(10),
+},
+imageTag: {
+  width: wp(20),
+  height: wp(20),
+  borderRadius: wp(3),
+  marginRight: wp(2),
+},
+
+// container of Text
+containerOfDate:  {
+  fontSize: wp(2.5), marginLeft: wp(2), opacity: 0.5
+},
+  // container of arrow
+  containerOfArrow:  {
+    width: 0,
+    position: 'absolute',
+    left: wp(-2),
+    top: wp(2),
+    borderTopWidth: wp(3),
+    borderTopColor: 'transparent',
+    borderRightColor: colors.lightBlue,
+    borderRightWidth: wp(3),
+    borderBottomWidth: wp(3),
+    borderBottomColor: 'transparent',
+  },
+  // container of text
+  containerOfText: {
+    position: 'relative',
+    backgroundColor: colors.lightBlue,
+    borderTopLeftRadius: wp(3),
+    borderBottomLeftRadius: wp(3),
+    padding: wp(3),
+    // width: wp(50),
+    borderTopRightRadius: wp(2),
+    borderBottomRightRadius: wp(2),
+    alignContent: 'center',
+  },
   // message
   messageTimeAndNameContainerRight: {},
   messageTimeAndNameContainerLeft: {},

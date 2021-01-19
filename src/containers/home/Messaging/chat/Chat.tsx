@@ -120,42 +120,14 @@ class Chat extends React.Component<ChatProps, any> {
       <View>
         {messageBelongsToCurrentUser == true ? (
           <View>
-            <View
-              style={{
-                position: 'relative',
-                backgroundColor: colors.lightBlue,
-                borderTopLeftRadius: wp(3),
-                borderBottomLeftRadius: wp(3),
-                padding: wp(3),
-                // width: wp(50),
-                borderTopRightRadius: wp(2),
-                borderBottomRightRadius: wp(2),
-                alignContent: 'center',
-              }}>
-              <View
-                style={{
-                  width: 0,
-                  position: 'absolute',
-                  left: wp(-2),
-                  top: wp(2),
-                  borderTopWidth: wp(3),
-                  borderTopColor: 'transparent',
-                  borderRightColor: colors.lightBlue,
-                  borderRightWidth: wp(3),
-                  borderBottomWidth: wp(3),
-                  borderBottomColor: 'transparent',
-                }}></View>
+            <View style={styles.containerOfText}>
+              <View style={styles.containerOfArrow}></View>
               <Text>{props.currentMessage?.text}</Text>
             </View>
-            <Text style={{fontSize: wp(2.5), marginLeft: wp(2), opacity: 0.5}}>
+            <Text style={styles.containerOfDate}>
               {moment(props.currentMessage?.createdAt).format('LT')}
             </Text>
-            <View
-              style={{
-                position: 'relative',
-                flexWrap: 'wrap',
-                width: wp(10),
-              }}>
+            <View style={styles.containerOfImage}>
               {props.currentMessage?.image != undefined ? (
                 <View style={{flexDirection: 'row'}}>
                   {props.currentMessage.image.map((d, i) => (
@@ -166,15 +138,7 @@ class Chat extends React.Component<ChatProps, any> {
                           imageViewer: true,
                         });
                       }}>
-                      <Image
-                        style={{
-                          width: wp(20),
-                          height: wp(20),
-                          borderRadius: wp(3),
-                          marginRight: wp(2),
-                        }}
-                        source={{uri: d}}
-                      />
+                      <Image style={styles.imageTag} source={{uri: d}} />
                     </TouchableOpacity>
                   ))}
                 </View>
@@ -213,40 +177,11 @@ class Chat extends React.Component<ChatProps, any> {
           </View>
         ) : (
           <View style={{marginBottom: wp(5)}}>
-            <View
-              style={{
-                backgroundColor: colors.lightBlue,
-                borderTopRightRadius: wp(3),
-                borderBottomRightRadius: wp(3),
-                padding: wp(3),
-                alignContent: 'center',
-                borderBottomLeftRadius: wp(2),
-                borderTopLeftRadius: wp(2),
-              }}>
-              <View
-                style={{
-                  width: 0,
-                  position: 'absolute',
-                  right: wp(-2),
-                  top: wp(2),
-                  borderTopWidth: wp(3),
-                  borderTopColor: 'transparent',
-                  borderLeftColor: colors.lightBlue,
-                  borderLeftWidth: wp(3),
-                  borderBottomWidth: wp(3),
-                  borderBottomColor: 'transparent',
-                }}></View>
+            <View style={styles.leftContainer}>
+              <View style={styles.LeftcontainerOfArrow}></View>
               <Text>{props.currentMessage?.text}</Text>
             </View>
-            <Text
-              style={{
-                fontSize: wp(2.5),
-                position: 'absolute',
-                bottom: wp(-3.5),
-                right: 0,
-                marginRight: wp(2),
-                opacity: 0.5,
-              }}>
+            <Text style={styles.LeftContainerOfDate}>
               {moment(props.currentMessage?.createdAt).format('LT')}
             </Text>
           </View>
