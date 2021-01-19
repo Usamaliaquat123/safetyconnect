@@ -7,6 +7,7 @@ import {
   mapChart,
   submitted,
   messagingUsers,
+  profileSetupSelections,
   groupConversation,
   notified,
 } from './mock';
@@ -18,6 +19,7 @@ export {
   viewas,
   mapChart,
   messagingUsers,
+  profileSetupSelections,
   groupConversation,
   submitted,
   notified,

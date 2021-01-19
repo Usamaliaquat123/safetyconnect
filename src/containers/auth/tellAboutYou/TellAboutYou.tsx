@@ -12,7 +12,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {View_sor} from '@service';
+import {View_sor, profileSetupSelections} from '@service';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -44,6 +44,14 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
       photoModal: false,
       selected: 1,
       photo: '',
+      selectedIndustry: false,
+      selectedDesignAndArchi: false,
+      IndustrySelection: profileSetupSelections.IndustrySelection,
+      DesignAndArchitecture: profileSetupSelections.DesignAndArchitecture,
+
+      IndustrySelectionText: profileSetupSelections.IndustrySelection[0].text,
+      DesignAndArchitectureText:
+        profileSetupSelections.DesignAndArchitecture[0].text,
     };
   }
 
@@ -104,27 +112,53 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   </View>
                 </TouchableOpacity>
               ) : (
-                <Avatar
-                  size={'xlarge'}
-                  rounded
-                  source={{
-                    uri: this.state.uploadedImage,
-                  }}
-                />
+                <TouchableOpacity
+                  onPress={() => this.setState({photoModal: true})}
+                  style={styles.avatarPencil}>
+                  <View style={{position: 'absolute', zIndex: 1, right: wp(5)}}>
+                    <View
+                      style={{
+                        backgroundColor: colors.green,
+                        borderRadius: wp(10),
+                        padding: wp(2),
+                        zIndex: 1,
+                      }}>
+                      <Icon
+                        size={wp(4)}
+                        containerStyle={{opacity: 0.5}}
+                        name="pencil"
+                        type="font-awesome"
+                        color={colors.secondary}
+                      />
+                    </View>
+                  </View>
+
+                  <Avatar
+                    size={'xlarge'}
+                    rounded
+                    source={{
+                      uri: this.state.uploadedImage,
+                    }}
+                  />
+                </TouchableOpacity>
               )}
             </TouchableOpacity>
             <View style={styles.inputsContainer}>
               {/*Industry selectionv   */}
               <Text style={styles.emailTextContainer}>Industry</Text>
               <TouchableOpacity
-                onPress={() => this.setState({selected: 1})}
+                onPress={() =>
+                  this.setState({selected: 1, selectedIndustry: true})
+                }
                 style={[
                   styles.inputContainer,
                   this.state.selected == 1
                     ? {borderColor: colors.green}
                     : {borderColor: colors.textOpa},
                 ]}>
-                <Text style={styles.selectText}>Design and Architecture</Text>
+                <Text style={styles.selectText}>
+                  {this.state.IndustrySelectionText}
+                </Text>
                 <Icon
                   onPress={() => this.props.navigation.goBack()}
                   size={wp(5)}
@@ -138,17 +172,44 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   color={colors.text}
                 />
               </TouchableOpacity>
+              {/* Industry selection */}
+              {this.state.selectedIndustry == true ? (
+                <View style={styles.involveSuggestCont}>
+                  {this.state.IndustrySelection.map((d: any, i: number) => (
+                    <TouchableOpacity
+                      key={i}
+                      onPress={() =>
+                        this.setState({
+                          IndustrySelectionText: d.text,
+                          selectedIndustry: false,
+                        })
+                      }
+                      style={[
+                        styles.involvePsuggCont,
+                        this.state.IndustrySelection.length == i + 1
+                          ? {borderBottomWidth: wp(0)}
+                          : null,
+                      ]}>
+                      <Text style={styles.involvePSt}>{d.text}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              ) : null}
               {/*Deraprtment selectionv   */}
               <Text style={styles.emailTextContainer}>Department</Text>
               <TouchableOpacity
-                onPress={() => this.setState({selected: 2})}
+                onPress={() =>
+                  this.setState({selected: 2, selectedDesignAndArchi: true})
+                }
                 style={[
                   styles.inputContainer,
                   this.state.selected == 2
                     ? {borderColor: colors.green}
                     : {borderColor: colors.textOpa},
                 ]}>
-                <Text style={styles.selectText}>Design and Architecture</Text>
+                <Text style={styles.selectText}>
+                  {this.state.DesignAndArchitectureText}
+                </Text>
                 <Icon
                   onPress={() => this.props.navigation.goBack()}
                   size={wp(5)}
@@ -162,6 +223,30 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   color={colors.text}
                 />
               </TouchableOpacity>
+              {/* design and architecture selection */}
+              {this.state.selectedDesignAndArchi == true ? (
+                <View style={styles.involveSuggestCont}>
+                  {this.state.DesignAndArchitecture.map((d: any, i: number) => (
+                    <TouchableOpacity
+                      key={i}
+                      onPress={() =>
+                        this.setState({
+                          DesignAndArchitectureText: d.text,
+                          selectedDesignAndArchi: false,
+                        })
+                      }
+                      style={[
+                        styles.involvePsuggCont,
+                        this.state.IndustrySelection.length == i + 1
+                          ? {borderBottomWidth: wp(0)}
+                          : null,
+                      ]}>
+                      <Text style={styles.involvePSt}>{d.text}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              ) : null}
+
               {/*job role selectionv   */}
               <Text style={styles.emailTextContainer}>
                 What is your role in the organization ?
@@ -171,16 +256,24 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                 style={[
                   styles.inputContainer,
                   this.state.selected == 3
-                    ? {borderColor: colors.green}
-                    : {borderColor: colors.textOpa},
+                    ? {borderColor: colors.green, padding: wp(0)}
+                    : {
+                        borderColor: colors.textOpa,
+                        padding: wp(0),
+                      },
                 ]}>
-                <Text style={styles.selectText}>Design and Architecture</Text>
+                <TextInput
+                  underlineColorAndroid="transparent"
+                  style={styles.selectText}
+                  placeholder={'Design and Architecture'}
+                />
               </TouchableOpacity>
             </View>
             <TouchableOpacity style={styles.siginBtnContainer}>
               <Text style={styles.signinText}>Continue</Text>
             </TouchableOpacity>
           </View>
+          {/* Modal Container */}
           <Modal
             isVisible={this.state.photoModal}
             onBackdropPress={() => this.setState({photoModal: false})}>
@@ -198,7 +291,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   size={wp(5)}
                   name="camerao"
                   type="antdesign"
-                  color={colors.primary}
+                  color={colors.text}
                 />
                 <Text style={[styles.selectText, {marginLeft: wp(10)}]}>
                   Take a photo

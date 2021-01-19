@@ -261,6 +261,39 @@ export const notified = [
     user2:'https://media-exp1.licdn.com/dms/image/C4D03AQGfuxWRWdlgVw/profile-displayphoto-shrink_400_400/0/1603355067087?e=1615420800&v=beta&t=EqS_Dglj86o0TOR3aIEKkOlgFWoo4dHKbJ4uA9ObAjs' ,},
   ];
 
+
+
+
+  export const profileSetupSelections = {
+    IndustrySelection: [
+      {
+        text: 'Design and Architecture',
+        selected: false,
+      },
+      {
+        selected: false,
+        text: 'Development and issues',
+      },
+      {
+        selected: false,
+        text: 'Research and development',
+      },
+    ],  DesignAndArchitecture: [
+      {
+        text: 'Design and Architecture',
+        selected: false,
+      },
+      {
+        selected: false,
+        text: 'Development and issues',
+      },
+      {
+        selected: false,
+        text: 'Research and development',
+      },
+    ],
+  }
+
 export const messagingUsers = [
   {
     name: 'Jane doe',
