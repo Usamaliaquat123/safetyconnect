@@ -14,6 +14,7 @@ import CreatePass from "./auth/createPassword/CreatePass";
 import Chat from './home/Messaging/chat/Chat';
 import TellAboutYou from './auth/tellAboutYou/TellAboutYou';
 import CreateOrg from "./home/CreateOrganization/CreateOrg";
+import CreateProject from "./home/CreateProject/CreateProject";
 export {
   Chat,
   Login,
@@ -21,6 +22,7 @@ export {
   CreateSOR,
   Signup,
   Forgot,
+  CreateProject,
   CreateOrg,
   Verify,
   Settings,

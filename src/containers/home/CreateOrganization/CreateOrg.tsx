@@ -17,8 +17,8 @@ import {
 import {Icon} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
-import {colors, images, GlStyles} from '@theme';
 import {RouteProp} from '@react-navigation/native';
+import {colors, images, GlStyles} from '@theme';
 
 type CreateOrgNavigationProp = StackNavigationProp<
   StackNavigatorProps,
