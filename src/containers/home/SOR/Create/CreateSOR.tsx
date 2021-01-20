@@ -21,12 +21,12 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import DocumentPicker from 'react-native-document-picker';
-import {Chart, Suggestions} from '@components';
+import {Chart, Suggestions, RepeatedSor} from '@components';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import {classifySorBtn} from '@typings';
-
+import Modal from 'react-native-modal';
 type CreateSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'CreateSOR'
@@ -70,6 +70,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       submitTo: Create_sor.Observation.submitTo[0],
       selectEsclateTo: false,
       esclateTo: Create_sor.Observation.esclateTo[0],
+      // repeated sor modal
+      repeatedSorModal: true,
     };
   }
   submitDraft = async () => {
@@ -539,6 +541,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               <Text style={styles.submitsorbtnSbtxt}>Submit</Text>
             </View>
           </Animated.View>
+
+          <Modal isVisible={this.state.repeatedSorModal}>
+            <RepeatedSor />
+          </Modal>
         </ScrollView>
       </Animated.View>
     );

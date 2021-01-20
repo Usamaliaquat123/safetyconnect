@@ -10,7 +10,7 @@ import {
   profileSetupSelections,
   groupConversation,
   notified,
-  
+  repeatedSor,
 } from './mock';
 import {messages  } from "./messaging_mock";
 export {
@@ -20,6 +20,7 @@ export {
   draft,
   messages,
   viewas,
+  repeatedSor,
   mapChart,
   messagingUsers,
   profileSetupSelections,

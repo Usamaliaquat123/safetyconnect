@@ -429,6 +429,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       iconConf={classifySor.find(
                         (e: any) => e.title == d.classify,
                       )}
+                      viewPortWidth={80}
                       location={d.location}
                       user1={d.user1}
                       user2={d.user2}
@@ -454,6 +455,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       }
                       date={d.date}
                       risk={d.risk}
+                      viewPortWidth={80}
                       observation={d.observation}
                       classify={d.classify}
                       iconConf={classifySor.find(
@@ -487,6 +489,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       }
                       date={d.date}
                       risk={d.risk}
+                      viewPortWidth={80}
                       user1={d.user1}
                       user2={d.user2}
                       observation={d.observation}

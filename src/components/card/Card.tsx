@@ -1,5 +1,11 @@
 import * as React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import {colors} from '@theme';
 import {Icon, Avatar} from 'react-native-elements';
 import moment from 'moment';
@@ -9,6 +15,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {any} from 'prop-types';
 export interface CardProps {
   data?: any;
   date?: number;
@@ -21,28 +28,45 @@ export interface CardProps {
   user1: string;
   user2: string;
   style?: Object;
+  viewPortWidth?: number;
+  backgroundColor?: string;
   onPress: Function;
 }
-
+function dp(percentage: any) {
+  const value = (percentage * viewportWidth) / 100;
+  return Math.round(value);
+}
+const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
 export default class Card extends React.Component<CardProps, any> {
   constructor(props: any) {
     super(props);
-    this.state = {};
+    this.state = {
+      itemWidth: 80,
+    };
   }
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    const slideWidth = dp(this.props.viewPortWidth);
+    const itemHorizontalMargin = dp(2);
+    const itemWidth = slideWidth + itemHorizontalMargin * 2;
+    this.setState({itemWidth});
+  };
 
   render() {
     return (
       <View style={this.props.style}>
         <TouchableOpacity
           activeOpacity={1}
-          style={styles.slideInnerContainer}
+          style={[styles.slideInnerContainer, {width: this.state.itemWidth}]}
           onPress={() => {
             this.props.onPress(this.props.data);
           }}>
           <View style={styles.shadow} />
-          <View style={[styles.imageContainer]}>
+          <View
+            style={[
+              styles.imageContainer,
+              {backgroundColor: this.props.backgroundColor},
+            ]}>
             <View style={styles.cardHeader}>
               <Text style={styles.cardtime}>{1234}</Text>
               <TouchableOpacity

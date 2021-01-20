@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     padding: wp(5),
     flex: 1,
     marginBottom: IS_IOS ? 0 : -1, // Prevent a random Android rendering issue
-    // backgroundColor: colors.textOpa,
+    
     borderTopLeftRadius: entryBorderRadius,
     borderTopRightRadius: entryBorderRadius,
     borderBottomLeftRadius: entryBorderRadius,
@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
     width: itemWidth,
     height: slideHeight,
     paddingHorizontal: itemHorizontalMargin,
+    // backgroundColor: colors.secondary
     // paddingBottom: wp(10), // needed for shadow
   },
 });
