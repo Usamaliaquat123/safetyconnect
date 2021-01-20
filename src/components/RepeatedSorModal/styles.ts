@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
     containerCard: {
         backgroundColor: colors.lightBlue,
         padding: wp(3),
-        borderRadius: wp(3),
-        marginTop: wp(5)
+        borderRadius: wp(5),
+        marginBottom: wp(5)
 
     },
     cardHeadng:  {

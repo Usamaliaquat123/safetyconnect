@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {Icon} from 'react-native-elements';
@@ -36,15 +36,16 @@ export default class RepeatedModal extends React.Component<
             Is your SOR same as these ?
           </Text>
           {/* SUbmitted */}
-          <View style={styles.containerCard}>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={styles.cardHeadng}>Submitted</Text>
+          <View style={[styles.containerCard, {marginTop: wp(2)}]}>
+            <View style={{flexDirection: 'row', paddingLeft: wp(2)}}>
+              <Text style={[styles.cardHeadng]}>Submitted</Text>
 
               {this.state.submittedSelected == true ? (
                 <Icon
                   onPress={() => this.setState({submittedSelected: false})}
                   size={25}
                   containerStyle={{
+                    top: wp(-1),
                     position: 'absolute',
                     right: wp(2),
                   }}
@@ -60,6 +61,7 @@ export default class RepeatedModal extends React.Component<
                     opacity: 0.6,
                     position: 'absolute',
                     right: wp(2),
+                    top: wp(-1),
                   }}
                   name="checkmark-circle-outline"
                   type="ionicon"
@@ -85,13 +87,13 @@ export default class RepeatedModal extends React.Component<
                 location={res.location}
                 user1={res.user1}
                 user2={res.user2}
-                style={[styles.cardConatiner, {marginTop: wp(5)}]}
+                style={[styles.cardConatiner, {marginTop: wp(2)}]}
               />
             ))}
           </View>
           {/* completed  */}
           <View style={styles.containerCard}>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row', paddingLeft: wp(2)}}>
               <Text style={styles.cardHeadng}>Completed</Text>
               {this.state.completedSelected == true ? (
                 <Icon
@@ -99,6 +101,7 @@ export default class RepeatedModal extends React.Component<
                   size={25}
                   containerStyle={{
                     position: 'absolute',
+                    top: wp(-1),
                     right: wp(2),
                   }}
                   name="checkmark-circle"
@@ -111,6 +114,7 @@ export default class RepeatedModal extends React.Component<
                   size={25}
                   containerStyle={{
                     opacity: 0.6,
+                    top: wp(-1),
                     position: 'absolute',
                     right: wp(2),
                   }}
@@ -138,13 +142,13 @@ export default class RepeatedModal extends React.Component<
                 location={res.location}
                 user1={res.user1}
                 user2={res.user2}
-                style={[styles.cardConatiner, {marginTop: wp(5)}]}
+                style={[styles.cardConatiner, {marginTop: wp(2)}]}
               />
             ))}
           </View>
           {/* Draft  */}
           <View style={styles.containerCard}>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row', paddingLeft: wp(2)}}>
               <Text style={styles.cardHeadng}>Draft</Text>
 
               {this.state.draftSelected == true ? (
@@ -154,6 +158,7 @@ export default class RepeatedModal extends React.Component<
                   containerStyle={{
                     position: 'absolute',
                     right: wp(2),
+                    top: wp(-1),
                   }}
                   name="checkmark-circle"
                   type="ionicon"
@@ -165,6 +170,7 @@ export default class RepeatedModal extends React.Component<
                   size={25}
                   containerStyle={{
                     opacity: 0.6,
+                    top: wp(-1),
                     position: 'absolute',
                     right: wp(2),
                   }}
@@ -192,9 +198,42 @@ export default class RepeatedModal extends React.Component<
                 location={res.location}
                 user1={res.user1}
                 user2={res.user2}
-                style={[styles.cardConatiner, {marginTop: wp(5)}]}
+                style={[styles.cardConatiner, {marginTop: wp(2)}]}
               />
             ))}
+          </View>
+          <View
+            style={{
+              marginTop: wp(2),
+              flexDirection: 'row',
+              padding: wp(3),
+              alignContent: 'center',
+              marginBottom: wp(10),
+            }}>
+            <TouchableOpacity>
+              <Text style={{color: colors.primary, fontWeight: 'bold'}}>
+                Skip
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                backgroundColor: colors.primary,
+                padding: wp(4),
+                paddingLeft: wp(10),
+                borderRadius: wp(3),
+                paddingRight: wp(10),
+                position: 'absolute',
+                right: wp(3),
+              }}>
+              <Text
+                style={{
+                  color: colors.secondary,
+                  fontWeight: 'bold',
+                  fontSize: wp(3),
+                }}>
+                Link with SOR
+              </Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </View>

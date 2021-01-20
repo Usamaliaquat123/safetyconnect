@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
   cardtime: {
     fontSize: wp(3),
     fontWeight: 'bold',
+    opacity:.5,
     color: colors.text,
   },
   cardDate: {
@@ -81,32 +82,41 @@ const styles = StyleSheet.create({
     padding: wp(5),
     flex: 1,
     marginBottom: IS_IOS ? 0 : -1, // Prevent a random Android rendering issue
-    
-    borderTopLeftRadius: entryBorderRadius,
-    borderTopRightRadius: entryBorderRadius,
-    borderBottomLeftRadius: entryBorderRadius,
-    borderBottomRightRadius: entryBorderRadius,
+    shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 30,
+      },
+      shadowOpacity: 0.50,
+      shadowRadius: 2.22,
+      
+      elevation: 10,
+    borderRadius: entryBorderRadius
+    //   borderTopLeftRadius: entryBorderRadius,
+    // borderTopRightRadius: entryBorderRadius,
+    // borderBottomLeftRadius: entryBorderRadius,
+    // borderBottomRightRadius: entryBorderRadius,
   },
   radiusMaskEven: {
     backgroundColor: '#1a1917',
   },
-  shadow: {
-    position: 'absolute',
-    top: 0,
-    left: itemHorizontalMargin,
-    right: itemHorizontalMargin,
-    bottom: 0,
-    borderRadius: entryBorderRadius,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 8,
-    },
-    shadowOpacity: 0.20,
-    shadowRadius: 2.22,
+  // shadow: {
+  //   position: 'absolute',
+  //   top: 0,
+  //   left: itemHorizontalMargin,
+  //   right: itemHorizontalMargin,
+  //   bottom: 0,
+  //   borderRadius: entryBorderRadius,
+  //   shadowColor: "#000",
+  //   shadowOffset: {
+  //     width: 0,
+  //     height: 30,
+  //   },
+  //   // shadowOpacity: 0.50,
+  //   shadowRadius: 2.22,
     
-    elevation: 3,
-  },
+  //   elevation: 1,
+  // },
   slideInnerContainer: {
     width: itemWidth,
     height: slideHeight,

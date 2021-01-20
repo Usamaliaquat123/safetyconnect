@@ -29,6 +29,7 @@ export interface CardProps {
   user2: string;
   style?: Object;
   viewPortWidth?: number;
+  isclassify?: boolean;
   backgroundColor?: string;
   onPress: Function;
 }
@@ -61,25 +62,28 @@ export default class Card extends React.Component<CardProps, any> {
           onPress={() => {
             this.props.onPress(this.props.data);
           }}>
-          <View style={styles.shadow} />
+          {/* <View style={styles.shadow} /> */}
           <View
             style={[
               styles.imageContainer,
               {backgroundColor: this.props.backgroundColor},
             ]}>
             <View style={styles.cardHeader}>
-              <Text style={styles.cardtime}>{1234}</Text>
-              <TouchableOpacity
-                style={[
-                  styles.cardbadge,
-                  {
-                    backgroundColor: mapChart.find(
-                      (x) => x.value == this.props.risk,
-                    )?.color,
-                  },
-                ]}>
-                <Text style={styles.cardBadgeText}>{this.props.risk}</Text>
-              </TouchableOpacity>
+              <Text style={styles.cardtime}>ID: {1234}</Text>
+              {this.props.isclassify == true ? (
+                <TouchableOpacity
+                  style={[
+                    styles.cardbadge,
+                    {
+                      backgroundColor: mapChart.find(
+                        (x) => x.value == this.props.risk,
+                      )?.color,
+                    },
+                  ]}>
+                  <Text style={styles.cardBadgeText}>{this.props.risk}</Text>
+                </TouchableOpacity>
+              ) : null}
+
               <Text style={styles.cardDate}>
                 {moment(this.props.date).format('DD/MM/YYYY')}
               </Text>
