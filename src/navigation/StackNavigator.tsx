@@ -19,6 +19,7 @@ import {
   Settings,
   Chat,
   ViewSOR,
+  CreateOrg,
   TellAboutYou,
 } from '@containers';
 
@@ -34,6 +35,7 @@ export type StackNavigatorProps = {
   Signup: undefined;
   CreatePass: undefined;
   tellAboutYou: undefined;
+  CreateOrganization: undefined;
 };
 export type AuthNavigatorProp = {
   // Login: undefined;
@@ -65,6 +67,13 @@ export const MainStackNavigator = () => {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator>
+          <Stack.Screen
+            name="CreateOrganization"
+            component={CreateOrg}
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen
             name="ViewAll"
             component={ViewAll}

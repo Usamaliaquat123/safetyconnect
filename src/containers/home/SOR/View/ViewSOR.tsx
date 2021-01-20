@@ -114,7 +114,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             // <.View
             style={[styles.content, {marginTop: this.state.contentAnim}]}>
             <View style={styles.contentPadding}>
-              <View style={styles.classittleicon}>
+              <TouchableOpacity
+                onPress={() => console.log('click on change classify btns')}
+                style={styles.classittleicon}>
                 <Icon
                   size={wp(6)}
                   name={
@@ -144,7 +146,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 <Text style={styles.clasifyT}>
                   {View_sor.user.classifyType}
                 </Text>
-              </View>
+              </TouchableOpacity>
               <View style={styles.obserContainer}>
                 <Text style={styles.observationText}>
                   {View_sor.user.observation}
@@ -280,6 +282,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       ]}>
                       {d.observation}
                     </Text>
+
                     <View style={styles.subAss}>
                       <Text style={styles.subAssText}>
                         Assigned to:{' '}
@@ -546,6 +549,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             />
           </TouchableOpacity>
           <ImageViewer
+            enableSwipeDown={true}
             flipThreshold={100}
             onCancel={() => console.log('sdsd')}
             imageUrls={this.state.images}

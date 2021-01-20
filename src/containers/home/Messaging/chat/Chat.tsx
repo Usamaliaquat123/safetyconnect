@@ -115,7 +115,7 @@ class Chat extends React.Component<ChatProps, any> {
 
     var messageBelongsToCurrentUser = 2 == props.currentMessage?.user._id;
 
-    console.log(props.currentMessage?.video);
+    console.log(typeof props.currentMessage?.video);
     return (
       <View>
         {messageBelongsToCurrentUser == true ? (
@@ -189,21 +189,6 @@ class Chat extends React.Component<ChatProps, any> {
       </View>
     );
   };
-  // renderTime = (props: TimeProps<IMessage>) => (
-  //   <View>
-  //     <Time
-  //       {...props}
-  //       timeTextStyle={{
-  //         left: {color: colors.text},
-  //         right: {color: colors.text},
-  //       }}
-  //       containerStyle={{
-  //         left: {backgroundColor: colors.secondary},
-  //         right: {backgroundColor: colors.secondary},
-  //       }}
-  //     />
-  //   </View>
-  // );
 
   componentDidMount = () => {};
   renderInput = (props: InputToolbarProps) => (

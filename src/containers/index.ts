@@ -13,6 +13,7 @@ import ViewSOR from './home/SOR/View/ViewSOR';
 import CreatePass from "./auth/createPassword/CreatePass";
 import Chat from './home/Messaging/chat/Chat';
 import TellAboutYou from './auth/tellAboutYou/TellAboutYou';
+import CreateOrg from "./home/CreateOrganization/CreateOrg";
 export {
   Chat,
   Login,
@@ -20,6 +21,7 @@ export {
   CreateSOR,
   Signup,
   Forgot,
+  CreateOrg,
   Verify,
   Settings,
   Messaging,
