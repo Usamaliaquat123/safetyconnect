@@ -85,8 +85,10 @@ alignItems:"center"
         backgroundColor: colors.primary,
         justifyContent: "center",
         alignItems: "center",
-        width: wp(70),
+        // width: wp(70),
         padding: wp(4),
+        paddingLeft: wp(10),
+        paddingRight: wp(10),
         borderRadius: wp(3)
       },
       siginwithGoogle:  {
