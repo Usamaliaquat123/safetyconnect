@@ -9,10 +9,13 @@ const styles = StyleSheet.create({
     container : {
         padding: wp(5),
         flex: 1,
+        paddingTop: wp(0),
+        paddingBottom: wp(0),
         borderRadius: wp(5),
         backgroundColor: colors.secondary
     },
     headingContainer : {
+        marginTop: wp(5),
         fontSize: wp(5),
         textAlign: "center"
 ,        fontWeight: "bold"

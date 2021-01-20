@@ -30,8 +30,8 @@ export default class RepeatedModal extends React.Component<
 
   render() {
     return (
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={styles.headingContainer}>
             Is your SOR same as these ?
           </Text>
@@ -196,8 +196,8 @@ export default class RepeatedModal extends React.Component<
               />
             ))}
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     );
   }
 }
