@@ -38,7 +38,41 @@ const styles = StyleSheet.create({
         marginBottom: wp(5),
         // marginRight: wp(1),
       },
-
+containerStyleOfFiledTick : {
+    top: wp(-1),
+    position: 'absolute',
+    right: wp(2),
+},
+containerStyleOfNotTick:  {
+    opacity: 0.6,
+    position: 'absolute',
+    right: wp(2),
+    top: wp(-1),
+},
+bottomBtns: {
+    marginTop: wp(2),
+    flexDirection: 'row',
+    padding: wp(3),
+    alignContent: 'center',
+    marginBottom: wp(10),
+  },
+  skipBtn:  {
+    color: colors.primary, fontWeight: 'bold'
+  },
+  submitBtn: {
+    backgroundColor: colors.primary,
+    padding: wp(4),
+    paddingLeft: wp(10),
+    borderRadius: wp(3),
+    paddingRight: wp(10),
+    position: 'absolute',
+    right: wp(3),
+  },
+  subBtnText: { 
+    color: colors.secondary,
+    fontWeight: 'bold',
+    fontSize: wp(3),
+  }
 })
 
 

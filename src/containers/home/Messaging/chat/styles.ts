@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: wp(2),
   },
   // container of arrow
-  containerOfArrow: {
+  LeftcontainerOfArrow: {
     width: 0,
     position: 'absolute',
     right: wp(-2),

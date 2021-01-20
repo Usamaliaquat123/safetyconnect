@@ -13,7 +13,11 @@ import {
 import {Isor} from '@typings';
 import {classifySor} from '@utils';
 import {ScrollView} from 'react-native-gesture-handler';
-export interface RepeatedModalProps {}
+export interface RepeatedModalProps {
+  onSubmit: Function;
+  onSkip: Function;
+  onViewSor: Function;
+}
 
 export default class RepeatedModal extends React.Component<
   RepeatedModalProps,
@@ -44,11 +48,7 @@ export default class RepeatedModal extends React.Component<
                 <Icon
                   onPress={() => this.setState({submittedSelected: false})}
                   size={25}
-                  containerStyle={{
-                    top: wp(-1),
-                    position: 'absolute',
-                    right: wp(2),
-                  }}
+                  containerStyle={styles.containerStyleOfFiledTick}
                   name="checkmark-circle"
                   type="ionicon"
                   color={colors.green}
@@ -57,12 +57,7 @@ export default class RepeatedModal extends React.Component<
                 <Icon
                   onPress={() => this.setState({submittedSelected: true})}
                   size={25}
-                  containerStyle={{
-                    opacity: 0.6,
-                    position: 'absolute',
-                    right: wp(2),
-                    top: wp(-1),
-                  }}
+                  containerStyle={styles.containerStyleOfNotTick}
                   name="checkmark-circle-outline"
                   type="ionicon"
                   color={colors.text}
@@ -99,11 +94,7 @@ export default class RepeatedModal extends React.Component<
                 <Icon
                   onPress={() => this.setState({completedSelected: false})}
                   size={25}
-                  containerStyle={{
-                    position: 'absolute',
-                    top: wp(-1),
-                    right: wp(2),
-                  }}
+                  containerStyle={styles.containerStyleOfFiledTick}
                   name="checkmark-circle"
                   type="ionicon"
                   color={colors.green}
@@ -112,12 +103,7 @@ export default class RepeatedModal extends React.Component<
                 <Icon
                   onPress={() => this.setState({completedSelected: true})}
                   size={25}
-                  containerStyle={{
-                    opacity: 0.6,
-                    top: wp(-1),
-                    position: 'absolute',
-                    right: wp(2),
-                  }}
+                  containerStyle={styles.containerStyleOfNotTick}
                   name="checkmark-circle-outline"
                   type="ionicon"
                   color={colors.text}
@@ -128,10 +114,7 @@ export default class RepeatedModal extends React.Component<
             {repeatedSor.submitted.map((res, i) => (
               <Card
                 data={res}
-                onPress={(d: Isor) =>
-                  // this.props.navigation.navigate('ViewSOR', {data: d})
-                  console.log(d)
-                }
+                onPress={(d: Isor) => this.props.onViewSor(d)}
                 date={res.date}
                 risk={res.risk}
                 viewPortWidth={70}
@@ -155,11 +138,7 @@ export default class RepeatedModal extends React.Component<
                 <Icon
                   onPress={() => this.setState({draftSelected: false})}
                   size={25}
-                  containerStyle={{
-                    position: 'absolute',
-                    right: wp(2),
-                    top: wp(-1),
-                  }}
+                  containerStyle={styles.containerStyleOfFiledTick}
                   name="checkmark-circle"
                   type="ionicon"
                   color={colors.green}
@@ -168,12 +147,7 @@ export default class RepeatedModal extends React.Component<
                 <Icon
                   onPress={() => this.setState({draftSelected: true})}
                   size={25}
-                  containerStyle={{
-                    opacity: 0.6,
-                    top: wp(-1),
-                    position: 'absolute',
-                    right: wp(2),
-                  }}
+                  containerStyle={styles.containerStyleOfNotTick}
                   name="checkmark-circle-outline"
                   type="ionicon"
                   color={colors.text}
@@ -202,37 +176,14 @@ export default class RepeatedModal extends React.Component<
               />
             ))}
           </View>
-          <View
-            style={{
-              marginTop: wp(2),
-              flexDirection: 'row',
-              padding: wp(3),
-              alignContent: 'center',
-              marginBottom: wp(10),
-            }}>
-            <TouchableOpacity>
-              <Text style={{color: colors.primary, fontWeight: 'bold'}}>
-                Skip
-              </Text>
+          <View style={styles.bottomBtns}>
+            <TouchableOpacity onPress={() => this.props.onSkip()}>
+              <Text style={styles.skipBtn}>Skip</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{
-                backgroundColor: colors.primary,
-                padding: wp(4),
-                paddingLeft: wp(10),
-                borderRadius: wp(3),
-                paddingRight: wp(10),
-                position: 'absolute',
-                right: wp(3),
-              }}>
-              <Text
-                style={{
-                  color: colors.secondary,
-                  fontWeight: 'bold',
-                  fontSize: wp(3),
-                }}>
-                Link with SOR
-              </Text>
+              onPress={() => this.props.onSubmit()}
+              style={styles.submitBtn}>
+              <Text style={styles.subBtnText}>Link with SOR</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

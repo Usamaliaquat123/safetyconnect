@@ -25,7 +25,7 @@ import {Chart, Suggestions, RepeatedSor} from '@components';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
-import {classifySorBtn} from '@typings';
+import {classifySorBtn, Isor} from '@typings';
 import Modal from 'react-native-modal';
 type CreateSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -71,7 +71,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       selectEsclateTo: false,
       esclateTo: Create_sor.Observation.esclateTo[0],
       // repeated sor modal
-      repeatedSorModal: true,
+      repeatedSorModal: false,
     };
   }
   submitDraft = async () => {
@@ -537,13 +537,30 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               style={styles.submitsorbtn}>
               <Text style={styles.submitsorbtntxt}>Save as Draft</Text>
             </TouchableOpacity>
-            <View style={styles.submitsorbtnSb}>
+            <TouchableOpacity
+              onPress={() => this.setState({repeatedSorModal: true})}
+              style={styles.submitsorbtnSb}>
               <Text style={styles.submitsorbtnSbtxt}>Submit</Text>
-            </View>
+            </TouchableOpacity>
           </Animated.View>
 
-          <Modal isVisible={this.state.repeatedSorModal}>
-            <RepeatedSor />
+          <Modal
+            animationInTiming={1000}
+            animationIn={'bounceInUp'}
+            animationOut={'bounceOutDown'}
+            animationOutTiming={1000}
+            useNativeDriver={true}
+            isVisible={this.state.repeatedSorModal}>
+            <RepeatedSor
+              onViewSor={(d: Isor) =>
+                this.props.navigation.navigate('ViewSOR', {data: d})
+              }
+              onSkip={() => {
+                this.props.navigation.navigate('ViewAll');
+                this.props.navigation.goBack();
+              }}
+              onSubmit={() => this.setState({repeatedSorModal: false})}
+            />
           </Modal>
         </ScrollView>
       </Animated.View>
