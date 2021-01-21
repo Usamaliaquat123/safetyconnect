@@ -36,7 +36,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      teamMembers: ['john doe', 'sunny leone', 'sunny leone', 'sunny leone'],
+      teamMembers: ['john doe', 'sunny leone'],
       teamMembersText: '',
       assignSuppervisor: [],
       assignSuppervisorText: '',
@@ -68,10 +68,14 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
           {/* content */}
           <View style={styles.content}>
             <Text style={styles.headingContainer}>Create Project</Text>
+
             {/* inputs container */}
             <View style={styles.inputsContainer}>
               {/* Email Container */}
-              <Text style={styles.emailTextContainer}>Project Name</Text>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={styles.emailTextContainer}>Project Name</Text>
+                <Text style={{color: colors.error, marginTop: wp(2)}}>*</Text>
+              </View>
               <View style={[styles.inputContainer]}>
                 <TextInput
                   style={styles.authInputs}
@@ -81,32 +85,31 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               </View>
               {/* Add Team Members */}
               <Text style={styles.emailTextContainer}>Add Team Members</Text>
-              <View style={[styles.inputContainer, {flexWrap: 'wrap'}]}>
-                <Tags
-                  onClose={(d: any) => {
-                    this.setState({
-                      teamMembers: this.state.teamMembers.filter(
-                        (v: any) => v !== d,
-                      ),
-                    });
-                  }}
-                  tags={this.state.teamMembers}
-                />
-                <TextInput
-                  style={styles.authInputs}
-                  value={this.state.teamMembersText}
-                  onChange={(e) => {
-                    this.setState({teamMembersText: e.nativeEvent.text});
-                  }}
-
-                  // placeholder={}
-                />
+              <View style={[styles.inputContainer]}>
+                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                  <Tags
+                    onClose={(d: any) => {
+                      this.setState({
+                        teamMembers: this.state.teamMembers.filter(
+                          (v: any) => v !== d,
+                        ),
+                      });
+                    }}
+                    tags={this.state.teamMembers}
+                  />
+                  <TextInput
+                    style={styles.authInputs}
+                    value={this.state.teamMembersText}
+                    onChange={(e) => {
+                      this.setState({teamMembersText: e.nativeEvent.text});
+                    }}
+                  />
+                </View>
               </View>
               {/* Add Team Suggestions */}
               {this.state.teamMembersText != '' ? (
                 <SuggestionsAvatar
                   onSelect={(d: string) => {
-                    console.log(d);
                     this.state.teamMembers.push(d);
                     this.setState({
                       teamMembersText: '',
@@ -143,7 +146,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               {this.state.assignSuppervisorText != '' ? (
                 <SuggestionsAvatar
                   onSelect={(d: string) => {
-                    console.log(d);
                     this.state.assignSuppervisor.push(d);
                     this.setState({
                       assignSuppervisorText: '',
@@ -177,7 +179,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               {this.state.assignLeaderssText != '' ? (
                 <SuggestionsAvatar
                   onSelect={(d: string) => {
-                    console.log(d);
                     this.state.assignLeaderss.push(d);
                     this.setState({
                       assignLeaderssText: '',
@@ -211,7 +212,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               {this.state.assignLocationsText != '' ? (
                 <SuggestionsAvatar
                   onSelect={(d: string) => {
-                    console.log(d);
                     this.state.assignLocations.push(d);
                     this.setState({
                       assignLocationsText: '',
