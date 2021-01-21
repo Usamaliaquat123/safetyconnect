@@ -16,7 +16,7 @@ export interface TagsProps {
 class Tags extends React.Component<TagsProps, any> {
   render() {
     return (
-      <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         {this.props.tags.map((d, i) => (
           <View style={styles.container}>
             <Text style={styles.tagsText}>{d}</Text>

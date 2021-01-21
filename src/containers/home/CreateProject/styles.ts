@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
       headertle: {flexDirection: 'row'},
     //  content
     content: {
-        height:hp(100),
+        // height:hp(100),
         padding: wp(5),
         paddingBottom: hp(20),
         backgroundColor: colors.secondary,

@@ -16,6 +16,8 @@ const styles  = StyleSheet.create({
       },
       involvePSt: {
         fontSize: wp(3),
+        fontWeight: "bold",
+        opacity: .5
       },
       involveSuggestCont: {
         borderColor: colors.green,
