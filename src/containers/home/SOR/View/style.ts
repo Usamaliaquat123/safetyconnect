@@ -131,6 +131,15 @@ marginRight: wp(15)
     backgroundColor: colors.primary,
     marginLeft: wp(4)
   },
+  addPopupCircle : {
+    borderRadius : wp(10),
+    // padding:  wp(),
+    width: wp(12),
+    justifyContent: "center",
+    height: wp(12),
+    backgroundColor: colors.primary,
+    marginLeft: wp(4)
+  },
   tabsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',

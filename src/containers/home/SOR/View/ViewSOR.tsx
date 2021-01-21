@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import {
   View,
   StyleSheet,
@@ -22,12 +23,14 @@ import {View_sor} from '@service';
 import {downloadFile} from '@utils';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {Tags} from '@components';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
-
+import {default as Model} from 'react-native-modal';
 import ImageViewer from 'react-native-image-zoom-viewer';
+
 type ViewSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'ViewSOR'
@@ -52,6 +55,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       // custom data
       observation: View_sor.user.observation,
       date: View_sor.user.date,
+      actionsAndRecommendations: View_sor.user.ActionAndRecommendation,
+      // popup Assigners
+      usersEditList: [],
+      addAssigners: false,
     };
 
     this.animation = React.createRef();
@@ -249,7 +256,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               <View style={styles.actionContainer}>
                 <Text style={styles.actionText}>Action / Recommendation</Text>
                 <Text style={styles.sugForYouText}>Suggested for you</Text>
-                {View_sor.user.ActionAndRecommendation.map((d, i) => (
+                {this.state.actionsAndRecommendations.map((d, i) => (
                   <View
                     style={[
                       styles.actionRecomCon,
@@ -264,40 +271,56 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             borderColor: colors.lightGrey,
                           },
                     ]}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                      <Icon
-                        onPress={() => this.props.navigation.goBack()}
-                        size={wp(3.5)}
-                        name="checkcircle"
-                        type="antdesign"
-                        color={
-                          d.status == 'Completed'
-                            ? colors.green
-                            : colors.lightGrey
+                    <TouchableOpacity
+                      onPress={() => {
+                        var data = [...this.state.actionsAndRecommendations];
+                        if (d.status == 'Completed') {
+                          data[i].status = 'status';
+                        } else {
+                          data[i].status = 'Completed';
                         }
-                      />
-                      <Text style={styles.statusARText}>{d.status}</Text>
-                      <View style={{position: 'absolute', right: wp(3)}}>
-                        <Text style={[styles.actionTypeElemAsdmin]}>
-                          {d.type}
-                        </Text>
+                        this.setState({actionsAndRecommendations: data});
+                      }}>
+                      <View
+                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Icon
+                          onPress={() => this.props.navigation.goBack()}
+                          size={wp(3.5)}
+                          name="checkcircle"
+                          type="antdesign"
+                          color={
+                            d.status == 'Completed'
+                              ? colors.green
+                              : colors.lightGrey
+                          }
+                        />
+                        <Text style={styles.statusARText}>{d.status}</Text>
+                        <View style={{position: 'absolute', right: wp(3)}}>
+                          <Text style={[styles.actionTypeElemAsdmin]}>
+                            {d.type}
+                          </Text>
+                        </View>
                       </View>
-                    </View>
-                    <Text
-                      style={[
-                        styles.obvTextAction,
-                        d.status == 'Completed'
-                          ? {color: colors.text, opacity: 0.5}
-                          : null,
-                      ]}>
-                      {d.observation}
-                    </Text>
+                      <Text
+                        style={[
+                          styles.obvTextAction,
+                          d.status == 'Completed'
+                            ? {color: colors.text, opacity: 0.5}
+                            : null,
+                        ]}>
+                        {d.observation}
+                      </Text>
+                    </TouchableOpacity>
 
                     <View style={styles.subAss}>
-                      <Text style={styles.subAssText}>
-                        Assigned to:{' '}
-                        <Text style={styles.subAssuser}>{d.AssignedTo}</Text>
-                      </Text>
+                      <TouchableOpacity
+                        onPress={() => this.setState({addAssigners: true})}>
+                        <Text style={styles.subAssText}>
+                          Assigned to:{' '}
+                          <Text style={styles.subAssuser}>{d.AssignedTo}</Text>
+                        </Text>
+                      </TouchableOpacity>
+
                       <Text style={styles.subAssText}>
                         {moment(d.time).format('MMM DD YYYY')}
                       </Text>
@@ -546,6 +569,106 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             </View>
           </Animated.View>
         </ScrollView>
+        <Model
+          animationIn={'bounceInUp'}
+          animationOut={'bounceOutDown'}
+          animationInTiming={2000}
+          animationOutTiming={2000}
+          isVisible={this.state.addAssigners}
+          onBackdropPress={() => this.setState({addAssigners: false})}>
+          <View
+            style={{
+              backgroundColor: colors.secondary,
+              justifyContent: 'center',
+              borderRadius: wp(5),
+              padding: wp(6),
+            }}>
+            <Text
+              style={{
+                fontSize: wp(4),
+                fontWeight: 'bold',
+                textAlign: 'center',
+                color: colors.text,
+                marginBottom: wp(3),
+              }}>
+              Assigners
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              {View_sor.user.observer.map((d, i) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    this.state.usersEditList.push(d.name);
+                    this.setState({});
+                  }}>
+                  <Avatar
+                    containerStyle={{marginLeft: wp(-(i + 1))}}
+                    size={wp(15)}
+                    rounded
+                    source={{
+                      uri: View_sor.user.profile,
+                    }}
+                  />
+                </TouchableOpacity>
+              ))}
+            </View>
+            {/* Users Tags */}
+            {this.state.usersEditList.length != 0 ? (
+              <View style={{flexDirection: 'row'}}>
+                {this.state.usersEditList.map((d, i) => (
+                  <Tags
+                    tags={this.state.usersEditList}
+                    onClose={(d) => console.log(d)}
+                  />
+                ))}
+              </View>
+            ) : null}
+            {/* add users here */}
+            <View style={{flexDirection: 'row', marginTop: wp(10)}}>
+              <Avatar
+                containerStyle={{marginRight: wp(2)}}
+                size={wp(6)}
+                rounded
+                source={{
+                  uri:
+                    'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                }}
+              />
+
+              <View style={[styles.commentTextInput, {width: wp(70)}]}>
+                <TextInput
+                  style={{fontSize: wp(3)}}
+                  onChange={(e) => console.log(e)}
+                  placeholder={'Type users email to add '}
+                />
+                <View
+                  style={{
+                    position: 'absolute',
+                    right: wp(3),
+                    flexDirection: 'row',
+                  }}>
+                  <View
+                    style={{
+                      padding: wp(2),
+                      borderRadius: wp(3),
+                      backgroundColor: colors.lightBlue,
+                    }}>
+                    <Icon
+                      size={wp(5)}
+                      name="arrowright"
+                      type="antdesign"
+                      color={colors.primary}
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </Model>
         <Modal visible={this.state.imageViewer} transparent={true}>
           <TouchableOpacity
             onPress={() => this.setState({imageViewer: false})}
