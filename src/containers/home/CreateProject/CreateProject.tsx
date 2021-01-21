@@ -16,6 +16,7 @@ import {
 import {colors} from '@theme';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
+import {Tags, Suggestions} from '@components';
 import {RouteProp} from '@react-navigation/native';
 import styles from './styles';
 type CreateProjectNavigationProp = StackNavigationProp<
@@ -32,6 +33,15 @@ export interface CreateProjectProps {
 }
 
 class CreateProject extends React.Component<CreateProjectProps, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      teamMembers: ['john doe', 'sunny leone'],
+      assignSuppervisor: [],
+      assignLeaderss: [],
+      assignLocations: [],
+    };
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -68,18 +78,40 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               {/* Add Team Members */}
               <Text style={styles.emailTextContainer}>Add Team Members</Text>
               <View style={[styles.inputContainer]}>
+                <Tags
+                  onClose={(d: any) => {
+                    this.setState({
+                      teamMembers: this.state.teamMembers.filter(
+                        (v: any) => v !== d,
+                      ),
+                    });
+                  }}
+                  tags={this.state.teamMembers}
+                />
                 <TextInput
                   style={styles.authInputs}
                   onChange={(e) => console.log(e)}
                   // placeholder={}
                 />
               </View>
+              {/* Add Team Suggestions */}
+
               {/* Asssign Supervisor */}
               <Text style={styles.emailTextContainer}>
                 {' '}
                 Assign Suppervisors
               </Text>
               <View style={[styles.inputContainer]}>
+                <Tags
+                  onClose={(d: any) =>
+                    this.setState({
+                      assignSuppervisor: this.state.assignSuppervisor.filter(
+                        (v: string) => v !== d,
+                      ),
+                    })
+                  }
+                  tags={this.state.assignSuppervisor}
+                />
                 <TextInput
                   style={styles.authInputs}
                   onChange={(e) => console.log(e)}
@@ -89,6 +121,16 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               {/* Asssign Leaders */}
               <Text style={styles.emailTextContainer}> Assign Leaders</Text>
               <View style={[styles.inputContainer]}>
+                <Tags
+                  onClose={(d: any) =>
+                    this.setState({
+                      assignLeaderss: this.state.assignLeaderss.filter(
+                        (v: string) => v !== d,
+                      ),
+                    })
+                  }
+                  tags={this.state.assignLeaderss}
+                />
                 <TextInput
                   style={styles.authInputs}
                   onChange={(e) => console.log(e)}
@@ -98,6 +140,16 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               {/* Assign Locations */}
               <Text style={styles.emailTextContainer}> Assign Locations</Text>
               <View style={[styles.inputContainer]}>
+                <Tags
+                  onClose={(d: any) =>
+                    this.setState({
+                      assignLocations: this.state.assignLocations.filter(
+                        (v: string) => v !== d,
+                      ),
+                    })
+                  }
+                  tags={this.state.assignLocations}
+                />
                 <TextInput
                   style={styles.authInputs}
                   onChange={(e) => console.log(e)}
