@@ -15,27 +15,23 @@ export interface TagsProps {
 
 class Tags extends React.Component<TagsProps, any> {
   render() {
-    return (
-      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-        {this.props.tags.map((d, i) => (
-          <View style={styles.container}>
-            <Text style={styles.tagsText}>{d}</Text>
-            <TouchableOpacity
-              onPress={() => this.props.onClose(d)}
-              style={styles.containerIcon}>
-              <Icon
-                style={styles.crossIcon}
-                onPress={() => this.props.onClose(d)}
-                size={wp(5)}
-                name="cross"
-                type="entypo"
-                color={colors.secondary}
-              />
-            </TouchableOpacity>
-          </View>
-        ))}
+    return this.props.tags.map((d, i) => (
+      <View style={styles.container}>
+        <Text style={styles.tagsText}>{d}</Text>
+        <TouchableOpacity
+          onPress={() => this.props.onClose(d)}
+          style={styles.containerIcon}>
+          <Icon
+            style={styles.crossIcon}
+            onPress={() => this.props.onClose(d)}
+            size={wp(5)}
+            name="cross"
+            type="entypo"
+            color={colors.secondary}
+          />
+        </TouchableOpacity>
       </View>
-    );
+    ));
   }
 }
 

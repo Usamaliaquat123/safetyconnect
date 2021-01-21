@@ -6,6 +6,7 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {Icon} from 'react-native-elements';
@@ -125,23 +126,27 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                 Assign Suppervisors
               </Text>
               <View style={[styles.inputContainer]}>
-                <Tags
-                  onClose={(d: any) => {
-                    this.setState({
-                      assignSuppervisor: this.state.assignSuppervisor.filter(
-                        (v: any) => v !== d,
-                      ),
-                    });
-                  }}
-                  tags={this.state.assignSuppervisor}
-                />
-                <TextInput
-                  style={styles.authInputs}
-                  value={this.state.assignSuppervisorText}
-                  onChange={(e) => {
-                    this.setState({assignSuppervisorText: e.nativeEvent.text});
-                  }}
-                />
+                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                  <Tags
+                    onClose={(d: any) => {
+                      this.setState({
+                        assignSuppervisor: this.state.assignSuppervisor.filter(
+                          (v: any) => v !== d,
+                        ),
+                      });
+                    }}
+                    tags={this.state.assignSuppervisor}
+                  />
+                  <TextInput
+                    style={styles.authInputs}
+                    value={this.state.assignSuppervisorText}
+                    onChange={(e) => {
+                      this.setState({
+                        assignSuppervisorText: e.nativeEvent.text,
+                      });
+                    }}
+                  />
+                </View>
               </View>
               {this.state.assignSuppervisorText != '' ? (
                 <SuggestionsAvatar
@@ -157,23 +162,25 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               {/* Asssign Leaders */}
               <Text style={styles.emailTextContainer}> Assign Leaders</Text>
               <View style={[styles.inputContainer]}>
-                <Tags
-                  onClose={(d: any) => {
-                    this.setState({
-                      assignLeaderss: this.state.assignLeaderss.filter(
-                        (v: any) => v !== d,
-                      ),
-                    });
-                  }}
-                  tags={this.state.assignLeaderss}
-                />
-                <TextInput
-                  style={styles.authInputs}
-                  value={this.state.assignLeaderssText}
-                  onChange={(e) => {
-                    this.setState({assignLeaderssText: e.nativeEvent.text});
-                  }}
-                />
+                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                  <Tags
+                    onClose={(d: any) => {
+                      this.setState({
+                        assignLeaderss: this.state.assignLeaderss.filter(
+                          (v: any) => v !== d,
+                        ),
+                      });
+                    }}
+                    tags={this.state.assignLeaderss}
+                  />
+                  <TextInput
+                    style={styles.authInputs}
+                    value={this.state.assignLeaderssText}
+                    onChange={(e) => {
+                      this.setState({assignLeaderssText: e.nativeEvent.text});
+                    }}
+                  />
+                </View>
               </View>
               {/* Assign Leaders suggestions */}
               {this.state.assignLeaderssText != '' ? (
@@ -190,23 +197,25 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               {/* Assign Locations */}
               <Text style={styles.emailTextContainer}> Assign Locations</Text>
               <View style={[styles.inputContainer]}>
-                <Tags
-                  onClose={(d: any) => {
-                    this.setState({
-                      assignLocations: this.state.assignLocations.filter(
-                        (v: any) => v !== d,
-                      ),
-                    });
-                  }}
-                  tags={this.state.assignLocations}
-                />
-                <TextInput
-                  style={styles.authInputs}
-                  value={this.state.assignLocationsText}
-                  onChange={(e) => {
-                    this.setState({assignLocationsText: e.nativeEvent.text});
-                  }}
-                />
+                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                  <Tags
+                    onClose={(d: any) => {
+                      this.setState({
+                        assignLocations: this.state.assignLocations.filter(
+                          (v: any) => v !== d,
+                        ),
+                      });
+                    }}
+                    tags={this.state.assignLocations}
+                  />
+                  <TextInput
+                    style={styles.authInputs}
+                    value={this.state.assignLocationsText}
+                    onChange={(e) => {
+                      this.setState({assignLocationsText: e.nativeEvent.text});
+                    }}
+                  />
+                </View>
               </View>
               {/* Assign Locations suggestions */}
               {this.state.assignLocationsText != '' ? (
