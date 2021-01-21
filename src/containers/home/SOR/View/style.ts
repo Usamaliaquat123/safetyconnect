@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
   observationText: {
     fontWeight: "800",
     color: colors.primary,
+    
     fontSize: wp(3.5),
   },
   observationDate: {

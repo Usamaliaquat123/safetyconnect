@@ -68,10 +68,7 @@ export default class RepeatedModal extends React.Component<
             {repeatedSor.submitted.map((res, i) => (
               <Card
                 data={res}
-                onPress={(d: Isor) =>
-                  // this.props.navigation.navigate('ViewSOR', {data: d})
-                  console.log(d)
-                }
+                onPress={(d: Isor) => this.props.onViewSor(d)}
                 date={res.date}
                 risk={res.risk}
                 viewPortWidth={70}
@@ -158,10 +155,7 @@ export default class RepeatedModal extends React.Component<
             {repeatedSor.draft.map((res, i) => (
               <Card
                 data={res}
-                onPress={(d: Isor) =>
-                  // this.props.navigation.navigate('ViewSOR', {data: d})
-                  console.log(d)
-                }
+                onPress={(d: Isor) => this.props.onViewSor(d)}
                 date={res.date}
                 risk={res.risk}
                 viewPortWidth={70}

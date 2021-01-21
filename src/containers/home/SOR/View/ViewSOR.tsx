@@ -49,6 +49,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       imageViewer: false,
       images: [],
       contentAnim: new Animated.Value(80),
+      // custom data
+      observation: View_sor.user.observation,
+      date: View_sor.user.date,
     };
 
     this.animation = React.createRef();
@@ -148,9 +151,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </Text>
               </TouchableOpacity>
               <View style={styles.obserContainer}>
-                <Text style={styles.observationText}>
-                  {View_sor.user.observation}
-                </Text>
+                <View>
+                  <TextInput
+                    multiline={true}
+                    value={this.state.observation}
+                    onChange={(e) =>
+                      this.setState({observation: e.nativeEvent.text})
+                    }
+                    style={styles.observationText}
+                  />
+                </View>
                 <Text style={styles.observationDate}>
                   {moment(View_sor.user.date).format('Do MMM, YYYY')}
                 </Text>

@@ -552,14 +552,18 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             useNativeDriver={true}
             isVisible={this.state.repeatedSorModal}>
             <RepeatedSor
-              onViewSor={(d: Isor) =>
-                this.props.navigation.navigate('ViewSOR', {data: d})
-              }
+              onViewSor={(d: Isor) => {
+                this.setState({repeatedSorModal: false});
+                this.props.navigation.navigate('ViewSOR', {data: d});
+              }}
               onSkip={() => {
-                this.props.navigation.navigate('ViewAll');
+                this.setState({repeatedSorModal: false});
                 this.props.navigation.goBack();
               }}
-              onSubmit={() => this.setState({repeatedSorModal: false})}
+              onSubmit={() => {
+                this.setState({repeatedSorModal: false});
+                this.props.navigation.navigate('ViewAll');
+              }}
             />
           </Modal>
         </ScrollView>
