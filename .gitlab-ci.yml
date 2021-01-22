@@ -1,38 +1,24 @@
 stages:
+  -build-base-image
   - build
-  # - test
 
-# lintDebug:
-  # stage: build
-  # script:
-  #   - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+build-base-image:
+  stage: build
+  image: docker:19.03.1
+  services:
+    - docker:19.03.1-dind
+  before_script:
+    - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
+  script:
+    - docker build -t ${CI_REGISTRY_IMAGE}/base:latest .
+    - docker push ${CI_REGISTRY_IMAGE}/base:latest
+
 
 assembleDebug:
   stage: build
-  image: openjdk:8-jdk
-  variables:
-    ANDROID_COMPILE_SDK: "29"
-    ANDROID_BUILD_TOOLS: "29.0.2"
-    ANDROID_SDK_TOOLS:   "4333796"
+  image: ${CI_REGISTRY_IMAGE}/base:latest
   before_script:
-    - apt-get --quiet update --yes
-    - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
-    - wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-${ANDROID_SDK_TOOLS}.zip
-    - unzip -d android-sdk-linux android-sdk.zip
-    - echo y | android-sdk-linux/tools/bin/sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}" >/dev/null
-    - echo y | android-sdk-linux/tools/bin/sdkmanager "platform-tools" >/dev/null
-    - echo y | android-sdk-linux/tools/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}" >/dev/null
-    - export ANDROID_HOME=$PWD/android-sdk-linux
-    - export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
     - chmod +x ./android/gradlew
-    # temporarily disable checking for EPIPE error and use yes to accept all licenses
-    - set +o pipefail
-    - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
-    - set -o pipefail
-    - curl -sL https://deb.nodesource.com/setup_12.x | bash -
-    - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-    - echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-    - apt-get update -qq && apt-get install -qq --no-install-recommends nodejs yarn && rm -rf /var/lib/apt/lists/*
     - yarn
   script:
     - npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
