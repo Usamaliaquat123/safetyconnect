@@ -1,5 +1,5 @@
 stages:
-  -build-base-image
+  - build-base-image
   - build
 
 build-base-image:
