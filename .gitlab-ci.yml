@@ -3,7 +3,7 @@ stages:
   - build
 
 build-base-image:
-  stage: build
+  stage: build-base-image
   image: docker:19.03.1
   services:
     - docker:19.03.1-dind
