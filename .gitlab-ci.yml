@@ -1,17 +1,17 @@
 stages:
-  - build-base-image
+  # - build-base-image
   - build
 
-build-base-image:
-  stage: build-base-image
-  image: docker:19.03.1
-  services:
-    - docker:19.03.1-dind
-  before_script:
-    - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
-  script:
-    - docker build -t ${CI_REGISTRY_IMAGE}/base:latest .
-    - docker push ${CI_REGISTRY_IMAGE}/base:latest
+# build-base-image:
+#   stage: build-base-image
+#   image: docker:19.03.1
+#   services:
+#     - docker:19.03.1-dind
+#   before_script:
+#     - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
+#   script:
+#     - docker build -t ${CI_REGISTRY_IMAGE}/base:latest .
+#     - docker push ${CI_REGISTRY_IMAGE}/base:latest
 
 
 assembleDebug:
