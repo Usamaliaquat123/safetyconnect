@@ -51,10 +51,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       initAnim: new Animated.Value(0),
       imageViewer: false,
       images: [],
+      commentText: '',
       contentAnim: new Animated.Value(80),
       // custom data
       observation: View_sor.user.observation,
       date: View_sor.user.date,
+      comments: View_sor.user.comments,
       actionsAndRecommendations: View_sor.user.ActionAndRecommendation,
       // popup Assigners
       usersEditList: [],
@@ -93,7 +95,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
   render() {
     // this.handleBackButtonClick();
-    console.log(this.state.images);
     return (
       <Animated.View style={[styles.container, {opacity: this.state.initAnim}]}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -448,9 +449,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               {/* comments sections */}
             </View>
             <View style={styles.commentsSections}>
-              {View_sor.user.comments.map((d, i) => (
+              {this.state.comments.map((d: any, i: number) => (
                 <View style={styles.userComments}>
                   <Avatar
+                    containerStyle={{marginTop: wp(0)}}
                     size={wp(6)}
                     rounded
                     source={{
@@ -481,9 +483,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
                 <View style={styles.commentTextInput}>
                   <TextInput
-                    style={{fontSize: wp(3)}}
-                    onChange={(e) => console.log(e)}
-                    placeholder={'Your commendt here '}
+                    style={{fontSize: wp(3), width: wp(50)}}
+                    multiline={true}
+                    value={this.state.commentText}
+                    onChange={(e) =>
+                      this.setState({commentText: e.nativeEvent.text})
+                    }
+                    placeholder={'Your comment here '}
                   />
                   <View
                     style={{
@@ -491,7 +497,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       right: wp(3),
                       flexDirection: 'row',
                     }}>
-                    <View
+                    <TouchableOpacity
+                      onPress={() => console.log('sd')}
                       style={{
                         backgroundColor: colors.lightBlue,
                         padding: wp(2),
@@ -504,8 +511,22 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         type="entypo"
                         color={colors.primary}
                       />
-                    </View>
-                    <View
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => {
+                        if (this.state.commentText != '') {
+                          var map = [...this.state.comments];
+
+                          map.push({
+                            user: 'TestUser',
+                            date: Date.now(),
+                            image:
+                              'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                            comment: this.state.commentText,
+                          });
+                          this.setState({commentText: '', comments: map});
+                        }
+                      }}
                       style={{
                         padding: wp(2),
                         borderRadius: wp(3),
@@ -517,18 +538,33 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         type="antdesign"
                         color={colors.primary}
                       />
-                    </View>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>
               <View style={{marginLeft: wp(10), marginTop: wp(3)}}>
-                <Text
+                {/* <Text
                   style={{
                     fontSize: wp(2.7),
                     opacity: 0.5,
                   }}>
                   Upload files will appear here
-                </Text>
+                </Text> */}
+                <View
+                  style={{
+                    backgroundColor: colors.secondary,
+                    width: wp(30),
+                    padding: wp(10),
+                    borderRadius: wp(3),
+                  }}>
+                  <Icon
+                    size={wp(10)}
+                    name="attachment"
+                    containerStyle={{opacity: 0.5}}
+                    type="ionicon"
+                    color={colors.text}
+                  />
+                </View>
               </View>
             </View>
             {/* Submit btns  */}
@@ -619,7 +655,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             {/* Users Tags */}
             {this.state.usersEditList.length != 0 ? (
               <View style={{flexDirection: 'row'}}>
-                {this.state.usersEditList.map((d, i) => (
+                {this.state.usersEditList.map((d, any, i: any) => (
                   <Tags
                     tags={this.state.usersEditList}
                     onClose={(d) => console.log(d)}

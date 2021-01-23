@@ -305,19 +305,22 @@ marginRight: wp(15)
   },
   usercomment : {
     fontSize: wp(2.7),
+    width: wp(50)
   },
   commentUser : {
+    // flexDirection: "row",
     marginTop: wp(2),
     marginLeft: wp(3)
   },
   dateComments: {
     position: "absolute",
-    right: wp(3 )
+    right: wp(3),top: (0),
+
   },
   dateTextComment:  {
     fontSize: wp(3),
-
-  },
+    opacity: .5
+  },  
   commentTextInput: {
     width: wp(80),
     backgroundColor: colors.secondary,
