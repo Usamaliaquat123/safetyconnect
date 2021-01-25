@@ -260,12 +260,14 @@ marginRight: wp(15)
   attachFileContainer: {
     padding: wp(5),
     borderRadius: wp(3),
+    marginTop: wp(3),
     backgroundColor: colors.lightBlue,
     // justifyContent: 'space-between',
     flexDirection: 'row',
   },
   attchFileText: {
     fontSize: wp(3),
+    fontStyle:"italic",
     color: colors.text,
     opacity: 0.7,
     marginLeft: wp(5),
@@ -331,7 +333,19 @@ marginRight: wp(15)
     flexDirection: "row",
     paddingLeft: wp(3),
    borderColor: colors.lightGrey 
-  }
+  },
+
+  // model for pictup images
+  takeaPhotoContainer: {
+    marginTop: wp(10),
+
+    flexDirection: 'row',
+  },
+  selectText: {
+    opacity: .5,
+    textAlignVertical: "top",
+    fontWeight:"bold"
+  },
 });
 
 export default styles;

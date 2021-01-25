@@ -130,7 +130,7 @@ class Chat extends React.Component<ChatProps, any> {
             <View style={styles.containerOfImage}>
               {props.currentMessage?.image != undefined ? (
                 <View style={{flexDirection: 'row'}}>
-                  {props.currentMessage.image.map((d, i) => (
+                  {props.currentMessage.image.map((d: any, i: number) => (
                     <TouchableOpacity
                       onPress={() => {
                         this.state.images.push({url: d});
@@ -145,7 +145,7 @@ class Chat extends React.Component<ChatProps, any> {
               ) : null}
               {props.currentMessage?.video != undefined ? (
                 <View style={{flexDirection: 'row'}}>
-                  {props.currentMessage.video.map((d, i) => (
+                  {props.currentMessage.video.map((d: any, i: number) => (
                     <TouchableOpacity
                       style={{backgroundColor: 'black', borderRadius: wp(3)}}
                       onPress={() => {

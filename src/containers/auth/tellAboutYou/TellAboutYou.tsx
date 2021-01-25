@@ -48,7 +48,6 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
       selectedDesignAndArchi: false,
       IndustrySelection: profileSetupSelections.IndustrySelection,
       DesignAndArchitecture: profileSetupSelections.DesignAndArchitecture,
-
       IndustrySelectionText: profileSetupSelections.IndustrySelection[0].text,
       DesignAndArchitectureText:
         profileSetupSelections.DesignAndArchitecture[0].text,

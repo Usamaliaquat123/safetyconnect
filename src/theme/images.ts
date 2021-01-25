@@ -1,7 +1,10 @@
 export const images = {
   send: require('./images/send.png'),
-  word: require('./images/word.png'),
   google: require('./images/googleicon.png'),
+  word: require('./images/word.png'),
+  // files
   pdf: require('./images/pdf.png'),
-  // ExerciseImage: require('../theme/images/exercise.png'),
+doc : require('./images/doc.png'),
+jpg : require('./images/jpg.png'),
+text : require('./images/txt.png')
 };

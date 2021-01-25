@@ -19,7 +19,7 @@ import moment from 'moment';
 import {connect} from 'react-redux';
 import {Icon, Avatar, Card} from 'react-native-elements';
 import {colors, GlStyles, animation, images} from '@theme';
-import {View_sor} from '@service';
+import {View_sor, notified} from '@service';
 import {downloadFile} from '@utils';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -30,7 +30,8 @@ import LottieView from 'lottie-react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {default as Model} from 'react-native-modal';
 import ImageViewer from 'react-native-image-zoom-viewer';
-
+import {imagePicker, cameraCapture} from '@utils';
+import DocumentPicker from 'react-native-document-picker';
 type ViewSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'ViewSOR'
@@ -51,16 +52,22 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       initAnim: new Animated.Value(0),
       imageViewer: false,
       images: [],
+      photoArr: [],
       commentText: '',
       contentAnim: new Animated.Value(80),
       // custom data
       observation: View_sor.user.observation,
       date: View_sor.user.date,
       comments: View_sor.user.comments,
+      involvedPerson: View_sor.user.InvolvedPersons,
+      notifiedPerson: View_sor.user.NotifiedTo,
+      attachments: View_sor.user.Attachments,
       actionsAndRecommendations: View_sor.user.ActionAndRecommendation,
       // popup Assigners
       usersEditList: [],
       addAssigners: false,
+      photoModal: false,
+      commentAttachment: [],
     };
 
     this.animation = React.createRef();
@@ -92,6 +99,86 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         this.state.images.push({url: d.url});
       }
     });
+  };
+
+  // openGalleryAndMap = (data : Array<any>) : Array<any> => {
+
+  //   return [{"sdsd"}]
+  // }
+
+  imgCap = (str: string, arr: Array<Object>) => {
+    if (str == 'upload') {
+      imagePicker()
+        .then((res: any) => {
+          arr.push({id: 24, name: 'John Doe', photo: res.uri});
+
+          this.setState({photoModal: false});
+        })
+        .catch((err) => {
+          this.setState({photoModal: false});
+        });
+    } else {
+      cameraCapture()
+        .then((res: any) => {
+          arr.push({id: 24, name: 'John Doe', photo: res.uri});
+
+          this.setState({photoModal: false});
+        })
+        .catch((err) => {
+          this.setState({photoModal: false});
+        });
+    }
+  };
+  // Document Attachments
+  openDoc = async (attach: Array<Object>) => {
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.allFiles],
+      });
+
+      console.log(res.type.split('.').pop());
+      if (res.type.split('/')[0] == 'image') {
+        console.log('image');
+        this.state.attachments.push({
+          type: 'photo',
+          name: res.name,
+          url: res.uri,
+        });
+      } else if (res.type.split('/')[0] == 'video') {
+        this.state.attachments.push({
+          type: 'video',
+          name: res.name,
+          url: res.uri,
+        });
+        console.log('video');
+      } else if (res.type.split('/')[1] == 'pdf') {
+        this.state.attachments.push({
+          type: 'pdf',
+          name: res.name,
+          url: res.uri,
+        });
+        console.log('pdf');
+      } else if (res.type.split('/')[0] == 'text') {
+        this.state.attachments.push({
+          type: 'text',
+          name: res.name,
+          url: res.uri,
+        });
+      } else if (res.type.split('.').pop() == 'document') {
+        this.state.attachments.push({
+          type: 'doc',
+          name: res.name,
+          url: res.uri,
+        });
+      }
+      this.setState({});
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // User cancelled the picker, exit any dialogs or menus and move on
+      } else {
+        throw err;
+      }
+    }
   };
   render() {
     // this.handleBackButtonClick();
@@ -188,57 +275,70 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </View>
               </View>
               <View style={styles.involveNortify}>
+                {/* Notified To Section */}
                 <View style={styles.notifiedSec}>
                   <Text style={styles.notifyPText}>Notified to : </Text>
-                  {View_sor.user.InvolvedPersons.map((d, i) => (
+                  {this.state.notifiedPerson.map((d: any, i: number) => (
                     <View>
                       <Avatar
                         containerStyle={{marginLeft: wp(-(i + 1))}}
                         size={wp(8)}
                         rounded
                         source={{
-                          uri: View_sor.user.profile,
+                          uri: d.photo,
                         }}
                       />
                     </View>
                   ))}
-                  <View
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.setState({
+                        photoArr: this.state.notifiedPerson,
+                        photoModal: true,
+                      })
+                    }
                     style={[
                       styles.addCircle,
                       {backgroundColor: colors.lightGrey},
                     ]}>
                     <Icon
-                      onPress={() => this.props.navigation.goBack()}
                       size={wp(3.5)}
                       name="plus"
                       type="antdesign"
                       color={colors.primary}
                     />
-                  </View>
+                  </TouchableOpacity>
                 </View>
+                {/* Involved Person  */}
                 <View style={styles.notifiedSec}>
                   <Text style={styles.invpText}>Involved People</Text>
-                  {View_sor.user.observer.map((d, i) => (
+                  {this.state.involvedPerson.map((d: any, i: number) => (
                     <View>
                       <Avatar
                         containerStyle={{marginLeft: wp(-(i + 1))}}
                         size={wp(8)}
                         rounded
                         source={{
-                          uri: View_sor.user.profile,
+                          uri: d.photo,
                         }}
                       />
                     </View>
                   ))}
-                  <View style={styles.addCircle}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.setState({
+                        photoArr: this.state.involvedPerson,
+                        photoModal: true,
+                      })
+                    }
+                    style={styles.addCircle}>
                     <Icon
-                      onPress={() => this.props.navigation.goBack()}
                       size={wp(3.5)}
                       name="plus"
                       type="antdesign"
                       color={colors.secondary}
                     />
-                  </View>
+                  </TouchableOpacity>
                 </View>
               </View>
               <View style={styles.risk}>
@@ -257,77 +357,81 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               <View style={styles.actionContainer}>
                 <Text style={styles.actionText}>Action / Recommendation</Text>
                 <Text style={styles.sugForYouText}>Suggested for you</Text>
-                {this.state.actionsAndRecommendations.map((d, i) => (
-                  <View
-                    style={[
-                      styles.actionRecomCon,
-                      d.status == 'Completed'
-                        ? {
-                            borderWidth: wp(0.2),
-                            backgroundColor: colors.lightBlue,
-                            borderColor: colors.primary,
-                          }
-                        : {
-                            borderWidth: wp(0.3),
-                            borderColor: colors.lightGrey,
-                          },
-                    ]}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        var data = [...this.state.actionsAndRecommendations];
-                        if (d.status == 'Completed') {
-                          data[i].status = 'status';
-                        } else {
-                          data[i].status = 'Completed';
-                        }
-                        this.setState({actionsAndRecommendations: data});
-                      }}>
-                      <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Icon
-                          onPress={() => this.props.navigation.goBack()}
-                          size={wp(3.5)}
-                          name="checkcircle"
-                          type="antdesign"
-                          color={
-                            d.status == 'Completed'
-                              ? colors.green
-                              : colors.lightGrey
-                          }
-                        />
-                        <Text style={styles.statusARText}>{d.status}</Text>
-                        <View style={{position: 'absolute', right: wp(3)}}>
-                          <Text style={[styles.actionTypeElemAsdmin]}>
-                            {d.type}
-                          </Text>
-                        </View>
-                      </View>
-                      <Text
-                        style={[
-                          styles.obvTextAction,
-                          d.status == 'Completed'
-                            ? {color: colors.text, opacity: 0.5}
-                            : null,
-                        ]}>
-                        {d.observation}
-                      </Text>
-                    </TouchableOpacity>
-
-                    <View style={styles.subAss}>
+                {this.state.actionsAndRecommendations.map(
+                  (d: any, i: number) => (
+                    <View
+                      style={[
+                        styles.actionRecomCon,
+                        d.status == 'Completed'
+                          ? {
+                              borderWidth: wp(0.2),
+                              backgroundColor: colors.lightBlue,
+                              borderColor: colors.primary,
+                            }
+                          : {
+                              borderWidth: wp(0.3),
+                              borderColor: colors.lightGrey,
+                            },
+                      ]}>
                       <TouchableOpacity
-                        onPress={() => this.setState({addAssigners: true})}>
-                        <Text style={styles.subAssText}>
-                          Assigned to:{' '}
-                          <Text style={styles.subAssuser}>{d.AssignedTo}</Text>
+                        onPress={() => {
+                          var data = [...this.state.actionsAndRecommendations];
+                          if (d.status == 'Completed') {
+                            data[i].status = 'status';
+                          } else {
+                            data[i].status = 'Completed';
+                          }
+                          this.setState({actionsAndRecommendations: data});
+                        }}>
+                        <View
+                          style={{flexDirection: 'row', alignItems: 'center'}}>
+                          <Icon
+                            onPress={() => this.props.navigation.goBack()}
+                            size={wp(3.5)}
+                            name="checkcircle"
+                            type="antdesign"
+                            color={
+                              d.status == 'Completed'
+                                ? colors.green
+                                : colors.lightGrey
+                            }
+                          />
+                          <Text style={styles.statusARText}>{d.status}</Text>
+                          <View style={{position: 'absolute', right: wp(3)}}>
+                            <Text style={[styles.actionTypeElemAsdmin]}>
+                              {d.type}
+                            </Text>
+                          </View>
+                        </View>
+                        <Text
+                          style={[
+                            styles.obvTextAction,
+                            d.status == 'Completed'
+                              ? {color: colors.text, opacity: 0.5}
+                              : null,
+                          ]}>
+                          {d.observation}
                         </Text>
                       </TouchableOpacity>
 
-                      <Text style={styles.subAssText}>
-                        {moment(d.time).format('MMM DD YYYY')}
-                      </Text>
+                      <View style={styles.subAss}>
+                        <TouchableOpacity
+                          onPress={() => this.setState({addAssigners: true})}>
+                          <Text style={styles.subAssText}>
+                            Assigned to:{' '}
+                            <Text style={styles.subAssuser}>
+                              {d.AssignedTo}
+                            </Text>
+                          </Text>
+                        </TouchableOpacity>
+
+                        <Text style={styles.subAssText}>
+                          {moment(d.time).format('MMM DD YYYY')}
+                        </Text>
+                      </View>
                     </View>
-                  </View>
-                ))}
+                  ),
+                )}
               </View>
               <View style={styles.addActionAndRecommendation}>
                 <TextInput
@@ -369,11 +473,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           style={styles.AttchimageContainer}>
                           <Image
                             source={{
-                              uri:
-                                'https://cdn.technologyadvice.com/wp-content/uploads/2017/08/Fotolia_98303431_Subscription_Monthly_M-699x408.jpg',
+                              uri: d.url,
                             }}
                             style={[GlStyles.images, {borderRadius: wp(5)}]}
-                            resizeMode={'contain'}
+                            resizeMode={'cover'}
                           />
                           <View
                             // onPress={() => {
@@ -406,12 +509,22 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </View>
                 {View_sor.user.Attachments.map((d, i) => (
                   <View>
-                    {d.type == 'file' ? (
+                    {d.type != 'photo' ? (
                       <View style={styles.attachFileContainer}>
-                        <View style={{width: wp(10)}}>
+                        <View>
                           <Image
-                            source={images.pdf}
-                            style={{width: wp(5), height: wp(7)}}
+                            source={
+                              d.type == 'pdf'
+                                ? images.pdf
+                                : d.type == 'doc'
+                                ? images.doc
+                                : d.type == 'text'
+                                ? images.text
+                                : d.type == 'doc'
+                                ? images.doc
+                                : null
+                            }
+                            style={{width: wp(7), height: wp(7)}}
                           />
                         </View>
                         <Text style={styles.attchFileText}>Untitled1.pdf</Text>
@@ -443,6 +556,27 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     ) : null}
                   </View>
                 ))}
+
+                <TouchableOpacity
+                  onPress={() => this.openDoc(this.state.attachments)}
+                  style={{marginTop: wp(3), flexDirection: 'row'}}>
+                  <Icon
+                    containerStyle={{marginRight: wp(3)}}
+                    name="plus"
+                    size={wp(4)}
+                    type="antdesign"
+                    color={colors.primary}
+                  />
+                  <Text
+                    style={{
+                      fontSize: wp(3),
+                      fontWeight: 'bold',
+                      opacity: 0.5,
+                      color: colors.primary,
+                    }}>
+                    Add New Attachments
+                  </Text>
+                </TouchableOpacity>
               </View>
               {/* Map Integration */}
               <View></View>
@@ -542,30 +676,30 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </View>
                 </View>
               </View>
-              <View style={{marginLeft: wp(10), marginTop: wp(3)}}>
-                {/* <Text
+              <View style={{marginLeft: wp(5)}}>
+                <Text style={[styles.attchFileText]}>
+                  Your attachments appear here
+                </Text>
+              </View>
+              {this.state.commentAttachment.map((d: any, i: number) => (
+                <View style={{marginLeft: wp(10), marginTop: wp(3)}}>
+                  {/* <Text
                   style={{
                     fontSize: wp(2.7),
                     opacity: 0.5,
                   }}>
                   Upload files will appear here
                 </Text> */}
-                <View
-                  style={{
-                    backgroundColor: colors.secondary,
-                    width: wp(30),
-                    padding: wp(10),
-                    borderRadius: wp(3),
-                  }}>
-                  <Icon
-                    size={wp(10)}
-                    name="attachment"
-                    containerStyle={{opacity: 0.5}}
-                    type="ionicon"
-                    color={colors.text}
-                  />
+
+                  <View
+                    style={{
+                      backgroundColor: colors.secondary,
+                      width: wp(30),
+                      padding: wp(10),
+                      borderRadius: wp(3),
+                    }}></View>
                 </View>
-              </View>
+              ))}
             </View>
             {/* Submit btns  */}
             <View
@@ -655,10 +789,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             {/* Users Tags */}
             {this.state.usersEditList.length != 0 ? (
               <View style={{flexDirection: 'row'}}>
-                {this.state.usersEditList.map((d, any, i: any) => (
+                {this.state.usersEditList.map((d: any, i: number) => (
                   <Tags
                     tags={this.state.usersEditList}
-                    onClose={(d) => console.log(d)}
+                    onClose={(d: any) => console.log(d)}
                   />
                 ))}
               </View>
@@ -703,6 +837,63 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </View>
               </View>
             </View>
+          </View>
+        </Model>
+        {/*  */}
+        <Model
+          animationIn={'bounceInUp'}
+          animationOut={'bounceOutDown'}
+          animationInTiming={2000}
+          animationOutTiming={2000}
+          isVisible={this.state.photoModal}
+          onBackdropPress={() => this.setState({photoModal: false})}>
+          <View
+            style={{
+              backgroundColor: colors.secondary,
+              justifyContent: 'center',
+              borderRadius: wp(8),
+              padding: wp(10),
+            }}>
+            <TouchableOpacity
+              onPress={() => this.imgCap('take', this.state.photoArr)}
+              style={[styles.takeaPhotoContainer, {marginTop: wp(1)}]}>
+              <Icon
+                size={wp(5)}
+                name="camerao"
+                type="antdesign"
+                color={colors.text}
+              />
+              <Text style={[styles.selectText, {marginLeft: wp(10)}]}>
+                Take a photo
+              </Text>
+              <Icon
+                containerStyle={{position: 'absolute', right: wp(0)}}
+                size={wp(5)}
+                name="right"
+                type="antdesign"
+                color={colors.text}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.imgCap('upload', this.state.photoArr)}
+              style={styles.takeaPhotoContainer}>
+              <Icon
+                size={wp(5)}
+                name="photo"
+                type="font-awesome"
+                color={colors.text}
+              />
+              <Text style={[styles.selectText, {marginLeft: wp(10)}]}>
+                Upload a photo
+              </Text>
+              <Icon
+                size={wp(5)}
+                name="right"
+                containerStyle={{position: 'absolute', right: wp(0)}}
+                type="antdesign"
+                color={colors.primary}
+              />
+            </TouchableOpacity>
           </View>
         </Model>
         <Modal visible={this.state.imageViewer} transparent={true}>
