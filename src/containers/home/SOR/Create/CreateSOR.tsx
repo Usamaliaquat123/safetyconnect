@@ -225,7 +225,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   color={colors.primary}
                 />
                 <Text style={[styles.obserttle, {color: colors.primary}]}>
-                  {' '}
                   {moment().format('MMMM DD')}, {moment().format('YYYY')}
                 </Text>
                 <Text style={styles.obserttle}>
@@ -266,7 +265,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 <Text style={styles.obText}> and it happend at</Text>
               </View>
 
-              <View style={{flexDirection: 'row'}}>
+              <View style={{flexDirection: 'row', marginTop: wp(-4)}}>
                 <Text
                   style={{
                     fontSize: wp(3),

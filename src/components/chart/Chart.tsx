@@ -6,7 +6,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {chartTy} from '@typings';
+// import {chartTy} from '@typings';
 interface Props {
   style: Object;
   onPress: Function;
