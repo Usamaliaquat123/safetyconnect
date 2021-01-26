@@ -64,6 +64,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       involvePersonText: '',
       actionRecommendationsText: '',
       classifySorbtns: classifySor,
+      observation: '',
       // esclateTo / submit To
       SelectsubmitTo: false,
       submitToArr: [],
@@ -237,15 +238,34 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 value={this.state.observationT}
                 underlineColorAndroid="transparent"
                 placeholder="Enter your observation here"
-                onChange={(t) => this.extractLocation(t.nativeEvent.text)}
+                onChange={(t) =>
+                  this.setState({observationT: t.nativeEvent.text})
+                }
                 style={styles.obInputText}></TextInput>
-              <Text style={styles.obText}>
-                at{' '}
-                <Text style={{color: colors.primary}}>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={styles.obText}>
+                  at{' '}
+                  {/* <Text style={{color: colors.primary}}>
                   {this.state.obserLocation}
-                </Text>{' '}
-                and it happend at
-              </Text>
+                </Text>{' '} */}
+                </Text>
+                <TextInput
+                  value={this.state.observationr}
+                  style={{
+                    marginTop: wp(-4),
+                    borderBottomWidth: 0,
+                    color: colors.primary,
+                    fontWeight: 'bold',
+                    fontSize: wp(3),
+                  }}
+                  onChange={(e) =>
+                    this.setState({observation: e.nativeEvent.text})
+                  }
+                  placeholder={'@Add Location'}
+                />
+                <Text style={styles.obText}> and it happend at</Text>
+              </View>
+
               <View style={{flexDirection: 'row'}}>
                 <Text
                   style={{

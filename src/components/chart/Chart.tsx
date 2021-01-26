@@ -18,7 +18,7 @@ const Chart = (props: Props) => {
       value: 1,
       text: 'Rare',
       selected: false,
-      color: colors.riskIcons.likelihood.Rare,
+      color: colors.riskIcons.likelihood.rare,
     },
     {
       value: 2,
@@ -50,7 +50,7 @@ const Chart = (props: Props) => {
       value: 1,
       text: 'low',
       selected: false,
-      color: colors.riskIcons.severity.Rare,
+      color: colors.riskIcons.severity.rare,
     },
     {
       value: 2,
@@ -108,12 +108,17 @@ const Chart = (props: Props) => {
                 }}
                 style={[
                   {
-                    padding: wp(2),
-
+                    padding: wp(1.7),
+                    marginTop: wp(0.4),
                     // marginLeft: wp(1),
                   },
                   d.selected == true
-                    ? {borderWidth: wp(0.2), borderRadius: wp(4)}
+                    ? {
+                        borderWidth: wp(0.2),
+                        borderRadius: wp(2),
+
+                        borderColor: colors.primary,
+                      }
                     : null,
                 ]}>
                 <View
@@ -169,13 +174,17 @@ const Chart = (props: Props) => {
                   }}
                   style={[
                     {
-                      padding: wp(2),
+                      padding: wp(1.7),
 
                       borderRadius: wp(3),
                       // marginLeft: wp(1),
                     },
                     d.selected == true
-                      ? {borderWidth: wp(0.2), borderRadius: wp(4)}
+                      ? {
+                          borderWidth: wp(0.2),
+                          borderRadius: wp(2),
+                          borderColor: colors.primary,
+                        }
                       : null,
                   ]}>
                   <View
