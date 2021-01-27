@@ -68,9 +68,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       // esclateTo / submit To
       SelectsubmitTo: false,
       submitToArr: [],
-      submitTo: Create_sor.Observation.submitTo[0],
+      submitTo: '',
       selectEsclateTo: false,
-      esclateTo: Create_sor.Observation.esclateTo[0],
+      esclateTo: ' ',
       // repeated sor modal
       repeatedSorModal: false,
 
@@ -461,7 +461,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   ]}
                   value={this.state.actionRecommendationsText}
                   onChangeText={(e) => this.actionRecommendSuggestion(e)}
-                  placeholder={'Enter person name /email'}
+                  placeholder={'Suggest your recommendation / actions'}
                 />
 
                 {/* Suggestions  */}
@@ -491,6 +491,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   <TextInput
                     onFocus={() => this.setState({selectedInputIndex: 4})}
                     style={styles.optnselectorText}
+                    placeholder={'Enter person name / email'}
                     underlineColorAndroid="transparent"
                     onChange={(v: any) =>
                       this.setState({
@@ -504,55 +505,33 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     value={this.state.submitTo}></TextInput>
                 </View>
                 {this.state.submitToArr.length != 0 ? (
-                  <View>
-                    <View style={styles.involveSuggestCont}>
-                      {this.state.submitToArr.map((d: string, i: number) => (
-                        <TouchableOpacity
-                          key={i}
-                          onPress={() =>
-                            this.setState({
-                              submitTo: d,
-                              submitToArr: [],
-                            })
-                          }
-                          style={[
-                            styles.involvePsuggCont,
-                            this.state.submitToArr.length == i + 1
-                              ? {borderBottomWidth: wp(0)}
-                              : null,
-                          ]}>
-                          <Avatar
-                            containerStyle={{marginRight: wp(3)}}
-                            rounded
-                            source={{
-                              uri:
-                                'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
-                            }}
-                          />
-                          <Text style={styles.involvePSt}>{d}</Text>
-                        </TouchableOpacity>
-                      ))}
-                    </View>
-
-                    {/* <View style={styles.slctSEContainer}>
-                      {this.state.submitToArr.map((d: string, i: number) => (
-                        <TouchableOpacity
-                          onPress={() =>
-                            this.setState({submitTo: d, submitToArr: []})
-                          }>
-                          <Text
-                            key={i}
-                            style={[
-                              styles.seitemH,
-                              this.state.submitToArr.length == i + 1
-                                ? {borderBottomWidth: wp(0)}
-                                : null,
-                            ]}>
-                            {d}
-                          </Text>
-                        </TouchableOpacity>
-                      ))}
-                    </View> */}
+                  <View style={styles.involveSuggestCont}>
+                    {this.state.submitToArr.map((d: string, i: number) => (
+                      <TouchableOpacity
+                        key={i}
+                        onPress={() =>
+                          this.setState({
+                            submitTo: d,
+                            submitToArr: [],
+                          })
+                        }
+                        style={[
+                          styles.involvePsuggCont,
+                          this.state.submitToArr.length == i + 1
+                            ? {borderBottomWidth: wp(0)}
+                            : null,
+                        ]}>
+                        <Avatar
+                          containerStyle={{marginRight: wp(3)}}
+                          rounded
+                          source={{
+                            uri:
+                              'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                          }}
+                        />
+                        <Text style={styles.involvePSt}>{d}</Text>
+                      </TouchableOpacity>
+                    ))}
                   </View>
                 ) : null}
               </View>
@@ -577,34 +556,37 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         esclateTo: v,
                       })
                     }
+                    placeholder={'Enter person name / email'}
                     style={styles.optnselectorText}
                     value={this.state.esclateTo}></TextInput>
-                  <Icon
-                    // style={{padding: }}
-                    size={wp(5)}
-                    name="down"
-                    type="antdesign"
-                    color={colors.primary}
-                  />
                 </View>
                 {this.state.exclateToArr.length != 0 ? (
-                  <View style={styles.slctSEContainer}>
-                    {this.state.exclateToArr.map((d: any, i: number) => (
-                      <Text
-                        key={i}
-                        onPress={() => {
-                          this.setState({esclateTo: d, exclateToArr: []});
-                          console.log(i);
-                        }}
-                        style={[
-                          styles.seitemH,
-                          this.state.exclateToArr.length == i + 1
-                            ? {borderBottomWidth: wp(0)}
-                            : null,
-                        ]}>
-                        {d}
-                      </Text>
-                    ))}
+                  <View>
+                    <View style={styles.involveSuggestCont}>
+                      {this.state.exclateToArr.map((d: string, i: number) => (
+                        <TouchableOpacity
+                          key={i}
+                          onPress={() =>
+                            this.setState({esclateTo: d, exclateToArr: []})
+                          }
+                          style={[
+                            styles.involvePsuggCont,
+                            this.state.exclateToArr.length == i + 1
+                              ? {borderBottomWidth: wp(0)}
+                              : null,
+                          ]}>
+                          <Avatar
+                            containerStyle={{marginRight: wp(3)}}
+                            rounded
+                            source={{
+                              uri:
+                                'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                            }}
+                          />
+                          <Text style={styles.involvePSt}>{d}</Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
                   </View>
                 ) : null}
               </View>
