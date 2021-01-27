@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   observationDetail: {
     borderRadius: wp(5),
     padding: wp(4),
-    borderColor: colors.green,
+    borderColor: colors.text,
     borderWidth: wp(0.3),
   },
   observationT: {
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   },
   involvePInput: {
     marginTop: wp(2),
-    borderColor: colors.green,
+    borderColor: colors.text,
     borderWidth: wp(0.3),
     padding: wp(2),
     paddingLeft: wp(4),

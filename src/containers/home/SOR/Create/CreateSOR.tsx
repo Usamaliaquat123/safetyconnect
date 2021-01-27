@@ -73,6 +73,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       esclateTo: Create_sor.Observation.esclateTo[0],
       // repeated sor modal
       repeatedSorModal: false,
+
+      // Selected input
+      selectedInputIndex: 1,
     };
   }
   submitDraft = async () => {
@@ -215,7 +218,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             <Text style={styles.cnHeading}>Create New SOR</Text>
             {/* Observation Details */}
             <Text style={styles.observationT}>Observation Detail</Text>
-            <View style={styles.observationDetail}>
+            <View
+              style={[
+                styles.observationDetail,
+                this.state.selectedInputIndex == 1
+                  ? {borderColor: colors.green}
+                  : null,
+              ]}>
               <View style={{flexDirection: 'row'}}>
                 <Text style={styles.obserttle}>On </Text>
                 <Icon
@@ -225,7 +234,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   color={colors.primary}
                 />
                 <Text style={[styles.obserttle, {color: colors.primary}]}>
-                  {moment().format('MMMM DD')}, {moment().format('YYYY')}
+                  {moment().format('MMMM DD')}, {moment().format('YYYY')}{' '}
                 </Text>
                 <Text style={styles.obserttle}>
                   at about {this.state.curTime}
@@ -234,13 +243,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               <Text style={styles.obserttle}> it was observed that</Text>
               <TextInput
                 multiline={true}
+                onFocus={() => this.setState({selectedInputIndex: 1})}
                 value={this.state.observationT}
                 underlineColorAndroid="transparent"
                 placeholder="Enter your observation here"
                 onChange={(t) =>
                   this.setState({observationT: t.nativeEvent.text})
                 }
-                style={styles.obInputText}></TextInput>
+                style={[styles.obInputText]}></TextInput>
               <View style={{flexDirection: 'row'}}>
                 <Text style={styles.obText}>
                   at{' '}
@@ -251,7 +261,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 <TextInput
                   value={this.state.observationr}
                   style={{
-                    marginTop: wp(-4),
+                    marginTop: wp(-4.5),
                     borderBottomWidth: 0,
                     color: colors.primary,
                     fontWeight: 'bold',
@@ -265,7 +275,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 <Text style={styles.obText}> and it happend at</Text>
               </View>
 
-              <View style={{flexDirection: 'row', marginTop: wp(-4)}}>
+              <View style={{flexDirection: 'row', marginTop: wp(-7)}}>
                 <Text
                   style={{
                     fontSize: wp(3),
@@ -358,7 +368,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </Text>
               <TextInput
                 value={this.state.involvePersonText}
-                style={styles.involvePInput}
+                style={[
+                  styles.involvePInput,
+                  this.state.selectedInputIndex == 2
+                    ? {borderColor: colors.green}
+                    : null,
+                ]}
+                onFocus={() => this.setState({selectedInputIndex: 2})}
                 onChangeText={(e) => this.suggestInvolvePersons(e)}
                 placeholder={'Enter person name /email'}
               />
@@ -436,7 +452,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   Actions / Recommendation
                 </Text>
                 <TextInput
-                  style={styles.actionInput}
+                  onFocus={() => this.setState({selectedInputIndex: 3})}
+                  style={[
+                    styles.actionInput,
+                    this.state.selectedInputIndex == 3
+                      ? {borderColor: colors.green}
+                      : null,
+                  ]}
                   value={this.state.actionRecommendationsText}
                   onChangeText={(e) => this.actionRecommendSuggestion(e)}
                   placeholder={'Enter person name /email'}
@@ -459,8 +481,15 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             <View style={styles.optnToggleContainer}>
               <View>
                 <Text style={styles.sbBtnText}>Submit to</Text>
-                <View style={styles.optnselector}>
+                <View
+                  style={[
+                    styles.optnselector,
+                    this.state.selectedInputIndex == 4
+                      ? {borderColor: colors.green}
+                      : null,
+                  ]}>
                   <TextInput
+                    onFocus={() => this.setState({selectedInputIndex: 4})}
                     style={styles.optnselectorText}
                     underlineColorAndroid="transparent"
                     onChange={(v: any) =>
@@ -473,41 +502,71 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       })
                     }
                     value={this.state.submitTo}></TextInput>
-
-                  <Icon
-                    // style={{padding: }}
-                    size={wp(5)}
-                    name="down"
-                    type="antdesign"
-                    color={colors.primary}
-                  />
                 </View>
                 {this.state.submitToArr.length != 0 ? (
-                  <View style={styles.slctSEContainer}>
-                    {this.state.submitToArr.map((d: string, i: number) => (
-                      <TouchableOpacity
-                        onPress={() =>
-                          this.setState({submitTo: d, submitToArr: []})
-                        }>
-                        <Text
+                  <View>
+                    <View style={styles.involveSuggestCont}>
+                      {this.state.submitToArr.map((d: string, i: number) => (
+                        <TouchableOpacity
                           key={i}
+                          onPress={() =>
+                            this.setState({
+                              submitTo: d,
+                              submitToArr: [],
+                            })
+                          }
                           style={[
-                            styles.seitemH,
+                            styles.involvePsuggCont,
                             this.state.submitToArr.length == i + 1
                               ? {borderBottomWidth: wp(0)}
                               : null,
                           ]}>
-                          {d}
-                        </Text>
-                      </TouchableOpacity>
-                    ))}
+                          <Avatar
+                            containerStyle={{marginRight: wp(3)}}
+                            rounded
+                            source={{
+                              uri:
+                                'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                            }}
+                          />
+                          <Text style={styles.involvePSt}>{d}</Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+
+                    {/* <View style={styles.slctSEContainer}>
+                      {this.state.submitToArr.map((d: string, i: number) => (
+                        <TouchableOpacity
+                          onPress={() =>
+                            this.setState({submitTo: d, submitToArr: []})
+                          }>
+                          <Text
+                            key={i}
+                            style={[
+                              styles.seitemH,
+                              this.state.submitToArr.length == i + 1
+                                ? {borderBottomWidth: wp(0)}
+                                : null,
+                            ]}>
+                            {d}
+                          </Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View> */}
                   </View>
                 ) : null}
               </View>
               <View>
                 <Text style={styles.sbBtnText}>Escalate to</Text>
-                <View style={styles.optnselector}>
+                <View
+                  style={[
+                    styles.optnselector,
+                    this.state.selectedInputIndex == 5
+                      ? {borderColor: colors.green}
+                      : null,
+                  ]}>
                   <TextInput
+                    onFocus={() => this.setState({selectedInputIndex: 5})}
                     underlineColorAndroid="transparent"
                     onChange={(v: any) =>
                       this.setState({
