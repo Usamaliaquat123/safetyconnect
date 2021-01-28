@@ -79,7 +79,7 @@ class Signup extends React.Component<SignupProps, any> {
               onPress={() => this.props.navigation.navigate('Login')}
               style={styles.createnewaccountContainer}>
               <Text style={styles.createNewAccount}>
-                Signin to your existing account!
+                Sign in to your existing account!
               </Text>
             </TouchableOpacity>
           </View>

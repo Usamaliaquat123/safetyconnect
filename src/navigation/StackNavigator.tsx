@@ -70,6 +70,13 @@ export const MainStackNavigator = () => {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
+            name="Signup"
+            component={Signup}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="Login"
             component={Login}
             options={{
@@ -86,13 +93,6 @@ export const MainStackNavigator = () => {
           <Stack.Screen
             name="ViewSOR"
             component={ViewSOR}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Signup"
-            component={Signup}
             options={{
               headerShown: false,
             }}

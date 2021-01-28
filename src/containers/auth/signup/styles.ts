@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: wp(7),
       },
       headingContainer : {
-          fontSize: wp(4.4),
+          fontSize: wp(5),
           color: colors.primary,
           fontWeight: "bold"
       },
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
       inputContainer: {
           marginTop: wp(2),
           borderColor: colors.green,
-          borderWidth: wp(0.3),
+          borderWidth: wp(0.4),
           paddingLeft: wp(3),
           borderRadius: wp(3),
           flexDirection: "row",
@@ -68,7 +68,7 @@ alignItems:"center"
           fontSize: wp(4)
       },
       signinText:  {
-        fontSize: wp(4),
+        fontSize: wp(4.5),
         fontWeight:"bold",
         color: colors.secondary
       },
@@ -124,7 +124,7 @@ alignItems:"center"
            marginTop: wp(3)
        },
        createNewAccount: {
-           color: colors.text,
+           color: colors.primary,
            opacity: .7,
            fontSize: wp(3.4),
            fontWeight: "bold",
