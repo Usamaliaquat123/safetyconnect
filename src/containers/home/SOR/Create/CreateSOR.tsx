@@ -20,8 +20,9 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+
 import DocumentPicker from 'react-native-document-picker';
-import {Chart, Suggestions, RepeatedSor} from '@components';
+import {Chart, Suggestions, RepeatedSor, Tags} from '@components';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
@@ -70,10 +71,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       submitToArr: [],
       submitTo: '',
       selectEsclateTo: false,
-      esclateTo: ' ',
+      esclateTo: '',
       // repeated sor modal
       repeatedSorModal: false,
-
+      submitToTags: [],
+      exclateToTags: [],
       // Selected input
       selectedInputIndex: 1,
     };
@@ -504,17 +506,38 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     }
                     value={this.state.submitTo}></TextInput>
                 </View>
+                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                  <Tags
+                    onClose={(d: any) => {
+                      this.setState({
+                        submitToTags: this.state.submitToTags.filter(
+                          (v: any) => v !== d,
+                        ),
+                      });
+                    }}
+                    tags={this.state.submitToTags}
+                  />
+                </View>
                 {this.state.submitToArr.length != 0 ? (
                   <View style={styles.involveSuggestCont}>
                     {this.state.submitToArr.map((d: string, i: number) => (
                       <TouchableOpacity
                         key={i}
-                        onPress={() =>
+                        onPress={() => {
                           this.setState({
-                            submitTo: d,
+                            submitTo: '',
                             submitToArr: [],
-                          })
-                        }
+                          });
+
+                          if (
+                            this.state.submitToTags.filter((v: any) => v == d)
+                              .length == 0
+                          ) {
+                            this.state.submitToTags.push(d);
+                          } else {
+                            return null;
+                          }
+                        }}
                         style={[
                           styles.involvePsuggCont,
                           this.state.submitToArr.length == i + 1
@@ -560,15 +583,36 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     style={styles.optnselectorText}
                     value={this.state.esclateTo}></TextInput>
                 </View>
+                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                  <Tags
+                    onClose={(d: any) => {
+                      this.setState({
+                        exclateToTags: this.state.exclateToTags.filter(
+                          (v: any) => v !== d,
+                        ),
+                      });
+                    }}
+                    tags={this.state.exclateToTags}
+                  />
+                </View>
                 {this.state.exclateToArr.length != 0 ? (
                   <View>
                     <View style={styles.involveSuggestCont}>
                       {this.state.exclateToArr.map((d: string, i: number) => (
                         <TouchableOpacity
                           key={i}
-                          onPress={() =>
-                            this.setState({esclateTo: d, exclateToArr: []})
-                          }
+                          onPress={() => {
+                            this.setState({esclateTo: '', exclateToArr: []});
+                            if (
+                              this.state.exclateToTags.filter(
+                                (v: any) => v == d,
+                              ).length == 0
+                            ) {
+                              this.state.exclateToTags.push(d);
+                            } else {
+                              return null;
+                            }
+                          }}
                           style={[
                             styles.involvePsuggCont,
                             this.state.exclateToArr.length == i + 1

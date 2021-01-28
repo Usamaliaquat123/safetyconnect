@@ -292,14 +292,14 @@ const styles = StyleSheet.create({
     marginBottom: wp(3),
     borderWidth: wp(0.2),
     borderRadius: wp(3),
-    padding: wp(3),
-    paddingBottom: wp(0),
+    padding: wp(1),
+    // paddingBottom: wp(0),
     borderColor: colors.text,
   },
   optnselectorText: {
-    textAlignVertical: 'top',
+    textAlignVertical: 'center',
     fontSize: wp(3),
-    padding: wp(0),
+    padding: wp(3),
     color: colors.text,
   },
   slctSEContainer: {

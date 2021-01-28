@@ -24,7 +24,7 @@ class Tags extends React.Component<TagsProps, any> {
           <Icon
             style={styles.crossIcon}
             onPress={() => this.props.onClose(d)}
-            size={wp(5)}
+            size={wp(3)}
             name="cross"
             type="entypo"
             color={colors.secondary}

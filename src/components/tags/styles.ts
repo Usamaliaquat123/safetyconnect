@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
 
     containerIcon:  {
         borderRadius: wp(15),
+        padding: wp(1),
         backgroundColor: "#707070",
 
     },
