@@ -300,8 +300,9 @@ const styles = StyleSheet.create({
   optnselectorText: {
     textAlignVertical: 'center',
     fontSize: wp(3),
-    padding: wp(3),
+    padding: wp(1),
     color: colors.text,
+    width: wp(80)
   },
   slctSEContainer: {
     // position: 'absolute',
