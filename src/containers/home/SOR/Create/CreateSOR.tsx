@@ -76,6 +76,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       repeatedSorModal: false,
       submitToTags: [],
       exclateToTags: [],
+      actionsTags: [],
       // Selected input
       selectedInputIndex: 1,
     };
@@ -465,15 +466,31 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   onChangeText={(e) => this.actionRecommendSuggestion(e)}
                   placeholder={'Suggest your recommendation / actions'}
                 />
+                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                  <Tags
+                    onClose={(d: any) => {
+                      this.setState({
+                        actionsTags: this.state.actionsTags.filter(
+                          (v: any) => v !== d,
+                        ),
+                      });
+                    }}
+                    tags={this.state.actionsTags}
+                  />
+                </View>
 
                 {/* Suggestions  */}
                 {this.state.actionRecommendations.length != 0 ? (
                   <Suggestions
                     styles={{}}
                     arr={this.state.actionRecommendations}
-                    onPress={(d: string) =>
-                      this.setState({actionRecommendationsText: d})
-                    }
+                    onPress={(d: string) => {
+                      this.state.actionsTags.push(d);
+                      this.setState({
+                        actionRecommendationsText: '',
+                        actionRecommendations: [],
+                      });
+                    }}
                   />
                 ) : null}
               </View>
