@@ -38,7 +38,7 @@ import {
         borderTopRightRadius: wp(7),
       },
       headingContainer : {
-          fontSize: wp(4.4),
+          fontSize: wp(5),
           color: colors.primary,
           fontWeight: "bold"
       },
@@ -51,9 +51,10 @@ import {
       },
       inputContainer: {
           marginTop: wp(2),
-          borderColor: colors.green,
-          borderWidth: wp(0.3),
+          borderColor: colors.text,
+          borderWidth: wp(0.4),
           paddingLeft: wp(3),
+          
           borderRadius: wp(3),
           flexDirection: "row",
 alignItems:"center"          
@@ -64,10 +65,13 @@ alignItems:"center"
         fontWeight: "bold"
       },
       authInputs : {
-          fontSize: wp(4)
+          fontSize: wp(4),
+          width: wp(80),
       },
       forgetPassText:  {
         fontSize: wp(3),
+        color: colors.primary,
+        fontWeight: "bold",
         opacity: .7,
         marginTop: wp(5),
       },
@@ -102,11 +106,11 @@ alignItems:"center"
         justifyContent: "center",
         alignItems: "center",
         width: wp(70),
-        padding: wp(4),
+        padding: wp(3),
         flexDirection: "row",
-        borderWidth: wp(0.2),
+        borderWidth: wp(0.3),
         borderColor: colors.primary,
-        borderRadius: wp(3)
+        borderRadius: wp(2)
       },
       orContainer:  {
           marginTop: wp(5),

@@ -35,6 +35,7 @@ class Login extends React.Component<LoginProps, any> {
     super(props);
     this.state = {
       selectedInput: 1,
+      isEye: true,
     };
   }
   render() {
@@ -81,21 +82,33 @@ class Login extends React.Component<LoginProps, any> {
                     : {borderColor: colors.textOpa},
                 ]}>
                 <TextInput
-                  secureTextEntry={true}
+                  secureTextEntry={this.state.isEye}
                   onFocus={() => this.setState({selectedInput: 2})}
                   style={styles.authInputs}
                   onChange={(e) => console.log(e)}
                   placeholder={'******'}
                 />
-                <View style={styles.eyeIconContainer}>
-                  <Icon
-                    containerStyle={{opacity: 0.5}}
-                    size={15}
-                    name="eye"
-                    type="feather"
-                    color={colors.text}
-                  />
-                </View>
+                <TouchableOpacity
+                  onPress={() => this.setState({isEye: !this.state.isEye})}
+                  style={styles.eyeIconContainer}>
+                  {this.state.isEye == true ? (
+                    <Icon
+                      containerStyle={{opacity: 0.5}}
+                      size={wp(5)}
+                      name="eye-with-line"
+                      type="entypo"
+                      color={colors.text}
+                    />
+                  ) : (
+                    <Icon
+                      containerStyle={{opacity: 0.5}}
+                      size={wp(5)}
+                      name="eye"
+                      type="antdesign"
+                      color={colors.text}
+                    />
+                  )}
+                </TouchableOpacity>
               </View>
             </View>
             <Text style={styles.forgetPassText}>Forget Password ? </Text>
@@ -110,7 +123,7 @@ class Login extends React.Component<LoginProps, any> {
             </View>
             {/* Google Signin */}
             <TouchableOpacity style={styles.siginwithGoogle}>
-              <View style={{width: wp(5), height: wp(5), marginRight: wp(3)}}>
+              <View style={{width: wp(7), height: wp(7), marginRight: wp(3)}}>
                 <Image source={images.google} style={GlStyles.images} />
               </View>
               <Text style={styles.signinTextGoogle}>Continue with Google </Text>
