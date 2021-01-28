@@ -61,7 +61,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       suggestions: [],
       involvePersonSuggestions: [],
       actionRecommendations: [],
-      filename: '',
+      filename: [],
       involvePersonText: '',
       actionRecommendationsText: '',
       classifySorbtns: classifySor,
@@ -76,6 +76,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       repeatedSorModal: false,
       submitToTags: [],
       exclateToTags: [],
+      involvePersonTags: [],
       actionsTags: [],
       // Selected input
       selectedInputIndex: 1,
@@ -90,12 +91,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.allFiles],
       });
-      this.setState({
-        filename:
-          res.name.length > 7
-            ? res.name.substring(0, 8) + `...${res.type}`
-            : res.name,
-      });
+      this.state.filename.push(
+        res.name.length > 7
+          ? res.name.substring(0, 8) + `...${res.type}`
+          : res.name,
+      );
+      // this.setState({});
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User cancelled the picker, exit any dialogs or menus and move on
@@ -381,18 +382,31 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 onChangeText={(e) => this.suggestInvolvePersons(e)}
                 placeholder={'Enter person name /email'}
               />
+              <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                <Tags
+                  onClose={(d: any) => {
+                    this.setState({
+                      involvePersonTags: this.state.involvePersonTags.filter(
+                        (v: any) => v !== d,
+                      ),
+                    });
+                  }}
+                  tags={this.state.involvePersonTags}
+                />
+              </View>
               {this.state.involvePersonSuggestions.length != 0 ? (
                 <View style={styles.involveSuggestCont}>
                   {this.state.involvePersonSuggestions.map(
                     (d: string, i: number) => (
                       <TouchableOpacity
                         key={i}
-                        onPress={() =>
+                        onPress={() => {
+                          this.state.involvePersonTags.push(d);
                           this.setState({
-                            involvePersonText: d,
+                            involvePersonText: '',
                             involvePersonSuggestions: [],
-                          })
-                        }
+                          });
+                        }}
                         style={[
                           styles.involvePsuggCont,
                           this.state.involvePersonSuggestions.length == i + 1
@@ -437,8 +451,30 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   Drag and drop your files to start upload{' '}
                 </Text>
               </View>
-              {this.state.filename != '' ? (
-                <Text style={styles.uplaodText}>{this.state.filename}</Text>
+              {this.state.filename.length != 0 ? (
+                <View>
+                  {/* {this.state.filename.map((d: string, i: number) => ( */}
+
+                  <View
+                    style={{
+                      flexWrap: 'wrap',
+                      flexDirection: 'row',
+                    }}>
+                    <Tags
+                      onClose={(d: any) => {
+                        this.setState({
+                          filename: this.state.filename.filter(
+                            (v: any) => v !== d,
+                          ),
+                        });
+                      }}
+                      style={{alignContent: 'center'}}
+                      tags={this.state.filename}
+                    />
+                  </View>
+                  {/* // <Text style={styles.uplaodText}>{d}</Text> */}
+                  {/* ))} */}
+                </View>
               ) : null}
 
               <TouchableOpacity

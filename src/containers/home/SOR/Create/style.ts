@@ -242,6 +242,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: wp(3),
     marginTop: wp(2),
+    textAlign: "center",
     color: colors.text,
   },
   uploadBIcmTxt: {
