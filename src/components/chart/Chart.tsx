@@ -88,6 +88,7 @@ const Chart = (props: Props) => {
               fontSize: wp(3),
               fontWeight: 'bold',
               marginTop: wp(-2),
+              marginRight: wp(3),
               alignSelf: 'center',
             }}>
             LIKELIHOOD
@@ -152,6 +153,7 @@ const Chart = (props: Props) => {
             style={{
               fontSize: wp(3),
               fontWeight: 'bold',
+              marginRight: wp(3),
               alignSelf: 'center',
               marginTop: wp(-2),
             }}>
