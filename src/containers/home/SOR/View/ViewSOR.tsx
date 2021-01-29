@@ -13,13 +13,12 @@ import {
   Easing,
   BackHandler,
 } from 'react-native';
-// import MapView from 'react-native-maps';
 
 import moment from 'moment';
 import {connect} from 'react-redux';
 import {Icon, Avatar, Card} from 'react-native-elements';
 import {colors, GlStyles, animation, images} from '@theme';
-import {View_sor, notified} from '@service';
+import {View_sor, notified, Create_sor} from '@service';
 import {downloadFile} from '@utils';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -30,7 +29,7 @@ import LottieView from 'lottie-react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {default as Model} from 'react-native-modal';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import {imagePicker, cameraCapture} from '@utils';
+import {imagePicker, cameraCapture, searchInSuggestions} from '@utils';
 import DocumentPicker from 'react-native-document-picker';
 type ViewSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -53,6 +52,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       imageViewer: false,
       images: [],
       photoArr: [],
+      selectedInput: 0,
       commentText: '',
       contentAnim: new Animated.Value(80),
       // custom data
@@ -66,8 +66,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       // popup Assigners
       usersEditList: [],
       addAssigners: false,
-      photoModal: false,
+      involveAndNotifiedUsersName: '',
+      IsaddInvAndNotifiedUser: true,
+      involvedAndNotifiedUserType: 'involved',
       commentAttachment: [],
+      addInvolvedandNotifiedUsers: [],
     };
 
     this.animation = React.createRef();
@@ -278,18 +281,22 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 {/* Notified To Section */}
                 <View style={styles.notifiedSec}>
                   <Text style={styles.notifyPText}>Notified to : </Text>
-                  {this.state.notifiedPerson.map((d: any, i: number) => (
-                    <View>
-                      <Avatar
-                        containerStyle={{marginLeft: wp(-(i + 1))}}
-                        size={wp(8)}
-                        rounded
-                        source={{
-                          uri: d.photo,
-                        }}
-                      />
-                    </View>
-                  ))}
+                  {this.state.notifiedPerson.map((d: any, i: number) => {
+                    var j = 2;
+
+                    return (
+                      <View>
+                        <Avatar
+                          containerStyle={{marginLeft: wp(-(j + 1))}}
+                          size={wp(8)}
+                          rounded
+                          source={{
+                            uri: d.photo,
+                          }}
+                        />
+                      </View>
+                    );
+                  })}
                   <TouchableOpacity
                     onPress={() =>
                       this.setState({
@@ -312,18 +319,22 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 {/* Involved Person  */}
                 <View style={styles.notifiedSec}>
                   <Text style={styles.invpText}>Involved People</Text>
-                  {this.state.involvedPerson.map((d: any, i: number) => (
-                    <View>
-                      <Avatar
-                        containerStyle={{marginLeft: wp(-(i + 1))}}
-                        size={wp(8)}
-                        rounded
-                        source={{
-                          uri: d.photo,
-                        }}
-                      />
-                    </View>
-                  ))}
+                  {this.state.involvedPerson.map((d: any, i: number) => {
+                    var j = 1;
+
+                    return (
+                      <View>
+                        <Avatar
+                          containerStyle={{marginLeft: wp(-(i + 1))}}
+                          size={wp(8)}
+                          rounded
+                          source={{
+                            uri: d.photo,
+                          }}
+                        />
+                      </View>
+                    );
+                  })}
                   <TouchableOpacity
                     onPress={() =>
                       this.setState({
@@ -845,16 +856,139 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           animationOut={'bounceOutDown'}
           animationInTiming={2000}
           animationOutTiming={2000}
-          isVisible={this.state.photoModal}
+          isVisible={this.state.IsaddInvAndNotifiedUser}
           onBackdropPress={() => this.setState({photoModal: false})}>
           <View
             style={{
               backgroundColor: colors.secondary,
               justifyContent: 'center',
+
               borderRadius: wp(8),
-              padding: wp(10),
+              paddingTop: wp(5),
+              paddingBottom: wp(5),
             }}>
-            <TouchableOpacity
+            <View style={{alignSelf: 'center'}}>
+              <Icon
+                onPress={() => {
+                  cameraCapture().then((res: any) => {
+                    // arr.push({id: 24, namphoto: res.uri});
+
+                    this.setState({invPhoto: res.uri});
+                  });
+                }}
+                containerStyle={{
+                  opacity: 0.5,
+                }}
+                size={wp(20)}
+                name="user"
+                type="evilicon"
+                color={colors.text}
+              />
+              <Text
+                style={{
+                  fontSize: wp(3),
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  marginTop: wp(2),
+                }}>
+                Add Involved User
+              </Text>
+              <TextInput
+                style={[
+                  {
+                    fontSize: wp(3),
+                    width: wp(80),
+                    borderWidth: wp(0.2),
+                    borderRadius: wp(3),
+                    paddingLeft: wp(4),
+                    paddingRight: wp(4),
+                    marginTop: wp(3),
+                  },
+                  this.state.selectedInput == 1
+                    ? {borderColor: colors.green}
+                    : {borderColor: colors.text},
+                ]}
+                onFocus={() => this.setState({selectedInput: 1})}
+                multiline={true}
+                value={this.state.involveAndNotifiedUsersName}
+                onChange={(v: any) =>
+                  this.setState({
+                    addInvolvedandNotifiedUsers: searchInSuggestions(
+                      v,
+                      this.state.involvedAndNotifiedUserType == 'involved'
+                        ? Create_sor.Observation.esclateTo
+                        : Create_sor.Observation.submitTo,
+                    ),
+                    involveAndNotifiedUsersName: v,
+                  })
+                }
+                placeholder={'Type your name / email ...'}
+              />
+
+              {this.state.addInvolvedandNotifiedUsers.length != 0 ? (
+                <View style={styles.involveSuggestCont}>
+                  {this.state.addInvolvedandNotifiedUsers.map(
+                    (d: string, i: number) => (
+                      <TouchableOpacity
+                        key={i}
+                        onPress={() => {
+                          this.setState({
+                            involveAndNotifiedUsersName: d,
+                            addInvolvedandNotifiedUsers: [],
+                          });
+                        }}
+                        style={[
+                          styles.involvePsuggCont,
+                          this.state.addInvolvedandNotifiedUsers.length == i + 1
+                            ? {borderBottomWidth: wp(0)}
+                            : null,
+                        ]}>
+                        <Avatar
+                          containerStyle={{marginRight: wp(3)}}
+                          rounded
+                          source={{
+                            uri:
+                              'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                          }}
+                        />
+                        <Text style={styles.involvePSt}>{d}</Text>
+                      </TouchableOpacity>
+                    ),
+                  )}
+                </View>
+              ) : null}
+              <TouchableOpacity
+                onPress={() => {
+                  this.state.involvedPerson.push({
+                    id: Date.now(),
+                    name: this.state.involveAndNotifiedUsersName,
+                    photo:
+                      this.state.invPhoto != ''
+                        ? this.state.invPhoto
+                        : `https://dummyimage.com/500x500/aaaaaa/080808.png&text=${this.state.involveAndNotifiedUsersName.substring(
+                            0,
+                            2,
+                          )}`,
+                  });
+                  this.setState({IsaddInvAndNotifiedUser: false});
+                }}
+                style={{
+                  backgroundColor: colors.green,
+                  borderRadius: wp(3),
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  alignSelf: 'center',
+                  marginTop: wp(5),
+                  padding: wp(3),
+                  width: wp(50),
+                }}>
+                <Text style={{fontSize: wp(3), color: colors.secondary}}>
+                  Add User
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* <TouchableOpacity
               onPress={() => this.imgCap('take', this.state.photoArr)}
               style={[styles.takeaPhotoContainer, {marginTop: wp(1)}]}>
               <Icon
@@ -893,7 +1027,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 type="antdesign"
                 color={colors.primary}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </Model>
         <Modal visible={this.state.imageViewer} transparent={true}>

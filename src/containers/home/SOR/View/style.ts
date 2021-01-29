@@ -277,14 +277,32 @@ marginRight: wp(15)
     fontSize: wp(2.7),
     opacity: 0.5,
   },
-  addActionAndRecommendation:  {
+  involveSuggestCont: {
+    borderColor: colors.green,
+    borderRadius: wp(3),
+    padding: wp(3),
     borderWidth: wp(0.3),
+    marginTop: wp(1),
+  },
+  involvePSt: {
+    fontSize: wp(3),
+  },
+  addActionAndRecommendation:  {
+    borderWidth: wp(0.3), 
     borderRadius: wp(3),
     marginTop : wp(3),
     paddingLeft: wp(1),
     borderColor: colors.lightGrey,
     flexDirection: "row",
     alignItems : "center"
+  },
+  involvePsuggCont: {
+    borderColor: colors.textOpa,
+    borderBottomWidth: wp(0.1),
+    paddingTop: wp(3),
+    paddingBottom: wp(3),
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   textaddActionContainer: {
     fontSize: wp(3.5)
