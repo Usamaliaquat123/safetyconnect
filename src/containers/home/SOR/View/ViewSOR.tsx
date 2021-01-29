@@ -67,7 +67,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       usersEditList: [],
       addAssigners: false,
       involveAndNotifiedUsersName: '',
-      IsaddInvAndNotifiedUser: true,
+      IsaddInvAndNotifiedUser: false,
       involvedAndNotifiedUserType: 'involved',
       commentAttachment: [],
       addInvolvedandNotifiedUsers: [],
@@ -301,7 +301,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     onPress={() =>
                       this.setState({
                         photoArr: this.state.notifiedPerson,
-                        photoModal: true,
+                        IsaddInvAndNotifiedUser: true,
+                        involvedAndNotifiedUserType: 'notified',
                       })
                     }
                     style={[
@@ -321,11 +322,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   <Text style={styles.invpText}>Involved People</Text>
                   {this.state.involvedPerson.map((d: any, i: number) => {
                     var j = 1;
-
                     return (
                       <View>
                         <Avatar
-                          containerStyle={{marginLeft: wp(-(i + 1))}}
+                          containerStyle={{marginLeft: wp(-(j + 1))}}
                           size={wp(8)}
                           rounded
                           source={{
@@ -339,7 +339,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     onPress={() =>
                       this.setState({
                         photoArr: this.state.involvedPerson,
-                        photoModal: true,
+                        IsaddInvAndNotifiedUser: true,
+                        involvedAndNotifiedUserType: 'involved',
                       })
                     }
                     style={styles.addCircle}>
@@ -854,10 +855,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         <Model
           animationIn={'bounceInUp'}
           animationOut={'bounceOutDown'}
-          animationInTiming={2000}
-          animationOutTiming={2000}
+          animationInTiming={1000}
+          animationOutTiming={1000}
           isVisible={this.state.IsaddInvAndNotifiedUser}
-          onBackdropPress={() => this.setState({photoModal: false})}>
+          onBackdropPress={() =>
+            this.setState({IsaddInvAndNotifiedUser: false})
+          }>
           <View
             style={{
               backgroundColor: colors.secondary,
@@ -868,32 +871,33 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               paddingBottom: wp(5),
             }}>
             <View style={{alignSelf: 'center'}}>
-              {this.state.invPhoto == '' ? (
-                <Icon
-                  onPress={() => {
-                    imagePicker().then((res: any) => {
-                      // arr.push({id: 24, namphoto: res.uri});
-
-                      this.setState({invPhoto: res.uri});
-                    });
-                  }}
-                  containerStyle={{
-                    opacity: 0.5,
-                  }}
-                  size={wp(20)}
-                  name="user"
-                  type="evilicon"
-                  color={colors.text}
-                />
-              ) : (
-                <Avatar
-                  // containerStyle={{marginRi}}
-                  rounded
-                  source={{
-                    uri: this.state.invPhoto,
-                  }}
-                />
-              )}
+              <TouchableOpacity
+                onPress={() =>
+                  imagePicker().then((res: any) => {
+                    this.setState({invPhoto: res.uri});
+                  })
+                }>
+                {this.state.invPhoto == null ? (
+                  <Icon
+                    containerStyle={{
+                      opacity: 0.5,
+                    }}
+                    size={wp(20)}
+                    name="user"
+                    type="evilicon"
+                    color={colors.text}
+                  />
+                ) : (
+                  <Avatar
+                    containerStyle={{alignSelf: 'center'}}
+                    rounded
+                    size={wp(20)}
+                    source={{
+                      uri: this.state.invPhoto,
+                    }}
+                  />
+                )}
+              </TouchableOpacity>
 
               <Text
                 style={{
@@ -973,18 +977,37 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   console.log(
                     this.state.involveAndNotifiedUsersName.substring(0, 2),
                   );
-                  this.state.involvedPerson.push({
-                    id: Date.now(),
-                    name: this.state.involveAndNotifiedUsersName,
-                    photo:
-                      this.state.invPhoto != ' '
-                        ? this.state.invPhoto
-                        : `https://dummyimage.com/500x500/aaaaaa/080808.png&text=${this.state.involveAndNotifiedUsersName.substring(
-                            0,
-                            2,
-                          )}`,
+                  if (this.state.involvedAndNotifiedUserType == 'involved') {
+                    this.state.involvedPerson.push({
+                      id: Date.now(),
+                      name: this.state.involveAndNotifiedUsersName,
+                      photo:
+                        this.state.invPhoto != ' '
+                          ? this.state.invPhoto
+                          : `https://dummyimage.com/500x500/aaaaaa/080808.png&text=${this.state.involveAndNotifiedUsersName.substring(
+                              0,
+                              2,
+                            )}`,
+                    });
+                  } else {
+                    this.state.notifiedPerson.push({
+                      id: Date.now(),
+                      name: this.state.involveAndNotifiedUsersName,
+                      photo:
+                        this.state.invPhoto != ' '
+                          ? this.state.invPhoto
+                          : `https://dummyimage.com/500x500/aaaaaa/080808.png&text=${this.state.involveAndNotifiedUsersName.substring(
+                              0,
+                              2,
+                            )}`,
+                    });
+                  }
+
+                  this.setState({
+                    IsaddInvAndNotifiedUser: false,
+                    involveAndNotifiedUsersName: '',
+                    invPhoto: '',
                   });
-                  this.setState({IsaddInvAndNotifiedUser: false});
                 }}
                 style={{
                   backgroundColor: colors.green,
