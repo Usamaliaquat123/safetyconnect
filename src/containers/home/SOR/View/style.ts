@@ -305,6 +305,7 @@ marginRight: wp(15)
     flexDirection: 'row',
   },
   textaddActionContainer: {
+    width: wp(70),
     fontSize: wp(3.5)
   },
   // comments sections

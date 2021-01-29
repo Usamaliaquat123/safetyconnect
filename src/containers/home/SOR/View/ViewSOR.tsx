@@ -448,6 +448,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               <View style={styles.addActionAndRecommendation}>
                 <TextInput
                   onChange={(e) => console.log(e)}
+                  multiline={true}
                   style={styles.textaddActionContainer}
                   placeholder={'Add action / recommendation here'}
                 />
