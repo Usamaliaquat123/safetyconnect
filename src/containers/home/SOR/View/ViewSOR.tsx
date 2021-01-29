@@ -868,22 +868,33 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               paddingBottom: wp(5),
             }}>
             <View style={{alignSelf: 'center'}}>
-              <Icon
-                onPress={() => {
-                  cameraCapture().then((res: any) => {
-                    // arr.push({id: 24, namphoto: res.uri});
+              {this.state.invPhoto == '' ? (
+                <Icon
+                  onPress={() => {
+                    imagePicker().then((res: any) => {
+                      // arr.push({id: 24, namphoto: res.uri});
 
-                    this.setState({invPhoto: res.uri});
-                  });
-                }}
-                containerStyle={{
-                  opacity: 0.5,
-                }}
-                size={wp(20)}
-                name="user"
-                type="evilicon"
-                color={colors.text}
-              />
+                      this.setState({invPhoto: res.uri});
+                    });
+                  }}
+                  containerStyle={{
+                    opacity: 0.5,
+                  }}
+                  size={wp(20)}
+                  name="user"
+                  type="evilicon"
+                  color={colors.text}
+                />
+              ) : (
+                <Avatar
+                  // containerStyle={{marginRi}}
+                  rounded
+                  source={{
+                    uri: this.state.invPhoto,
+                  }}
+                />
+              )}
+
               <Text
                 style={{
                   fontSize: wp(3),
@@ -959,11 +970,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               ) : null}
               <TouchableOpacity
                 onPress={() => {
+                  console.log(
+                    this.state.involveAndNotifiedUsersName.substring(0, 2),
+                  );
                   this.state.involvedPerson.push({
                     id: Date.now(),
                     name: this.state.involveAndNotifiedUsersName,
                     photo:
-                      this.state.invPhoto != ''
+                      this.state.invPhoto != ' '
                         ? this.state.invPhoto
                         : `https://dummyimage.com/500x500/aaaaaa/080808.png&text=${this.state.involveAndNotifiedUsersName.substring(
                             0,

@@ -98,6 +98,7 @@ View_sor = {
     date: 1609667502505,
     InvolvedPersons: [
       {id: 12, name: ' Jane Doe', photo: 'https://media-exp1.licdn.com/dms/image/C4E03AQFTUDB-a5qa7Q/profile-displayphoto-shrink_400_400/0/1600851452365?e=1615420800&v=beta&t=ic43tX8ncbqo6LSNHAyj09i3EMIPD868wVxnkTdyOzg'},
+      {id: 12, name: ' Jane Doe', photo: 'https://media-exp1.licdn.com/dms/image/C4E03AQFTUDB-a5qa7Q/profile-displayphoto-shrink_400_400/0/1600851452365?e=1615420800&v=beta&t=ic43tX8ncbqo6LSNHAyj09i3EMIPD868wVxnkTdyOzg'},
       {id: 13, name: ' James Doe', photo: 'https://media-exp1.licdn.com/dms/image/C4E03AQFTUDB-a5qa7Q/profile-displayphoto-shrink_400_400/0/1600851452365?e=1615420800&v=beta&t=ic43tX8ncbqo6LSNHAyj09i3EMIPD868wVxnkTdyOzg'},
     ],
     NotifiedTo: [
