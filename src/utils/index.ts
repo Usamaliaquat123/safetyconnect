@@ -11,6 +11,7 @@ import {
   cameraCapture,
   mapAsyncStorage,
   getAsyncStorage,
+  DocType
 } from './utils';
 export {
   classifySor,
@@ -24,5 +25,6 @@ export {
   cameraCapture,
   getAsyncStorage,
   imagePicker,
-  mapAsyncStorage
+  mapAsyncStorage,
+  DocType
 };

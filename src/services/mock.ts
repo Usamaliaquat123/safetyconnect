@@ -118,7 +118,10 @@ View_sor = {
       {id: 32, name: 'Ela', photo: ''},
     ],
 
-    Risk: 16,
+    Risk: {
+      severity : 4,
+      liklihood : 4,
+    },
     ActionAndRecommendation: [
       {
         status: 'Completed',
@@ -181,6 +184,76 @@ export const mapChart = [
   {value: 1, color: colors.riskIcons.darkGreen},
   {value: 4, color: colors.riskIcons.lightGreen},
 ];
+
+
+
+
+export const riskxSeverityxliklihood = {
+  severity:  [
+    {
+      value: 1,
+      text: 'low',
+      selected: false,
+      color: colors.riskIcons.severity.rare,
+    },
+    {
+      value: 2,
+      text: 'Minor',
+      selected: false,
+      color: colors.riskIcons.severity.likely,
+    },
+    {
+      value: 3,
+      text: 'Moderate',
+      selected: false,
+      color: colors.riskIcons.severity.possibly,
+    },
+    {
+      value: 4,
+      text: 'Major',
+      selected: false,
+      color: colors.riskIcons.severity.unlikely,
+    },
+    {
+      value: 5,
+      text: 'Critical',
+      selected: false,
+      color: colors.riskIcons.severity.Rare,
+    },
+  ],
+  liklihood: [
+    {
+      value: 1,
+      text: 'Rare',
+      selected: false,
+      color: colors.riskIcons.likelihood.rare,
+    },
+    {
+      value: 2,
+      text: 'Likely',
+      selected: false,
+      color: colors.riskIcons.likelihood.likely,
+    },
+    {
+      value: 3,
+      text: 'Possible',
+      selected: false,
+      color: colors.riskIcons.likelihood.possibly,
+    },
+    {
+      value: 4,
+      text: 'Unlikely',
+      selected: false,
+      color: colors.riskIcons.likelihood.unlikely,
+    },
+    {
+      value: 5,
+      text: 'Rare',
+      selected: false,
+      color: colors.riskIcons.likelihood.Rare,
+    },
+  ]
+}
 
 export const draft = [
   {

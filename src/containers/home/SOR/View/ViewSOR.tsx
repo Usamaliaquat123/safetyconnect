@@ -18,19 +18,30 @@ import moment from 'moment';
 import {connect} from 'react-redux';
 import {Icon, Avatar, Card} from 'react-native-elements';
 import {colors, GlStyles, animation, images} from '@theme';
-import {View_sor, notified, Create_sor} from '@service';
-import {downloadFile} from '@utils';
+import {
+  View_sor,
+  notified,
+  Create_sor,
+  riskxSeverityxliklihood,
+} from '@service';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Tags} from '@components';
+import {Tags, Chart} from '@components';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {default as Model} from 'react-native-modal';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import {imagePicker, cameraCapture, searchInSuggestions} from '@utils';
+import {
+  imagePicker,
+  cameraCapture,
+  searchInSuggestions,
+  DocType,
+  downloadFile,
+} from '@utils';
 import DocumentPicker from 'react-native-document-picker';
+import listAction from './../../../../store/actions/listActions';
 type ViewSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'ViewSOR'
@@ -64,13 +75,17 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       attachments: View_sor.user.Attachments,
       actionsAndRecommendations: View_sor.user.ActionAndRecommendation,
       // popup Assigners
-      usersEditList: [],
       addAssigners: false,
       involveAndNotifiedUsersName: '',
       IsaddInvAndNotifiedUser: false,
       involvedAndNotifiedUserType: 'involved',
       commentAttachment: [],
       addInvolvedandNotifiedUsers: [],
+      selectedRisk: true,
+
+      // Risk Array
+      liklihood: riskxSeverityxliklihood.liklihood,
+      severity: riskxSeverityxliklihood.severity,
     };
 
     this.animation = React.createRef();
@@ -79,6 +94,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   componentDidMount = () => {
     this.mapViewSorPhoto();
     this.AnimatedViews();
+    this.mappingMapping(
+      View_sor.user.Risk.severity,
+      View_sor.user.Risk.liklihood,
+    );
   };
 
   AnimatedViews = () => {
@@ -138,18 +157,22 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.allFiles],
       });
+      // DocType(res, this.state.attachments).then((res) => {
+      //   this.setState({});
+      // });
 
-      console.log(res.type.split('.').pop());
       if (res.type.split('/')[0] == 'image') {
         console.log('image');
         this.state.attachments.push({
           type: 'photo',
+          upload: 'self',
           name: res.name,
           url: res.uri,
         });
       } else if (res.type.split('/')[0] == 'video') {
         this.state.attachments.push({
           type: 'video',
+          upload: 'self',
           name: res.name,
           url: res.uri,
         });
@@ -157,6 +180,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       } else if (res.type.split('/')[1] == 'pdf') {
         this.state.attachments.push({
           type: 'pdf',
+          upload: 'self',
           name: res.name,
           url: res.uri,
         });
@@ -164,12 +188,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       } else if (res.type.split('/')[0] == 'text') {
         this.state.attachments.push({
           type: 'text',
+          upload: 'self',
           name: res.name,
           url: res.uri,
         });
       } else if (res.type.split('.').pop() == 'document') {
         this.state.attachments.push({
           type: 'doc',
+          upload: 'self',
           name: res.name,
           url: res.uri,
         });
@@ -183,6 +209,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       }
     }
   };
+
+  mappingMapping = (sev: number, lik: number) => {
+    this.state.liklihood.map((d: any, i: number) => {
+      if (sev == d.value) {
+        d.selected = true;
+      }
+    });
+    this.state.severity.map((d: any, i: number) => {
+      if (lik == d.value) {
+        d.selected = true;
+      }
+    });
+    this.setState({});
+  };
+
   render() {
     // this.handleBackButtonClick();
     return (
@@ -358,13 +399,27 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   Risk{' '}
                   <Text style={styles.riskttle}>(Severity x Likelihood)</Text>
                 </Text>
-                <View style={{flexDirection: 'row'}}>
-                  <View style={styles.riskIcon}>
-                    <Text style={styles.riskIconText}>
-                      {View_sor.user.Risk}
-                    </Text>
+                {this.state.selectedRisk == false ? (
+                  <View>
+                    <Chart
+                      liklihood={this.state.liklihood}
+                      severity={this.state.severity}
+                      style={{alignSelf: 'center', marginTop: wp(3)}}
+                      onPress={(v: object) => console.log(v)}
+                    />
                   </View>
-                </View>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() => this.setState({selectedRisk: false})}
+                    style={{flexDirection: 'row'}}>
+                    <View style={styles.riskIcon}>
+                      <Text style={styles.riskIconText}>
+                        {View_sor.user.Risk.severity *
+                          View_sor.user.Risk.liklihood}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                )}
               </View>
               <View style={styles.actionContainer}>
                 <Text style={styles.actionText}>Action / Recommendation</Text>
@@ -427,8 +482,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       </TouchableOpacity>
 
                       <View style={styles.subAss}>
-                        <TouchableOpacity
-                          onPress={() => this.setState({addAssigners: true})}>
+                        <TouchableOpacity>
                           <Text style={styles.subAssText}>
                             Assigned to:{' '}
                             <Text style={styles.subAssuser}>
@@ -540,7 +594,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             style={{width: wp(7), height: wp(7)}}
                           />
                         </View>
-                        <Text style={styles.attchFileText}>Untitled1.pdf</Text>
+                        <Text style={styles.attchFileText}>
+                          {d.name.substring(0, 10)}.../.{d.type}
+                        </Text>
 
                         <TouchableOpacity
                           onPress={() => {
@@ -782,34 +838,36 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              {View_sor.user.observer.map((d, i) => (
-                <TouchableOpacity
-                  onPress={() => {
-                    this.state.usersEditList.push(d.name);
-                    this.setState({});
-                  }}>
-                  <Avatar
-                    containerStyle={{marginLeft: wp(-(i + 1))}}
-                    size={wp(15)}
-                    rounded
-                    source={{
-                      uri: View_sor.user.profile,
-                    }}
-                  />
-                </TouchableOpacity>
-              ))}
+              {View_sor.user.observer.map((d, i) => {
+                var j = 1;
+                return (
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({});
+                    }}>
+                    <Avatar
+                      containerStyle={{marginLeft: wp(-(j + 1))}}
+                      size={wp(15)}
+                      rounded
+                      source={{
+                        uri: View_sor.user.profile,
+                      }}
+                    />
+                  </TouchableOpacity>
+                );
+              })}
             </View>
-            {/* Users Tags */}
-            {this.state.usersEditList.length != 0 ? (
-              <View style={{flexDirection: 'row'}}>
-                {this.state.usersEditList.map((d: any, i: number) => (
-                  <Tags
-                    tags={this.state.usersEditList}
-                    onClose={(d: any) => console.log(d)}
-                  />
-                ))}
-              </View>
-            ) : null}
+            {/* details of user */}
+
+            <View
+              style={{
+                backgroundColor: colors.lightBlue,
+                borderRadius: wp(3),
+                // padding: wp(3),
+              }}>
+              {/* <View style={}></View> */}
+              {/* <Text>Adsd</Text> */}
+            </View>
             {/* add users here */}
             <View style={{flexDirection: 'row', marginTop: wp(10)}}>
               <Avatar

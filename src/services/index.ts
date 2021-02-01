@@ -11,6 +11,7 @@ import {
   groupConversation,
   notified,
   repeatedSor,
+  riskxSeverityxliklihood,
 } from './mock';
 import {messages  } from "./messaging_mock";
 export {
@@ -27,4 +28,5 @@ export {
   groupConversation,
   submitted,
   notified,
+  riskxSeverityxliklihood
 };

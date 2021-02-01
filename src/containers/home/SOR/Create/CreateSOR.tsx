@@ -358,6 +358,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             {this.state.classifySorbtns[1].selected == false ? (
               <View>
                 <Text style={styles.RiskHeading}>Risk</Text>
+                ```{' '}
                 <Chart
                   style={{alignSelf: 'center', marginTop: wp(3)}}
                   onPress={(v: number) => console.log(v)}
