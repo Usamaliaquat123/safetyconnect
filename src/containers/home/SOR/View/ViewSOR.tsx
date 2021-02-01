@@ -79,7 +79,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       involveAndNotifiedUsersName: '',
       IsaddInvAndNotifiedUser: false,
       involvedAndNotifiedUserType: 'involved',
-      commentAttachment: [],
+      commentAttachment: [
+        // {type: 'photo', upload: 'self', name: 'sds', url: 'sds'},
+        // {type: 'photo', upload: 'self', name: 'sds', url: 'sds'},
+        // {type: 'photo', upload: 'self', name: 'sds', url: 'sds'},
+        // {type: 'photo', upload: 'self', name: 'sds', url: 'sds'},
+      ],
       addInvolvedandNotifiedUsers: [],
       selectedRisk: true,
 
@@ -163,14 +168,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
       if (res.type.split('/')[0] == 'image') {
         console.log('image');
-        this.state.attachments.push({
+        attach.push({
           type: 'photo',
           upload: 'self',
           name: res.name,
           url: res.uri,
         });
       } else if (res.type.split('/')[0] == 'video') {
-        this.state.attachments.push({
+        attach.push({
           type: 'video',
           upload: 'self',
           name: res.name,
@@ -178,7 +183,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         });
         console.log('video');
       } else if (res.type.split('/')[1] == 'pdf') {
-        this.state.attachments.push({
+        attach.push({
           type: 'pdf',
           upload: 'self',
           name: res.name,
@@ -186,14 +191,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         });
         console.log('pdf');
       } else if (res.type.split('/')[0] == 'text') {
-        this.state.attachments.push({
+        attach.push({
           type: 'text',
           upload: 'self',
           name: res.name,
           url: res.uri,
         });
       } else if (res.type.split('.').pop() == 'document') {
-        this.state.attachments.push({
+        attach.push({
           type: 'doc',
           upload: 'self',
           name: res.name,
@@ -601,14 +606,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         </Text>
                         {d.upload == 'self' ? null : (
                           <TouchableOpacity
-                            onPress={() => {
-                              this.animation.play();
-                              downloadFile(d.url, d.type)
-                                .then((res: any) => {
-                                  console.log(res);
-                                })
-                                .catch((err) => console.log(err));
-                            }}
+                            // onPress={() => {
+                            //   this.animation.play();
+                            //   downloadFile(d.url, d.type)
+                            //     .then((res: any) => {
+                            //       console.log(res);
+                            //     })
+                            //     .catch((err) => console.log(err));
+                            // }}
                             style={{
                               position: 'absolute',
                               right: wp(1),
@@ -704,7 +709,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       flexDirection: 'row',
                     }}>
                     <TouchableOpacity
-                      onPress={() => console.log('sd')}
+                      onPress={() => this.openDoc(this.state.commentAttachment)}
                       style={{
                         backgroundColor: colors.lightBlue,
                         padding: wp(2),
@@ -748,30 +753,120 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </View>
                 </View>
               </View>
-              <View style={{marginLeft: wp(5)}}>
-                <Text style={[styles.attchFileText]}>
-                  Your attachments appear here
-                </Text>
-              </View>
-              {this.state.commentAttachment.map((d: any, i: number) => (
-                <View style={{marginLeft: wp(10), marginTop: wp(3)}}>
-                  {/* <Text
+              {this.state.commentAttachment.length != 0 ? (
+                <ScrollView
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}>
+                  {this.state.commentAttachment.map((d: any, i: number) => (
+                    <View style={{marginLeft: wp(2), marginTop: wp(3)}}>
+                      {/* <Text
                   style={{
                     fontSize: wp(2.7),
                     opacity: 0.5,
                   }}>
                   Upload files will appear here
                 </Text> */}
+                      {/* // {type: 'photo', upload: 'self', name: 'sds', url: 'sds'}, */}
+                      {d.type == 'photo' ? (
+                        <View style={styles.AttchimageContainer}>
+                          <Image
+                            source={{
+                              uri: d.url,
+                            }}
+                            style={[GlStyles.images, {borderRadius: wp(5)}]}
+                            resizeMode={'cover'}
+                          />
+                          <TouchableOpacity
+                            onPress={() => {
+                              var arr = [
+                                ...this.state.commentAttachment,
+                              ].filter((j) => j != d);
+                              this.setState({commentAttachment: arr});
+                            }}
+                            style={{
+                              position: 'absolute',
+                              right: wp(2),
+                              top: wp(2),
+                              zIndex: wp(1),
+                            }}>
+                            <Icon
+                              size={wp(5)}
+                              name="circle-with-cross"
+                              type="entypo"
+                              color={colors.text}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      ) : (
+                        <View>
+                          <View
+                            style={[
+                              styles.AttchimageContainer,
+                              {
+                                backgroundColor: colors.secondary,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                              },
+                            ]}>
+                            <Image
+                              source={
+                                d.type == 'pdf'
+                                  ? images.pdf
+                                  : d.type == 'doc'
+                                  ? images.doc
+                                  : d.type == 'text'
+                                  ? images.text
+                                  : d.type == 'doc'
+                                  ? images.doc
+                                  : null
+                              }
+                              style={{width: wp(10), height: wp(10)}}
+                            />
 
-                  <View
-                    style={{
-                      backgroundColor: colors.secondary,
-                      width: wp(30),
-                      padding: wp(10),
-                      borderRadius: wp(3),
-                    }}></View>
+                            <Text
+                              style={{
+                                fontSize: wp(2.5),
+
+                                color: colors.text,
+                                marginTop: wp(2),
+                              }}>
+                              {d.name.split('.')[0].substring(0, 10)}...{' '}
+                              {d.name.split('.')[1]}
+                            </Text>
+
+                            <TouchableOpacity
+                              onPress={() => {
+                                var arr = [
+                                  ...this.state.commentAttachment,
+                                ].filter((j) => j != d);
+                                this.setState({commentAttachment: arr});
+                              }}
+                              style={{
+                                position: 'absolute',
+                                right: wp(2),
+                                top: wp(2),
+                                zIndex: wp(1),
+                              }}>
+                              <Icon
+                                size={wp(5)}
+                                name="circle-with-cross"
+                                type="entypo"
+                                color={colors.text}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        </View>
+                      )}
+                    </View>
+                  ))}
+                </ScrollView>
+              ) : (
+                <View style={{marginLeft: wp(5)}}>
+                  <Text style={[styles.attchFileText]}>
+                    Your attachments appear here
+                  </Text>
                 </View>
-              ))}
+              )}
             </View>
             {/* Submit btns  */}
             <View

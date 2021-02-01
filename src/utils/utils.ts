@@ -180,40 +180,7 @@ export const cameraCapture = () => {
 export const DocType= (res: any, attachments: Array<Object>) => {
   return new Promise((resolve, reject) => {
     
-      if (res.type.split('/')[0] == 'image') {
-        console.log('image');
-        resolve(attachments.push({
-          type: 'photo',
-          name: res.name,
-          url: res.uri,
-        })) 
-      } else if (res.type.split('/')[0] == 'video') {
-        resolve(attachments.push({
-          type: 'video',
-          name: res.name,
-          url: res.uri,
-        }))
-        console.log('video');
-      } else if (res.type.split('/')[1] == 'pdf') {
-        resolve(attachments.push({
-          type: 'pdf',
-          name: res.name,
-          url: res.uri,
-        }))
-        console.log('pdf');
-      } else if (res.type.split('/')[0] == 'text') {
-        resolve(attachments.push({
-          type: 'text',
-          name: res.name,
-          url: res.uri,
-        }))
-      } else if (res.type.split('.').pop() == 'document') {
-        resolve(attachments.push({
-          type: 'doc',
-          name: res.name,
-          url: res.uri,
-        }))
-      }
+   
 
   })
 
