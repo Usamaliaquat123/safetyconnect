@@ -660,27 +660,98 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               {/* comments sections */}
             </View>
             <View style={styles.commentsSections}>
-              {this.state.comments.map((d: any, i: number) => (
-                <View style={styles.userComments}>
-                  <Avatar
-                    containerStyle={{marginTop: wp(0)}}
-                    size={wp(6)}
-                    rounded
-                    source={{
-                      uri: d.image,
-                    }}
-                  />
-                  <View style={styles.commentUser}>
-                    <Text style={styles.userCommentName}>{d.user}</Text>
-                    <Text style={styles.usercomment}>{d.comment}</Text>
+              {this.state.comments.map((d: any, i: number) => {
+                console.log(`sdasdsa ${d.attachments}`);
+                return (
+                  <View>
+                    <View style={styles.userComments}>
+                      <Avatar
+                        containerStyle={{marginTop: wp(0)}}
+                        size={wp(6)}
+                        rounded
+                        source={{
+                          uri: d.image,
+                        }}
+                      />
+                      <View style={styles.commentUser}>
+                        <Text style={styles.userCommentName}>{d.user}</Text>
+                        <Text style={styles.usercomment}>{d.comment}</Text>
+                      </View>
+                      <View style={styles.dateComments}>
+                        <Text style={styles.dateTextComment}>
+                          {moment(d.date).fromNow()}
+                        </Text>
+                      </View>
+                    </View>
+                    {d.attachments != undefined ? (
+                      <ScrollView
+                        style={{marginBottom: wp(3)}}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}>
+                        {d.attachments.map((d: any, i: number) => (
+                          <View
+                            style={[
+                              styles.AttchimageContainer,
+                              {
+                                backgroundColor: colors.secondary,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                              },
+                            ]}>
+                            {d.type == 'photo' ? (
+                              <Image
+                                source={{
+                                  uri: d.url,
+                                }}
+                                style={[GlStyles.images, {borderRadius: wp(5)}]}
+                                resizeMode={'cover'}
+                              />
+                            ) : (
+                              <View>
+                                <Image
+                                  source={
+                                    d.type == 'pdf'
+                                      ? images.pdf
+                                      : d.type == 'doc'
+                                      ? images.doc
+                                      : d.type == 'text'
+                                      ? images.text
+                                      : d.type == 'doc'
+                                      ? images.doc
+                                      : null
+                                  }
+                                  style={{width: wp(10), height: wp(10)}}
+                                />
+                              </View>
+                            )}
+
+                            <TouchableOpacity
+                              onPress={() => {
+                                var arr = [
+                                  ...this.state.commentAttachment,
+                                ].filter((j) => j != d);
+                                this.setState({commentAttachment: arr});
+                              }}
+                              style={{
+                                position: 'absolute',
+                                right: wp(2),
+                                top: wp(2),
+                                zIndex: wp(1),
+                              }}>
+                              <Icon
+                                size={wp(5)}
+                                name="download-outline"
+                                type="material-community"
+                                color={colors.text}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        ))}
+                      </ScrollView>
+                    ) : null}
                   </View>
-                  <View style={styles.dateComments}>
-                    <Text style={styles.dateTextComment}>
-                      {moment(d.date).fromNow()}
-                    </Text>
-                  </View>
-                </View>
-              ))}
+                );
+              })}
               <View style={{flexDirection: 'row'}}>
                 <Avatar
                   containerStyle={{marginRight: wp(2)}}
@@ -734,8 +805,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             image:
                               'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
                             comment: this.state.commentText,
+                            attachments: this.state.commentAttachment,
                           });
-                          this.setState({commentText: '', comments: map});
+                          this.setState({
+                            commentText: '',
+                            comments: map,
+                            commentAttachment: [],
+                          });
                         }
                       }}
                       style={{
@@ -758,7 +834,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}>
                   {this.state.commentAttachment.map((d: any, i: number) => (
-                    <View style={{marginLeft: wp(2), marginTop: wp(3)}}>
+                    <View
+                      style={{
+                        marginLeft: wp(2),
+                        marginTop: wp(3),
+                        marginBottom: wp(5),
+                      }}>
                       {/* <Text
                   style={{
                     fontSize: wp(2.7),

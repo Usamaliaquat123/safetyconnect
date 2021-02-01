@@ -162,17 +162,24 @@ View_sor = {
     comments: [
       {user: "Faizan", comment:"Created SOR sydsjdhsjdhsjhdjshd sdjhdjsahdjsahd jsadhsajdhsajdhsjahdsadjsahdjsa " , date: 1610696943490, image: "https://media-exp1.licdn.com/dms/image/C4D03AQGfuxWRWdlgVw/profile-displayphoto-shrink_400_400/0/1603355067087?e=1615420800&v=beta&t=EqS_Dglj86o0TOR3aIEKkOlgFWoo4dHKbJ4uA9ObAjs"},
       {user: "Haider", comment:"Mark an action completed " , attachments: [{
-        type: 'word',
+        type: 'doc',
         upload: 'self',
         name: "gtest",
         url:  "",
+      },
+      {
+        type: 'text',
+        upload: 'self',
+        name: 'sds',
+        url: 'sds',
       },
       {
         type: 'pdf',
         upload: 'self',
         name: 'sds',
         url: 'sds',
-      }],  date: 1610696943490, image: "https://media-exp1.licdn.com/dms/image/C4D03AQGfuxWRWdlgVw/profile-displayphoto-shrink_400_400/0/1603355067087?e=1615420800&v=beta&t=EqS_Dglj86o0TOR3aIEKkOlgFWoo4dHKbJ4uA9ObAjs"},
+      },
+    ],  date: 1610696943490, image: "https://media-exp1.licdn.com/dms/image/C4D03AQGfuxWRWdlgVw/profile-displayphoto-shrink_400_400/0/1603355067087?e=1615420800&v=beta&t=EqS_Dglj86o0TOR3aIEKkOlgFWoo4dHKbJ4uA9ObAjs"},
       {user: "Sawera", comment:"Faizan you need to revisit this action " , date: 1610696943490, image : "https://media-exp1.licdn.com/dms/image/C4D03AQGfuxWRWdlgVw/profile-displayphoto-shrink_400_400/0/1603355067087?e=1615420800&v=beta&t=EqS_Dglj86o0TOR3aIEKkOlgFWoo4dHKbJ4uA9ObAjs"}
     ]
   },
