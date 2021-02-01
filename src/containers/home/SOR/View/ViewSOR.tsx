@@ -532,7 +532,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     flexWrap: 'wrap',
                     alignSelf: 'center',
                   }}>
-                  {View_sor.user.Attachments.map((d, i) => {
+                  {this.state.attachments.map((d: any, i: number) => {
                     if (d.type == 'photo') {
                       return (
                         <TouchableOpacity
@@ -574,7 +574,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     }
                   })}
                 </View>
-                {View_sor.user.Attachments.map((d, i) => (
+                {this.state.attachments.map((d: any, i: number) => (
                   <View>
                     {d.type != 'photo' ? (
                       <View style={styles.attachFileContainer}>
@@ -597,30 +597,31 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         <Text style={styles.attchFileText}>
                           {d.name.substring(0, 10)}.../.{d.type}
                         </Text>
-
-                        <TouchableOpacity
-                          onPress={() => {
-                            this.animation.play();
-                            downloadFile(d.url, d.type)
-                              .then((res: any) => {
-                                console.log(res);
-                              })
-                              .catch((err) => console.log(err));
-                          }}
-                          style={{
-                            position: 'absolute',
-                            right: wp(1),
-                            top: wp(1.5),
-                          }}>
-                          <LottieView
-                            ref={(animation) => {
-                              this.animation = animation;
+                        {d.upload == 'self' ? null : (
+                          <TouchableOpacity
+                            onPress={() => {
+                              this.animation.play();
+                              downloadFile(d.url, d.type)
+                                .then((res: any) => {
+                                  console.log(res);
+                                })
+                                .catch((err) => console.log(err));
                             }}
-                            style={{width: wp(15)}}
-                            source={animation.download}
-                            loop={false}
-                          />
-                        </TouchableOpacity>
+                            style={{
+                              position: 'absolute',
+                              right: wp(1),
+                              top: wp(1.5),
+                            }}>
+                            <LottieView
+                              ref={(animation) => {
+                                this.animation = animation;
+                              }}
+                              style={{width: wp(15)}}
+                              source={animation.download}
+                              loop={false}
+                            />
+                          </TouchableOpacity>
+                        )}
                       </View>
                     ) : null}
                   </View>
