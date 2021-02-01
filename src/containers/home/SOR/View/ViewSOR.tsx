@@ -545,30 +545,32 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             style={[GlStyles.images, {borderRadius: wp(5)}]}
                             resizeMode={'cover'}
                           />
-                          <View
-                            // onPress={() => {
-                            //   this.photoAnim.play();
-                            //   downloadFile(d.url, d.type)
-                            //     .then((res: any) => {
-                            //       console.log(res);
-                            //     })
-                            //     .catch((err) => console.log(err));
-                            // }}
-                            style={{
-                              position: 'absolute',
-                              right: wp(-2),
-                              top: wp(2),
-                              zIndex: wp(1),
-                            }}>
-                            <LottieView
-                              ref={(animation) => {
-                                this.photoAnim = animation;
+                          {d.upload == 'self' ? null : (
+                            <TouchableOpacity
+                              onPress={() => {
+                                this.photoAnim.play();
+                                downloadFile(d.url, d.type)
+                                  .then((res: any) => {
+                                    console.log(res);
+                                  })
+                                  .catch((err) => console.log(err));
                               }}
-                              style={{width: wp(11)}}
-                              source={animation.download}
-                              loop={false}
-                            />
-                          </View>
+                              style={{
+                                position: 'absolute',
+                                right: wp(-2),
+                                top: wp(2),
+                                zIndex: wp(1),
+                              }}>
+                              <LottieView
+                                ref={(animation) => {
+                                  this.photoAnim = animation;
+                                }}
+                                style={{width: wp(11)}}
+                                source={animation.download}
+                                loop={false}
+                              />
+                            </TouchableOpacity>
+                          )}
                         </TouchableOpacity>
                       );
                     }
