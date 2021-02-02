@@ -30,7 +30,9 @@ class Home extends React.Component<HomeProps, any> {
   render() {
     return (
       <View style={{flex: 1, backgroundColor: colors.primary}}>
-        <ScrollView></ScrollView>
+        <ScrollView>
+          <Text>sds</Text>
+        </ScrollView>
       </View>
     );
   }
