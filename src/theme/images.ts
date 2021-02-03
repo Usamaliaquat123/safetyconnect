@@ -18,6 +18,7 @@ bottomTab: {
   message_selected : require('./images/tab/message_selected.png'),
   sors : require('./images/tab/sors.png'),
   sors_selected : require('./images/tab/sors_selected.png'),
-  
+  folder : require('./images/tab/folder.png'),
+  note : require('./images/tab/note.png'),
 }
 };
