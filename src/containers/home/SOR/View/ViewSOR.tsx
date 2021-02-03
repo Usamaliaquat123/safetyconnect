@@ -550,32 +550,32 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             style={[GlStyles.images, {borderRadius: wp(5)}]}
                             resizeMode={'cover'}
                           />
-                          {d.upload == 'self' ? null : (
-                            <TouchableOpacity
-                              onPress={() => {
+                          <TouchableOpacity
+                            onPress={() => {
+                              if (d.upload != 'self') {
                                 this.photoAnim.play();
                                 downloadFile(d.url, d.type)
                                   .then((res: any) => {
                                     console.log(res);
                                   })
                                   .catch((err) => console.log(err));
+                              }
+                            }}
+                            style={{
+                              position: 'absolute',
+                              right: wp(-2),
+                              top: wp(2),
+                              zIndex: wp(1),
+                            }}>
+                            <LottieView
+                              ref={(animation) => {
+                                this.photoAnim = animation;
                               }}
-                              style={{
-                                position: 'absolute',
-                                right: wp(-2),
-                                top: wp(2),
-                                zIndex: wp(1),
-                              }}>
-                              <LottieView
-                                ref={(animation) => {
-                                  this.photoAnim = animation;
-                                }}
-                                style={{width: wp(11)}}
-                                source={animation.download}
-                                loop={false}
-                              />
-                            </TouchableOpacity>
-                          )}
+                              style={{width: wp(11)}}
+                              source={animation.download}
+                              loop={false}
+                            />
+                          </TouchableOpacity>
                         </TouchableOpacity>
                       );
                     }
@@ -604,20 +604,34 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         <Text style={styles.attchFileText}>
                           {d.name.substring(0, 10)}.../.{d.type}
                         </Text>
-                        {d.upload == 'self' ? null : (
+                        <View
+                          // onPress={() => {
+                          //   if (d.upload != 'self') {
+                          //     this.photoAnim.play();
+                          //     downloadFile(d.url, d.type)
+                          //       .then((res: any) => {
+                          //         console.log(res);
+                          //       })
+                          //       .catch((err) => console.log(err));
+                          //   }
+                          // }}
+                          style={{
+                            position: 'absolute',
+                            right: wp(1),
+                            top: wp(1.5),
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                          }}>
                           <TouchableOpacity
-                            // onPress={() => {
-                            //   this.animation.play();
-                            //   downloadFile(d.url, d.type)
-                            //     .then((res: any) => {
-                            //       console.log(res);
-                            //     })
-                            //     .catch((err) => console.log(err));
-                            // }}
-                            style={{
-                              position: 'absolute',
-                              right: wp(1),
-                              top: wp(1.5),
+                            onPress={() => {
+                              if (d.upload != 'self') {
+                                this.photoAnim.play();
+                                downloadFile(d.url, d.type)
+                                  .then((res: any) => {
+                                    console.log(res);
+                                  })
+                                  .catch((err) => console.log(err));
+                              }
                             }}>
                             <LottieView
                               ref={(animation) => {
@@ -628,7 +642,30 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               loop={false}
                             />
                           </TouchableOpacity>
-                        )}
+
+                          {d.upload == 'self' ? (
+                            <TouchableOpacity
+                              onPress={() => {
+                                var arr = [...this.state.attachments].filter(
+                                  (b) => b != d,
+                                );
+                                console.log(arr);
+                                this.setState({attachments: arr});
+                              }}>
+                              <Icon
+                                containerStyle={{
+                                  marginRight: wp(2),
+                                  marginTop: wp(2),
+                                  opacity: 0.5,
+                                }}
+                                name="circle-with-cross"
+                                size={wp(5)}
+                                type="entypo"
+                                color={colors.text}
+                              />
+                            </TouchableOpacity>
+                          ) : null}
+                        </View>
                       </View>
                     ) : null}
                   </View>
@@ -685,7 +722,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     </View>
                     {d.attachments != undefined ? (
                       <ScrollView
-                        style={{marginBottom: wp(3)}}
+                        style={{marginBottom: wp(3), marginLeft: wp(8)}}
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}>
                         {d.attachments.map((d: any, i: number) => (
@@ -832,6 +869,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               {this.state.commentAttachment.length != 0 ? (
                 <ScrollView
                   horizontal={true}
+                  style={{marginLeft: wp(6.7)}}
                   showsHorizontalScrollIndicator={false}>
                   {this.state.commentAttachment.map((d: any, i: number) => (
                     <View
@@ -944,7 +982,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               ) : (
                 <View style={{marginLeft: wp(5)}}>
                   <Text style={[styles.attchFileText]}>
-                    Your attachments appear here
+                    Uploaded files will be appear here .
                   </Text>
                 </View>
               )}

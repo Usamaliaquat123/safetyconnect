@@ -8,7 +8,7 @@ import {
   Modal,
 } from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {Home, ViewAll, Messaging} from '@containers';
+import {Home, ViewAll, Messaging, ViewSOR} from '@containers';
 import {Icon} from 'react-native-elements';
 import {colors, images, GlStyles} from '@theme';
 import {default as Model} from 'react-native-modal';
@@ -18,8 +18,8 @@ import {
 } from 'react-native-responsive-screen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import BottomSheet from 'reanimated-bottom-sheet';
-import Animated from 'react-native-reanimated';
+// import BottomSheet from 'reanimated-bottom-sheet';
+// import Animated from 'react-native-reanimated';
 export interface TabBarProps {
   state: any;
   descriptors: any;
@@ -40,8 +40,8 @@ export const BottomTabNavigator = () => {
         <Tab.Navigator
           tabBar={(props) => <TabBar {...props} />}
           sceneContainerStyle={{backgroundColor: colors.error}}
-          initialRouteName={'sors'}>
-          <Tab.Screen name="home" component={Home} options={{}} />
+          initialRouteName={'home'}>
+          <Tab.Screen name="home" component={ViewSOR} options={{}} />
           <Tab.Screen name="sors" component={ViewAll} options={{}} />
           <Tab.Screen name="addNew" component={Home} options={{}} />
           <Tab.Screen name="inbox" component={Messaging} options={{}} />
@@ -51,6 +51,7 @@ export const BottomTabNavigator = () => {
     </SafeAreaProvider>
   );
 };
+
 export default class TabBar extends React.Component<TabBarProps, any> {
   constructor(props: any) {
     super(props);
@@ -104,8 +105,6 @@ export default class TabBar extends React.Component<TabBarProps, any> {
 
           //   elevation: 1,
         }}>
-        {/* modal of selection ad */}
-
         {this.props.state.routes.map((route: any, index: number) => {
           const {options} = this.props.descriptors[route.key];
           const label =

@@ -266,12 +266,12 @@ marginRight: wp(15)
     flexDirection: 'row',
   },
   attchFileText: {
-    fontSize: wp(3),
+    fontSize: wp(2.7),
     fontStyle:"italic",
     color: colors.text,
     opacity: 0.7,
     marginLeft: wp(5),
-    marginTop: wp(1),
+    marginTop: wp(2),
   },
   actionTypeElemAsdmin:  {
     fontSize: wp(2.7),
