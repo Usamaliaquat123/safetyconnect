@@ -1192,15 +1192,34 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     .catch((err) => this.setState({invPhoto: ''}));
                 }}>
                 {this.state.invPhoto === '' ? (
-                  <Icon
-                    containerStyle={{
-                      opacity: 0.5,
-                    }}
-                    size={wp(20)}
-                    name="user"
-                    type="evilicon"
-                    color={colors.text}
-                  />
+                  // <Icon
+                  //   containerStyle={{
+                  //     opacity: 0.5,
+                  //   }}
+                  //   size={wp(10)}
+                  //   name="user-edit"
+                  //   type="font-awesome-5"
+                  //   color={colors.text}
+                  // />
+                  <View
+                    style={{
+                      borderWidth: wp(0.2),
+                      borderRadius: wp(10),
+                      width: wp(20),
+                      height: wp(20),
+                      alignItems: 'center',
+                      alignSelf: 'center',
+                      justifyContent: 'center',
+                      padding: wp(3),
+                    }}>
+                    <Icon
+                      size={wp(10)}
+                      containerStyle={{opacity: 0.5, position: 'absolute'}}
+                      name="camera"
+                      type="evilicon"
+                      color={colors.text}
+                    />
+                  </View>
                 ) : (
                   <Avatar
                     containerStyle={{alignSelf: 'center'}}
@@ -1218,9 +1237,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   fontSize: wp(3),
                   fontWeight: 'bold',
                   textAlign: 'center',
+                  opacity: 0.5,
                   marginTop: wp(2),
                 }}>
-                Add Involved User
+                {this.state.involvedAndNotifiedUserType == 'involved'
+                  ? 'Add Involved User Details'
+                  : 'Add Notified User Details'}
               </Text>
               <TextInput
                 style={[
@@ -1294,10 +1316,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       name: this.state.involveAndNotifiedUsersName,
                       photo:
                         this.state.invPhoto === ''
-                          ? `https://dummyimage.com/500x500/aaaaaa/080808.png&text=${this.state.involveAndNotifiedUsersName.substring(
-                              0,
-                              2,
-                            )}`
+                          ? `https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png`
                           : this.state.invPhoto,
                     });
                   } else {
@@ -1306,10 +1325,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       name: this.state.involveAndNotifiedUsersName,
                       photo:
                         this.state.invPhoto === ''
-                          ? `https://dummyimage.com/500x500/aaaaaa/080808.png&text=${this.state.involveAndNotifiedUsersName.substring(
-                              0,
-                              2,
-                            )}`
+                          ? `https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png`
                           : this.state.invPhoto,
                     });
                   }
