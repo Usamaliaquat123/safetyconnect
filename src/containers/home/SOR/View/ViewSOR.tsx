@@ -389,12 +389,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         involvedAndNotifiedUserType: 'involved',
                       })
                     }
-                    style={styles.addCircle}>
+                    style={[
+                      styles.addCircle,
+                      {backgroundColor: colors.lightGrey},
+                    ]}>
                     <Icon
                       size={wp(3.5)}
                       name="plus"
                       type="antdesign"
-                      color={colors.secondary}
+                      color={colors.primary}
                     />
                   </TouchableOpacity>
                 </View>
@@ -517,6 +520,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     right: wp(3),
                     padding: wp(2),
                     borderRadius: wp(2),
+                    top: wp(2.7),
                     backgroundColor: colors.lightGrey,
                   }}>
                   <Icon
@@ -547,7 +551,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             source={{
                               uri: d.url,
                             }}
-                            style={[GlStyles.images, {borderRadius: wp(5)}]}
+                            style={[GlStyles.images, {borderRadius: wp(3)}]}
                             resizeMode={'cover'}
                           />
                           <TouchableOpacity
@@ -562,6 +566,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               }
                             }}
                             style={{
+                              flexDirection: 'row',
                               position: 'absolute',
                               right: wp(-2),
                               top: wp(2),
@@ -575,6 +580,30 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               source={animation.download}
                               loop={false}
                             />
+
+                            {d.upload == 'self' ? (
+                              <TouchableOpacity
+                                style={{marginRight: wp(3)}}
+                                onPress={() => {
+                                  var arr = [...this.state.attachments].filter(
+                                    (b) => b != d,
+                                  );
+                                  console.log(arr);
+                                  this.setState({attachments: arr});
+                                }}>
+                                <Icon
+                                  containerStyle={{
+                                    marginRight: wp(2),
+                                    marginTop: wp(2),
+                                    opacity: 0.5,
+                                  }}
+                                  name="circle-with-cross"
+                                  size={wp(5)}
+                                  type="entypo"
+                                  color={colors.text}
+                                />
+                              </TouchableOpacity>
+                            ) : null}
                           </TouchableOpacity>
                         </TouchableOpacity>
                       );
@@ -812,6 +841,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   />
                   <View
                     style={{
+                      top: wp(2.7),
                       position: 'absolute',
                       right: wp(3),
                       flexDirection: 'row',
