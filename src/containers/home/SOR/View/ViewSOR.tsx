@@ -91,6 +91,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       // Risk Array
       liklihood: riskxSeverityxliklihood.liklihood,
       severity: riskxSeverityxliklihood.severity,
+      invPhoto: '',
     };
 
     this.animation = React.createRef();
@@ -167,7 +168,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       // });
 
       if (res.type.split('/')[0] == 'image') {
-        console.log('image');
         attach.push({
           type: 'photo',
           upload: 'self',
@@ -181,7 +181,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           name: res.name,
           url: res.uri,
         });
-        console.log('video');
       } else if (res.type.split('/')[1] == 'pdf') {
         attach.push({
           type: 'pdf',
@@ -189,7 +188,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           name: res.name,
           url: res.uri,
         });
-        console.log('pdf');
       } else if (res.type.split('/')[0] == 'text') {
         attach.push({
           type: 'text',
@@ -262,7 +260,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             style={[styles.content, {marginTop: this.state.contentAnim}]}>
             <View style={styles.contentPadding}>
               <TouchableOpacity
-                onPress={() => console.log('click on change classify btns')}
+                // onPress={() => console.log('click on change classify btns')}
                 style={styles.classittleicon}>
                 <Icon
                   size={wp(6)}
@@ -509,7 +507,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               </View>
               <View style={styles.addActionAndRecommendation}>
                 <TextInput
-                  onChange={(e) => console.log(e)}
+                  onChange={(e) => console.log('action and recommendation')}
                   multiline={true}
                   style={styles.textaddActionContainer}
                   placeholder={'Add action / recommendation here'}
@@ -722,17 +720,31 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </TouchableOpacity>
               </View>
               {/* Map Integration */}
-              <View></View>
+              <Text
+                style={{
+                  fontSize: wp(3),
+                  color: colors.text,
+                  marginBottom: wp(3),
+                }}>
+                Hall No, 1 first floor, Plot No. 45 Street 10, I-9/2, Islamabad,
+                Federal, Islamabad Capital Territory 44000
+              </Text>
+              <View style={{width: wp(90), height: wp(50)}}>
+                <Image
+                  source={images.map}
+                  style={[GlStyles.images, {borderRadius: wp(3)}]}
+                  resizeMode={'cover'}
+                />
+              </View>
               {/* comments sections */}
             </View>
             <View style={styles.commentsSections}>
               {this.state.comments.map((d: any, i: number) => {
-                console.log(`sdasdsa ${d.attachments}`);
                 return (
                   <View>
                     <View style={styles.userComments}>
                       <Avatar
-                        containerStyle={{marginTop: wp(0)}}
+                        containerStyle={{position: 'absolute', top: wp(0)}}
                         size={wp(6)}
                         rounded
                         source={{
@@ -908,14 +920,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         marginTop: wp(3),
                         marginBottom: wp(5),
                       }}>
-                      {/* <Text
-                  style={{
-                    fontSize: wp(2.7),
-                    opacity: 0.5,
-                  }}>
-                  Upload files will appear here
-                </Text> */}
-                      {/* // {type: 'photo', upload: 'self', name: 'sds', url: 'sds'}, */}
                       {d.type == 'photo' ? (
                         <View style={styles.AttchimageContainer}>
                           <Image
@@ -1178,12 +1182,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             }}>
             <View style={{alignSelf: 'center'}}>
               <TouchableOpacity
-                onPress={() =>
-                  imagePicker().then((res: any) => {
-                    this.setState({invPhoto: res.uri});
-                  })
-                }>
-                {this.state.invPhoto == null ? (
+                onPress={() => {
+                  imagePicker()
+                    .then((res: any) => {
+                      this.setState({
+                        invPhoto: res.uri == undefined ? '' : res.uri,
+                      });
+                    })
+                    .catch((err) => this.setState({invPhoto: ''}));
+                }}>
+                {this.state.invPhoto === '' ? (
                   <Icon
                     containerStyle={{
                       opacity: 0.5,
@@ -1280,32 +1288,29 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               ) : null}
               <TouchableOpacity
                 onPress={() => {
-                  console.log(
-                    this.state.involveAndNotifiedUsersName.substring(0, 2),
-                  );
                   if (this.state.involvedAndNotifiedUserType == 'involved') {
                     this.state.involvedPerson.push({
                       id: Date.now(),
                       name: this.state.involveAndNotifiedUsersName,
                       photo:
-                        this.state.invPhoto != ' '
-                          ? this.state.invPhoto
-                          : `https://dummyimage.com/500x500/aaaaaa/080808.png&text=${this.state.involveAndNotifiedUsersName.substring(
+                        this.state.invPhoto === ''
+                          ? `https://dummyimage.com/500x500/aaaaaa/080808.png&text=${this.state.involveAndNotifiedUsersName.substring(
                               0,
                               2,
-                            )}`,
+                            )}`
+                          : this.state.invPhoto,
                     });
                   } else {
                     this.state.notifiedPerson.push({
                       id: Date.now(),
                       name: this.state.involveAndNotifiedUsersName,
                       photo:
-                        this.state.invPhoto != ' '
-                          ? this.state.invPhoto
-                          : `https://dummyimage.com/500x500/aaaaaa/080808.png&text=${this.state.involveAndNotifiedUsersName.substring(
+                        this.state.invPhoto === ''
+                          ? `https://dummyimage.com/500x500/aaaaaa/080808.png&text=${this.state.involveAndNotifiedUsersName.substring(
                               0,
                               2,
-                            )}`,
+                            )}`
+                          : this.state.invPhoto,
                     });
                   }
 
@@ -1330,47 +1335,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </Text>
               </TouchableOpacity>
             </View>
-
-            {/* <TouchableOpacity
-              onPress={() => this.imgCap('take', this.state.photoArr)}
-              style={[styles.takeaPhotoContainer, {marginTop: wp(1)}]}>
-              <Icon
-                size={wp(5)}
-                name="camerao"
-                type="antdesign"
-                color={colors.text}
-              />
-              <Text style={[styles.selectText, {marginLeft: wp(10)}]}>
-                Take a photo
-              </Text>
-              <Icon
-                containerStyle={{position: 'absolute', right: wp(0)}}
-                size={wp(5)}
-                name="right"
-                type="antdesign"
-                color={colors.text}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.imgCap('upload', this.state.photoArr)}
-              style={styles.takeaPhotoContainer}>
-              <Icon
-                size={wp(5)}
-                name="photo"
-                type="font-awesome"
-                color={colors.text}
-              />
-              <Text style={[styles.selectText, {marginLeft: wp(10)}]}>
-                Upload a photo
-              </Text>
-              <Icon
-                size={wp(5)}
-                name="right"
-                containerStyle={{position: 'absolute', right: wp(0)}}
-                type="antdesign"
-                color={colors.primary}
-              />
-            </TouchableOpacity> */}
           </View>
         </Model>
         <Modal visible={this.state.imageViewer} transparent={true}>
@@ -1388,7 +1352,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           <ImageViewer
             enableSwipeDown={true}
             flipThreshold={100}
-            onCancel={() => console.log('sdsd')}
+            onCancel={() => console.log('close Viewer')}
             imageUrls={this.state.images}
           />
         </Modal>

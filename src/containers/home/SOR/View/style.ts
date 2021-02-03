@@ -330,8 +330,8 @@ marginRight: wp(15)
   },
   commentUser : {
     // flexDirection: "row",
-    marginTop: wp(2),
-    marginLeft: wp(3)
+    marginTop: wp(0.7),
+    marginLeft: wp(10)
   },
   dateComments: {
     position: "absolute",

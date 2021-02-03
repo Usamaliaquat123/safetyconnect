@@ -7,6 +7,7 @@ export const images = {
 doc : require('./images/doc.png'),
 jpg : require('./images/jpg.png'),
 text : require('./images/txt.png'),
+map : require('./images/map.png'),
 
 
 bottomTab: {
