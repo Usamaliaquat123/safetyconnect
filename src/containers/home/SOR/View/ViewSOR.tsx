@@ -1456,7 +1456,32 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             this.setState({commentAttachment: e})
           }
           commentAttachmentArr={this.state.commentAttachment}
-          submitComment={(e: any) => console.log(e)}
+          submitComment={(e: any) => {
+            if (this.state.editAttachedCommentArr.length == 0) {
+              this.state.commentAttachment[
+                this.state.editDiscardCommentIndex
+              ] = {
+                user: 'TestUser',
+                date: Date.now(),
+                image:
+                  'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                comment: this.state.editDiscardComment,
+              };
+            } else {
+              this.state.commentAttachment[
+                this.state.editDiscardCommentIndex
+              ] = {
+                user: 'TestUser',
+                date: Date.now(),
+                image:
+                  'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                comment: this.state.editDiscardComment,
+                attachments: this.state.editAttachedCommentArr,
+              };
+            }
+
+            this.setState({});
+          }}
         />
       </Animated.View>
     );
