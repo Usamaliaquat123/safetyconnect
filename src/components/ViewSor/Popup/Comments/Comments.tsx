@@ -17,6 +17,9 @@ export interface CommentsProps {
   openDoc: Function;
   isOpen: boolean;
   attachments: Array<any>;
+  commentText: Function;
+  deleteAttachment: Function;
+  commentAttachment: Function;
 }
 
 export default class Comments extends React.Component<CommentsProps, any> {
@@ -64,8 +67,7 @@ export default class Comments extends React.Component<CommentsProps, any> {
               {this.props.attachments.map((d: any, i: number) => {
                 if (d.type == 'photo') {
                   return (
-                    <TouchableOpacity
-                      onPress={() => this.setState({imageViewer: true})}
+                    <View
                       style={[
                         styles.AttchimageContainer,
                         {width: wp(30), borderRadius: wp(1)},
@@ -84,11 +86,12 @@ export default class Comments extends React.Component<CommentsProps, any> {
                           right: wp(0),
                         }}
                         onPress={() => {
-                          var arr = [...this.state.attachments].filter(
+                          var arr = [...this.props.attachments].filter(
                             (b) => b != d,
                           );
                           console.log(arr);
-                          this.setState({attachments: arr});
+                          this.props.deleteAttachment(arr);
+                          //   this.setState({attachments: arr});
                         }}>
                         <Icon
                           containerStyle={{
@@ -103,7 +106,7 @@ export default class Comments extends React.Component<CommentsProps, any> {
                         />
                       </TouchableOpacity>
                       {/* ) : null} */}
-                    </TouchableOpacity>
+                    </View>
                   );
                 } else {
                   <View>
@@ -144,7 +147,7 @@ export default class Comments extends React.Component<CommentsProps, any> {
 
                       <TouchableOpacity
                         onPress={() => {
-                          var arr = [...this.state.commentAttachment].filter(
+                          var arr = [...this.props.commentAttachmentArr].filter(
                             (j) => j != d,
                           );
                           this.setState({commentAttachment: arr});
@@ -173,7 +176,7 @@ export default class Comments extends React.Component<CommentsProps, any> {
               style={{fontSize: wp(3), width: wp(50)}}
               multiline={true}
               value={this.state.commentText}
-              onChange={(e) => this.setState({commentText: e.nativeEvent.text})}
+              onChange={(e) => this.props.commentText(e.nativeEvent.text)}
               placeholder={'Your comment here '}
             />
             <View
@@ -184,7 +187,7 @@ export default class Comments extends React.Component<CommentsProps, any> {
                 flexDirection: 'row',
               }}>
               <TouchableOpacity
-                onPress={() => this.openDoc(this.state.commentAttachment)}
+                onPress={() => this.props.openDoc(this.props.attachments)}
                 style={{
                   backgroundColor: colors.lightBlue,
                   padding: wp(2),

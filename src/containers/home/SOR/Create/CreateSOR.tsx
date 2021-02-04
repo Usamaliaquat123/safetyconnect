@@ -10,7 +10,7 @@ import {
   Easing,
 } from 'react-native';
 import {connect} from 'react-redux';
-import {Create_sor} from '@service/mock';
+import {Create_sor, riskxSeverityxliklihood} from '@service/mock';
 import styles from './style';
 import moment from 'moment';
 import {searchInSuggestions, filterLocation, classifySor} from '@utils';
@@ -80,6 +80,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       actionsTags: [],
       // Selected input
       selectedInputIndex: 1,
+
+      liklihood: riskxSeverityxliklihood.liklihood,
+      severity: riskxSeverityxliklihood.severity,
     };
   }
   submitDraft = async () => {
@@ -164,6 +167,20 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       });
     }, 1000);
     this.AnimatedViews();
+  };
+
+  mappingMapping = (sev: number, lik: number) => {
+    this.state.liklihood.map((d: any, i: number) => {
+      if (sev == d.value) {
+        d.selected = true;
+      }
+    });
+    this.state.severity.map((d: any, i: number) => {
+      if (lik == d.value) {
+        d.selected = true;
+      }
+    });
+    this.setState({});
   };
 
   AnimatedViews = () => {
@@ -358,10 +375,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             {this.state.classifySorbtns[1].selected == false ? (
               <View>
                 <Text style={styles.RiskHeading}>Risk</Text>
-                ```{' '}
+
                 <Chart
+                  liklihood={this.state.liklihood}
+                  severity={this.state.severity}
                   style={{alignSelf: 'center', marginTop: wp(3)}}
-                  onPress={(v: number) => console.log(v)}
+                  onPress={(v: object) => console.log(v)}
                 />
               </View>
             ) : null}

@@ -170,35 +170,35 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       // });
 
       if (res.type.split('/')[0] == 'image') {
-        attach.push({
+        attach.splice(0, 0, {
           type: 'photo',
           upload: 'self',
           name: res.name,
           url: res.uri,
         });
       } else if (res.type.split('/')[0] == 'video') {
-        attach.push({
+        attach.splice(0, 0, {
           type: 'video',
           upload: 'self',
           name: res.name,
           url: res.uri,
         });
       } else if (res.type.split('/')[1] == 'pdf') {
-        attach.push({
+        attach.splice(0, 0, {
           type: 'pdf',
           upload: 'self',
           name: res.name,
           url: res.uri,
         });
       } else if (res.type.split('/')[0] == 'text') {
-        attach.push({
+        attach.splice(0, 0, {
           type: 'text',
           upload: 'self',
           name: res.name,
           url: res.uri,
         });
       } else if (res.type.split('.').pop() == 'document') {
-        attach.push({
+        attach.splice(0, 0, {
           type: 'doc',
           upload: 'self',
           name: res.name,
@@ -343,25 +343,29 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       </View>
                     );
                   })}
-                  <TouchableOpacity
-                    onPress={() =>
-                      this.setState({
-                        photoArr: this.state.notifiedPerson,
-                        IsaddInvAndNotifiedUser: true,
-                        involvedAndNotifiedUserType: 'notified',
-                      })
-                    }
-                    style={[
-                      styles.addCircle,
-                      {backgroundColor: colors.lightGrey},
-                    ]}>
-                    <Icon
-                      size={wp(3.5)}
-                      name="plus"
-                      type="antdesign"
-                      color={colors.primary}
-                    />
-                  </TouchableOpacity>
+                  {this.state.notifiedPerson.length < 6 ? (
+                    <TouchableOpacity
+                      onPress={() => {
+                        if (this.state.notifiedPerson.length < 6) {
+                          this.setState({
+                            photoArr: this.state.notifiedPerson,
+                            IsaddInvAndNotifiedUser: true,
+                            involvedAndNotifiedUserType: 'notified',
+                          });
+                        }
+                      }}
+                      style={[
+                        styles.addCircle,
+                        {backgroundColor: colors.lightGrey},
+                      ]}>
+                      <Icon
+                        size={wp(3.5)}
+                        name="plus"
+                        type="antdesign"
+                        color={colors.primary}
+                      />
+                    </TouchableOpacity>
+                  ) : null}
                 </View>
                 {/* Involved Person  */}
                 <View style={styles.notifiedSec}>
@@ -381,25 +385,27 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       </View>
                     );
                   })}
-                  <TouchableOpacity
-                    onPress={() =>
-                      this.setState({
-                        photoArr: this.state.involvedPerson,
-                        IsaddInvAndNotifiedUser: true,
-                        involvedAndNotifiedUserType: 'involved',
-                      })
-                    }
-                    style={[
-                      styles.addCircle,
-                      {backgroundColor: colors.lightGrey},
-                    ]}>
-                    <Icon
-                      size={wp(3.5)}
-                      name="plus"
-                      type="antdesign"
-                      color={colors.primary}
-                    />
-                  </TouchableOpacity>
+                  {this.state.involvedPerson.length < 6 ? (
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.setState({
+                          photoArr: this.state.involvedPerson,
+                          IsaddInvAndNotifiedUser: true,
+                          involvedAndNotifiedUserType: 'involved',
+                        });
+                      }}
+                      style={[
+                        styles.addCircle,
+                        {backgroundColor: colors.lightGrey},
+                      ]}>
+                      <Icon
+                        size={wp(3.5)}
+                        name="plus"
+                        type="antdesign"
+                        color={colors.primary}
+                      />
+                    </TouchableOpacity>
+                  ) : null}
                 </View>
               </View>
               <View style={styles.risk}>
@@ -434,7 +440,17 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 <Text style={styles.sugForYouText}>Suggested for you</Text>
                 {this.state.actionsAndRecommendations.map(
                   (d: any, i: number) => (
-                    <View
+                    <TouchableOpacity
+                      onLongPress={() => console.log('sds')}
+                      onPress={() => {
+                        var data = [...this.state.actionsAndRecommendations];
+                        if (d.status == 'Completed') {
+                          data[i].status = 'Status';
+                        } else {
+                          data[i].status = 'Completed';
+                        }
+                        this.setState({actionsAndRecommendations: data});
+                      }}
                       style={[
                         styles.actionRecomCon,
                         d.status == 'Completed'
@@ -448,20 +464,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               borderColor: colors.lightGrey,
                             },
                       ]}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          var data = [...this.state.actionsAndRecommendations];
-                          if (d.status == 'Completed') {
-                            data[i].status = 'status';
-                          } else {
-                            data[i].status = 'Completed';
-                          }
-                          this.setState({actionsAndRecommendations: data});
-                        }}>
+                      <View>
                         <View
                           style={{flexDirection: 'row', alignItems: 'center'}}>
                           <Icon
-                            onPress={() => this.props.navigation.goBack()}
                             size={wp(3.5)}
                             name="checkcircle"
                             type="antdesign"
@@ -487,7 +493,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           ]}>
                           {d.observation}
                         </Text>
-                      </TouchableOpacity>
+                      </View>
 
                       <View style={styles.subAss}>
                         <TouchableOpacity>
@@ -503,12 +509,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           {moment(d.time).format('MMM DD YYYY')}
                         </Text>
                       </View>
-                    </View>
+                    </TouchableOpacity>
                   ),
                 )}
               </View>
               <View style={styles.addActionAndRecommendation}>
                 <TextInput
+                  maxLength={10}
                   onChange={(e) => console.log('action and recommendation')}
                   multiline={true}
                   style={styles.textaddActionContainer}
@@ -722,7 +729,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </TouchableOpacity>
               </View>
               {/* Map Integration */}
-              <Text
+              {/* <Text
                 style={{
                   fontSize: wp(3),
                   color: colors.text,
@@ -730,7 +737,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 }}>
                 Hall No, 1 first floor, Plot No. 45 Street 10, I-9/2, Islamabad,
                 Federal, Islamabad Capital Territory 44000
-              </Text>
+              </Text> */}
               <View style={{width: wp(90), height: wp(50)}}>
                 <Image
                   source={images.map}
@@ -743,7 +750,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             <View style={styles.commentsSections}>
               {this.state.comments.map((d: any, i: number) => {
                 return (
-                  <TouchableOpacity onLongPress={() => console.log('sds')}>
+                  <View>
                     <View style={styles.userComments}>
                       <Avatar
                         containerStyle={{position: 'absolute', top: wp(0)}}
@@ -829,7 +836,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         ))}
                       </ScrollView>
                     ) : null}
-                  </TouchableOpacity>
+                  </View>
                 );
               })}
               <View style={{flexDirection: 'row'}}>
@@ -885,7 +892,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             date: Date.now(),
                             image:
                               'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
-                            comment: this.state.commentText,
+                            comment: this.state.commentText
+                              .replace(/\s+/g, ' ')
+                              .trim(),
                             attachments: this.state.commentAttachment,
                           });
                           this.setState({
@@ -1276,7 +1285,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 onFocus={() => this.setState({selectedInput: 1})}
                 multiline={true}
                 value={this.state.involveAndNotifiedUsersName}
-                onChange={(v: any) =>
+                onChange={(v: any) => {
                   this.setState({
                     addInvolvedandNotifiedUsers: searchInSuggestions(
                       v.nativeEvent.text,
@@ -1285,8 +1294,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         : Create_sor.Observation.submitTo,
                     ),
                     involveAndNotifiedUsersName: v.nativeEvent.text,
-                  })
-                }
+                  });
+                }}
                 placeholder={'Type your name / email ...'}
               />
 
@@ -1386,7 +1395,17 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             imageUrls={this.state.images}
           />
         </Modal>
-        {/* <Comments isOpen={this.state.editDelComment}openDoc={} attachments={this.state.attachments} /> */}
+        {/* <Comments
+          isOpen={this.state.editDelComment}
+          openDoc={() => this.openDoc(this.state.attachments)}
+          attachments={this.state.attachments}
+          commentText={(e: string) => this.setState({commentText: e})}
+          deleteAttachment={(e: string) => this.setState({attachments: e})}
+          commentAttachment={(e: string) =>
+            this.setState({commentAttachment: e})
+          }
+          commentAttachmentArr={this.state.commentAttachment}
+        /> */}
       </Animated.View>
     );
   }
