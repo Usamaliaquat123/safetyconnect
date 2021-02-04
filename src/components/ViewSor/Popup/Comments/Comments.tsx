@@ -18,17 +18,27 @@ export interface CommentsProps {
   onClose: Function;
   isOpen: boolean;
   attachments: Array<any>;
-  commentTextOnChange: Function;
   deleteAttachment: Function;
   commentAttachmentOnChange: Function;
   commentAttachmentArr: Array<any>;
   submitComment: Function;
   commentTextString: String;
+  commentIndex: number;
+  comments: Array<any>;
+  editDiscardComment: any;
+  commentTextStringOnChange: Function;
 }
 
 export default class Comments extends React.Component<CommentsProps, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      comments: props.comments,
+      editDiscardComment: props.editDiscardComment.comment,
+    };
+  }
   render() {
-    console.log(this.props.attachments);
+    // console.log(this.state.editDiscardComment);
     return (
       <Model
         animationIn={'bounceInUp'}
@@ -63,10 +73,10 @@ export default class Comments extends React.Component<CommentsProps, any> {
             <TextInput
               style={{fontSize: wp(3), width: wp(50)}}
               multiline={true}
-              value={this.props.commentTextString}
-              onChange={(e) =>
-                this.props.commentTextOnChange(e.nativeEvent.text)
-              }
+              value={this.props.editDiscardComment}
+              onChange={(e) => {
+                this.props.commentTextStringOnChange(e.nativeEvent.text);
+              }}
               placeholder={'Your comment here '}
             />
             <View
@@ -93,28 +103,19 @@ export default class Comments extends React.Component<CommentsProps, any> {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  if (this.props.commentTextString != '') {
-                    var map = [...this.state.comments];
-
-                    map.push({
+                  if (this.props.editDiscardComment != '') {
+                    (this.props.commentAttachmentArr[
+                      this.props.commentIndex
+                    ] = {
                       user: 'TestUser',
                       date: Date.now(),
                       image:
                         'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
-                      comment: this.props.commentTextString,
+                      comment: this.props.editDiscardComment,
                       attachments: this.props.attachments,
-                    });
-
-                    this.props.submitComment({
-                      commentText: '',
-                      comments: map,
-                      commentAttachment: [],
-                    });
-                    // this.setState({
-                    //   commentText: '',
-                    //   comments: map,
-                    //   commentAttachment: [],
-                    // });
+                    }),
+                      this.props.submitComment();
+                    console.log('sds');
                   }
                 }}
                 style={{

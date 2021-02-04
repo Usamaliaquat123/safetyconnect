@@ -86,9 +86,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       liklihood: riskxSeverityxliklihood.liklihood,
       severity: riskxSeverityxliklihood.severity,
       invPhoto: '',
+      // for selection
+      notifiedAndInv: 0,
       // comments edit
       editDelComment: false,
-      notifiedAndInv: 0,
+      editAttachedCommentArr: [],
+      EditcommentText: '',
+      editDiscardComment: '',
+      editDiscardCommentIndex: 0,
     };
 
     this.animation = React.createRef();
@@ -771,7 +776,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 return (
                   <View>
                     <TouchableOpacity
-                      onLongPress={() => this.setState({editDelComment: true})}
+                      onLongPress={() =>
+                        this.setState({
+                          editDiscardComment: d.comment,
+                          editDiscardCommentIndex: i,
+                          editDelComment: true,
+                        })
+                      }
                       style={styles.userComments}>
                       <Avatar
                         containerStyle={{position: 'absolute', top: wp(0)}}
@@ -1428,17 +1439,24 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           onClose={() =>
             this.setState({editDelComment: !this.state.editDelComment})
           }
+          editDiscardComment={this.state.editDiscardComment}
+          commentIndex={this.state.editDiscardCommentIndex}
           isOpen={this.state.editDelComment}
-          openDoc={() => this.openDoc(this.state.attachments)}
-          attachments={this.state.attachments}
-          commentTextOnChange={(e: string) => this.setState({commentText: e})}
-          commentTextString={this.state.commentText}
-          deleteAttachment={(e: string) => this.setState({attachments: e})}
+          openDoc={() => this.openDoc(this.state.editAttachedCommentArr)}
+          attachments={this.state.editAttachedCommentArr}
+          comments={this.state.comments}
+          commentTextString={this.state.EditcommentText}
+          commentTextStringOnChange={(e: string) =>
+            this.setState({editDiscardComment: e})
+          }
+          deleteAttachment={(e: string) =>
+            this.setState({editAttachedCommentArr: e})
+          }
           commentAttachmentOnChange={(e: string) =>
             this.setState({commentAttachment: e})
           }
           commentAttachmentArr={this.state.commentAttachment}
-          submitComment={(e: Object) => console.log(e)}
+          submitComment={(e: any) => console.log(e)}
         />
       </Animated.View>
     );
