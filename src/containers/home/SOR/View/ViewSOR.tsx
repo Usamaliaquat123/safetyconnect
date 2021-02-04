@@ -87,7 +87,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       severity: riskxSeverityxliklihood.severity,
       invPhoto: '',
       // comments edit
-      editDelComment: false,
+      editDelComment: true,
       notifiedAndInv: 0,
     };
 

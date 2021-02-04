@@ -28,6 +28,7 @@ export interface CommentsProps {
 
 export default class Comments extends React.Component<CommentsProps, any> {
   render() {
+    console.log(this.props.attachments);
     return (
       <Model
         animationIn={'bounceInUp'}
@@ -43,8 +44,8 @@ export default class Comments extends React.Component<CommentsProps, any> {
             alignItems: 'center',
             borderRadius: wp(8),
             paddingTop: wp(5),
-            paddingLeft: wp(4),
-            paddingRight: wp(4),
+            paddingLeft: wp(1),
+            paddingRight: wp(1),
             paddingBottom: wp(5),
           }}>
           <View style={{marginTop: wp(3)}}>
@@ -132,7 +133,11 @@ export default class Comments extends React.Component<CommentsProps, any> {
           </View>
 
           <View style={styles.attachmentsContainer}>
-            <Text style={{fontSize: wp(3), fontWeight: 'bold'}}>
+            <Text
+              style={{
+                fontSize: wp(3),
+                textAlign: 'center',
+              }}>
               Attachments
             </Text>
             <View
@@ -147,7 +152,7 @@ export default class Comments extends React.Component<CommentsProps, any> {
                     <View
                       style={[
                         styles.AttchimageContainer,
-                        {width: wp(30), borderRadius: wp(1)},
+                        {width: wp(40), borderRadius: wp(1)},
                       ]}>
                       <Image
                         source={{
@@ -185,67 +190,72 @@ export default class Comments extends React.Component<CommentsProps, any> {
                       {/* ) : null} */}
                     </View>
                   );
-                } else {
-                  <View>
-                    <View
-                      style={[
-                        styles.AttchimageContainer,
-                        {
-                          backgroundColor: colors.secondary,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        },
-                      ]}>
-                      <Image
-                        source={
-                          d.type == 'pdf'
-                            ? images.pdf
-                            : d.type == 'doc'
-                            ? images.doc
-                            : d.type == 'text'
-                            ? images.text
-                            : d.type == 'doc'
-                            ? images.doc
-                            : null
-                        }
-                        style={{width: wp(10), height: wp(10)}}
-                      />
-
-                      <Text
-                        style={{
-                          fontSize: wp(2.5),
-
-                          color: colors.text,
-                          marginTop: wp(2),
-                        }}>
-                        {d.name.split('.')[0].substring(0, 10)}...{' '}
-                        {d.name.split('.')[1]}
-                      </Text>
-
-                      <TouchableOpacity
-                        onPress={() => {
-                          var arr = [...this.props.commentAttachmentArr].filter(
-                            (j) => j != d,
-                          );
-
-                          this.props.commentAttachment(arr);
-                          //   this.setState({commentAttachment: arr});
-                        }}
-                        style={{
-                          position: 'absolute',
-                          right: wp(2),
-                          top: wp(2),
-                          zIndex: wp(1),
-                        }}>
-                        <Icon
-                          size={wp(5)}
-                          name="circle-with-cross"
-                          type="entypo"
-                          color={colors.text}
+                }
+                if (d.type != 'photo') {
+                  return (
+                    <View>
+                      <View
+                        style={[
+                          styles.AttchimageContainer,
+                          {
+                            width: wp(40),
+                            borderWidth: wp(0.2),
+                            backgroundColor: colors.secondary,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          },
+                        ]}>
+                        <Image
+                          source={
+                            d.type == 'pdf'
+                              ? images.pdf
+                              : d.type == 'doc'
+                              ? images.doc
+                              : d.type == 'text'
+                              ? images.text
+                              : d.type == 'doc'
+                              ? images.doc
+                              : null
+                          }
+                          style={{width: wp(10), height: wp(10)}}
                         />
-                      </TouchableOpacity>
+
+                        <Text
+                          style={{
+                            fontSize: wp(2.5),
+
+                            color: colors.text,
+                            marginTop: wp(2),
+                          }}>
+                          {d.name.split('.')[0].substring(0, 10)}...{' '}
+                          {d.name.split('.')[1]}
+                        </Text>
+
+                        <TouchableOpacity
+                          onPress={() => {
+                            var arr = [
+                              ...this.props.commentAttachmentArr,
+                            ].filter((j) => j != d);
+
+                            this.props.commentAttachment(arr);
+                            //   this.setState({commentAttachment: arr});
+                          }}
+                          style={{
+                            position: 'absolute',
+                            right: wp(2),
+                            top: wp(2),
+                            zIndex: wp(1),
+                          }}>
+                          <Icon
+                            size={wp(5)}
+                            name="circle-with-cross"
+                            type="entypo"
+                            color={colors.text}
+                          />
+                        </TouchableOpacity>
+                      </View>
                     </View>
-                  </View>;
+                  );
                 }
               })}
             </View>
