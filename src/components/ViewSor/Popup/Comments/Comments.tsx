@@ -17,9 +17,12 @@ export interface CommentsProps {
   openDoc: Function;
   isOpen: boolean;
   attachments: Array<any>;
-  commentText: Function;
+  commentTextOnChange: Function;
   deleteAttachment: Function;
   commentAttachment: Function;
+  commentAttachmentArr: Array<any>;
+  submitComment: Function;
+  commentTextString: String;
 }
 
 export default class Comments extends React.Component<CommentsProps, any> {
@@ -150,7 +153,9 @@ export default class Comments extends React.Component<CommentsProps, any> {
                           var arr = [...this.props.commentAttachmentArr].filter(
                             (j) => j != d,
                           );
-                          this.setState({commentAttachment: arr});
+
+                          this.props.commentAttachment(arr);
+                          //   this.setState({commentAttachment: arr});
                         }}
                         style={{
                           position: 'absolute',
@@ -175,8 +180,10 @@ export default class Comments extends React.Component<CommentsProps, any> {
             <TextInput
               style={{fontSize: wp(3), width: wp(50)}}
               multiline={true}
-              value={this.state.commentText}
-              onChange={(e) => this.props.commentText(e.nativeEvent.text)}
+              value={this.props.commentTextString}
+              onChange={(e) =>
+                this.props.commentTextOnChange(e.nativeEvent.text)
+              }
               placeholder={'Your comment here '}
             />
             <View
@@ -214,11 +221,17 @@ export default class Comments extends React.Component<CommentsProps, any> {
                       comment: this.state.commentText,
                       attachments: this.state.commentAttachment,
                     });
-                    this.setState({
+
+                    this.props.submitComment({
                       commentText: '',
                       comments: map,
                       commentAttachment: [],
                     });
+                    // this.setState({
+                    //   commentText: '',
+                    //   comments: map,
+                    //   commentAttachment: [],
+                    // });
                   }
                 }}
                 style={{

@@ -1395,17 +1395,19 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             imageUrls={this.state.images}
           />
         </Modal>
-        {/* <Comments
+        <Comments
           isOpen={this.state.editDelComment}
           openDoc={() => this.openDoc(this.state.attachments)}
           attachments={this.state.attachments}
-          commentText={(e: string) => this.setState({commentText: e})}
+          commentTextOnChange={(e: string) => this.setState({commentText: e})}
+          commentTextString={this.state.commentText}
           deleteAttachment={(e: string) => this.setState({attachments: e})}
           commentAttachment={(e: string) =>
             this.setState({commentAttachment: e})
           }
           commentAttachmentArr={this.state.commentAttachment}
-        /> */}
+          submitComment={(e: Object) => console.log(e)}
+        />
       </Animated.View>
     );
   }
