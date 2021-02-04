@@ -8,4 +8,5 @@ import Header from './header/Header';
 import SuggestionsAvatar from "./suggestionsAvatar/SuggestionsAvatar";
 import RepeatedSor from './RepeatedSorModal/RepeatedSor';
 import  ListCard from "./listCard/ListCard";
-export {Suggestions, Chart, Card, Search, User, Header,ListCard, RepeatedSor,Tags, SuggestionsAvatar};
+import  Comments from "./ViewSor/Popup/Comments/Comments";
+export {Suggestions, Chart, Card, Search, User, Header,ListCard, RepeatedSor,Tags, SuggestionsAvatar,Comments};

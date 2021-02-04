@@ -4,9 +4,6 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {color} from 'react-native-reanimated';
-import {withOrientation} from 'react-navigation';
 
 const styles = StyleSheet.create({
   container: {
@@ -247,6 +244,7 @@ marginRight: wp(15)
   attachmentsContainer: {
     marginTop: wp(5),
     marginBottom: wp(10),
+  
     // flexWrap: 'wrap',
     // flexDirection: 'row',
     // alignSelf: 'center',

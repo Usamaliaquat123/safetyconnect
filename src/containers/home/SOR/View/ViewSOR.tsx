@@ -26,7 +26,7 @@ import {
 } from '@service';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Tags, Chart} from '@components';
+import {Tags, Chart, Comments} from '@components';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
@@ -1215,6 +1215,18 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       padding: wp(3),
                     }}>
                     <Icon
+                      size={wp(5)}
+                      containerStyle={{
+                        // opacity: 0.5,
+                        position: 'absolute',
+                        top: wp(7.5),
+                        right: wp(-1.9),
+                      }}
+                      name="pluscircle"
+                      type="antdesign"
+                      color={colors.green}
+                    />
+                    <Icon
                       size={wp(10)}
                       containerStyle={{opacity: 0.5, position: 'absolute'}}
                       name="camera"
@@ -1267,12 +1279,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 onChange={(v: any) =>
                   this.setState({
                     addInvolvedandNotifiedUsers: searchInSuggestions(
-                      v,
+                      v.nativeEvent.text,
                       this.state.involvedAndNotifiedUserType == 'involved'
                         ? Create_sor.Observation.esclateTo
                         : Create_sor.Observation.submitTo,
                     ),
-                    involveAndNotifiedUsersName: v,
+                    involveAndNotifiedUsersName: v.nativeEvent.text,
                   })
                 }
                 placeholder={'Type your name / email ...'}
@@ -1374,265 +1386,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             imageUrls={this.state.images}
           />
         </Modal>
-
-        <Model
-          animationIn={'bounceInUp'}
-          animationOut={'bounceOutDown'}
-          animationInTiming={1000}
-          animationOutTiming={1000}
-          isVisible={this.state.editDelComment}
-          onBackdropPress={() =>
-            this.setState({IsaddInvAndNotifiedUser: false})
-          }>
-          <View
-            style={{
-              backgroundColor: colors.secondary,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: wp(8),
-              paddingTop: wp(5),
-              paddingLeft: wp(4),
-              paddingRight: wp(4),
-              paddingBottom: wp(5),
-            }}>
-            <View style={{marginTop: wp(3)}}>
-              <Text
-                style={{
-                  fontSize: wp(4),
-                  fontWeight: 'bold',
-                  marginBottom: wp(3),
-                }}>
-                Edit / Discard
-              </Text>
-            </View>
-
-            <View style={styles.attachmentsContainer}>
-              <Text style={{fontSize: wp(3), fontWeight: 'bold'}}>
-                Attachments
-              </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                  alignSelf: 'center',
-                }}>
-                {this.state.attachments.map((d: any, i: number) => {
-                  if (d.type == 'photo') {
-                    return (
-                      <TouchableOpacity
-                        onPress={() => this.setState({imageViewer: true})}
-                        style={styles.AttchimageContainer}>
-                        <Image
-                          source={{
-                            uri: d.url,
-                          }}
-                          style={[GlStyles.images, {borderRadius: wp(3)}]}
-                          resizeMode={'cover'}
-                        />
-                        <TouchableOpacity
-                          onPress={() => {
-                            if (d.upload != 'self') {
-                              this.photoAnim.play();
-                              downloadFile(d.url, d.type)
-                                .then((res: any) => {
-                                  console.log(res);
-                                })
-                                .catch((err) => console.log(err));
-                            }
-                          }}
-                          style={{
-                            flexDirection: 'row',
-                            position: 'absolute',
-                            right: wp(-2),
-                            top: wp(2),
-                            zIndex: wp(1),
-                          }}>
-                          <LottieView
-                            ref={(animation) => {
-                              this.photoAnim = animation;
-                            }}
-                            style={{width: wp(11)}}
-                            source={animation.download}
-                            loop={false}
-                          />
-
-                          {d.upload == 'self' ? (
-                            <TouchableOpacity
-                              style={{marginRight: wp(3)}}
-                              onPress={() => {
-                                var arr = [...this.state.attachments].filter(
-                                  (b) => b != d,
-                                );
-                                console.log(arr);
-                                this.setState({attachments: arr});
-                              }}>
-                              <Icon
-                                containerStyle={{
-                                  marginRight: wp(2),
-                                  marginTop: wp(2),
-                                  opacity: 0.5,
-                                }}
-                                name="circle-with-cross"
-                                size={wp(5)}
-                                type="entypo"
-                                color={colors.text}
-                              />
-                            </TouchableOpacity>
-                          ) : null}
-                        </TouchableOpacity>
-                      </TouchableOpacity>
-                    );
-                  }
-                })}
-              </View>
-              {this.state.attachments.map((d: any, i: number) => (
-                <View>
-                  {d.type != 'photo' ? (
-                    <View style={styles.attachFileContainer}>
-                      <View>
-                        <Image
-                          source={
-                            d.type == 'pdf'
-                              ? images.pdf
-                              : d.type == 'doc'
-                              ? images.doc
-                              : d.type == 'text'
-                              ? images.text
-                              : d.type == 'doc'
-                              ? images.doc
-                              : null
-                          }
-                          style={{width: wp(7), height: wp(7)}}
-                        />
-                      </View>
-                      <Text style={styles.attchFileText}>
-                        {d.name.substring(0, 10)}.../.{d.type}
-                      </Text>
-                      <View
-                        style={{
-                          position: 'absolute',
-                          right: wp(1),
-                          top: wp(1.5),
-                          alignItems: 'center',
-                          flexDirection: 'row',
-                        }}>
-                        <TouchableOpacity
-                          onPress={() => {
-                            if (d.upload != 'self') {
-                              this.photoAnim.play();
-                              downloadFile(d.url, d.type)
-                                .then((res: any) => {
-                                  console.log(res);
-                                })
-                                .catch((err) => console.log(err));
-                            }
-                          }}>
-                          <LottieView
-                            ref={(animation) => {
-                              this.animation = animation;
-                            }}
-                            style={{width: wp(15)}}
-                            source={animation.download}
-                            loop={false}
-                          />
-                        </TouchableOpacity>
-
-                        {d.upload == 'self' ? (
-                          <TouchableOpacity
-                            onPress={() => {
-                              var arr = [...this.state.attachments].filter(
-                                (b) => b != d,
-                              );
-                              console.log(arr);
-                              this.setState({attachments: arr});
-                            }}>
-                            <Icon
-                              containerStyle={{
-                                marginRight: wp(2),
-                                marginTop: wp(2),
-                                opacity: 0.5,
-                              }}
-                              name="circle-with-cross"
-                              size={wp(5)}
-                              type="entypo"
-                              color={colors.text}
-                            />
-                          </TouchableOpacity>
-                        ) : null}
-                      </View>
-                    </View>
-                  ) : null}
-                </View>
-              ))}
-            </View>
-            <View style={styles.commentTextInput}>
-              <TextInput
-                style={{fontSize: wp(3), width: wp(50)}}
-                multiline={true}
-                value={this.state.commentText}
-                onChange={(e) =>
-                  this.setState({commentText: e.nativeEvent.text})
-                }
-                placeholder={'Your comment here '}
-              />
-              <View
-                style={{
-                  top: wp(2.7),
-                  position: 'absolute',
-                  right: wp(3),
-                  flexDirection: 'row',
-                }}>
-                <TouchableOpacity
-                  onPress={() => this.openDoc(this.state.commentAttachment)}
-                  style={{
-                    backgroundColor: colors.lightBlue,
-                    padding: wp(2),
-                    marginRight: wp(2),
-                    borderRadius: wp(3),
-                  }}>
-                  <Icon
-                    size={wp(5)}
-                    name="attachment"
-                    type="entypo"
-                    color={colors.primary}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    if (this.state.commentText != '') {
-                      var map = [...this.state.comments];
-
-                      map.push({
-                        user: 'TestUser',
-                        date: Date.now(),
-                        image:
-                          'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
-                        comment: this.state.commentText,
-                        attachments: this.state.commentAttachment,
-                      });
-                      this.setState({
-                        commentText: '',
-                        comments: map,
-                        commentAttachment: [],
-                      });
-                    }
-                  }}
-                  style={{
-                    padding: wp(2),
-                    borderRadius: wp(3),
-                    backgroundColor: colors.lightBlue,
-                  }}>
-                  <Icon
-                    size={wp(5)}
-                    name="arrowright"
-                    type="antdesign"
-                    color={colors.primary}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </Model>
+        {/* <Comments isOpen={this.state.editDelComment}openDoc={} attachments={this.state.attachments} /> */}
       </Animated.View>
     );
   }

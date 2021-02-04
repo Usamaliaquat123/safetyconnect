@@ -20,7 +20,7 @@ const Chart = (props: Props) => {
 
   return (
     <View style={props.style}>
-      <View style={{padding: wp(3)}}>
+      <View style={{paddingTop: wp(3), paddingBottom: wp(3)}}>
         {/* Liklihood */}
         <View style={{flexDirection: 'row'}}>
           <Text
@@ -28,6 +28,7 @@ const Chart = (props: Props) => {
               fontSize: wp(3),
               fontWeight: 'bold',
               marginTop: wp(-2),
+
               marginRight: wp(3),
               alignSelf: 'center',
             }}>
@@ -52,6 +53,7 @@ const Chart = (props: Props) => {
                   style={[
                     {
                       padding: wp(1.7),
+                      height: wp(16),
                       marginTop: wp(0.4),
                       // marginLeft: wp(1),
                     },
@@ -80,7 +82,10 @@ const Chart = (props: Props) => {
                   <Text
                     style={{
                       textAlign: 'center',
-                      fontSize: wp(2.7),
+                      fontSize: wp(2.2),
+                      position: 'absolute',
+                      bottom: wp(1),
+                      alignSelf: 'center',
                       opacity: 0.5,
                     }}>
                     {d.text}
@@ -122,7 +127,8 @@ const Chart = (props: Props) => {
                     style={[
                       {
                         padding: wp(1.7),
-
+                        height: wp(16),
+                        // width: wp(14),
                         borderRadius: wp(3),
                         // marginLeft: wp(1),
                       },
@@ -139,6 +145,7 @@ const Chart = (props: Props) => {
                         backgroundColor: d.color,
                         alignItems: 'center',
                         width: wp(10),
+                        // position: 'absolute',
                         height: wp(10),
                         justifyContent: 'center',
                         borderRadius: wp(3),
@@ -150,7 +157,10 @@ const Chart = (props: Props) => {
                     <Text
                       style={{
                         textAlign: 'center',
-                        fontSize: wp(2.7),
+                        fontSize: wp(2.2),
+                        position: 'absolute',
+                        bottom: wp(1),
+                        alignSelf: 'center',
                         opacity: 0.5,
                       }}>
                       {d.text}
