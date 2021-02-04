@@ -20,7 +20,7 @@ export interface CommentsProps {
   attachments: Array<any>;
   commentTextOnChange: Function;
   deleteAttachment: Function;
-  commentAttachment: Function;
+  commentAttachmentOnChange: Function;
   commentAttachmentArr: Array<any>;
   submitComment: Function;
   commentTextString: String;
@@ -93,7 +93,7 @@ export default class Comments extends React.Component<CommentsProps, any> {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  if (this.state.commentText != '') {
+                  if (this.props.commentTextString != '') {
                     var map = [...this.state.comments];
 
                     map.push({
@@ -101,8 +101,8 @@ export default class Comments extends React.Component<CommentsProps, any> {
                       date: Date.now(),
                       image:
                         'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
-                      comment: this.state.commentText,
-                      attachments: this.state.commentAttachment,
+                      comment: this.props.commentTextString,
+                      attachments: this.props.attachments,
                     });
 
                     this.props.submitComment({
@@ -237,7 +237,7 @@ export default class Comments extends React.Component<CommentsProps, any> {
                               ...this.props.commentAttachmentArr,
                             ].filter((j) => j != d);
 
-                            this.props.commentAttachment(arr);
+                            this.props.commentAttachmentOnChange(arr);
                             //   this.setState({commentAttachment: arr});
                           }}
                           style={{

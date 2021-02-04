@@ -87,7 +87,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       severity: riskxSeverityxliklihood.severity,
       invPhoto: '',
       // comments edit
-      editDelComment: true,
+      editDelComment: false,
       notifiedAndInv: 0,
     };
 
@@ -770,7 +770,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               {this.state.comments.map((d: any, i: number) => {
                 return (
                   <View>
-                    <View style={styles.userComments}>
+                    <TouchableOpacity
+                      onLongPress={() => this.setState({editDelComment: true})}
+                      style={styles.userComments}>
                       <Avatar
                         containerStyle={{position: 'absolute', top: wp(0)}}
                         size={wp(6)}
@@ -788,7 +790,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           {moment(d.date).fromNow()}
                         </Text>
                       </View>
-                    </View>
+                    </TouchableOpacity>
                     {d.attachments != undefined ? (
                       <ScrollView
                         style={{marginBottom: wp(3), marginLeft: wp(8)}}
@@ -1432,7 +1434,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           commentTextOnChange={(e: string) => this.setState({commentText: e})}
           commentTextString={this.state.commentText}
           deleteAttachment={(e: string) => this.setState({attachments: e})}
-          commentAttachment={(e: string) =>
+          commentAttachmentOnChange={(e: string) =>
             this.setState({commentAttachment: e})
           }
           commentAttachmentArr={this.state.commentAttachment}
