@@ -79,21 +79,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       involveAndNotifiedUsersName: '',
       IsaddInvAndNotifiedUser: false,
       involvedAndNotifiedUserType: 'involved',
-      commentAttachment: [
-        // {type: 'photo', upload: 'self', name: 'sds', url: 'sds'},
-        // {type: 'photo', upload: 'self', name: 'sds', url: 'sds'},
-        // {type: 'photo', upload: 'self', name: 'sds', url: 'sds'},
-        // {type: 'photo', upload: 'self', name: 'sds', url: 'sds'},
-      ],
+      commentAttachment: [],
       addInvolvedandNotifiedUsers: [],
       selectedRisk: true,
-
       // Risk Array
       liklihood: riskxSeverityxliklihood.liklihood,
       severity: riskxSeverityxliklihood.severity,
       invPhoto: '',
       // comments edit
-      editDelComment: true,
+      editDelComment: false,
+      notifiedAndInv: 0,
     };
 
     this.animation = React.createRef();
@@ -162,49 +157,52 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   // Document Attachments
   openDoc = async (attach: Array<Object>) => {
     try {
-      const res = await DocumentPicker.pick({
+      const res = await DocumentPicker.pickMultiple({
         type: [DocumentPicker.types.allFiles],
       });
       // DocType(res, this.state.attachments).then((res) => {
       //   this.setState({});
       // });
 
-      if (res.type.split('/')[0] == 'image') {
-        attach.splice(0, 0, {
-          type: 'photo',
-          upload: 'self',
-          name: res.name,
-          url: res.uri,
-        });
-      } else if (res.type.split('/')[0] == 'video') {
-        attach.splice(0, 0, {
-          type: 'video',
-          upload: 'self',
-          name: res.name,
-          url: res.uri,
-        });
-      } else if (res.type.split('/')[1] == 'pdf') {
-        attach.splice(0, 0, {
-          type: 'pdf',
-          upload: 'self',
-          name: res.name,
-          url: res.uri,
-        });
-      } else if (res.type.split('/')[0] == 'text') {
-        attach.splice(0, 0, {
-          type: 'text',
-          upload: 'self',
-          name: res.name,
-          url: res.uri,
-        });
-      } else if (res.type.split('.').pop() == 'document') {
-        attach.splice(0, 0, {
-          type: 'doc',
-          upload: 'self',
-          name: res.name,
-          url: res.uri,
-        });
-      }
+      res.map((d, i) => {
+        if (d.type.split('/')[0] == 'image') {
+          attach.splice(0, 0, {
+            type: 'photo',
+            upload: 'self',
+            name: d.name,
+            url: d.uri,
+          });
+        } else if (d.type.split('/')[0] == 'video') {
+          attach.splice(0, 0, {
+            type: 'video',
+            upload: 'self',
+            name: d.name,
+            url: d.uri,
+          });
+        } else if (d.type.split('/')[1] == 'pdf') {
+          attach.splice(0, 0, {
+            type: 'pdf',
+            upload: 'self',
+            name: d.name,
+            url: d.uri,
+          });
+        } else if (d.type.split('/')[0] == 'text') {
+          attach.splice(0, 0, {
+            type: 'text',
+            upload: 'self',
+            name: d.name,
+            url: d.uri,
+          });
+        } else if (d.type.split('.').pop() == 'document') {
+          attach.splice(0, 0, {
+            type: 'doc',
+            upload: 'self',
+            name: d.name,
+            url: d.uri,
+          });
+        }
+      });
+
       this.setState({});
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
@@ -348,6 +346,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       onPress={() => {
                         if (this.state.notifiedPerson.length < 6) {
                           this.setState({
+                            notifiedAndInv: 1,
                             photoArr: this.state.notifiedPerson,
                             IsaddInvAndNotifiedUser: true,
                             involvedAndNotifiedUserType: 'notified',
@@ -356,13 +355,19 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       }}
                       style={[
                         styles.addCircle,
-                        {backgroundColor: colors.lightGrey},
+                        this.state.notifiedAndInv == 1
+                          ? {backgroundColor: colors.primary}
+                          : {backgroundColor: colors.lightGrey},
                       ]}>
                       <Icon
                         size={wp(3.5)}
                         name="plus"
                         type="antdesign"
-                        color={colors.primary}
+                        color={
+                          this.state.notifiedAndInv == 1
+                            ? colors.secondary
+                            : colors.primary
+                        }
                       />
                     </TouchableOpacity>
                   ) : null}
@@ -389,6 +394,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     <TouchableOpacity
                       onPress={() => {
                         this.setState({
+                          notifiedAndInv: 2,
                           photoArr: this.state.involvedPerson,
                           IsaddInvAndNotifiedUser: true,
                           involvedAndNotifiedUserType: 'involved',
@@ -396,13 +402,19 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       }}
                       style={[
                         styles.addCircle,
-                        {backgroundColor: colors.lightGrey},
+                        this.state.notifiedAndInv == 2
+                          ? {backgroundColor: colors.primary}
+                          : {backgroundColor: colors.lightGrey},
                       ]}>
                       <Icon
                         size={wp(3.5)}
                         name="plus"
                         type="antdesign"
-                        color={colors.primary}
+                        color={
+                          this.state.notifiedAndInv == 2
+                            ? colors.secondary
+                            : colors.primary
+                        }
                       />
                     </TouchableOpacity>
                   ) : null}
@@ -513,9 +525,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   ),
                 )}
               </View>
-              <View style={styles.addActionAndRecommendation}>
+              <View
+                style={[
+                  styles.addActionAndRecommendation,
+                  this.state.notifiedAndInv == 3
+                    ? {borderColor: colors.green}
+                    : {borderColor: colors.lightGrey},
+                ]}>
                 <TextInput
-                  maxLength={10}
+                  onFocus={() => this.setState({notifiedAndInv: 3})}
+                  maxLength={500}
                   onChange={(e) => console.log('action and recommendation')}
                   multiline={true}
                   style={styles.textaddActionContainer}
@@ -850,8 +869,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   }}
                 />
 
-                <View style={styles.commentTextInput}>
+                <View
+                  style={[
+                    styles.commentTextInput,
+                    this.state.notifiedAndInv == 4
+                      ? {borderColor: colors.green}
+                      : {borderColor: colors.lightGrey},
+                  ]}>
                   <TextInput
+                    onFocus={() => this.setState({notifiedAndInv: 4})}
                     style={{fontSize: wp(3), width: wp(50)}}
                     multiline={true}
                     value={this.state.commentText}
@@ -1333,31 +1359,32 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               ) : null}
               <TouchableOpacity
                 onPress={() => {
-                  if (this.state.involvedAndNotifiedUserType == 'involved') {
-                    this.state.involvedPerson.push({
-                      id: Date.now(),
-                      name: this.state.involveAndNotifiedUsersName,
-                      photo:
-                        this.state.invPhoto === ''
-                          ? `https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png`
-                          : this.state.invPhoto,
-                    });
-                  } else {
-                    this.state.notifiedPerson.push({
-                      id: Date.now(),
-                      name: this.state.involveAndNotifiedUsersName,
-                      photo:
-                        this.state.invPhoto === ''
-                          ? `https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png`
-                          : this.state.invPhoto,
+                  if (this.state.involveAndNotifiedUsersName !== '') {
+                    if (this.state.involvedAndNotifiedUserType == 'involved') {
+                      this.state.involvedPerson.push({
+                        id: Date.now(),
+                        name: this.state.involveAndNotifiedUsersName,
+                        photo:
+                          this.state.invPhoto === ''
+                            ? `https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png`
+                            : this.state.invPhoto,
+                      });
+                    } else {
+                      this.state.notifiedPerson.push({
+                        id: Date.now(),
+                        name: this.state.involveAndNotifiedUsersName,
+                        photo:
+                          this.state.invPhoto === ''
+                            ? `https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png`
+                            : this.state.invPhoto,
+                      });
+                    }
+                    this.setState({
+                      IsaddInvAndNotifiedUser: false,
+                      involveAndNotifiedUsersName: '',
+                      invPhoto: '',
                     });
                   }
-
-                  this.setState({
-                    IsaddInvAndNotifiedUser: false,
-                    involveAndNotifiedUsersName: '',
-                    invPhoto: '',
-                  });
                 }}
                 style={{
                   backgroundColor: colors.green,
@@ -1396,6 +1423,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           />
         </Modal>
         <Comments
+          onClose={() =>
+            this.setState({editDelComment: !this.state.editDelComment})
+          }
           isOpen={this.state.editDelComment}
           openDoc={() => this.openDoc(this.state.attachments)}
           attachments={this.state.attachments}

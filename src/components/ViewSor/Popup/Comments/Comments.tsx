@@ -15,6 +15,7 @@ import styles from './styles';
 import {default as Model} from 'react-native-modal';
 export interface CommentsProps {
   openDoc: Function;
+  onClose: Function;
   isOpen: boolean;
   attachments: Array<any>;
   commentTextOnChange: Function;
@@ -34,7 +35,7 @@ export default class Comments extends React.Component<CommentsProps, any> {
         animationInTiming={1000}
         animationOutTiming={1000}
         isVisible={this.props.isOpen}
-        onBackdropPress={() => this.props.isOpen}>
+        onBackdropPress={() => this.props.onClose()}>
         <View
           style={{
             backgroundColor: colors.secondary,
@@ -55,6 +56,79 @@ export default class Comments extends React.Component<CommentsProps, any> {
               }}>
               Edit / Discard
             </Text>
+          </View>
+
+          <View style={styles.commentTextInput}>
+            <TextInput
+              style={{fontSize: wp(3), width: wp(50)}}
+              multiline={true}
+              value={this.props.commentTextString}
+              onChange={(e) =>
+                this.props.commentTextOnChange(e.nativeEvent.text)
+              }
+              placeholder={'Your comment here '}
+            />
+            <View
+              style={{
+                top: wp(2.7),
+                position: 'absolute',
+                right: wp(3),
+                flexDirection: 'row',
+              }}>
+              <TouchableOpacity
+                onPress={() => this.props.openDoc(this.props.attachments)}
+                style={{
+                  backgroundColor: colors.lightBlue,
+                  padding: wp(2),
+                  marginRight: wp(2),
+                  borderRadius: wp(3),
+                }}>
+                <Icon
+                  size={wp(5)}
+                  name="attachment"
+                  type="entypo"
+                  color={colors.primary}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  if (this.state.commentText != '') {
+                    var map = [...this.state.comments];
+
+                    map.push({
+                      user: 'TestUser',
+                      date: Date.now(),
+                      image:
+                        'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                      comment: this.state.commentText,
+                      attachments: this.state.commentAttachment,
+                    });
+
+                    this.props.submitComment({
+                      commentText: '',
+                      comments: map,
+                      commentAttachment: [],
+                    });
+                    // this.setState({
+                    //   commentText: '',
+                    //   comments: map,
+                    //   commentAttachment: [],
+                    // });
+                  }
+                }}
+                style={{
+                  padding: wp(2),
+                  borderRadius: wp(3),
+                  backgroundColor: colors.lightBlue,
+                }}>
+                <Icon
+                  size={wp(5)}
+                  name="arrowright"
+                  type="antdesign"
+                  color={colors.primary}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
 
           <View style={styles.attachmentsContainer}>
@@ -174,78 +248,6 @@ export default class Comments extends React.Component<CommentsProps, any> {
                   </View>;
                 }
               })}
-            </View>
-          </View>
-          <View style={styles.commentTextInput}>
-            <TextInput
-              style={{fontSize: wp(3), width: wp(50)}}
-              multiline={true}
-              value={this.props.commentTextString}
-              onChange={(e) =>
-                this.props.commentTextOnChange(e.nativeEvent.text)
-              }
-              placeholder={'Your comment here '}
-            />
-            <View
-              style={{
-                top: wp(2.7),
-                position: 'absolute',
-                right: wp(3),
-                flexDirection: 'row',
-              }}>
-              <TouchableOpacity
-                onPress={() => this.props.openDoc(this.props.attachments)}
-                style={{
-                  backgroundColor: colors.lightBlue,
-                  padding: wp(2),
-                  marginRight: wp(2),
-                  borderRadius: wp(3),
-                }}>
-                <Icon
-                  size={wp(5)}
-                  name="attachment"
-                  type="entypo"
-                  color={colors.primary}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  if (this.state.commentText != '') {
-                    var map = [...this.state.comments];
-
-                    map.push({
-                      user: 'TestUser',
-                      date: Date.now(),
-                      image:
-                        'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
-                      comment: this.state.commentText,
-                      attachments: this.state.commentAttachment,
-                    });
-
-                    this.props.submitComment({
-                      commentText: '',
-                      comments: map,
-                      commentAttachment: [],
-                    });
-                    // this.setState({
-                    //   commentText: '',
-                    //   comments: map,
-                    //   commentAttachment: [],
-                    // });
-                  }
-                }}
-                style={{
-                  padding: wp(2),
-                  borderRadius: wp(3),
-                  backgroundColor: colors.lightBlue,
-                }}>
-                <Icon
-                  size={wp(5)}
-                  name="arrowright"
-                  type="antdesign"
-                  color={colors.primary}
-                />
-              </TouchableOpacity>
             </View>
           </View>
         </View>
