@@ -13,7 +13,7 @@ import {colors, GlStyles, images} from '@theme';
 import {Icon} from 'react-native-elements';
 import styles from './styles';
 import {default as Model} from 'react-native-modal';
-export interface CommentsProps {
+export interface CommentPopProps {
   openDoc: Function;
   onClose: Function;
   isOpen: boolean;
@@ -29,7 +29,7 @@ export interface CommentsProps {
   commentTextStringOnChange: Function;
 }
 
-export default class Comments extends React.Component<CommentsProps, any> {
+export default class CommentPop extends React.Component<CommentPopProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {

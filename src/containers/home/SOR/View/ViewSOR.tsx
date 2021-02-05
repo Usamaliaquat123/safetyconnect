@@ -25,7 +25,7 @@ import {
 } from '@service';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Tags, Chart, Comments} from '@components';
+import {Tags, Chart, CommentPop} from '@components';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
@@ -89,7 +89,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       // for selection
       notifiedAndInv: 0,
       // comments edit
-      editDelComment: true,
+      editDelComment: false,
       editAttachedCommentArr: [],
       EditcommentText: '',
       editDiscardComment: '',
@@ -1464,14 +1464,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             imageUrls={this.state.images}
           />
         </Modal>
-        <Comments
+        <CommentPop
           onClose={() =>
             this.setState({editDelComment: !this.state.editDelComment})
           }
           editDiscardComment={this.state.editDiscardComment}
           commentIndex={this.state.editDiscardCommentIndex}
           isOpen={this.state.editDelComment}
-          openDoc={() => this.openDoc(this.state.commentAttachment)}
+          openDoc={() => this.openDoc(this.state.editAttachedCommentArr)}
           attachments={this.state.editAttachedCommentArr}
           comments={this.state.comments}
           commentTextString={this.state.EditcommentText}
@@ -1479,19 +1479,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             this.setState({editDiscardComment: e})
           }
           deleteAttachment={(e: string) => {
-            console.log(e);
-
             this.setState({editAttachedCommentArr: e});
           }}
-          commentAttachmentOnChange={(e: string) => {
-            console.log(e);
-
-            this.setState({commentAttachment: e});
-          }}
-          commentAttachmentArr={this.state.commentAttachment}
+          // commentAttachmentOnChange={(e: string) => {
+          //   this.setState({commentAttachment: e});
+          // }}
+          // commentAttachmentArr={this.state.commentAttachment}
           submitComment={(e: any) => {
-            console.log(this.state.editDiscardComment);
-
             this.state.comments[this.state.editDiscardCommentIndex][
               'comment'
             ] = this.state.editDiscardComment;
@@ -1503,32 +1497,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 'attachments'
               ] = this.state.editAttachedCommentArr;
             }
-
-            // if (this.state.editAttachedCommentArr.length == 0) {
-            //   this.state.commentAttachment[
-            //     this.state.editDiscardCommentIndex
-            //   ] = {
-            //     user: 'TestUser',
-            //     date: Date.now(),
-            //     image:
-            //       'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
-            //     comment: this.state.editDiscardComment,
-            //     attachments: undefined,
-            //   };
-            // } else {
-            //   this.state.commentAttachment[
-            //     this.state.editDiscardCommentIndex
-            //   ] = {
-            //     user: 'TestUser',
-            //     date: Date.now(),
-            //     image:
-            //       'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
-            //     comment: this.state.editDiscardComment,
-            //     attachments: this.state.editAttachedCommentArr,
-            //   };
-            // }
-
-            // this.setState({});
           }}
         />
       </Animated.View>
