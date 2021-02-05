@@ -21,6 +21,7 @@ export interface CommentPopProps {
   deleteAttachment: Function;
   // commentAttachmentOnChange: Function;
   // commentAttachmentArr: Array<any>;
+  discardComment: Function;
   submitComment: Function;
   commentTextString: String;
   commentIndex: number;
@@ -142,7 +143,6 @@ export default class CommentPop extends React.Component<CommentPopProps, any> {
                               var arr = [...this.props.attachments].filter(
                                 (j) => j != d,
                               );
-                              console.log(arr);
                               this.props.deleteAttachment(arr);
                             }}
                             style={styles.circleWithCrossFile}>
@@ -163,7 +163,7 @@ export default class CommentPop extends React.Component<CommentPopProps, any> {
           )}
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              onPress={() => this.props.onClose()}
+              onPress={() => this.props.discardComment()}
               style={styles.discardContainer}>
               <Text style={styles.discardText}>Discard</Text>
             </TouchableOpacity>
