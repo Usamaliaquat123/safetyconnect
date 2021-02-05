@@ -37,7 +37,6 @@ export default class Comments extends React.Component<CommentsProps, any> {
     };
   }
   render() {
-    // console.log(this.state.editDiscardComment);
     return (
       <Model
         animationIn={'bounceInUp'}
@@ -46,31 +45,13 @@ export default class Comments extends React.Component<CommentsProps, any> {
         animationOutTiming={1000}
         isVisible={this.props.isOpen}
         onBackdropPress={() => this.props.onClose()}>
-        <View
-          style={{
-            backgroundColor: colors.secondary,
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: wp(8),
-            paddingTop: wp(5),
-            paddingLeft: wp(1),
-            paddingRight: wp(1),
-            paddingBottom: wp(5),
-          }}>
-          <View style={{marginTop: wp(3)}}>
-            <Text
-              style={{
-                fontSize: wp(4),
-                fontWeight: 'bold',
-                marginBottom: wp(3),
-              }}>
-              Edit / Discard
-            </Text>
+        <View style={styles.containerPopup}>
+          <View style={styles.containerText}>
+            <Text style={styles.containerTextString}>Edit / Discard</Text>
           </View>
-
           <View style={styles.commentTextInput}>
             <TextInput
-              style={{fontSize: wp(3), width: wp(50)}}
+              style={styles.textInputPopup}
               multiline={true}
               value={this.props.editDiscardComment}
               onChange={(e) => {
@@ -78,21 +59,10 @@ export default class Comments extends React.Component<CommentsProps, any> {
               }}
               placeholder={'Your comment here '}
             />
-            <View
-              style={{
-                top: wp(2.7),
-                position: 'absolute',
-                right: wp(3),
-                flexDirection: 'row',
-              }}>
+            <View style={styles.pickerIcon}>
               <TouchableOpacity
                 onPress={() => this.props.openDoc(this.props.attachments)}
-                style={{
-                  backgroundColor: colors.lightBlue,
-                  padding: wp(2),
-                  marginRight: wp(2),
-                  borderRadius: wp(3),
-                }}>
+                style={styles.pickerIconStyle}>
                 <Icon
                   size={wp(5)}
                   name="attachment"
@@ -100,44 +70,11 @@ export default class Comments extends React.Component<CommentsProps, any> {
                   color={colors.primary}
                 />
               </TouchableOpacity>
-              {/* <TouchableOpacity
-                onPress={() => {
-                  if (this.props.editDiscardComment != '') {
-                    // (this.props.commentAttachmentArr[
-                    //   this.props.commentIndex
-                    // ] = {
-                    //   user: 'TestUser',
-                    //   date: Date.now(),
-                    //   image:
-                    //     'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
-                    //   comment: this.props.editDiscardComment,
-                    //   attachments: this.props.attachments,
-                    // }),
-                    this.props.submitComment();
-                  }
-                }}
-                style={{
-                  padding: wp(2),
-                  borderRadius: wp(3),
-                  backgroundColor: colors.lightBlue,
-                }}>
-                <Icon
-                  size={wp(5)}
-                  name="arrowright"
-                  type="antdesign"
-                  color={colors.primary}
-                />
-              </TouchableOpacity> */}
             </View>
           </View>
           {this.props.attachments.length != 0 && (
             <View style={styles.attachmentsContainer}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                  alignSelf: 'center',
-                }}>
+              <View style={styles.attachmentContainerContent}>
                 {this.props.attachments.map((d: any, i: number) => {
                   if (d.type == 'photo') {
                     return (
@@ -153,7 +90,6 @@ export default class Comments extends React.Component<CommentsProps, any> {
                           style={[GlStyles.images, {borderRadius: wp(3)}]}
                           resizeMode={'cover'}
                         />
-                        {/* {d.upload == 'self' ? ( */}
                         <TouchableOpacity
                           style={{
                             position: 'absolute',
@@ -165,38 +101,22 @@ export default class Comments extends React.Component<CommentsProps, any> {
                             );
                             console.log(arr);
                             this.props.deleteAttachment(arr);
-                            //   this.setState({attachments: arr});
                           }}>
                           <Icon
-                            containerStyle={{
-                              marginRight: wp(2),
-                              marginTop: wp(2),
-                              opacity: 0.5,
-                            }}
+                            containerStyle={styles.iconWithCircle}
                             name="circle-with-cross"
                             size={wp(5)}
                             type="entypo"
                             color={colors.text}
                           />
                         </TouchableOpacity>
-                        {/* ) : null} */}
                       </View>
                     );
                   }
                   if (d.type != 'photo') {
                     return (
                       <View>
-                        <View
-                          style={[
-                            styles.AttchimageContainer,
-                            {
-                              width: wp(40),
-                              borderWidth: wp(0.2),
-                              backgroundColor: colors.secondary,
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                            },
-                          ]}>
+                        <View style={[styles.AttchfileContainer]}>
                           <Image
                             source={
                               d.type == 'pdf'
@@ -209,16 +129,10 @@ export default class Comments extends React.Component<CommentsProps, any> {
                                 ? images.doc
                                 : null
                             }
-                            style={{width: wp(10), height: wp(10)}}
+                            style={styles.imageFile}
                           />
 
-                          <Text
-                            style={{
-                              fontSize: wp(2.5),
-
-                              color: colors.text,
-                              marginTop: wp(2),
-                            }}>
+                          <Text style={styles.fileNameTxt}>
                             {d.name.split('.')[0].substring(0, 10)}...{' '}
                             {d.name.split('.')[1]}
                           </Text>
@@ -231,12 +145,7 @@ export default class Comments extends React.Component<CommentsProps, any> {
                               console.log(arr);
                               this.props.deleteAttachment(arr);
                             }}
-                            style={{
-                              position: 'absolute',
-                              right: wp(2),
-                              top: wp(2),
-                              zIndex: wp(1),
-                            }}>
+                            style={styles.circleWithCrossFile}>
                             <Icon
                               size={wp(5)}
                               name="circle-with-cross"
@@ -252,38 +161,16 @@ export default class Comments extends React.Component<CommentsProps, any> {
               </View>
             </View>
           )}
-          <View style={{flexDirection: 'row', marginTop: wp(3)}}>
+          <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={() => this.props.onClose()}
-              style={{
-                backgroundColor: colors.secondary,
-                paddingLeft: wp(13),
-                paddingRight: wp(13),
-                borderWidth: wp(0.2),
-                marginRight: wp(3),
-                borderRadius: wp(2),
-                padding: wp(3),
-                borderColor: colors.primary,
-              }}>
-              <Text style={{fontSize: wp(3), color: colors.text}}>Discard</Text>
+              style={styles.discardContainer}>
+              <Text style={styles.discardText}>Discard</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => this.props.submitComment()}
-              style={{
-                backgroundColor: colors.primary,
-                padding: wp(3),
-                borderRadius: wp(2),
-                paddingLeft: wp(14),
-                paddingRight: wp(14),
-              }}>
-              <Text
-                style={{
-                  fontSize: wp(3),
-                  color: colors.secondary,
-                  fontWeight: 'bold',
-                }}>
-                Save
-              </Text>
+              style={styles.saveContainer}>
+              <Text style={styles.saveContainerText}>Save</Text>
             </TouchableOpacity>
           </View>
         </View>
