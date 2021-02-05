@@ -104,18 +104,17 @@ export default class Comments extends React.Component<CommentsProps, any> {
               <TouchableOpacity
                 onPress={() => {
                   if (this.props.editDiscardComment != '') {
-                    (this.props.commentAttachmentArr[
-                      this.props.commentIndex
-                    ] = {
-                      user: 'TestUser',
-                      date: Date.now(),
-                      image:
-                        'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
-                      comment: this.props.editDiscardComment,
-                      attachments: this.props.attachments,
-                    }),
-                      this.props.submitComment();
-                    console.log('sds');
+                    // (this.props.commentAttachmentArr[
+                    //   this.props.commentIndex
+                    // ] = {
+                    //   user: 'TestUser',
+                    //   date: Date.now(),
+                    //   image:
+                    //     'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                    //   comment: this.props.editDiscardComment,
+                    //   attachments: this.props.attachments,
+                    // }),
+                    this.props.submitComment();
                   }
                 }}
                 style={{

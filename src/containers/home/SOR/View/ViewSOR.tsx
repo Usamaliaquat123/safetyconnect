@@ -11,7 +11,6 @@ import {
   Animated,
   Modal,
   Easing,
-  BackHandler,
 } from 'react-native';
 
 import moment from 'moment';
@@ -267,32 +266,52 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               <TouchableOpacity
                 // onPress={() => console.log('click on change classify btns')}
                 style={styles.classittleicon}>
-                <Icon
-                  size={wp(6)}
-                  name={
-                    View_sor.user.classifyType == 'LSR'
-                      ? 'aperture'
-                      : View_sor.user.classifyType == 'positive'
-                      ? 'check-circle'
-                      : View_sor.user.classifyType == 'concern'
-                      ? 'warning'
-                      : View_sor.user.classifyType == 'nearmiss'
-                      ? 'centercode'
-                      : 'frowno'
-                  }
-                  type={
-                    View_sor.user.classifyType == 'LSR'
-                      ? 'ionicon'
-                      : View_sor.user.classifyType == 'positive'
-                      ? 'font-awesome-5'
-                      : View_sor.user.classifyType == 'concern'
-                      ? 'antdesign'
-                      : View_sor.user.classifyType == 'nearmiss'
-                      ? 'font-awesome-5'
-                      : 'antdesign'
-                  }
-                  color={colors.text}
-                />
+                {View_sor.user.classifyType != 'LSR' ? (
+                  <View>
+                    {View_sor.user.classifyType != 'Near Miss' ? (
+                      <Icon
+                        size={wp(6)}
+                        name={
+                          View_sor.user.classifyType == 'LSR'
+                            ? 'aperture'
+                            : View_sor.user.classifyType == 'positive'
+                            ? 'check-circle'
+                            : View_sor.user.classifyType == 'concern'
+                            ? 'warning'
+                            : View_sor.user.classifyType == 'nearmiss'
+                            ? 'centercode'
+                            : 'frowno'
+                        }
+                        type={
+                          View_sor.user.classifyType == 'LSR'
+                            ? 'ionicon'
+                            : View_sor.user.classifyType == 'positive'
+                            ? 'font-awesome-5'
+                            : View_sor.user.classifyType == 'concern'
+                            ? 'antdesign'
+                            : View_sor.user.classifyType == 'nearmiss'
+                            ? 'font-awesome-5'
+                            : 'antdesign'
+                        }
+                        color={colors.text}
+                      />
+                    ) : null}
+                  </View>
+                ) : null}
+
+                {View_sor.user.classifyType == 'LSR' ? (
+                  <View style={{width: wp(7), height: wp(7)}}>
+                    <Image
+                      source={images.lsr}
+                      style={[GlStyles.images, {tintColor: colors.text}]}
+                    />
+                  </View>
+                ) : null}
+                {View_sor.user.classifyType == 'Near Miss' ? (
+                  <View style={{width: wp(8), height: wp(8)}}>
+                    <Image source={images.nearMiss} style={GlStyles.images} />
+                  </View>
+                ) : null}
                 <Text style={styles.clasifyT}>
                   {View_sor.user.classifyType}
                 </Text>
@@ -1442,7 +1461,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           editDiscardComment={this.state.editDiscardComment}
           commentIndex={this.state.editDiscardCommentIndex}
           isOpen={this.state.editDelComment}
-          openDoc={() => this.openDoc(this.state.editAttachedCommentArr)}
+          openDoc={() => this.openDoc(this.state.commentAttachment)}
           attachments={this.state.editAttachedCommentArr}
           comments={this.state.comments}
           commentTextString={this.state.EditcommentText}
@@ -1457,30 +1476,41 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           }
           commentAttachmentArr={this.state.commentAttachment}
           submitComment={(e: any) => {
-            if (this.state.editAttachedCommentArr.length == 0) {
-              this.state.commentAttachment[
-                this.state.editDiscardCommentIndex
-              ] = {
-                user: 'TestUser',
-                date: Date.now(),
-                image:
-                  'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
-                comment: this.state.editDiscardComment,
-              };
-            } else {
-              this.state.commentAttachment[
-                this.state.editDiscardCommentIndex
-              ] = {
-                user: 'TestUser',
-                date: Date.now(),
-                image:
-                  'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
-                comment: this.state.editDiscardComment,
-                attachments: this.state.editAttachedCommentArr,
-              };
-            }
+            console.log(this.state.editDiscardComment);
 
-            this.setState({});
+            this.state.comments[this.state.editDiscardCommentIndex][
+              'comment'
+            ] = this.state.editDiscardComment;
+            this.state.comments[this.state.editDiscardCommentIndex][
+              'date'
+            ] = Date.now();
+            console.log(this.state.commentAttachment);
+
+            // if (this.state.editAttachedCommentArr.length == 0) {
+            //   this.state.commentAttachment[
+            //     this.state.editDiscardCommentIndex
+            //   ] = {
+            //     user: 'TestUser',
+            //     date: Date.now(),
+            //     image:
+            //       'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+            //     comment: this.state.editDiscardComment,
+            //     attachments: undefined,
+            //   };
+            // } else {
+            //   this.state.commentAttachment[
+            //     this.state.editDiscardCommentIndex
+            //   ] = {
+            //     user: 'TestUser',
+            //     date: Date.now(),
+            //     image:
+            //       'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+            //     comment: this.state.editDiscardComment,
+            //     attachments: this.state.editAttachedCommentArr,
+            //   };
+            // }
+
+            // this.setState({});
           }}
         />
       </Animated.View>

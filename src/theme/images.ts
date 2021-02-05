@@ -9,6 +9,10 @@ jpg : require('./images/jpg.png'),
 text : require('./images/txt.png'),
 map : require('./images/map.png'),
 
+lsr:  require('./images/icons/lsr.png'),
+nearMiss:  require('./images/icons/nearmiss.png'),
+
+
 
 bottomTab: {
   home : require('./images/tab/home.png'),
@@ -21,5 +25,6 @@ bottomTab: {
   sors_selected : require('./images/tab/sors_selected.png'),
   folder : require('./images/tab/folder.png'),
   note : require('./images/tab/note.png'),
-}
+},
+
 };
