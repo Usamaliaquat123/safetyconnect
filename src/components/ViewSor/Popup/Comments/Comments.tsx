@@ -254,7 +254,7 @@ export default class Comments extends React.Component<CommentsProps, any> {
           )}
           <View style={{flexDirection: 'row', marginTop: wp(3)}}>
             <TouchableOpacity
-              onPress={() => {}}
+              onPress={() => this.props.onClose()}
               style={{
                 backgroundColor: colors.secondary,
                 paddingLeft: wp(13),
@@ -268,7 +268,7 @@ export default class Comments extends React.Component<CommentsProps, any> {
               <Text style={{fontSize: wp(3), color: colors.text}}>Discard</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.onClose()}
+              onPress={() => this.props.submitComment()}
               style={{
                 backgroundColor: colors.primary,
                 padding: wp(3),
