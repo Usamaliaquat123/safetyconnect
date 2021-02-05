@@ -34,7 +34,6 @@ export default class Comments extends React.Component<CommentsProps, any> {
     super(props);
     this.state = {
       comments: props.comments,
-      editDiscardComment: props.editDiscardComment.comment,
     };
   }
   render() {
@@ -101,7 +100,7 @@ export default class Comments extends React.Component<CommentsProps, any> {
                   color={colors.primary}
                 />
               </TouchableOpacity>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() => {
                   if (this.props.editDiscardComment != '') {
                     // (this.props.commentAttachmentArr[
@@ -128,137 +127,164 @@ export default class Comments extends React.Component<CommentsProps, any> {
                   type="antdesign"
                   color={colors.primary}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
-
-          <View style={styles.attachmentsContainer}>
-            <Text
-              style={{
-                fontSize: wp(3),
-                textAlign: 'center',
-              }}>
-              Attachments
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                alignSelf: 'center',
-              }}>
-              {this.props.attachments.map((d: any, i: number) => {
-                if (d.type == 'photo') {
-                  return (
-                    <View
-                      style={[
-                        styles.AttchimageContainer,
-                        {width: wp(40), borderRadius: wp(1)},
-                      ]}>
-                      <Image
-                        source={{
-                          uri: d.url,
-                        }}
-                        style={[GlStyles.images, {borderRadius: wp(3)}]}
-                        resizeMode={'cover'}
-                      />
-                      {/* {d.upload == 'self' ? ( */}
-                      <TouchableOpacity
-                        style={{
-                          position: 'absolute',
-                          right: wp(0),
-                        }}
-                        onPress={() => {
-                          var arr = [...this.props.attachments].filter(
-                            (b) => b != d,
-                          );
-                          console.log(arr);
-                          this.props.deleteAttachment(arr);
-                          //   this.setState({attachments: arr});
-                        }}>
-                        <Icon
-                          containerStyle={{
-                            marginRight: wp(2),
-                            marginTop: wp(2),
-                            opacity: 0.5,
-                          }}
-                          name="circle-with-cross"
-                          size={wp(5)}
-                          type="entypo"
-                          color={colors.text}
-                        />
-                      </TouchableOpacity>
-                      {/* ) : null} */}
-                    </View>
-                  );
-                }
-                if (d.type != 'photo') {
-                  return (
-                    <View>
+          {this.props.attachments.length != 0 && (
+            <View style={styles.attachmentsContainer}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  alignSelf: 'center',
+                }}>
+                {this.props.attachments.map((d: any, i: number) => {
+                  if (d.type == 'photo') {
+                    return (
                       <View
                         style={[
                           styles.AttchimageContainer,
-                          {
-                            width: wp(40),
-                            borderWidth: wp(0.2),
-                            backgroundColor: colors.secondary,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                          },
+                          {width: wp(40), borderRadius: wp(1)},
                         ]}>
                         <Image
-                          source={
-                            d.type == 'pdf'
-                              ? images.pdf
-                              : d.type == 'doc'
-                              ? images.doc
-                              : d.type == 'text'
-                              ? images.text
-                              : d.type == 'doc'
-                              ? images.doc
-                              : null
-                          }
-                          style={{width: wp(10), height: wp(10)}}
-                        />
-
-                        <Text
-                          style={{
-                            fontSize: wp(2.5),
-
-                            color: colors.text,
-                            marginTop: wp(2),
-                          }}>
-                          {d.name.split('.')[0].substring(0, 10)}...{' '}
-                          {d.name.split('.')[1]}
-                        </Text>
-
-                        <TouchableOpacity
-                          onPress={() => {
-                            var arr = [
-                              ...this.props.commentAttachmentArr,
-                            ].filter((j) => j != d);
-
-                            this.props.commentAttachmentOnChange(arr);
-                            //   this.setState({commentAttachment: arr});
+                          source={{
+                            uri: d.url,
                           }}
+                          style={[GlStyles.images, {borderRadius: wp(3)}]}
+                          resizeMode={'cover'}
+                        />
+                        {/* {d.upload == 'self' ? ( */}
+                        <TouchableOpacity
                           style={{
                             position: 'absolute',
-                            right: wp(2),
-                            top: wp(2),
-                            zIndex: wp(1),
+                            right: wp(0),
+                          }}
+                          onPress={() => {
+                            var arr = [...this.props.attachments].filter(
+                              (b) => b != d,
+                            );
+                            console.log(arr);
+                            this.props.deleteAttachment(arr);
+                            //   this.setState({attachments: arr});
                           }}>
                           <Icon
-                            size={wp(5)}
+                            containerStyle={{
+                              marginRight: wp(2),
+                              marginTop: wp(2),
+                              opacity: 0.5,
+                            }}
                             name="circle-with-cross"
+                            size={wp(5)}
                             type="entypo"
                             color={colors.text}
                           />
                         </TouchableOpacity>
+                        {/* ) : null} */}
                       </View>
-                    </View>
-                  );
-                }
-              })}
+                    );
+                  }
+                  if (d.type != 'photo') {
+                    return (
+                      <View>
+                        <View
+                          style={[
+                            styles.AttchimageContainer,
+                            {
+                              width: wp(40),
+                              borderWidth: wp(0.2),
+                              backgroundColor: colors.secondary,
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                            },
+                          ]}>
+                          <Image
+                            source={
+                              d.type == 'pdf'
+                                ? images.pdf
+                                : d.type == 'doc'
+                                ? images.doc
+                                : d.type == 'text'
+                                ? images.text
+                                : d.type == 'doc'
+                                ? images.doc
+                                : null
+                            }
+                            style={{width: wp(10), height: wp(10)}}
+                          />
+
+                          <Text
+                            style={{
+                              fontSize: wp(2.5),
+
+                              color: colors.text,
+                              marginTop: wp(2),
+                            }}>
+                            {d.name.split('.')[0].substring(0, 10)}...{' '}
+                            {d.name.split('.')[1]}
+                          </Text>
+
+                          <TouchableOpacity
+                            onPress={() => {
+                              var arr = [...this.props.attachments].filter(
+                                (j) => j != d,
+                              );
+                              console.log(arr);
+                              this.props.deleteAttachment(arr);
+                            }}
+                            style={{
+                              position: 'absolute',
+                              right: wp(2),
+                              top: wp(2),
+                              zIndex: wp(1),
+                            }}>
+                            <Icon
+                              size={wp(5)}
+                              name="circle-with-cross"
+                              type="entypo"
+                              color={colors.text}
+                            />
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    );
+                  }
+                })}
+              </View>
             </View>
+          )}
+          <View style={{flexDirection: 'row', marginTop: wp(3)}}>
+            <TouchableOpacity
+              onPress={() => {}}
+              style={{
+                backgroundColor: colors.secondary,
+                paddingLeft: wp(13),
+                paddingRight: wp(13),
+                borderWidth: wp(0.2),
+                marginRight: wp(3),
+                borderRadius: wp(2),
+                padding: wp(3),
+                borderColor: colors.primary,
+              }}>
+              <Text style={{fontSize: wp(3), color: colors.text}}>Discard</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.onClose()}
+              style={{
+                backgroundColor: colors.primary,
+                padding: wp(3),
+                borderRadius: wp(2),
+                paddingLeft: wp(14),
+                paddingRight: wp(14),
+              }}>
+              <Text
+                style={{
+                  fontSize: wp(3),
+                  color: colors.secondary,
+                  fontWeight: 'bold',
+                }}>
+                Save
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Model>

@@ -58,6 +58,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
+      time: View_sor.user.date,
       initAnim: new Animated.Value(0),
       imageViewer: false,
       images: [],
@@ -88,7 +89,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       // for selection
       notifiedAndInv: 0,
       // comments edit
-      editDelComment: false,
+      editDelComment: true,
       editAttachedCommentArr: [],
       EditcommentText: '',
       editDiscardComment: '',
@@ -232,7 +233,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
 
   render() {
-    // this.handleBackButtonClick();
     return (
       <Animated.View style={[styles.container, {opacity: this.state.initAnim}]}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -321,14 +321,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   <TextInput
                     multiline={true}
                     value={this.state.observation}
-                    onChange={(e) =>
-                      this.setState({observation: e.nativeEvent.text})
-                    }
+                    onChange={(e) => {
+                      this.setState({observation: e.nativeEvent.text});
+                      this.setState({time: Date.now()});
+                    }}
                     style={styles.observationText}
                   />
                 </View>
                 <Text style={styles.observationDate}>
-                  {moment(View_sor.user.date).format('Do MMM, YYYY')}
+                  {moment(this.state.time).fromNow()}
                 </Text>
               </View>
               <View style={styles.subContainer}>
@@ -795,13 +796,22 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 return (
                   <View>
                     <TouchableOpacity
-                      onLongPress={() =>
+                      onLongPress={() => {
+                        if (d.attachments != undefined) {
+                          this.setState({
+                            editAttachedCommentArr: d.attachments,
+                          });
+                        } else {
+                          this.setState({
+                            editAttachedCommentArr: [],
+                          });
+                        }
                         this.setState({
                           editDiscardComment: d.comment,
                           editDiscardCommentIndex: i,
                           editDelComment: true,
-                        })
-                      }
+                        });
+                      }}
                       style={styles.userComments}>
                       <Avatar
                         containerStyle={{position: 'absolute', top: wp(0)}}
@@ -1468,12 +1478,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           commentTextStringOnChange={(e: string) =>
             this.setState({editDiscardComment: e})
           }
-          deleteAttachment={(e: string) =>
-            this.setState({editAttachedCommentArr: e})
-          }
-          commentAttachmentOnChange={(e: string) =>
-            this.setState({commentAttachment: e})
-          }
+          deleteAttachment={(e: string) => {
+            console.log(e);
+
+            this.setState({editAttachedCommentArr: e});
+          }}
+          commentAttachmentOnChange={(e: string) => {
+            console.log(e);
+
+            this.setState({commentAttachment: e});
+          }}
           commentAttachmentArr={this.state.commentAttachment}
           submitComment={(e: any) => {
             console.log(this.state.editDiscardComment);
@@ -1484,7 +1498,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             this.state.comments[this.state.editDiscardCommentIndex][
               'date'
             ] = Date.now();
-            console.log(this.state.commentAttachment);
+            if (this.state.editAttachedCommentArr.length != 0) {
+              this.state.comments[this.state.editDiscardCommentIndex][
+                'attachments'
+              ] = this.state.editAttachedCommentArr;
+            }
 
             // if (this.state.editAttachedCommentArr.length == 0) {
             //   this.state.commentAttachment[
