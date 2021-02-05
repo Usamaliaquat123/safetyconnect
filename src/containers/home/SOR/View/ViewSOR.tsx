@@ -1492,11 +1492,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             this.state.comments[this.state.editDiscardCommentIndex][
               'date'
             ] = Date.now();
-            if (this.state.editAttachedCommentArr.length != 0) {
-              this.state.comments[this.state.editDiscardCommentIndex][
-                'attachments'
-              ] = this.state.editAttachedCommentArr;
-            }
+            // if (this.state.editAttachedCommentArr.length != 0) {
+            this.state.comments[this.state.editDiscardCommentIndex][
+              'attachments'
+            ] = this.state.editAttachedCommentArr;
+            // }
+
+            this.setState({editDelComment: false});
           }}
         />
       </Animated.View>

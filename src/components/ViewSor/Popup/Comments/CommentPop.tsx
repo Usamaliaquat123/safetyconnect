@@ -19,8 +19,8 @@ export interface CommentPopProps {
   isOpen: boolean;
   attachments: Array<any>;
   deleteAttachment: Function;
-  commentAttachmentOnChange: Function;
-  commentAttachmentArr: Array<any>;
+  // commentAttachmentOnChange: Function;
+  // commentAttachmentArr: Array<any>;
   submitComment: Function;
   commentTextString: String;
   commentIndex: number;
