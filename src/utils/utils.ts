@@ -176,7 +176,7 @@ export const cameraCapture = () => {
   })
 }
 
-
+// Doc Type picker
 export const DocType= (res: any, attachments: Array<Object>) => {
   return new Promise((resolve, reject) => {
     
@@ -186,3 +186,5 @@ export const DocType= (res: any, attachments: Array<Object>) => {
 
 
 }
+
+
