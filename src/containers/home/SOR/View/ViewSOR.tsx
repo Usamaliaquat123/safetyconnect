@@ -13,7 +13,7 @@ import {
   Easing,
   Alert,
 } from 'react-native';
-
+import FlashMessage from 'react-native-flash-message';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import {Icon, Avatar, Card} from 'react-native-elements';
@@ -53,9 +53,11 @@ export interface ViewSORProps {
   reduxActions: any;
   reduxState: any;
 }
+
 class ViewSOR extends React.Component<ViewSORProps, any> {
   public animation: any;
   public photoAnim: any;
+  public fileNotSupported: any;
   constructor(props: any) {
     super(props);
     this.state = {
@@ -104,6 +106,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
     this.animation = React.createRef();
     this.photoAnim = React.createRef();
+    this.fileNotSupported = React.createRef();
   }
   componentDidMount = () => {
     this.mapViewSorPhoto();
@@ -230,7 +233,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             url: d.uri,
           });
         } else {
-          Alert.alert('File not supported');
+          this.fileNotSupported.showMessage({
+            message: 'Hello World',
+            description: 'This is our second message',
+            type: 'success',
+          });
         }
       });
 
@@ -1552,6 +1559,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             this.setState({editDelComment: false});
           }}
         />
+        <FlashMessage ref="fileNotSupported" />
       </Animated.View>
     );
   }
