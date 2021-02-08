@@ -21,6 +21,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginTop: wp(3)
       },
+
+  
       containerTextString:  {
           
         fontSize: wp(3.5),

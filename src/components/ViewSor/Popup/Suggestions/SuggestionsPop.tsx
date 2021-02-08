@@ -111,16 +111,38 @@ export default class SuggestionsPop extends React.Component<
               }}
               placeholder={'Type assigner email address'}
             />
+            <TouchableOpacity
+              // onPress={() => this.openDoc(this.state.commentAttachment)}
+              style={{
+                backgroundColor: colors.lightBlue,
+                padding: wp(2),
+                marginRight: wp(2),
+                borderRadius: wp(3),
+                position: 'absolute',
+                right: wp(0),
+              }}>
+              <Icon
+                size={wp(5)}
+                name="arrowright"
+                type="antdesign"
+                color={colors.primary}
+              />
+            </TouchableOpacity>
           </View>
-          <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-            <Tags
-              onClose={(d: any) => {
-                this.setState({
-                  AssignedTo: this.state.AssignedTo.filter((v: any) => v !== d),
-                });
-              }}
-              tags={this.state.AssignedTo}
-            />
+          <View
+            style={{flexWrap: 'wrap', flexDirection: 'row', marginTop: wp(3)}}>
+            {this.state.AssignedTo.length != 0 && (
+              <Tags
+                onClose={(d: any) => {
+                  this.setState({
+                    AssignedTo: this.state.AssignedTo.filter(
+                      (v: any) => v !== d,
+                    ),
+                  });
+                }}
+                tags={this.state.AssignedTo}
+              />
+            )}
           </View>
         </View>
       </Model>

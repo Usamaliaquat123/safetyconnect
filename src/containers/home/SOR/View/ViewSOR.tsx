@@ -728,16 +728,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           {d.name.substring(0, 10)}.../.{d.type}
                         </Text>
                         <View
-                          // onPress={() => {
-                          //   if (d.upload != 'self') {
-                          //     this.photoAnim.play();
-                          //     downloadFile(d.url, d.type)
-                          //       .then((res: any) => {
-                          //         console.log(res);
-                          //       })
-                          //       .catch((err) => console.log(err));
-                          //   }
-                          // }}
                           style={{
                             position: 'absolute',
                             right: wp(1),
