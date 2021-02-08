@@ -11,6 +11,7 @@ import {
   Animated,
   Modal,
   Easing,
+  Alert,
 } from 'react-native';
 
 import moment from 'moment';
@@ -136,11 +137,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
   };
 
-  // openGalleryAndMap = (data : Array<any>) : Array<any> => {
-
-  //   return [{"sdsd"}]
-  // }
-
   imgCap = (str: string, arr: Array<Object>) => {
     if (str == 'upload') {
       imagePicker()
@@ -203,13 +199,38 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             name: d.name,
             url: d.uri,
           });
-        } else if (d.type.split('.').pop() == 'document') {
+        } else if (
+          d.type.split('.').pop() == 'document' ||
+          d.type.split('/')[1] == 'msword'
+        ) {
           attach.splice(0, 0, {
             type: 'doc',
             upload: 'self',
             name: d.name,
             url: d.uri,
           });
+        } else if (
+          d.type.split('/')[1] == 'vnd.ms-excel' ||
+          d.type.split('.').pop() == 'sheet'
+        ) {
+          attach.splice(0, 0, {
+            type: 'excel',
+            upload: 'self',
+            name: d.name,
+            url: d.uri,
+          });
+        } else if (
+          d.type.split('/')[1] == 'vnd.ms-powerpoint' ||
+          d.type.split('.').pop() == 'presentation'
+        ) {
+          attach.splice(0, 0, {
+            type: 'powerpoint',
+            upload: 'self',
+            name: d.name,
+            url: d.uri,
+          });
+        } else {
+          Alert.alert('File not supported');
         }
       });
 
@@ -687,6 +708,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 ? images.text
                                 : d.type == 'doc'
                                 ? images.doc
+                                : d.type == 'excel'
+                                ? images.excel
+                                : d.type == 'powerpoint'
+                                ? images.powerpoint
                                 : null
                             }
                             style={{width: wp(7), height: wp(7)}}
@@ -877,6 +902,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                       ? images.text
                                       : d.type == 'doc'
                                       ? images.doc
+                                      : d.type == 'excel'
+                                      ? images.excel
+                                      : d.type == 'powerpoint'
+                                      ? images.powerpoint
                                       : null
                                   }
                                   style={{width: wp(10), height: wp(10)}}
@@ -1061,6 +1090,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                   ? images.text
                                   : d.type == 'doc'
                                   ? images.doc
+                                  : d.type == 'excel'
+                                  ? images.excel
+                                  : d.type == 'powerpoint'
+                                  ? images.powerpoint
                                   : null
                               }
                               style={{width: wp(10), height: wp(10)}}
