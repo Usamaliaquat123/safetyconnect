@@ -9,4 +9,5 @@ import SuggestionsAvatar from "./suggestionsAvatar/SuggestionsAvatar";
 import RepeatedSor from './RepeatedSorModal/RepeatedSor';
 import  ListCard from "./listCard/ListCard";
 import  CommentPop from "./ViewSor/Popup/Comments/CommentPop";
-export {Suggestions, Chart, Card, Search, User, Header,ListCard, RepeatedSor,Tags, SuggestionsAvatar,CommentPop};
+import  SuggestionsPop from "./ViewSor/Popup/Suggestions/SuggestionsPop";
+export {Suggestions, Chart, Card, Search, User, Header,ListCard, RepeatedSor,Tags, SuggestionsAvatar,CommentPop,SuggestionsPop};

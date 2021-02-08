@@ -25,7 +25,7 @@ import {
 } from '@service';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Tags, Chart, CommentPop} from '@components';
+import {Tags, Chart, CommentPop, SuggestionsPop} from '@components';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
@@ -94,6 +94,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       EditcommentText: '',
       editDiscardComment: '',
       editDiscardCommentIndex: 0,
+      // actions and recommendation
+
+      SuggestionPop: false,
+      allActionsEdit: [],
+      allActionsEditIndex: 0,
     };
 
     this.animation = React.createRef();
@@ -478,7 +483,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 {this.state.actionsAndRecommendations.map(
                   (d: any, i: number) => (
                     <TouchableOpacity
-                      onLongPress={() => console.log('sds')}
+                      onLongPress={() => {
+                        this.setState({
+                          SuggestionPop: true,
+                          allActionsEdit: d,
+                          allActionsEditIndex: i,
+                        });
+                      }}
                       onPress={() => {
                         var data = [...this.state.actionsAndRecommendations];
                         if (d.status == 'Completed') {
@@ -537,7 +548,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           <Text style={styles.subAssText}>
                             Assigned to:{' '}
                             <Text style={styles.subAssuser}>
-                              {d.AssignedTo}
+                              {d.AssignedTo[0]}
                             </Text>
                           </Text>
                         </TouchableOpacity>
@@ -1464,6 +1475,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             imageUrls={this.state.images}
           />
         </Modal>
+        <SuggestionsPop
+          onClose={() =>
+            this.setState({SuggestionPop: !this.state.SuggestionPop})
+          }
+          isOpen={this.state.SuggestionPop}
+          suggestions={this.state.allActionsEdit}
+          save={() => console.log('save')}
+          discard={() => console.log('discard')}
+        />
         <CommentPop
           onClose={() =>
             this.setState({editDelComment: !this.state.editDelComment})

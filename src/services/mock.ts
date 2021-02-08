@@ -127,8 +127,8 @@ View_sor = {
         status: 'Completed',
         observation:
           'Adipisicing voluptate Lorem sint officia fugiat mollit nisi mollit.',
-        SubmittedTo: 'Jane Doe',
-        AssignedTo: 'Jane Doe',
+        SubmittedTo: ['Jane Doe'],
+        AssignedTo: ['Jane Doe'],
         time : 1610636244237,
         type: "Elimination"
       },
@@ -137,8 +137,8 @@ View_sor = {
         type:"Administrative",
         observation:
         'Adipisicing voluptate Lorem sint officia fugiat mollit nisi mollit.',
-        SubmittedTo: 'Jane Doe',
-        AssignedTo: 'Jane Doe',
+        SubmittedTo: ['Jane Doe'],
+        AssignedTo: ['Jane Doe'],
         time : 1610636244239
       },
     ],
