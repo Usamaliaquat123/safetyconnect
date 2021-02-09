@@ -514,9 +514,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       onLongPress={() => {
                         this.setState({
                           allActionsEdit: d,
-                          allActionsEditIndex: i,
                           SuggestionPop: true,
+                          //   allActionsEditIndex: i,
                         });
+
+                        // setTimeout(() => {
+                        //   this.setState({
+                        //   });
+                        // }, 5000);
                       }}
                       onPress={() => {
                         var data = [...this.state.actionsAndRecommendations];
@@ -650,7 +655,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 this.photoAnim.play();
                                 downloadFile(d.url, d.type)
                                   .then((res: any) => {
-                                    console.log(res);
+                                    // console.log(res);
                                   })
                                   .catch((err) => console.log(err));
                               }
@@ -678,7 +683,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                   var arr = [...this.state.attachments].filter(
                                     (b) => b != d,
                                   );
-                                  console.log(arr);
+                                  // console.log(arr);
                                   this.setState({attachments: arr});
                                 }}>
                                 <Icon
@@ -741,7 +746,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 this.photoAnim.play();
                                 downloadFile(d.url, d.type)
                                   .then((res: any) => {
-                                    console.log(res);
+                                    // console.log(res);
                                   })
                                   .catch((err) => console.log(err));
                               }
@@ -762,7 +767,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 var arr = [...this.state.attachments].filter(
                                   (b) => b != d,
                                 );
-                                console.log(arr);
+                                // console.log(arr);
                                 this.setState({attachments: arr});
                               }}>
                               <Icon
@@ -1505,15 +1510,24 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             imageUrls={this.state.images}
           />
         </Modal>
-        <SuggestionsPop
-          onClose={() =>
-            this.setState({SuggestionPop: !this.state.SuggestionPop})
-          }
-          isOpen={this.state.SuggestionPop}
-          suggestions={this.state.allActionsEdit}
-          save={() => console.log('save')}
-          discard={() => console.log('discard')}
-        />
+        {this.state.SuggestionPop == true && (
+          <SuggestionsPop
+            onClose={() =>
+              this.setState({SuggestionPop: !this.state.SuggestionPop})
+            }
+            isOpen={this.state.SuggestionPop}
+            suggestions={this.state.allActionsEdit}
+            save={() => console.log('save')}
+            discard={() => {
+              this.setState({
+                actionsAndRecommendations: this.state.actionsAndRecommendations.filter(
+                  (d: any) => d != this.state.allActionsEdit,
+                ),
+                SuggestionPop: false,
+              });
+            }}
+          />
+        )}
         <CommentPop
           onClose={() =>
             this.setState({editDelComment: !this.state.editDelComment})

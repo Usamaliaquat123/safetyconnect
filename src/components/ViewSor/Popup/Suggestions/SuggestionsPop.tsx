@@ -41,7 +41,6 @@ export default class SuggestionsPop extends React.Component<
   componentDidMount = () => {};
 
   render() {
-    console.log(this.props.suggestions);
     return (
       <Model
         animationIn={'bounceInUp'}
@@ -107,7 +106,6 @@ export default class SuggestionsPop extends React.Component<
                     />
                     <TouchableOpacity
                       onPress={() => {
-                        console.log(this.state.actionsText);
                         this.state.AssignedTo.push(this.state.actionsText);
                         this.setState({actionsText: ''});
                       }}
@@ -179,10 +177,14 @@ export default class SuggestionsPop extends React.Component<
               </View>
 
               <View style={styles.btnsContainer}>
-                <TouchableOpacity style={styles.btnDiscard}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.discard();
+                  }}
+                  style={styles.btnDiscard}>
                   <Text style={styles.btnDiscardText}>Delete</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.saveBtn}>
+                <TouchableOpacity onPress={() => {}} style={styles.saveBtn}>
                   <Text style={styles.sveBtnText}>Save</Text>
                 </TouchableOpacity>
               </View>
