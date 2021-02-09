@@ -8,7 +8,7 @@ import {
   Modal,
 } from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {Home, ViewAll, Messaging, ViewSOR} from '@containers';
+import {Home, ViewAll, Messaging, ViewSOR, CreateSOR} from '@containers';
 import {Icon} from 'react-native-elements';
 import {colors, images, GlStyles} from '@theme';
 import {default as Model} from 'react-native-modal';
@@ -42,7 +42,7 @@ export const BottomTabNavigator = () => {
           sceneContainerStyle={{backgroundColor: colors.error}}
           initialRouteName={'home'}>
           <Tab.Screen name="home" component={ViewSOR} options={{}} />
-          <Tab.Screen name="sors" component={ViewAll} options={{}} />
+          <Tab.Screen name="sors" component={CreateSOR} options={{}} />
           <Tab.Screen name="addNew" component={Home} options={{}} />
           <Tab.Screen name="inbox" component={Messaging} options={{}} />
           <Tab.Screen name="more" component={Home} options={{}} />

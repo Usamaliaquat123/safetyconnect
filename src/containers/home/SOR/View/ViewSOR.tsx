@@ -1515,9 +1515,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             onClose={() =>
               this.setState({SuggestionPop: !this.state.SuggestionPop})
             }
+            allSuggestions={this.state.actionsAndRecommendations}
             isOpen={this.state.SuggestionPop}
             suggestions={this.state.allActionsEdit}
-            save={() => console.log('save')}
+            save={(d) => {
+              this.state.actionsAndRecommendations[
+                this.state.allActionsEditIndex
+              ] = d;
+
+              this.setState({SuggestionPop: false});
+            }}
             discard={() => {
               this.setState({
                 actionsAndRecommendations: this.state.actionsAndRecommendations.filter(

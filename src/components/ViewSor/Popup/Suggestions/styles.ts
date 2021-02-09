@@ -22,8 +22,24 @@ const styles = StyleSheet.create({
         marginTop: wp(2),
         marginRight: wp(20),
       },
-
-  
+      involveSuggestCont: {
+        borderColor: colors.green,
+        borderRadius: wp(3),
+        padding: wp(3),
+        borderWidth: wp(0.3),
+        marginTop: wp(1),
+      },
+       involvePSt: {
+        fontSize: wp(3),
+      },
+      involvePsuggCont: {
+        borderColor: colors.textOpa,
+        borderBottomWidth: wp(0.1),
+        paddingTop: wp(3),
+        paddingBottom: wp(3),
+        alignItems: 'center',
+        flexDirection: 'row',
+      },
       containerTextString:  {
           
         fontSize: wp(3.5),

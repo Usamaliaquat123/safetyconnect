@@ -9,8 +9,11 @@ import {
 import {default as Model} from 'react-native-modal';
 import {Icon} from 'react-native-elements';
 import styles from './styles';
-import {Tags} from '@components';
+import {Tags, Suggestions} from '@components';
 import {colors} from '@theme';
+import {Avatar} from 'react-native-elements';
+import {Create_sor} from '@service';
+import {searchInSuggestions} from '@utils';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 export interface SuggestionsPopProps {
   onClose: Function;
@@ -18,6 +21,7 @@ export interface SuggestionsPopProps {
   suggestions: Array<any>;
   save: Function;
   discard: Function;
+  allSuggestions: Array<any>;
 }
 
 export default class SuggestionsPop extends React.Component<
@@ -32,15 +36,17 @@ export default class SuggestionsPop extends React.Component<
       submittedTo: props.suggestions.SubmittedTo,
       type: props.suggestions.type,
       status: props.suggestions.status,
-
+      suggestions: [],
       AssignedTo: props.suggestions.AssignedTo,
       actionsText: '',
+      selectedInput: 0,
     };
   }
 
   componentDidMount = () => {};
 
   render() {
+    // console.log()
     return (
       <Model
         animationIn={'bounceInUp'}
@@ -70,8 +76,15 @@ export default class SuggestionsPop extends React.Component<
           <View style={{alignSelf: 'flex-start', marginTop: wp(5)}}>
             <Text style={styles.recommendationsHead}>Recommendations</Text>
           </View>
-          <View style={styles.commentTextInput}>
+          <View
+            style={[
+              styles.commentTextInput,
+              this.state.selectedInput == 1
+                ? {borderColor: colors.green, borderWidth: wp(0.3)}
+                : {borderColor: colors.lightGrey},
+            ]}>
             <TextInput
+              onFocus={() => this.setState({selectedInput: 1})}
               style={styles.textInputPopup}
               multiline={true}
               value={this.state.observation}
@@ -94,16 +107,41 @@ export default class SuggestionsPop extends React.Component<
                   <View style={{alignSelf: 'flex-start'}}>
                     <Text style={styles.tagAssigners}>Tag Assigners</Text>
                   </View>
-                  <View style={[styles.commentTextInput]}>
+                  {/* Assigners */}
+                  {this.state.AssignedTo.length < 1 && (
+                    <Text
+                      style={{
+                        fontSize: wp(3),
+                        marginBottom: wp(3),
+                        color: colors.error,
+                      }}>
+                      You have to assign someone..
+                    </Text>
+                  )}
+                  <View
+                    style={[
+                      styles.commentTextInput,
+                      this.state.selectedInput == 2
+                        ? {borderColor: colors.green, borderWidth: wp(0.3)}
+                        : {borderColor: colors.lightGrey},
+                    ]}>
                     <TextInput
+                      onFocus={() => this.setState({selectedInput: 2})}
                       style={styles.textInputPopup}
                       multiline={true}
                       value={this.state.actionsText}
                       onChange={(e) => {
+                        this.setState({
+                          suggestions: searchInSuggestions(
+                            e.nativeEvent.text,
+                            Create_sor.Observation.emailSuggestions,
+                          ),
+                        });
                         this.setState({actionsText: e.nativeEvent.text});
                       }}
                       placeholder={'Type assigner email address'}
                     />
+
                     <TouchableOpacity
                       onPress={() => {
                         this.state.AssignedTo.push(this.state.actionsText);
@@ -118,6 +156,47 @@ export default class SuggestionsPop extends React.Component<
                       />
                     </TouchableOpacity>
                   </View>
+                  {/* Suggestions  */}
+                  {this.state.suggestions.length != 0 ? (
+                    // <Suggestions
+                    //   styles={{}}
+                    //   arr={this.state.suggestions}
+                    //   onPress={(d: string) => this.setState({observationT: d})}
+                    // />
+
+                    // {this.state.involvePersonSuggestions.length != 0 ? (
+                    <View style={styles.involveSuggestCont}>
+                      {this.state.suggestions.map((d: string, i: number) => (
+                        <TouchableOpacity
+                          key={i}
+                          onPress={() => {
+                            this.state.involvePersonTags.push(d);
+                            this.setState({
+                              involvePersonText: '',
+                              suggestions: [],
+                            });
+                          }}
+                          style={[
+                            styles.involvePsuggCont,
+                            this.state.suggestions.length == i + 1
+                              ? {borderBottomWidth: wp(0)}
+                              : null,
+                          ]}>
+                          <Avatar
+                            containerStyle={{marginRight: wp(3)}}
+                            rounded
+                            source={{
+                              uri:
+                                'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                            }}
+                          />
+                          <Text style={styles.involvePSt}>{d}</Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  ) : // ) : null}
+
+                  null}
                 </View>
               )}
               <View style={styles.tagsContainer}>
@@ -184,7 +263,20 @@ export default class SuggestionsPop extends React.Component<
                   style={styles.btnDiscard}>
                   <Text style={styles.btnDiscardText}>Delete</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {}} style={styles.saveBtn}>
+                <TouchableOpacity
+                  onPress={() => {
+                    var sugg = {
+                      status: this.state.status,
+                      observation: this.state.observation,
+                      SubmittedTo: this.state.submittedTo,
+                      AssignedTo: this.state.AssignedTo,
+                      time: Date.now(),
+                      type: this.state.type,
+                    };
+
+                    this.props.save(sugg);
+                  }}
+                  style={styles.saveBtn}>
                   <Text style={styles.sveBtnText}>Save</Text>
                 </TouchableOpacity>
               </View>
