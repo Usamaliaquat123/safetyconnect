@@ -513,9 +513,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     <TouchableOpacity
                       onLongPress={() => {
                         this.setState({
-                          SuggestionPop: true,
                           allActionsEdit: d,
                           allActionsEditIndex: i,
+                          SuggestionPop: true,
                         });
                       }}
                       onPress={() => {

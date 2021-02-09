@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
     containerText:  {
         // justifyContent: "space-between",
         flexDirection: "row",
-        marginTop: wp(3)
+        marginTop: wp(2),
+        marginRight: wp(20),
       },
 
   
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
        borderColor: colors.lightGrey 
       },
       textInputPopup : {
-        fontSize: wp(3), width: wp(50)
+        fontSize: wp(3), width: wp(70)
       },
       pickerIcon: {
         top: wp(2.7),
@@ -55,6 +56,90 @@ const styles = StyleSheet.create({
                     marginRight: wp(2),
                     borderRadius: wp(3),
       },
+
+      recommendationsHead: {
+        fontSize: wp(3),
+        textAlign: 'left',
+        marginLeft: wp(7),
+        marginBottom: wp(2),
+      },
+      assignersHead : {
+        fontSize: wp(3),
+        textAlign: 'left',
+        // marginLeft: wp(7),
+        marginTop: wp(3),
+        fontWeight: 'bold',
+        marginBottom: wp(2),
+      },
+      tagAssigners:  {
+        fontSize: wp(3),
+        textAlign: 'left',
+        marginTop: wp(3),
+        marginBottom: wp(2),
+      },
+      arrowRightAssigners: {
+        backgroundColor: colors.lightBlue,
+        padding: wp(2),
+        marginRight: wp(2),
+        borderRadius: wp(3),
+        position: 'absolute',
+        right: wp(0),
+      },
+      tagsContainer : {
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        marginTop: wp(3),
+        marginRight: wp(3),
+        marginLeft: wp(3),
+      },
+      selectYourElemination: {
+        fontSize: wp(3),
+        fontWeight: 'bold',
+        opacity: 0.5,
+        marginTop: wp(5),
+      },
+    eleminationAndAdministrativeContainer:  {
+      marginTop: wp(5),
+      alignSelf: 'center',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+
+    // Discard and save container
+
+    btnsContainer : {
+      marginBottom: wp(5),
+      flexDirection: 'row', marginTop: wp(7)
+    },
+    btnDiscard:  {
+      marginRight: wp(3),
+      paddingLeft: wp(15),
+      paddingRight: wp(15),
+      paddingTop: wp(4),
+      borderColor: colors.primary,
+      borderWidth: wp(0.2),
+      paddingBottom: wp(4),
+      borderRadius: wp(3),
+    },
+    btnDiscardText:  {
+      fontSize: wp(3), color: colors.primary
+    },
+    saveBtn : {
+      paddingLeft: wp(15),
+      paddingRight: wp(15),
+      paddingTop: wp(4),
+      borderRadius: wp(3),
+      // borderColor: colors.text, ,
+      borderWidth: wp(0.2),
+      paddingBottom: wp(4),
+      backgroundColor: colors.primary,
+    },
+    sveBtnText:  {
+      fontSize: wp(3), color: colors.secondary
+    }
+
+
+
 })
 
 

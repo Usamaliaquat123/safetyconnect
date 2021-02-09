@@ -32,15 +32,16 @@ export default class SuggestionsPop extends React.Component<
       submittedTo: props.suggestions.SubmittedTo,
       type: props.suggestions.type,
       status: props.suggestions.status,
+
       AssignedTo: props.suggestions.AssignedTo,
       actionsText: '',
     };
-    console.log(props.suggestions.AssignedTo);
   }
 
   componentDidMount = () => {};
 
   render() {
+    console.log(this.props.suggestions);
     return (
       <Model
         animationIn={'bounceInUp'}
@@ -52,7 +53,8 @@ export default class SuggestionsPop extends React.Component<
         <View style={styles.containerPopup}>
           <View style={styles.containerText}>
             <Icon
-              size={wp(3.5)}
+              style={{marginRight: wp(15)}}
+              size={wp(5)}
               name="checkcircle"
               type="antdesign"
               color={
@@ -66,16 +68,8 @@ export default class SuggestionsPop extends React.Component<
             </Text>
           </View>
           {/* Content */}
-          <View style={{alignSelf: 'flex-start'}}>
-            <Text
-              style={{
-                fontSize: wp(3),
-                textAlign: 'left',
-                marginLeft: wp(7),
-                marginBottom: wp(2),
-              }}>
-              Recommendations
-            </Text>
+          <View style={{alignSelf: 'flex-start', marginTop: wp(5)}}>
+            <Text style={styles.recommendationsHead}>Recommendations</Text>
           </View>
           <View style={styles.commentTextInput}>
             <TextInput
@@ -88,62 +82,112 @@ export default class SuggestionsPop extends React.Component<
               placeholder={'Type your recommendations here '}
             />
           </View>
-          {/* Assdigned to */}
-          <View style={{alignSelf: 'flex-start'}}>
-            <Text
-              style={{
-                fontSize: wp(3),
-                textAlign: 'left',
-                marginLeft: wp(7),
-                marginTop: wp(3),
-                marginBottom: wp(2),
-              }}>
-              Tag Assigners
-            </Text>
-          </View>
-          <View style={[styles.commentTextInput]}>
-            <TextInput
-              style={styles.textInputPopup}
-              multiline={true}
-              value={this.state.actionsText}
-              onChange={(e) => {
-                this.setState({actionsText: e.nativeEvent.text});
-              }}
-              placeholder={'Type assigner email address'}
-            />
-            <TouchableOpacity
-              // onPress={() => this.openDoc(this.state.commentAttachment)}
-              style={{
-                backgroundColor: colors.lightBlue,
-                padding: wp(2),
-                marginRight: wp(2),
-                borderRadius: wp(3),
-                position: 'absolute',
-                right: wp(0),
-              }}>
-              <Icon
-                size={wp(5)}
-                name="arrowright"
-                type="antdesign"
-                color={colors.primary}
-              />
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{flexWrap: 'wrap', flexDirection: 'row', marginTop: wp(3)}}>
-            {this.state.AssignedTo.length != 0 && (
-              <Tags
-                onClose={(d: any) => {
-                  this.setState({
-                    AssignedTo: this.state.AssignedTo.filter(
-                      (v: any) => v !== d,
-                    ),
-                  });
-                }}
-                tags={this.state.AssignedTo}
-              />
-            )}
-          </View>
+          {this.state.AssignedTo != undefined && (
+            <>
+              {this.state.AssignedTo.length >= 5 && (
+                <View style={{alignSelf: 'center'}}>
+                  <Text style={styles.assignersHead}>Assigners</Text>
+                </View>
+              )}
+              {this.state.AssignedTo.length < 5 && (
+                <View>
+                  {/* Assdigned to */}
+                  <View style={{alignSelf: 'flex-start'}}>
+                    <Text style={styles.tagAssigners}>Tag Assigners</Text>
+                  </View>
+                  <View style={[styles.commentTextInput]}>
+                    <TextInput
+                      style={styles.textInputPopup}
+                      multiline={true}
+                      value={this.state.actionsText}
+                      onChange={(e) => {
+                        this.setState({actionsText: e.nativeEvent.text});
+                      }}
+                      placeholder={'Type assigner email address'}
+                    />
+                    <TouchableOpacity
+                      onPress={() => {
+                        console.log(this.state.actionsText);
+                        this.state.AssignedTo.push(this.state.actionsText);
+                        this.setState({actionsText: ''});
+                      }}
+                      style={styles.arrowRightAssigners}>
+                      <Icon
+                        size={wp(5)}
+                        name="arrowright"
+                        type="antdesign"
+                        color={colors.primary}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
+              <View style={styles.tagsContainer}>
+                <Tags
+                  onClose={(d: any) => {
+                    this.setState({
+                      AssignedTo: this.state.AssignedTo.filter(
+                        (v: any) => v !== d,
+                      ),
+                    });
+                  }}
+                  tags={this.state.AssignedTo}
+                />
+              </View>
+              {/* Elimination / Administrative */}
+              <Text style={styles.selectYourElemination}>
+                Select your elimination / Administrative
+              </Text>
+              <View style={styles.eleminationAndAdministrativeContainer}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({type: 'Elimination'});
+                  }}
+                  style={{marginRight: wp(20)}}>
+                  <Icon
+                    size={wp(10)}
+                    name="team"
+                    type="antdesign"
+                    color={
+                      this.state.type == 'Elimination'
+                        ? colors.green
+                        : colors.lightGrey
+                    }
+                  />
+                  <Text style={{fontSize: wp(3), opacity: 0.5}}>
+                    Elimination
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({type: 'Administrative'});
+                  }}>
+                  <Icon
+                    size={wp(10)}
+                    name="admin-panel-settings"
+                    type="material"
+                    color={
+                      this.state.type == 'Administrative'
+                        ? colors.green
+                        : colors.lightGrey
+                    }
+                  />
+                  <Text style={{fontSize: wp(3), opacity: 0.5}}>
+                    Administrative
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.btnsContainer}>
+                <TouchableOpacity style={styles.btnDiscard}>
+                  <Text style={styles.btnDiscardText}>Delete</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.saveBtn}>
+                  <Text style={styles.sveBtnText}>Save</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
         </View>
       </Model>
     );
