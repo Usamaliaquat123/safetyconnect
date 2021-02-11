@@ -110,21 +110,7 @@ export const MainStackNavigator = () => {
               headerShown: false,
             }}
           />
-          <Stack.Screen
-            name="tellAboutYou"
-            component={TellAboutYou}
-            options={{
-              headerShown: false,
-            }}
-          />
 
-          <Stack.Screen
-            name="CreatePass"
-            component={CreatePass}
-            options={{
-              headerShown: false,
-            }}
-          />
           <Stack.Screen
             name="Verify"
             component={Verify}

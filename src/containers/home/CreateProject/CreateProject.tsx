@@ -231,7 +231,9 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               ) : null}
             </View>
 
-            <TouchableOpacity style={styles.siginBtnContainer}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('sor')}
+              style={styles.siginBtnContainer}>
               <Text style={styles.signinText}>Create Project</Text>
             </TouchableOpacity>
           </View>

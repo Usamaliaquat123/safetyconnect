@@ -19,6 +19,7 @@ import {StackNavigatorProps} from '@nav';
 import {colors, images, GlStyles} from '@theme';
 import {RouteProp} from '@react-navigation/native';
 import styles from './styles';
+import {Auth} from 'aws-amplify';
 type SignupNavigationProp = StackNavigationProp<StackNavigatorProps, 'Login'>;
 type SignupRouteProp = RouteProp<StackNavigatorProps, 'Login'>;
 
@@ -30,6 +31,14 @@ export interface SignupProps {
 }
 
 class Signup extends React.Component<SignupProps, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {username: ''};
+  }
+
+  async signup() {
+    this.props.navigation.navigate('tellAboutYou');
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -52,12 +61,17 @@ class Signup extends React.Component<SignupProps, any> {
               <View style={[styles.inputContainer]}>
                 <TextInput
                   style={styles.authInputs}
-                  onChange={(e) => console.log(e)}
+                  value={this.state.username}
+                  onChange={(e) => {
+                    this.setState({username: e.nativeEvent.text});
+                  }}
                   placeholder={'Enter your email'}
                 />
               </View>
             </View>
-            <TouchableOpacity style={styles.siginBtnContainer}>
+            <TouchableOpacity
+              onPress={() => this.signup()}
+              style={styles.siginBtnContainer}>
               <Text style={styles.signinText}>Continue</Text>
             </TouchableOpacity>
             {/* Or */}
@@ -67,7 +81,9 @@ class Signup extends React.Component<SignupProps, any> {
               <View style={styles.line} />
             </View>
             {/* Google Signin */}
-            <TouchableOpacity style={styles.siginwithGoogle}>
+            <TouchableOpacity
+              // onPress={() => }
+              style={styles.siginwithGoogle}>
               <View style={{width: wp(5), height: wp(5), marginRight: wp(3)}}>
                 <Image source={images.google} style={GlStyles.images} />
               </View>

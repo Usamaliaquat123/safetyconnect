@@ -65,9 +65,9 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       AnimatedDownSubmitted: new Animated.Value(0),
       AnimatedOpacSubmitted: new Animated.Value(0),
       currentlocation: Create_sor.Observation.locations[0],
-      project: 'Board View',
+      project: 'List View',
       isNotified: false,
-      isDraft: false,
+      isDraft: true,
       isSubmited: false,
       selectP: true,
       draft: draft,
@@ -135,8 +135,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
             </View>
             <View style={styles.headerSelect}>
               {/* Project selector */}
-              <View style={styles.leftSelector}>
-                {/* <Text style={styles.hselectort}> Board View</Text> */}
+              {/* <View style={styles.leftSelector}>
                 <TouchableOpacity
                   style={styles.selector}
                   onPress={() => {
@@ -167,27 +166,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                     </TouchableOpacity>
                   </View>
                 ) : null}
-              </View>
-              <View style={styles.rightSelector}>
-                <Icon
-                  onPress={() => this.props.navigation.navigate('CreateSOR')}
-                  style={{padding: 3}}
-                  size={20}
-                  name="address-card"
-                  type="font-awesome-5"
-                  color={colors.secondary}
-                />
-              </View>
-              <View style={styles.rightSelector}>
-                <Icon
-                  onPress={() => this.props.navigation.navigate('Messaging')}
-                  style={{padding: 3}}
-                  size={20}
-                  name="ios-chatbubbles"
-                  type="ionicon"
-                  color={colors.secondary}
-                />
-              </View>
+              </View> */}
             </View>
           </View>
           <View style={styles.content}>
@@ -255,9 +234,10 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                               (e: any) => e.title == d.classify,
                             )}
                             onPress={() =>
-                              this.props.navigation.navigate('ViewSOR', {
-                                data: d,
-                              })
+                              // this.props.navigation.navigate('home', {
+                              //   data: d,
+                              // })
+                              this.props.navigation.navigate('home')
                             }
                             date={d.date}
                           />

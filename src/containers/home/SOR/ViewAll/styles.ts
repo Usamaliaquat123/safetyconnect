@@ -34,9 +34,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: wp(100),
   },
-  content: {
+    content: {
     // flex: 2,
-    height: hp(100),
+    // height: hp(100),
     backgroundColor: colors.secondary,
     borderTopLeftRadius: wp(10),
     borderTopRightRadius: wp(10)

@@ -8,7 +8,7 @@ import {
   Modal,
 } from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {Home, ViewAll, Messaging, ViewSOR, CreateSOR} from '@containers';
+import {Home, ViewAll, Messaging, ViewSOR, CreateSOR, Login} from '@containers';
 import {Icon} from 'react-native-elements';
 import {colors, images, GlStyles} from '@theme';
 import {default as Model} from 'react-native-modal';
@@ -18,6 +18,7 @@ import {
 } from 'react-native-responsive-screen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
+import {AuthStackNavigator} from './AuthNav';
 // import BottomSheet from 'reanimated-bottom-sheet';
 // import Animated from 'react-native-reanimated';
 export interface TabBarProps {
@@ -28,9 +29,9 @@ export interface TabBarProps {
 const Tab = createBottomTabNavigator<BottomTabNavigatorProp>();
 export type BottomTabNavigatorProp = {
   home: undefined;
-  sors: undefined;
+  sor: undefined;
   addNew: undefined;
-  inbox: undefined;
+  create: undefined;
   more: undefined;
 };
 export const BottomTabNavigator = () => {
@@ -42,10 +43,10 @@ export const BottomTabNavigator = () => {
           sceneContainerStyle={{backgroundColor: colors.error}}
           initialRouteName={'home'}>
           <Tab.Screen name="home" component={ViewSOR} options={{}} />
-          <Tab.Screen name="sors" component={CreateSOR} options={{}} />
+          <Tab.Screen name="sor" component={ViewAll} options={{}} />
           <Tab.Screen name="addNew" component={Home} options={{}} />
-          <Tab.Screen name="inbox" component={Messaging} options={{}} />
-          <Tab.Screen name="more" component={Home} options={{}} />
+          <Tab.Screen name="create" component={CreateSOR} options={{}} />
+          <Tab.Screen name="more" component={AuthStackNavigator} options={{}} />
         </Tab.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
@@ -228,102 +229,3 @@ export default class TabBar extends React.Component<TabBarProps, any> {
     );
   }
 }
-
-{
-  /* <Model
-          // swipeDirection={'up'}
-          animationIn={'bounceInUp'}
-          animationOut={'bounceOutDown'}
-          animationInTiming={2000}
-          animationOutTiming={2000}
-          //   hrbordasBackdrop={true}
-          backdropColor={'black'}
-          style={{margin: wp(0)}}
-          isVisible={this.state.createModal}
-          onBackdropPress={() => this.setState({createModal: false})}>
-          <View
-            style={{
-              height: wp(50),
-              // borderRadius: wp(10),
-              borderTopLeftRadius: wp(10),
-              borderTopRightRadius: wp(10),
-              backgroundColor: colors.secondary,
-              padding: wp(10),
-              //   zIndex: wp(-5),
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              marginTop: wp(99),
-              shadowOpacity: 0.23,
-              shadowRadius: 2.62,
-              elevation: 3,
-            }}>
-            {/* Add New Sor section */
-}
-//     <View style={{flexDirection: 'row', alignItems: 'center'}}>
-//       <View style={{width: wp(8), height: wp(8)}}>
-//         <Image
-//           source={images.bottomTab.note}
-//           style={[GlStyles.images]}
-//           resizeMode={'cover'}
-//         />
-//       </View>
-//       <Text
-//         style={{
-//           color: '#4BA735',
-//           fontSize: wp(3.5),
-//           marginLeft: wp(5),
-//         }}>
-//         Add New SOR
-//       </Text>
-//     </View>
-//     {/* Add New Project  section */}
-//     <View
-//       style={{
-//         flexDirection: 'row',
-//         alignItems: 'center',
-//         marginTop: wp(5),
-//       }}>
-//       <View style={{width: wp(8), height: wp(8)}}>
-//         <Image
-//           source={images.bottomTab.note}
-//           style={[GlStyles.images]}
-//           resizeMode={'cover'}
-//         />
-//       </View>
-//       <Text
-//         style={{
-//           color: '#4BA735',
-//           fontSize: wp(3.5),
-//           marginLeft: wp(5),
-//         }}>
-//         Add New Project
-//       </Text>
-//     </View>
-//     {/* Add New Organization section */}
-//     <View
-//       style={{
-//         flexDirection: 'row',
-//         alignItems: 'center',
-//         marginTop: wp(5),
-//       }}>
-//       <View style={{width: wp(8), height: wp(8)}}>
-//         <Image
-//           source={images.bottomTab.folder}
-//           style={[GlStyles.images]}
-//           resizeMode={'cover'}
-//         />
-//       </View>
-//       <Text
-//         style={{
-//           color: '#4BA735',
-//           fontSize: wp(3.5),
-//           marginLeft: wp(5),
-//         }}>
-//         Add New Organization
-//       </Text>
-//     </View>
-//   </View>
-// </Model> */}

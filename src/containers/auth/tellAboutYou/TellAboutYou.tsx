@@ -268,7 +268,9 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                 />
               </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.siginBtnContainer}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('CreateOrg')}
+              style={styles.siginBtnContainer}>
               <Text style={styles.signinText}>Continue</Text>
             </TouchableOpacity>
           </View>

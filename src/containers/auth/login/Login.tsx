@@ -42,14 +42,26 @@ class Login extends React.Component<LoginProps, any> {
     };
   }
 
-  submitSignin = async () => {
+  submitSignin = async (e: string) => {
     // event.preventDefault();
+    // this.props.navigation.navigate('sor');
+    const attr = {
+      profile: 'NotConfirmed',
+    };
     try {
       const user = await Auth.signIn(
         'asohial.bscs16seecs@seecs.edu.pk',
         'Weird.password02',
+        attr,
       );
       console.log(user);
+
+      if (user.userConfirmed) {
+        const sendEmail = await Auth.forgotPassword(e);
+        if (sendEmail) this.props.navigation.navigate('Verify');
+      } else {
+        this.props.navigation.navigate('sor');
+      }
     } catch (err) {
       console.log(err);
     }
@@ -135,7 +147,7 @@ class Login extends React.Component<LoginProps, any> {
             </View>
             <Text style={styles.forgetPassText}>Forget Password ? </Text>
             <TouchableOpacity
-              onPress={() => this.submitSignin()}
+              onPress={() => this.submitSignin(this.state.username)}
               style={styles.siginBtnContainer}>
               <Text style={styles.signinText}>Sign in </Text>
             </TouchableOpacity>
