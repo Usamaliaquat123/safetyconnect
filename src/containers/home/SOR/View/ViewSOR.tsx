@@ -1129,11 +1129,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                   ? images.text
                                   : d.type == 'doc'
                                   ? images.doc
-                                  : d.type == 'excel'
-                                  ? images.excel
-                                  : d.type == 'powerpoint'
-                                  ? images.powerpoint
-                                  : null
+                                  : // : d.type == 'excel'
+                                    // ? images.excel
+                                    // : d.type == 'powerpoint'
+                                    // ? images.powerpoint
+                                    null
                               }
                               style={{width: wp(10), height: wp(10)}}
                             />
