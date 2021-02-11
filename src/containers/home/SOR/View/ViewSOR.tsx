@@ -587,6 +587,29 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             Assigned to:{' '}
                             <Text style={styles.subAssuser}>
                               {d.AssignedTo[0]}
+                              {d.AssignedTo.length > 1 && (
+                                <Text
+                                  onPress={() => {
+                                    this.setState({
+                                      allActionsEdit: d,
+                                      SuggestionPop: true,
+                                      //   allActionsEditIndex: i,
+                                    });
+                                  }}
+                                  style={[
+                                    styles.subAssuser,
+
+                                    {
+                                      opacity: 0.5,
+                                      // marginTop: wp(3,
+                                      fontWeight: 'bold',
+                                      fontSize: wp(2.7),
+                                    },
+                                  ]}>
+                                  {' '}
+                                  {d.AssignedTo.length - 1}+ more
+                                </Text>
+                              )}
                             </Text>
                           </Text>
                         </TouchableOpacity>

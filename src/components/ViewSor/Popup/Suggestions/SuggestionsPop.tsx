@@ -127,6 +127,7 @@ export default class SuggestionsPop extends React.Component<
                         : {borderColor: colors.lightGrey},
                     ]}>
                     <TextInput
+                      maxLength={500}
                       onFocus={() => this.setState({selectedInput: 2})}
                       style={styles.textInputPopup}
                       multiline={true}
