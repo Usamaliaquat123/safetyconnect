@@ -268,8 +268,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     this.setState({});
   };
 
-  submitActionsAndRecommendations = () => {};
-
   render() {
     return (
       <Animated.View style={[styles.container, {opacity: this.state.initAnim}]}>
@@ -593,7 +591,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                     this.setState({
                                       allActionsEdit: d,
                                       SuggestionPop: true,
-                                      //   allActionsEditIndex: i,
+                                      //   allActionsEditIndex: i,s
                                     });
                                   }}
                                   style={[
@@ -607,7 +605,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                     },
                                   ]}>
                                   {' '}
-                                  {d.AssignedTo.length - 1}+ more
+                                  {d.AssignedTo.length - 1} + more
                                 </Text>
                               )}
                             </Text>
@@ -642,9 +640,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   style={styles.textaddActionContainer}
                   placeholder={'Add action / recommendation here'}
                 />
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   onPress={() => {
-                    this.submitActionsAndRecommendations();
+                    this.submitActionsAndRecommendations(this.st);
                   }}
                   style={{
                     position: 'absolute',
@@ -656,14 +654,30 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   }}>
                   <Icon
                     size={wp(4)}
-                    name="arrowright"
-                    type="antdesign"
+                    name="admin-panel-settings"
+                    type="material"
                     color={colors.primary}
                   />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity
                   onPress={() => {
-                    this.submitActionsAndRecommendations();
+                    // this.submitActionsAndRecommendations(
+                    //   this.state.actionsAndRecommendationText,
+                    // );
+                    if(this.state.actionsAndRecommendationText !== ""){
+
+                      this.setState({
+                        allActionsEdit: {
+                          status: 'Completed',
+                          observation: this.state.actionsAndRecommendationText,
+                          SubmittedTo: [],
+                          AssignedTo: [],
+                          time: Date.now,
+                          type: 'Elimination',
+                        },
+                        SuggestionPop: true,
+                      });
+                    }
                   }}
                   style={{
                     position: 'absolute',
@@ -1244,6 +1258,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             </View>
           </Animated.View>
         </ScrollView>
+
         <Model
           animationIn={'bounceInUp'}
           animationOut={'bounceOutDown'}
