@@ -15,6 +15,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {Create_sor} from '@service';
 import {RouteProp} from '@react-navigation/native';
+import {Auth} from 'aws-amplify';
 import {colors, images, GlStyles} from '@theme';
 import {
   widthPercentageToDP as wp,
@@ -36,8 +37,23 @@ class Login extends React.Component<LoginProps, any> {
     this.state = {
       selectedInput: 1,
       isEye: true,
+      username: '',
+      password: '',
     };
   }
+
+  submitSignin = async () => {
+    // event.preventDefault();
+    try {
+      const user = await Auth.signIn(
+        'asohial.bscs16seecs@seecs.edu.pk',
+        'Weird.password02',
+      );
+      console.log(user);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -67,7 +83,10 @@ class Login extends React.Component<LoginProps, any> {
                 <TextInput
                   onFocus={() => this.setState({selectedInput: 1})}
                   style={styles.authInputs}
-                  onChange={(e) => console.log(e)}
+                  onChange={(e) =>
+                    this.setState({username: e.nativeEvent.text})
+                  }
+                  value={this.state.username}
                   placeholder={'Enter your email'}
                 />
               </View>
@@ -85,7 +104,10 @@ class Login extends React.Component<LoginProps, any> {
                   secureTextEntry={this.state.isEye}
                   onFocus={() => this.setState({selectedInput: 2})}
                   style={styles.authInputs}
-                  onChange={(e) => console.log(e)}
+                  value={this.state.password}
+                  onChange={(e) =>
+                    this.setState({password: e.nativeEvent.text})
+                  }
                   placeholder={'******'}
                 />
                 <TouchableOpacity
@@ -112,7 +134,9 @@ class Login extends React.Component<LoginProps, any> {
               </View>
             </View>
             <Text style={styles.forgetPassText}>Forget Password ? </Text>
-            <TouchableOpacity style={styles.siginBtnContainer}>
+            <TouchableOpacity
+              onPress={() => this.submitSignin()}
+              style={styles.siginBtnContainer}>
               <Text style={styles.signinText}>Sign in </Text>
             </TouchableOpacity>
             {/* Or */}

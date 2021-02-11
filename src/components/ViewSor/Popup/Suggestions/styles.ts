@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
        borderColor: colors.lightGrey 
       },
       textInputPopup : {
-        fontSize: wp(3), width: wp(70)
+        fontSize: wp(3), width: wp(60)
       },
       pickerIcon: {
         top: wp(2.7),

@@ -84,6 +84,7 @@ export default class SuggestionsPop extends React.Component<
                 : {borderColor: colors.lightGrey},
             ]}>
             <TextInput
+              maxLength={20}
               onFocus={() => this.setState({selectedInput: 1})}
               style={styles.textInputPopup}
               multiline={true}
@@ -170,7 +171,7 @@ export default class SuggestionsPop extends React.Component<
                         <TouchableOpacity
                           key={i}
                           onPress={() => {
-                            this.state.involvePersonTags.push(d);
+                            this.state.AssignedTo.push(d);
                             this.setState({
                               involvePersonText: '',
                               suggestions: [],

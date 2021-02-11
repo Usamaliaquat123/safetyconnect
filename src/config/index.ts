@@ -1,7 +1,7 @@
 
 
 import * as Sentry from "@sentry/react-native";
-// import { Auth } from 'aws-amplify';
+import Amplify from 'aws-amplify'
 
 
 
@@ -20,6 +20,33 @@ const configSentry = () => {
 }
 
 
+const AmlifyConfigure = () => {
+    return new Promise((resolve, reject)=> {
+        try {
+            
+            Amplify.configure({
+                Auth: {
+                  mandatorySignIn: true,
+                  region: 'us-east-2',
+                  userPoolId: 'us-east-2_dCVQj7g1N',
+                  userPoolWebClientId: '5n6tdp3pqcoj0q44ch83963gfp',
+                },
+                oauth: {
+                  domain: 'homesafety.auth.us-east-2.amazoncognito.com',
+                  redirectSignIn: 'http://localhost:3000/signin',
+                  redirectSignOut: 'http://localhost:3000/signup',
+                  responseType: 'code', // or 'token', note that REFRESH token will only be generated when the responseType is code
+                },
+              });
+
+              resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+
+}
+
 // configure aws auther 
 //  export const authSignup = async (email :string, password: string) => {
 //     return new Promise((resolve, reject) => {
@@ -36,4 +63,4 @@ const configSentry = () => {
 //  } 
 
 
-export    {configSentry}
+export    {configSentry,AmlifyConfigure}

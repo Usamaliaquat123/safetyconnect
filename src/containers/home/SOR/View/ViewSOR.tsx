@@ -102,6 +102,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       SuggestionPop: false,
       allActionsEdit: [],
       allActionsEditIndex: 0,
+
+      // actions and recommendations
+      actionsAndRecommendationText: '',
     };
 
     this.animation = React.createRef();
@@ -216,22 +219,22 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           d.type.split('/')[1] == 'vnd.ms-excel' ||
           d.type.split('.').pop() == 'sheet'
         ) {
-          attach.splice(0, 0, {
-            type: 'excel',
-            upload: 'self',
-            name: d.name,
-            url: d.uri,
-          });
+          // attach.splice(0, 0, {
+          //   type: 'excel',
+          //   upload: 'self',
+          //   name: d.name,
+          //   url: d.uri,
+          // });
         } else if (
           d.type.split('/')[1] == 'vnd.ms-powerpoint' ||
           d.type.split('.').pop() == 'presentation'
         ) {
-          attach.splice(0, 0, {
-            type: 'powerpoint',
-            upload: 'self',
-            name: d.name,
-            url: d.uri,
-          });
+          // attach.splice(0, 0, {
+          //   type: 'powerpoint',
+          //   upload: 'self',
+          //   name: d.name,
+          //   url: d.uri,
+          // });
         } else {
           showMessage({
             message: 'File not supported',
@@ -264,6 +267,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
     this.setState({});
   };
+
+  submitActionsAndRecommendations = () => {};
 
   render() {
     return (
@@ -604,12 +609,39 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 <TextInput
                   onFocus={() => this.setState({notifiedAndInv: 3})}
                   maxLength={500}
-                  onChange={(e) => console.log('action and recommendation')}
+                  onChange={(e) =>
+                    this.setState({
+                      actionsAndRecommendationText: e.nativeEvent.text,
+                    })
+                  }
+                  value={this.state.actionsAndRecommendationText}
                   multiline={true}
                   style={styles.textaddActionContainer}
                   placeholder={'Add action / recommendation here'}
                 />
-                <View
+                <TouchableOpacity
+                  onPress={() => {
+                    this.submitActionsAndRecommendations();
+                  }}
+                  style={{
+                    position: 'absolute',
+                    right: wp(13),
+                    padding: wp(2),
+                    borderRadius: wp(2),
+                    top: wp(2.7),
+                    backgroundColor: colors.lightGrey,
+                  }}>
+                  <Icon
+                    size={wp(4)}
+                    name="arrowright"
+                    type="antdesign"
+                    color={colors.primary}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.submitActionsAndRecommendations();
+                  }}
                   style={{
                     position: 'absolute',
                     right: wp(3),
@@ -624,7 +656,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     type="antdesign"
                     color={colors.primary}
                   />
-                </View>
+                </TouchableOpacity>
               </View>
               <View style={styles.attachmentsContainer}>
                 <Text style={{fontSize: wp(3), fontWeight: 'bold'}}>
@@ -720,11 +752,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 ? images.text
                                 : d.type == 'doc'
                                 ? images.doc
-                                : d.type == 'excel'
-                                ? images.excel
-                                : d.type == 'powerpoint'
-                                ? images.powerpoint
-                                : null
+                                : // : d.type == 'excel'
+                                  // ? images.excel
+                                  // : d.type == 'powerpoint'
+                                  // ? images.powerpoint
+                                  null
                             }
                             style={{width: wp(7), height: wp(7)}}
                           />
@@ -788,27 +820,32 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     ) : null}
                   </View>
                 ))}
-
-                <TouchableOpacity
-                  onPress={() => this.openDoc(this.state.attachments)}
-                  style={{marginTop: wp(3), flexDirection: 'row'}}>
-                  <Icon
-                    containerStyle={{marginRight: wp(3)}}
-                    name="plus"
-                    size={wp(4)}
-                    type="antdesign"
-                    color={colors.primary}
-                  />
-                  <Text
-                    style={{
-                      fontSize: wp(3),
-                      fontWeight: 'bold',
-                      opacity: 0.5,
-                      color: colors.primary,
-                    }}>
-                    Add New Attachments
-                  </Text>
-                </TouchableOpacity>
+                {this.state.attachments.length < 6 && (
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (this.state.attachments.length < 6) {
+                        this.openDoc(this.state.attachments);
+                      }
+                    }}
+                    style={{marginTop: wp(3), flexDirection: 'row'}}>
+                    <Icon
+                      containerStyle={{marginRight: wp(3)}}
+                      name="plus"
+                      size={wp(4)}
+                      type="antdesign"
+                      color={colors.primary}
+                    />
+                    <Text
+                      style={{
+                        fontSize: wp(3),
+                        fontWeight: 'bold',
+                        opacity: 0.5,
+                        color: colors.primary,
+                      }}>
+                      Add New Attachments
+                    </Text>
+                  </TouchableOpacity>
+                )}
               </View>
               {/* Map Integration */}
               {/* <Text
@@ -904,11 +941,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                       ? images.text
                                       : d.type == 'doc'
                                       ? images.doc
-                                      : d.type == 'excel'
-                                      ? images.excel
-                                      : d.type == 'powerpoint'
-                                      ? images.powerpoint
-                                      : null
+                                      : // : d.type == 'excel'
+                                        // ? images.excel
+                                        // : d.type == 'powerpoint'
+                                        // ? images.powerpoint
+                                        null
                                   }
                                   style={{width: wp(10), height: wp(10)}}
                                 />

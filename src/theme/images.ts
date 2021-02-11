@@ -5,12 +5,12 @@ export const images = {
   // files
   pdf: require('./images/pdf.png'),
 doc : require('./images/doc.png'),
-jpg : require('./images/jpg.png'),
+// jpg : require('./images/jpg.png'),
 text : require('./images/txt.png'),
 map : require('./images/map.png'),
 jfif: require('./images/jfif.png'),
-excel: require('./images/excel.png'),
-powerpoint: require('./images/powerpoint.png'),
+// excel: require('./images/excel.png'),
+// powerpoint: require('./images/powerpoint.png'),
 
 lsr:  require('./images/icons/lsr.png'),
 nearMiss:  require('./images/icons/nearmiss.png'),

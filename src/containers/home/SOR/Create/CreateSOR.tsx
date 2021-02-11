@@ -498,7 +498,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               ) : null}
 
               <TouchableOpacity
-                onPress={() => this.pickupDoc()}
+                onPress={() => {
+                  if (this.state.filename.length < 5) {
+                    this.pickupDoc();
+                  }
+                }}
                 style={styles.uplaodBtn}>
                 <Text style={styles.uploadfileText}>Upload File</Text>
               </TouchableOpacity>
