@@ -297,9 +297,10 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                               (e: any) => e.title == d.classify,
                             )}
                             onPress={() =>
-                              this.props.navigation.navigate('ViewSOR', {
-                                data: d,
-                              })
+                              // this.props.navigation.navigate('ViewSOR', {
+                              //   data: d,
+                              // })
+                              this.props.navigation.navigate('home')
                             }
                             date={d.date}
                           />
@@ -364,9 +365,10 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                               (e: any) => e.title == d.classify,
                             )}
                             onPress={() =>
-                              this.props.navigation.navigate('ViewSOR', {
-                                data: d,
-                              })
+                              // this.props.navigation.navigate('ViewSOR', {
+                              //   data: d,
+                              // })
+                              this.props.navigation.navigate('home')
                             }
                             date={d.date}
                           />
