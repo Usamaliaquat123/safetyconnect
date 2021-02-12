@@ -664,8 +664,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     // this.submitActionsAndRecommendations(
                     //   this.state.actionsAndRecommendationText,
                     // );
-                    if(this.state.actionsAndRecommendationText !== ""){
-
+                    if (this.state.actionsAndRecommendationText !== '') {
                       this.setState({
                         allActionsEdit: {
                           status: 'Completed',
@@ -1018,12 +1017,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               })}
               <View style={{flexDirection: 'row'}}>
                 <Avatar
-                  containerStyle={{marginRight: wp(2)}}
+                  containerStyle={{
+                    marginRight: wp(2),
+                    marginTop: wp(4),
+                  }}
                   size={wp(6)}
                   rounded
                   source={{
                     uri:
-                      'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                      'https://media-exp1.licdn.com/dms/image/C5603AQHGeQB42B1CcA/profile-displayphoto-shrink_200_200/0/1588740771758?e=1618444800&v=beta&t=CtMgG7KLgfGZO-pYkX6tdvwbCGnuU-g4G2TiocMI1gc',
                   }}
                 />
 

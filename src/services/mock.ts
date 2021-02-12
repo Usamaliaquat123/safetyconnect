@@ -91,7 +91,7 @@ View_sor = {
   user: {
     name: 'John Doe',
     profile:
-      'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+      'https://media-exp1.licdn.com/dms/image/C5603AQHGeQB42B1CcA/profile-displayphoto-shrink_200_200/0/1588740771758?e=1618444800&v=beta&t=CtMgG7KLgfGZO-pYkX6tdvwbCGnuU-g4G2TiocMI1gc',
     classifyType: 'Near Miss',
     observation:
       'Aliqua deserunt laboris reprehenderit qui aliqua aute proident amet duis irure.',
