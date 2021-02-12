@@ -222,7 +222,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 <Avatar
                   rounded
                   source={{
-                    uri: Create_sor.user.profile,
+                    uri:
+                      'https://media-exp1.licdn.com/dms/image/C5603AQHGeQB42B1CcA/profile-displayphoto-shrink_200_200/0/1588740771758?e=1618444800&v=beta&t=CtMgG7KLgfGZO-pYkX6tdvwbCGnuU-g4G2TiocMI1gc',
                   }}
                 />
               </View>

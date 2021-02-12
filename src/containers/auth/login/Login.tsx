@@ -15,8 +15,10 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {Create_sor} from '@service';
 import {RouteProp} from '@react-navigation/native';
+import LottieView from 'lottie-react-native';
 import {Auth} from 'aws-amplify';
-import {colors, images, GlStyles} from '@theme';
+import {colors, images, GlStyles, animation} from '@theme';
+import {default as Model} from 'react-native-modal';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -174,6 +176,22 @@ class Login extends React.Component<LoginProps, any> {
             </TouchableOpacity>
           </View>
         </ScrollView>
+        {/* <Model
+          animationIn={'bounceInUp'}
+          animationOut={'bounceOutDown'}
+          animationInTiming={2000}
+          animationOutTiming={2000}
+          isVisible={true}
+          onBackdropPress={() => this.setState({addAssigners: false})}>
+          <LottieView
+            ref={(animation) => {
+              this.photoAnim = animation;
+            }}
+            style={{width: wp(70)}}
+            source={animation.loading}
+            loop={true}
+          />
+        </Model> */}
       </View>
     );
   }
