@@ -11,8 +11,8 @@ import {
     },
     header: {
         padding: wp(7),
-        paddingTop: wp(10),
-        paddingBottom: wp(8),
+        paddingTop: wp(6),
+        paddingBottom: wp(5),
         backgroundColor: colors.primary,
       },
       title: {
