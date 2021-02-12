@@ -40,94 +40,93 @@ export type StackNavigatorProps = {
 export const MainStackNavigator = () => {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="ViewSOR"
-            component={ViewSOR}
-            options={{
-              headerShown: false,
-            }}
-          />
+      {/* <NavigationContainer> */}
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="ViewSOR"
+          component={ViewSOR}
+          options={{
+            headerShown: false,
+          }}
+        />
 
-          <Stack.Screen
-            name="Signup"
-            component={Signup}
-            options={{
-              headerShown: false,
-            }}
-          />
+        <Stack.Screen
+          name="Signup"
+          component={Signup}
+          options={{
+            headerShown: false,
+          }}
+        />
 
-          <Stack.Screen
-            name="CreateSOR"
-            component={CreateSOR}
-            options={{
-              headerShown: false,
-            }}
-          />
+        <Stack.Screen
+          name="CreateSOR"
+          component={CreateSOR}
+          options={{
+            headerShown: false,
+          }}
+        />
 
-          <Stack.Screen
-            name="ViewAll"
-            component={ViewAll}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="createProject"
-            component={CreateProject}
-            options={{
-              headerShown: false,
-            }}
-          />
+        <Stack.Screen
+          name="ViewAll"
+          component={ViewAll}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="createProject"
+          component={CreateProject}
+          options={{
+            headerShown: false,
+          }}
+        />
 
-          <Stack.Screen
-            name="CreateOrganization"
-            component={CreateOrg}
-            options={{
-              headerShown: false,
-            }}
-          />
+        <Stack.Screen
+          name="CreateOrganization"
+          component={CreateOrg}
+          options={{
+            headerShown: false,
+          }}
+        />
 
-          <Stack.Screen
-            name="Messaging"
-            component={Messaging}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Chat"
-            component={Chat}
-            options={{
-              headerShown: false,
-            }}
-          />
+        <Stack.Screen
+          name="Messaging"
+          component={Messaging}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Chat"
+          component={Chat}
+          options={{
+            headerShown: false,
+          }}
+        />
 
-          <Stack.Screen
-            name="Verify"
-            component={Verify}
-            options={{
-              headerShown: false,
-            }}
-          />
-
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{
-              headerShown: false,
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+        <Stack.Screen
+          name="Verify"
+          component={Verify}
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack.Navigator>
+      {/* </NavigationContainer> */}
     </SafeAreaProvider>
   );
 };

@@ -740,7 +740,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 this.photoAnim = animation;
                               }}
                               style={{width: wp(11)}}
-                              source={animation.loading}
+                              source={animation.download}
                               loop={false}
                             />
 

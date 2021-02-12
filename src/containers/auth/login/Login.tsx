@@ -99,7 +99,7 @@ class Login extends React.Component<LoginProps, any> {
                   //   this.photoAnim = animation;
                   // }}
                   autoPlay={true}
-                  style={{width: wp(70)}}
+                  style={{width: wp(90)}}
                   source={animation.loading}
                   loop={true}
                 />
@@ -108,7 +108,7 @@ class Login extends React.Component<LoginProps, any> {
                     fontSize: wp(3.5),
                     opacity: 0.5,
                     textAlign: 'center',
-                    marginTop: wp(5),
+                    marginTop: wp(-5),
                   }}>
                   Connecting...
                 </Text>

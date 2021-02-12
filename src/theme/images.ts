@@ -15,7 +15,17 @@ jfif: require('./images/jfif.png'),
 lsr:  require('./images/icons/lsr.png'),
 nearMiss:  require('./images/icons/nearmiss.png'),
 
-
+menuIcons : {
+  edit : require('./images/more/edit.png'),
+  observation : require('./images/more/observation.png'),
+  incident : require('./images/more/incident.png'),
+  audit : require('./images/more/audit.png'),
+  risk : require('./images/more/risk.png'),
+  lms : require('./images/more/lms.png'),
+  data : require('./images/more/data.png'),
+  settings : require('./images/more/settings.png'),
+  signout : require('./images/more/signout.png'),
+},
 
 bottomTab: {
   home : require('./images/tab/home.png'),

@@ -12,6 +12,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {Auth} from 'aws-amplify';
 import {connect} from 'react-redux';
 import {Icon} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -30,9 +31,14 @@ export interface CreatePassProps {
   route: CreatePassRouteProp;
   reduxActions: any;
   reduxState: any;
+  // username: string;
 }
 
 class CreatePass extends React.Component<CreatePassProps, any> {
+  createPass = async () => {
+    const signup = await Auth.forgotPassword(this.props.route.params.username);
+    if (signup) this.props.navigation.navigate('tellAboutYou');
+  };
   render() {
     return (
       <View style={styles.container}>

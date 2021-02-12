@@ -18,7 +18,7 @@ export type AuthNavigatorProp = {
   Login: undefined;
   Signup: undefined;
   tellAboutYou: undefined;
-  CreatePass: undefined;
+  CreatePass: {username: string};
   CreateOrg: undefined;
   CreateProj: undefined;
 };

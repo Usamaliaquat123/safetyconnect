@@ -8,7 +8,15 @@ import {
   Modal,
 } from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {Home, ViewAll, Messaging, ViewSOR, CreateSOR, Login} from '@containers';
+import {
+  Home,
+  ViewAll,
+  Messaging,
+  ViewSOR,
+  CreateSOR,
+  Login,
+  Signup,
+} from '@containers';
 import {Icon} from 'react-native-elements';
 import {colors, images, GlStyles} from '@theme';
 import {default as Model} from 'react-native-modal';
@@ -19,6 +27,7 @@ import {
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {AuthStackNavigator} from './AuthNav';
+import {MainStackNavigator} from './Main';
 // import BottomSheet from 'reanimated-bottom-sheet';
 // import Animated from 'react-native-reanimated';
 export interface TabBarProps {
@@ -45,8 +54,12 @@ export const BottomTabNavigator = () => {
           <Tab.Screen name="home" component={ViewSOR} options={{}} />
           <Tab.Screen name="sor" component={ViewAll} options={{}} />
           <Tab.Screen name="addNew" component={Home} options={{}} />
-          <Tab.Screen name="create" component={CreateSOR} options={{}} />
-          <Tab.Screen name="more" component={AuthStackNavigator} options={{}} />
+          <Tab.Screen
+            name="create"
+            component={AuthStackNavigator}
+            options={{}}
+          />
+          <Tab.Screen name="more" component={MainStackNavigator} options={{}} />
         </Tab.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
