@@ -27,7 +27,7 @@ export type StackNavigatorProps = {
   Home: undefined;
   CreateSOR: undefined;
   ViewAll: undefined;
-  ViewSOR: {data: Isor};
+  // ViewSOR: {data: Isor};
   Messaging: undefined;
   Verify: undefined;
   Chat: {data: Imessage};
