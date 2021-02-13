@@ -3,6 +3,7 @@ import {
   View,
   TouchableOpacity,
   StyleSheet,
+  Image,
   Text,
   StyleProp,
   ViewStyle,
@@ -10,6 +11,7 @@ import {
 import {connect} from 'react-redux';
 import {Icon, Avatar} from 'react-native-elements';
 import styles from './styles';
+import {images, colors} from '@theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -23,6 +25,7 @@ export interface ListCardProps {
   date: number;
   onPress: Function;
   iconconf: any;
+  classify: string;
   styles: StyleProp<ViewStyle>;
 }
 
@@ -34,12 +37,29 @@ export default class ListCard extends React.Component<ListCardProps, any> {
         onPress={() => this.props.onPress()}
         style={[styles.listVwCntent, this.props.styles]}>
         <View style={{flexDirection: 'row'}}>
-          <Icon
-            size={wp(5)}
-            name={this.props.iconconf.icon}
-            type={this.props.iconconf.type}
-            color={this.props.iconconf.color}
-          />
+          {this.props.classify == 'LSR' ? (
+            <Image
+              source={images.lsr}
+              style={{tintColor: colors.primary, width: wp(5), height: wp(5)}}
+            />
+          ) : (
+            <View>
+              {this.props.classify == 'Near Miss' ? (
+                <Image
+                  source={images.nearMiss}
+                  style={{tintColor: 'black', width: wp(5), height: wp(5)}}
+                />
+              ) : (
+                <Icon
+                  size={wp(5)}
+                  name={this.props.iconconf.icon}
+                  type={this.props.iconconf.type}
+                  color={this.props.iconconf.color}
+                />
+              )}
+            </View>
+          )}
+
           <Text style={styles.listObDesc}>
             {this.props.observation.slice(0, 40)}...
           </Text>

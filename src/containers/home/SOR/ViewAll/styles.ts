@@ -34,12 +34,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: wp(100),
   },
-    content: {
+  content: {
     // flex: 2,
     // height: hp(100),
     backgroundColor: colors.secondary,
     borderTopLeftRadius: wp(10),
-    borderTopRightRadius: wp(10)
+    borderTopRightRadius: wp(10),
   },
   hselectort: {color: colors.secondary, fontWeight: 'bold', fontSize: wp(3)},
   selectorBox: {color: colors.secondary, fontSize: wp(3)},
@@ -137,24 +137,21 @@ const styles = StyleSheet.create({
     marginRight: wp(7),
   },
 
-    listHeader: {
-    flexDirection : "row",
-      paddingLeft: wp(3)
+  listHeader: {
+    flexDirection: 'row',
+    paddingLeft: wp(3),
   },
   listDraftText: {
     fontSize: wp(3.5),
-    fontWeight: "bold",
+    fontWeight: 'bold',
     color: colors.text,
-    marginTop :wp(-1),
-    marginLeft: wp(5)
+    marginTop: wp(-1),
+    marginLeft: wp(5),
   },
   listViewContent: {
-marginTop: wp(5),
-marginLeft: wp(3),
+    marginTop: wp(5),
+    marginLeft: wp(3),
   },
- 
-
-
 });
 
 export default styles;

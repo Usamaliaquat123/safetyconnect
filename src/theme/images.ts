@@ -11,7 +11,7 @@ map : require('./images/map.png'),
 jfif: require('./images/jfif.png'),
 // excel: require('./images/excel.png'),
 // powerpoint: require('./images/powerpoint.png'),
-
+organizationLogo : require('./images/organizationLogo.png'),
 lsr:  require('./images/icons/lsr.png'),
 nearMiss:  require('./images/icons/nearmiss.png'),
 

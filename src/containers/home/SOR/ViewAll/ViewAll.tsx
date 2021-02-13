@@ -221,6 +221,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       <View style={styles.listViewContent}>
                         {this.state.draft.map((d: Isor, i: number) => (
                           <ListCard
+                            classify={d.classify}
                             styles={
                               this.state.draft.length == i + 1
                                 ? {borderBottomWidth: wp(0)}
@@ -284,6 +285,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       <View style={styles.listViewContent}>
                         {this.state.notified.map((d: Isor, i: number) => (
                           <ListCard
+                            classify={d.classify}
                             styles={
                               this.state.draft.length == i + 1
                                 ? {borderBottomWidth: wp(0)}
@@ -352,6 +354,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       <View style={styles.listViewContent}>
                         {this.state.submitted.map((d: Isor, i: number) => (
                           <ListCard
+                            classify={d.classify}
                             styles={
                               this.state.draft.length == i + 1
                                 ? {borderBottomWidth: wp(0)}

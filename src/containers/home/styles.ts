@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '@theme';
+import { colors, fonts } from '@theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -12,6 +12,8 @@ const styles = StyleSheet.create({
   },
 
 
+  orgLogo : { backgroundColor: colors.secondary, justifyContent: "center", alignItems:"center", borderRadius: wp(3),padding: wp(2) },
+  orgLogoPng : { width: wp(10), height:wp(10)},
 
   headertle: {flexDirection: 'row'},
   underScrore: {
@@ -23,47 +25,66 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: wp(7),
+    paddingLeft: wp(4),
     paddingTop: wp(7),
     paddingBottom: wp(7),
     backgroundColor: colors.primary,
   },
   title: {
-    fontSize: wp(5),
+    fontSize: wp(3.6),
     marginLeft: wp(3),
     color: colors.secondary,
-    fontWeight: 'bold',
+    
+  },
+  orgTitle : {
+    fontSize: wp(5),
+    marginLeft: wp(3),
+    color : colors.secondary,
+    fontWeight: "bold"
   },
 
   content : {
-    padding: wp(5),
-    backgroundColor: colors.secondary,
+    // padding: wp(5),
+    backgroundColor: colors.darkLightGrey,
     
     // flex: 2,
     // marginTop: wp(80),
-    // borderTopLeftRadius: wp(8),
-    // borderTopRightRadius: wp(8),
+    borderTopLeftRadius: wp(4),
+    borderTopRightRadius: wp(4),
   },
 
 
-  username : {
-    marginLeft: wp(3),
-    fontSize: wp(4),
+  // Content
 
-    fontWeight: 'bold',
+  menu : {
+    padding: wp(5),
+    backgroundColor :colors.secondary,
+    borderTopLeftRadius: wp(4),
+    borderTopRightRadius: wp(4),
   },
-organizations : {fontSize: wp(3), marginLeft: wp(3), opacity: 0.5},
-
-
-  itemIcon : {
-    width: wp(9), height: wp(9)
+  recentActivity:  {
+    marginTop :wp(2),
+    padding: wp(5),
+    backgroundColor:colors.secondary
   },
-  itemText:  {
-    alignSelf: "center",
-    fontSize: wp(3.6), opacity: 0.5, marginLeft: wp(2)
+  perfStats : {
+    marginTop :wp(2),
+    padding: wp(5),
+    backgroundColor: colors.secondary
   },
-  containerOfItem : {
-    marginTop: wp(4),
-
+  actHeading : {  
+    fontSize :wp(5),
+    fontWeight : "bold",
+    color: colors.primary
+  },
+  recentlyHead : {
+    alignItems : "center",
+    flexDirection:"row"
+  },
+  viewAll : {
+    fontSize: wp(3.3),
+    position: "absolute",
+    right: wp(0)
   }
 });
 

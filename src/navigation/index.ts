@@ -1,7 +1,10 @@
-import TabBar,{ TabBarProps ,BottomTabNavigator,BottomTabNavigatorProp} from './TabBar';
-import {MainStackNavigator ,StackNavigatorProps } from "./Main";
-import {   AuthStackNavigator,
-  AuthNavigatorProp, } from "./AuthNav";
+import TabBar, {
+  TabBarProps,
+  BottomTabNavigator,
+  BottomTabNavigatorProp,
+} from './TabBar';
+import {MainStackNavigator, StackNavigatorProps} from './Main';
+import {AuthStackNavigator, AuthNavigatorProp} from './AuthNav';
 
 export {
   MainStackNavigator,
@@ -11,5 +14,5 @@ export {
   BottomTabNavigatorProp,
   AuthNavigatorProp,
   TabBarProps,
-  TabBar
+  TabBar,
 };

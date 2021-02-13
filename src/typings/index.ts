@@ -9,7 +9,7 @@ export interface Isor {
   location: string;
   user1: string;
   user2: string;
-  username : string
+  username: string;
 }
 
 export interface Imessage {
@@ -21,12 +21,12 @@ export interface Imessage {
 }
 // classify sor typings
 export interface classifySorBtn {
-  icon: string,
-  type: string,
-  title: string,
-  selected: boolean,
-  color: string,
-} 
+  icon: string;
+  type: string;
+  title: string;
+  selected: boolean;
+  color: string;
+}
 // Messages
 type renderFunction = (x: any) => JSX.Element;
 export interface IChat {

@@ -171,9 +171,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignSelf: 'center',
-    justifyContent: "center"
+    justifyContent: 'center',
   },
-  clasSorBtnWrap: { alignSelf: 'center'},
+  clasSorBtnWrap: {alignSelf: 'center'},
   clasSorBtnTtl: {
     textAlign: 'center',
     fontSize: wp(3),
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: wp(3),
     marginTop: wp(2),
-    textAlign: "center",
+    textAlign: 'center',
     color: colors.text,
   },
   uploadBIcmTxt: {
@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
     fontSize: wp(3),
     padding: wp(1),
     color: colors.text,
-    width: wp(80)
+    width: wp(80),
   },
   slctSEContainer: {
     // position: 'absolute',

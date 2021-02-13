@@ -1,24 +1,26 @@
 import * as React from 'react';
-import {View, StyleSheet, Text, ScrollView,TouchableOpacity,Image} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 // import { connect } from 'react-redux';
-import { Avatar } from "react-native-elements";
+import {Avatar} from 'react-native-elements';
 import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
-import { colors, images } from "@theme";
+import {colors, images} from '@theme';
 import {
-    widthPercentageToDP as wp,
-    heightPercentageToDP as hp,
-  } from 'react-native-responsive-screen';
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 export interface MenuProps {}
 
-
-
-type MenuNavigationProp = StackNavigationProp<
-  StackNavigatorProps,
-  'Menu'
->;
+type MenuNavigationProp = StackNavigationProp<StackNavigatorProps, 'Menu'>;
 type MenuRouteProp = RouteProp<StackNavigatorProps, 'Menu'>;
 
 export interface HomeProps {
@@ -28,16 +30,14 @@ export interface HomeProps {
   reduxState: any;
 }
 export default class Menu extends React.Component<MenuProps, any> {
-    constructor(props: any){
-        super(props)
-        this.state = {}
-    }
-
-
+  constructor(props: any) {
+    super(props);
+    this.state = {};
+  }
 
   render() {
     return (
-        <View style={{flex: 1, backgroundColor: colors.primary}}>
+      <View style={{flex: 1, backgroundColor: colors.primary}}>
         <ScrollView>
           <View style={styles.header}>
             <View style={styles.headertle}>

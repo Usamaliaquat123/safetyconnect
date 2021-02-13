@@ -6,7 +6,10 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import styles from './styles';
+import {classifySor} from '@utils';
 import {Avatar, Icon} from 'react-native-elements';
+import {View_sor, recentActivity} from '@service';
+import {ListCard} from '@components';
 import {} from '@theme';
 import {bindActionCreators} from 'redux';
 import {
@@ -40,122 +43,72 @@ class Home extends React.Component<HomeProps, any> {
         <ScrollView>
           <View style={styles.header}>
             <View style={styles.headertle}>
-              <View>
-                <Text style={styles.title}>More</Text>
-                <View style={styles.underScrore} />
+              <View style={styles.orgLogo}>
+                <Image
+                  source={images.organizationLogo}
+                  style={styles.orgLogoPng}
+                />
+              </View>
+              <View style={{alignSelf: 'center'}}>
+                <Text style={styles.title}>Welcome Waseem!</Text>
+                <Text style={styles.orgTitle}>Sandan</Text>
+              </View>
+              <View
+                style={{
+                  position: 'absolute',
+                  right: wp(0),
+                  alignSelf: 'center',
+                }}>
+                <Avatar
+                  rounded
+                  source={{
+                    uri: View_sor.user.profile,
+                  }}
+                />
               </View>
             </View>
           </View>
           <View style={styles.content}>
-            <View style={styles.avatarView}>
-              <Avatar
-                size={'medium'}
-                rounded
-                source={{
-                  uri:
-                    'https://media-exp1.licdn.com/dms/image/C5603AQHGeQB42B1CcA/profile-displayphoto-shrink_200_200/0/1588740771758?e=1618444800&v=beta&t=CtMgG7KLgfGZO-pYkX6tdvwbCGnuU-g4G2TiocMI1gc',
-                }}
-              />
-              <View style={{marginTop: wp(2)}}>
-                <Text style={styles.username}>John Doe</Text>
-                <Text style={styles.organizations}>Safety Connect</Text>
+            <View style={styles.menu}></View>
+            <View style={styles.recentActivity}>
+              <View style={styles.recentlyHead}>
+                <Text style={styles.actHeading}>Recently Activity</Text>
+                <Text style={styles.viewAll}>View All</Text>
               </View>
-              <View style={{position: 'absolute', right: wp(0)}}>
-                <Image style={styles.itemIcon} source={images.menuIcons.edit} />
+              <View style={{marginTop: wp(3)}}>
+                {recentActivity.map((d, i) => (
+                  <ListCard
+                    classify={d.classify}
+                    styles={
+                      recentActivity.length == i + 1
+                        ? {borderBottomWidth: wp(0)}
+                        : null
+                    }
+                    user1={d.user1}
+                    user2={d.user2}
+                    observation={d.observation}
+                    username={d.username}
+                    iconconf={classifySor.find(
+                      (e: any) => e.title == d.classify,
+                    )}
+                    onPress={
+                      () => {}
+                      // this.props.navigation.navigate('home', {
+                      //   data: d,
+                      // })
+                      // this.props.navigation.navigate('home')
+                    }
+                    date={d.date}
+                  />
+                ))}
               </View>
             </View>
-            {/*  content */}
-            <TouchableOpacity style={styles.containerOfItem}>
-              <View style={{flexDirection: 'row'}}>
-                <View>
-                  <Image
-                    style={styles.itemIcon}
-                    source={images.menuIcons.observation}
-                  />
-                </View>
-                <Text style={styles.itemText}>Observation & Feedback</Text>
+            <View style={styles.perfStats}>
+              <View style={styles.recentlyHead}>
+                <Text style={styles.actHeading}>Performance Statistics</Text>
+                <Text style={styles.viewAll}>View All</Text>
               </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.containerOfItem}>
-              <View style={{flexDirection: 'row'}}>
-                <View>
-                  <Image
-                    style={styles.itemIcon}
-                    source={images.menuIcons.incident}
-                  />
-                </View>
-                <Text style={styles.itemText}>
-                  Incident and Accident Reporting
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.containerOfItem}>
-              <View style={{flexDirection: 'row'}}>
-                <View>
-                  <Image
-                    style={styles.itemIcon}
-                    source={images.menuIcons.audit}
-                  />
-                </View>
-                <Text style={styles.itemText}>Audit and Inspection</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.containerOfItem}>
-              <View style={{flexDirection: 'row'}}>
-                <View>
-                  <Image
-                    style={styles.itemIcon}
-                    source={images.menuIcons.risk}
-                  />
-                </View>
-                <Text style={styles.itemText}>Risk Management</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.containerOfItem}>
-              <View style={{flexDirection: 'row'}}>
-                <View>
-                  <Image
-                    style={styles.itemIcon}
-                    source={images.menuIcons.lms}
-                  />
-                </View>
-                <Text style={styles.itemText}>LMS</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.containerOfItem}>
-              <View style={{flexDirection: 'row'}}>
-                <View>
-                  <Image
-                    style={styles.itemIcon}
-                    source={images.menuIcons.data}
-                  />
-                </View>
-                <Text style={styles.itemText}>Data Analytics</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.containerOfItem}>
-              <View style={{flexDirection: 'row'}}>
-                <View>
-                  <Image
-                    style={styles.itemIcon}
-                    source={images.menuIcons.settings}
-                  />
-                </View>
-                <Text style={styles.itemText}>Settings</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.containerOfItem, {marginBottom: wp(15)}]}>
-              <View style={{flexDirection: 'row'}}>
-                <View>
-                  <Image
-                    style={styles.itemIcon}
-                    source={images.menuIcons.signout}
-                  />
-                </View>
-                <Text style={styles.itemText}>Sign out</Text>
-              </View>
-            </TouchableOpacity>
+            </View>
           </View>
         </ScrollView>
       </View>

@@ -37,13 +37,12 @@ export type StackNavigatorProps = {
   tellAboutYou: undefined;
   createProject: undefined;
   CreateOrganization: undefined;
-  Menu:  undefined
+  Menu: undefined;
 };
 export const MainStackNavigator = () => {
   return (
     <SafeAreaProvider>
       <Stack.Navigator>
-
         <Stack.Screen
           name="Menu"
           component={Menu}

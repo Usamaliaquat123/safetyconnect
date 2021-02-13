@@ -12,11 +12,13 @@ import {
   notified,
   repeatedSor,
   riskxSeverityxliklihood,
+  recentActivity
 } from './mock';
 import {messages  } from "./messaging_mock";
 export {
   Api,
   Create_sor,
+  recentActivity,
   View_sor,
   draft,
   messages,

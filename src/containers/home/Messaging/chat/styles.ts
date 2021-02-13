@@ -46,8 +46,6 @@ const styles = StyleSheet.create({
     // marginRight: 15,
   },
 
-
-
   // left container message
   leftContainer: {
     backgroundColor: colors.lightBlue,
@@ -81,25 +79,27 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
 
-// container OF Imagetainer
-containerOfImage : {
-  position: 'relative',
-  flexWrap: 'wrap',
-  width: wp(10),
-},
-imageTag: {
-  width: wp(20),
-  height: wp(20),
-  borderRadius: wp(3),
-  marginRight: wp(2),
-},
+  // container OF Imagetainer
+  containerOfImage: {
+    position: 'relative',
+    flexWrap: 'wrap',
+    width: wp(10),
+  },
+  imageTag: {
+    width: wp(20),
+    height: wp(20),
+    borderRadius: wp(3),
+    marginRight: wp(2),
+  },
 
-// container of Text
-containerOfDate:  {
-  fontSize: wp(2.5), marginLeft: wp(2), opacity: 0.5
-},
+  // container of Text
+  containerOfDate: {
+    fontSize: wp(2.5),
+    marginLeft: wp(2),
+    opacity: 0.5,
+  },
   // container of arrow
-  containerOfArrow:  {
+  containerOfArrow: {
     width: 0,
     position: 'absolute',
     left: wp(-2),

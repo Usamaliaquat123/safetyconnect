@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     // paddingLeft: wp(5),
     // paddingRight: wp(5),
     paddingTop: wp(8),
-    paddingBottom: wp(8)
+    paddingBottom: wp(8),
     // height: wp(150),
   },
   clasifyT: {
@@ -59,16 +59,15 @@ const styles = StyleSheet.create({
   classittleicon: {
     flexDirection: 'row',
   },
-  contentPadding : {
+  contentPadding: {
     paddingLeft: wp(5),
-    paddingRight: wp(5)
-
+    paddingRight: wp(5),
   },
   obserContainer: {marginTop: wp(3)},
   observationText: {
-    fontWeight: "800",
+    fontWeight: '800',
     color: colors.primary,
-    
+
     fontSize: wp(3.5),
   },
   observationDate: {
@@ -78,64 +77,62 @@ const styles = StyleSheet.create({
     opacity: 0.5,
     marginTop: wp(1),
   },
-  subContainer:  {
-    flexDirection: "row",
+  subContainer: {
+    flexDirection: 'row',
     marginTop: wp(3),
-
   },
-  submittedTo : {
-    flexDirection: "row"
+  submittedTo: {
+    flexDirection: 'row',
   },
-  observerTo : {
-    flexDirection: "row",
-    position: "absolute",
-    right: 0
+  observerTo: {
+    flexDirection: 'row',
+    position: 'absolute',
+    right: 0,
   },
-  subText:  {
+  subText: {
     fontSize: wp(3),
     color: colors.text,
-    fontFamily:fonts.latoRegular
+    fontFamily: fonts.latoRegular,
   },
-  obvText:  {
-    
+  obvText: {
     fontSize: wp(3),
-    color: colors.text
+    color: colors.text,
   },
   tabs: {marginTop: wp(5)},
-  involveNortify : {
-marginTop: wp(10),
+  involveNortify: {
+    marginTop: wp(10),
   },
-  notifiedSec : { 
+  notifiedSec: {
     marginTop: wp(2),
-    flexDirection: "row"
+    flexDirection: 'row',
   },
   invpText: {
-fontSize: wp(3.2),
+    fontSize: wp(3.2),
     marginTop: wp(1),
-marginRight: wp(10)
+    marginRight: wp(10),
   },
   notifyPText: {
-fontSize: wp(3.2),
+    fontSize: wp(3.2),
     marginTop: wp(1),
-marginRight: wp(15)
+    marginRight: wp(15),
   },
-  addCircle : {
-    borderRadius : wp(10),
+  addCircle: {
+    borderRadius: wp(10),
     // padding:  wp(),
     width: wp(8),
-    justifyContent: "center",
+    justifyContent: 'center',
     height: wp(8),
     backgroundColor: colors.primary,
-    marginLeft: wp(4)
+    marginLeft: wp(4),
   },
-  addPopupCircle : {
-    borderRadius : wp(10),
+  addPopupCircle: {
+    borderRadius: wp(10),
     // padding:  wp(),
     width: wp(12),
-    justifyContent: "center",
+    justifyContent: 'center',
     height: wp(12),
     backgroundColor: colors.primary,
-    marginLeft: wp(4)
+    marginLeft: wp(4),
   },
   tabsContainer: {
     flexDirection: 'row',
@@ -198,11 +195,11 @@ marginRight: wp(15)
   // action & recommendation
   actionContainer: {marginTop: wp(5)},
   actionText: {fontSize: wp(3.5), fontWeight: 'bold', color: colors.primary},
-  sugForYouText :{
-    fontSize:wp(3),
+  sugForYouText: {
+    fontSize: wp(3),
     color: colors.text,
-    fontWeight: "bold",
-    marginTop: wp(1)
+    fontWeight: 'bold',
+    marginTop: wp(1),
   },
   actionRecomCon: {
     padding: wp(3),
@@ -235,16 +232,16 @@ marginRight: wp(15)
     // marginLeft: wp,
     // fontStyle: 'italic',
   },
-  statusARText : {
+  statusARText: {
     color: colors.text,
-    opacity: .8,
+    opacity: 0.8,
     fontSize: wp(3),
-    marginLeft:wp(3)
+    marginLeft: wp(3),
   },
   attachmentsContainer: {
     marginTop: wp(5),
     marginBottom: wp(10),
-  
+
     // flexWrap: 'wrap',
     // flexDirection: 'row',
     // alignSelf: 'center',
@@ -265,13 +262,13 @@ marginRight: wp(15)
   },
   attchFileText: {
     fontSize: wp(2.7),
-    fontStyle:"italic",
+    fontStyle: 'italic',
     color: colors.text,
     opacity: 0.7,
     marginLeft: wp(5),
     marginTop: wp(2),
   },
-  actionTypeElemAsdmin:  {
+  actionTypeElemAsdmin: {
     fontSize: wp(2.7),
     opacity: 0.5,
   },
@@ -285,14 +282,14 @@ marginRight: wp(15)
   involvePSt: {
     fontSize: wp(3),
   },
-  addActionAndRecommendation:  {
-    borderWidth: wp(0.3), 
+  addActionAndRecommendation: {
+    borderWidth: wp(0.3),
     borderRadius: wp(3),
-    marginTop : wp(3),
+    marginTop: wp(3),
     paddingLeft: wp(1),
     borderColor: colors.lightGrey,
-    flexDirection: "row",
-    alignItems : "center"
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   involvePsuggCont: {
     borderColor: colors.textOpa,
@@ -304,52 +301,51 @@ marginRight: wp(15)
   },
   textaddActionContainer: {
     width: wp(70),
-    fontSize: wp(3.5)
+    fontSize: wp(3.5),
   },
   // comments sections
-  commentsSections : {
-    marginTop :wp(4),
+  commentsSections: {
+    marginTop: wp(4),
     backgroundColor: colors.lightBlue,
     padding: wp(4),
-    paddingLeft: wp(6)
+    paddingLeft: wp(6),
   },
   userComments: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginBottom: wp(3),
-    alignItems: "center"
-    
+    alignItems: 'center',
   },
-  userCommentName : {
+  userCommentName: {
     fontSize: wp(3),
   },
-  usercomment : {
+  usercomment: {
     fontSize: wp(2.7),
-    width: wp(50)
+    width: wp(50),
   },
-  commentUser : {
+  commentUser: {
     // flexDirection: "row",
     marginTop: wp(0.7),
-    marginLeft: wp(10)
+    marginLeft: wp(10),
   },
   dateComments: {
-    position: "absolute",
-    right: wp(3),top: (0),
-
+    position: 'absolute',
+    right: wp(3),
+    top: 0,
   },
-  dateTextComment:  {
+  dateTextComment: {
     fontSize: wp(3),
-    opacity: .5
-  },  
+    opacity: 0.5,
+  },
   commentTextInput: {
     width: wp(80),
     backgroundColor: colors.secondary,
     borderRadius: wp(4),
-    alignItems: "center",
-    borderWidth : wp(0.2),
+    alignItems: 'center',
+    borderWidth: wp(0.2),
     // padding: wp(1),
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingLeft: wp(3),
-   borderColor: colors.lightGrey 
+    borderColor: colors.lightGrey,
   },
 
   // model for pictup images
@@ -359,9 +355,9 @@ marginRight: wp(15)
     flexDirection: 'row',
   },
   selectText: {
-    opacity: .5,
-    textAlignVertical: "top",
-    fontWeight:"bold"
+    opacity: 0.5,
+    textAlignVertical: 'top',
+    fontWeight: 'bold',
   },
 });
 
