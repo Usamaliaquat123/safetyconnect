@@ -15,6 +15,7 @@ import Chat from './home/Messaging/chat/Chat';
 import TellAboutYou from './auth/tellAboutYou/TellAboutYou';
 import CreateOrg from "./home/CreateOrganization/CreateOrg";
 import CreateProject from "./home/CreateProject/CreateProject";
+import Menu from "./home/Menu/Menu";
 export {
   Chat,
   Login,
@@ -32,4 +33,5 @@ export {
   CreatePass,
   ViewAll,
   ViewSOR,
+  Menu
 };

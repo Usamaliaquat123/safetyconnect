@@ -17,6 +17,7 @@ import {
   CreatePass,
   Chat,
   Verify,
+  Menu,
   Home,
   CreateOrg,
 } from '@containers';
@@ -36,12 +37,20 @@ export type StackNavigatorProps = {
   tellAboutYou: undefined;
   createProject: undefined;
   CreateOrganization: undefined;
+  Menu:  undefined
 };
 export const MainStackNavigator = () => {
   return (
     <SafeAreaProvider>
-      {/* <NavigationContainer> */}
       <Stack.Navigator>
+
+        <Stack.Screen
+          name="Menu"
+          component={Menu}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="Home"
           component={Home}
@@ -126,7 +135,6 @@ export const MainStackNavigator = () => {
           }}
         />
       </Stack.Navigator>
-      {/* </NavigationContainer> */}
     </SafeAreaProvider>
   );
 };
