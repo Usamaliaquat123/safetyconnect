@@ -100,7 +100,7 @@ class Home extends React.Component<HomeProps, any> {
                 <View style={styles.item}>
                   <Image
                     source={images.homeIcon.observationfeedback}
-                    style={{width: wp(8), height: wp(8)}}
+                    style={styles.iconImages}
                   />
                 </View>
                 <Text style={styles.itemText}>Observation & Feedback</Text>
@@ -109,7 +109,7 @@ class Home extends React.Component<HomeProps, any> {
                 <View style={styles.item}>
                   <Image
                     source={images.homeIcon.incidentreporting}
-                    style={{width: wp(8), height: wp(8)}}
+                    style={styles.iconImages}
                   />
                 </View>
                 <Text style={styles.itemText}>Incident</Text>
@@ -119,7 +119,7 @@ class Home extends React.Component<HomeProps, any> {
                 <View style={styles.item}>
                   <Image
                     source={images.homeIcon.auditAndReporting}
-                    style={{width: wp(8), height: wp(8)}}
+                    style={styles.iconImages}
                   />
                 </View>
                 <Text style={styles.itemText}>Audit &</Text>
@@ -129,7 +129,7 @@ class Home extends React.Component<HomeProps, any> {
                 <View style={styles.item}>
                   <Image
                     source={images.homeIcon.riskmanagement}
-                    style={{width: wp(8), height: wp(8)}}
+                    style={styles.iconImages}
                   />
                 </View>
                 <Text style={styles.itemText}>Risk</Text>
@@ -139,7 +139,7 @@ class Home extends React.Component<HomeProps, any> {
                 <View style={styles.item}>
                   <Image
                     source={images.homeIcon.lms}
-                    style={{width: wp(8), height: wp(8)}}
+                    style={styles.iconImages}
                   />
                 </View>
                 <Text style={styles.itemText}>LMS</Text>
@@ -148,7 +148,7 @@ class Home extends React.Component<HomeProps, any> {
                 <View style={styles.item}>
                   <Image
                     source={images.homeIcon.dataanalytics}
-                    style={{width: wp(8), height: wp(8)}}
+                    style={styles.iconImages}
                   />
                 </View>
                 <Text style={styles.itemText}>Data</Text>

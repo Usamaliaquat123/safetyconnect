@@ -10,7 +10,10 @@ const styles = StyleSheet.create({
     // right: 0,
     flexDirection: 'row',
   },
-
+  iconImages: {
+    width: wp(7),
+    height: wp(7),
+  },
   orgLogo: {
     backgroundColor: colors.secondary,
     justifyContent: 'center',
@@ -52,6 +55,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.darkLightGrey,
 
     // flex: 2,
+
     // marginTop: wp(80),
     borderTopLeftRadius: wp(4),
     borderTopRightRadius: wp(4),
@@ -72,7 +76,7 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: '#F0F7ED',
     borderRadius: wp(5),
-    padding: wp(8.5),
+    padding: wp(9),
     width: wp(25),
   },
   itemText: {
