@@ -51,7 +51,11 @@ export const BottomTabNavigator = () => {
           tabBar={(props) => <TabBar {...props} />}
           sceneContainerStyle={{backgroundColor: colors.error}}
           initialRouteName={'home'}>
-          <Tab.Screen name="home" component={Home} options={{}} />
+          <Tab.Screen
+            name="home"
+            component={() => MainStackNavigator('Home')}
+            options={{}}
+          />
           <Tab.Screen name="sor" component={ViewAll} options={{}} />
           <Tab.Screen name="addNew" component={Home} options={{}} />
           <Tab.Screen
@@ -59,7 +63,11 @@ export const BottomTabNavigator = () => {
             component={AuthStackNavigator}
             options={{}}
           />
-          <Tab.Screen name="more" component={MainStackNavigator} options={{}} />
+          <Tab.Screen
+            name="more"
+            component={() => MainStackNavigator('Signup')}
+            options={{}}
+          />
         </Tab.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

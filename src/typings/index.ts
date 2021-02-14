@@ -11,7 +11,7 @@ export interface Isor {
   user2: string;
   username: string;
 }
-
+// @props
 export interface Imessage {
   name: string;
   image: string;

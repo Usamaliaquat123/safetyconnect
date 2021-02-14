@@ -232,7 +232,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
             </View>
 
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('sor')}
+              onPress={() => this.props.navigation.navigate('ViewAll')}
               style={styles.siginBtnContainer}>
               <Text style={styles.signinText}>Create Project</Text>
             </TouchableOpacity>

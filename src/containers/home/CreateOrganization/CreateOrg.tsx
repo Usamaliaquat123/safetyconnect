@@ -82,7 +82,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
               <Text style={styles.dontHaveAccount}>Add Project</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('CreateProj')}
+              onPress={() => this.props.navigation.navigate('createProject')}
               style={styles.siginBtnContainer}>
               <Text style={styles.signinText}>Create Organization</Text>
             </TouchableOpacity>

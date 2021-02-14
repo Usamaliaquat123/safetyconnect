@@ -39,10 +39,26 @@ export type StackNavigatorProps = {
   CreateOrganization: undefined;
   Menu: undefined;
 };
-export const MainStackNavigator = () => {
+export type route =
+  | 'Home'
+  | 'CreateSOR'
+  | 'ViewAll'
+  | 'ViewSOR'
+  | 'Messaging'
+  | 'Verify'
+  | 'Chat'
+  | 'Login'
+  | 'Signup'
+  | 'CreatePass'
+  | 'tellAboutYou'
+  | 'createProject'
+  | 'CreateOrganization'
+  | 'Menu'
+  | undefined;
+export const MainStackNavigator = (route?: route) => {
   return (
     <SafeAreaProvider>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName={route}>
         <Stack.Screen
           name="Menu"
           component={Menu}

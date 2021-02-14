@@ -3,13 +3,14 @@ import TabBar, {
   BottomTabNavigator,
   BottomTabNavigatorProp,
 } from './TabBar';
-import {MainStackNavigator, StackNavigatorProps} from './Main';
+import {MainStackNavigator, StackNavigatorProps, route} from './Main';
 import {AuthStackNavigator, AuthNavigatorProp} from './AuthNav';
 
 export {
   MainStackNavigator,
   AuthStackNavigator,
   StackNavigatorProps,
+  route,
   BottomTabNavigator,
   BottomTabNavigatorProp,
   AuthNavigatorProp,

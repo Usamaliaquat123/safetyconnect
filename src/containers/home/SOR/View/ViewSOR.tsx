@@ -1595,7 +1595,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             allSuggestions={this.state.actionsAndRecommendations}
             isOpen={this.state.SuggestionPop}
             suggestions={this.state.allActionsEdit}
-            save={(d) => {
+            save={(d: any) => {
               this.state.actionsAndRecommendations[
                 this.state.allActionsEditIndex
               ] = d;

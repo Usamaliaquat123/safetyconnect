@@ -234,11 +234,12 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                             iconconf={classifySor.find(
                               (e: any) => e.title == d.classify,
                             )}
-                            onPress={() =>
-                              // this.props.navigation.navigate('home', {
-                              //   data: d,
-                              // })
-                              this.props.navigation.navigate('home')
+                            onPress={
+                              () =>
+                                this.props.navigation.navigate('ViewSOR', {
+                                  data: d,
+                                })
+                              // this.props.navigation.navigate('home')
                             }
                             date={d.date}
                           />
@@ -298,11 +299,12 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                             iconconf={classifySor.find(
                               (e: any) => e.title == d.classify,
                             )}
-                            onPress={() =>
-                              // this.props.navigation.navigate('ViewSOR', {
-                              //   data: d,
-                              // })
-                              this.props.navigation.navigate('home')
+                            onPress={
+                              () =>
+                                this.props.navigation.navigate('ViewSOR', {
+                                  data: d,
+                                })
+                              // this.props.navigation.navigate('home')
                             }
                             date={d.date}
                           />
@@ -367,11 +369,12 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                             iconconf={classifySor.find(
                               (e: any) => e.title == d.classify,
                             )}
-                            onPress={() =>
-                              // this.props.navigation.navigate('ViewSOR', {
-                              //   data: d,
-                              // })
-                              this.props.navigation.navigate('home')
+                            onPress={
+                              () =>
+                                this.props.navigation.navigate('ViewSOR', {
+                                  data: d,
+                                })
+                              // this.props.navigation.navigate('View')
                             }
                             date={d.date}
                           />
