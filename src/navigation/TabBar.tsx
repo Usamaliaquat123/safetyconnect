@@ -50,13 +50,17 @@ export const BottomTabNavigator = () => {
         <Tab.Navigator
           tabBar={(props) => <TabBar {...props} />}
           sceneContainerStyle={{backgroundColor: colors.error}}
-          initialRouteName={'home'}>
+          initialRouteName={'sor'}>
           <Tab.Screen
             name="home"
             component={() => MainStackNavigator('Home')}
             options={{}}
           />
-          <Tab.Screen name="sor" component={ViewAll} options={{}} />
+          <Tab.Screen
+            name="sor"
+            component={() => MainStackNavigator('MyTasks')}
+            options={{}}
+          />
           <Tab.Screen name="addNew" component={Home} options={{}} />
           <Tab.Screen
             name="create"

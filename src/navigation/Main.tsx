@@ -9,6 +9,7 @@ import {
   ViewSOR,
   Signup,
   Login,
+  MyTasks,
   CreateSOR,
   ViewAll,
   CreateProject,
@@ -34,6 +35,7 @@ export type StackNavigatorProps = {
   Login: undefined;
   Signup: undefined;
   CreatePass: undefined;
+  MyTasks: undefined;
   tellAboutYou: undefined;
   createProject: undefined;
   CreateOrganization: undefined;
@@ -50,6 +52,7 @@ export type route =
   | 'Login'
   | 'Signup'
   | 'CreatePass'
+  | 'MyTasks'
   | 'tellAboutYou'
   | 'createProject'
   | 'CreateOrganization'
@@ -62,6 +65,13 @@ export const MainStackNavigator = (route?: route) => {
         <Stack.Screen
           name="Menu"
           component={Menu}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="MyTasks"
+          component={MyTasks}
           options={{
             headerShown: false,
           }}

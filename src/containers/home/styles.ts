@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
   },
   perfStats: {
     marginTop: wp(2),
+    paddingBottom: wp(10),
     padding: wp(5),
     backgroundColor: colors.secondary,
   },
@@ -144,6 +145,27 @@ const styles = StyleSheet.create({
   },
   chartContent: {
     fontSize: wp(3.2),
+  },
+  guideColors: {
+    flexDirection: 'row',
+    marginTop: wp(5),
+    // justifyContent: 'center',
+    alignItems: 'center',
+  },
+  swatch: {
+    width: wp(2.5),
+    alignSelf: 'center',
+    marginRight: wp(1.5),
+    height: wp(2.5),
+    backgroundColor: colors.error,
+    borderRadius: wp(10),
+  },
+  guideitem: {
+    // padding: wp(3),
+    flexDirection: 'row',
+  },
+  guideText: {
+    fontSize: wp(3),
   },
 });
 

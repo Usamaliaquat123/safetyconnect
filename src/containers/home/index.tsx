@@ -262,7 +262,33 @@ class Home extends React.Component<HomeProps, any> {
                   </Text>
                 </TouchableOpacity>
               </View>
-
+              {/* colors guide */}
+              <View style={styles.guideColors}>
+                <View style={styles.guideitem}>
+                  <View
+                    style={[
+                      styles.swatch,
+                      {marginLeft: wp(4), backgroundColor: '#8DCF7F'},
+                    ]}></View>
+                  <Text style={styles.guideText}>Report Resolved</Text>
+                </View>
+                <View style={[styles.guideitem]}>
+                  <View
+                    style={[
+                      styles.swatch,
+                      {marginLeft: wp(3), backgroundColor: '#FED888'},
+                    ]}></View>
+                  <Text style={styles.guideText}>Reports Pending</Text>
+                </View>
+                <View style={styles.guideitem}>
+                  <View
+                    style={[
+                      styles.swatch,
+                      {marginLeft: wp(3), backgroundColor: '#5BD8FC'},
+                    ]}></View>
+                  <Text style={styles.guideText}>Dismissed</Text>
+                </View>
+              </View>
               {/* Tabs Content */}
               <Animated.View style={styles.tabsContent}>
                 <PieChart

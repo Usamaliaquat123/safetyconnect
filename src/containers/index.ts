@@ -10,18 +10,20 @@ import Splash from './splash/Splash';
 import Home from './home/index';
 import ViewAll from './home/SOR/ViewAll/ViewAll';
 import ViewSOR from './home/SOR/View/ViewSOR';
-import CreatePass from "./auth/createPassword/CreatePass";
+import CreatePass from './auth/createPassword/CreatePass';
 import Chat from './home/Messaging/chat/Chat';
 import TellAboutYou from './auth/tellAboutYou/TellAboutYou';
-import CreateOrg from "./home/CreateOrganization/CreateOrg";
-import CreateProject from "./home/CreateProject/CreateProject";
-import Menu from "./home/Menu/Menu";
+import CreateOrg from './home/CreateOrganization/CreateOrg';
+import CreateProject from './home/CreateProject/CreateProject';
+import Menu from './home/Menu/Menu';
+import MyTasks from './home/MyTasks/MyTasks';
 export {
   Chat,
   Login,
   TellAboutYou,
   CreateSOR,
   Signup,
+  MyTasks,
   Forgot,
   CreateProject,
   CreateOrg,
@@ -33,5 +35,5 @@ export {
   CreatePass,
   ViewAll,
   ViewSOR,
-  Menu
+  Menu,
 };

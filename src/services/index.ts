@@ -12,15 +12,17 @@ import {
   notified,
   repeatedSor,
   riskxSeverityxliklihood,
-  recentActivity
+  recentActivity,
+  myTasks,
 } from './mock';
-import {messages  } from "./messaging_mock";
+import {messages} from './messaging_mock';
 export {
   Api,
   Create_sor,
   recentActivity,
   View_sor,
   draft,
+  myTasks,
   messages,
   viewas,
   repeatedSor,
@@ -30,5 +32,5 @@ export {
   groupConversation,
   submitted,
   notified,
-  riskxSeverityxliklihood
+  riskxSeverityxliklihood,
 };
