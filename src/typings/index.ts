@@ -1,3 +1,4 @@
+import {user, orgnaization, project, sor} from './api';
 // View sor data interface
 export interface Isor {
   date: number;
@@ -11,8 +12,8 @@ export interface Isor {
   user2: string;
   username: string;
 }
-/**
- * @
+/*
+ * @Imessage
  */
 export interface Imessage {
   name: string;
@@ -21,7 +22,9 @@ export interface Imessage {
   isonline: boolean;
   userId: number;
 }
-// classify sor typings
+/*
+ * @classifySorBtn
+ */
 export interface classifySorBtn {
   icon: string;
   type: string;
@@ -60,3 +63,5 @@ export interface IUser {
   name?: string;
   avatar?: string | number | renderFunction;
 }
+
+export {user, orgnaization, project, sor};

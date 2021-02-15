@@ -6,11 +6,7 @@ export interface SettingsProps {}
 
 export default class Settings extends React.Component<SettingsProps, any> {
   render() {
-    return (
-      <View>
-        <Text>Settings</Text>
-      </View>
-    );
+    return <View></View>;
   }
 }
 

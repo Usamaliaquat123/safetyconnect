@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     borderWidth: wp(0.3),
     borderRadius: wp(3),
     width: wp(90),
+    height: wp(13),
     marginTop: wp(-1.5),
     paddingLeft: wp(5),
     borderColor: colors.lightGrey,
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
   textInput: {
     // marginTop: wp(-3),
     fontSize: wp(3),
-
+    width: wp(80),
     borderBottomWidth: wp(0),
   },
   recentlyContent: {

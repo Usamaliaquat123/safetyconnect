@@ -64,14 +64,10 @@ export const BottomTabNavigator = () => {
           <Tab.Screen name="addNew" component={Home} options={{}} />
           <Tab.Screen
             name="create"
-            component={AuthStackNavigator}
+            component={() => MainStackNavigator('CreateSOR')}
             options={{}}
           />
-          <Tab.Screen
-            name="more"
-            component={() => MainStackNavigator('Signup')}
-            options={{}}
-          />
+          <Tab.Screen name="more" component={AuthStackNavigator} options={{}} />
         </Tab.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

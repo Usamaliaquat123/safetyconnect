@@ -1,4 +1,4 @@
-import {Api} from './api';
+import createApi from './api';
 import {
   Create_sor,
   View_sor,
@@ -17,7 +17,7 @@ import {
 } from './mock';
 import {messages} from './messaging_mock';
 export {
-  Api,
+  createApi,
   Create_sor,
   recentActivity,
   View_sor,
