@@ -55,7 +55,6 @@ const createApi = (
    */
   const getProject = (data: project) => baseapi.get('project', data);
   const project = (data: project) => baseapi.put('project', data);
-  // const updateProject = (data: project) => baseapi.put('project', data);
   /*
    * @sors
    */
@@ -74,7 +73,6 @@ const createApi = (
     repeatedsorsugg,
     observationSuggestions,
     createSor,
-    viewProject,
   };
 };
 
