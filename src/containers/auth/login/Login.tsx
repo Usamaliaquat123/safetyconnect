@@ -52,6 +52,7 @@ class Login extends React.Component<LoginProps, any> {
     const attr = {
       profile: 'NotConfirmed',
     };
+
     try {
       // Auth.
       const user = await Auth.signIn(
