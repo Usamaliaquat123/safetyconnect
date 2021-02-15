@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
   },
   authInputs: {
     fontSize: wp(4),
+    width: wp(100),
   },
   signinText: {
     fontSize: wp(4.5),

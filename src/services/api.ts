@@ -11,23 +11,20 @@ const createApi = (
     timeout: 10000,
   });
 
-  const aiBaseApi = () =>
-    apisauce.create({
-      baseURL: baseAi,
-      // headers,
-      timeout: 10000,
-    });
+  const aiBaseApi = apisauce.create({
+    baseURL: baseAi,
+    // headers,
+    timeout: 10000,
+  });
 
   /*
    *  @apis
    */
 
-  const suggestiosns = (keyword: string) => baseapi.post('');
-  const repeatedsorsugg = (keyword: string) => baseapi.get('');
-  const observationSuggestions = (keyword: string) => baseapi.get('');
+  const suggestiosns = (keyword: string) => aiBaseApi.post('');
+  const repeatedsorsugg = (keyword: string) => aiBaseApi.get('');
+  const observationSuggestions = (keyword: string) => aiBaseApi.get('');
   // sor api
-  const createSor = (data: object) => baseapi.post('');
-  // const viewSor = (data : )
 
   /*
    * @user
@@ -67,7 +64,7 @@ const createApi = (
       query: {'reports._id ': data.query?.reportId},
     });
   const updateSor = (data: sor) => baseapi.put('project/report', {data});
-
+  const createSor = (data: sor) => baseapi.put('project/newreport', {data});
   return {
     suggestiosns,
     repeatedsorsugg,

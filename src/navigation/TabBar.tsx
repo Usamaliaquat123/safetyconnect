@@ -28,6 +28,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {AuthStackNavigator} from './AuthNav';
 import {MainStackNavigator} from './Main';
+
 // import BottomSheet from 'reanimated-bottom-sheet';
 // import Animated from 'react-native-reanimated';
 export interface TabBarProps {
@@ -50,7 +51,7 @@ export const BottomTabNavigator = () => {
         <Tab.Navigator
           tabBar={(props) => <TabBar {...props} />}
           sceneContainerStyle={{backgroundColor: colors.error}}
-          initialRouteName={'sor'}>
+          initialRouteName={'home'}>
           <Tab.Screen
             name="home"
             component={() => MainStackNavigator('Home')}

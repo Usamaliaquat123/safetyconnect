@@ -12,7 +12,7 @@ import {Avatar, Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {StackNavigatorProps} from '@nav';
+import {AuthNavigatorProp} from '@nav';
 import {Create_sor} from '@service';
 import {RouteProp} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
@@ -23,8 +23,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-type LoginNavigationProp = StackNavigationProp<StackNavigatorProps, 'Login'>;
-type LoginRouteProp = RouteProp<StackNavigatorProps, 'Login'>;
+type LoginNavigationProp = StackNavigationProp<AuthNavigatorProp, 'Login'>;
+type LoginRouteProp = RouteProp<AuthNavigatorProp, 'Login'>;
 
 export interface LoginProps {
   navigation: LoginNavigationProp;
@@ -64,10 +64,10 @@ class Login extends React.Component<LoginProps, any> {
       if (user.userConfirmed) {
         const sendEmail = await Auth.forgotPassword(e);
         this.setState({loading: false});
-        if (sendEmail) this.props.navigation.navigate('Verify');
+        if (sendEmail) this.props.navigation.navigate('Home');
       } else {
         this.setState({loading: false});
-        this.props.navigation.navigate('sor');
+        // this.props.navigation.navigate('sor');
       }
     } catch (err) {
       this.setState({loading: false});

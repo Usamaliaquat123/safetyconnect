@@ -1,6 +1,4 @@
 /*
-import listAction from '../store/actions/listActions';
-import { type } from '../store/store';
  *
  * @apis typings definations | Developer @Usamaliaquat123
  */

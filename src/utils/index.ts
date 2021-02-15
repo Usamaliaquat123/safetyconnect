@@ -6,19 +6,23 @@ import {
   createAction,
   downloadFile,
   searchInObjects,
-  setAsncStorage
-  ,imagePicker,
+  setAsncStorage,
+  imagePicker,
   cameraCapture,
   mapAsyncStorage,
   getAsyncStorage,
-  DocType
+  DocType,
+  validateEmail,
+  validatePassword,
 } from './utils';
 export {
   classifySor,
+  validatePassword,
   filterLocation,
   searchInSuggestions,
   setHeaderAllign,
   createAction,
+  validateEmail,
   searchInObjects,
   downloadFile,
   setAsncStorage,
@@ -26,5 +30,5 @@ export {
   getAsyncStorage,
   imagePicker,
   mapAsyncStorage,
-  DocType
+  DocType,
 };

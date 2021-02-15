@@ -8,23 +8,21 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+
 import {Auth} from 'aws-amplify';
 import {connect} from 'react-redux';
 import {Icon} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {StackNavigatorProps} from '@nav';
+import {AuthNavigatorProp} from '@nav';
+import {validatePassword} from '@utils';
 import {colors, images, GlStyles} from '@theme';
 import {RouteProp} from '@react-navigation/native';
 import styles from './styles';
 type CreatePassNavigationProp = StackNavigationProp<
-  StackNavigatorProps,
+  AuthNavigatorProp,
   'CreatePass'
 >;
-type CreatePassRouteProp = RouteProp<StackNavigatorProps, 'CreatePass'>;
+type CreatePassRouteProp = RouteProp<AuthNavigatorProp, 'CreatePass'>;
 
 export interface CreatePassProps {
   navigation: CreatePassNavigationProp;
@@ -35,9 +33,30 @@ export interface CreatePassProps {
 }
 
 class CreatePass extends React.Component<CreatePassProps, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      password: '',
+      error: false,
+    };
+  }
   createPass = async () => {
-    const signup = await Auth.forgotPassword(this.props.route.params.username);
-    if (signup) this.props.navigation.navigate('tellAboutYou');
+    if (this.state.password !== '') {
+      if (validatePassword(this.state.password)) {
+        this.setState({loading: true});
+        const signup = await Auth.forgotPassword(
+          this.props.route.params.username,
+        );
+        if (signup) {
+          this.setState({loading: false});
+          this.props.navigation.navigate('tellAboutYou');
+        }
+      } else {
+        this.setState({error: true});
+      }
+    } else {
+      this.setState({error: true});
+    }
   };
   render() {
     return (
@@ -63,7 +82,15 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                 <TextInput
                   secureTextEntry={true}
                   style={styles.authInputs}
-                  onChange={(e) => console.log(e)}
+                  value={this.state.password}
+                  onChange={(e) => {
+                    if (validatePassword(this.state.password)) {
+                      this.setState({error: false});
+                    } else {
+                      this.setState({error: true});
+                    }
+                    this.setState({password: e.nativeEvent.text});
+                  }}
                   placeholder={'******'}
                 />
                 <View style={styles.eyeIconContainer}>
@@ -77,18 +104,20 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                 </View>
               </View>
             </View>
-            {/* 8 char validation */}
-            <Text style={styles.dontHaveAccount}>
-              Password must be a 8 characters long.
-            </Text>
-            {/* 8 char validation */}
-            <Text style={styles.dontHaveAccount}>
-              Password must be contain a capital letter.
-            </Text>
-            {/* 8 char validation */}
-            <Text style={styles.dontHaveAccount}>
-              Password must be contain a number.
-            </Text>
+            {this.state.error && (
+              <View>
+                <Text style={styles.dontHaveAccount}>
+                  Password must be a 8 characters long.
+                </Text>
+                <Text style={styles.dontHaveAccount}>
+                  Password must be contain a capital letter.
+                </Text>
+                <Text style={styles.dontHaveAccount}>
+                  Password must be contain a number.
+                </Text>
+              </View>
+            )}
+
             <TouchableOpacity style={styles.siginBtnContainer}>
               <Text style={styles.signinText}>Continue</Text>
             </TouchableOpacity>

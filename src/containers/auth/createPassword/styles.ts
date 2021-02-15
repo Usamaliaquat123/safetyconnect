@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
   },
   authInputs: {
     fontSize: wp(4),
+    width: wp(80),
   },
   signinText: {
     fontSize: wp(4),
@@ -117,9 +118,9 @@ const styles = StyleSheet.create({
   },
   dontHaveAccount: {
     fontSize: wp(3.5),
-    color: colors.text,
-    opacity: 0.5,
-    marginTop: wp(3),
+    color: colors.error,
+    // opacity: 0.5,
+    marginTop: wp(1.5),
     fontWeight: 'bold',
   },
   createNewAccount: {

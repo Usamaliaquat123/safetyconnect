@@ -8,7 +8,7 @@ import {
 } from 'react-native-responsive-screen';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import {PermissionsAndroid} from 'react-native';
-import { resolvePlugin } from '@babel/core';
+import {resolvePlugin} from '@babel/core';
 export const classifySor: Array<Object> = [
   {
     icon: 'warning',
@@ -22,7 +22,7 @@ export const classifySor: Array<Object> = [
     type: 'font-awesome-5',
     selected: false,
     title: 'Positive',
-    color: colors.classify_sor_btns.positive,     
+    color: colors.classify_sor_btns.positive,
   },
   {
     icon: 'aperture',
@@ -44,7 +44,14 @@ export const filterLocation = (str: any) => {
   return str.match(/@\S+/);
 };
 
-
+export const validateEmail = (email: string): boolean => {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+};
+export const validatePassword = (password: string): boolean => {
+  const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  return re.test(String(password).toLowerCase());
+};
 export const searchInSuggestions = (
   str: string,
   strArray: Array<string>,
@@ -90,21 +97,20 @@ const options = {
     description: 'Downloading File',
   },
 };
-export const setAsncStorage = (key: string, d:   Array<Object>,) => {
+export const setAsncStorage = (key: string, d: Array<Object>) => {
   // return AsyncStorage.setItem(key, JSON.stringify(d))
-}
-export const mapAsyncStorage = (key: string,d: any)  => {
-    // var arr : []
-    // AsyncStorage.getItem(key).then((v: any) => {
-    // arr = JSON.parse(v)
-    // return arr.push(d)
-    // }).catch(err => [err])    
-}
+};
+export const mapAsyncStorage = (key: string, d: any) => {
+  // var arr : []
+  // AsyncStorage.getItem(key).then((v: any) => {
+  // arr = JSON.parse(v)
+  // return arr.push(d)
+  // }).catch(err => [err])
+};
 
-export const getAsyncStorage = (key: string) : any => {
+export const getAsyncStorage = (key: string): any => {
   // AsyncStorage.getItem(key).then(res => {return res})
-}
-
+};
 
 const checkPermission = async (type: string) => {
   const granted = await PermissionsAndroid.request(
@@ -140,51 +146,50 @@ export const downloadFile = (file: string, typee: string) => {
 };
 // online
 export const checkPermissionOfCamea = async (type: string) => {
-  const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
-    title: `Permissions to use camera  ${type}`,
-    message:
-
-      'Safety Client want to granted access to camera',
-    buttonNeutral: 'Ask Me Later',
-    buttonNegative: 'no',
-    buttonPositive: 'sure',
-  },)
-}
+  const granted = await PermissionsAndroid.request(
+    PermissionsAndroid.PERMISSIONS.CAMERA,
+    {
+      title: `Permissions to use camera  ${type}`,
+      message: 'Safety Client want to granted access to camera',
+      buttonNeutral: 'Ask Me Later',
+      buttonNegative: 'no',
+      buttonPositive: 'sure',
+    },
+  );
+};
 // Image picker
 export const imagePicker = () => {
   return new Promise((resolve, reject) => {
     try {
-      ImagePicker.launchImageLibrary({mediaType: "photo"}, (res: ImagePicker.ImagePickerResponse) => {
-        resolve(res)
-      })
+      ImagePicker.launchImageLibrary(
+        {mediaType: 'photo'},
+        (res: ImagePicker.ImagePickerResponse) => {
+          resolve(res);
+        },
+      );
     } catch (error) {
-      reject(error)
+      reject(error);
     }
-  })
-}
+  });
+};
 
 // Camera capture
 export const cameraCapture = () => {
   return new Promise((resolve, reject) => {
     try {
-      ImagePicker.launchCamera({saveToPhotos: true, mediaType: "photo"}, (res: ImagePicker.ImagePickerResponse) => {
-        resolve(res)
-      })
+      ImagePicker.launchCamera(
+        {saveToPhotos: true, mediaType: 'photo'},
+        (res: ImagePicker.ImagePickerResponse) => {
+          resolve(res);
+        },
+      );
     } catch (error) {
-      reject(error)  
+      reject(error);
     }
-  })
-}
+  });
+};
 
 // Doc Type picker
-export const DocType= (res: any, attachments: Array<Object>) => {
-  return new Promise((resolve, reject) => {
-    
-   
-
-  })
-
-
-}
-
-
+export const DocType = (res: any, attachments: Array<Object>) => {
+  return new Promise((resolve, reject) => {});
+};
