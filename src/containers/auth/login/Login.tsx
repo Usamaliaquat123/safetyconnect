@@ -176,12 +176,24 @@ class Login extends React.Component<LoginProps, any> {
                     ]}>
                     <TextInput
                       secureTextEntry={this.state.isEye}
-                      onFocus={() => this.setState({selectedInput: 2})}
+                      onFocus={() => {
+                        if (validateEmail(this.state.username)) {
+                          this.setState({emailError: false});
+                        } else {
+                          this.setState({emailError: true});
+                        }
+                        this.setState({selectedInput: 2});
+                      }}
                       style={styles.authInputs}
                       value={this.state.password}
-                      onChange={(e) =>
-                        this.setState({password: e.nativeEvent.text})
-                      }
+                      onChange={(e) => {
+                        if (!validatePassword(e.nativeEvent.text)) {
+                          this.setState({passError: true});
+                        } else {
+                          this.setState({passError: false});
+                        }
+                        this.setState({password: e.nativeEvent.text});
+                      }}
                       placeholder={'******'}
                     />
                     <TouchableOpacity
@@ -262,15 +274,6 @@ class Login extends React.Component<LoginProps, any> {
             )}
           </View>
         </ScrollView>
-        {/* <Model
-          animationIn={'bounceInUp'}
-          animationOut={'bounceOutDown'}
-          animationInTiming={2000}
-          animationOutTiming={2000}
-          isVisible={true}
-          onBackdropPress={() => this.setState({addAssigners: false})}>
-        
-        </Model> */}
       </View>
     );
   }
