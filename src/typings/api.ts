@@ -10,6 +10,7 @@ export interface user {
   name?: string;
   email?: string;
   role?: string;
+  img_url?: string;
   department?: string;
   industry?: string;
 }

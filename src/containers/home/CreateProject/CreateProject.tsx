@@ -16,15 +16,15 @@ import {
 } from 'react-native-responsive-screen';
 import {colors} from '@theme';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {StackNavigatorProps} from '@nav';
+import {StackNavigatorProps, AuthNavigatorProp} from '@nav';
 import {Tags, SuggestionsAvatar} from '@components';
 import {RouteProp} from '@react-navigation/native';
 import styles from './styles';
 type CreateProjectNavigationProp = StackNavigationProp<
-  StackNavigatorProps,
-  'Login'
+  AuthNavigatorProp,
+  'CreateProj'
 >;
-type CreateProjectRouteProp = RouteProp<StackNavigatorProps, 'Login'>;
+type CreateProjectRouteProp = RouteProp<AuthNavigatorProp, 'CreateProj'>;
 
 export interface CreateProjectProps {
   navigation: CreateProjectNavigationProp;
@@ -45,8 +45,15 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       assignLeaderssText: '',
       assignLocations: [],
       assignLocationsText: '',
+      projectName: '',
+      laoding: false,
+
+      // errors popup
+      errorProjectName: false,
     };
   }
+
+  createProject = () => {};
   render() {
     return (
       <View style={styles.container}>
@@ -80,7 +87,10 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               <View style={[styles.inputContainer]}>
                 <TextInput
                   style={styles.authInputs}
-                  onChange={(e) => console.log(e)}
+                  value={this.state.projectName}
+                  onChange={(e) =>
+                    this.setState({projectName: e.nativeEvent.text})
+                  }
                   placeholder={'Enter Project Name'}
                 />
               </View>
@@ -98,13 +108,15 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     }}
                     tags={this.state.teamMembers}
                   />
-                  <TextInput
-                    style={styles.authInputs}
-                    value={this.state.teamMembersText}
-                    onChange={(e) => {
-                      this.setState({teamMembersText: e.nativeEvent.text});
-                    }}
-                  />
+                  {this.state.teamMembers.length < 5 ? (
+                    <TextInput
+                      style={styles.authInputs}
+                      value={this.state.teamMembersText}
+                      onChange={(e) => {
+                        this.setState({teamMembersText: e.nativeEvent.text});
+                      }}
+                    />
+                  ) : null}
                 </View>
               </View>
               {/* Add Team Suggestions */}
@@ -137,15 +149,17 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     }}
                     tags={this.state.assignSuppervisor}
                   />
-                  <TextInput
-                    style={styles.authInputs}
-                    value={this.state.assignSuppervisorText}
-                    onChange={(e) => {
-                      this.setState({
-                        assignSuppervisorText: e.nativeEvent.text,
-                      });
-                    }}
-                  />
+                  {this.state.assignSuppervisor < 6 ? (
+                    <TextInput
+                      style={styles.authInputs}
+                      value={this.state.assignSuppervisorText}
+                      onChange={(e) => {
+                        this.setState({
+                          assignSuppervisorText: e.nativeEvent.text,
+                        });
+                      }}
+                    />
+                  ) : null}
                 </View>
               </View>
               {this.state.assignSuppervisorText != '' ? (
@@ -173,13 +187,15 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     }}
                     tags={this.state.assignLeaderss}
                   />
-                  <TextInput
-                    style={styles.authInputs}
-                    value={this.state.assignLeaderssText}
-                    onChange={(e) => {
-                      this.setState({assignLeaderssText: e.nativeEvent.text});
-                    }}
-                  />
+                  {this.state.assignLeaderss < 6 ? (
+                    <TextInput
+                      style={styles.authInputs}
+                      value={this.state.assignLeaderssText}
+                      onChange={(e) => {
+                        this.setState({assignLeaderssText: e.nativeEvent.text});
+                      }}
+                    />
+                  ) : null}
                 </View>
               </View>
               {/* Assign Leaders suggestions */}
@@ -208,13 +224,17 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     }}
                     tags={this.state.assignLocations}
                   />
-                  <TextInput
-                    style={styles.authInputs}
-                    value={this.state.assignLocationsText}
-                    onChange={(e) => {
-                      this.setState({assignLocationsText: e.nativeEvent.text});
-                    }}
-                  />
+                  {this.state.assignLocations < 6 ? (
+                    <TextInput
+                      style={styles.authInputs}
+                      value={this.state.assignLocationsText}
+                      onChange={(e) => {
+                        this.setState({
+                          assignLocationsText: e.nativeEvent.text,
+                        });
+                      }}
+                    />
+                  ) : null}
                 </View>
               </View>
               {/* Assign Locations suggestions */}
@@ -232,7 +252,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
             </View>
 
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('ViewAll')}
+              onPress={() => this.props.navigation.navigate('CreateOrg')}
               style={styles.siginBtnContainer}>
               <Text style={styles.signinText}>Create Project</Text>
             </TouchableOpacity>

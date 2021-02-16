@@ -68,7 +68,9 @@ class Login extends React.Component<LoginProps, any> {
           const user = await Auth.signIn(
             this.state.username,
             this.state.password,
-            // attr,
+            {
+              profile: 'NotConfirmed',
+            },
           );
           console.log(user);
 
@@ -78,7 +80,7 @@ class Login extends React.Component<LoginProps, any> {
             if (sendEmail) this.props.navigation.navigate('Home');
           } else {
             this.setState({loading: false});
-            // this.props.navigation.navigate('sor');
+            
           }
         } catch (err) {
           this.setState({loading: false});
@@ -90,10 +92,6 @@ class Login extends React.Component<LoginProps, any> {
     } else {
       this.setState({emailError: true});
     }
-    // this.setState({loading: true});
-    const attr = {
-      profile: 'NotConfirmed',
-    };
   };
   render() {
     return (

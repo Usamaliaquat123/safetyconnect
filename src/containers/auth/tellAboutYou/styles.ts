@@ -64,8 +64,9 @@ const styles = StyleSheet.create({
   },
   selectText: {
     opacity: 0.5,
-    textAlignVertical: 'top',
+    // textAlignVertical: 'top',
     fontWeight: 'bold',
+    width: wp(80),
   },
   passTextContainer: {
     fontSize: wp(3.5),

@@ -30,12 +30,8 @@ const createApi = (
    * @user
    */
   const createUser = (data: user) => baseapi.post('users', data);
-  const getUser = (data: user) => {
-    baseapi.get('users', data);
-  };
-  const setUserInfo = (data: user) => {
-    baseapi.put('users', data);
-  };
+  const getUser = (data: user) => baseapi.get('users', data);
+  const setUserInfo = (data: user) => baseapi.put('users', data);
 
   /*
    * @organization
@@ -70,6 +66,17 @@ const createApi = (
     repeatedsorsugg,
     observationSuggestions,
     createSor,
+    updateSor,
+    filterSors,
+    getSors,
+    getProject,
+    project,
+    updateOrganization,
+    getOrganization,
+    organization,
+    setUserInfo,
+    createUser,
+    getUser,
   };
 };
 

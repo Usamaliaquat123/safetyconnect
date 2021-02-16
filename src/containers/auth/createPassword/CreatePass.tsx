@@ -8,7 +8,10 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
-
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import {Auth} from 'aws-amplify';
 import {connect} from 'react-redux';
 import {Icon} from 'react-native-elements';
@@ -18,6 +21,9 @@ import {validatePassword} from '@utils';
 import {colors, images, GlStyles} from '@theme';
 import {RouteProp} from '@react-navigation/native';
 import styles from './styles';
+import LottieView from 'lottie-react-native';
+import {createApi as api} from '@service';
+import {animation} from '@theme';
 type CreatePassNavigationProp = StackNavigationProp<
   AuthNavigatorProp,
   'CreatePass'
@@ -38,6 +44,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
     this.state = {
       password: '',
       error: false,
+      isEye: false,
     };
   }
   createPass = async () => {
@@ -49,7 +56,12 @@ class CreatePass extends React.Component<CreatePassProps, any> {
         );
         if (signup) {
           this.setState({loading: false});
-          this.props.navigation.navigate('tellAboutYou');
+          Auth.signIn(this.props.route.params.username, this.state.password);
+          this.props.navigation.navigate('tellAboutYou', {
+            username: this.props.route.params.username,
+          });
+        } else {
+          this.setState({loading: false});
         }
       } else {
         this.setState({error: true});
@@ -72,55 +84,95 @@ class CreatePass extends React.Component<CreatePassProps, any> {
           </View>
           {/* content */}
           <View style={styles.content}>
-            <Text style={styles.headingContainer}>
-              Welcome to Safety Connect
-            </Text>
-            {/* inputs container */}
-            <View style={styles.inputsContainer}>
-              <Text style={styles.passTextContainer}>Create Password</Text>
-              <View style={[styles.inputContainer]}>
-                <TextInput
-                  secureTextEntry={true}
-                  style={styles.authInputs}
-                  value={this.state.password}
-                  onChange={(e) => {
-                    if (validatePassword(this.state.password)) {
-                      this.setState({error: false});
-                    } else {
-                      this.setState({error: true});
-                    }
-                    this.setState({password: e.nativeEvent.text});
-                  }}
-                  placeholder={'******'}
+            {this.state.loading == true ? (
+              <View
+                style={{
+                  alignSelf: 'center',
+                  marginTop: wp(40),
+                }}>
+                <LottieView
+                  autoPlay={true}
+                  style={{width: wp(90)}}
+                  source={animation.loading}
+                  loop={true}
                 />
-                <View style={styles.eyeIconContainer}>
-                  <Icon
-                    containerStyle={{opacity: 0.5}}
-                    size={15}
-                    name="eye"
-                    type="feather"
-                    color={colors.text}
-                  />
-                </View>
+                <Text
+                  style={{
+                    fontSize: wp(3.5),
+                    opacity: 0.5,
+                    textAlign: 'center',
+                    marginTop: wp(-5),
+                  }}>
+                  Connecting...
+                </Text>
               </View>
-            </View>
-            {this.state.error && (
+            ) : (
               <View>
-                <Text style={styles.dontHaveAccount}>
-                  Password must be a 8 characters long.
+                <Text style={styles.headingContainer}>
+                  Welcome to Safety Connect
                 </Text>
-                <Text style={styles.dontHaveAccount}>
-                  Password must be contain a capital letter.
-                </Text>
-                <Text style={styles.dontHaveAccount}>
-                  Password must be contain a number.
-                </Text>
+                {/* inputs container */}
+                <View style={styles.inputsContainer}>
+                  <Text style={styles.passTextContainer}>Create Password</Text>
+                  <View style={[styles.inputContainer]}>
+                    <TextInput
+                      secureTextEntry={this.state.isEye}
+                      style={styles.authInputs}
+                      value={this.state.password}
+                      onChange={(e) => {
+                        if (validatePassword(this.state.password)) {
+                          this.setState({error: false});
+                        } else {
+                          this.setState({error: true});
+                        }
+                        this.setState({password: e.nativeEvent.text});
+                      }}
+                      placeholder={'******'}
+                    />
+                    <TouchableOpacity
+                      onPress={() => this.setState({isEye: !this.state.isEye})}
+                      style={styles.eyeIconContainer}>
+                      {this.state.isEye == true ? (
+                        <Icon
+                          containerStyle={{opacity: 0.5}}
+                          size={wp(5)}
+                          name="eye-with-line"
+                          type="entypo"
+                          color={colors.text}
+                        />
+                      ) : (
+                        <Icon
+                          containerStyle={{opacity: 0.5}}
+                          size={wp(5)}
+                          name="eye"
+                          type="antdesign"
+                          color={colors.text}
+                        />
+                      )}
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                {this.state.error && (
+                  <View>
+                    <Text style={styles.dontHaveAccount}>
+                      Password must be a 8 characters long.
+                    </Text>
+                    <Text style={styles.dontHaveAccount}>
+                      Password must be contain a capital letter.
+                    </Text>
+                    <Text style={styles.dontHaveAccount}>
+                      Password must be contain a number.
+                    </Text>
+                  </View>
+                )}
+
+                <TouchableOpacity
+                  onPress={() => this.createPass()}
+                  style={styles.siginBtnContainer}>
+                  <Text style={styles.signinText}>Continue</Text>
+                </TouchableOpacity>
               </View>
             )}
-
-            <TouchableOpacity style={styles.siginBtnContainer}>
-              <Text style={styles.signinText}>Continue</Text>
-            </TouchableOpacity>
           </View>
         </ScrollView>
       </View>
