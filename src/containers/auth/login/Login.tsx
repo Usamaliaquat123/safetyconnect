@@ -23,6 +23,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {validateEmail, validatePassword} from '@utils';
 type LoginNavigationProp = StackNavigationProp<AuthNavigatorProp, 'Login'>;
 type LoginRouteProp = RouteProp<AuthNavigatorProp, 'Login'>;
 
@@ -42,38 +43,57 @@ class Login extends React.Component<LoginProps, any> {
       username: '',
       loading: false,
       password: '',
+      passError: false,
+      emailError: false,
     };
   }
 
-  submitSignin = async (e: string) => {
-    // event.preventDefault();
-    // this.props.navigation.navigate('sor');
-    this.setState({loading: true});
+  submitSignin = async () => {
+    if (
+      this.state.username != '' &&
+      validateEmail(this.state.username) == true
+    ) {
+      this.setState({emailError: false});
+      // console.log;
+      if (
+        this.state.password != '' &&
+        validatePassword(this.state.password) == true
+      ) {
+        this.setState({passError: false});
+        try {
+          /*
+           * @Default email : asohial.bscs16seecs@seecs.edu.pk || password: Weird.password02
+           */
+          this.setState({loading: true});
+          const user = await Auth.signIn(
+            this.state.username,
+            this.state.password,
+            // attr,
+          );
+          console.log(user);
+
+          if (user.userConfirmed) {
+            const sendEmail = await Auth.forgotPassword(this.state.username);
+            this.setState({loading: false});
+            if (sendEmail) this.props.navigation.navigate('Home');
+          } else {
+            this.setState({loading: false});
+            // this.props.navigation.navigate('sor');
+          }
+        } catch (err) {
+          this.setState({loading: false});
+          console.log(err);
+        }
+      } else {
+        this.setState({passError: true});
+      }
+    } else {
+      this.setState({emailError: true});
+    }
+    // this.setState({loading: true});
     const attr = {
       profile: 'NotConfirmed',
     };
-
-    try {
-      // Auth.
-      const user = await Auth.signIn(
-        'asohial.bscs16seecs@seecs.edu.pk',
-        'Weird.password02',
-        attr,
-      );
-      console.log(user);
-
-      if (user.userConfirmed) {
-        const sendEmail = await Auth.forgotPassword(e);
-        this.setState({loading: false});
-        if (sendEmail) this.props.navigation.navigate('Home');
-      } else {
-        this.setState({loading: false});
-        // this.props.navigation.navigate('sor');
-      }
-    } catch (err) {
-      this.setState({loading: false});
-      console.log(err);
-    }
   };
   render() {
     return (
@@ -138,6 +158,12 @@ class Login extends React.Component<LoginProps, any> {
                       placeholder={'Enter your email'}
                     />
                   </View>
+                  {this.state.emailError && (
+                    <Text style={{fontSize: wp(3), color: colors.error}}>
+                      Enter your valid email address
+                    </Text>
+                  )}
+
                   {/* Password Container */}
 
                   <Text style={styles.passTextContainer}>Password</Text>
@@ -180,10 +206,28 @@ class Login extends React.Component<LoginProps, any> {
                       )}
                     </TouchableOpacity>
                   </View>
+                  {this.state.passError && (
+                    <View>
+                      <Text style={{fontSize: wp(3), color: colors.error}}>
+                        Your valid password should be including
+                      </Text>
+                      <View>
+                        <Text style={styles.passwordError}>
+                          * Password must be a 8 characters long.
+                        </Text>
+                        <Text style={styles.passwordError}>
+                          * Password must be contain a capital letter.
+                        </Text>
+                        <Text style={styles.passwordError}>
+                          * Password must be contain a number.
+                        </Text>
+                      </View>
+                    </View>
+                  )}
                 </View>
                 <Text style={styles.forgetPassText}>Forget Password ? </Text>
                 <TouchableOpacity
-                  onPress={() => this.submitSignin(this.state.username)}
+                  onPress={() => this.submitSignin()}
                   style={styles.siginBtnContainer}>
                   <Text style={styles.signinText}>Sign in </Text>
                 </TouchableOpacity>
