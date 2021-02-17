@@ -52,6 +52,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       assignLocationsText: '',
       projectName: '',
       laoding: false,
+      projects: [],
       email: 'inconnent12345@outlook.com',
       // errors popup
       errorProjectName: true,
@@ -59,31 +60,26 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     };
   }
 
+  componentWillUnmount = () => {
+    if (this.props.route.params.onGoBack) {
+      // console.log(this.state.p)
+      this.props.route.params.onGoBack(this.state.projects);
+    }
+  };
+
   createProject = () => {
     if (this.state.projectName !== '') {
       this.setState({errorProjectName: false});
       if (this.state.teamMembers.length < 2) {
         this.setState({errorTeamMem: false});
-
-        AsyncStorage.getItem('projects').then((res) => {
-          if (res != null) {
-            JSON.parse(res).push({
-              created_by: this.state.email,
-              project_name: this.state.projectName,
-              involved_persons: this.state.teamMembers,
-            });
-            AsyncStorage.setItem('projects', JSON.stringify(res));
-          } else {
-            AsyncStorage.setItem(
-              'project',
-              JSON.stringify({
-                created_by: this.state.email,
-                project_name: this.state.projectName,
-                involved_persons: this.state.teamMembers,
-              }),
-            );
-          }
+        this.setState({
+          projects: this.props.route.params.data.push({
+            created_by: this.state.emails,
+            project_name: this.state.projectName,
+            involved_persons: this.state.teamMembers,
+          }),
         });
+        this.props.navigation.pop();
       } else {
         this.setState({errorTeamMem: true});
       }
