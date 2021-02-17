@@ -63,6 +63,13 @@ export const MainStackNavigator = (route?: route) => {
     <SafeAreaProvider>
       <Stack.Navigator initialRouteName={route}>
         <Stack.Screen
+          name="ViewAll"
+          component={ViewAll}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="Menu"
           component={Menu}
           options={{
@@ -114,13 +121,13 @@ export const MainStackNavigator = (route?: route) => {
           }}
         />
 
-        <Stack.Screen
+        {/* <Stack.Screen
           name="ViewAll"
           component={ViewAll}
           options={{
             headerShown: false,
           }}
-        />
+        /> */}
         <Stack.Screen
           name="createProject"
           component={CreateProject}

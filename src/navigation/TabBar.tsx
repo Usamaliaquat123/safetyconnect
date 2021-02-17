@@ -44,6 +44,7 @@ export type BottomTabNavigatorProp = {
   create: undefined;
   more: undefined;
 };
+
 export const BottomTabNavigator = () => {
   return (
     <SafeAreaProvider>

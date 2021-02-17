@@ -33,6 +33,7 @@ export interface project {
   email?: string;
   created_by?: string;
   project_name?: string;
+  locations?: Array<string>;
   involved_persons?: Array<string>;
   organization?: string;
   project?: string;

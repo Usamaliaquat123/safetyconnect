@@ -22,7 +22,7 @@ export type AuthNavigatorProp = {
   tellAboutYou: {username: string};
   CreatePass: {username: string};
   CreateOrg: undefined;
-  CreateProj: undefined;
+  CreateProj: {data: Array<any>; onGoBack: Function};
   Home: undefined;
 };
 
@@ -41,7 +41,7 @@ export const AuthStackNavigator = () => {
   return (
     // <SafeAreaProvider>
     <NavigationContainer>
-      <Auth.Navigator initialRouteName={'CreateProj'}>
+      <Auth.Navigator initialRouteName={'Login'}>
         <Auth.Screen
           name="Signup"
           component={Signup}

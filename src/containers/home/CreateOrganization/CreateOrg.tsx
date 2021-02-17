@@ -21,6 +21,8 @@ import {RouteProp} from '@react-navigation/native';
 import {colors, images, GlStyles} from '@theme';
 import {animation} from '@theme';
 import LottieView from 'lottie-react-native';
+import {createApi as api} from '@service';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 type CreateOrgNavigationProp = StackNavigationProp<AuthNavigatorProp, 'Login'>;
 type CreateOrgRouteProp = RouteProp<AuthNavigatorProp, 'Login'>;
 
@@ -38,10 +40,43 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
       loading: false,
       // Error State
       orgError: false,
+      org: '',
+      projects: [],
     };
   }
 
-  createOrg = () => {};
+  onGoBack = (someDataFromModal: any) => {
+    console.log(someDataFromModal);
+  };
+
+  createOrg = () => {
+    if (this.state.org !== '') {
+      AsyncStorage.getItem('email').then((email: any) => {
+        this.setState({orgError: false});
+        api
+          .createApi()
+          .organization({
+            created_by: email,
+            name: this.state.org,
+            details: 'add yor project descriptions',
+          })
+          .then((res) => {
+            api
+              .createApi()
+              .project({
+                created_by: this.state.email,
+                project_name: this.state.project,
+                involved_persons: this.state.teamMembers,
+                organization: this.state.orgnaization,
+                locations: this.state.locations,
+              })
+              .then((res) => {});
+          });
+      });
+    } else {
+      this.setState({orgError: true});
+    }
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -104,10 +139,20 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                       placeholder={'Enter Organization Name'}
                     />
                   </View>
+                  {this.state.orgError && (
+                    <Text style={{fontSize: wp(3), color: colors.error}}>
+                      Type your organization name
+                    </Text>
+                  )}
                 </View>
                 {/* view all projects */}
                 <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('CreateProj')}
+                  onPress={() =>
+                    this.props.navigation.navigate('CreateProj', {
+                      data: this.state.projects,
+                      onGoBack: this.onGoBack,
+                    })
+                  }
                   style={{flexDirection: 'row'}}>
                   <Icon
                     containerStyle={{marginTop: wp(3), marginRight: wp(3)}}
@@ -120,7 +165,12 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                   <Text style={styles.dontHaveAccount}>Add Project</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('CreateProj')}
+                  onPress={() =>
+                    this.props.navigation.navigate('CreateProj', {
+                      data: this.state.projects,
+                      onGoBack: this.onGoBack,
+                    })
+                  }
                   style={styles.siginBtnContainer}>
                   <Text style={styles.signinText}>Create Organization</Text>
                 </TouchableOpacity>

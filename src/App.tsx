@@ -35,7 +35,7 @@ export default class App extends React.Component<AppProps, any> {
     return (
       <Provider store={Store}>
         <NetworkProvider>
-          <AuthStackNavigator route="Signup" />
+          <AuthStackNavigator route={this.state.route} />
         </NetworkProvider>
       </Provider>
     );

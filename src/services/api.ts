@@ -4,6 +4,7 @@ import {string} from 'prop-types';
 // our "constructor"
 const createApi = (
   baseURL: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:12222/',
+  repBaseAi: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:5002/',
   baseAi: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:5001/',
 ) => {
   const baseapi = apisauce.create({
@@ -11,7 +12,12 @@ const createApi = (
     timeout: 10000,
   });
 
-  const aiBaseApi = apisauce.create({
+  const aiRepBaseApi = apisauce.create({
+    baseURL: repBaseAi,
+    // headers,
+    timeout: 10000,
+  });
+  const aiBaseAi = apisauce.create({
     baseURL: baseAi,
     // headers,
     timeout: 10000,
@@ -21,9 +27,10 @@ const createApi = (
    *  @apis
    */
 
-  const suggestiosns = (keyword: string) => aiBaseApi.post('');
-  const repeatedsorsugg = (keyword: string) => aiBaseApi.get('');
-  const observationSuggestions = (keyword: string) => aiBaseApi.get('');
+  const suggestiosns = (keyword: string) => aiBaseAi.post('', {});
+  const repeatedsorsugg = (keyword: string) =>
+    aiRepBaseApi.post(`repeatedsor?resorobs=${keyword}`, {resorobs: 'general'});
+  const observationSuggestions = (keyword: string) => aiBaseAi.get('');
   // sor api
 
   /*
