@@ -22,7 +22,7 @@ export type AuthNavigatorProp = {
   tellAboutYou: {username: string};
   CreatePass: {username: string};
   CreateOrg: undefined;
-  CreateProj: {data: Array<any>; onGoBack: Function};
+  CreateProj: {organization: string};
   Home: undefined;
 };
 

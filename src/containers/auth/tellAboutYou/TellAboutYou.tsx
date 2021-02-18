@@ -25,6 +25,7 @@ import Modal from 'react-native-modal';
 import LottieView from 'lottie-react-native';
 import {createApi as api} from '@service';
 import {animation} from '@theme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 type TellAboutYouNavigationProp = StackNavigationProp<
   AuthNavigatorProp,
   'CreatePass'
@@ -112,6 +113,10 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   img_url: this.state.photo,
                 })
                 .then((res) => {
+                  AsyncStorage.setItem(
+                    'email',
+                    this.props.route.params.username,
+                  );
                   this.setState({loading: true});
                   if ((res.status = 200)) {
                     this.props.navigation.navigate('CreateOrg');

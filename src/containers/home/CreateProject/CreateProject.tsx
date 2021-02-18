@@ -23,6 +23,7 @@ import styles from './styles';
 import {createApi as api} from '@service';
 import {animation} from '@theme';
 import LottieView from 'lottie-react-native';
+
 import {orgnaization} from '@typings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 type CreateProjectNavigationProp = StackNavigationProp<
@@ -60,26 +61,28 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     };
   }
 
-  componentWillUnmount = () => {
-    if (this.props.route.params.onGoBack) {
-      // console.log(this.state.p)
-      this.props.route.params.onGoBack(this.state.projects);
-    }
-  };
-
   createProject = () => {
     if (this.state.projectName !== '') {
       this.setState({errorProjectName: false});
       if (this.state.teamMembers.length < 2) {
-        this.setState({errorTeamMem: false});
-        this.setState({
-          projects: this.props.route.params.data.push({
-            created_by: this.state.emails,
-            project_name: this.state.projectName,
-            involved_persons: this.state.teamMembers,
-          }),
+        AsyncStorage.getItem('email').then((email: any) => {
+          this.setState({errorTeamMem: false});
+          console.log(this.props.route.params.organization);
+          api
+            .createApi()
+            .project({
+              created_by: email,
+              project_name: this.state.projectName,
+              involved_persons: this.state.teamMembers,
+              organization: this.props.route.params.organization,
+            })
+            .then((res: any) => {
+              if (res.status == 200) {
+                this.props.navigation.navigate('Home');
+              }
+            });
+          // this.props.navigation.pop();
         });
-        this.props.navigation.pop();
       } else {
         this.setState({errorTeamMem: true});
       }
@@ -331,7 +334,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                 </View>
 
                 <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('CreateOrg')}
+                  onPress={() => this.createProject()}
                   style={styles.siginBtnContainer}>
                   <Text style={styles.signinText}>Create Project</Text>
                 </TouchableOpacity>
