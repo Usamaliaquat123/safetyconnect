@@ -61,32 +61,49 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     };
   }
 
-  createProject = () => {
+  createProject = async () => {
     if (this.state.projectName !== '') {
       this.setState({errorProjectName: false});
-      if (this.state.teamMembers.length < 2) {
-        AsyncStorage.getItem('email').then((email: any) => {
-          this.setState({errorTeamMem: false});
-          console.log(this.props.route.params.organization);
-          api
-            .createApi()
-            .project({
-              created_by: email,
-              project_name: this.state.projectName,
-              involved_persons: this.state.teamMembers,
-              organization: this.props.route.params.organization,
-            })
-            .then((res: any) => {
-              if (res.status == 200) {
-                this.props.navigation.navigate('Home');
-              }
-            });
-          // this.props.navigation.pop();
-        });
+      if (this.state.teamMembers.length > 2) {
+        this.setState({loading: true});
+        await AsyncStorage.getItem('email')
+          .then((email: any) => {
+            this.setState({errorTeamMem: false});
+            // console.log('================================');
+            console.log(this.props.route.params.organization);
+            // console.log('================================');
+            console.log(email);
+            api
+              .createApi()
+              .Postproject({
+                created_by: email,
+                project_name: this.state.projectName,
+                involved_persons: [],
+                organization: this.props.route.params.organization,
+              })
+
+              .then((res: any) => {
+                console.log(res);
+
+                if (res.status == 200) {
+                  this.setState({loading: false});
+                  this.props.navigation.navigate('Home');
+                }
+              })
+              .catch((err) => console.log(err));
+            // this.props.navigation.pop();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       } else {
+        this.setState({loading: false});
+
         this.setState({errorTeamMem: true});
       }
     } else {
+      this.setState({loading: false});
+
       this.setState({errorProjectName: true});
     }
   };

@@ -55,6 +55,8 @@ const createApi = (
    */
   const getProject = (data: project) => baseapi.get('project', data);
   const project = (data: project) => baseapi.put('project', data);
+  const Postproject = (data: project) => baseapi.post('project', data);
+
   /*
    * @sors
    */
@@ -78,6 +80,7 @@ const createApi = (
     getSors,
     getProject,
     project,
+    Postproject,
     updateOrganization,
     getOrganization,
     organization,

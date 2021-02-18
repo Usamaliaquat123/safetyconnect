@@ -23,6 +23,7 @@ import {animation} from '@theme';
 import LottieView from 'lottie-react-native';
 import {createApi as api} from '@service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getActiveChildNavigationOptions} from 'react-navigation';
 // import {validateEmail} from '@utils/';
 type CreateOrgNavigationProp = StackNavigationProp<AuthNavigatorProp, 'Login'>;
 type CreateOrgRouteProp = RouteProp<AuthNavigatorProp, 'Login'>;
@@ -46,63 +47,71 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
     };
   }
 
-  onGoBack = (someDataFromModal: any) => {
-    console.log('======================');
-    console.log(someDataFromModal);
-    console.log('======================');
-  };
+  // onGoBack = (someDataFromModal: any) => {
+  //   console.log('======================');
+  //   console.log(someDataFromModal);
+  //   console.log('======================');
+  // };
 
   createOrg = () => {
     if (this.state.org !== '') {
       this.setState({loading: true});
-      AsyncStorage.getItem('email').then((email: any) => {
-        console.log(email);
-        // this.props.navigation.navigate('CreateProj', {})
-        api
-          .createApi()
-          .organization({
-            created_by: email,
-            name: this.state.org,
-            details: 'ad',
-            members: [],
-            projects: [],
-          })
-          .then((res: any) => {
-            if (res.status == 200) {
-              this.setState({laoding: false});
-              this.props.navigation.navigate('CreateProj', {
-                organization: res.data.ororganization_id,
-              });
+      AsyncStorage.getItem('email')
+        .then((email: any) => {
+          console.log(email);
+          // this.props.navigation.navigate('CreateProj', {})
+          api
+            .createApi()
+            .organization({
+              created_by: email,
+              name: this.state.org,
+              details: 'ad',
+              members: [],
+              projects: [],
+            })
+            .then((res: any) => {
+              console.log(res);
+              if (res.status == 200) {
+                //   console.log(res);
+                //   this.setState({laoding: false});
+                // AsyncStorage.setItem(
+                //   'organizations',
+                //   res.data.data.organization_id,
+                // );
+                this.props.navigation.navigate('CreateProj', {
+                  organization: res.data.data.organization_id,
+                });
 
-              // AsyncStorage.setItem('organizations', {});
-            }
-          })
-          .catch((err) => {
-            this.setState({loading: false});
-            console.log(err);
-          });
+                //   // AsyncStorage.setItem('organizations', {});
+              }
+            })
+            .catch((err) => {
+              this.setState({loading: false});
+              console.log(err);
+            });
 
-        // this.setState({orgError: false});
-        // api
-        //   .createApi()
-        //   .organization({
-        //     created_by: email,
-        //     name: this.state.org,
-        //     details: 'add yor project descriptions',
-        //   })
-        //   .then((res) => {
-        //     api
-        //       .createApi()
-        //       .project({
-        //         created_by: this.state.email,
-        //         project_name: this.state.project,
-        //         involved_persons: this.state.teamMembers,
-        //         organization: this.state.orgnaization,
-        //         locations: this.state.locations,
-        //       })
-        //       .then((res) => {});
-        //   });
-      });
+          // this.setState({orgError: false});
+          // api
+          //   .createApi()
+          //   .organization({
+          //     created_by: email,
+          //     name: this.state.org,
+          //     details: 'add yor project descriptions',
+          //   })
+          //   .then((res) => {
+          //     api
+          //       .createApi()
+          //       .project({
+          //         created_by: this.state.email,
+          //         project_name: this.state.project,
+          //         involved_persons: this.state.teamMembers,
+          //         organization: this.state.orgnaization,
+          //         locations: this.state.locations,
+          //       })
+          //       .then((res) => {});
+          //   });
+        })
+        .catch((err) => console.log(err));
     } else {
       this.setState({loading: false});
       this.setState({orgError: true});
