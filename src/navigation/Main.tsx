@@ -11,6 +11,7 @@ import {
   Login,
   MyTasks,
   CreateSOR,
+  ViewAllSOr,
   ViewAll,
   CreateProject,
   Messaging,
@@ -27,7 +28,7 @@ const Stack = createStackNavigator<StackNavigatorProps>();
 export type StackNavigatorProps = {
   Home: undefined;
   CreateSOR: undefined;
-  ViewAll: undefined;
+  ViewAllSOr: undefined;
   ViewSOR: {data: Isor};
   Messaging: undefined;
   Verify: undefined;
@@ -37,6 +38,7 @@ export type StackNavigatorProps = {
   CreatePass: undefined;
   MyTasks: undefined;
   tellAboutYou: undefined;
+  ViewAll: undefined;
   createProject: undefined;
   CreateOrganization: undefined;
   Menu: undefined;
@@ -44,7 +46,7 @@ export type StackNavigatorProps = {
 export type route =
   | 'Home'
   | 'CreateSOR'
-  | 'ViewAll'
+  | 'ViewAllSOr'
   | 'ViewSOR'
   | 'Messaging'
   | 'Verify'
@@ -56,6 +58,7 @@ export type route =
   | 'tellAboutYou'
   | 'createProject'
   | 'CreateOrganization'
+  | 'ViewAll'
   | 'Menu'
   | undefined;
 export const MainStackNavigator = (route?: route) => {
@@ -65,6 +68,13 @@ export const MainStackNavigator = (route?: route) => {
         <Stack.Screen
           name="ViewAll"
           component={ViewAll}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="ViewAllSOr"
+          component={ViewAllSOr}
           options={{
             headerShown: false,
           }}

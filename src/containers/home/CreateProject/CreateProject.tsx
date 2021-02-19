@@ -89,13 +89,17 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                   api
                     .createApi()
                     .getUser({email: email})
-                    .then((res) => {
+                    .then((res: any) => {
+                      AsyncStorage.setItem('id', res.data.data._id);
+                      AsyncStorage.setItem(
+                        'organization',
+                        this.props.route.params.organization,
+                      );
+                      this.setState({loading: false});
+                      this.props.navigation.navigate('Home');
                       //  AsyncStorage.setItem('token', res.)
                       console.log(res);
                     });
-                  AsyncStorage.setItem('id', '');
-                  this.setState({loading: false});
-                  this.props.navigation.navigate('Home');
                 }
               })
               .catch((err) => console.log(err));
@@ -106,7 +110,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
           });
       } else {
         this.setState({loading: false});
-
         this.setState({errorTeamMem: true});
       }
     } else {

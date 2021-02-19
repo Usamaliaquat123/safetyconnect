@@ -25,15 +25,15 @@ import {
 } from 'react-native-responsive-screen';
 import {Isor, classifySorBtn} from '@typings';
 
-type ViewAllNavigationProp = StackNavigationProp<
+type ViewAllSOrNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'ViewAll'
 >;
-type ViewAllRouteProp = RouteProp<StackNavigatorProps, 'ViewAll'>;
+type ViewAllSOrRouteProp = RouteProp<StackNavigatorProps, 'ViewAll'>;
 
 export interface ViewAllProps {
-  route: ViewAllRouteProp;
-  navigation: ViewAllNavigationProp;
+  route: ViewAllSOrRouteProp;
+  navigation: ViewAllSOrNavigationProp;
   reduxActions: any;
   reduxState: any;
 }

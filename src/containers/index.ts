@@ -8,7 +8,7 @@ import Settings from './home/Settings/Settings';
 import Messaging from './home/Messaging/Messaging';
 import Splash from './splash/Splash';
 import Home from './home/index';
-import ViewAll from './home/SOR/ViewAll/ViewAll';
+import ViewAll from './home/ViewAll/ViewAll';
 import ViewSOR from './home/SOR/View/ViewSOR';
 import CreatePass from './auth/createPassword/CreatePass';
 import Chat from './home/Messaging/chat/Chat';
@@ -17,6 +17,7 @@ import CreateOrg from './home/CreateOrganization/CreateOrg';
 import CreateProject from './home/CreateProject/CreateProject';
 import Menu from './home/Menu/Menu';
 import MyTasks from './home/MyTasks/MyTasks';
+import ViewAllSOr from './home/SOR/ViewAll/ViewAllSOr';
 export {
   Chat,
   Login,
@@ -31,6 +32,7 @@ export {
   Settings,
   Messaging,
   Splash,
+  ViewAllSOr,
   Home,
   CreatePass,
   ViewAll,

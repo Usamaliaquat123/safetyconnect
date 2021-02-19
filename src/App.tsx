@@ -47,11 +47,9 @@ export default class App extends React.Component<AppProps, any> {
     return (
       <Provider store={Store}>
         <NetworkProvider>
-          {this.state.authenticated == true ? (
-            <BottomTabNavigator />
-          ) : (
-            <AuthStackNavigator />
-          )}
+          {/* {this.state.authenticated == true ? ( */}
+          <BottomTabNavigator />
+          {/* ) */}
         </NetworkProvider>
       </Provider>
     );
