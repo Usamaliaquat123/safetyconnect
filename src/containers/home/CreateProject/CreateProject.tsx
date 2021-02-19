@@ -56,8 +56,8 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       projects: [],
       email: 'inconnent12345@outlook.com',
       // errors popup
-      errorProjectName: true,
-      errorTeamMem: true,
+      errorProjectName: false,
+      errorTeamMem: false,
     };
   }
 
@@ -70,7 +70,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
           .then((email: any) => {
             this.setState({errorTeamMem: false});
             // console.log('================================');
-            console.log(this.props.route.params.organization);
+            // console.log(this.props.route.params.organization);
             // console.log('================================');
             console.log(email);
             api
@@ -86,6 +86,14 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                 console.log(res);
 
                 if (res.status == 200) {
+                  api
+                    .createApi()
+                    .getUser({email: email})
+                    .then((res) => {
+                      //  AsyncStorage.setItem('token', res.)
+                      console.log(res);
+                    });
+                  AsyncStorage.setItem('id', '');
                   this.setState({loading: false});
                   this.props.navigation.navigate('Home');
                 }
@@ -168,9 +176,9 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     <TextInput
                       style={styles.authInputs}
                       value={this.state.projectName}
-                      onChange={(e) =>
-                        this.setState({projectName: e.nativeEvent.text})
-                      }
+                      onChange={(e) => {
+                        this.setState({projectName: e.nativeEvent.text});
+                      }}
                       placeholder={'Enter Project Name'}
                     />
                   </View>
@@ -200,9 +208,17 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                           style={styles.authInputs}
                           value={this.state.teamMembersText}
                           onChange={(e) => {
-                            this.setState({
-                              teamMembersText: e.nativeEvent.text,
-                            });
+                            {
+                              if (this.state.teamMembers < 1) {
+                                this.setState({errorTeamMem: true});
+                              } else {
+                                this.setState({errorTeamMem: false});
+                              }
+
+                              this.setState({
+                                teamMembersText: e.nativeEvent.text,
+                              });
+                            }
                           }}
                         />
                       ) : null}
