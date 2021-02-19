@@ -9,6 +9,7 @@ import {
   Easing,
   PanResponder,
 } from 'react-native';
+import {allDraft, allRecentActivity, allSubmitted, allNotified} from '@service';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors, fonts} from '@theme';
 import {connect} from 'react-redux';
@@ -249,12 +250,19 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                             date={d.date}
                           />
                         ))}
-                        <View style={{marginLeft: wp(4)}}>
+                        <TouchableOpacity
+                          onPress={() =>
+                            this.props.navigation.navigate('ViewAll', {
+                              data: allDraft,
+                              title: 'Draft',
+                            })
+                          }
+                          style={{marginLeft: wp(4)}}>
                           <Text
                             style={{fontSize: wp(3), color: colors.primary}}>
                             See More
                           </Text>
-                        </View>
+                        </TouchableOpacity>
                       </View>
                     ) : null}
                   </View>
@@ -283,7 +291,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                           name={this.state.isNotified == true ? 'down' : 'up'}
                           type="antdesign"
                         />
-                        <Text style={styles.listDraftText}>Notified</Text>
+                        <Text style={styles.listDraftText}>In Progress</Text>
                       </TouchableOpacity>
                       <View
                         style={{
@@ -332,12 +340,19 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                             date={d.date}
                           />
                         ))}
-                        <View style={{marginLeft: wp(4), marginTop: wp(3)}}>
+                        <TouchableOpacity
+                          onPress={() =>
+                            this.props.navigation.navigate('ViewAll', {
+                              data: allNotified,
+                              title: 'In Progress',
+                            })
+                          }
+                          style={{marginLeft: wp(4), marginTop: wp(3)}}>
                           <Text
                             style={{fontSize: wp(3), color: colors.primary}}>
                             See More
                           </Text>
-                        </View>
+                        </TouchableOpacity>
                       </View>
                     ) : null}
                   </View>
@@ -419,12 +434,19 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                             date={d.date}
                           />
                         ))}
-                        <View style={{marginLeft: wp(4), marginTop: wp(3)}}>
+                        <TouchableOpacity
+                          onPress={() =>
+                            this.props.navigation.navigate('ViewAll', {
+                              data: allSubmitted,
+                              title: 'Closed',
+                            })
+                          }
+                          style={{marginLeft: wp(4), marginTop: wp(3)}}>
                           <Text
                             style={{fontSize: wp(3), color: colors.primary}}>
                             See More
                           </Text>
-                        </View>
+                        </TouchableOpacity>
                       </View>
                     ) : null}
                   </View>
@@ -507,7 +529,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                 </View>
                 <View>
                   <View style={styles.submitTextContaienr}>
-                    <Text style={styles.submitText}>Submitted</Text>
+                    <Text style={styles.submitText}>Closed</Text>
                     <Icon
                       size={22}
                       name="filter"
