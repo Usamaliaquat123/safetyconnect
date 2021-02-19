@@ -12,17 +12,25 @@ import {
   notified,
   repeatedSor,
   riskxSeverityxliklihood,
-  allRecentActivity,
   recentActivity,
   myTasks,
 } from './mock';
+import {
+  allDraft,
+  allRecentActivity,
+  allNotified,
+  allSubmitted,
+} from './ViewAllSors';
 import {messages} from './messaging_mock';
 export {
   createApi,
   Create_sor,
+  allSubmitted,
+  allDraft,
   allRecentActivity,
   recentActivity,
   View_sor,
+  allNotified,
   draft,
   myTasks,
   messages,
