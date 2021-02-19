@@ -12,6 +12,7 @@ import {
   notified,
   repeatedSor,
   riskxSeverityxliklihood,
+  allRecentActivity,
   recentActivity,
   myTasks,
 } from './mock';
@@ -19,6 +20,7 @@ import {messages} from './messaging_mock';
 export {
   createApi,
   Create_sor,
+  allRecentActivity,
   recentActivity,
   View_sor,
   draft,

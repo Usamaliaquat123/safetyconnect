@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.darkLightGrey,
 
     // flex: 2,
-
     // marginTop: wp(80),
     borderTopLeftRadius: wp(4),
     borderTopRightRadius: wp(4),
