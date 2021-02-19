@@ -385,7 +385,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                           name={this.state.isSubmited == true ? 'down' : 'up'}
                           type="antdesign"
                         />
-                        <Text style={styles.listDraftText}>Submitted</Text>
+                        <Text style={styles.listDraftText}>Closed</Text>
                       </TouchableOpacity>
                       <View
                         style={{
