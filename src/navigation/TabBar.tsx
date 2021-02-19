@@ -55,7 +55,7 @@ export const BottomTabNavigator = () => {
           initialRouteName={'home'}>
           <Tab.Screen
             name="home"
-            component={() => MainStackNavigator('ViewAll')}
+            component={() => MainStackNavigator('ViewAllSOr')}
             options={{}}
           />
           <Tab.Screen

@@ -38,7 +38,7 @@ export type StackNavigatorProps = {
   CreatePass: undefined;
   MyTasks: undefined;
   tellAboutYou: undefined;
-  ViewAll: undefined;
+  ViewAll: {data: Array<Isor>; title: string};
   createProject: undefined;
   CreateOrganization: undefined;
   Menu: undefined;

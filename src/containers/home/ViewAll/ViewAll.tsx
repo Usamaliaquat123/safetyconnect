@@ -32,9 +32,9 @@ import {
 // import {color} from 'react-native-reanimated';
 type ViewAllNavigationProp = StackNavigationProp<
   StackNavigatorProps,
-  'MyTasks'
+  'ViewAll'
 >;
-type ViewAllRouteProp = RouteProp<StackNavigatorProps, 'MyTasks'>;
+type ViewAllRouteProp = RouteProp<StackNavigatorProps, 'ViewAll'>;
 
 export interface ViewAllProps {
   route: ViewAllRouteProp;
@@ -61,7 +61,9 @@ class ViewAll extends React.Component<ViewAllProps, any> {
           <View style={styles.header}>
             <View style={styles.headertle}>
               <View style={{alignSelf: 'center'}}>
-                <Text style={styles.orgTitle}>Recently Activity</Text>
+                <Text style={styles.orgTitle}>
+                  {this.props.route.params.title}
+                </Text>
               </View>
               <View
                 style={{
@@ -79,8 +81,14 @@ class ViewAll extends React.Component<ViewAllProps, any> {
             </View>
           </View>
           <View style={styles.content}>
-            <View style={{backgroundColor: colors.secondary, padding: wp(3)}}>
-              {allRecentActivity.map((d, i) => (
+            <View
+              style={{
+                backgroundColor: colors.secondary,
+                padding: wp(3),
+                borderTopLeftRadius: wp(4),
+                borderTopRightRadius: wp(4),
+              }}>
+              {this.props.route.params.data.map((d, i) => (
                 <ListCard
                   classify={d.classify}
                   styles={

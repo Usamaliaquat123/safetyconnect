@@ -10,7 +10,7 @@ import {
   PanResponder,
 } from 'react-native';
 import {Icon, Avatar} from 'react-native-elements';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {Create_sor, viewas, notified, submitted, draft} from '@service';
@@ -135,7 +135,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
             </View>
             <View style={styles.headerSelect}>
               {/* Project selector */}
-              {/* <View style={styles.leftSelector}>
+              <View style={styles.leftSelector}>
                 <TouchableOpacity
                   style={styles.selector}
                   onPress={() => {
@@ -166,7 +166,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                     </TouchableOpacity>
                   </View>
                 ) : null}
-              </View> */}
+              </View>
             </View>
           </View>
           <View style={styles.content}>
@@ -174,11 +174,16 @@ class ViewAll extends React.Component<ViewAllProps, any> {
               <View>
                 <ScrollView
                   style={{
-                    marginTop: wp(15),
-                    padding: wp(3),
+                    marginTop: wp(5),
+                    paddingTop: wp(3),
                   }}
                   showsVerticalScrollIndicator={false}>
-                  <View style={{paddingBottom: wp(9)}}>
+                  <View
+                    style={{
+                      paddingBottom: wp(5),
+                      paddingLeft: wp(3),
+                      paddingRight: wp(3),
+                    }}>
                     <View style={styles.listHeader}>
                       <TouchableOpacity
                         onPress={() => {
@@ -203,7 +208,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                           position: 'absolute',
                           right: wp(4),
                           flexDirection: 'row',
-                          marginTop: wp(-1),
+                          // marginTop: wp(),
                         }}>
                         <Icon size={wp(5)} name="filter" type="ionicon" />
                         <Text
@@ -218,7 +223,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       </View>
                     </View>
                     {this.state.isDraft == true ? (
-                      <View style={styles.listViewContent}>
+                      <View style={[styles.listViewContent]}>
                         {this.state.draft.map((d: Isor, i: number) => (
                           <ListCard
                             classify={d.classify}
@@ -244,10 +249,28 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                             date={d.date}
                           />
                         ))}
+                        <View style={{marginLeft: wp(4)}}>
+                          <Text
+                            style={{fontSize: wp(3), color: colors.primary}}>
+                            See More
+                          </Text>
+                        </View>
                       </View>
                     ) : null}
                   </View>
-                  <View style={{paddingBottom: wp(10)}}>
+                  <View
+                    style={{
+                      height: wp(2),
+
+                      backgroundColor: colors.darkLightGrey,
+                    }}></View>
+                  <View
+                    style={{
+                      paddingBottom: wp(5),
+                      marginTop: wp(5),
+                      paddingLeft: wp(3),
+                      paddingRight: wp(3),
+                    }}>
                     <View style={styles.listHeader}>
                       <TouchableOpacity
                         onPress={() => {
@@ -309,10 +332,27 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                             date={d.date}
                           />
                         ))}
+                        <View style={{marginLeft: wp(4), marginTop: wp(3)}}>
+                          <Text
+                            style={{fontSize: wp(3), color: colors.primary}}>
+                            See More
+                          </Text>
+                        </View>
                       </View>
                     ) : null}
                   </View>
-                  <View style={{paddingBottom: this.state.bottomWidth}}>
+                  <View
+                    style={{
+                      height: wp(2),
+                      backgroundColor: colors.darkLightGrey,
+                    }}></View>
+                  <View
+                    style={{
+                      marginTop: wp(5),
+                      paddingBottom: this.state.bottomWidth,
+                      paddingLeft: wp(3),
+                      paddingRight: wp(3),
+                    }}>
                     <View style={styles.listHeader}>
                       <TouchableOpacity
                         onPress={() => {
@@ -379,6 +419,12 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                             date={d.date}
                           />
                         ))}
+                        <View style={{marginLeft: wp(4), marginTop: wp(3)}}>
+                          <Text
+                            style={{fontSize: wp(3), color: colors.primary}}>
+                            See More
+                          </Text>
+                        </View>
                       </View>
                     ) : null}
                   </View>

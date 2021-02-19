@@ -36,9 +36,9 @@ const styles = StyleSheet.create({
   content: {
     // padding: wp(5),
     backgroundColor: colors.darkLightGrey,
-
+    // paddingTop: wp(3),
     // flex: 2,
-    // marginTop: wp(80),
+    // marginTop    : wp(80),
     borderTopLeftRadius: wp(4),
     borderTopRightRadius: wp(4),
   },

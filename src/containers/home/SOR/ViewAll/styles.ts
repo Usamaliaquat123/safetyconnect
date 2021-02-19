@@ -35,14 +35,19 @@ const styles = StyleSheet.create({
     width: wp(100),
   },
   content: {
-    // flex: 2,
+    // flex: 1,
     // height: hp(100),
     backgroundColor: colors.secondary,
-    borderTopLeftRadius: wp(10),
-    borderTopRightRadius: wp(10),
+    borderTopLeftRadius: wp(6),
+    borderTopRightRadius: wp(6),
   },
   hselectort: {color: colors.secondary, fontWeight: 'bold', fontSize: wp(3)},
-  selectorBox: {color: colors.secondary, fontSize: wp(3)},
+  selectorBox: {
+    color: colors.secondary,
+    fontSize: wp(3.4),
+    fontWeight: 'bold',
+    // letterSpacing: wp(0.2),
+  },
   rightSelector: {flexDirection: 'row', marginRight: wp(12)},
   leftSelector: {flexDirection: 'row'},
   selector: {
@@ -51,9 +56,9 @@ const styles = StyleSheet.create({
   },
 
   slctContainer: {
-    // position: 'absolute',
+    position: 'absolute',
     top: wp(5),
-    zIndex: wp(5),
+    // zIndex: wp(5),
     // left: wp(13),
     backgroundColor: colors.secondary,
     // padding: wp(5),
@@ -62,15 +67,15 @@ const styles = StyleSheet.create({
     paddingTop: wp(1),
     paddingBottom: wp(1),
     // width: wp(22),
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 1,
+    // },
+    // shadowOpacity: 0.22,
+    // shadowRadius: 2.22,
 
-    elevation: 3,
+    // elevation: 3,
   },
 
   itemH: {
