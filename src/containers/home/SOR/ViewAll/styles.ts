@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
   },
   headertle: {flexDirection: 'row'},
   headerSelect: {
-    marginTop: wp(10),
+    marginTop: wp(2),
+    marginLeft: wp(11),
     flexDirection: 'row',
     // alignContent: 'stretch',
     justifyContent: 'space-between',
