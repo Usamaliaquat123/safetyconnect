@@ -4,7 +4,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 const styles = StyleSheet.create({
   listVwCntent: {
     // paddingLeft: wp(),
@@ -21,12 +21,13 @@ const styles = StyleSheet.create({
   },
   listBottomView: {
     flexDirection: 'row',
-
+    fontWeight: 'bold',
     marginLeft: wp(8),
   },
   listUserTimeDate: {
     fontSize: wp(2.5),
     opacity: 0.5,
+    fontFamily: 'SFuiDisplayLight',
   },
   listMomentLT: {
     marginLeft: wp(3),
@@ -45,7 +46,9 @@ const styles = StyleSheet.create({
 
   listObDesc: {
     marginLeft: wp(3),
-    fontSize: wp(3),
+    fontSize: wp(3.4),
+
+    fontFamily: 'SFuiDisplayMedium',
   },
 });
 

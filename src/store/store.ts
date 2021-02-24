@@ -5,7 +5,10 @@ import {IAction} from './ActionTypes';
 import InitialAppReducer, {
   initialState as initState,
 } from './Reducers/InitialAppReducer';
-import ListReducer, {initialState as listState} from './Reducers/listReducers';
+// import {  } from "./Reducers/listSorReducers";
+import ListSorReducer, {
+  initialState as listState,
+} from './Reducers/listSorReducers';
 
 export type RootState = {
   init: typeof initState;
@@ -31,7 +34,7 @@ function configureStore() {
   const composeEnhancers = (__DEV__ && composeDevToolsWithOption) || compose;
   let rootReducer = combineReducers({
     init: InitialAppReducer,
-    list: ListReducer,
+    list: ListSorReducer,
     // auto-plugin
   });
 

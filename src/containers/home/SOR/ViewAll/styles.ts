@@ -14,10 +14,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
   },
   title: {
-    fontSize: wp(4),
+    fontSize: wp(3.5),
     marginLeft: wp(5),
     color: colors.secondary,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'SFuiDisplayBlack',
   },
   underScrore: {
     backgroundColor: colors.green,
@@ -145,18 +146,49 @@ const styles = StyleSheet.create({
 
   listHeader: {
     flexDirection: 'row',
+    alignItems: 'center',
     paddingLeft: wp(3),
   },
   listDraftText: {
-    fontSize: wp(3.5),
-    fontWeight: 'bold',
+    fontSize: wp(3.4),
+    // fontWeight: 'bold',
     color: colors.text,
+    fontFamily: 'SFuiDisplayBold',
     marginTop: wp(-1),
     marginLeft: wp(5),
   },
   listViewContent: {
     marginTop: wp(5),
     marginLeft: wp(3),
+  },
+  filterHeader: {
+    position: 'absolute',
+    right: wp(4),
+    flexDirection: 'row',
+    marginTop: wp(-1),
+  },
+  filterText: {
+    paddingLeft: wp(1),
+    fontSize: wp(3),
+    marginTop: wp(0.6),
+    // fontWeight: 'bold',
+    fontFamily: 'SFuiDisplayBold',
+  },
+  inProgressTop: {
+    paddingBottom: wp(5),
+    marginTop: wp(5),
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+  },
+  closedTop: {
+    paddingLeft: wp(3),
+    marginTop: wp(5),
+
+    paddingRight: wp(3),
+  },
+  lineheight: {
+    height: wp(2),
+    backgroundColor: colors.darkLightGrey,
   },
 });
 

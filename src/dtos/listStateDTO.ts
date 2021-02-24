@@ -1,5 +1,5 @@
 interface ListStateDTO {
-  list: [];
+  list: Array<any>;
 }
 
 export default ListStateDTO;

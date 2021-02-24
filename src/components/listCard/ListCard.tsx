@@ -19,8 +19,8 @@ import {
 import moment from 'moment';
 export interface ListCardProps {
   observation: string;
-  user1: string;
-  user2: string;
+  user1?: string;
+  user2?: string;
   username: string;
   date: number;
   onPress: Function;
@@ -30,39 +30,43 @@ export interface ListCardProps {
 }
 
 export default class ListCard extends React.Component<ListCardProps, any> {
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    console.log(this.props.user1);
+  };
   render() {
     return (
       <TouchableOpacity
         onPress={() => this.props.onPress()}
         style={[styles.listVwCntent, this.props.styles]}>
         <View style={{flexDirection: 'row'}}>
-          {this.props.classify == 'LSR' ? (
+          {this.props.classify == 'lsr' ? (
             <Image
               source={images.lsr}
               style={{tintColor: colors.primary, width: wp(5), height: wp(5)}}
             />
           ) : (
             <View>
-              {this.props.classify == 'Near Miss' ? (
+              {this.props.classify == 'near miss' ? (
                 <Image
                   source={images.nearMiss}
                   style={{tintColor: 'black', width: wp(5), height: wp(5)}}
                 />
               ) : (
-                <Icon
-                  size={wp(5)}
-                  name={this.props.iconconf.icon}
-                  type={this.props.iconconf.type}
-                  color={this.props.iconconf.color}
-                />
+                <View>
+                  {this.props.iconconf == undefined ? null : (
+                    <Icon
+                      size={wp(5)}
+                      name={this.props.iconconf.icon}
+                      type={this.props.iconconf.type}
+                      color={this.props.iconconf.color}
+                    />
+                  )}
+                </View>
               )}
             </View>
           )}
 
-          <Text style={styles.listObDesc}>
-            {this.props.observation.slice(0, 40)}...
-          </Text>
+          <Text style={styles.listObDesc}>{this.props.observation}...</Text>
           <View style={styles.listAvatars}>
             <Avatar
               size={wp(8)}

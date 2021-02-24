@@ -41,7 +41,7 @@ import {
   downloadFile,
 } from '@utils';
 import DocumentPicker from 'react-native-document-picker';
-import listAction from './../../../../store/actions/listActions';
+// import listAction from './../../../../store/actions/listActions';
 type ViewSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'ViewSOR'

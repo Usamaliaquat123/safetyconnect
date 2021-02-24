@@ -24,10 +24,14 @@
         "@service":["./services/index"], 
         "@utils/*":["./utils/*"], 
         "@utils":["./utils/index"], 
+        "@store/*":["./store/*"], 
+        "@store":["./store/index"], 
         "@deco":["./decorators/index"],
         "@typings":["./typings/index"],
         "@config":["./config"],
         "@config/*":["./config/*"],
+        "@dtos":["./dtos/index"],
+        "@dtos/*":["./dtos/*"],
       }
     },
     "exclude": [

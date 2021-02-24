@@ -13,7 +13,7 @@ export const classifySor: Array<Object> = [
   {
     icon: 'warning',
     type: 'antdesign',
-    title: 'Concern',
+    title: 'concern',
     selected: false,
     color: colors.classify_sor_btns.concern,
   },
@@ -21,21 +21,21 @@ export const classifySor: Array<Object> = [
     icon: 'check-circle',
     type: 'font-awesome-5',
     selected: false,
-    title: 'Positive',
+    title: 'positive',
     color: colors.classify_sor_btns.positive,
   },
   {
     icon: 'aperture',
     selected: false,
     type: 'ionicon',
-    title: 'LSR',
+    title: 'lsr',
     color: colors.classify_sor_btns.lsr,
   },
   {
     icon: 'centercode',
     selected: false,
     type: 'font-awesome-5',
-    title: 'Near Miss',
+    title: 'near miss',
     color: colors.classify_sor_btns.nearmiss,
   },
 ];

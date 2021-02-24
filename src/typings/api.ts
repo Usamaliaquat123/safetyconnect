@@ -37,6 +37,7 @@ export interface project {
   involved_persons?: Array<string>;
   organization?: string;
   project?: string;
+  projectid?: string;
 }
 /*
  * SOR's
@@ -46,9 +47,7 @@ export interface sor {
   project?: string;
   limit?: number;
   page?: number;
-  query?: {
-    reportId: string;
-  };
+  query?: Object;
 }
 export interface report {
   status?: number;

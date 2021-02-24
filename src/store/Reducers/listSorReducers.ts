@@ -1,11 +1,14 @@
 import ActionTypes, {IAction} from '../ActionTypes';
-import ListStateDTO from '../../dtos/listStateDTO';
+import {ListStateDTO} from '@dtos';
 
 export const initialState: ListStateDTO = {
   list: [],
 };
 
-const ListReducer = (state = initialState, actions: IAction<ListStateDTO>) => {
+const ListSorReducer = (
+  state = initialState,
+  actions: IAction<ListStateDTO>,
+) => {
   switch (actions.type) {
     case ActionTypes.LIST_INIT: {
       return {
@@ -24,4 +27,4 @@ const ListReducer = (state = initialState, actions: IAction<ListStateDTO>) => {
   }
 };
 
-export default ListReducer;
+export default ListSorReducer;

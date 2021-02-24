@@ -9,12 +9,23 @@ import {
   Easing,
   PanResponder,
 } from 'react-native';
-import {allDraft, allRecentActivity, allSubmitted, allNotified} from '@service';
+import {
+  allDraft,
+  allRecentActivity,
+  allSubmitted,
+  allNotified,
+  draft,
+  Create_sor,
+} from '@service';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors, fonts} from '@theme';
+import {initialList} from '@store';
+import {RootState} from '../../../../store/store';
+import {InitialAppStateDTO, ListStateDTO} from '@dtos';
 import {connect} from 'react-redux';
 import styles from './styles';
-import {Create_sor, viewas, notified, submitted, draft} from '@service';
+// import * as initialApp from '@store';
+// import {Create_sor, viewas, notified, submitted, draft} from '@service';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
@@ -24,8 +35,10 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {Isor, classifySorBtn} from '@typings';
+import {createApi} from '@service';
 
+import {Isor, classifySorBtn} from '@typings';
+// import {  } from "";
 type ViewAllSOrNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'ViewAll'
@@ -36,7 +49,9 @@ export interface ViewAllProps {
   route: ViewAllSOrRouteProp;
   navigation: ViewAllSOrNavigationProp;
   reduxActions: any;
-  reduxState: any;
+  reduxState: RootState;
+  initial: ListStateDTO;
+  initialList: any;
 }
 const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
 
@@ -52,8 +67,8 @@ export const sliderWidth = viewportWidth;
 export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
 const SLIDER_1_FIRST_ITEM = 1;
-class ViewAll extends React.Component<ViewAllProps, any> {
-  constructor(props: any) {
+export class ViewAllSOr extends React.Component<ViewAllProps, any> {
+  constructor(props: ViewAllProps) {
     super(props);
     this.state = {
       // animation of drafts
@@ -70,16 +85,50 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       isNotified: false,
       isDraft: true,
       isSubmited: false,
-      selectP: true,
+      selectP: false,
       draft: draft,
-      notified: notified,
-      submitted: submitted,
+      exclated: [],
+      notified: [],
+      submitted: [],
+      completed: [],
+      inprogress: [],
       slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
       bottomWidth: wp(100),
     };
   }
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    createApi
+      .createApi()
+      .filterSors({
+        project: '6034fe3c2443d9b4f384c3ad',
+        limit: 10,
+        page: 0,
+        query: {status: [1, 2, 3, 4, 5]},
+      })
+      .then((res: any) => {
+        for (let i = 0; i < res.data.data.report.length; i++) {
+          if (res.data.data.report[i].status == 1) {
+            this.state.draft.push(res.data.data.report[i]);
+          } else if (res.data.data.report[i].status == 2) {
+            this.state.submitted.push(res.data.data.report[i]);
+          } else if (res.data.data.report[i].status == 3) {
+            this.state.exclated.push(res.data.data.report[i]);
+          } else if (res.data.data.report[i].status == 4) {
+            this.state.inprogress.push(res.data.data.report[i]);
+          } else if (res.data.data.report[i].status == 5) {
+            this.state.completed.push(res.data.data.report[i]);
+          }
+        }
+        console.log(res.data.data.report);
+        this.setState({draft: res.data.data.report});
+      });
+    // initialList.initialList();
+    // this.props.initialList.addList('602e54a3fbfaf078abab8466');
+    // console.log(RootState);
+    // console.log(this.props.initial);
+    // initialList.addList('602e54a3fbfaf078abab8466');
+  };
 
   dropdownAnimated = (d: string) => {
     // Animated.timing(this.state.AnimatedDown, {
@@ -109,7 +158,10 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     //   useNativeDriver: false,
     // }).start();
   };
+
   render() {
+    // console.log(this.props.initial.list);
+    // console.log();
     return (
       <View style={{backgroundColor: colors.primary}}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -209,76 +261,73 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                           position: 'absolute',
                           right: wp(4),
                           flexDirection: 'row',
-                          // marginTop: wp(),
                         }}>
-                        <Icon size={wp(5)} name="filter" type="ionicon" />
+                        <Icon
+                          containerStyle={{marginTop: wp(-0.6)}}
+                          size={wp(5)}
+                          name="filter"
+                          type="ionicon"
+                        />
                         <Text
                           style={{
                             paddingLeft: wp(1),
-                            fontSize: wp(3.5),
-                            marginTop: wp(0.6),
-                            fontWeight: 'bold',
+                            fontSize: wp(3),
+                            fontFamily: 'SFuiDisplayBold',
                           }}>
                           Filter
                         </Text>
                       </View>
                     </View>
+
                     {this.state.isDraft == true ? (
                       <View style={[styles.listViewContent]}>
-                        {this.state.draft.map((d: Isor, i: number) => (
-                          <ListCard
-                            classify={d.classify}
-                            styles={
-                              this.state.draft.length == i + 1
-                                ? {borderBottomWidth: wp(0)}
-                                : null
+                        {this.state.draft
+                          .slice(0, 5)
+                          .map((d: Isor, i: number) => (
+                            <ListCard
+                              classify={d.sor_type}
+                              styles={
+                                this.state.draft.slice(0, 5).length == i + 1
+                                  ? {borderBottomWidth: wp(0)}
+                                  : null
+                              }
+                              user1={d.user1}
+                              user2={d.user2}
+                              observation={d.details}
+                              username={d.created_by}
+                              iconconf={classifySor.find(
+                                (e: any) => e.title == d.sor_type.toString(),
+                              )}
+                              onPress={
+                                () =>
+                                  this.props.navigation.navigate('ViewSOR', {
+                                    data: d,
+                                  })
+                                // this.props.navigation.navigate('home')
+                              }
+                              date={d.occured_at}
+                            />
+                          ))}
+                        {this.state.draft.length > 5 && (
+                          <TouchableOpacity
+                            onPress={() =>
+                              this.props.navigation.navigate('ViewAll', {
+                                data: this.state.draft,
+                                title: 'Draft',
+                              })
                             }
-                            user1={d.user1}
-                            user2={d.user2}
-                            observation={d.observation}
-                            username={d.username}
-                            iconconf={classifySor.find(
-                              (e: any) => e.title == d.classify,
-                            )}
-                            onPress={
-                              () =>
-                                this.props.navigation.navigate('ViewSOR', {
-                                  data: d,
-                                })
-                              // this.props.navigation.navigate('home')
-                            }
-                            date={d.date}
-                          />
-                        ))}
-                        <TouchableOpacity
-                          onPress={() =>
-                            this.props.navigation.navigate('ViewAll', {
-                              data: allDraft,
-                              title: 'Draft',
-                            })
-                          }
-                          style={{marginLeft: wp(4)}}>
-                          <Text
-                            style={{fontSize: wp(3), color: colors.primary}}>
-                            See More
-                          </Text>
-                        </TouchableOpacity>
+                            style={{marginLeft: wp(4)}}>
+                            <Text
+                              style={{fontSize: wp(3), color: colors.primary}}>
+                              See More
+                            </Text>
+                          </TouchableOpacity>
+                        )}
                       </View>
                     ) : null}
                   </View>
-                  <View
-                    style={{
-                      height: wp(2),
-
-                      backgroundColor: colors.darkLightGrey,
-                    }}></View>
-                  <View
-                    style={{
-                      paddingBottom: wp(5),
-                      marginTop: wp(5),
-                      paddingLeft: wp(3),
-                      paddingRight: wp(3),
-                    }}>
+                  <View style={styles.lineheight}></View>
+                  <View style={styles.inProgressTop}>
                     <View style={styles.listHeader}>
                       <TouchableOpacity
                         onPress={() => {
@@ -293,57 +342,42 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                         />
                         <Text style={styles.listDraftText}>In Progress</Text>
                       </TouchableOpacity>
-                      <View
-                        style={{
-                          position: 'absolute',
-                          right: wp(4),
-                          flexDirection: 'row',
-                          marginTop: wp(-1),
-                        }}>
+                      <View style={styles.filterHeader}>
                         <Icon size={wp(5)} name="filter" type="ionicon" />
-
-                        <Text
-                          style={{
-                            paddingLeft: wp(1),
-                            fontSize: wp(3.5),
-                            marginTop: wp(0.6),
-                            fontWeight: 'bold',
-                          }}>
-                          Filter
-                        </Text>
+                        <Text style={styles.filterText}>Filter</Text>
                       </View>
                     </View>
                     {this.state.isNotified == true ? (
                       <View style={styles.listViewContent}>
-                        {this.state.notified.map((d: Isor, i: number) => (
-                          <ListCard
-                            classify={d.classify}
-                            styles={
-                              this.state.draft.length == i + 1
-                                ? {borderBottomWidth: wp(0)}
-                                : null
-                            }
-                            user1={d.user1}
-                            user2={d.user2}
-                            observation={d.observation}
-                            username={d.username}
-                            iconconf={classifySor.find(
-                              (e: any) => e.title == d.classify,
-                            )}
-                            onPress={
-                              () =>
+                        {this.state.notified
+                          .slice(0, 5)
+                          .map((d: Isor, i: number) => (
+                            <ListCard
+                              classify={d.sor_type}
+                              styles={
+                                this.state.draft.length == i + 1
+                                  ? {borderBottomWidth: wp(0)}
+                                  : null
+                              }
+                              user1={d.user1}
+                              user2={d.user2}
+                              observation={d.details}
+                              username={d.created_by}
+                              iconconf={classifySor.find(
+                                (e: any) => e.title == d.sor_type,
+                              )}
+                              onPress={() =>
                                 this.props.navigation.navigate('ViewSOR', {
                                   data: d,
                                 })
-                              // this.props.navigation.navigate('home')
-                            }
-                            date={d.date}
-                          />
-                        ))}
+                              }
+                              date={d.occured_at}
+                            />
+                          ))}
                         <TouchableOpacity
                           onPress={() =>
                             this.props.navigation.navigate('ViewAll', {
-                              data: allNotified,
+                              data: this.state.notified,
                               title: 'In Progress',
                             })
                           }
@@ -356,18 +390,14 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       </View>
                     ) : null}
                   </View>
+                  <View style={styles.lineheight}></View>
                   <View
-                    style={{
-                      height: wp(2),
-                      backgroundColor: colors.darkLightGrey,
-                    }}></View>
-                  <View
-                    style={{
-                      marginTop: wp(5),
-                      paddingBottom: this.state.bottomWidth,
-                      paddingLeft: wp(3),
-                      paddingRight: wp(3),
-                    }}>
+                    style={[
+                      {
+                        paddingBottom: this.state.bottomWidth,
+                      },
+                      styles.closedTop,
+                    ]}>
                     <View style={styles.listHeader}>
                       <TouchableOpacity
                         onPress={() => {
@@ -399,9 +429,10 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                         <Text
                           style={{
                             paddingLeft: wp(1),
-                            fontSize: wp(3.5),
+                            fontSize: wp(3),
                             marginTop: wp(0.6),
-                            fontWeight: 'bold',
+                            // fontWeight: 'bold',
+                            fontFamily: 'SFuiDisplayBold',
                           }}>
                           Filter
                         </Text>
@@ -409,35 +440,35 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                     </View>
                     {this.state.isSubmited == true ? (
                       <View style={styles.listViewContent}>
-                        {this.state.submitted.map((d: Isor, i: number) => (
-                          <ListCard
-                            classify={d.classify}
-                            styles={
-                              this.state.draft.length == i + 1
-                                ? {borderBottomWidth: wp(0)}
-                                : null
-                            }
-                            user1={d.user1}
-                            user2={d.user2}
-                            observation={d.observation}
-                            username={d.username}
-                            iconconf={classifySor.find(
-                              (e: any) => e.title == d.classify,
-                            )}
-                            onPress={
-                              () =>
+                        {this.state.submitted
+                          .slice(0, 5)
+                          .map((d: Isor, i: number) => (
+                            <ListCard
+                              classify={d.sor_type}
+                              styles={
+                                this.state.submitted.slice(0, 5).length == i + 1
+                                  ? {borderBottomWidth: wp(0)}
+                                  : null
+                              }
+                              user1={d.user1}
+                              user2={d.user2}
+                              observation={d.details}
+                              username={d.created_by}
+                              iconconf={classifySor.find(
+                                (e: any) => e.title == d.sor_type,
+                              )}
+                              onPress={() =>
                                 this.props.navigation.navigate('ViewSOR', {
                                   data: d,
                                 })
-                              // this.props.navigation.navigate('View')
-                            }
-                            date={d.date}
-                          />
-                        ))}
+                              }
+                              date={d.occured_at}
+                            />
+                          ))}
                         <TouchableOpacity
                           onPress={() =>
                             this.props.navigation.navigate('ViewAll', {
-                              data: allSubmitted,
+                              data: this.state.submitted,
                               title: 'Closed',
                             })
                           }
@@ -478,12 +509,12 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       onPress={(d: Isor) =>
                         this.props.navigation.navigate('ViewSOR', {data: d})
                       }
-                      date={d.date}
+                      date={d.occured_at}
                       risk={d.risk}
-                      observation={d.observation}
-                      classify={d.classify}
+                      observation={d.details}
+                      classify={d.sor_type}
                       iconConf={classifySor.find(
-                        (e: any) => e.title == d.classify,
+                        (e: any) => e.title == d.sor_type,
                       )}
                       viewPortWidth={80}
                       location={d.location}
@@ -509,13 +540,13 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       onPress={(d: Isor) =>
                         this.props.navigation.navigate('ViewSOR', {data: d})
                       }
-                      date={d.date}
+                      date={d.occured_at}
                       risk={d.risk}
                       viewPortWidth={80}
-                      observation={d.observation}
-                      classify={d.classify}
+                      observation={d.details}
+                      classify={d.sor_type}
                       iconConf={classifySor.find(
-                        (e: any) => e.title == d.classify,
+                        (e: any) => e.title == d.sor_type,
                       )}
                       location={d.location}
                       style={[
@@ -543,15 +574,15 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       onPress={(d: Isor) =>
                         this.props.navigation.navigate('ViewSOR', {data: d})
                       }
-                      date={d.date}
+                      date={d.occured_at}
                       risk={d.risk}
                       viewPortWidth={80}
                       user1={d.user1}
                       user2={d.user2}
-                      observation={d.observation}
-                      classify={d.classify}
+                      observation={d.details}
+                      classify={d.sor_type}
                       iconConf={classifySor.find(
-                        (e: any) => e.title == d.classify,
+                        (e: any) => e.title == d.sor_type,
                       )}
                       location={d.location}
                       style={[
@@ -570,12 +601,14 @@ class ViewAll extends React.Component<ViewAllProps, any> {
   }
 }
 
-const mapStateToProps = (state: unknown) => {
-  return {};
-};
+const mapStateToProps = (state: RootState) => ({
+  initial: state.list,
+});
 
 const mapDispatchToProps = (dispatch: unknown) => {
-  return {};
+  return {
+    initialList,
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ViewAll);
+export default connect(mapStateToProps, mapDispatchToProps)(ViewAllSOr);

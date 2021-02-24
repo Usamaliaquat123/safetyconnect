@@ -62,11 +62,11 @@ const createApi = (
    */
   const getSors = (data: sor) => baseapi.post('project/newreport', data);
   const filterSors = (data: sor) =>
-    baseapi.post('project/getReports', {
+    baseapi.get('project/getReports', {
       project: data.project,
       limit: data.limit,
       page: data.page,
-      query: {'reports._id ': data.query?.reportId},
+      query: data.query,
     });
   const updateSor = (data: sor) => baseapi.put('project/report', {data});
   const createSor = (data: sor) => baseapi.put('project/newreport', {data});

@@ -1,16 +1,16 @@
 import {user, orgnaization, project, sor} from './api';
 // View sor data interface
 export interface Isor {
-  date: number;
-  observation: string;
+  occured_at: number;
+  details: string;
   risk: number;
-  classify: string;
+  sor_type: string;
   color: string;
   type: string;
   location: string;
   user1: string;
   user2: string;
-  username: string;
+  created_by: string;
 }
 /*
  * @Imessage

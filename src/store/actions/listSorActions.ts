@@ -1,15 +1,16 @@
 import {createAction} from '@utils';
 import ActionTypes from '../ActionTypes';
 import {IThunkAction} from '../Store';
-
+import {createApi} from '@service';
 const initList = createAction(ActionTypes.LIST_INIT);
 const updateList = createAction(ActionTypes.LIST_CHANGE);
 
 export const initialList = (): IThunkAction => {
   return async (dispatch, getState) => {
+    console.log('sdasda');
     dispatch(
       initList({
-        list: [],
+        list: ['sads', 'asd'],
       }),
     );
   };

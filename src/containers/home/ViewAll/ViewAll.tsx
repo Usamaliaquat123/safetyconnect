@@ -49,6 +49,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     this.state = {
       selectedStats: 1,
       searchValue: '',
+      bottomWidth: wp(100),
     };
   }
 
@@ -85,12 +86,14 @@ class ViewAll extends React.Component<ViewAllProps, any> {
               style={{
                 backgroundColor: colors.secondary,
                 padding: wp(3),
+                paddingBottom: this.state.bottomWidth,
+
                 borderTopLeftRadius: wp(4),
                 borderTopRightRadius: wp(4),
               }}>
               {this.props.route.params.data.map((d, i) => (
                 <ListCard
-                  classify={d.classify}
+                  classify={d.sor_type}
                   styles={
                     myTasks.rercently.length == i + 1
                       ? {borderBottomWidth: wp(0)}
@@ -98,13 +101,13 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                   }
                   user1={d.user1}
                   user2={d.user2}
-                  observation={d.observation}
-                  username={d.username}
-                  iconconf={classifySor.find((e: any) => e.title == d.classify)}
+                  observation={d.details}
+                  username={d.created_by}
+                  iconconf={classifySor.find((e: any) => e.title == d.sor_type)}
                   onPress={() =>
                     this.props.navigation.navigate('ViewSOR', {data: d})
                   }
-                  date={d.date}
+                  date={d.occured_at}
                 />
               ))}
             </View>
