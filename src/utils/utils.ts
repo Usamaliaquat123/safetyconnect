@@ -85,6 +85,10 @@ export const createAction = (actionType: string) => (payload?: any) => ({
   payload: payload,
 });
 
+export const capitalizeFirstLetter = (string: string): string => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
 const {config, fs} = RNFetchBlob;
 const d: Date = new Date();
 const PictureDir = fs.dirs.PictureDir;

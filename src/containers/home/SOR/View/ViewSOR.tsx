@@ -70,8 +70,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       commentText: '',
       contentAnim: new Animated.Value(80),
       // custom data
-      observation: View_sor.user.observation,
-      date: View_sor.user.date,
+      sor_type: this.props.route.params.data.sor_type,
+      observation: this.props.route.params.data.details,
+      date: this.props.route.params.data.occured_at,
       comments: View_sor.user.comments,
       involvedPerson: View_sor.user.InvolvedPersons,
       notifiedPerson: View_sor.user.NotifiedTo,
@@ -112,6 +113,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     this.fileNotSupported = React.createRef();
   }
   componentDidMount = () => {
+    console.log(this.props.route.params.data);
     this.mapViewSorPhoto();
     this.AnimatedViews();
     this.mappingMapping(
@@ -302,30 +304,30 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               <TouchableOpacity
                 // onPress={() => console.log('click on change classify btns')}
                 style={styles.classittleicon}>
-                {View_sor.user.classifyType != 'LSR' ? (
+                {this.state.sor_type != 'lsr' ? (
                   <View>
-                    {View_sor.user.classifyType != 'Near Miss' ? (
+                    {this.state.sor_type != 'near miss' ? (
                       <Icon
                         size={wp(6)}
                         name={
-                          View_sor.user.classifyType == 'LSR'
+                          this.state.sor_type == 'lsr'
                             ? 'aperture'
-                            : View_sor.user.classifyType == 'positive'
+                            : this.state.sor_type == 'positive'
                             ? 'check-circle'
-                            : View_sor.user.classifyType == 'concern'
+                            : this.state.sor_type == 'concern'
                             ? 'warning'
-                            : View_sor.user.classifyType == 'nearmiss'
+                            : this.state.sor_type == 'near miss'
                             ? 'centercode'
                             : 'frowno'
                         }
                         type={
-                          View_sor.user.classifyType == 'LSR'
+                          this.state.sor_type == 'lsr'
                             ? 'ionicon'
-                            : View_sor.user.classifyType == 'positive'
+                            : this.state.sor_type == 'positive'
                             ? 'font-awesome-5'
-                            : View_sor.user.classifyType == 'concern'
+                            : this.state.sor_type == 'concern'
                             ? 'antdesign'
-                            : View_sor.user.classifyType == 'nearmiss'
+                            : this.state.sor_type == 'near miss'
                             ? 'font-awesome-5'
                             : 'antdesign'
                         }
@@ -335,7 +337,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </View>
                 ) : null}
 
-                {View_sor.user.classifyType == 'LSR' ? (
+                {this.state.sor_type == 'lsr' ? (
                   <View style={{width: wp(7), height: wp(7)}}>
                     <Image
                       source={images.lsr}
@@ -343,14 +345,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     />
                   </View>
                 ) : null}
-                {View_sor.user.classifyType == 'Near Miss' ? (
+                {this.state.sor_type == 'near miss' ? (
                   <View style={{width: wp(8), height: wp(8)}}>
                     <Image source={images.nearMiss} style={GlStyles.images} />
                   </View>
                 ) : null}
-                <Text style={styles.clasifyT}>
-                  {View_sor.user.classifyType}
-                </Text>
+                <Text style={styles.clasifyT}>{this.state.sor_type}</Text>
               </TouchableOpacity>
               <View style={styles.obserContainer}>
                 <View>

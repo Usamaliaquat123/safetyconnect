@@ -103,7 +103,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     createApi
       .createApi()
       .filterSors({
-        project: '6034fe3c2443d9b4f384c3ad',
+        project: '603619612443d95d4784c3ea',
         limit: 10,
         page: 0,
         query: {status: [1, 2, 3, 4, 5]},

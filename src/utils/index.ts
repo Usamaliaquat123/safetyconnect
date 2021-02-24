@@ -14,11 +14,13 @@ import {
   DocType,
   validateEmail,
   validatePassword,
+  capitalizeFirstLetter,
 } from './utils';
 export {
   classifySor,
   validatePassword,
   filterLocation,
+  capitalizeFirstLetter,
   searchInSuggestions,
   setHeaderAllign,
   createAction,
