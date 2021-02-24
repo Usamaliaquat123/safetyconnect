@@ -35,6 +35,7 @@ import {default as Model} from 'react-native-modal';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {
   imagePicker,
+  capitalizeFirstLetter,
   cameraCapture,
   searchInSuggestions,
   DocType,
@@ -350,7 +351,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     <Image source={images.nearMiss} style={GlStyles.images} />
                   </View>
                 ) : null}
-                <Text style={styles.clasifyT}>{this.state.sor_type}</Text>
+                <Text style={styles.clasifyT}>
+                  {capitalizeFirstLetter(this.state.sor_type)}
+                </Text>
               </TouchableOpacity>
               <View style={styles.obserContainer}>
                 <View>
