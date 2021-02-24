@@ -25,7 +25,7 @@ import {InitialAppStateDTO, ListStateDTO} from '@dtos';
 import {connect} from 'react-redux';
 import styles from './styles';
 // import * as initialApp from '@store';
-// import {Create_sor, viewas, notified, submitted, draft} from '@service';
+// import { Create_sor, viewas, notified, submitted, draft, profileSetupSelections } from '@service';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
@@ -82,11 +82,11 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       AnimatedOpacSubmitted: new Animated.Value(0),
       currentlocation: Create_sor.Observation.locations[0],
       project: 'List View',
-      isNotified: false,
+      isInProgress: false,
       isDraft: false,
       isSubmited: false,
       isExclated: false,
-
+      isCompleted: false,
       selectP: false,
       draft: draft,
       exclated: [],
@@ -335,16 +335,16 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         <View style={styles.listHeader}>
                           <TouchableOpacity
                             onPress={() => {
-                              this.dropdownAnimated(this.state.isNotified);
+                              this.dropdownAnimated(this.state.isInProgress);
                               this.setState({
-                                isNotified: !this.state.isNotified,
+                                isInProgress: !this.state.isInProgress,
                               });
                             }}
                             style={{flexDirection: 'row'}}>
                             <Icon
                               size={wp(3.5)}
                               name={
-                                this.state.isNotified == true ? 'down' : 'up'
+                                this.state.isInProgress == true ? 'down' : 'up'
                               }
                               type="antdesign"
                             />
@@ -357,15 +357,16 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             <Text style={styles.filterText}>Filter</Text>
                           </View>
                         </View>
-                        {this.state.isNotified == true ? (
+                        {this.state.isInProgress == true ? (
                           <View style={styles.listViewContent}>
-                            {this.state.notified
+                            {this.state.inprogress
                               .slice(0, 5)
                               .map((d: Isor, i: number) => (
                                 <ListCard
                                   classify={d.sor_type}
                                   styles={
-                                    this.state.draft.length == i + 1
+                                    this.state.inprogress.slice(0, 5).length ==
+                                    i + 1
                                       ? {borderBottomWidth: wp(0)}
                                       : null
                                   }
@@ -384,22 +385,24 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                   date={d.occured_at}
                                 />
                               ))}
-                            <TouchableOpacity
-                              onPress={() =>
-                                this.props.navigation.navigate('ViewAll', {
-                                  data: this.state.notified,
-                                  title: 'In Progress',
-                                })
-                              }
-                              style={{marginLeft: wp(4), marginTop: wp(3)}}>
-                              <Text
-                                style={{
-                                  fontSize: wp(3),
-                                  color: colors.primary,
-                                }}>
-                                See More
-                              </Text>
-                            </TouchableOpacity>
+                            {this.state.inprogress.length > 5 && (
+                              <TouchableOpacity
+                                onPress={() =>
+                                  this.props.navigation.navigate('ViewAll', {
+                                    data: this.state.inprogress,
+                                    title: 'In Progress',
+                                  })
+                                }
+                                style={{marginLeft: wp(4), marginTop: wp(3)}}>
+                                <Text
+                                  style={{
+                                    fontSize: wp(3),
+                                    color: colors.primary,
+                                  }}>
+                                  See More
+                                </Text>
+                              </TouchableOpacity>
+                            )}
                           </View>
                         ) : null}
                       </View>
@@ -440,7 +443,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 <ListCard
                                   classify={d.sor_type}
                                   styles={
-                                    this.state.draft.length == i + 1
+                                    this.state.exclated.length == i + 1
                                       ? {borderBottomWidth: wp(0)}
                                       : null
                                   }
@@ -459,22 +462,103 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                   date={d.occured_at}
                                 />
                               ))}
-                            <TouchableOpacity
-                              onPress={() =>
-                                this.props.navigation.navigate('ViewAll', {
-                                  data: this.state.notified,
-                                  title: 'In Progress',
-                                })
+                            {this.state.exclated.length > 5 && (
+                              <TouchableOpacity
+                                onPress={() =>
+                                  this.props.navigation.navigate('ViewAll', {
+                                    data: this.state.notified,
+                                    title: 'In Progress',
+                                  })
+                                }
+                                style={{marginLeft: wp(4), marginTop: wp(3)}}>
+                                <Text
+                                  style={{
+                                    fontSize: wp(3),
+                                    color: colors.primary,
+                                  }}>
+                                  See More
+                                </Text>
+                              </TouchableOpacity>
+                            )}
+                          </View>
+                        ) : null}
+                      </View>
+                    </View>
+                  )}
+
+                  {this.state.completed.length == 0 ? null : (
+                    <View>
+                      <View style={styles.lineheight}></View>
+                      <View style={styles.inProgressTop}>
+                        <View style={styles.listHeader}>
+                          <TouchableOpacity
+                            onPress={() => {
+                              this.dropdownAnimated(this.state.isCompleted);
+                              this.setState({
+                                isCompleted: !this.state.isCompleted,
+                              });
+                            }}
+                            style={{flexDirection: 'row'}}>
+                            <Icon
+                              size={wp(3.5)}
+                              name={
+                                this.state.isCompleted == true ? 'down' : 'up'
                               }
-                              style={{marginLeft: wp(4), marginTop: wp(3)}}>
-                              <Text
-                                style={{
-                                  fontSize: wp(3),
-                                  color: colors.primary,
-                                }}>
-                                See More
-                              </Text>
-                            </TouchableOpacity>
+                              type="antdesign"
+                            />
+                            <Text style={styles.listDraftText}>Completed</Text>
+                          </TouchableOpacity>
+                          <View style={styles.filterHeader}>
+                            <Icon size={wp(5)} name="filter" type="ionicon" />
+                            <Text style={styles.filterText}>Filter</Text>
+                          </View>
+                        </View>
+                        {this.state.isCompleted == true ? (
+                          <View style={styles.listViewContent}>
+                            {this.state.completed
+                              .slice(0, 5)
+                              .map((d: Isor, i: number) => (
+                                <ListCard
+                                  classify={d.sor_type}
+                                  styles={
+                                    this.state.completed.slice(0, 5).length ==
+                                    i + 1
+                                      ? {borderBottomWidth: wp(0)}
+                                      : null
+                                  }
+                                  user1={d.user1}
+                                  user2={d.user2}
+                                  observation={d.details}
+                                  username={d.created_by}
+                                  iconconf={classifySor.find(
+                                    (e: any) => e.title == d.sor_type,
+                                  )}
+                                  onPress={() =>
+                                    this.props.navigation.navigate('ViewSOR', {
+                                      data: d,
+                                    })
+                                  }
+                                  date={d.occured_at}
+                                />
+                              ))}
+                            {this.state.completed.length > 5 && (
+                              <TouchableOpacity
+                                onPress={() =>
+                                  this.props.navigation.navigate('ViewAll', {
+                                    data: this.state.completed,
+                                    title: 'Completed',
+                                  })
+                                }
+                                style={{marginLeft: wp(4), marginTop: wp(3)}}>
+                                <Text
+                                  style={{
+                                    fontSize: wp(3),
+                                    color: colors.primary,
+                                  }}>
+                                  See More
+                                </Text>
+                              </TouchableOpacity>
+                            )}
                           </View>
                         ) : null}
                       </View>
@@ -562,22 +646,24 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                   date={d.occured_at}
                                 />
                               ))}
-                            <TouchableOpacity
-                              onPress={() =>
-                                this.props.navigation.navigate('ViewAll', {
-                                  data: this.state.submitted,
-                                  title: 'Closed',
-                                })
-                              }
-                              style={{marginLeft: wp(4), marginTop: wp(3)}}>
-                              <Text
-                                style={{
-                                  fontSize: wp(3),
-                                  color: colors.primary,
-                                }}>
-                                See More
-                              </Text>
-                            </TouchableOpacity>
+                            {this.state.submitted.length > 5 && (
+                              <TouchableOpacity
+                                onPress={() =>
+                                  this.props.navigation.navigate('ViewAll', {
+                                    data: this.state.submitted,
+                                    title: 'Closed',
+                                  })
+                                }
+                                style={{marginLeft: wp(4), marginTop: wp(3)}}>
+                                <Text
+                                  style={{
+                                    fontSize: wp(3),
+                                    color: colors.primary,
+                                  }}>
+                                  See More
+                                </Text>
+                              </TouchableOpacity>
+                            )}
                           </View>
                         ) : null}
                       </View>
