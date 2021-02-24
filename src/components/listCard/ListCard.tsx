@@ -72,7 +72,10 @@ export default class ListCard extends React.Component<ListCardProps, any> {
               size={wp(8)}
               rounded
               source={{
-                uri: this.props.user1,
+                uri:
+                  this.props.user1 == undefined
+                    ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    : this.props.user1,
               }}
             />
             <Avatar
@@ -80,7 +83,10 @@ export default class ListCard extends React.Component<ListCardProps, any> {
               size={wp(8)}
               rounded
               source={{
-                uri: this.props.user2,
+                uri:
+                  this.props.user2 == undefined
+                    ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                    : this.props.user2,
               }}
             />
           </View>
