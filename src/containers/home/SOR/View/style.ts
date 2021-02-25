@@ -359,6 +359,56 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     fontWeight: 'bold',
   },
+  lottieDownloadContainer: {
+    flexDirection: 'row',
+    position: 'absolute',
+    right: wp(-2),
+    top: wp(2),
+    zIndex: wp(1),
+  },
+  attachmentsFont: {
+    fontSize: wp(3),
+    fontWeight: 'bold',
+  },
+  youdonthaveAnyAttachments: {
+    fontSize: wp(3),
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: wp(5),
+  },
+  nosuchActionsAndRecommendations: {
+    marginTop: wp(3),
+    fontSize: wp(3),
+    opacity: 0.5,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  saveAsDraftContainer: {
+    width: wp(45),
+    borderColor: colors.primary,
+    borderWidth: wp(0.3),
+    padding: wp(4),
+    marginRight: wp(3),
+    borderRadius: wp(4),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  saveAsDraftText: {
+    color: colors.primary,
+    fontSize: wp(3),
+  },
+  saveAsSubmitText: {
+    fontSize: wp(3),
+    color: colors.secondary,
+  },
+  saveAsSubmitContainer: {
+    width: wp(45),
+    backgroundColor: colors.primary,
+    padding: wp(4),
+    justifyContent: 'center',
+    borderRadius: wp(4),
+    alignItems: 'center',
+  },
 });
 
 export default styles;

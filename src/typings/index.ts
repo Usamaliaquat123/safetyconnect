@@ -3,13 +3,18 @@ import {user, orgnaization, project, sor} from './api';
 export interface Isor {
   occured_at: number;
   details: string;
-  risk: number;
+  risk: {
+    likelihood: number;
+    severity: number;
+  };
   sor_type: string;
   color: string;
   type: string;
   location: string;
   user1: string;
   user2: string;
+  action_required: Array<object>;
+  attachments: Array<string>;
   created_by: string;
 }
 /*

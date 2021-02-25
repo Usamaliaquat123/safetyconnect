@@ -89,6 +89,45 @@ export const capitalizeFirstLetter = (string: string): string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
+export const imageAndVideoObjectMap = (
+  attachments: Array<string>,
+): Array<Object> => {
+  var arr = [];
+  for (let i = 0; i < attachments.length; i++) {
+    arr.push({
+      type: attachments[i].split('.').pop(),
+      name: attachments[i].split('/').pop()?.split('.')[0],
+      url: attachments[i],
+    });
+  }
+  return arr;
+};
+
+export const imageVideoDetector = (attachments: any): Array<Object> => {
+  var arr = attachments;
+  for (let i = 0; i < arr.length; i++) {
+    if (
+      attachments.type == 'png' ||
+      attachments.type == 'jpg' ||
+      attachments.type == 'jpeg'
+    ) {
+      arr[i].type = 'photo';
+    } else if (
+      attachments.type == 'mp4' ||
+      attachments.type == 'mov' ||
+      attachments.type == 'mkv'
+    ) {
+      arr[i].type = 'video';
+    } else if (attachments.type == 'pdf') {
+      arr[i].type = 'pdf';
+    } else if (attachments.type == 'txt') {
+      arr[i].type = 'text';
+    }
+  }
+
+  return arr;
+};
+
 const {config, fs} = RNFetchBlob;
 const d: Date = new Date();
 const PictureDir = fs.dirs.PictureDir;

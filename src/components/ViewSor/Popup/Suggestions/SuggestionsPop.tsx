@@ -32,7 +32,7 @@ export default class SuggestionsPop extends React.Component<
     super(props);
 
     this.state = {
-      observation: props.suggestions.observation,
+      observation: props.suggestions.content,
       submittedTo: props.suggestions.SubmittedTo,
       type: props.suggestions.type,
       status: props.suggestions.status,

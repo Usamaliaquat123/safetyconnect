@@ -17,7 +17,7 @@ import FlashMessage, {showMessage} from 'react-native-flash-message';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import {Icon, Avatar, Card} from 'react-native-elements';
-import {colors, GlStyles, animation, images} from '@theme';
+import {colors, GlStyles, animation, images, fonts} from '@theme';
 import {
   View_sor,
   notified,
@@ -38,10 +38,13 @@ import {
   capitalizeFirstLetter,
   cameraCapture,
   searchInSuggestions,
+  imageVideoDetector,
   DocType,
+  imageAndVideoObjectMap,
   downloadFile,
 } from '@utils';
 import DocumentPicker from 'react-native-document-picker';
+import {connectionHandler} from 'react-native-offline/dist/src/redux/sagas';
 // import listAction from './../../../../store/actions/listActions';
 type ViewSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -62,7 +65,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      time: View_sor.user.date,
+      time: this.props.route.params.data.occured_at,
       initAnim: new Animated.Value(0),
       imageViewer: false,
       images: [],
@@ -78,7 +81,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       involvedPerson: View_sor.user.InvolvedPersons,
       notifiedPerson: View_sor.user.NotifiedTo,
       attachments: View_sor.user.Attachments,
-      actionsAndRecommendations: View_sor.user.ActionAndRecommendation,
+
+      actionsAndRecommendations: this.props.route.params.data.action_required,
       // popup Assigners
       addAssigners: false,
       involveAndNotifiedUsersName: '',
@@ -114,6 +118,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     this.fileNotSupported = React.createRef();
   }
   componentDidMount = () => {
+    this.fileAndImageCapturer(this.props.route.params.data.attachments);
     console.log(this.props.route.params.data);
     this.mapViewSorPhoto();
     this.AnimatedViews();
@@ -144,6 +149,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         this.state.images.push({url: d.url});
       }
     });
+  };
+
+  fileAndImageCapturer = (attachments: Array<string>) => {
+    /*
+     * Image object Map to this
+     *
+     *      type: 'video',
+     *      upload: 'self',
+     *      name: d.name,
+     *      url: d.uri,
+     */
+    var mapped = imageAndVideoObjectMap(attachments);
+    console.log(attachments);
+    console.log(mapped);
+    console.log(imageVideoDetector(mapped));
   };
 
   imgCap = (str: string, arr: Array<Object>) => {
@@ -272,6 +292,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
 
   render() {
+    console.log(this.props.route.params.data.attachments);
     return (
       <Animated.View style={[styles.container, {opacity: this.state.initAnim}]}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -299,12 +320,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             </View>
           </View>
           <Animated.View
-            // <.View
             style={[styles.content, {marginTop: this.state.contentAnim}]}>
             <View style={styles.contentPadding}>
-              <TouchableOpacity
-                // onPress={() => console.log('click on change classify btns')}
-                style={styles.classittleicon}>
+              <TouchableOpacity style={styles.classittleicon}>
                 {this.state.sor_type != 'lsr' ? (
                   <View>
                     {this.state.sor_type != 'near miss' ? (
@@ -504,8 +522,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     style={{flexDirection: 'row'}}>
                     <View style={styles.riskIcon}>
                       <Text style={styles.riskIconText}>
-                        {View_sor.user.Risk.severity *
-                          View_sor.user.Risk.liklihood}
+                        {this.props.route.params.data.risk.likelihood *
+                          this.props.route.params.data.risk.severity}
                       </Text>
                     </View>
                   </TouchableOpacity>
@@ -514,113 +532,129 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               <View style={styles.actionContainer}>
                 <Text style={styles.actionText}>Action / Recommendation</Text>
                 <Text style={styles.sugForYouText}>Suggested for you</Text>
-                {this.state.actionsAndRecommendations.map(
-                  (d: any, i: number) => (
-                    <TouchableOpacity
-                      onLongPress={() => {
-                        this.setState({
-                          allActionsEdit: d,
-                          SuggestionPop: true,
-                          //   allActionsEditIndex: i,
-                        });
+                {this.props.route.params.data.action_required == undefined ? (
+                  <Text style={styles.nosuchActionsAndRecommendations}>
+                    No such Actions / Recommendations
+                  </Text>
+                ) : (
+                  <View>
+                    {this.state.actionsAndRecommendations.map(
+                      (d: any, i: number) => (
+                        <TouchableOpacity
+                          onLongPress={() => {
+                            this.setState({
+                              allActionsEdit: d,
+                              SuggestionPop: true,
+                              //   allActionsEditIndex: i,
+                            });
 
-                        // setTimeout(() => {
-                        //   this.setState({
-                        //   });
-                        // }, 5000);
-                      }}
-                      onPress={() => {
-                        var data = [...this.state.actionsAndRecommendations];
-                        if (d.status == 'Completed') {
-                          data[i].status = 'Status';
-                        } else {
-                          data[i].status = 'Completed';
-                        }
-                        this.setState({actionsAndRecommendations: data});
-                      }}
-                      style={[
-                        styles.actionRecomCon,
-                        d.status == 'Completed'
-                          ? {
-                              borderWidth: wp(0.2),
-                              backgroundColor: colors.lightBlue,
-                              borderColor: colors.primary,
+                            // setTimeout(() => {
+                            //   this.setState({
+                            //   });
+                            // }, 5000);
+                          }}
+                          onPress={() => {
+                            var data = [
+                              ...this.state.actionsAndRecommendations,
+                            ];
+                            if (d.is_complete == true) {
+                              data[i].is_complete = false;
+                            } else {
+                              data[i].is_complete = true;
                             }
-                          : {
-                              borderWidth: wp(0.3),
-                              borderColor: colors.lightGrey,
-                            },
-                      ]}>
-                      <View>
-                        <View
-                          style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <Icon
-                            size={wp(3.5)}
-                            name="checkcircle"
-                            type="antdesign"
-                            color={
-                              d.status == 'Completed'
-                                ? colors.green
-                                : colors.lightGrey
-                            }
-                          />
-                          <Text style={styles.statusARText}>{d.status}</Text>
-                          <View style={{position: 'absolute', right: wp(3)}}>
-                            <Text style={[styles.actionTypeElemAsdmin]}>
-                              {d.type}
+                            this.setState({actionsAndRecommendations: data});
+                          }}
+                          style={[
+                            styles.actionRecomCon,
+                            d.is_complete == true
+                              ? {
+                                  borderWidth: wp(0.2),
+                                  backgroundColor: colors.lightBlue,
+                                  borderColor: colors.primary,
+                                }
+                              : {
+                                  borderWidth: wp(0.3),
+                                  borderColor: colors.lightGrey,
+                                },
+                          ]}>
+                          <View>
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                              }}>
+                              <Icon
+                                size={wp(3.5)}
+                                name="checkcircle"
+                                type="antdesign"
+                                color={
+                                  d.is_complete == true
+                                    ? colors.green
+                                    : colors.lightGrey
+                                }
+                              />
+                              <Text style={styles.statusARText}>
+                                {d.is_complete == true ? 'Completed' : 'Status'}
+                              </Text>
+                              <View
+                                style={{position: 'absolute', right: wp(3)}}>
+                                <Text style={[styles.actionTypeElemAsdmin]}>
+                                  {d.category}
+                                </Text>
+                              </View>
+                            </View>
+                            <Text
+                              style={[
+                                styles.obvTextAction,
+                                d.status == true
+                                  ? {color: colors.text, opacity: 0.5}
+                                  : null,
+                              ]}>
+                              {d.content}
                             </Text>
                           </View>
-                        </View>
-                        <Text
-                          style={[
-                            styles.obvTextAction,
-                            d.status == 'Completed'
-                              ? {color: colors.text, opacity: 0.5}
-                              : null,
-                          ]}>
-                          {d.observation}
-                        </Text>
-                      </View>
 
-                      <View style={styles.subAss}>
-                        <TouchableOpacity>
-                          <Text style={styles.subAssText}>
-                            Assigned to:{' '}
-                            <Text style={styles.subAssuser}>
-                              {d.AssignedTo[0]}
-                              {d.AssignedTo.length > 1 && (
-                                <Text
-                                  onPress={() => {
-                                    this.setState({
-                                      allActionsEdit: d,
-                                      SuggestionPop: true,
-                                      //   allActionsEditIndex: i,s
-                                    });
-                                  }}
-                                  style={[
-                                    styles.subAssuser,
+                          <View style={styles.subAss}>
+                            <TouchableOpacity>
+                              <Text style={styles.subAssText}>
+                                Assigned to:{' '}
+                                <Text style={styles.subAssuser}>
+                                  {d.assigned_to}
+                                  {/* {d.AssignedTo.length > 1 && (
+                                    <Text
+                                      onPress={() => {
+                                        this.setState({
+                                          allActionsEdit: d,
+                                          SuggestionPop: true,
+                                          //   allActionsEditIndex: i,s
+                                        });
+                                      }}
+                                      style={[
+                                        styles.subAssuser,
 
-                                    {
-                                      opacity: 0.5,
-                                      // marginTop: wp(3,
-                                      fontWeight: 'bold',
-                                      fontSize: wp(2.7),
-                                    },
-                                  ]}>
-                                  {' '}
-                                  {d.AssignedTo.length - 1} + more
+                                        {
+                                          opacity: 0.5,
+                                          // marginTop: wp(3,
+                                          fontWeight: 'bold',
+                                          fontSize: wp(2.7),
+                                        },
+                                      ]}>
+                                      {' '}
+                                      {d.AssignedTo.length - 1} + more
+                                    </Text>
+                                  )} */}
                                 </Text>
-                              )}
-                            </Text>
-                          </Text>
-                        </TouchableOpacity>
+                              </Text>
+                            </TouchableOpacity>
 
-                        <Text style={styles.subAssText}>
-                          {moment(d.time).format('MMM DD YYYY')}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  ),
+                            <Text style={styles.subAssText}>
+                              {moment(d.date).format('MMM DD YYYY')}
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      ),
+                    )}
+                  </View>
                 )}
               </View>
               <View
@@ -698,84 +732,85 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </TouchableOpacity>
               </View>
               <View style={styles.attachmentsContainer}>
-                <Text style={{fontSize: wp(3), fontWeight: 'bold'}}>
-                  Attachments
-                </Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    alignSelf: 'center',
-                  }}>
-                  {this.state.attachments.map((d: any, i: number) => {
-                    if (d.type == 'photo') {
-                      return (
-                        <TouchableOpacity
-                          onPress={() => this.setState({imageViewer: true})}
-                          style={styles.AttchimageContainer}>
-                          <Image
-                            source={{
-                              uri: d.url,
-                            }}
-                            style={[GlStyles.images, {borderRadius: wp(3)}]}
-                            resizeMode={'cover'}
-                          />
-                          <TouchableOpacity
-                            onPress={() => {
-                              if (d.upload != 'self') {
-                                this.photoAnim.play();
-                                downloadFile(d.url, d.type)
-                                  .then((res: any) => {
-                                    // console.log(res);
-                                  })
-                                  .catch((err) => console.log(err));
-                              }
-                            }}
-                            style={{
-                              flexDirection: 'row',
-                              position: 'absolute',
-                              right: wp(-2),
-                              top: wp(2),
-                              zIndex: wp(1),
-                            }}>
-                            <LottieView
-                              ref={(animation) => {
-                                this.photoAnim = animation;
-                              }}
-                              style={{width: wp(11)}}
-                              source={animation.download}
-                              loop={false}
-                            />
-
-                            {d.upload == 'self' ? (
+                <Text style={styles.attachmentsFont}>Attachments</Text>
+                {this.props.route.params.data.attachments == undefined ? (
+                  <Text style={styles.youdonthaveAnyAttachments}>
+                    You don't have any attachments
+                  </Text>
+                ) : (
+                  <View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        alignSelf: 'center',
+                      }}>
+                      {this.state.attachments.map((d: any, i: number) => {
+                        if (d.type == 'photo') {
+                          return (
+                            <TouchableOpacity
+                              onPress={() => this.setState({imageViewer: true})}
+                              style={styles.AttchimageContainer}>
+                              <Image
+                                source={{
+                                  uri: d.url,
+                                }}
+                                style={[GlStyles.images, {borderRadius: wp(3)}]}
+                                resizeMode={'cover'}
+                              />
                               <TouchableOpacity
-                                style={{marginRight: wp(3)}}
                                 onPress={() => {
-                                  var arr = [...this.state.attachments].filter(
-                                    (b) => b != d,
-                                  );
-                                  // console.log(arr);
-                                  this.setState({attachments: arr});
-                                }}>
-                                <Icon
-                                  containerStyle={{
-                                    marginRight: wp(2),
-                                    marginTop: wp(2),
-                                    opacity: 0.5,
+                                  if (d.upload != 'self') {
+                                    this.photoAnim.play();
+                                    downloadFile(d.url, d.type)
+                                      .then((res: any) => {
+                                        // console.log(res);
+                                      })
+                                      .catch((err) => console.log(err));
+                                  }
+                                }}
+                                style={styles.lottieDownloadContainer}>
+                                <LottieView
+                                  ref={(animation) => {
+                                    this.photoAnim = animation;
                                   }}
-                                  name="circle-with-cross"
-                                  size={wp(5)}
-                                  type="entypo"
-                                  color={colors.text}
+                                  style={{width: wp(11)}}
+                                  source={animation.download}
+                                  loop={false}
                                 />
+
+                                {d.upload == 'self' ? (
+                                  <TouchableOpacity
+                                    style={{marginRight: wp(3)}}
+                                    onPress={() => {
+                                      var arr = [
+                                        ...this.state.attachments,
+                                      ].filter((b) => b != d);
+                                      // console.log(arr);
+                                      this.setState({attachments: arr});
+                                    }}>
+                                    <Icon
+                                      containerStyle={{
+                                        marginRight: wp(2),
+                                        marginTop: wp(2),
+                                        opacity: 0.5,
+                                      }}
+                                      name="circle-with-cross"
+                                      size={wp(5)}
+                                      type="entypo"
+                                      color={colors.text}
+                                    />
+                                  </TouchableOpacity>
+                                ) : null}
                               </TouchableOpacity>
-                            ) : null}
-                          </TouchableOpacity>
-                        </TouchableOpacity>
-                      );
-                    }
-                  })}
-                </View>
+                            </TouchableOpacity>
+                          );
+                        }
+                      })}
+                    </View>
+                  </View>
+                )}
+
                 {this.state.attachments.map((d: any, i: number) => (
                   <View>
                     {d.type != 'photo' ? (
@@ -1232,33 +1267,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 justifyContent: 'center',
                 marginTop: wp(5),
               }}>
-              <TouchableOpacity
-                style={{
-                  width: wp(45),
-                  borderColor: colors.primary,
-                  borderWidth: wp(0.3),
-                  padding: wp(4),
-                  marginRight: wp(3),
-                  borderRadius: wp(4),
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Text style={{color: colors.primary, fontSize: wp(3)}}>
-                  Save as Draft
-                </Text>
+              <TouchableOpacity style={styles.saveAsDraftContainer}>
+                <Text style={styles.saveAsDraftText}>Save as Draft</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  width: wp(45),
-                  backgroundColor: colors.primary,
-                  padding: wp(4),
-                  justifyContent: 'center',
-                  borderRadius: wp(4),
-                  alignItems: 'center',
-                }}>
-                <Text style={{fontSize: wp(3), color: colors.secondary}}>
-                  Submit
-                </Text>
+              <TouchableOpacity style={styles.saveAsSubmitContainer}>
+                <Text style={styles.saveAsSubmitText}>Submit</Text>
               </TouchableOpacity>
             </View>
           </Animated.View>
