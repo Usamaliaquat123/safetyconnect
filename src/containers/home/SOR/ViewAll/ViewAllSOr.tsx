@@ -247,7 +247,14 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         <Text style={styles.noncreate}>
                           Would you like to create the
                         </Text>
-                        <Text style={styles.noneCreatetext}> new one</Text>
+                        <Text
+                          onPress={() =>
+                            this.props.navigation.navigate('CreateSOR')
+                          }
+                          style={styles.noneCreatetext}>
+                          {' '}
+                          new one
+                        </Text>
                       </View>
                     </View>
                   ) : null}
@@ -720,7 +727,14 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       <Text style={styles.noncreate}>
                         Would you like to create the
                       </Text>
-                      <Text style={styles.noneCreatetext}> new one</Text>
+                      <Text
+                        onPress={() =>
+                          this.props.navigation.navigate('CreateSOR')
+                        }
+                        style={styles.noneCreatetext}>
+                        {' '}
+                        new one
+                      </Text>
                     </View>
                   </View>
                 ) : null}
