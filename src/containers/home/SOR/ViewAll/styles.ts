@@ -190,6 +190,27 @@ const styles = StyleSheet.create({
     height: wp(2),
     backgroundColor: colors.darkLightGrey,
   },
+  nonReport: {
+    justifyContent: 'center',
+    height: wp(140),
+  },
+  nonReportText: {
+    textAlign: 'center',
+    fontSize: wp(3),
+    opacity: 0.5,
+  },
+  noncreate: {
+    textAlign: 'center',
+    fontSize: wp(3),
+    opacity: 0.5,
+  },
+  noneCreatetext: {
+    textAlign: 'center',
+    fontSize: wp(3),
+    fontWeight: 'bold',
+    opacity: 0.7,
+    color: colors.primary,
+  },
 });
 
 export default styles;

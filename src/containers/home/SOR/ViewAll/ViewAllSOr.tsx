@@ -88,7 +88,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       isExclated: false,
       isCompleted: false,
       selectP: false,
-      draft: draft,
+      draft: [],
       exclated: [],
       submitted: [],
       completed: [],
@@ -103,7 +103,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     createApi
       .createApi()
       .filterSors({
-        project: '603619612443d95d4784c3ea',
+        project: '6038cf8472762b29b1bed1f3',
         limit: 10,
         page: 0,
         query: {status: [1, 2, 3, 4, 5]},
@@ -233,101 +233,126 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     paddingTop: wp(3),
                   }}
                   showsVerticalScrollIndicator={false}>
-                  <View
-                    style={{
-                      paddingBottom: wp(5),
-                      paddingLeft: wp(3),
-                      paddingRight: wp(3),
-                    }}>
-                    <View style={styles.listHeader}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          if (this.state.isDraft == true) {
-                            this.setState({isDraft: false});
-                            this.closeDropDown(this.state.isDraft);
-                          } else {
-                            this.setState({isDraft: true});
-                            this.dropdownAnimated(this.state.isDraft);
-                          }
-                        }}
-                        style={{flexDirection: 'row'}}>
-                        <Icon
-                          size={wp(3.5)}
-                          name={this.state.isDraft == true ? 'down' : 'up'}
-                          type="antdesign"
-                        />
-                        <Text style={styles.listDraftText}>Drafts</Text>
-                      </TouchableOpacity>
-                      <View
-                        style={{
-                          position: 'absolute',
-                          right: wp(4),
-                          flexDirection: 'row',
-                        }}>
-                        <Icon
-                          containerStyle={{marginTop: wp(-0.6)}}
-                          size={wp(5)}
-                          name="filter"
-                          type="ionicon"
-                        />
-                        <Text
-                          style={{
-                            paddingLeft: wp(1),
-                            fontSize: wp(3),
-                            fontFamily: 'SFuiDisplayBold',
-                          }}>
-                          Filter
+                  {/* when you have 0 reports */}
+                  {this.state.draft.length == 0 ||
+                  this.state.inprogress.length == 0 ||
+                  this.state.exclated.length == 0 ||
+                  this.state.completed.length == 0 ||
+                  this.state.submitted == 0 ? (
+                    <View style={styles.nonReport}>
+                      <Text style={styles.nonReportText}>
+                        You don't have any reports yet...
+                      </Text>
+                      <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+                        <Text style={styles.noncreate}>
+                          Would you like to create the
                         </Text>
+                        <Text style={styles.noneCreatetext}> new one</Text>
                       </View>
                     </View>
+                  ) : null}
 
-                    {this.state.isDraft == true ? (
-                      <View style={[styles.listViewContent]}>
-                        {this.state.draft
-                          .slice(0, 5)
-                          .map((d: Isor, i: number) => (
-                            <ListCard
-                              classify={d.sor_type}
-                              styles={
-                                this.state.draft.slice(0, 5).length == i + 1
-                                  ? {borderBottomWidth: wp(0)}
-                                  : null
-                              }
-                              user1={d.user1}
-                              user2={d.user2}
-                              observation={d.details}
-                              username={d.created_by}
-                              iconconf={classifySor.find(
-                                (e: any) => e.title == d.sor_type.toString(),
-                              )}
-                              onPress={
-                                () =>
-                                  this.props.navigation.navigate('ViewSOR', {
-                                    data: d,
-                                  })
-                                // this.props.navigation.navigate('home')
-                              }
-                              date={d.occured_at}
-                            />
-                          ))}
-                        {this.state.draft.length > 5 && (
-                          <TouchableOpacity
-                            onPress={() =>
-                              this.props.navigation.navigate('ViewAll', {
-                                data: this.state.draft,
-                                title: 'Draft',
-                              })
+                  {/* List View */}
+                  {this.state.draft.length == 0 ? null : (
+                    <View
+                      style={{
+                        paddingBottom: wp(5),
+                        paddingLeft: wp(3),
+                        paddingRight: wp(3),
+                      }}>
+                      <View style={styles.listHeader}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            if (this.state.isDraft == true) {
+                              this.setState({isDraft: false});
+                              this.closeDropDown(this.state.isDraft);
+                            } else {
+                              this.setState({isDraft: true});
+                              this.dropdownAnimated(this.state.isDraft);
                             }
-                            style={{marginLeft: wp(4)}}>
-                            <Text
-                              style={{fontSize: wp(3), color: colors.primary}}>
-                              See More
-                            </Text>
-                          </TouchableOpacity>
-                        )}
+                          }}
+                          style={{flexDirection: 'row'}}>
+                          <Icon
+                            size={wp(3.5)}
+                            name={this.state.isDraft == true ? 'down' : 'up'}
+                            type="antdesign"
+                          />
+                          <Text style={styles.listDraftText}>Drafts</Text>
+                        </TouchableOpacity>
+                        <View
+                          style={{
+                            position: 'absolute',
+                            right: wp(4),
+                            flexDirection: 'row',
+                          }}>
+                          <Icon
+                            containerStyle={{marginTop: wp(-0.6)}}
+                            size={wp(5)}
+                            name="filter"
+                            type="ionicon"
+                          />
+                          <Text
+                            style={{
+                              paddingLeft: wp(1),
+                              fontSize: wp(3),
+                              fontFamily: 'SFuiDisplayBold',
+                            }}>
+                            Filter
+                          </Text>
+                        </View>
                       </View>
-                    ) : null}
-                  </View>
+
+                      {this.state.isDraft == true ? (
+                        <View style={[styles.listViewContent]}>
+                          {this.state.draft
+                            .slice(0, 5)
+                            .map((d: Isor, i: number) => (
+                              <ListCard
+                                classify={d.sor_type}
+                                styles={
+                                  this.state.draft.slice(0, 5).length == i + 1
+                                    ? {borderBottomWidth: wp(0)}
+                                    : null
+                                }
+                                user1={d.user1}
+                                user2={d.user2}
+                                observation={d.details}
+                                username={d.created_by}
+                                iconconf={classifySor.find(
+                                  (e: any) => e.title == d.sor_type.toString(),
+                                )}
+                                onPress={
+                                  () =>
+                                    this.props.navigation.navigate('ViewSOR', {
+                                      data: d,
+                                    })
+                                  // this.props.navigation.navigate('home')
+                                }
+                                date={d.occured_at}
+                              />
+                            ))}
+                          {this.state.draft.length > 5 && (
+                            <TouchableOpacity
+                              onPress={() =>
+                                this.props.navigation.navigate('ViewAll', {
+                                  data: this.state.draft,
+                                  title: 'Draft',
+                                })
+                              }
+                              style={{marginLeft: wp(4)}}>
+                              <Text
+                                style={{
+                                  fontSize: wp(3),
+                                  color: colors.primary,
+                                }}>
+                                See More
+                              </Text>
+                            </TouchableOpacity>
+                          )}
+                        </View>
+                      ) : null}
+                    </View>
+                  )}
                   {this.state.inprogress.length == 0 ? null : (
                     <View>
                       <View style={styles.lineheight}></View>
@@ -680,106 +705,205 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 showsHorizontalScrollIndicator={false}
                 snapToInterval={wp(83)}
                 decelerationRate="fast"
-                horizontal>
-                <View style={{paddingBottom: wp(10)}}>
-                  <View style={styles.notifiedTextContaienr}>
-                    <Text style={styles.notifiedText}>Notified</Text>
-                    <Icon
-                      size={22}
-                      name="filter"
-                      type="ionicon"
-                      color={colors.primary}
-                    />
+                horizontal={true}>
+                {/* when you have 0 reports */}
+                {this.state.draft.length == 0 ||
+                this.state.inprogress.length == 0 ||
+                this.state.exclated.length == 0 ||
+                this.state.completed.length == 0 ||
+                this.state.submitted == 0 ? (
+                  <View style={[styles.nonReport, {padding: wp(25)}]}>
+                    <Text style={styles.nonReportText}>
+                      You don't have any reports yet...
+                    </Text>
+                    <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+                      <Text style={styles.noncreate}>
+                        Would you like to create the
+                      </Text>
+                      <Text style={styles.noneCreatetext}> new one</Text>
+                    </View>
                   </View>
-                  {this.state.notified.map((d: Isor, i: number) => (
-                    <Card
-                      data={d}
-                      onPress={(d: Isor) =>
-                        this.props.navigation.navigate('ViewSOR', {data: d})
-                      }
-                      date={d.occured_at}
-                      risk={d.risk}
-                      observation={d.details}
-                      classify={d.sor_type}
-                      iconConf={classifySor.find(
-                        (e: any) => e.title == d.sor_type,
-                      )}
-                      viewPortWidth={80}
-                      location={d.location}
-                      user1={d.user1}
-                      user2={d.user2}
-                      style={[styles.cardConatiner, {marginBottom: wp(10)}]}
-                    />
-                  ))}
-                </View>
-                <View>
-                  <View style={styles.draftTextContainer}>
-                    <Text style={styles.draftText}>Draft</Text>
-                    <Icon
-                      size={22}
-                      name="filter"
-                      type="ionicon"
-                      color={colors.primary}
-                    />
+                ) : null}
+                {this.state.draft.length == 0 ? null : (
+                  <View>
+                    <View style={styles.draftTextContainer}>
+                      <Text style={styles.draftText}>Draft</Text>
+                      <Icon
+                        size={22}
+                        name="filter"
+                        type="ionicon"
+                        color={colors.primary}
+                      />
+                    </View>
+                    {this.state.draft.map((d: Isor, i: number) => (
+                      <Card
+                        data={d}
+                        onPress={(d: Isor) =>
+                          this.props.navigation.navigate('ViewSOR', {data: d})
+                        }
+                        date={d.occured_at}
+                        risk={d.risk.severity * d.risk.likelihood}
+                        viewPortWidth={80}
+                        observation={d.details}
+                        classify={d.sor_type}
+                        iconConf={classifySor.find(
+                          (e: any) => e.title == d.sor_type,
+                        )}
+                        location={d.location}
+                        style={[
+                          styles.draftCardContainer,
+                          {marginBottom: wp(10)},
+                        ]}
+                        user1={d.user1}
+                        user2={d.user2}
+                      />
+                    ))}
                   </View>
-                  {this.state.draft.map((d: Isor, i: number) => (
-                    <Card
-                      data={d}
-                      onPress={(d: Isor) =>
-                        this.props.navigation.navigate('ViewSOR', {data: d})
-                      }
-                      date={d.occured_at}
-                      risk={d.risk}
-                      viewPortWidth={80}
-                      observation={d.details}
-                      classify={d.sor_type}
-                      iconConf={classifySor.find(
-                        (e: any) => e.title == d.sor_type,
-                      )}
-                      location={d.location}
-                      style={[
-                        styles.draftCardContainer,
-                        {marginBottom: wp(10)},
-                      ]}
-                      user1={d.user1}
-                      user2={d.user2}
-                    />
-                  ))}
-                </View>
-                <View>
-                  <View style={styles.submitTextContaienr}>
-                    <Text style={styles.submitText}>Closed</Text>
-                    <Icon
-                      size={22}
-                      name="filter"
-                      type="ionicon"
-                      color={colors.primary}
-                    />
+                )}
+                {this.state.inprogress.length == 0 ? null : (
+                  <View>
+                    <View style={styles.draftTextContainer}>
+                      <Text style={styles.draftText}>In Progress</Text>
+                      <Icon
+                        size={22}
+                        name="filter"
+                        type="ionicon"
+                        color={colors.primary}
+                      />
+                    </View>
+                    {this.state.inprogress.map((d: Isor, i: number) => (
+                      <Card
+                        data={d}
+                        onPress={(d: Isor) =>
+                          this.props.navigation.navigate('ViewSOR', {data: d})
+                        }
+                        date={d.occured_at}
+                        risk={d.risk.severity * d.risk.likelihood}
+                        viewPortWidth={80}
+                        observation={d.details}
+                        classify={d.sor_type}
+                        iconConf={classifySor.find(
+                          (e: any) => e.title == d.sor_type,
+                        )}
+                        location={d.location}
+                        style={[
+                          styles.draftCardContainer,
+                          {marginBottom: wp(10)},
+                        ]}
+                        user1={d.user1}
+                        user2={d.user2}
+                      />
+                    ))}
                   </View>
-                  {this.state.submitted.map((d: Isor, i: number) => (
-                    <Card
-                      data={d}
-                      onPress={(d: Isor) =>
-                        this.props.navigation.navigate('ViewSOR', {data: d})
-                      }
-                      date={d.occured_at}
-                      risk={d.risk}
-                      viewPortWidth={80}
-                      user1={d.user1}
-                      user2={d.user2}
-                      observation={d.details}
-                      classify={d.sor_type}
-                      iconConf={classifySor.find(
-                        (e: any) => e.title == d.sor_type,
-                      )}
-                      location={d.location}
-                      style={[
-                        styles.submitCardContainer,
-                        {marginBottom: wp(10)},
-                      ]}
-                    />
-                  ))}
-                </View>
+                )}
+                {this.state.exclated.length == 0 ? null : (
+                  <View>
+                    <View style={styles.draftTextContainer}>
+                      <Text style={styles.draftText}>In Progress</Text>
+                      <Icon
+                        size={22}
+                        name="filter"
+                        type="ionicon"
+                        color={colors.primary}
+                      />
+                    </View>
+                    {this.state.exclated.map((d: Isor, i: number) => (
+                      <Card
+                        data={d}
+                        onPress={(d: Isor) =>
+                          this.props.navigation.navigate('ViewSOR', {data: d})
+                        }
+                        date={d.occured_at}
+                        risk={d.risk.severity * d.risk.likelihood}
+                        viewPortWidth={80}
+                        observation={d.details}
+                        classify={d.sor_type}
+                        iconConf={classifySor.find(
+                          (e: any) => e.title == d.sor_type,
+                        )}
+                        location={d.location}
+                        style={[
+                          styles.draftCardContainer,
+                          {marginBottom: wp(10)},
+                        ]}
+                        user1={d.user1}
+                        user2={d.user2}
+                      />
+                    ))}
+                  </View>
+                )}
+                {this.state.completed.length == 0 ? null : (
+                  <View>
+                    <View style={styles.draftTextContainer}>
+                      <Text style={styles.draftText}>In Progress</Text>
+                      <Icon
+                        size={22}
+                        name="filter"
+                        type="ionicon"
+                        color={colors.primary}
+                      />
+                    </View>
+                    {this.state.completed.map((d: Isor, i: number) => (
+                      <Card
+                        data={d}
+                        onPress={(d: Isor) =>
+                          this.props.navigation.navigate('ViewSOR', {data: d})
+                        }
+                        date={d.occured_at}
+                        risk={d.risk.severity * d.risk.likelihood}
+                        viewPortWidth={80}
+                        observation={d.details}
+                        classify={d.sor_type}
+                        iconConf={classifySor.find(
+                          (e: any) => e.title == d.sor_type,
+                        )}
+                        location={d.location}
+                        style={[
+                          styles.draftCardContainer,
+                          {marginBottom: wp(10)},
+                        ]}
+                        user1={d.user1}
+                        user2={d.user2}
+                      />
+                    ))}
+                  </View>
+                )}
+                {this.state.submitted.length == 0 ? null : (
+                  <View>
+                    <View style={styles.submitTextContaienr}>
+                      <Text style={styles.submitText}>Closed</Text>
+                      <Icon
+                        size={22}
+                        name="filter"
+                        type="ionicon"
+                        color={colors.primary}
+                      />
+                    </View>
+                    {this.state.submitted.map((d: Isor, i: number) => (
+                      <Card
+                        data={d}
+                        onPress={(d: Isor) =>
+                          this.props.navigation.navigate('ViewSOR', {data: d})
+                        }
+                        date={d.occured_at}
+                        risk={d.risk.severity * d.risk.likelihood}
+                        viewPortWidth={80}
+                        user1={d.user1}
+                        user2={d.user2}
+                        observation={d.details}
+                        classify={d.sor_type}
+                        iconConf={classifySor.find(
+                          (e: any) => e.title == d.sor_type,
+                        )}
+                        location={d.location}
+                        style={[
+                          styles.submitCardContainer,
+                          {marginBottom: wp(10)},
+                        ]}
+                      />
+                    ))}
+                  </View>
+                )}
               </ScrollView>
             )}
           </View>
