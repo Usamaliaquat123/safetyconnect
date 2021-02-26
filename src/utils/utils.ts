@@ -154,6 +154,16 @@ export const mapAsyncStorage = (key: string, d: any) => {
 export const getAsyncStorage = (key: string): any => {
   // AsyncStorage.getItem(key).then(res => {return res})
 };
+// Search in involved persons
+export const searchInInVolvedPersons = (k: string, arr: Array<any>) => {
+  var strArr = [];
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i].name === k) {
+      strArr.push(arr[i]);
+    }
+    return strArr;
+  }
+};
 
 const checkPermission = async (type: string) => {
   const granted = await PermissionsAndroid.request(

@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     // flex: 2,
     // marginTop: wp(80),
-    borderTopLeftRadius: wp(8),
-    borderTopRightRadius: wp(8),
+    borderTopLeftRadius: wp(6),
+    borderTopRightRadius: wp(6),
   },
   // OBSERVATION
   cnHeading: {

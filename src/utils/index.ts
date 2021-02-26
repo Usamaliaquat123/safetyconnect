@@ -15,6 +15,7 @@ import {
   imageVideoDetector,
   validateEmail,
   validatePassword,
+  searchInInVolvedPersons,
   imageAndVideoObjectMap,
   capitalizeFirstLetter,
 } from './utils';
@@ -23,6 +24,7 @@ export {
   validatePassword,
   filterLocation,
   imageVideoDetector,
+  searchInInVolvedPersons,
   capitalizeFirstLetter,
   searchInSuggestions,
   setHeaderAllign,

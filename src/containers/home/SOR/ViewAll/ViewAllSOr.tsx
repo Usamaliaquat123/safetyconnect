@@ -24,6 +24,8 @@ import {RootState} from '../../../../store/store';
 import {InitialAppStateDTO, ListStateDTO} from '@dtos';
 import {connect} from 'react-redux';
 import styles from './styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 // import * as initialApp from '@store';
 // import { Create_sor, viewas, notified, submitted, draft, profileSetupSelections } from '@service';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -36,6 +38,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {createApi} from '@service';
+import {Storage} from 'aws-amplify';
 
 import {Isor, classifySorBtn} from '@typings';
 // import {  } from "";
@@ -100,6 +103,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   }
 
   componentDidMount = () => {
+    Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png').then((res) => {
+      console.log(res);
+    });
     createApi
       .createApi()
       .filterSors({
@@ -109,19 +115,25 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         query: {status: [1, 2, 3, 4, 5]},
       })
       .then((res: any) => {
-        for (let i = 0; i < res.data.data.report.length; i++) {
-          if (res.data.data.report[i].status == 1) {
-            this.state.draft.push(res.data.data.report[i]);
-          } else if (res.data.data.report[i].status == 2) {
-            this.state.submitted.push(res.data.data.report[i]);
-          } else if (res.data.data.report[i].status == 3) {
-            this.state.exclated.push(res.data.data.report[i]);
-          } else if (res.data.data.report[i].status == 4) {
-            this.state.inprogress.push(res.data.data.report[i]);
-          } else if (res.data.data.report[i].status == 5) {
-            this.state.completed.push(res.data.data.report[i]);
+        AsyncStorage.setItem(
+          'involved_persons',
+          JSON.stringify(res.data.data.involved_persons),
+        ).then(() => {
+          for (let i = 0; i < res.data.data.report.length; i++) {
+            if (res.data.data.report[i].status == 1) {
+              this.state.draft.push(res.data.data.report[i]);
+            } else if (res.data.data.report[i].status == 2) {
+              this.state.submitted.push(res.data.data.report[i]);
+            } else if (res.data.data.report[i].status == 3) {
+              this.state.exclated.push(res.data.data.report[i]);
+            } else if (res.data.data.report[i].status == 4) {
+              this.state.inprogress.push(res.data.data.report[i]);
+            } else if (res.data.data.report[i].status == 5) {
+              this.state.completed.push(res.data.data.report[i]);
+            }
           }
-        }
+        });
+
         console.log(res.data.data.report);
         this.setState({draft: res.data.data.report});
       });

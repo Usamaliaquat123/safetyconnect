@@ -44,9 +44,7 @@ import {
   downloadFile,
 } from '@utils';
 import DocumentPicker from 'react-native-document-picker';
-import {Storage} from 'aws-amplify';
 
-import {connectionHandler} from 'react-native-offline/dist/src/redux/sagas';
 // import listAction from './../../../../store/actions/listActions';
 type ViewSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -128,10 +126,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       View_sor.user.Risk.severity,
       View_sor.user.Risk.liklihood,
     );
-
-    Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png').then((res) => {
-      console.log(res);
-    });
   };
 
   AnimatedViews = () => {

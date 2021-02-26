@@ -24,6 +24,8 @@ const AmlifyConfigure = () => {
           mandatorySignIn: true,
           region: 'us-east-2',
           userPoolId: 'us-east-2_dCVQj7g1N',
+          identityPoolId: 'us-east-2:2d678d8d-d65a-42e0-9dd8-b9533c0c3bb1',
+
           userPoolWebClientId: '5n6tdp3pqcoj0q44ch83963gfp',
         },
         oauth: {
@@ -34,6 +36,8 @@ const AmlifyConfigure = () => {
         },
         Storage: {
           AWSS3: {
+            mandatorySignIn: true,
+            identityPoolId: 'us-east-2:2d678d8d-d65a-42e0-9dd8-b9533c0c3bb1',
             bucket: 'safetyconnect-users', //REQUIRED -  Amazon S3 bucket name
             region: 'us-east-2', //OPTIONAL -  Amazon service region
           },

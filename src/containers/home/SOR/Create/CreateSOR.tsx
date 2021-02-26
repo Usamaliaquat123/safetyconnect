@@ -198,6 +198,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     }).start();
   };
 
+  onSubmit = () => {};
+
   componentWillUnmount = () => {};
 
   render() {

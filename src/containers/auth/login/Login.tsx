@@ -80,7 +80,6 @@ class Login extends React.Component<LoginProps, any> {
             if (sendEmail) this.props.navigation.navigate('Home');
           } else {
             this.setState({loading: false});
-            
           }
         } catch (err) {
           this.setState({loading: false});
