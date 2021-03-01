@@ -1,5 +1,5 @@
 import apisauce from 'apisauce';
-import {project, user, orgnaization, sor} from '@typings';
+import {project, user, orgnaization, sor, observationsSug} from '@typings';
 import {string} from 'prop-types';
 // our "constructor"
 const createApi = (
@@ -27,10 +27,10 @@ const createApi = (
    *  @apis
    */
 
-  const suggestiosns = (keyword: string) => aiBaseAi.post('', {});
+  const suggestiosns = (data: any) => aiBaseAi.post('act', data);
   const repeatedsorsugg = (keyword: string) =>
     aiRepBaseApi.post(`repeatedsor?resorobs=${keyword}`, {resorobs: 'general'});
-  const observationSuggestions = (keyword: string) => aiBaseAi.get('');
+  const observationSuggestions = (data: any) => aiBaseAi.post('obs', data);
   // sor api
 
   /*

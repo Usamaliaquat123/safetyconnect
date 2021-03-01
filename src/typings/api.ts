@@ -14,9 +14,14 @@ export interface user {
   department?: string;
   industry?: string;
 }
+
+export interface observationsSug {
+  obs1?: string;
+}
 /*
  * @Organizations
  */
+
 export interface orgnaization {
   created_by?: string;
   name?: string;

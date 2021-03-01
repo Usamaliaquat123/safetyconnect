@@ -19,11 +19,14 @@ import {View_sor, recentActivity} from '@service';
 import {ListCard} from '@components';
 import {route} from '@nav';
 import {PieChart} from 'react-native-svg-charts';
+import {createApi} from '@service';
 
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {Isor, orgnaization} from '@typings';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // import {connect} from '../../decorators/index';
 type HomeScreenNavigationProp = StackNavigationProp<
@@ -44,7 +47,30 @@ class Home extends React.Component<HomeProps, any> {
     super(props);
     this.state = {
       selectedStats: 1,
+      recentActivity: [],
+      username: '',
+      orgName: '',
     };
+  }
+
+  componentDidMount() {
+    createApi
+      .createApi()
+      .filterSors({
+        project: '6038cf8472762b29b1bed1f3',
+        limit: 10,
+        page: 0,
+        query: {status: [1, 2, 3, 4, 5]},
+      })
+      .then((res: any) => {
+        this.setState({recentActivity: res.data.data.report.slice(0, 3)});
+      });
+
+    AsyncStorage.getItem('user').then((res: any) => {
+      const arr = JSON.parse(res);
+
+      this.setState({username: arr.name, orgName: arr.organizations[0].name});
+    });
   }
 
   render() {
@@ -76,8 +102,8 @@ class Home extends React.Component<HomeProps, any> {
                 />
               </View>
               <View style={{alignSelf: 'center'}}>
-                <Text style={styles.title}>Welcome Waseem!</Text>
-                <Text style={styles.orgTitle}>Sandan</Text>
+                <Text style={styles.title}>Welcome {this.state.username}!</Text>
+                <Text style={styles.orgTitle}>{this.state.orgName}</Text>
               </View>
               <View
                 style={{
@@ -158,31 +184,61 @@ class Home extends React.Component<HomeProps, any> {
             <View style={styles.recentActivity}>
               <View style={styles.recentlyHead}>
                 <Text style={styles.actHeading}>Recently Activity</Text>
-                <Text style={styles.viewAll}>View All</Text>
+                {this.state.recentActivity.length > 3 ? (
+                  <Text style={styles.viewAll}>View All</Text>
+                ) : null}
               </View>
-              <View style={{marginTop: wp(3)}}>
-                {recentActivity.map((d, i) => (
-                  <ListCard
-                    classify={d.classify}
-                    styles={
-                      recentActivity.length == i + 1
-                        ? {borderBottomWidth: wp(0)}
-                        : null
-                    }
-                    user1={d.user1}
-                    user2={d.user2}
-                    observation={d.observation}
-                    username={d.username}
-                    iconconf={classifySor.find(
-                      (e: any) => e.title == d.classify,
-                    )}
-                    onPress={() =>
-                      this.props.navigation.navigate('ViewSOR', {data: d})
-                    }
-                    date={d.date}
-                  />
-                ))}
-              </View>
+              {this.state.recentActivity.length != 0 ? (
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    paddingTop: wp(10),
+                    paddingBottom: wp(10),
+                  }}>
+                  <Text style={styles.nonReportText}>
+                    You don't have any reports yet...
+                  </Text>
+                  <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+                    <Text style={styles.noncreate}>
+                      Would you like to create the
+                    </Text>
+                    <Text
+                      onPress={() =>
+                        this.props.navigation.navigate('CreateSOR')
+                      }
+                      style={styles.noneCreatetext}>
+                      {' '}
+                      new one
+                    </Text>
+                  </View>
+                </View>
+              ) : (
+                <View>
+                  <View style={{marginTop: wp(3)}}>
+                    {this.state.recentActivity.map((d: Isor, i: number) => (
+                      <ListCard
+                        classify={d.sor_type}
+                        styles={
+                          this.state.recentActivity.length == i + 1
+                            ? {borderBottomWidth: wp(0)}
+                            : null
+                        }
+                        user1={d.user1}
+                        user2={d.user2}
+                        observation={d.details}
+                        username={d.created_by}
+                        iconconf={classifySor.find(
+                          (e: any) => e.title == d.sor_type,
+                        )}
+                        onPress={() =>
+                          this.props.navigation.navigate('ViewSOR', {data: d})
+                        }
+                        date={d.occured_at}
+                      />
+                    ))}
+                  </View>
+                </View>
+              )}
             </View>
             <View style={styles.perfStats}>
               <View style={styles.recentlyHead}>

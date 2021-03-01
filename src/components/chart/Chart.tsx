@@ -36,7 +36,7 @@ const Chart = (props: Props) => {
           </Text>
           {liklihood.map((d: any, i: number) => {
             return (
-              <View>
+              <View key={i}>
                 <TouchableOpacity
                   onPress={() => {
                     var likelihoodarr: Array<any> = [...liklihood];
@@ -110,7 +110,7 @@ const Chart = (props: Props) => {
           <View style={{flexDirection: 'row', marginLeft: wp(3)}}>
             {severity.map((d: any, i) => {
               return (
-                <View>
+                <View key={i}>
                   <TouchableOpacity
                     onPress={() => {
                       var severityArr: Array<any> = [...severity];

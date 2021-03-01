@@ -55,7 +55,7 @@ export const BottomTabNavigator = () => {
           initialRouteName={'home'}>
           <Tab.Screen
             name="home"
-            component={() => MainStackNavigator('ViewAllSOr')}
+            component={() => MainStackNavigator('CreateSOR')}
             options={{}}
           />
           <Tab.Screen
@@ -98,7 +98,7 @@ export default class TabBar extends React.Component<TabBarProps, any> {
       return null;
     }
 
-    this.props.state.routes.map((d, i) => {
+    this.props.state.routes.map((d: any, i: number) => {
       if (d.name == 'home') {
         d['icon'] = images.bottomTab.home;
       } else if (d.name == 'sors') {
@@ -164,7 +164,7 @@ export default class TabBar extends React.Component<TabBarProps, any> {
           };
 
           return (
-            <View style={{flex: 1, height: wp(15)}}>
+            <View key={index} style={{flex: 1, height: wp(15)}}>
               <TouchableOpacity
                 accessibilityRole="button"
                 accessibilityState={isFocused ? {selected: true} : {}}

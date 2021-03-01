@@ -2,10 +2,16 @@ import {arrayOf} from 'prop-types';
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
+// import {colros} from '@theme';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 interface Props {
   styles: Object;
   arr: Array<string>;
   onPress: Function;
+  type: string;
 }
 
 const Suggestions = (props: Props) => {
@@ -14,13 +20,41 @@ const Suggestions = (props: Props) => {
       <View>
         <Text style={styles.actionSuggHeading}>Suggestions</Text>
         <View style={styles.ActionSugContainer}>
-          {props.arr.map((d: string) => (
-            <TouchableOpacity
-              onPress={() => props.onPress(d)}
-              style={styles.ActionsugItm}>
-              <Text style={styles.ActionsugItmTxt}>{d}</Text>
-            </TouchableOpacity>
-          ))}
+          {/* Actions  || Observations */}
+
+          {/* Actions */}
+          {props.type == 'suggestions' && (
+            <View>
+              {props.arr.slice(0, 3).map((d: any, i: number) => (
+                <TouchableOpacity
+                  key={i}
+                  onPress={() => props.onPress(d.action)}
+                  style={styles.ActionsugItm}>
+                  <Text style={styles.ActionsugItmTxt}>{d.action}</Text>
+                  {/* <Text style={{fontSize: wp(3), color: colors.black}}>
+                {d.email}
+              </Text> */}
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
+
+          {/* Observations  */}
+          {props.type == 'observation' && (
+            <View>
+              {props.arr.slice(0, 3).map((d: any, i: number) => (
+                <TouchableOpacity
+                  key={i}
+                  onPress={() => props.onPress(d.obs)}
+                  style={styles.ActionsugItm}>
+                  <Text style={styles.ActionsugItmTxt}>{d.obs}</Text>
+                  {/* <Text style={{fontSize: wp(3), color: colors.black}}>
+                {d.email}
+              </Text> */}
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
         </View>
       </View>
     </View>

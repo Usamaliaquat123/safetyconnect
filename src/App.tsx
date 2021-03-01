@@ -11,6 +11,7 @@ import {
 import {configSentry, AmlifyConfigure} from '@config';
 import {NetworkProvider} from 'react-native-offline';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {createApi} from '@service';
 
 export interface AppProps {}
 
@@ -36,6 +37,13 @@ export default class App extends React.Component<AppProps, any> {
         this.setState({route: 'CreatePass'});
       }
     });
+
+    createApi
+      .createApi()
+      .getUser({email: 'usamaliaquat@outlook.com'})
+      .then((res: any) => {
+        AsyncStorage.setItem('user', JSON.stringify(res.data.data));
+      });
 
     AsyncStorage.getItem('token').then((res) => {
       if (res !== null) {

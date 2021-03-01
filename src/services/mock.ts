@@ -20,17 +20,46 @@ export const Create_sor = {
       'Ex adipisicing ullamco consequat irure duis.',
     ],
     emailSuggestions: [
-      'johndoe@codistan.org',
-      'janedoe@codistan.org',
-      'janesmith@codistan.org',
+      {
+        _id: '6038cd7472762b7ddbbed1ec',
+        email: 'shiza@outlook.com',
+        name: 'haiderali',
+        img_url: '"https://static1.shine.com/l/m/images/blog/Any-questions.jpg',
+      },
+      {
+        _id: '6038cd8572762b186fbed1ed',
+        email: 'zara@outlook.com',
+        name: 'haiderali',
+        img_url: '"https://static1.shine.com/l/m/images/blog/Any-questions.jpg',
+      },
+      {
+        _id: '6038cd9a72762b0638bed1ee',
+        email: 'jamal@outlook.com',
+        name: 'haiderali',
+        img_url: '"https://static1.shine.com/l/m/images/blog/Any-questions.jpg',
+      },
     ],
     actionOrRecommended: [
       'Officia laboris incididunt quis id tempor.',
       'Exercitation reprehenderit ea proident nostrud.',
       'Ex voluptate amet ad quis anim ea commodo.',
     ],
-    submitTo: ['John Doe', 'Jane Doe', 'zara'],
-    esclateTo: ['Lorem', 'Ipsum', 'Officia'],
+    submitTo: [
+      {
+        _id: '6038cd9a72762b0638bed1ee',
+        email: 'jamal@outlook.com',
+        name: 'haiderali',
+        img_url: '"https://static1.shine.com/l/m/images/blog/Any-questions.jpg',
+      },
+    ],
+    esclateTo: [
+      {
+        _id: '6038cd9a72762b0638bed1ee',
+        email: 'jamal@outlook.com',
+        name: 'haiderali',
+        img_url: '"https://static1.shine.com/l/m/images/blog/Any-questions.jpg',
+      },
+    ],
   },
 };
 

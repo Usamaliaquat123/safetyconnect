@@ -13,7 +13,12 @@ import {connect} from 'react-redux';
 import {Create_sor, riskxSeverityxliklihood} from '@service/mock';
 import styles from './style';
 import moment from 'moment';
-import {searchInSuggestions, filterLocation, classifySor} from '@utils';
+import {
+  searchInSuggestions,
+  filterLocation,
+  classifySor,
+  suggestInActionsRecommendations,
+} from '@utils';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors} from '@theme';
 import {
@@ -26,8 +31,11 @@ import {Chart, Suggestions, RepeatedSor, Tags} from '@components';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
-import {classifySorBtn, Isor} from '@typings';
+import {classifySorBtn, Isor, involved_persons, user} from '@typings';
 import Modal from 'react-native-modal';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {parse} from 'react-native-svg';
+import {createApi} from '@service';
 type CreateSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'CreateSOR'
@@ -83,6 +91,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
       liklihood: riskxSeverityxliklihood.liklihood,
       severity: riskxSeverityxliklihood.severity,
+      // Involved Persons of this project
+      involved_persons: [],
+      user: {},
     };
   }
   submitDraft = async () => {
@@ -116,48 +127,90 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     } else {
       this.setState({obserLocation: '@Add Location'});
     }
-    var srchArr = searchInSuggestions(str, Create_sor.Observation.suggestions);
+    var srchArr = suggestInActionsRecommendations(
+      str,
+      Create_sor.Observation.suggestions,
+    );
     this.setState({suggestions: [...srchArr], observationT: str});
   };
   // Search in InvolvePersons Array
   suggestInvolvePersons = (str: string) => {
-    var srchSug = searchInSuggestions(
-      str,
-      Create_sor.Observation.emailSuggestions,
-    );
+    // console.log(this.state.involved_persons);
+    var srchSug = searchInSuggestions(str, this.state.involved_persons);
     if (str == '') {
       this.setState({
         involvePersonSuggestions: [],
         involvePersonText: str,
       });
     } else {
+      console.log(srchSug);
       this.setState({
         involvePersonSuggestions: [...srchSug],
         involvePersonText: str,
       });
     }
   };
+
   // Search Action / Recommendation Suggestions
   actionRecommendSuggestion = (str: string) => {
-    var srchSug = searchInSuggestions(
-      str,
-      Create_sor.Observation.actionOrRecommended,
-    );
-    if (str == '') {
-      this.setState({
-        actionRecommendations: [],
-        actionRecommendationsText: str,
+    const form = new FormData();
+
+    form.append('act1', str);
+    createApi
+      .createApi()
+      .suggestiosns(form)
+      .then((res: any) => {
+        this.setState({
+          actionRecommendations: [...res.data.actjson],
+          actionRecommendationsText: str,
+        });
+        console.log(res.data.actjson);
       });
-    } else {
-      this.setState({
-        actionRecommendations: [...srchSug],
-        actionRecommendationsText: str,
-      });
-    }
+    // var srchSug = suggestInActionsRecommendations(
+    //   str,
+    //   Create_sor.Observation.actionOrRecommended,
+    // );
+    // if (str == '') {
+    //   this.setState({
+    //     actionRecommendations: [],
+    //     actionRecommendationsText: str,
+    //   });
+    // } else {
+
+    // }
   };
 
+  // search in observatiosn
+  searchInObservation = (str: string) => {
+    const form = new FormData();
+    form.append('obs1', str);
+    createApi
+      .createApi()
+      .observationSuggestions(form)
+      .then((res: any) => {
+        this.setState({suggestions: res.data.results});
+      });
+  };
   componentDidMount = () => {
+    // get involved users
+    // AsyncStorage.getItem('involved_persons').then((res: any) =>
+    // );
+    console.log(this.state.involved_persons);
+    // Get User info
+    AsyncStorage.getItem('user').then((user: any) => {
+      this.setState({user: JSON.parse(user)});
+    });
+    createApi
+      .createApi()
+      .getProject({
+        projectid: '603b8c1b83176628f90f8dbe',
+      })
+      .then((res: any) => {
+        // console.log(res.data.data.involved_persons);
+        this.setState({involved_persons: res.data.data.involved_persons});
+      });
     // Time Update on every seconds
+
     setInterval(() => {
       this.setState({
         curTime: moment().format('LT'),
@@ -224,8 +277,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 <Avatar
                   rounded
                   source={{
-                    uri:
-                      'https://media-exp1.licdn.com/dms/image/C5603AQHGeQB42B1CcA/profile-displayphoto-shrink_200_200/0/1588740771758?e=1618444800&v=beta&t=CtMgG7KLgfGZO-pYkX6tdvwbCGnuU-g4G2TiocMI1gc',
+                    uri: this.state.user.img_url,
                   }}
                 />
               </View>
@@ -271,9 +323,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 value={this.state.observationT}
                 underlineColorAndroid="transparent"
                 placeholder="Enter your observation here"
-                onChange={(t) =>
-                  this.setState({observationT: t.nativeEvent.text})
-                }
+                onChange={(t) => {
+                  this.setState({observationT: t.nativeEvent.text});
+                  this.searchInObservation(t.nativeEvent.text);
+                }}
                 style={[styles.obInputText]}></TextInput>
               <View style={{flexDirection: 'row'}}>
                 <Text style={styles.obText}>
@@ -321,8 +374,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             {this.state.suggestions.length != 0 ? (
               <Suggestions
                 styles={{}}
+                type={'observation'}
                 arr={this.state.suggestions}
-                onPress={(d: string) => this.setState({observationT: d})}
+                onPress={(d: string) =>
+                  this.setState({observationT: d, suggestions: []})
+                }
               />
             ) : null}
 
@@ -420,32 +476,37 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               {this.state.involvePersonSuggestions.length != 0 ? (
                 <View style={styles.involveSuggestCont}>
                   {this.state.involvePersonSuggestions.map(
-                    (d: string, i: number) => (
-                      <TouchableOpacity
-                        key={i}
-                        onPress={() => {
-                          this.state.involvePersonTags.push(d);
-                          this.setState({
-                            involvePersonText: '',
-                            involvePersonSuggestions: [],
-                          });
-                        }}
-                        style={[
-                          styles.involvePsuggCont,
-                          this.state.involvePersonSuggestions.length == i + 1
-                            ? {borderBottomWidth: wp(0)}
-                            : null,
-                        ]}>
-                        <Avatar
-                          containerStyle={{marginRight: wp(3)}}
-                          rounded
-                          source={{
-                            uri:
-                              'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                    (d: involved_persons, i: number) => (
+                      <View key={i}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.state.involvePersonTags.push(d);
+                            this.setState({
+                              involvePersonText: '',
+                              involvePersonSuggestions: [],
+                            });
                           }}
-                        />
-                        <Text style={styles.involvePSt}>{d}</Text>
-                      </TouchableOpacity>
+                          style={[
+                            styles.involvePsuggCont,
+                            this.state.involvePersonSuggestions.length == i + 1
+                              ? {borderBottomWidth: wp(0)}
+                              : null,
+                          ]}>
+                          <Avatar
+                            containerStyle={{marginRight: wp(3)}}
+                            rounded
+                            source={{
+                              uri: d.img_url,
+                            }}
+                          />
+                          <View>
+                            <Text style={styles.involvePSt}>{d.name}</Text>
+                            <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                              {d.email}
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
                     ),
                   )}
                 </View>
@@ -545,6 +606,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 {/* Suggestions  */}
                 {this.state.actionRecommendations.length != 0 ? (
                   <Suggestions
+                    type={'suggestions'}
                     styles={{}}
                     arr={this.state.actionRecommendations}
                     onPress={(d: string) => {
@@ -600,41 +662,43 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 </View>
                 {this.state.submitToArr.length != 0 ? (
                   <View style={styles.involveSuggestCont}>
-                    {this.state.submitToArr.map((d: string, i: number) => (
-                      <TouchableOpacity
-                        key={i}
-                        onPress={() => {
-                          this.setState({
-                            submitTo: '',
-                            submitToArr: [],
-                          });
+                    {this.state.submitToArr.map(
+                      (d: involved_persons, i: number) => (
+                        <TouchableOpacity
+                          key={i}
+                          onPress={() => {
+                            this.setState({
+                              submitTo: '',
+                              submitToArr: [],
+                            });
 
-                          if (
-                            this.state.submitToTags.filter((v: any) => v == d)
-                              .length == 0
-                          ) {
-                            this.state.submitToTags.push(d);
-                          } else {
-                            return null;
-                          }
-                        }}
-                        style={[
-                          styles.involvePsuggCont,
-                          this.state.submitToArr.length == i + 1
-                            ? {borderBottomWidth: wp(0)}
-                            : null,
-                        ]}>
-                        <Avatar
-                          containerStyle={{marginRight: wp(3)}}
-                          rounded
-                          source={{
-                            uri:
-                              'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                            if (
+                              this.state.submitToTags.filter(
+                                (v: involved_persons) => v == d,
+                              ).length == 0
+                            ) {
+                              this.state.submitToTags.push(d);
+                            } else {
+                              return null;
+                            }
                           }}
-                        />
-                        <Text style={styles.involvePSt}>{d}</Text>
-                      </TouchableOpacity>
-                    ))}
+                          style={[
+                            styles.involvePsuggCont,
+                            this.state.submitToArr.length == i + 1
+                              ? {borderBottomWidth: wp(0)}
+                              : null,
+                          ]}>
+                          <Avatar
+                            containerStyle={{marginRight: wp(3)}}
+                            rounded
+                            source={{
+                              uri: d.img_url,
+                            }}
+                          />
+                          <Text style={styles.involvePSt}>{d.name}</Text>
+                        </TouchableOpacity>
+                      ),
+                    )}
                   </View>
                 ) : null}
               </View>
@@ -678,38 +742,39 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 {this.state.exclateToArr.length != 0 ? (
                   <View>
                     <View style={styles.involveSuggestCont}>
-                      {this.state.exclateToArr.map((d: string, i: number) => (
-                        <TouchableOpacity
-                          key={i}
-                          onPress={() => {
-                            this.setState({esclateTo: '', exclateToArr: []});
-                            if (
-                              this.state.exclateToTags.filter(
-                                (v: any) => v == d,
-                              ).length == 0
-                            ) {
-                              this.state.exclateToTags.push(d);
-                            } else {
-                              return null;
-                            }
-                          }}
-                          style={[
-                            styles.involvePsuggCont,
-                            this.state.exclateToArr.length == i + 1
-                              ? {borderBottomWidth: wp(0)}
-                              : null,
-                          ]}>
-                          <Avatar
-                            containerStyle={{marginRight: wp(3)}}
-                            rounded
-                            source={{
-                              uri:
-                                'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                      {this.state.exclateToArr.map(
+                        (d: involved_persons, i: number) => (
+                          <TouchableOpacity
+                            key={i}
+                            onPress={() => {
+                              this.setState({esclateTo: '', exclateToArr: []});
+                              if (
+                                this.state.exclateToTags.filter(
+                                  (v: involved_persons) => v == d,
+                                ).length == 0
+                              ) {
+                                this.state.exclateToTags.push(d);
+                              } else {
+                                return null;
+                              }
                             }}
-                          />
-                          <Text style={styles.involvePSt}>{d}</Text>
-                        </TouchableOpacity>
-                      ))}
+                            style={[
+                              styles.involvePsuggCont,
+                              this.state.exclateToArr.length == i + 1
+                                ? {borderBottomWidth: wp(0)}
+                                : null,
+                            ]}>
+                            <Avatar
+                              containerStyle={{marginRight: wp(3)}}
+                              rounded
+                              source={{
+                                uri: d.img_url,
+                              }}
+                            />
+                            <Text style={styles.involvePSt}>{d.name}</Text>
+                          </TouchableOpacity>
+                        ),
+                      )}
                     </View>
                   </View>
                 ) : null}

@@ -9,6 +9,7 @@ import {
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import {PermissionsAndroid} from 'react-native';
 import {resolvePlugin} from '@babel/core';
+import {involved_persons} from '@typings';
 export const classifySor: Array<Object> = [
   {
     icon: 'warning',
@@ -52,7 +53,8 @@ export const validatePassword = (password: string): boolean => {
   const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
   return re.test(String(password).toLowerCase());
 };
-export const searchInSuggestions = (
+// Suggest in Actions an recommendations
+export const suggestInActionsRecommendations = (
   str: string,
   strArray: Array<string>,
 ): Array<string> => {
@@ -64,6 +66,20 @@ export const searchInSuggestions = (
   }
   return strArr;
 };
+// Search in Involved Persons
+export const searchInSuggestions = (
+  str: string,
+  strArray: Array<involved_persons>,
+): Array<Object> => {
+  var strArr = [];
+  for (var j = 0; j < strArray.length; j++) {
+    if (strArray[j].email.toLowerCase().match(str.toLowerCase())) {
+      strArr.push(strArray[j]);
+    }
+  }
+  return strArr;
+};
+
 // Messaging part
 export const searchInObjects = (k: string, arr: Array<any>) => {
   var strArr = [];
