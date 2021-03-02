@@ -18,27 +18,66 @@ export interface TagsProps {
   tags: Array<string>;
   onClose: Function;
   style?: ViewStyle;
+  type?: string;
 }
 
 class Tags extends React.Component<TagsProps, any> {
   render() {
-    return this.props.tags.map((d: any, i) => (
-      <View style={[styles.container, this.props.style]}>
-        <Text style={styles.tagsText}>{d.name}</Text>
-        <TouchableOpacity
-          onPress={() => this.props.onClose(d)}
-          style={styles.containerIcon}>
-          <Icon
-            style={styles.crossIcon}
+    if (this.props.type == 'sugg') {
+      return this.props.tags.map((d: any, i: number) => (
+        <View style={[styles.container, this.props.style]}>
+          <Text style={styles.tagsText}>{d.action.substring(0, 40)}...</Text>
+          <TouchableOpacity
             onPress={() => this.props.onClose(d)}
-            size={wp(3)}
-            name="cross"
-            type="entypo"
-            color={colors.secondary}
-          />
-        </TouchableOpacity>
-      </View>
-    ));
+            style={styles.containerIcon}>
+            <Icon
+              style={styles.crossIcon}
+              onPress={() => this.props.onClose(d)}
+              size={wp(3)}
+              name="cross"
+              type="entypo"
+              color={colors.secondary}
+            />
+          </TouchableOpacity>
+        </View>
+      ));
+    } else if (this.props.type == 'addTeamMem') {
+      return this.props.tags.map((d: any, i: number) => (
+        <View style={[styles.container, this.props.style]}>
+          <Text style={styles.tagsText}>{d}</Text>
+          <TouchableOpacity
+            onPress={() => this.props.onClose(d)}
+            style={styles.containerIcon}>
+            <Icon
+              style={styles.crossIcon}
+              onPress={() => this.props.onClose(d)}
+              size={wp(3)}
+              name="cross"
+              type="entypo"
+              color={colors.secondary}
+            />
+          </TouchableOpacity>
+        </View>
+      ));
+    } else {
+      return this.props.tags.map((d: any, i: number) => (
+        <View style={[styles.container, this.props.style]}>
+          <Text style={styles.tagsText}>{d.name}</Text>
+          <TouchableOpacity
+            onPress={() => this.props.onClose(d)}
+            style={styles.containerIcon}>
+            <Icon
+              style={styles.crossIcon}
+              onPress={() => this.props.onClose(d)}
+              size={wp(3)}
+              name="cross"
+              type="entypo"
+              color={colors.secondary}
+            />
+          </TouchableOpacity>
+        </View>
+      ));
+    }
   }
 }
 

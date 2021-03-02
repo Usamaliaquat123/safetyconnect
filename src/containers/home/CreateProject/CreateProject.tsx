@@ -195,37 +195,38 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     Add Team Members
                   </Text>
                   <View style={[styles.inputContainer]}>
-                    <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                      <Tags
-                        onClose={(d: any) => {
-                          this.setState({
-                            teamMembers: this.state.teamMembers.filter(
-                              (v: any) => v !== d,
-                            ),
-                          });
-                        }}
-                        tags={this.state.teamMembers}
-                      />
-                      {this.state.teamMembers.length < 5 ? (
-                        <TextInput
-                          style={styles.authInputs}
-                          value={this.state.teamMembersText}
-                          onChange={(e) => {
-                            {
-                              if (this.state.teamMembers < 1) {
-                                this.setState({errorTeamMem: true});
-                              } else {
-                                this.setState({errorTeamMem: false});
-                              }
-
-                              this.setState({
-                                teamMembersText: e.nativeEvent.text,
-                              });
+                    {this.state.teamMembers.length < 5 ? (
+                      <TextInput
+                        style={styles.authInputs}
+                        value={this.state.teamMembersText}
+                        onChange={(e) => {
+                          {
+                            if (this.state.teamMembers < 1) {
+                              this.setState({errorTeamMem: true});
+                            } else {
+                              this.setState({errorTeamMem: false});
                             }
-                          }}
-                        />
-                      ) : null}
-                    </View>
+
+                            this.setState({
+                              teamMembersText: e.nativeEvent.text,
+                            });
+                          }
+                        }}
+                      />
+                    ) : null}
+                  </View>
+                  <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                    <Tags
+                      type={'addTeamMem'}
+                      onClose={(d: any) => {
+                        this.setState({
+                          teamMembers: this.state.teamMembers.filter(
+                            (v: any) => v !== d,
+                          ),
+                        });
+                      }}
+                      tags={this.state.teamMembers}
+                    />
                   </View>
                   {this.state.errorTeamMem && (
                     <Text style={{fontSize: wp(3), color: colors.error}}>

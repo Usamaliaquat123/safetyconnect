@@ -28,7 +28,7 @@ const Suggestions = (props: Props) => {
               {props.arr.slice(0, 3).map((d: any, i: number) => (
                 <TouchableOpacity
                   key={i}
-                  onPress={() => props.onPress(d.action)}
+                  onPress={() => props.onPress(d)}
                   style={styles.ActionsugItm}>
                   <Text style={styles.ActionsugItmTxt}>{d.action}</Text>
                   {/* <Text style={{fontSize: wp(3), color: colors.black}}>
@@ -45,7 +45,7 @@ const Suggestions = (props: Props) => {
               {props.arr.slice(0, 3).map((d: any, i: number) => (
                 <TouchableOpacity
                   key={i}
-                  onPress={() => props.onPress(d.obs)}
+                  onPress={() => props.onPress(d)}
                   style={styles.ActionsugItm}>
                   <Text style={styles.ActionsugItmTxt}>{d.obs}</Text>
                   {/* <Text style={{fontSize: wp(3), color: colors.black}}>

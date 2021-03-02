@@ -153,31 +153,24 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
   // Search Action / Recommendation Suggestions
   actionRecommendSuggestion = (str: string) => {
-    const form = new FormData();
-
-    form.append('act1', str);
-    createApi
-      .createApi()
-      .suggestiosns(form)
-      .then((res: any) => {
-        this.setState({
-          actionRecommendations: [...res.data.actjson],
-          actionRecommendationsText: str,
-        });
-        console.log(res.data.actjson);
+    if (str == '') {
+      this.setState({
+        actionRecommendations: [],
+        actionRecommendationsText: str,
       });
-    // var srchSug = suggestInActionsRecommendations(
-    //   str,
-    //   Create_sor.Observation.actionOrRecommended,
-    // );
-    // if (str == '') {
-    //   this.setState({
-    //     actionRecommendations: [],
-    //     actionRecommendationsText: str,
-    //   });
-    // } else {
-
-    // }
+    } else {
+      const form = new FormData();
+      this.setState({actionRecommendationsText: str});
+      form.append('act1', str);
+      createApi
+        .createApi()
+        .suggestiosns(form)
+        .then((res: any) => {
+          this.setState({
+            actionRecommendations: [...res.data.actjson],
+          });
+        });
+    }
   };
 
   // search in observatiosn
@@ -578,20 +571,24 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 <Text style={styles.actionsRecHeading}>
                   Actions / Recommendation
                 </Text>
-                <TextInput
-                  onFocus={() => this.setState({selectedInputIndex: 3})}
-                  style={[
-                    styles.actionInput,
-                    this.state.selectedInputIndex == 3
-                      ? {borderColor: colors.green}
-                      : null,
-                  ]}
-                  value={this.state.actionRecommendationsText}
-                  onChangeText={(e) => this.actionRecommendSuggestion(e)}
-                  placeholder={'Suggest your recommendation / actions'}
-                />
+                {this.state.actionsTags.length < 3 && (
+                  <TextInput
+                    onFocus={() => this.setState({selectedInputIndex: 3})}
+                    style={[
+                      styles.actionInput,
+                      this.state.selectedInputIndex == 3
+                        ? {borderColor: colors.green}
+                        : null,
+                    ]}
+                    value={this.state.actionRecommendationsText}
+                    onChangeText={(e) => this.actionRecommendSuggestion(e)}
+                    placeholder={'Suggest your recommendation / actions'}
+                  />
+                )}
+
                 <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
                   <Tags
+                    type={'sugg'}
                     onClose={(d: any) => {
                       this.setState({
                         actionsTags: this.state.actionsTags.filter(
@@ -609,8 +606,20 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     type={'suggestions'}
                     styles={{}}
                     arr={this.state.actionRecommendations}
-                    onPress={(d: string) => {
-                      this.state.actionsTags.push(d);
+                    onPress={(d: any) => {
+                      console.log(d);
+                      // this.state.actionsTags.push(d);
+
+                      if (
+                        this.state.actionsTags.filter((v: any) => v == d)
+                          .length == 0
+                      ) {
+                        this.state.actionsTags.push(d);
+                        this.setState({actionRecommendations: []});
+                      } else {
+                        return null;
+                      }
+
                       this.setState({
                         actionRecommendationsText: '',
                         actionRecommendations: [],
@@ -637,15 +646,15 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     style={styles.optnselectorText}
                     placeholder={'Enter person name / email'}
                     underlineColorAndroid="transparent"
-                    onChange={(v: any) =>
+                    onChange={(v: any) => {
                       this.setState({
                         submitToArr: searchInSuggestions(
                           v,
-                          Create_sor.Observation.submitTo,
+                          this.state.involved_persons,
                         ),
                         submitTo: v,
-                      })
-                    }
+                      });
+                    }}
                     value={this.state.submitTo}></TextInput>
                 </View>
                 <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
