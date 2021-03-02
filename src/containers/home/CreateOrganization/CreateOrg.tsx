@@ -83,6 +83,8 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                 });
 
                 //   // AsyncStorage.setItem('organizations', {});
+              } else {
+                this.setState({loading: false});
               }
             })
             .catch((err) => {

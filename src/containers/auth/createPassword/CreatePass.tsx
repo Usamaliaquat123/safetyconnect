@@ -82,6 +82,14 @@ class CreatePass extends React.Component<CreatePassProps, any> {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
+              <Icon
+                containerStyle={{marginLeft: wp(2)}}
+                onPress={() => this.props.navigation.goBack()}
+                size={25}
+                name="arrow-back-outline"
+                type="ionicon"
+                color={colors.secondary}
+              />
               <View>
                 <Text style={styles.title}>Sign up</Text>
                 <View style={styles.underScrore} />

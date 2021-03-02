@@ -48,6 +48,12 @@ class Login extends React.Component<LoginProps, any> {
     };
   }
 
+  componentWillUnmount = () => {
+    this.setState({
+      username: '',
+      password: '',
+    });
+  };
   submitSignin = async () => {
     if (
       this.state.username != '' &&
@@ -128,7 +134,7 @@ class Login extends React.Component<LoginProps, any> {
                     textAlign: 'center',
                     marginTop: wp(-5),
                   }}>
-                  Connecting...
+                  loading...
                 </Text>
               </View>
             ) : (
@@ -148,9 +154,15 @@ class Login extends React.Component<LoginProps, any> {
                     <TextInput
                       onFocus={() => this.setState({selectedInput: 1})}
                       style={styles.authInputs}
-                      onChange={(e) =>
-                        this.setState({username: e.nativeEvent.text})
-                      }
+                      onChange={(e) => {
+                        if (validateEmail(e.nativeEvent.text) == true) {
+                          this.setState({emailError: false});
+                        } else {
+                          this.setState({emailError: true});
+                        }
+
+                        this.setState({username: e.nativeEvent.text});
+                      }}
                       value={this.state.username}
                       placeholder={'Enter your email'}
                     />

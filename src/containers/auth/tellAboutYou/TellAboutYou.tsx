@@ -53,9 +53,8 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
       selectedDesignAndArchi: false,
       IndustrySelection: profileSetupSelections.IndustrySelection,
       DesignAndArchitecture: profileSetupSelections.DesignAndArchitecture,
-      IndustrySelectionText: profileSetupSelections.IndustrySelection[0].text,
-      DesignAndArchitectureText:
-        profileSetupSelections.DesignAndArchitecture[0].text,
+      IndustrySelectionText: '',
+      DesignAndArchitectureText: '',
       // Errors
       imageError: false,
       roleError: false,
@@ -145,6 +144,14 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
+              <Icon
+                containerStyle={{marginLeft: wp(2)}}
+                onPress={() => this.props.navigation.goBack()}
+                size={25}
+                name="arrow-back-outline"
+                type="ionicon"
+                color={colors.secondary}
+              />
               <View>
                 <Text style={styles.title}>Sign up</Text>
                 <View style={styles.underScrore} />

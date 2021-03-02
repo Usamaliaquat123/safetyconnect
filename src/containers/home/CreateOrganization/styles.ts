@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: wp(3),
   },
   headingContainer: {
-    fontSize: wp(4.4),
+    fontSize: wp(4),
     color: colors.primary,
     fontWeight: 'bold',
   },
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     marginTop: wp(7),
   },
   emailTextContainer: {
-    fontSize: wp(3.5),
+    fontSize: wp(3),
     fontWeight: 'bold',
   },
   inputContainer: {
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   authInputs: {
-    fontSize: wp(4),
+    fontSize: wp(3),
     width: wp(80),
   },
   signinText: {

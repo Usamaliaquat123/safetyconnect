@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   authInputs: {
     fontSize: wp(3),
-    width: wp(80),
+    width: wp(70),
   },
   forgetPassText: {
     fontSize: wp(3),
@@ -142,14 +142,17 @@ const styles = StyleSheet.create({
     marginTop: wp(2),
   },
   createNewAccount: {
-    color: colors.text,
+    color: colors.primary,
     opacity: 0.7,
     fontSize: wp(3.4),
+
     fontWeight: 'bold',
     textAlign: 'center',
   },
   createnewaccountContainer: {
     marginTop: wp(3),
+    // width: wp(30),
+    // height: wp(10),
   },
 });
 
