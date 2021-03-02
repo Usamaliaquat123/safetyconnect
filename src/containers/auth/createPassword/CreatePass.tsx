@@ -79,7 +79,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
               <View>

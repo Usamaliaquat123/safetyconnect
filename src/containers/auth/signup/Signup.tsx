@@ -61,7 +61,7 @@ class Signup extends React.Component<SignupProps, any> {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
               <View>

@@ -69,9 +69,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
         await AsyncStorage.getItem('email')
           .then((email: any) => {
             this.setState({errorTeamMem: false});
-            // console.log('================================');
-            // console.log(this.props.route.params.organization);
-            // console.log('================================');
+
             console.log(email);
             api
               .createApi()
@@ -121,7 +119,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
