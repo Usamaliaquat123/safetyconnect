@@ -174,11 +174,11 @@ class Login extends React.Component<LoginProps, any> {
                     <TextInput
                       secureTextEntry={this.state.isEye}
                       onFocus={() => {
-                        if (validateEmail(this.state.username)) {
-                          this.setState({emailError: false});
-                        } else {
-                          this.setState({emailError: true});
-                        }
+                        // if (validateEmail(this.state.username)) {
+                        //   this.setState({emailError: false});
+                        // } else {
+                        //   this.setState({emailError: true});
+                        // }
                         this.setState({selectedInput: 2});
                       }}
                       style={styles.authInputs}
