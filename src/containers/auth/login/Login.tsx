@@ -46,7 +46,7 @@ class Login extends React.Component<LoginProps, any> {
       loading: false,
       password: '',
       passError: false,
-      errorModal: true,
+      errorModal: false,
       emailError: false,
     };
   }
@@ -73,7 +73,7 @@ class Login extends React.Component<LoginProps, any> {
           /*
            * @Default email : asohial.bscs16seecs@seecs.edu.pk || password: Weird.password02
            */
-          this.setState({loading: true});
+          // this.setState({loading: true});
           const user = await Auth.signIn(
             this.state.username,
             this.state.password,
@@ -85,13 +85,13 @@ class Login extends React.Component<LoginProps, any> {
 
           if (user.userConfirmed) {
             const sendEmail = await Auth.forgotPassword(this.state.username);
-            this.setState({loading: false});
+            // this.setState({loading: false});
             if (sendEmail) this.props.navigation.navigate('Home');
           } else {
-            this.setState({loading: false});
+            // this.setState({loading: false});
           }
         } catch (err) {
-          this.setState({loading: false});
+          this.setState({errorModal: true});
           console.log(err);
         }
       } else {
@@ -115,7 +115,7 @@ class Login extends React.Component<LoginProps, any> {
           </View>
           {/* content */}
           <View style={[styles.content]}>
-            {this.state.loading == true ? (
+            {/* {this.state.loading == true ? (
               <View
                 style={{
                   alignSelf: 'center',
@@ -140,150 +140,145 @@ class Login extends React.Component<LoginProps, any> {
                   loading...
                 </Text>
               </View>
-            ) : (
-              <View>
-                <Text style={styles.headingContainer}>Sign In</Text>
-                {/* inputs container */}
-                <View style={styles.inputsContainer}>
-                  {/* Email Container */}
-                  <Text style={styles.emailTextContainer}>Email</Text>
-                  <View
-                    style={[
-                      styles.inputContainer,
-                      this.state.selectedInput == 1
-                        ? {borderColor: colors.green}
-                        : {borderColor: colors.textOpa},
-                    ]}>
-                    <TextInput
-                      onFocus={() => this.setState({selectedInput: 1})}
-                      style={styles.authInputs}
-                      onChange={(e) => {
-                        if (validateEmail(e.nativeEvent.text) == true) {
-                          this.setState({emailError: false});
-                        } else {
-                          this.setState({emailError: true});
-                        }
+            ) : ( */}
+            <View>
+              <Text style={styles.headingContainer}>Sign In</Text>
+              {/* inputs container */}
+              <View style={styles.inputsContainer}>
+                {/* Email Container */}
+                <Text style={styles.emailTextContainer}>Email</Text>
+                <View
+                  style={[
+                    styles.inputContainer,
+                    this.state.selectedInput == 1
+                      ? {borderColor: colors.green}
+                      : {borderColor: colors.textOpa},
+                  ]}>
+                  <TextInput
+                    onFocus={() => this.setState({selectedInput: 1})}
+                    style={styles.authInputs}
+                    onChange={(e) => {
+                      if (validateEmail(e.nativeEvent.text) == true) {
+                        this.setState({emailError: false});
+                      } else {
+                        this.setState({emailError: true});
+                      }
 
-                        this.setState({username: e.nativeEvent.text});
-                      }}
-                      value={this.state.username}
-                      placeholder={'Enter your email'}
-                    />
-                  </View>
-                  {this.state.emailError && (
+                      this.setState({username: e.nativeEvent.text});
+                    }}
+                    value={this.state.username}
+                    placeholder={'Enter your email'}
+                  />
+                </View>
+                {this.state.emailError && (
+                  <Text style={{fontSize: wp(3), color: colors.error}}>
+                    Enter your valid email address
+                  </Text>
+                )}
+                {/* Password Container */}
+                <Text style={styles.passTextContainer}>Password</Text>
+                <View
+                  style={[
+                    styles.inputContainer,
+                    this.state.selectedInput == 2
+                      ? {borderColor: colors.green}
+                      : {borderColor: colors.textOpa},
+                  ]}>
+                  <TextInput
+                    secureTextEntry={this.state.isEye}
+                    onFocus={() => {
+                      // if (validateEmail(this.state.username)) {
+                      //   this.setState({emailError: false});
+                      // } else {
+                      //   this.setState({emailError: true});
+                      // }
+                      this.setState({selectedInput: 2});
+                    }}
+                    style={styles.authInputs}
+                    value={this.state.password}
+                    onChange={(e) => {
+                      if (!validatePassword(e.nativeEvent.text)) {
+                        this.setState({passError: true});
+                      } else {
+                        this.setState({passError: false});
+                      }
+                      this.setState({password: e.nativeEvent.text});
+                    }}
+                    placeholder={'******'}
+                  />
+                  <TouchableOpacity
+                    onPress={() => this.setState({isEye: !this.state.isEye})}
+                    style={styles.eyeIconContainer}>
+                    {this.state.isEye == true ? (
+                      <Icon
+                        containerStyle={{opacity: 0.5}}
+                        size={wp(5)}
+                        name="eye-with-line"
+                        type="entypo"
+                        color={colors.text}
+                      />
+                    ) : (
+                      <Icon
+                        containerStyle={{opacity: 0.5}}
+                        size={wp(5)}
+                        name="eye"
+                        type="antdesign"
+                        color={colors.text}
+                      />
+                    )}
+                  </TouchableOpacity>
+                </View>
+                {this.state.passError && (
+                  <View>
                     <Text style={{fontSize: wp(3), color: colors.error}}>
-                      Enter your valid email address
+                      Your valid password should be including
                     </Text>
-                  )}
-
-                  {/* Password Container */}
-
-                  <Text style={styles.passTextContainer}>Password</Text>
-                  <View
-                    style={[
-                      styles.inputContainer,
-                      this.state.selectedInput == 2
-                        ? {borderColor: colors.green}
-                        : {borderColor: colors.textOpa},
-                    ]}>
-                    <TextInput
-                      secureTextEntry={this.state.isEye}
-                      onFocus={() => {
-                        // if (validateEmail(this.state.username)) {
-                        //   this.setState({emailError: false});
-                        // } else {
-                        //   this.setState({emailError: true});
-                        // }
-                        this.setState({selectedInput: 2});
-                      }}
-                      style={styles.authInputs}
-                      value={this.state.password}
-                      onChange={(e) => {
-                        if (!validatePassword(e.nativeEvent.text)) {
-                          this.setState({passError: true});
-                        } else {
-                          this.setState({passError: false});
-                        }
-                        this.setState({password: e.nativeEvent.text});
-                      }}
-                      placeholder={'******'}
-                    />
-                    <TouchableOpacity
-                      onPress={() => this.setState({isEye: !this.state.isEye})}
-                      style={styles.eyeIconContainer}>
-                      {this.state.isEye == true ? (
-                        <Icon
-                          containerStyle={{opacity: 0.5}}
-                          size={wp(5)}
-                          name="eye-with-line"
-                          type="entypo"
-                          color={colors.text}
-                        />
-                      ) : (
-                        <Icon
-                          containerStyle={{opacity: 0.5}}
-                          size={wp(5)}
-                          name="eye"
-                          type="antdesign"
-                          color={colors.text}
-                        />
-                      )}
-                    </TouchableOpacity>
-                  </View>
-                  {this.state.passError && (
                     <View>
-                      <Text style={{fontSize: wp(3), color: colors.error}}>
-                        Your valid password should be including
+                      <Text style={styles.passwordError}>
+                        * Password must be a 8 characters long.
                       </Text>
-                      <View>
-                        <Text style={styles.passwordError}>
-                          * Password must be a 8 characters long.
-                        </Text>
-                        <Text style={styles.passwordError}>
-                          * Password must be contain a capital letter.
-                        </Text>
-                        <Text style={styles.passwordError}>
-                          * Password must be contain a number.
-                        </Text>
-                      </View>
+                      <Text style={styles.passwordError}>
+                        * Password must be contain a capital letter.
+                      </Text>
+                      <Text style={styles.passwordError}>
+                        * Password must be contain a number.
+                      </Text>
                     </View>
-                  )}
-                </View>
-                <Text style={styles.forgetPassText}>Forget Password ? </Text>
-                <TouchableOpacity
-                  onPress={() => this.submitSignin()}
-                  style={styles.siginBtnContainer}>
-                  <Text style={styles.signinText}>Sign in </Text>
-                </TouchableOpacity>
-                {/* Or */}
-                <View style={styles.orContainer}>
-                  <View style={styles.line} />
-                  <Text style={styles.orText}>OR</Text>
-                  <View style={styles.line} />
-                </View>
-                {/* Google Signin */}
-                <TouchableOpacity style={styles.siginwithGoogle}>
-                  <View
-                    style={{width: wp(7), height: wp(7), marginRight: wp(3)}}>
-                    <Image source={images.google} style={GlStyles.images} />
                   </View>
-                  <Text style={styles.signinTextGoogle}>
-                    Continue with Google{' '}
-                  </Text>
-                </TouchableOpacity>
-                {/* Don't have a Acctouny */}
-                <Text style={styles.dontHaveAccount}>
-                  Don't have an Account ?
-                </Text>
-                <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('Signup')}
-                  style={styles.createnewaccountContainer}>
-                  <Text style={styles.createNewAccount}>
-                    Create New Account
-                  </Text>
-                </TouchableOpacity>
+                )}
               </View>
-            )}
+              <Text style={styles.forgetPassText}>Forget Password ? </Text>
+              <TouchableOpacity
+                onPress={() => this.submitSignin()}
+                style={styles.siginBtnContainer}>
+                <Text style={styles.signinText}>Sign in </Text>
+              </TouchableOpacity>
+              {/* Or */}
+              <View style={styles.orContainer}>
+                <View style={styles.line} />
+                <Text style={styles.orText}>OR</Text>
+                <View style={styles.line} />
+              </View>
+              {/* Google Signin */}
+              <TouchableOpacity style={styles.siginwithGoogle}>
+                <View style={{width: wp(7), height: wp(7), marginRight: wp(3)}}>
+                  <Image source={images.google} style={GlStyles.images} />
+                </View>
+                <Text style={styles.signinTextGoogle}>
+                  Continue with Google{' '}
+                </Text>
+              </TouchableOpacity>
+              {/* Don't have a Acctouny */}
+              <Text style={styles.dontHaveAccount}>
+                Don't have an Account ?
+              </Text>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Signup')}
+                style={styles.createnewaccountContainer}>
+                <Text style={styles.createNewAccount}>Create New Account</Text>
+              </TouchableOpacity>
+            </View>
+            {/* )} */}
           </View>
         </ScrollView>
 
@@ -292,29 +287,12 @@ class Login extends React.Component<LoginProps, any> {
         <Modal
           isVisible={this.state.errorModal}
           onBackdropPress={() => this.setState({errorModal: false})}>
-          <View
-            style={{
-              backgroundColor: colors.secondary,
-              padding: wp(10),
-              borderRadius: wp(5),
-            }}>
+          <View style={styles.modelContainer}>
             <View>
-              <Text
-                style={{
-                  fontSize: wp(4),
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                  color: colors.error,
-                }}>
+              <Text style={styles.errHeadPop}>
                 Incorrect Email / Password !
               </Text>
-              <Text
-                style={{
-                  marginTop: wp(2),
-                  textAlign: 'center',
-                  fontSize: wp(3),
-                  color: colors.text,
-                }}>
+              <Text style={styles.errEmailPassDesc}>
                 We don't recognize that email and password.
               </Text>
               <Text style={styles.plzTryAgain}>Please try again later.</Text>

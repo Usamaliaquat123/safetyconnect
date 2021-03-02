@@ -17,6 +17,8 @@
     "@react-native-community/google-signin": "^5.0.0",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/netinfo": "^5.9.10",
+    "@react-native-firebase/app": "^10.8.1",
+    "@react-native-firebase/dynamic-links": "^10.8.1",
     "@react-navigation/bottom-tabs": "^5.11.7",
     "@react-navigation/native": "^5.8.10",
     "@react-navigation/stack": "^5.12.8",
@@ -89,6 +91,4 @@
   "jest": {
     "preset": "react-native"
   }
-
 }
-
