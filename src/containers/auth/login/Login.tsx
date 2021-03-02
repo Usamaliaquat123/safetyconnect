@@ -19,6 +19,8 @@ import LottieView from 'lottie-react-native';
 import {Auth} from 'aws-amplify';
 import {colors, images, GlStyles, animation} from '@theme';
 import {default as Model} from 'react-native-modal';
+import Modal from 'react-native-modal';
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -44,6 +46,7 @@ class Login extends React.Component<LoginProps, any> {
       loading: false,
       password: '',
       passError: false,
+      errorModal: true,
       emailError: false,
     };
   }
@@ -283,6 +286,41 @@ class Login extends React.Component<LoginProps, any> {
             )}
           </View>
         </ScrollView>
+
+        {/* validations error */}
+        {/* Modal Container */}
+        <Modal
+          isVisible={this.state.errorModal}
+          onBackdropPress={() => this.setState({errorModal: false})}>
+          <View
+            style={{
+              backgroundColor: colors.secondary,
+              padding: wp(10),
+              borderRadius: wp(5),
+            }}>
+            <View>
+              <Text
+                style={{
+                  fontSize: wp(4),
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  color: colors.error,
+                }}>
+                Incorrect Email / Password !
+              </Text>
+              <Text
+                style={{
+                  marginTop: wp(2),
+                  textAlign: 'center',
+                  fontSize: wp(3),
+                  color: colors.text,
+                }}>
+                We don't recognize that email and password.
+              </Text>
+              <Text style={styles.plzTryAgain}>Please try again later.</Text>
+            </View>
+          </View>
+        </Modal>
       </View>
     );
   }

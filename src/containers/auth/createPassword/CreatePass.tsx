@@ -47,6 +47,12 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       isEye: false,
     };
   }
+
+  componentWillUnmount = () => {
+    this.setState({
+      password: '',
+    });
+  };
   createPass = async () => {
     if (this.state.password !== '') {
       if (validatePassword(this.state.password)) {
@@ -117,7 +123,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                     textAlign: 'center',
                     marginTop: wp(-5),
                   }}>
-                  Connecting...
+                  loading...
                 </Text>
               </View>
             ) : (

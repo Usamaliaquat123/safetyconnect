@@ -154,6 +154,19 @@ const styles = StyleSheet.create({
     // width: wp(30),
     // height: wp(10),
   },
+
+  errEmailPassDesc: {
+    marginTop: wp(2),
+    textAlign: 'center',
+    fontSize: wp(3),
+    color: colors.text,
+  },
+
+  plzTryAgain: {
+    textAlign: 'center',
+    fontSize: wp(3),
+    color: colors.text,
+  },
 });
 
 export default styles;
