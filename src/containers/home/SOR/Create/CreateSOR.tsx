@@ -151,6 +151,23 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     }
   };
 
+  // Search in Esclated To
+  suggestInEsclatedTo = (str: string) => {
+    var srchSug = searchInSuggestions(str, this.state.involved_persons);
+    if (str == '') {
+      this.setState({
+        involvePersonSuggestions: [],
+        involvePersonText: str,
+      });
+    } else {
+      console.log(srchSug);
+      this.setState({
+        involvePersonSuggestions: [...srchSug],
+        involvePersonText: str,
+      });
+    }
+  };
+
   // Search Action / Recommendation Suggestions
   actionRecommendSuggestion = (str: string) => {
     if (str == '') {

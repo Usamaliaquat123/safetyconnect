@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   },
   selectText: {
     opacity: 0.5,
+    fontSize: wp(3),
     // textAlignVertical: 'top',
     fontWeight: 'bold',
     width: wp(80),

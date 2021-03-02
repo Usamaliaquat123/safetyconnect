@@ -259,7 +259,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   )}
                   {/*Industry selectionv   */}
                   <Text style={styles.emailTextContainer}>Industry</Text>
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     onPress={() =>
                       this.setState({selected: 1, selectedIndustry: true})
                     }
@@ -284,7 +284,30 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       type="antdesign"
                       color={colors.text}
                     />
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
+
+                  <View
+                    style={[
+                      styles.inputContainer,
+                      this.state.selected == 2
+                        ? {borderColor: colors.green, padding: wp(0)}
+                        : {
+                            borderColor: colors.textOpa,
+                            padding: wp(0),
+                          },
+                    ]}>
+                    <TextInput
+                      onFocus={() => this.setState({selected: 0})}
+                      underlineColorAndroid="transparent"
+                      style={styles.selectText}
+                      value={this.state.name}
+                      onChange={(e) =>
+                        this.setState({name: e.nativeEvent.text})
+                      }
+                      placeholder={'Industry Type'}
+                    />
+                  </View>
+
                   {/* Industry selection */}
                   {this.state.selectedIndustry == true ? (
                     <View style={styles.involveSuggestCont}>
@@ -310,7 +333,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   ) : null}
                   {/*Deraprtment selectionv   */}
                   <Text style={styles.emailTextContainer}>Department</Text>
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     onPress={() =>
                       this.setState({selected: 2, selectedDesignAndArchi: true})
                     }
@@ -335,7 +358,29 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       type="antdesign"
                       color={colors.text}
                     />
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
+
+                  <View
+                    style={[
+                      styles.inputContainer,
+                      this.state.selected == 3
+                        ? {borderColor: colors.green, padding: wp(0)}
+                        : {
+                            borderColor: colors.textOpa,
+                            padding: wp(0),
+                          },
+                    ]}>
+                    <TextInput
+                      onFocus={() => this.setState({selected: 0})}
+                      underlineColorAndroid="transparent"
+                      style={styles.selectText}
+                      value={this.state.name}
+                      onChange={(e) =>
+                        this.setState({name: e.nativeEvent.text})
+                      }
+                      placeholder={'department'}
+                    />
+                  </View>
                   {/* design and architecture selection */}
                   {this.state.selectedDesignAndArchi == true ? (
                     <View style={styles.involveSuggestCont}>
