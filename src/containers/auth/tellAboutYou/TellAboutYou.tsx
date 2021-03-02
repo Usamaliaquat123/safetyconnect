@@ -165,15 +165,6 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   source={animation.loading}
                   loop={true}
                 />
-                <Text
-                  style={{
-                    fontSize: wp(3.5),
-                    opacity: 0.5,
-                    textAlign: 'center',
-                    marginTop: wp(-5),
-                  }}>
-                  Connecting...
-                </Text>
               </View>
             ) : (
               <View>
@@ -318,7 +309,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   <View
                     style={[
                       styles.inputContainer,
-                      this.state.selected == 3
+                      this.state.selected == 4
                         ? {borderColor: colors.green, padding: wp(0)}
                         : {
                             borderColor: colors.textOpa,
@@ -326,7 +317,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                           },
                     ]}>
                     <TextInput
-                      onFocus={() => this.setState({selected: 3})}
+                      onFocus={() => this.setState({selected: 4})}
                       underlineColorAndroid="transparent"
                       style={styles.selectText}
                       value={this.state.role}

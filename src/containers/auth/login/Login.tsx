@@ -123,7 +123,7 @@ class Login extends React.Component<LoginProps, any> {
                 />
                 <Text
                   style={{
-                    fontSize: wp(3.5),
+                    fontSize: wp(3),
                     opacity: 0.5,
                     textAlign: 'center',
                     marginTop: wp(-5),

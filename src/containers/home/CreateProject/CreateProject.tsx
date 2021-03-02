@@ -149,15 +149,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                   source={animation.loading}
                   loop={true}
                 />
-                <Text
-                  style={{
-                    fontSize: wp(3.5),
-                    opacity: 0.5,
-                    textAlign: 'center',
-                    marginTop: wp(-5),
-                  }}>
-                  Connecting...
-                </Text>
               </View>
             ) : (
               <View>
