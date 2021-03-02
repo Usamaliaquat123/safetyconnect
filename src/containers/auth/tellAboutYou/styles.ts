@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     marginTop: wp(1),
   },
   emailTextContainer: {
-    fontSize: wp(3.8),
+    fontSize: wp(3),
     marginTop: wp(5),
     fontWeight: 'bold',
     opacity: 0.7,

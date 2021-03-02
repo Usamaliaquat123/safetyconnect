@@ -11,19 +11,19 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: wp(7),
-    paddingTop: wp(6),
+    paddingTop: wp(5),
     paddingBottom: wp(5),
     backgroundColor: colors.primary,
   },
   title: {
-    fontSize: wp(5),
+    fontSize: wp(4),
     marginLeft: wp(5),
     color: colors.secondary,
     fontWeight: 'bold',
   },
   underScrore: {
     backgroundColor: colors.green,
-    width: wp(6),
+    width: wp(3),
     marginLeft: wp(5),
     padding: wp(0.5),
     borderRadius: 10,
@@ -34,11 +34,11 @@ const styles = StyleSheet.create({
     height: hp(100),
     padding: wp(5),
     backgroundColor: colors.secondary,
-    borderTopLeftRadius: wp(7),
-    borderTopRightRadius: wp(7),
+    borderTopLeftRadius: wp(3),
+    borderTopRightRadius: wp(3),
   },
   headingContainer: {
-    fontSize: wp(5),
+    fontSize: wp(4),
     color: colors.primary,
     fontWeight: 'bold',
   },
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     marginTop: wp(7),
   },
   emailTextContainer: {
-    fontSize: wp(3.5),
+    fontSize: wp(3),
     fontWeight: 'bold',
   },
   inputContainer: {
@@ -61,11 +61,11 @@ const styles = StyleSheet.create({
   },
   passTextContainer: {
     marginTop: wp(4),
-    fontSize: wp(3.5),
+    fontSize: wp(3),
     fontWeight: 'bold',
   },
   authInputs: {
-    fontSize: wp(4),
+    fontSize: wp(3),
     width: wp(80),
   },
   forgetPassText: {

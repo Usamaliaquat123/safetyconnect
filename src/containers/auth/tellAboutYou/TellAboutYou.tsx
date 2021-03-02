@@ -259,32 +259,6 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   )}
                   {/*Industry selectionv   */}
                   <Text style={styles.emailTextContainer}>Industry</Text>
-                  {/* <TouchableOpacity
-                    onPress={() =>
-                      this.setState({selected: 1, selectedIndustry: true})
-                    }
-                    style={[
-                      styles.inputContainer,
-                      this.state.selected == 1
-                        ? {borderColor: colors.green}
-                        : {borderColor: colors.textOpa},
-                    ]}>
-                    <Text style={styles.selectText}>
-                      {this.state.IndustrySelectionText}
-                    </Text>
-                    <Icon
-                      onPress={() => this.props.navigation.goBack()}
-                      size={wp(5)}
-                      containerStyle={{
-                        position: 'absolute',
-                        right: wp(3),
-                        opacity: 0.5,
-                      }}
-                      name="down"
-                      type="antdesign"
-                      color={colors.text}
-                    />
-                  </TouchableOpacity> */}
 
                   <View
                     style={[
@@ -297,68 +271,21 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                           },
                     ]}>
                     <TextInput
-                      onFocus={() => this.setState({selected: 0})}
+                      onFocus={() => this.setState({selected: 2})}
                       underlineColorAndroid="transparent"
                       style={styles.selectText}
-                      value={this.state.name}
+                      value={this.state.IndustrySelectionText}
                       onChange={(e) =>
-                        this.setState({name: e.nativeEvent.text})
+                        this.setState({
+                          IndustrySelectionText: e.nativeEvent.text,
+                        })
                       }
                       placeholder={'Industry Type'}
                     />
                   </View>
 
-                  {/* Industry selection */}
-                  {this.state.selectedIndustry == true ? (
-                    <View style={styles.involveSuggestCont}>
-                      {this.state.IndustrySelection.map((d: any, i: number) => (
-                        <TouchableOpacity
-                          key={i}
-                          onPress={() =>
-                            this.setState({
-                              IndustrySelectionText: d.text,
-                              selectedIndustry: false,
-                            })
-                          }
-                          style={[
-                            styles.involvePsuggCont,
-                            this.state.IndustrySelection.length == i + 1
-                              ? {borderBottomWidth: wp(0)}
-                              : null,
-                          ]}>
-                          <Text style={styles.involvePSt}>{d.text}</Text>
-                        </TouchableOpacity>
-                      ))}
-                    </View>
-                  ) : null}
                   {/*Deraprtment selectionv   */}
                   <Text style={styles.emailTextContainer}>Department</Text>
-                  {/* <TouchableOpacity
-                    onPress={() =>
-                      this.setState({selected: 2, selectedDesignAndArchi: true})
-                    }
-                    style={[
-                      styles.inputContainer,
-                      this.state.selected == 2
-                        ? {borderColor: colors.green}
-                        : {borderColor: colors.textOpa},
-                    ]}>
-                    <Text style={styles.selectText}>
-                      {this.state.DesignAndArchitectureText}
-                    </Text>
-                    <Icon
-                      onPress={() => this.props.navigation.goBack()}
-                      size={wp(5)}
-                      containerStyle={{
-                        position: 'absolute',
-                        right: wp(3),
-                        opacity: 0.5,
-                      }}
-                      name="down"
-                      type="antdesign"
-                      color={colors.text}
-                    />
-                  </TouchableOpacity> */}
 
                   <View
                     style={[
@@ -371,41 +298,18 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                           },
                     ]}>
                     <TextInput
-                      onFocus={() => this.setState({selected: 0})}
+                      onFocus={() => this.setState({selected: 3})}
                       underlineColorAndroid="transparent"
                       style={styles.selectText}
-                      value={this.state.name}
+                      value={this.state.DesignAndArchitectureText}
                       onChange={(e) =>
-                        this.setState({name: e.nativeEvent.text})
+                        this.setState({
+                          DesignAndArchitectureText: e.nativeEvent.text,
+                        })
                       }
                       placeholder={'department'}
                     />
                   </View>
-                  {/* design and architecture selection */}
-                  {this.state.selectedDesignAndArchi == true ? (
-                    <View style={styles.involveSuggestCont}>
-                      {this.state.DesignAndArchitecture.map(
-                        (d: any, i: number) => (
-                          <TouchableOpacity
-                            key={i}
-                            onPress={() =>
-                              this.setState({
-                                DesignAndArchitectureText: d.text,
-                                selectedDesignAndArchi: false,
-                              })
-                            }
-                            style={[
-                              styles.involvePsuggCont,
-                              this.state.IndustrySelection.length == i + 1
-                                ? {borderBottomWidth: wp(0)}
-                                : null,
-                            ]}>
-                            <Text style={styles.involvePSt}>{d.text}</Text>
-                          </TouchableOpacity>
-                        ),
-                      )}
-                    </View>
-                  ) : null}
 
                   {/*job role selectionv   */}
                   <Text style={styles.emailTextContainer}>
