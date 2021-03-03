@@ -1,5 +1,6 @@
 apply plugin: "com.android.application"
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+apply plugin: 'com.google.gms.google-services'
 
 import com.android.build.OutputFile
 
@@ -188,6 +189,9 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
+  implementation platform('com.google.firebase:firebase-bom:26.6.0')
+  implementation 'com.google.firebase:firebase-analytics'
+
     implementation "com.facebook.react:react-native:+"  // From node_modules
 //  implementation project(':rn-fetch-blob')                
 implementation project(':lottie-react-native')

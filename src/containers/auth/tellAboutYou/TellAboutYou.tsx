@@ -69,20 +69,27 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
     if (str == 'upload') {
       imagePicker()
         .then((res: any) => {
-          console.log(res);
-          this.setState({photoModal: false, uploadedImage: res.uri});
+          if (res.didCancel == true) {
+            this.setState({photoModal: false, uploadedImage: ''});
+          } else {
+            this.setState({photoModal: false, uploadedImage: res.uri});
+          }
         })
         .catch((err) => {
-          this.setState({photoModal: false});
+          this.setState({photoModal: false, uploadedImage: ''});
         });
     } else {
       cameraCapture()
         .then((res: any) => {
-          console.log(res);
-          this.setState({photoModal: false, uploadedImage: res.uri});
+          if (res.didCancel == true) {
+            this.setState({photoModal: false, uploadedImage: ''});
+          } else {
+            this.setState({photoModal: false, uploadedImage: res.uri});
+          }
+          // this.setState({photoModal: false, uploadedImage: res.uri});
         })
         .catch((err) => {
-          this.setState({photoModal: false});
+          this.setState({photoModal: false, uploadedImage: ''});
         });
     }
   };
@@ -139,6 +146,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
   };
 
   render() {
+    console.log(this.state.uploadedImage);
     return (
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -178,7 +186,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                 <Text style={styles.headingContainer}>Tell about yourself</Text>
                 {/* Photo Seclector  */}
                 <TouchableOpacity style={styles.imageUploadContainer}>
-                  {this.state.uploadedImage == '' ? (
+                  {this.state.uploadedImage === '' ? (
                     <TouchableOpacity
                       onPress={() => this.setState({photoModal: true})}
                       style={styles.imagenotUpoad}>
