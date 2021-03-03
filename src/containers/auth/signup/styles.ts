@@ -134,6 +134,29 @@ const styles = StyleSheet.create({
   createnewaccountContainer: {
     marginTop: wp(3),
   },
+  errEmailPassDesc: {
+    marginTop: wp(2),
+    textAlign: 'center',
+    fontSize: wp(3),
+    color: colors.text,
+  },
+
+  errHeadPop: {
+    fontSize: wp(4),
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: colors.error,
+  },
+  plzTryAgain: {
+    textAlign: 'center',
+    fontSize: wp(3),
+    color: colors.text,
+  },
+  modelContainer: {
+    backgroundColor: colors.secondary,
+    padding: wp(10),
+    borderRadius: wp(5),
+  },
 });
 
 export default styles;

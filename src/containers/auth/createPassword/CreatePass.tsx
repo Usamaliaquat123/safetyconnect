@@ -112,7 +112,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
           {/* content */}
           <View style={styles.content}>
             {/* {this.state.loading == true ? ( */}
-            <View
+            {/* <View
               style={{
                 alignSelf: 'center',
                 marginTop: wp(40),
@@ -132,7 +132,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                 }}>
                 loading...
               </Text>
-            </View>
+            </View> */}
             {/* ) : ( */}
             <View>
               <Text style={styles.headingContainer}>
