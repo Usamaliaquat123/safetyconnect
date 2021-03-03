@@ -162,21 +162,9 @@ class Signup extends React.Component<SignupProps, any> {
           onBackdropPress={() =>
             this.setState({errorModal: false, loading: false})
           }>
-          {this.state.loading == true ? (
+          {this.state.loading == true && (
             <View>
               <ActivityIndicator color={colors.primary} size={'large'} />
-            </View>
-          ) : (
-            <View style={styles.modelContainer}>
-              <View>
-                <Text style={styles.errHeadPop}>
-                  Incorrect Email / Password !
-                </Text>
-                <Text style={styles.errEmailPassDesc}>
-                  We don't recognize that email and password.
-                </Text>
-                <Text style={styles.plzTryAgain}>Please try again later.</Text>
-              </View>
             </View>
           )}
         </Modal>
