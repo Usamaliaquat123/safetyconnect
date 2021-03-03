@@ -147,11 +147,11 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                     style={styles.authInputs}
                     value={this.state.password}
                     onChange={(e) => {
-                      if (validatePassword(this.state.password)) {
-                        this.setState({error: false});
-                      } else {
-                        this.setState({error: true});
-                      }
+                      // if (validatePassword(this.state.password)) {
+                      //   this.setState({error: false});
+                      // } else {
+                      //   this.setState({error: true});
+                      // }
                       this.setState({password: e.nativeEvent.text});
                     }}
                     placeholder={'******'}
@@ -178,41 +178,29 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                     )}
                   </TouchableOpacity>
                 </View>
+                {this.state.error == true && (
+                  <Text
+                    style={{
+                      paddingTop: wp(2),
+                      color: colors.error,
+                      fontSize: wp(3),
+                    }}>
+                    Enter your valid password..
+                  </Text>
+                )}
               </View>
               {/* {this.state.error && ( */}
               <View>
-                <Text
-                  style={[
-                    styles.dontHaveAccount,
-                    this.state.passError == '8char' && {color: colors.error},
-                  ]}>
+                <Text style={[styles.dontHaveAccount]}>
                   * Password must be a 8 characters long.
                 </Text>
-                <Text
-                  style={[
-                    styles.dontHaveAccount,
-                    this.state.passError == 'upperCase' && {
-                      color: colors.error,
-                    },
-                  ]}>
+                <Text style={[styles.dontHaveAccount]}>
                   * Password must be at least one uppercase character.
                 </Text>
-                <Text
-                  style={[
-                    styles.dontHaveAccount,
-                    this.state.passError == 'lowerCase' && {
-                      color: colors.error,
-                    },
-                  ]}>
+                <Text style={[styles.dontHaveAccount]}>
                   * Password must be at least one lowercase character
                 </Text>
-                <Text
-                  style={[
-                    styles.dontHaveAccount,
-                    this.state.passError == 'specialChar' && {
-                      color: colors.error,
-                    },
-                  ]}>
+                <Text style={[styles.dontHaveAccount]}>
                   * Password must be include one special character
                 </Text>
               </View>
