@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  ActivityIndicator,
   TextInput,
 } from 'react-native';
 import {Avatar, Icon} from 'react-native-elements';
@@ -18,7 +19,6 @@ import {RouteProp} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import {Auth} from 'aws-amplify';
 import {colors, images, GlStyles, animation} from '@theme';
-import {default as Model} from 'react-native-modal';
 import Modal from 'react-native-modal';
 
 import {
@@ -73,7 +73,7 @@ class Login extends React.Component<LoginProps, any> {
           /*
            * @Default email : asohial.bscs16seecs@seecs.edu.pk || password: Weird.password02
            */
-          // this.setState({loading: true});
+          this.setState({loading: true, errorModal: true});
           const user = await Auth.signIn(
             this.state.username,
             this.state.password,
@@ -81,17 +81,16 @@ class Login extends React.Component<LoginProps, any> {
               profile: 'NotConfirmed',
             },
           );
-          console.log(user);
 
           if (user.userConfirmed) {
             const sendEmail = await Auth.forgotPassword(this.state.username);
-            // this.setState({loading: false});
+            this.setState({loading: false});
             if (sendEmail) this.props.navigation.navigate('Home');
           } else {
-            // this.setState({loading: false});
+            this.setState({loading: false});
           }
         } catch (err) {
-          this.setState({errorModal: true});
+          this.setState({errorModal: true, loading: false});
           console.log(err);
         }
       } else {
@@ -286,18 +285,26 @@ class Login extends React.Component<LoginProps, any> {
         {/* Modal Container */}
         <Modal
           isVisible={this.state.errorModal}
-          onBackdropPress={() => this.setState({errorModal: false})}>
-          <View style={styles.modelContainer}>
+          onBackdropPress={() =>
+            this.setState({errorModal: false, loading: false})
+          }>
+          {this.state.loading == true ? (
             <View>
-              <Text style={styles.errHeadPop}>
-                Incorrect Email / Password !
-              </Text>
-              <Text style={styles.errEmailPassDesc}>
-                We don't recognize that email and password.
-              </Text>
-              <Text style={styles.plzTryAgain}>Please try again later.</Text>
+              <ActivityIndicator color={colors.primary} size={'large'} />
             </View>
-          </View>
+          ) : (
+            <View style={styles.modelContainer}>
+              <View>
+                <Text style={styles.errHeadPop}>
+                  Incorrect Email / Password !
+                </Text>
+                <Text style={styles.errEmailPassDesc}>
+                  We don't recognize that email and password.
+                </Text>
+                <Text style={styles.plzTryAgain}>Please try again later.</Text>
+              </View>
+            </View>
+          )}
         </Modal>
       </View>
     );

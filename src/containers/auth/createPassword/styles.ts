@@ -117,8 +117,9 @@ const styles = StyleSheet.create({
     marginRight: wp(3),
   },
   dontHaveAccount: {
-    fontSize: wp(3.5),
-    color: colors.error,
+    fontSize: wp(3),
+    opacity: 0.5,
+    color: colors.text,
     // opacity: 0.5,
     marginTop: wp(1.5),
     fontWeight: 'bold',
@@ -136,6 +137,30 @@ const styles = StyleSheet.create({
   eyeIconContainer: {
     position: 'absolute',
     right: wp(3),
+  },
+
+  errEmailPassDesc: {
+    marginTop: wp(2),
+    textAlign: 'center',
+    fontSize: wp(3),
+    color: colors.text,
+  },
+
+  errHeadPop: {
+    fontSize: wp(4),
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: colors.error,
+  },
+  plzTryAgain: {
+    textAlign: 'center',
+    fontSize: wp(3),
+    color: colors.text,
+  },
+  modelContainer: {
+    backgroundColor: colors.secondary,
+    padding: wp(10),
+    borderRadius: wp(5),
   },
 });
 export default styles;
