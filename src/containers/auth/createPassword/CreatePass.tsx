@@ -61,9 +61,12 @@ class CreatePass extends React.Component<CreatePassProps, any> {
     if (this.state.password !== '') {
       if (validatePassword(this.state.password)) {
         this.setState({loading: true, errorModal: true});
+        // const sii =  await Auth.signUp()
+
         const signup = await Auth.forgotPassword(
           this.props.route.params.username,
         );
+        console.log(signup);
         if (signup) {
           this.setState({loading: false, errorModal: false});
           try {
