@@ -14,10 +14,21 @@ export interface user {
   department?: string;
   industry?: string;
 }
-
+/*
+ *   @Observations
+ *
+ */
 export interface observationsSug {
   obs1?: string;
 }
+/*
+ *   @Countries
+ *
+ */
+export interface country {
+  name: string;
+}
+
 /*
  * @Organizations
  */

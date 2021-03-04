@@ -1,11 +1,20 @@
 import apisauce from 'apisauce';
-import {project, user, orgnaization, sor, observationsSug} from '@typings';
+import {
+  project,
+  user,
+  orgnaization,
+  sor,
+  observationsSug,
+  country,
+} from '@typings';
 import {string} from 'prop-types';
 // our "constructor"
 const createApi = (
   baseURL: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:12222/',
   repBaseAi: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:5002/',
   baseAi: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:5001/',
+  // External Countries api
+  countries: string = 'https://restcountries.eu/rest/v2/',
 ) => {
   const baseapi = apisauce.create({
     baseURL,
@@ -23,9 +32,17 @@ const createApi = (
     timeout: 10000,
   });
 
+  const contries = apisauce.create({
+    baseURL: countries,
+    timeout: 10000,
+  });
   /*
    *  @apis
    */
+
+  // Exteral apis
+
+  const contriesAll = (data: country) => contries.get(`/name/${data.name}`);
 
   const suggestiosns = (data: any) => aiBaseAi.post('act', data);
   const repeatedsorsugg = (keyword: string) =>
@@ -83,6 +100,7 @@ const createApi = (
     Postproject,
     updateOrganization,
     getOrganization,
+    contriesAll,
     organization,
     setUserInfo,
     createUser,

@@ -1,4 +1,11 @@
-import {user, orgnaization, project, sor, observationsSug} from './api';
+import {
+  user,
+  orgnaization,
+  project,
+  sor,
+  observationsSug,
+  country,
+} from './api';
 import {involved_persons} from './createSor.d';
 // View sor data interface
 export interface Isor {
@@ -70,4 +77,12 @@ export interface IUser {
   avatar?: string | number | renderFunction;
 }
 
-export {user, orgnaization, project, sor, involved_persons, observationsSug};
+export {
+  user,
+  orgnaization,
+  project,
+  sor,
+  involved_persons,
+  observationsSug,
+  country,
+};
