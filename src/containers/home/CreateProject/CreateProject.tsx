@@ -66,7 +66,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       .createApi()
       .contriesAll({name: contries})
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
       })
       .catch((err) => console.log(err));
   };

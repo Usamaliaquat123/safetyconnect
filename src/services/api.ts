@@ -42,7 +42,7 @@ const createApi = (
 
   // Exteral apis
 
-  const contriesAll = (data: country) => contries.get(`/name/${data.name}`);
+  const contriesAll = (data: country) => contries.get(`name/${data.name}`);
 
   const suggestiosns = (data: any) => aiBaseAi.post('act', data);
   const repeatedsorsugg = (keyword: string) =>
