@@ -108,7 +108,6 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
             organization: [],
           })
           .then((res) => {
-            console.log(res);
             if (res.status == 200) {
               api
                 .createApi()
@@ -136,9 +135,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
               this.setState({loading: true});
             }
           })
-          .catch((err) => {
-            // console.log(err);
-          });
+          .catch((err) => {});
       } else {
         this.setState({nameError: true});
       }
@@ -150,7 +147,6 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
   };
 
   render() {
-    console.log(this.state.uploadedImage);
     return (
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>

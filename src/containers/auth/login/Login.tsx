@@ -63,7 +63,6 @@ class Login extends React.Component<LoginProps, any> {
       validateEmail(this.state.username) == true
     ) {
       this.setState({emailError: false});
-      // console.log;
       if (
         this.state.password != '' &&
         validatePassword(this.state.password) == true
@@ -91,7 +90,6 @@ class Login extends React.Component<LoginProps, any> {
           }
         } catch (err) {
           this.setState({errorModal: true, loading: false});
-          console.log(err);
         }
       } else {
         this.setState({passError: true});

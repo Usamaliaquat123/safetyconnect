@@ -60,7 +60,6 @@ class CreatePass extends React.Component<CreatePassProps, any> {
   createPass = async () => {
     if (this.state.password !== '') {
       if (validatePassword(this.state.password)) {
-        console.log('sdsdsd');
         this.setState({loading: true, errorModal: true});
         const signup = await Auth.forgotPassword(
           this.props.route.params.username,
@@ -72,17 +71,11 @@ class CreatePass extends React.Component<CreatePassProps, any> {
             this.props.navigation.navigate('tellAboutYou', {
               username: this.props.route.params.username,
             });
-
-            console.log(signup);
-          } catch (error) {
-            console.log(error);
-          }
+          } catch (error) {}
         } else {
           this.setState({loading: false});
         }
       } else {
-        console.log('Error avalidations');
-
         this.setState({error: true});
       }
     } else {
