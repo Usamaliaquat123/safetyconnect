@@ -196,11 +196,6 @@ class Login extends React.Component<LoginProps, any> {
                     style={styles.authInputs}
                     value={this.state.password}
                     onChange={(e) => {
-                      if (!validatePassword(e.nativeEvent.text)) {
-                        this.setState({passError: true});
-                      } else {
-                        this.setState({passError: false});
-                      }
                       this.setState({password: e.nativeEvent.text});
                     }}
                     placeholder={'******'}

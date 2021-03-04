@@ -6,6 +6,7 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
   Image,
 } from 'react-native';
 import {
@@ -116,7 +117,10 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   role: this.state.role,
                   department: this.state.DesignAndArchitectureText,
                   industry: this.state.IndustrySelectionText,
-                  img_url: this.state.photo,
+                  img_url:
+                    this.state.uploadedImage === ''
+                      ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                      : this.state.uploadedImage,
                 })
                 .then((res) => {
                   AsyncStorage.setItem(
@@ -168,7 +172,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
           </View>
           {/* content */}
           <View style={styles.content}>
-            {this.state.loading == true ? (
+            {/* {this.state.loading == true ? (
               <View
                 style={{
                   alignSelf: 'center',
@@ -181,181 +185,191 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   loop={true}
                 />
               </View>
-            ) : (
-              <View>
-                <Text style={styles.headingContainer}>Tell about yourself</Text>
-                {/* Photo Seclector  */}
-                <TouchableOpacity style={styles.imageUploadContainer}>
-                  {this.state.uploadedImage === '' ? (
-                    <TouchableOpacity
-                      onPress={() => this.setState({photoModal: true})}
-                      style={styles.imagenotUpoad}>
-                      <View style={styles.imagenotuploadContainer}>
-                        <Icon
-                          size={wp(13)}
-                          containerStyle={{opacity: 0.5}}
-                          name="camera"
-                          type="evilicon"
-                          color={colors.text}
-                        />
-                        <Text style={styles.uploadPicText}>Upload</Text>
-                        <Text style={styles.uploadPicText}>Picture</Text>
-                      </View>
-                    </TouchableOpacity>
-                  ) : (
-                    <TouchableOpacity
-                      onPress={() => this.setState({photoModal: true})}
-                      style={styles.avatarPencil}>
-                      <View
-                        style={{position: 'absolute', zIndex: 1, right: wp(5)}}>
-                        <View
-                          style={{
-                            backgroundColor: colors.green,
-                            borderRadius: wp(10),
-                            padding: wp(2),
-                            zIndex: 1,
-                          }}>
-                          <Icon
-                            size={wp(4)}
-                            containerStyle={{opacity: 0.5}}
-                            name="pencil"
-                            type="font-awesome"
-                            color={colors.secondary}
-                          />
-                        </View>
-                      </View>
-
-                      <Avatar
-                        size={'xlarge'}
-                        rounded
-                        source={{
-                          uri: this.state.uploadedImage,
-                        }}
+            ) : ( */}
+            <View>
+              <Text style={styles.headingContainer}>Tell about yourself</Text>
+              {/* Photo Seclector  */}
+              <TouchableOpacity style={styles.imageUploadContainer}>
+                {this.state.uploadedImage === '' ? (
+                  <TouchableOpacity
+                    onPress={() => this.setState({photoModal: true})}
+                    style={styles.imagenotUpoad}>
+                    <View style={styles.imagenotuploadContainer}>
+                      <Icon
+                        size={wp(13)}
+                        containerStyle={{opacity: 0.5}}
+                        name="camera"
+                        type="evilicon"
+                        color={colors.text}
                       />
-                    </TouchableOpacity>
-                  )}
-                </TouchableOpacity>
-                <View style={styles.inputsContainer}>
-                  {/* <Text style={styles.emailTextContainer}>Name÷÷</Text> */}
-                  <View
-                    style={[
-                      styles.inputContainer,
-                      this.state.selected == 0
-                        ? {borderColor: colors.green, padding: wp(0)}
-                        : {
-                            borderColor: colors.textOpa,
-                            padding: wp(0),
-                          },
-                    ]}>
-                    <TextInput
-                      onFocus={() => this.setState({selected: 0})}
-                      underlineColorAndroid="transparent"
-                      style={styles.selectText}
-                      value={this.state.name}
-                      onChange={(e) =>
-                        this.setState({name: e.nativeEvent.text})
-                      }
-                      placeholder={'First Name'}
-                    />
-                  </View>
-                  {this.state.nameError && (
-                    <Text style={{color: colors.error, fontSize: wp(3)}}>
-                      * Enter your name
-                    </Text>
-                  )}
-                  {/*Industry selectionv   */}
-                  <Text style={styles.emailTextContainer}>Industry</Text>
+                      <Text style={styles.uploadPicText}>Upload</Text>
+                      <Text style={styles.uploadPicText}>Picture</Text>
+                    </View>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() => this.setState({photoModal: true})}
+                    style={styles.avatarPencil}>
+                    <View
+                      style={{position: 'absolute', zIndex: 1, right: wp(5)}}>
+                      <View
+                        style={{
+                          backgroundColor: colors.green,
+                          borderRadius: wp(10),
+                          padding: wp(2),
+                          zIndex: 1,
+                        }}>
+                        <Icon
+                          size={wp(4)}
+                          containerStyle={{opacity: 0.5}}
+                          name="pencil"
+                          type="font-awesome"
+                          color={colors.secondary}
+                        />
+                      </View>
+                    </View>
 
-                  <View
-                    style={[
-                      styles.inputContainer,
-                      this.state.selected == 2
-                        ? {borderColor: colors.green, padding: wp(0)}
-                        : {
-                            borderColor: colors.textOpa,
-                            padding: wp(0),
-                          },
-                    ]}>
-                    <TextInput
-                      onFocus={() => this.setState({selected: 2})}
-                      underlineColorAndroid="transparent"
-                      style={styles.selectText}
-                      value={this.state.IndustrySelectionText}
-                      onChange={(e) =>
-                        this.setState({
-                          IndustrySelectionText: e.nativeEvent.text,
-                        })
-                      }
-                      placeholder={'Industry Type'}
+                    <Avatar
+                      size={'xlarge'}
+                      rounded
+                      source={{
+                        uri: this.state.uploadedImage,
+                      }}
                     />
-                  </View>
-
-                  {/*Deraprtment selectionv   */}
-                  <Text style={styles.emailTextContainer}>Department</Text>
-
-                  <View
-                    style={[
-                      styles.inputContainer,
-                      this.state.selected == 3
-                        ? {borderColor: colors.green, padding: wp(0)}
-                        : {
-                            borderColor: colors.textOpa,
-                            padding: wp(0),
-                          },
-                    ]}>
-                    <TextInput
-                      onFocus={() => this.setState({selected: 3})}
-                      underlineColorAndroid="transparent"
-                      style={styles.selectText}
-                      value={this.state.DesignAndArchitectureText}
-                      onChange={(e) =>
-                        this.setState({
-                          DesignAndArchitectureText: e.nativeEvent.text,
-                        })
-                      }
-                      placeholder={'department'}
-                    />
-                  </View>
-
-                  {/*job role selectionv   */}
-                  <Text style={styles.emailTextContainer}>
-                    What is your role in the organization ?
-                  </Text>
-                  <View
-                    style={[
-                      styles.inputContainer,
-                      this.state.selected == 4
-                        ? {borderColor: colors.green, padding: wp(0)}
-                        : {
-                            borderColor: colors.textOpa,
-                            padding: wp(0),
-                          },
-                    ]}>
-                    <TextInput
-                      onFocus={() => this.setState({selected: 4})}
-                      underlineColorAndroid="transparent"
-                      style={styles.selectText}
-                      value={this.state.role}
-                      onChange={(e) =>
-                        this.setState({role: e.nativeEvent.text})
-                      }
-                      placeholder={'Design and Architecture'}
-                    />
-                  </View>
-                  {this.state.roleError && (
-                    <Text style={{color: colors.error, fontSize: wp(3)}}>
-                      * Enter you role in the organization
-                    </Text>
-                  )}
+                  </TouchableOpacity>
+                )}
+              </TouchableOpacity>
+              <View style={styles.inputsContainer}>
+                {/* <Text style={styles.emailTextContainer}>Name÷÷</Text> */}
+                <View
+                  style={[
+                    styles.inputContainer,
+                    this.state.selected == 0
+                      ? {borderColor: colors.green, padding: wp(0)}
+                      : {
+                          borderColor: colors.textOpa,
+                          padding: wp(0),
+                        },
+                  ]}>
+                  <TextInput
+                    onFocus={() => this.setState({selected: 0})}
+                    underlineColorAndroid="transparent"
+                    style={styles.selectText}
+                    value={this.state.name}
+                    onChange={(e) => this.setState({name: e.nativeEvent.text})}
+                    placeholder={'First Name'}
+                  />
                 </View>
-                <TouchableOpacity
-                  onPress={() => this.updateProfile()}
-                  style={styles.siginBtnContainer}>
-                  <Text style={styles.signinText}>Continue</Text>
-                </TouchableOpacity>
+                {this.state.nameError && (
+                  <Text style={{color: colors.error, fontSize: wp(3)}}>
+                    * Enter your name
+                  </Text>
+                )}
+                {/*Industry selectionv   */}
+                <Text style={styles.emailTextContainer}>Industry</Text>
+
+                <View
+                  style={[
+                    styles.inputContainer,
+                    this.state.selected == 2
+                      ? {borderColor: colors.green, padding: wp(0)}
+                      : {
+                          borderColor: colors.textOpa,
+                          padding: wp(0),
+                        },
+                  ]}>
+                  <TextInput
+                    onFocus={() => this.setState({selected: 2})}
+                    underlineColorAndroid="transparent"
+                    style={styles.selectText}
+                    value={this.state.IndustrySelectionText}
+                    onChange={(e) =>
+                      this.setState({
+                        IndustrySelectionText: e.nativeEvent.text,
+                      })
+                    }
+                    placeholder={'Industry Type'}
+                  />
+                </View>
+
+                {/*Deraprtment selectionv   */}
+                <Text style={styles.emailTextContainer}>Department</Text>
+
+                <View
+                  style={[
+                    styles.inputContainer,
+                    this.state.selected == 3
+                      ? {borderColor: colors.green, padding: wp(0)}
+                      : {
+                          borderColor: colors.textOpa,
+                          padding: wp(0),
+                        },
+                  ]}>
+                  <TextInput
+                    onFocus={() => this.setState({selected: 3})}
+                    underlineColorAndroid="transparent"
+                    style={styles.selectText}
+                    value={this.state.DesignAndArchitectureText}
+                    onChange={(e) =>
+                      this.setState({
+                        DesignAndArchitectureText: e.nativeEvent.text,
+                      })
+                    }
+                    placeholder={'department'}
+                  />
+                </View>
+
+                {/*job role selectionv   */}
+                <Text style={styles.emailTextContainer}>
+                  What is your role in the organization ?
+                </Text>
+                <View
+                  style={[
+                    styles.inputContainer,
+                    this.state.selected == 4
+                      ? {borderColor: colors.green, padding: wp(0)}
+                      : {
+                          borderColor: colors.textOpa,
+                          padding: wp(0),
+                        },
+                  ]}>
+                  <TextInput
+                    onFocus={() => this.setState({selected: 4})}
+                    underlineColorAndroid="transparent"
+                    style={styles.selectText}
+                    value={this.state.role}
+                    onChange={(e) => this.setState({role: e.nativeEvent.text})}
+                    placeholder={'Design and Architecture'}
+                  />
+                </View>
+                {this.state.roleError && (
+                  <Text style={{color: colors.error, fontSize: wp(3)}}>
+                    * Enter you role in the organization
+                  </Text>
+                )}
+              </View>
+              <TouchableOpacity
+                onPress={() => this.updateProfile()}
+                style={styles.siginBtnContainer}>
+                <Text style={styles.signinText}>Continue</Text>
+              </TouchableOpacity>
+            </View>
+            {/* )} */}
+          </View>
+
+          {/* validations error */}
+          {/* Modal Container */}
+          <Modal
+            isVisible={this.state.errorModal}
+            onBackdropPress={() =>
+              this.setState({errorModal: false, loading: false})
+            }>
+            {this.state.loading == true && (
+              <View>
+                <ActivityIndicator color={colors.primary} size={'large'} />
               </View>
             )}
-          </View>
+          </Modal>
           {/* Modal Container */}
           <Modal
             isVisible={this.state.photoModal}

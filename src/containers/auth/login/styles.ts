@@ -137,9 +137,9 @@ const styles = StyleSheet.create({
   },
   passwordError: {
     fontSize: wp(3),
-    color: colors.error,
+    color: colors.text,
     opacity: 0.7,
-    marginTop: wp(2),
+    marginTop: wp(1),
   },
   createNewAccount: {
     color: colors.primary,

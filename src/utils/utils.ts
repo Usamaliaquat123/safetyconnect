@@ -50,6 +50,8 @@ export const validateEmail = (email: string): boolean => {
   return re.test(String(email).toLowerCase());
 };
 export const validatePassword = (password: string): boolean => {
+  // /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!.@#$%^&*])(?=.{8,})$/
+
   const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
   return re.test(String(password).toLowerCase());
 };
