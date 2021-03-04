@@ -12,6 +12,7 @@ import {configSentry, AmlifyConfigure} from '@config';
 import {NetworkProvider} from 'react-native-offline';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createApi} from '@service';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 
 export interface AppProps {}
 
@@ -23,7 +24,13 @@ export default class App extends React.Component<AppProps, any> {
       authenticated: false,
     };
   }
+
+  handleDynamicLink = (link: any) => {
+    // Handle dynamic link inside your own application
+    console.log(link);
+  };
   componentDidMount = () => {
+    dynamicLinks().onLink(this.handleDynamicLink);
     configSentry().catch(
       (err) => new Error(`Error when configure sentry ${err}`),
     );

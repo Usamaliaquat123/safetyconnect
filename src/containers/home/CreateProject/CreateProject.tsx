@@ -67,6 +67,9 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       .contriesAll({name: contries})
       .then((res) => {
         console.log(res.data);
+        this.setState({
+          locations: res.data,
+        });
       })
       .catch((err) => console.log(err));
   };
@@ -354,9 +357,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         value={this.state.assignLocationsText}
                         onChange={(e) => {
                           this.filterContries(e.nativeEvent.text);
-                          this.setState({
-                            assignLocationsText: e.nativeEvent.text,
-                          });
                         }}
                       />
                     ) : null}
@@ -365,6 +365,8 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                   {/* Assign Locations suggestions */}
                   {this.state.assignLocationsText != '' ? (
                     <SuggestionsAvatar
+                      type={'location'}
+                      locations={this.state.locations}
                       onSelect={(d: string) => {
                         this.state.assignLocations.push(d);
                         this.setState({

@@ -20,6 +20,7 @@ import LottieView from 'lottie-react-native';
 import {Auth} from 'aws-amplify';
 import {colors, images, GlStyles, animation} from '@theme';
 import Modal from 'react-native-modal';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 
 import {
   widthPercentageToDP as wp,
@@ -48,15 +49,24 @@ class Login extends React.Component<LoginProps, any> {
       passError: false,
       errorModal: false,
       emailError: false,
+      dynamicLink: '',
     };
   }
-
+  handleDynamicLink = (link: any) => {
+    // Handle dynamic link inside your own application
+    this.setState({dynamicLink: JSON.stringify(link)});
+  };
   componentWillUnmount = () => {
     this.setState({
       username: '',
       password: '',
     });
   };
+
+  componentDidMount() {
+    dynamicLinks().onLink(this.handleDynamicLink);
+  }
+
   submitSignin = async () => {
     if (
       this.state.username != '' &&
@@ -105,6 +115,7 @@ class Login extends React.Component<LoginProps, any> {
           <View style={styles.header}>
             <View style={styles.headertle}>
               <View>
+                <Text>{this.state.dynamicLink}</Text>
                 <Text style={styles.title}>Sign In</Text>
                 <View style={styles.underScrore} />
               </View>
