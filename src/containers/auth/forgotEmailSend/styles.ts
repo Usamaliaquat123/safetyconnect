@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     color: colors.secondary,
   },
   headingContainer: {
-    fontSize: wp(4),
+    fontSize: wp(4.5),
     textAlign: 'center',
     color: colors.primary,
     fontWeight: 'bold',
