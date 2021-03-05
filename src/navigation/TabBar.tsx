@@ -55,7 +55,7 @@ export const BottomTabNavigator = () => {
           initialRouteName={'home'}>
           <Tab.Screen
             name="home"
-            component={() => MainStackNavigator('NothingFound')}
+            component={() => MainStackNavigator('NoInternet')}
             options={{}}
           />
           <Tab.Screen

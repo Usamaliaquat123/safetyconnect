@@ -11,9 +11,12 @@ import {
 import {connect} from 'react-redux';
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {AuthNavigatorProp} from '@nav';
+
+// import {StackNavigationProps} from '@react-navigation/stack';
+import {StackNavigatorProps} from '@nav';
 import styles from './styles';
 import {colors, images} from '@theme';
+
 import {Icon} from 'react-native-elements';
 import {
   widthPercentageToDP as wp,
@@ -27,10 +30,10 @@ export interface NoInternetProps {
 }
 
 type NoInternetNavigationProp = StackNavigationProp<
-  AuthNavigatorProp,
-  'Forgot'
+  StackNavigatorProps,
+  'NoInternet'
 >;
-type NoInternetRouteProp = RouteProp<AuthNavigatorProp, ''>;
+type NoInternetRouteProp = RouteProp<StackNavigatorProps, 'NoInternet'>;
 
 class NoInternet extends React.Component<NoInternetProps, any> {
   constructor(props: any) {
@@ -63,11 +66,13 @@ class NoInternet extends React.Component<NoInternetProps, any> {
           {/* content */}
           <View style={styles.content}>
             <View>
-              <Text style={styles.headingContainer}>Nothing Found</Text>
+              <Text style={styles.headingContainer}>
+                No Internet Connection
+              </Text>
 
               <View style={{alignItems: 'center', marginTop: wp(10)}}>
                 <Image
-                  source={images.nothingFound}
+                  source={images.noInternet}
                   width={wp(80)}
                   height={wp(80)}
                 />
@@ -75,15 +80,15 @@ class NoInternet extends React.Component<NoInternetProps, any> {
               {/* Don't have a Acctouny */}
               <View style={styles.dtHaveContainer}>
                 <Text style={styles.dontHaveAccount}>
-                  Sorry, there is nothing found in what you
+                  Sorry, there is no internet connection
                 </Text>
-                <Text style={styles.dontHaveAccount}>are looking for...</Text>
+                <Text style={styles.dontHaveAccount}>found your device.</Text>
               </View>
 
               <TouchableOpacity
                 onPress={() => this.props.navigation.goBack()}
                 style={styles.siginBtnContainer}>
-                <Text style={styles.signinText}>Back to Home</Text>
+                <Text style={styles.signinText}>Try Again</Text>
               </TouchableOpacity>
             </View>
           </View>
