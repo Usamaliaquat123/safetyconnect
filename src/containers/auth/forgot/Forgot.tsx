@@ -14,6 +14,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthNavigatorProp} from '@nav';
 import styles from './styles';
 import {colors, images} from '@theme';
+import {Icon} from 'react-native-elements';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -45,6 +46,14 @@ class Forgot extends React.Component<ForgotProps, any> {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
+              <Icon
+                containerStyle={{marginLeft: wp(2)}}
+                onPress={() => this.props.navigation.goBack()}
+                size={25}
+                name="arrow-back-outline"
+                type="ionicon"
+                color={colors.secondary}
+              />
               <View>
                 <Text style={styles.title}>Forgot Password</Text>
                 <View style={styles.underScrore} />
@@ -95,11 +104,13 @@ class Forgot extends React.Component<ForgotProps, any> {
                   on your given email address.{' '}
                 </Text>
               </View>
-              <Image
-                source={images.forgotPass}
-                width={wp(80)}
-                height={wp(80)}
-              />
+              <View style={{alignItems: 'center', marginTop: wp(5)}}>
+                <Image
+                  source={images.forgotPass}
+                  width={wp(80)}
+                  height={wp(80)}
+                />
+              </View>
             </View>
           </View>
         </ScrollView>
