@@ -48,6 +48,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       password: '',
       error: false,
       isEye: false,
+      contentPopup: '',
       errorModal: false,
     };
   }
@@ -86,10 +87,39 @@ class CreatePass extends React.Component<CreatePassProps, any> {
               this.props.navigation.navigate('ForgotEmailSend');
             }
           }
-        } catch (e) {
+        } catch (e: any) {
           if (e.message.includes('google')) {
             // Redirect to => Alredy met screen
+            // this.props.navigation.navigate('');
           }
+
+          Auth.signIn(this.props.route.params.username, 'asshole')
+            .then()
+            .catch(async (err) => {
+              console.log(err);
+              if (err.message.includes('Incorrect')) {
+                // Toast Account Already exist
+              }
+            });
+
+          if (e.message.includes('NotConfirmed')) {
+            const sendEmail = await Auth.forgotPassword(
+              this.props.route.params.username,
+            ).catch((error) => {
+              if (error.message.includes('limit')) {
+                console.log('here');
+                // toast((t) => (
+                //   <Toast
+                //     type="error"
+                //     message="Attempt limit reached. Try again later."
+                //     toastRef={t}
+                //   />
+                // ));
+              }
+            });
+            if (sendEmail) this.props.navigation.navigate('ForgotEmailSend');
+          }
+          // });
         }
 
         // const signup = await Auth.forgotPassword(
@@ -250,6 +280,12 @@ class CreatePass extends React.Component<CreatePassProps, any> {
           {this.state.loading == true && (
             <View>
               <ActivityIndicator color={colors.primary} size={'large'} />
+            </View>
+          )}
+          {this.state.contentPopup !== '' && (
+            <View
+              style={{backgroundColor: colors.secondary, borderRadius: wp(4)}}>
+              <Text>{this.state.contentPopup}</Text>
             </View>
           )}
         </Modal>

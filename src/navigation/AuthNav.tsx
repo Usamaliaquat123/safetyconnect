@@ -51,7 +51,7 @@ export const AuthStackNavigator = () => {
   return (
     // <SafeAreaProvider>
     <NavigationContainer>
-      <Auth.Navigator initialRouteName={'Verify'}>
+      <Auth.Navigator initialRouteName={'Signup'}>
         <Auth.Screen
           name="Verify"
           component={Verify}
