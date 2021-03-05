@@ -22,6 +22,7 @@ import {
   Verify,
   Menu,
   Home,
+  NoInternet,
   CreateOrg,
 } from '@containers';
 
@@ -44,6 +45,7 @@ export type StackNavigatorProps = {
   CreateOrganization: undefined;
   Menu: undefined;
   NothingFound: undefined;
+  NoInternet: undefined;
 };
 export type route =
   | 'Home'
@@ -63,11 +65,19 @@ export type route =
   | 'CreateOrganization'
   | 'ViewAll'
   | 'Menu'
+  | 'NoInternet'
   | undefined;
 export const MainStackNavigator = (route?: route) => {
   return (
     <SafeAreaProvider>
       <Stack.Navigator initialRouteName={route}>
+        <Stack.Screen
+          name="NoInternet"
+          component={NoInternet}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="NothingFound"
           component={NothingFound}

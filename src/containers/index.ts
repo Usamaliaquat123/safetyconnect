@@ -18,12 +18,14 @@ import CreateProject from './home/CreateProject/CreateProject';
 import Menu from './home/Menu/Menu';
 import MyTasks from './home/MyTasks/MyTasks';
 import NothingFound from './home/NothingFound/NothingFound';
+import NoInternet from './home/NoInternet/NoInternet';
 import ViewAllSOr from './home/SOR/ViewAll/ViewAllSOr';
 export {
   Chat,
   Login,
   TellAboutYou,
   NothingFound,
+  NoInternet,
   CreateSOR,
   Signup,
   MyTasks,
