@@ -9,6 +9,7 @@ import {
   CreateOrg,
   Forgot,
   CreateProject,
+  ForgotEmailSend,
 } from '@containers';
 
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -27,6 +28,7 @@ export type AuthNavigatorProp = {
   Forgot: undefined;
   CreateProj: {organization: string};
   Home: undefined;
+  ForgotEmailSend: undefined;
 };
 
 const Auth = createStackNavigator<AuthNavigatorProp>();
@@ -39,13 +41,21 @@ export type route =
   | 'CreateProj'
   | 'Home'
   | 'Forgot'
+  | 'ForgotEmailSend'
   | undefined;
 export const AuthStackNavigator = () => {
   // console.log(route);
   return (
     // <SafeAreaProvider>
     <NavigationContainer>
-      <Auth.Navigator initialRouteName={'Forgot'}>
+      <Auth.Navigator initialRouteName={'ForgotEmailSend'}>
+        <Auth.Screen
+          name="ForgotEmailSend"
+          component={ForgotEmailSend}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Auth.Screen
           name="Forgot"
           component={Forgot}

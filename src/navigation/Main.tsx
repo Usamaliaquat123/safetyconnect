@@ -45,6 +45,7 @@ export type StackNavigatorProps = {
   CreateOrganization: undefined;
   Menu: undefined;
   NothingFound: undefined;
+  ForgotEmailSend: undefined;
   NoInternet: undefined;
 };
 export type route =

@@ -20,11 +20,14 @@ import MyTasks from './home/MyTasks/MyTasks';
 import NothingFound from './home/NothingFound/NothingFound';
 import NoInternet from './home/NoInternet/NoInternet';
 import ViewAllSOr from './home/SOR/ViewAll/ViewAllSOr';
+import ForgotEmailSend from './auth/forgotEmailSend/ForgotEmailSend';
+
 export {
   Chat,
   Login,
   TellAboutYou,
   NothingFound,
+  ForgotEmailSend,
   NoInternet,
   CreateSOR,
   Signup,

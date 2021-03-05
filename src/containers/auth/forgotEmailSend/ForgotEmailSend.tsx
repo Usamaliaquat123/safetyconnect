@@ -19,20 +19,20 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-export interface ForgotProps {
-  navigation: forgotPassNavigationProp;
-  route: forgotRouteProp;
+export interface ForgotEmailSendProps {
+  navigation: forgotEmailSendNavigationProp;
+  route: forgotEmailSendRouteProp;
   reduxActions: any;
   reduxState: any;
 }
 
-type forgotPassNavigationProp = StackNavigationProp<
+type forgotEmailSendNavigationProp = StackNavigationProp<
   AuthNavigatorProp,
   'Forgot'
 >;
-type forgotRouteProp = RouteProp<AuthNavigatorProp, 'Forgot'>;
+type forgotEmailSendRouteProp = RouteProp<AuthNavigatorProp, 'Forgot'>;
 
-class Forgot extends React.Component<ForgotProps, any> {
+class ForgotEmailSend extends React.Component<ForgotEmailSendProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {};
@@ -64,53 +64,29 @@ class Forgot extends React.Component<ForgotProps, any> {
           <View style={styles.content}>
             <View>
               <Text style={styles.headingContainer}>Forgot Password</Text>
-              {/* inputs container */}
-              <View style={styles.inputsContainer}>
-                {/* Email Container */}
-                <Text style={styles.emailTextContainer}>Email</Text>
-                <View style={[styles.inputContainer]}>
-                  <TextInput
-                    style={styles.authInputs}
-                    value={this.state.username}
-                    onChange={(e) => {
-                      // if (validateEmail(e.nativeEvent.text)) {
-                      //   this.setState({error: false});
-                      // } else {
-                      //   this.setState({error: true});
-                      // }
-                      this.setState({username: e.nativeEvent.text});
-                    }}
-                    placeholder={'Enter your email'}
-                  />
-                </View>
-                {this.state.error && (
-                  <Text style={{fontSize: wp(3), color: colors.error}}>
-                    Type your valid email address
-                  </Text>
-                )}
-              </View>
-              <TouchableOpacity
-                onPress={() => console.log('forgot pass')}
-                style={styles.siginBtnContainer}>
-                <Text style={styles.signinText}>Continue</Text>
-              </TouchableOpacity>
 
-              {/* Don't have a Acctouny */}
-              <View style={styles.dtHaveContainer}>
-                <Text style={styles.dontHaveAccount}>
-                  Confirmation Link will be sent to you{' '}
-                </Text>
-                <Text style={styles.dontHaveAccount}>
-                  on your given email address.{' '}
-                </Text>
-              </View>
-              <View style={{alignItems: 'center', marginTop: wp(5)}}>
+              <View style={{alignItems: 'center', marginTop: wp(10)}}>
                 <Image
                   source={images.forgotPass}
                   width={wp(80)}
                   height={wp(80)}
                 />
               </View>
+              {/* Don't have a Acctouny */}
+              <View style={styles.dtHaveContainer}>
+                <Text style={styles.dontHaveAccount}>
+                  Email sent to you. Please check. If you haven't
+                </Text>
+                <Text style={styles.dontHaveAccount}>
+                  received email. Click here to resend the link.
+                </Text>
+              </View>
+
+              <TouchableOpacity
+                onPress={() => this.props.navigation.goBack()}
+                style={styles.siginBtnContainer}>
+                <Text style={styles.signinText}>Resend Confirmation Link</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
@@ -127,4 +103,4 @@ const mapDispatchToProps = (dispatch: any) => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Forgot);
+export default connect(mapStateToProps, mapDispatchToProps)(ForgotEmailSend);
