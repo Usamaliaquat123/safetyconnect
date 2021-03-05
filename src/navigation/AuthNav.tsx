@@ -48,7 +48,7 @@ export const AuthStackNavigator = () => {
   return (
     // <SafeAreaProvider>
     <NavigationContainer>
-      <Auth.Navigator initialRouteName={'Forgot'}>
+      <Auth.Navigator initialRouteName={'ForgotEmailSend'}>
         <Auth.Screen
           name="ForgotEmailSend"
           component={ForgotEmailSend}

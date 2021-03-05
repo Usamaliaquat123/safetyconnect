@@ -14,11 +14,14 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthNavigatorProp} from '@nav';
 import styles from './styles';
 import {colors, images} from '@theme';
+import {Auth} from 'aws-amplify';
+
 import {Icon} from 'react-native-elements';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {validateEmail} from '@utils';
 export interface ForgotProps {
   navigation: forgotPassNavigationProp;
   route: forgotRouteProp;
@@ -35,10 +38,32 @@ type forgotRouteProp = RouteProp<AuthNavigatorProp, 'Forgot'>;
 class Forgot extends React.Component<ForgotProps, any> {
   constructor(props: any) {
     super(props);
-    this.state = {};
+    this.state = {
+      email: '',
+      laoding: false,
+    };
   }
 
   componentDidMount() {}
+
+  forgotPass = async (email: string) => {
+    if (validateEmail(email)) {
+      this.setState({loading: true});
+
+      const forgot = await Auth.forgotPassword(email).catch((err) => {
+        if (err.message.includes('limit')) {
+          // SHOW ATTEMPT LIMIT REACHED
+        }
+      });
+      if (forgot) {
+        this.setState({loading: false, error: false});
+
+        this.props.navigation.navigate('ForgotEmailSend');
+      }
+    } else {
+      this.setState({loading: false, error: true});
+    }
+  };
 
   render() {
     return (
@@ -71,14 +96,9 @@ class Forgot extends React.Component<ForgotProps, any> {
                 <View style={[styles.inputContainer]}>
                   <TextInput
                     style={styles.authInputs}
-                    value={this.state.username}
+                    value={this.state.email}
                     onChange={(e) => {
-                      // if (validateEmail(e.nativeEvent.text)) {
-                      //   this.setState({error: false});
-                      // } else {
-                      //   this.setState({error: true});
-                      // }
-                      this.setState({username: e.nativeEvent.text});
+                      this.setState({email: e.nativeEvent.text});
                     }}
                     placeholder={'Enter your email'}
                   />
@@ -90,7 +110,7 @@ class Forgot extends React.Component<ForgotProps, any> {
                 )}
               </View>
               <TouchableOpacity
-                onPress={() => console.log('forgot pass')}
+                onPress={() => this.forgotPass(this.state.email)}
                 style={styles.siginBtnContainer}>
                 <Text style={styles.signinText}>Continue</Text>
               </TouchableOpacity>
@@ -104,10 +124,12 @@ class Forgot extends React.Component<ForgotProps, any> {
                   on your given email address.{' '}
                 </Text>
               </View>
-              <View style={{alignItems: 'center', marginTop: wp(5)}}>
+              <View style={{alignSelf: 'center', marginTop: wp(5)}}>
                 <Image
+                  // style={{width: wp(30)}}
                   source={images.forgotPassEmail}
-                  width={wp(40)}
+                  style={{width: wp(40), height: wp(40)}}
+                  width={wp(57)}
                   height={wp(40)}
                 />
               </View>
