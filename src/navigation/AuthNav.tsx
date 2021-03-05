@@ -7,8 +7,10 @@ import {
   Signup,
   CreatePass,
   CreateOrg,
+  Forgot,
   CreateProject,
 } from '@containers';
+
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -22,6 +24,7 @@ export type AuthNavigatorProp = {
   tellAboutYou: {username: string};
   CreatePass: {username: string};
   CreateOrg: undefined;
+  Forgot: undefined;
   CreateProj: {organization: string};
   Home: undefined;
 };
@@ -35,13 +38,21 @@ export type route =
   | 'CreateOrg'
   | 'CreateProj'
   | 'Home'
+  | 'Forgot'
   | undefined;
 export const AuthStackNavigator = () => {
   // console.log(route);
   return (
     // <SafeAreaProvider>
     <NavigationContainer>
-      <Auth.Navigator initialRouteName={'Login'}>
+      <Auth.Navigator initialRouteName={'Forgot'}>
+        <Auth.Screen
+          name="Forgot"
+          component={Forgot}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Auth.Screen
           name="Signup"
           component={Signup}

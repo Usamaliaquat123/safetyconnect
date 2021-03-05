@@ -62,22 +62,50 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       if (validatePassword(this.state.password)) {
         this.setState({loading: true, errorModal: true});
         // const sii =  await Auth.signUp()
+        try {
+          const signup: any = Auth.signUp({
+            username: this.props.route.params.username,
+            password: this.state.password,
+            attributes: {
+              profile: 'NotConfirmed',
+            },
+          });
 
-        const signup = await Auth.forgotPassword(
-          this.props.route.params.username,
-        );
-        console.log(signup);
-        if (signup) {
-          this.setState({loading: false, errorModal: false});
-          try {
-            Auth.signIn(this.props.route.params.username, this.state.password);
-            this.props.navigation.navigate('tellAboutYou', {
-              username: this.props.route.params.username,
+          if (signup.userConfirmed) {
+            // check if limit is not reached else send email for forgot password
+            const sendEmail = await Auth.forgotPassword(
+              this.props.route.params.username,
+            ).catch((error) => {
+              if (error.message.includes('limit')) {
+                console.log('here');
+                // SHOW ATTEMPT LIMIT REACHED
+              }
             });
-          } catch (error) {}
-        } else {
-          this.setState({loading: false});
+            if (sendEmail) {
+              // Redirect => TO Forgot Password
+            }
+          }
+        } catch (e) {
+          if (e.message.includes('google')) {
+            // Redirect to => Alredy met screen
+          }
         }
+
+        // const signup = await Auth.forgotPassword(
+        //   this.props.route.params.username,
+        // );
+        // console.log(signup);
+        // if (signup) {
+        //   this.setState({loading: false, errorModal: false});
+        //   try {
+        //     Auth.signIn(this.props.route.params.username, this.state.password);
+        //     this.props.navigation.navigate('tellAboutYou', {
+        //       username: this.props.route.params.username,
+        //     });
+        //   } catch (error) {}
+        // } else {
+        //   this.setState({loading: false});
+        // }
       } else {
         this.setState({error: true});
       }
@@ -238,3 +266,76 @@ const mapDispatchToProps = (dispatch: any) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreatePass);
+
+// const handleSubmit = async (event) => {
+//   event.preventDefault();
+//   if (!shouldSubmit) {
+//     toast((t) => <Toast type="error" message="Invalid Email" toastRef={t} />);
+//     return;
+//   }
+//   // try to signup user with email and default password
+//   try {
+//     const signUpResponse = await Auth.signUp({
+//       username: email,
+//       password,
+//       attributes: {
+//         profile: 'NotConfirmed',
+//       },
+//     });
+//     console.log(signUpResponse);
+//     // check if user profile is confirmed or not.
+//     if (signUpResponse.userConfirmed) {
+//       // check if limit is not reached else send email for forgot password
+//       const sendEmail = await Auth.forgotPassword(email).catch((error) => {
+//         if (error.message.includes('limit')) {
+//           console.log('here');
+//           toast((t) => (
+//             <Toast
+//               type="error"
+//               message="Attempt limit reached. Try again later."
+//               toastRef={t}
+//             />
+//           ));
+//         }
+//       });
+//       if (sendEmail) navigate('/verify-email', { state: { email } });
+//     }
+//     // navigate('/verify-email', navigate('/verify-email', {state: { email }}));
+//   } catch (e) {
+//     console.log(e.message);
+//     if (e.message.includes('google')) {
+//       navigate('/already-met');
+//     }
+//     Auth.signIn(email, process.env.REACT_APP_DEFAULT_PASSWORD)
+//       .then()
+//       .catch(async (err) => {
+//         console.log(err);
+//         if (err.message.includes('Incorrect')) {
+//           toast((t) => (
+//             <Toast
+//               type="error"
+//               message="Account already exists."
+//               toastRef={t}
+//             />
+//           ));
+//         }
+//         if (err.message.includes('NotConfirmed')) {
+//           const sendEmail = await Auth.forgotPassword(email).catch(
+//             (error) => {
+//               if (error.message.includes('limit')) {
+//                 console.log('here');
+//                 toast((t) => (
+//                   <Toast
+//                     type="error"
+//                     message="Attempt limit reached. Try again later."
+//                     toastRef={t}
+//                   />
+//                 ));
+//               }
+//             }
+//           );
+//           if (sendEmail) navigate('/verify-email', { state: { email } });
+//         }
+//       });
+//   }
+// };

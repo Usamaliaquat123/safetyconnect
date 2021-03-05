@@ -25,6 +25,8 @@ import {animation} from '@theme';
 import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
+import {Auth} from 'aws-amplify';
+
 type SignupNavigationProp = StackNavigationProp<AuthNavigatorProp, 'Login'>;
 type SignupRouteProp = RouteProp<AuthNavigatorProp, 'Login'>;
 
@@ -133,7 +135,10 @@ class Signup extends React.Component<SignupProps, any> {
               </View>
               {/* Google Signin */}
               <TouchableOpacity
-                // onPress={() => }
+                onPress={() => {
+                  // Auth.federatedSignIn({provider: }).then(res => {
+                  // })
+                }}
                 style={styles.siginwithGoogle}>
                 <View style={{width: wp(5), height: wp(5), marginRight: wp(3)}}>
                   <Image source={images.google} style={GlStyles.images} />
