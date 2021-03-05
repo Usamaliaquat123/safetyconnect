@@ -20,7 +20,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {AuthNavigatorProp} from '@nav';
 import {validatePassword} from '@utils';
 import {colors, images, GlStyles} from '@theme';
-import {RouteProp} from '@react-navigation/native';
+import {RouteProp, ThemeProvider} from '@react-navigation/native';
 import styles from './styles';
 import LottieView from 'lottie-react-native';
 import {createApi as api} from '@service';
@@ -83,6 +83,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
             });
             if (sendEmail) {
               // Redirect => TO Forgot Password
+              this.props.navigation.navigate('ForgotEmailSend');
             }
           }
         } catch (e) {
