@@ -5,6 +5,7 @@ import {
   Login,
   TellAboutYou,
   Signup,
+  Verify,
   CreatePass,
   CreateOrg,
   Forgot,
@@ -29,6 +30,7 @@ export type AuthNavigatorProp = {
   CreateProj: {organization: string};
   Home: undefined;
   ForgotEmailSend: undefined;
+  Verify: undefined;
 };
 
 const Auth = createStackNavigator<AuthNavigatorProp>();
@@ -40,6 +42,7 @@ export type route =
   | 'CreateOrg'
   | 'CreateProj'
   | 'Home'
+  | 'Verify'
   | 'Forgot'
   | 'ForgotEmailSend'
   | undefined;
@@ -48,7 +51,14 @@ export const AuthStackNavigator = () => {
   return (
     // <SafeAreaProvider>
     <NavigationContainer>
-      <Auth.Navigator initialRouteName={'ForgotEmailSend'}>
+      <Auth.Navigator initialRouteName={'Verify'}>
+        <Auth.Screen
+          name="Verify"
+          component={Verify}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Auth.Screen
           name="ForgotEmailSend"
           component={ForgotEmailSend}

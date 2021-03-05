@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {RouteProp} from '@react-navigation/native';
@@ -15,6 +16,7 @@ import {AuthNavigatorProp} from '@nav';
 import styles from './styles';
 import {colors, images} from '@theme';
 import {Auth} from 'aws-amplify';
+import Modal from 'react-native-modal';
 
 import {Icon} from 'react-native-elements';
 import {
@@ -41,11 +43,12 @@ class Forgot extends React.Component<ForgotProps, any> {
     this.state = {
       email: '',
       laoding: false,
+      error: true,
     };
   }
 
   componentDidMount() {}
-
+  // Forget pass function
   forgotPass = async (email: string) => {
     if (validateEmail(email)) {
       this.setState({loading: true});
@@ -136,6 +139,30 @@ class Forgot extends React.Component<ForgotProps, any> {
             </View>
           </View>
         </ScrollView>
+
+        <Modal
+          isVisible={this.state.errorModal}
+          onBackdropPress={() =>
+            this.setState({errorModal: false, loading: false})
+          }>
+          {this.state.loading == true ? (
+            <View>
+              <ActivityIndicator color={colors.primary} size={'large'} />
+            </View>
+          ) : (
+            <View style={styles.modelContainer}>
+              <View>
+                <Text style={styles.errHeadPop}>
+                  Incorrect Email / Password !
+                </Text>
+                <Text style={styles.errEmailPassDesc}>
+                  We don't recognize that email and password.
+                </Text>
+                <Text style={styles.plzTryAgain}>Please try again later.</Text>
+              </View>
+            </View>
+          )}
+        </Modal>
       </View>
     );
   }

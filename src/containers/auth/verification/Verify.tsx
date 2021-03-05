@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {StackNavigatorProps} from '@nav';
+import {AuthNavigatorProp, StackNavigatorProps} from '@nav';
 import {
   View,
   ScrollView,
@@ -17,8 +17,8 @@ import {
 import {connect} from 'react-redux';
 import {RouteProp} from '@react-navigation/native';
 import styles from './styles';
-type VerifyNavigationProp = StackNavigationProp<StackNavigatorProps, 'Login'>;
-type VerifyRouteProp = RouteProp<StackNavigatorProps, 'Login'>;
+type VerifyNavigationProp = StackNavigationProp<AuthNavigatorProp>;
+type VerifyRouteProp = RouteProp<AuthNavigatorProp, 'Login'>;
 
 export interface VerifyProps {
   navigation: VerifyNavigationProp;
