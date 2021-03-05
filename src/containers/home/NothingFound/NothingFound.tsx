@@ -65,9 +65,9 @@ class NothingFound extends React.Component<NothingFoundProps, any> {
             <View>
               <Text style={styles.headingContainer}>Nothing Found</Text>
 
-              <View style={{alignItems: 'center', marginTop: wp(5)}}>
+              <View style={{alignItems: 'center', marginTop: wp(10)}}>
                 <Image
-                  source={images.forgotPass}
+                  source={images.nothingFound}
                   width={wp(80)}
                   height={wp(80)}
                 />
@@ -75,17 +75,15 @@ class NothingFound extends React.Component<NothingFoundProps, any> {
               {/* Don't have a Acctouny */}
               <View style={styles.dtHaveContainer}>
                 <Text style={styles.dontHaveAccount}>
-                  Confirmation Link will be sent to you{' '}
+                  Sorry, there is nothing found in what you
                 </Text>
-                <Text style={styles.dontHaveAccount}>
-                  on your given email address.{' '}
-                </Text>
+                <Text style={styles.dontHaveAccount}>are looking for...</Text>
               </View>
 
               <TouchableOpacity
-                onPress={() => this.signup()}
+                onPress={() => this.props.navigation.goBack()}
                 style={styles.siginBtnContainer}>
-                <Text style={styles.signinText}>Continue</Text>
+                <Text style={styles.signinText}>Back to Home</Text>
               </TouchableOpacity>
             </View>
           </View>

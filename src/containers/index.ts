@@ -17,7 +17,7 @@ import CreateOrg from './home/CreateOrganization/CreateOrg';
 import CreateProject from './home/CreateProject/CreateProject';
 import Menu from './home/Menu/Menu';
 import MyTasks from './home/MyTasks/MyTasks';
-import NothingFound from './NothingFound/NothingFound';
+import NothingFound from './home/NothingFound/NothingFound';
 import ViewAllSOr from './home/SOR/ViewAll/ViewAllSOr';
 export {
   Chat,

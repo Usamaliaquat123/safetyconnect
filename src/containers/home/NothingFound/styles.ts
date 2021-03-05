@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
   },
   headingContainer: {
     fontSize: wp(4),
+    textAlign: 'center',
     color: colors.primary,
     fontWeight: 'bold',
   },

@@ -16,6 +16,7 @@ import {
   CreateProject,
   Messaging,
   TellAboutYou,
+  NothingFound,
   CreatePass,
   Chat,
   Verify,
@@ -42,6 +43,7 @@ export type StackNavigatorProps = {
   createProject: undefined;
   CreateOrganization: undefined;
   Menu: undefined;
+  NothingFound: undefined;
 };
 export type route =
   | 'Home'
@@ -57,6 +59,7 @@ export type route =
   | 'MyTasks'
   | 'tellAboutYou'
   | 'createProject'
+  | 'NothingFound'
   | 'CreateOrganization'
   | 'ViewAll'
   | 'Menu'
@@ -65,6 +68,13 @@ export const MainStackNavigator = (route?: route) => {
   return (
     <SafeAreaProvider>
       <Stack.Navigator initialRouteName={route}>
+        <Stack.Screen
+          name="NothingFound"
+          component={NothingFound}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="ViewAll"
           component={ViewAll}
