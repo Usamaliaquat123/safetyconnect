@@ -12,6 +12,8 @@ export const images = {
   forgotPass: require('./images/verify.png'),
   noInternet: require('./images/noInternet.png'),
   nothingFound: require('./images/nothingFound.png'),
+  forgotPassEmail: require('./images/forgotPass.png'),
+
   // excel: require('./images/excel.png'),
   // powerpoint: require('./images/powerpoint.png'),
   organizationLogo: require('./images/organizationLogo.png'),

@@ -67,9 +67,10 @@ class ForgotEmailSend extends React.Component<ForgotEmailSendProps, any> {
 
               <View style={{alignItems: 'center', marginTop: wp(10)}}>
                 <Image
-                  source={images.forgotPass}
-                  width={wp(80)}
-                  height={wp(80)}
+                  style={{width: wp(40), height: wp(40)}}
+                  source={images.forgotPassEmail}
+                  width={wp(57)}
+                  height={wp(40)}
                 />
               </View>
               {/* Don't have a Acctouny */}

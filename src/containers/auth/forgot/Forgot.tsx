@@ -106,9 +106,9 @@ class Forgot extends React.Component<ForgotProps, any> {
               </View>
               <View style={{alignItems: 'center', marginTop: wp(5)}}>
                 <Image
-                  source={images.forgotPass}
-                  width={wp(80)}
-                  height={wp(80)}
+                  source={images.forgotPassEmail}
+                  width={wp(40)}
+                  height={wp(40)}
                 />
               </View>
             </View>
