@@ -58,92 +58,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       password: '',
     });
   };
-  createPass = async () => {
-    if (this.state.password !== '') {
-      if (validatePassword(this.state.password)) {
-        this.setState({loading: true, errorModal: true});
-        // const sii =  await Auth.signUp()
-        try {
-          const signup: any = Auth.signUp({
-            username: this.props.route.params.username,
-            password: this.state.password,
-            attributes: {
-              profile: 'NotConfirmed',
-            },
-          });
 
-          if (signup.userConfirmed) {
-            // check if limit is not reached else send email for forgot password
-            const sendEmail = await Auth.forgotPassword(
-              this.props.route.params.username,
-            ).catch((error) => {
-              if (error.message.includes('limit')) {
-                console.log('here');
-                // SHOW ATTEMPT LIMIT REACHED
-              }
-            });
-            if (sendEmail) {
-              // Redirect => TO Forgot Password
-              this.props.navigation.navigate('ForgotEmailSend');
-            }
-          }
-        } catch (e: any) {
-          if (e.message.includes('google')) {
-            // Redirect to => Alredy met screen
-            // this.props.navigation.navigate('');
-          }
-
-          Auth.signIn(this.props.route.params.username, 'asshole')
-            .then()
-            .catch(async (err) => {
-              console.log(err);
-              if (err.message.includes('Incorrect')) {
-                // Toast Account Already exist
-              }
-            });
-
-          if (e.message.includes('NotConfirmed')) {
-            const sendEmail = await Auth.forgotPassword(
-              this.props.route.params.username,
-            ).catch((error) => {
-              if (error.message.includes('limit')) {
-                console.log('here');
-                // toast((t) => (
-                //   <Toast
-                //     type="error"
-                //     message="Attempt limit reached. Try again later."
-                //     toastRef={t}
-                //   />
-                // ));
-              }
-            });
-            if (sendEmail) this.props.navigation.navigate('ForgotEmailSend');
-          }
-          // });
-        }
-
-        // const signup = await Auth.forgotPassword(
-        //   this.props.route.params.username,
-        // );
-        // console.log(signup);
-        // if (signup) {
-        //   this.setState({loading: false, errorModal: false});
-        //   try {
-        //     Auth.signIn(this.props.route.params.username, this.state.password);
-        //     this.props.navigation.navigate('tellAboutYou', {
-        //       username: this.props.route.params.username,
-        //     });
-        //   } catch (error) {}
-        // } else {
-        //   this.setState({loading: false});
-        // }
-      } else {
-        this.setState({error: true});
-      }
-    } else {
-      this.setState({error: true});
-    }
-  };
   render() {
     return (
       <View style={styles.container}>
@@ -262,7 +177,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
               {/* )} */}
 
               <TouchableOpacity
-                onPress={() => this.createPass()}
+                onPress={() => console.log('test')}
                 style={styles.siginBtnContainer}>
                 <Text style={styles.signinText}>Continue</Text>
               </TouchableOpacity>

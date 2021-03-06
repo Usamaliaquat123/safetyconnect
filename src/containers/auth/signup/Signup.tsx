@@ -23,6 +23,7 @@ import {validateEmail} from '@utils';
 import {RouteProp} from '@react-navigation/native';
 import {animation} from '@theme';
 import styles from './styles';
+import {validatePassword} from '@utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
 import {Auth} from 'aws-amplify';
@@ -43,6 +44,7 @@ class Signup extends React.Component<SignupProps, any> {
     this.state = {
       username: '',
       loading: false,
+      conentLoading: '',
       error: false,
       errorModal: false,
     };
@@ -53,9 +55,77 @@ class Signup extends React.Component<SignupProps, any> {
       if (validateEmail(this.state.username)) {
         this.setState({loading: true, errorModal: true});
         // setTimeout(() => {
-        await AsyncStorage.setItem('email', this.state.username).then((res) => {
-          this.setState({loading: false, error: false, errorModal: false});
-        });
+
+        // Auth.forgotPassword('')
+        // await AsyncStorage.setItem('email', this.state.username).then((res) => {
+        //   this.setState({loading: false, error: false, errorModal: false});
+        // });
+
+        // createPass = async () => {
+        if (this.state.password !== '') {
+          if (validatePassword(this.state.password)) {
+            this.setState({loading: true, errorModal: true});
+            // const sii =  await Auth.signUp()
+            try {
+              const signup: any = Auth.signUp({
+                username: this.state.username,
+                password: 'Safety_Connect1',
+                attributes: {
+                  profile: 'NotConfirmed',
+                },
+              });
+
+              if (signup.userConfirmed) {
+                // check if limit is not reached else send email for forgot password
+                const sendEmail = await Auth.forgotPassword(
+                  this.state.username,
+                ).catch((error) => {
+                  if (error.message.includes('limit')) {
+                    console.log('here');
+                    // SHOW ATTEMPT LIMIT REACHED
+                  }
+                });
+                if (sendEmail) {
+                  // Redirect => TO Forgot Password
+                  this.props.navigation.navigate('ForgotEmailSend');
+                }
+              }
+            } catch (e: any) {
+              if (e.message.includes('google')) {
+                // Redirect to => Alredy met screen
+                // Auth.federatedSignIn({})
+                // this.props.navigation.navigate('');
+              }
+
+              Auth.signIn(this.state.username, 'Safety_Connect1')
+                .then()
+                .catch(async (err) => {
+                  console.log(err);
+                  if (err.message.includes('Incorrect')) {
+                    // Toast Account Already exist
+                  }
+                });
+
+              if (e.message.includes('NotConfirmed')) {
+                const sendEmail = await Auth.forgotPassword(
+                  this.state.username,
+                ).catch((error) => {
+                  if (error.message.includes('limit')) {
+                    console.log('here');
+                  }
+                });
+                if (sendEmail)
+                  this.props.navigation.navigate('ForgotEmailSend');
+              }
+            }
+          } else {
+            this.setState({error: true});
+          }
+        } else {
+          this.setState({error: true});
+        }
+        // };
+
         this.props.navigation.navigate('CreatePass', {
           username: this.state.username,
         });
@@ -170,6 +240,18 @@ class Signup extends React.Component<SignupProps, any> {
           {this.state.loading == true && (
             <View>
               <ActivityIndicator color={colors.primary} size={'large'} />
+            </View>
+          )}
+
+          {this.state.conentLoading !== '' && (
+            <View
+              style={{
+                backgroundColor: colors.secondary,
+                padding: wp(5),
+                alignContent: 'center',
+                borderRadius: wp(3),
+              }}>
+              <Text style={{fontSize: wp(3)}}>{this.state.conentLoading}</Text>
             </View>
           )}
         </Modal>
