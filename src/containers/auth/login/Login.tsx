@@ -50,12 +50,14 @@ class Login extends React.Component<LoginProps, any> {
       errorModal: false,
       emailError: false,
       dynamicLink: '',
+      email: '',
+      code: '',
     };
   }
-  handleDynamicLink = (link: any) => {
-    // Handle dynamic link inside your own application
-    this.setState({dynamicLink: JSON.stringify(link)});
-  };
+  // handleDynamicLink = (link: any) => {
+  //   // Handle dynamic link inside your own application
+  //   this.setState({dynamicLink: JSON.stringify(link)});
+  // };
   componentWillUnmount = () => {
     this.setState({
       username: '',
@@ -64,8 +66,39 @@ class Login extends React.Component<LoginProps, any> {
   };
 
   componentDidMount() {
+    // dynamicLinks().onLink(this.handleDynamicLink);
+    dynamicLinks()
+      .getInitialLink()
+      .then((link: any) => {
+        console.log(link);
+        if (link != null) {
+          if (link.url.split('/')[3].split('?')[0] == 'user-info') {
+            this.props.navigation.navigate('CreatePass', {
+              email: link.url
+                .split('/')[3]
+                .split('?')[1]
+                .split('email=')[1]
+                .split('&')[0],
+              code: link.url
+                .split('/')[3]
+                .split('?')[1]
+                .split('&')[1]
+                .split('=')[1],
+            });
+          }
+        }
+      });
+
     dynamicLinks().onLink(this.handleDynamicLink);
   }
+
+  handleDynamicLink = (link: any) => {
+    // Handle dynamic link inside your own application
+    console.log(link.url);
+    // if (link.url === 'https://invertase.io/offer') {
+    //   // ...navigate to your offers screen
+    // }
+  };
 
   submitSignin = async () => {
     if (

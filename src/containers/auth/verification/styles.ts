@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
   headingContainer: {
     textAlign: 'center',
-    fontSize: wp(4),
+    fontSize: wp(3.2),
     color: colors.primary,
     // fontWeight: ,
   },

@@ -29,9 +29,9 @@ import {animation} from '@theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 type TellAboutYouNavigationProp = StackNavigationProp<
   AuthNavigatorProp,
-  'CreatePass'
+  'tellAboutYou'
 >;
-type TellAboutYouRouteProp = RouteProp<AuthNavigatorProp, 'CreatePass'>;
+type TellAboutYouRouteProp = RouteProp<AuthNavigatorProp, 'tellAboutYou'>;
 
 export interface TellAboutYouProps {
   navigation: TellAboutYouNavigationProp;

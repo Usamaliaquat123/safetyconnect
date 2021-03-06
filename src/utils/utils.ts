@@ -184,6 +184,15 @@ export const searchInInVolvedPersons = (k: string, arr: Array<any>) => {
   }
 };
 
+export const getLinkParam = (param: string, url: string) => {
+  // if (!url) url = location.href;
+  param = param.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+  var regexS = '[\\?&]' + param + '=([^&#]*)';
+  var regex = new RegExp(regexS);
+  var results = regex.exec(url);
+  return results == null ? null : results[1];
+};
+
 const checkPermission = async (type: string) => {
   const granted = await PermissionsAndroid.request(
     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,

@@ -14,6 +14,7 @@ import {
   DocType,
   imageVideoDetector,
   validateEmail,
+  getLinkParam,
   validatePassword,
   searchInInVolvedPersons,
   suggestInActionsRecommendations,
@@ -23,6 +24,7 @@ import {
 export {
   classifySor,
   validatePassword,
+  getLinkParam,
   filterLocation,
   imageVideoDetector,
   searchInInVolvedPersons,

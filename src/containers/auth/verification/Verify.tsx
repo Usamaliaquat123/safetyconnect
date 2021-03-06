@@ -42,14 +42,22 @@ class Verify extends React.Component<VerifyProps, any> {
           </View>
           {/* content */}
           <View style={styles.content}>
+            <View style={{alignSelf: 'center'}}>
+              <Image
+                source={images.forgotPass}
+                width={wp(40)}
+                height={wp(40)}
+              />
+            </View>
             <View style={styles.containerVerifyText}>
-              <Text style={styles.headingContainer}>Please verify your</Text>
-              <Text style={styles.headingContainer}>email address!</Text>
+              <Text style={styles.headingContainer}>
+                Please verify your email address!
+              </Text>
             </View>
 
-            <TouchableOpacity style={styles.siginBtnContainer}>
+            {/* <TouchableOpacity style={styles.siginBtnContainer}>
               <Text style={styles.signinText}>Continue</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             {/* Don't have a Acctouny */}
             <Text style={styles.dontHaveAccount}>
               Didn't receive an email ?{' '}

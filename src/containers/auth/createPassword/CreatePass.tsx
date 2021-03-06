@@ -49,8 +49,13 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       error: false,
       isEye: false,
       contentPopup: '',
+      passMachErr: false,
       errorModal: false,
+      passMatchText: '',
     };
+  }
+  componentDidMount() {
+    console.log(this.props.route.params.email, this.props.route.params.code);
   }
 
   componentWillUnmount = () => {
@@ -59,6 +64,38 @@ class CreatePass extends React.Component<CreatePassProps, any> {
     });
   };
 
+  setupPass = () => {
+    if (validatePassword(this.state.password)) {
+      if (this.state.password == this.state.passMatchText) {
+        try {
+          this.setState({passMachErr: false, error: false});
+          Auth.forgotPasswordSubmit(
+            this.props.route.params.email,
+            this.props.route.params.code,
+            this.state.password,
+          )
+            .then((res) => {
+              Auth.signIn(
+                this.props.route.params.email,
+                this.state.password,
+              ).then((res) => {
+                this.props.navigation.navigate('tellAboutYou', {
+                  username: this.props.route.params.email,
+                });
+              });
+            })
+            .catch((err) => console.log(err))
+            .catch((err) => console.log(err));
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        this.setState({passMachErr: true, error: false});
+      }
+    } else {
+      this.setState({error: true});
+    }
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -159,6 +196,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                   </Text>
                 )}
               </View>
+
               {/* {this.state.error && ( */}
               <View>
                 <Text style={[styles.dontHaveAccount]}>
@@ -176,8 +214,59 @@ class CreatePass extends React.Component<CreatePassProps, any> {
               </View>
               {/* )} */}
 
+              <View style={styles.inputsContainer}>
+                <Text style={styles.passTextContainer}>Confirm Password</Text>
+                <View style={[styles.inputContainer]}>
+                  <TextInput
+                    secureTextEntry={this.state.isEye}
+                    style={styles.authInputs}
+                    value={this.state.passMatchText}
+                    onChange={(e) => {
+                      if (this.state.password == e.nativeEvent.text) {
+                        this.setState({passMachErr: false});
+                      } else {
+                        this.setState({passMachErr: true});
+                      }
+                      this.setState({passMatchText: e.nativeEvent.text});
+                    }}
+                    placeholder={'******'}
+                  />
+                  <TouchableOpacity
+                    onPress={() => this.setState({isEye: !this.state.isEye})}
+                    style={styles.eyeIconContainer}>
+                    {this.state.isEye == true ? (
+                      <Icon
+                        containerStyle={{opacity: 0.5}}
+                        size={wp(5)}
+                        name="eye-with-line"
+                        type="entypo"
+                        color={colors.text}
+                      />
+                    ) : (
+                      <Icon
+                        containerStyle={{opacity: 0.5}}
+                        size={wp(5)}
+                        name="eye"
+                        type="antdesign"
+                        color={colors.text}
+                      />
+                    )}
+                  </TouchableOpacity>
+                </View>
+                {this.state.passMachErr == true && (
+                  <Text
+                    style={{
+                      paddingTop: wp(2),
+                      color: colors.error,
+                      fontSize: wp(3),
+                    }}>
+                    Your password is not matched
+                  </Text>
+                )}
+              </View>
+
               <TouchableOpacity
-                onPress={() => console.log('test')}
+                onPress={() => this.setupPass()}
                 style={styles.siginBtnContainer}>
                 <Text style={styles.signinText}>Continue</Text>
               </TouchableOpacity>
