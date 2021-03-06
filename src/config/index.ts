@@ -21,7 +21,7 @@ const AmlifyConfigure = () => {
     try {
       Amplify.configure({
         Auth: {
-          mandatorySignIn: true,
+          mandatorySignIn: false,
           region: 'us-east-2',
           userPoolId: 'us-east-2_dCVQj7g1N',
           identityPoolId: 'us-east-2:2d678d8d-d65a-42e0-9dd8-b9533c0c3bb1',
@@ -36,7 +36,7 @@ const AmlifyConfigure = () => {
         },
         Storage: {
           AWSS3: {
-            mandatorySignIn: true,
+            mandatorySignIn: false,
             identityPoolId: 'us-east-2:2d678d8d-d65a-42e0-9dd8-b9533c0c3bb1',
             bucket: 'safetyconnect-users', //REQUIRED -  Amazon S3 bucket name
             region: 'us-east-2', //OPTIONAL -  Amazon service region

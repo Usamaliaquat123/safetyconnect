@@ -51,7 +51,7 @@ export const AuthStackNavigator = () => {
   return (
     // <SafeAreaProvider>
     <NavigationContainer>
-      <Auth.Navigator initialRouteName={'Login'}>
+      <Auth.Navigator initialRouteName={'tellAboutYou'}>
         <Auth.Screen
           name="Verify"
           component={Verify}
@@ -91,6 +91,7 @@ export const AuthStackNavigator = () => {
         <Auth.Screen
           name="tellAboutYou"
           component={TellAboutYou}
+          initialParams={{username: 'inconennt12345@outlook.com'}}
           options={{
             headerShown: false,
           }}

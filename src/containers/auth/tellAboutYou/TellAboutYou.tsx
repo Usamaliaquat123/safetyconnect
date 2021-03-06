@@ -22,6 +22,7 @@ import {Avatar, Icon} from 'react-native-elements';
 import {colors, images, GlStyles} from '@theme';
 import {RouteProp} from '@react-navigation/native';
 import {imagePicker, cameraCapture} from '@utils';
+import {Storage} from 'aws-amplify';
 import Modal from 'react-native-modal';
 import LottieView from 'lottie-react-native';
 import {createApi as api} from '@service';
@@ -64,7 +65,12 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
     };
   }
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    // Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png').then((res) => {
+    //   console.log(res);
+    //   this.setState({uploadedImage: res});
+    // });
+  };
 
   imgCap = (str: string) => {
     if (str == 'upload') {
