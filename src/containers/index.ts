@@ -21,7 +21,7 @@ import NothingFound from './home/NothingFound/NothingFound';
 import NoInternet from './home/NoInternet/NoInternet';
 import ViewAllSOr from './home/SOR/ViewAll/ViewAllSOr';
 import ForgotEmailSend from './auth/forgotEmailSend/ForgotEmailSend';
-
+import MeetBefore from './auth/MeetBefore/MeetBefore';
 export {
   Chat,
   Login,
@@ -31,6 +31,7 @@ export {
   NoInternet,
   CreateSOR,
   Signup,
+  MeetBefore,
   MyTasks,
   Forgot,
   CreateProject,

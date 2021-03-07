@@ -54,7 +54,9 @@ class Verify extends React.Component<VerifyProps, any> {
                 Please verify your email address!
               </Text>
             </View>
-
+            <Text style={styles.headingContainer}>
+              Please verify your email address!
+            </Text>
             {/* <TouchableOpacity style={styles.siginBtnContainer}>
               <Text style={styles.signinText}>Continue</Text>
             </TouchableOpacity> */}

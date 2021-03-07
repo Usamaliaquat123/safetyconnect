@@ -100,7 +100,9 @@ class Signup extends React.Component<SignupProps, any> {
             if (sendEmail) {
               this.setState({loading: false, errorModal: false});
               // Redirect => TO Forgot Password
-              this.props.navigation.navigate('Verify');
+              this.props.navigation.navigate('Verify', {
+                email: this.state.username,
+              });
             }
           }
         } catch (e: any) {
@@ -137,7 +139,9 @@ class Signup extends React.Component<SignupProps, any> {
                 });
                 if (sendEmail) {
                   this.setState({loading: false, errorModal: false});
-                  this.props.navigation.navigate('Verify');
+                  this.props.navigation.navigate('Verify', {
+                    email: this.state.username,
+                  });
                 }
               }
             });

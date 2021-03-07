@@ -50,12 +50,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
     };
   }
 
-  // onGoBack = (someDataFromModal: any) => {
-  //   console.log('======================');
-  //   console.log(someDataFromModal);
-  //   console.log('======================');
-  // };
-
   createOrg = () => {
     if (this.state.org !== '') {
       this.setState({loading: true, errorModal: true});

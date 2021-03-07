@@ -11,6 +11,7 @@ import {
   Forgot,
   CreateProject,
   ForgotEmailSend,
+  MeetBefore,
 } from '@containers';
 
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -30,7 +31,8 @@ export type AuthNavigatorProp = {
   CreateProj: {organization: string};
   Home: undefined;
   ForgotEmailSend: undefined;
-  Verify: undefined;
+  Verify: {email: string};
+  MeetBefore: undefined;
 };
 
 const Auth = createStackNavigator<AuthNavigatorProp>();
@@ -44,6 +46,7 @@ export type route =
   | 'Home'
   | 'Verify'
   | 'Forgot'
+  | 'MeetBefore'
   | 'ForgotEmailSend'
   | undefined;
 export const AuthStackNavigator = () => {
@@ -51,7 +54,14 @@ export const AuthStackNavigator = () => {
   return (
     // <SafeAreaProvider>
     <NavigationContainer>
-      <Auth.Navigator initialRouteName={'tellAboutYou'}>
+      <Auth.Navigator initialRouteName={'MeetBefore'}>
+        <Auth.Screen
+          name="MeetBefore"
+          component={MeetBefore}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Auth.Screen
           name="Verify"
           component={Verify}
@@ -87,16 +97,13 @@ export const AuthStackNavigator = () => {
             headerShown: false,
           }}
         />
-
         <Auth.Screen
           name="tellAboutYou"
           component={TellAboutYou}
-          initialParams={{username: 'inconennt12345@outlook.com'}}
           options={{
             headerShown: false,
           }}
         />
-
         <Auth.Screen
           name="CreatePass"
           component={CreatePass}

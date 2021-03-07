@@ -13,7 +13,7 @@ export const images = {
   noInternet: require('./images/noInternet.png'),
   nothingFound: require('./images/nothingFound.png'),
   forgotPassEmail: require('./images/forgotPass.png'),
-
+  meetBefore: require('./images/metBefore.png'),
   // excel: require('./images/excel.png'),
   // powerpoint: require('./images/powerpoint.png'),
   organizationLogo: require('./images/organizationLogo.png'),

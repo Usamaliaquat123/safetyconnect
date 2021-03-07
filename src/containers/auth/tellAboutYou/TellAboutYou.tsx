@@ -132,6 +132,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     'email',
                     this.props.route.params.username,
                   );
+                  AsyncStorage.setItem('photo', this.state.uploadedImage);
                   this.setState({loading: true});
                   if ((res.status = 200)) {
                     this.props.navigation.navigate('CreateOrg');
