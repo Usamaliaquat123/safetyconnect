@@ -95,6 +95,18 @@ class MeetBefore extends React.Component<MeetBeforeProps, any> {
                 <Text style={styles.dontHaveAccount}>
                   please{' '}
                   <Text
+                    onPress={() => {
+                      this.props.navigation.dispatch(
+                        CommonActions.reset({
+                          index: 1,
+                          routes: [
+                            {
+                              name: 'Login',
+                            },
+                          ],
+                        }),
+                      );
+                    }}
                     style={{
                       fontSize: wp(3),
                       color: colors.primary,

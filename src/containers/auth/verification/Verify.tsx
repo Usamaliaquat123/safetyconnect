@@ -17,8 +17,10 @@ import {
 import {connect} from 'react-redux';
 import {RouteProp} from '@react-navigation/native';
 import styles from './styles';
-type VerifyNavigationProp = StackNavigationProp<AuthNavigatorProp>;
-type VerifyRouteProp = RouteProp<AuthNavigatorProp, 'Login'>;
+import dynamicLinks from '@react-native-firebase/dynamic-links';
+
+type VerifyNavigationProp = StackNavigationProp<AuthNavigatorProp, 'Verify'>;
+type VerifyRouteProp = RouteProp<AuthNavigatorProp, 'Verify'>;
 
 export interface VerifyProps {
   navigation: VerifyNavigationProp;
@@ -28,6 +30,37 @@ export interface VerifyProps {
 }
 
 class Verify extends React.Component<VerifyProps, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {};
+  }
+
+  componentDidMount() {
+    dynamicLinks()
+      .getInitialLink()
+      .then((link) => this.handleDynamicLink(link));
+    dynamicLinks().onLink(this.handleDynamicLink);
+  }
+  handleDynamicLink = (link: any) => {
+    console.log(link);
+    if (link != null) {
+      if (link.url.split('/')[3].split('?')[0] == 'user-info') {
+        this.props.navigation.navigate('CreatePass', {
+          email: link.url
+            .split('/')[3]
+            .split('?')[1]
+            .split('email=')[1]
+            .split('&')[0],
+          code: link.url
+            .split('/')[3]
+            .split('?')[1]
+            .split('&')[1]
+            .split('=')[1],
+        });
+      }
+    }
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -54,8 +87,9 @@ class Verify extends React.Component<VerifyProps, any> {
                 Please verify your email address!
               </Text>
             </View>
-            <Text style={styles.headingContainer}>
-              Please verify your email address!
+            <Text
+              style={{marginTop: wp(3), fontSize: wp(3), color: colors.text}}>
+              {this.props.route.params.email}
             </Text>
             {/* <TouchableOpacity style={styles.siginBtnContainer}>
               <Text style={styles.signinText}>Continue</Text>
