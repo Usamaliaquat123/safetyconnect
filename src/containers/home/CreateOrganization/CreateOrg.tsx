@@ -89,27 +89,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
               this.setState({loading: false, errorModal: false});
               console.log(err);
             });
-
-          // this.setState({orgError: false});
-          // api
-          //   .createApi()
-          //   .organization({
-          //     created_by: email,
-          //     name: this.state.org,
-          //     details: 'add yor project descriptions',
-          //   })
-          //   .then((res) => {
-          //     api
-          //       .createApi()
-          //       .project({
-          //         created_by: this.state.email,
-          //         project_name: this.state.project,
-          //         involved_persons: this.state.teamMembers,
-          //         organization: this.state.orgnaization,
-          //         locations: this.state.locations,
-          //       })
-          //       .then((res) => {});
-          //   });
         })
         .catch((err) => {
           console.log(err);
@@ -126,13 +105,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
-              <Icon
-                onPress={() => this.props.navigation.goBack()}
-                size={25}
-                name="arrow-back-outline"
-                type="ionicon"
-                color={colors.secondary}
-              />
               <View>
                 <Text style={styles.title}>Create organization</Text>
                 <View style={styles.underScrore} />

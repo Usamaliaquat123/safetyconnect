@@ -17,14 +17,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: wp(4),
-    marginLeft: wp(5),
+    // marginLeft: wp(2),
     color: colors.secondary,
     fontWeight: 'bold',
   },
   underScrore: {
     backgroundColor: colors.green,
     width: wp(3),
-    marginLeft: wp(5),
+    // marginLeft: wp(5),
     padding: wp(0.5),
     borderRadius: 10,
   },

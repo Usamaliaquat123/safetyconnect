@@ -28,15 +28,15 @@ export interface MeetBeforeProps {
 
 type MeetBeforeNavigationProp = StackNavigationProp<
   AuthNavigatorProp,
-  'Forgot'
+  'MeetBefore'
 >;
-type MeetBeforeRouteProp = RouteProp<AuthNavigatorProp, 'Forgot'>;
+type MeetBeforeRouteProp = RouteProp<AuthNavigatorProp, 'MeetBefore'>;
 
 class MeetBefore extends React.Component<MeetBeforeProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      email: 'inconnent12345@outylook.com',
+      email: this.props.route.params.email,
     };
   }
 

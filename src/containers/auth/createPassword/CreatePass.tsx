@@ -52,6 +52,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       passMachErr: false,
       errorModal: false,
       passMatchText: '',
+      loading: true,
     };
   }
   componentDidMount() {
@@ -68,7 +69,12 @@ class CreatePass extends React.Component<CreatePassProps, any> {
     if (validatePassword(this.state.password)) {
       if (this.state.password == this.state.passMatchText) {
         try {
-          this.setState({passMachErr: false, error: false});
+          this.setState({
+            passMachErr: false,
+            error: false,
+            loading: true,
+            errorModal: true,
+          });
           Auth.forgotPasswordSubmit(
             this.props.route.params.email,
             this.props.route.params.code,
@@ -79,15 +85,23 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                 this.props.route.params.email,
                 this.state.password,
               ).then((res) => {
+                this.setState({loading: false, errorModal: false});
                 this.props.navigation.navigate('tellAboutYou', {
                   username: this.props.route.params.email,
                 });
               });
             })
-            .catch((err) => console.log(err))
-            .catch((err) => console.log(err));
+            .catch((err) => {
+              this.setState({loading: false, errorModal: false});
+              console.log(err);
+            })
+            .catch((err) => {
+              this.setState({loading: false, errorModal: false});
+              console.log(err);
+            });
         } catch (err) {
           console.log(err);
+          this.setState({loading: false, errorModal: false});
         }
       } else {
         this.setState({passMachErr: true, error: false});
@@ -102,14 +116,14 @@ class CreatePass extends React.Component<CreatePassProps, any> {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
-              <Icon
+              {/* <Icon
                 containerStyle={{marginLeft: wp(2)}}
                 onPress={() => this.props.navigation.goBack()}
                 size={25}
                 name="arrow-back-outline"
                 type="ionicon"
                 color={colors.secondary}
-              />
+              /> */}
               <View>
                 <Text style={styles.title}>Sign up</Text>
                 <View style={styles.underScrore} />

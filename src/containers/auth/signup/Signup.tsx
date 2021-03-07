@@ -89,7 +89,10 @@ class Signup extends React.Component<SignupProps, any> {
               console.log('line 84');
               console.log(error);
               if (error.message.includes('limit')) {
-                this.setState({loading: false, errorModal: false});
+                this.setState({
+                  loading: false,
+                  conentLoading: 'Attempt limit Reached!',
+                });
 
                 console.log('Attempt limit Reached');
                 // SHOW ATTEMPT LIMIT REACHED
@@ -114,7 +117,9 @@ class Signup extends React.Component<SignupProps, any> {
             console.log('Looks like you already signup with google.');
             // Redirect to => Alredy met screen
             // Auth.federatedSignIn({})
-            // this.props.navigation.navigate('');
+            this.props.navigation.navigate('MeetBefore', {
+              email: this.state.username,
+            });
           }
 
           Auth.signIn(this.state.username, 'Safety_Connect1')
@@ -124,7 +129,9 @@ class Signup extends React.Component<SignupProps, any> {
               if (err.message.includes('Incorrect')) {
                 // Toast Account Already exist
                 this.setState({loading: false, errorModal: false});
-
+                this.props.navigation.navigate('MeetBefore', {
+                  email: this.state.username,
+                });
                 console.log('Account Already exitst');
               }
 
@@ -132,9 +139,14 @@ class Signup extends React.Component<SignupProps, any> {
                 const sendEmail = await Auth.forgotPassword(
                   this.state.username,
                 ).catch((error) => {
-                  this.setState({loading: false, errorModal: false});
+                  // this.setState({loading: false, errorModal: false});
+
                   if (error.message.includes('limit')) {
-                    console.log('Attempt limit reached. Try again later.');
+                    this.setState({
+                      loading: false,
+                      conentLoading: 'Attempt limit Reached!',
+                    });
+                    // console.log('Attempt limit reached. Try again later.');
                   }
                 });
                 if (sendEmail) {
@@ -251,7 +263,11 @@ class Signup extends React.Component<SignupProps, any> {
         <Modal
           isVisible={this.state.errorModal}
           onBackdropPress={() =>
-            this.setState({errorModal: false, loading: false})
+            this.setState({
+              errorModal: false,
+              loading: false,
+              conentLoading: '',
+            })
           }>
           {this.state.loading == true && (
             <View>
