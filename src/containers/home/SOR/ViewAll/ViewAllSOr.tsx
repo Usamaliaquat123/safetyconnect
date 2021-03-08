@@ -39,6 +39,7 @@ import {
 } from 'react-native-responsive-screen';
 import {createApi} from '@service';
 import {Storage} from 'aws-amplify';
+
 import jwtDecode from 'jwt-decode';
 import {Isor, classifySorBtn} from '@typings';
 // import {  } from "";
@@ -124,6 +125,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     }
 
     console.log(tempUser);
+
+    AsyncStorage.setItem('user', JSON.Stringify(tempUser));
 
     createApi
       .createApi()
