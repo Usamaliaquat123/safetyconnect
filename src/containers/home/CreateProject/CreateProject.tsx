@@ -62,14 +62,20 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   }
 
   filterContries = (contries: string) => {
+    this.setState({assignLocationsText: contries});
     api
       .createApi()
       .contriesAll({name: contries})
-      .then((res) => {
-        console.log(res.data);
-        this.setState({
-          locations: res.data,
-        });
+      .then((res: any) => {
+        // console.log(res.data.length);
+
+        if (res.data != undefined) {
+          // for (let i = 0; i < res.data.length; i++) {
+          //   console.log(res.data[i]);
+          // }
+
+          this.setState({locations: res.data});
+        }
       })
       .catch((err) => console.log(err));
   };

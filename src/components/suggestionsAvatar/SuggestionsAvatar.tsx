@@ -40,11 +40,15 @@ class SuggestionsAvatar extends React.Component<SuggestionsAvatarProps, any> {
                 </Text>
                 <Text style={styles.involvePSt}> {this.props.text}</Text>
               </View>
-              {this.props.locations.map((d, i) => {
-                <View>
-                  <Text>{d.name}</Text>
-                </View>;
-              })}
+              {this.props.locations?.length != 0 && (
+                <>
+                  {this.props.locations.map((d, i) => {
+                    <View>
+                      <Text>{d.name}</Text>
+                    </View>;
+                  })}
+                </>
+              )}
             </TouchableOpacity>
             {/* ))} */}
           </View>

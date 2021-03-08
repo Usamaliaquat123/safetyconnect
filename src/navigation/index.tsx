@@ -39,7 +39,7 @@ export const Navigator = () => {
   // Check user if authenticated
   const [isAuth, setIsAuth] = useState(false);
   console.log('=======');
-  checkuser().then((res) => console.log((res: Boolean) => setIsAuth(res)));
+  checkuser().then((res) => console.log((res: boolean) => setIsAuth(res)));
   return (
     <SafeAreaProvider>
       <NavigationContainer>

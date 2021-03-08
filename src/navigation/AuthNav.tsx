@@ -53,7 +53,7 @@ export const AuthStackNavigator = () => {
   // console.log(route);
   return (
     // <SafeAreaProvider>
-    <Auth.Navigator initialRouteName={'Login'}>
+    <Auth.Navigator initialRouteName={'CreateProj'}>
       <Auth.Screen
         name="MeetBefore"
         component={MeetBefore}
