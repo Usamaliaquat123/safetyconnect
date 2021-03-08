@@ -10,6 +10,7 @@ import {
 import {PermissionsAndroid} from 'react-native';
 import {resolvePlugin} from '@babel/core';
 import {involved_persons} from '@typings';
+export const mainPass : string = 'Safety_Connect1'
 export const classifySor: Array<Object> = [
   {
     icon: 'warning',

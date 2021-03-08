@@ -25,7 +25,7 @@ import {InitialAppStateDTO, ListStateDTO} from '@dtos';
 import {connect} from 'react-redux';
 import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {Auth} from 'aws-amplify';
 // import * as initialApp from '@store';
 // import { Create_sor, viewas, notified, submitted, draft, profileSetupSelections } from '@service';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -39,7 +39,7 @@ import {
 } from 'react-native-responsive-screen';
 import {createApi} from '@service';
 import {Storage} from 'aws-amplify';
-
+import jwtDecode from 'jwt-decode';
 import {Isor, classifySorBtn} from '@typings';
 // import {  } from "";
 type ViewAllSOrNavigationProp = StackNavigationProp<
@@ -96,16 +96,35 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       submitted: [],
       completed: [],
       inprogress: [],
-
+      isAuthenticated: false,
       slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
       bottomWidth: wp(100),
+      setUser: '',
     };
   }
 
-  componentDidMount = () => {
-    Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png').then((res) => {
-      console.log(res);
-    });
+  componentDidMount = async () => {
+    // aws s3 storage
+    // Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png').then((res) => {
+    //   console.log(res);
+    // });
+
+    const session: any = await Auth.currentSession();
+
+    const tempUser = await Auth.currentAuthenticatedUser(); // returns a promise if user then object else error
+    if ((await session) && tempUser.attributes) {
+      await this.setState({isAuthenticated: true});
+    }
+    if (await !tempUser.attributes) {
+      if (await session.idToken) {
+        const token = await session.idToken.jwtToken;
+        const decoded: any = await jwtDecode(token);
+        tempUser.attributes = await {email: decoded.email};
+      }
+    }
+
+    console.log(tempUser);
+
     createApi
       .createApi()
       .filterSors({

@@ -54,7 +54,7 @@ export const AuthStackNavigator = () => {
   return (
     // <SafeAreaProvider>
     <NavigationContainer>
-      <Auth.Navigator initialRouteName={'Signup'}>
+      <Auth.Navigator initialRouteName={'Login'}>
         <Auth.Screen
           name="MeetBefore"
           component={MeetBefore}

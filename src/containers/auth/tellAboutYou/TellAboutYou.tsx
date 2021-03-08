@@ -134,7 +134,12 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     'email',
                     this.props.route.params.username,
                   );
-                  AsyncStorage.setItem('photo', this.state.uploadedImage);
+                  AsyncStorage.setItem(
+                    'photo',
+                    this.state.uploadedImage === ''
+                      ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                      : this.state.uploadedImage,
+                  );
                   this.setState({loading: true});
                   if ((res.status = 200)) {
                     this.props.navigation.navigate('CreateOrg');

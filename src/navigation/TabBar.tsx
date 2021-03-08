@@ -48,34 +48,34 @@ export type BottomTabNavigatorProp = {
 export const BottomTabNavigator = () => {
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        <Tab.Navigator
-          tabBar={(props) => <TabBar {...props} />}
-          sceneContainerStyle={{backgroundColor: colors.error}}
-          initialRouteName={'home'}>
-          <Tab.Screen
-            name="home"
-            component={() => MainStackNavigator('NoInternet')}
-            options={{}}
-          />
-          <Tab.Screen
-            name="sor"
-            component={() => MainStackNavigator('MyTasks')}
-            options={{}}
-          />
-          <Tab.Screen name="addNew" component={Home} options={{}} />
-          <Tab.Screen
-            name="create"
-            component={() => MainStackNavigator('CreateSOR')}
-            options={{}}
-          />
-          <Tab.Screen
-            name="more"
-            component={() => MainStackNavigator('Menu')}
-            options={{}}
-          />
-        </Tab.Navigator>
-      </NavigationContainer>
+      {/* <NavigationContainer> */}
+      <Tab.Navigator
+        tabBar={(props) => <TabBar {...props} />}
+        sceneContainerStyle={{backgroundColor: colors.error}}
+        initialRouteName={'home'}>
+        <Tab.Screen
+          name="home"
+          component={() => MainStackNavigator('ViewAllSOr')}
+          options={{}}
+        />
+        <Tab.Screen
+          name="sor"
+          component={() => MainStackNavigator('MyTasks')}
+          options={{}}
+        />
+        <Tab.Screen name="addNew" component={Home} options={{}} />
+        <Tab.Screen
+          name="create"
+          component={() => MainStackNavigator('CreateSOR')}
+          options={{}}
+        />
+        <Tab.Screen
+          name="more"
+          component={() => MainStackNavigator('Menu')}
+          options={{}}
+        />
+      </Tab.Navigator>
+      {/* </NavigationContainer> */}
     </SafeAreaProvider>
   );
 };

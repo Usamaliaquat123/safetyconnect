@@ -18,12 +18,12 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-export interface MenuProps {}
+import {Auth} from 'aws-amplify';
 
 type MenuNavigationProp = StackNavigationProp<StackNavigatorProps, 'Menu'>;
 type MenuRouteProp = RouteProp<StackNavigatorProps, 'Menu'>;
 
-export interface HomeProps {
+export interface MenuProps {
   route: MenuRouteProp;
   navigation: MenuNavigationProp;
   reduxActions: any;
@@ -147,7 +147,11 @@ export default class Menu extends React.Component<MenuProps, any> {
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.containerOfItem, {marginBottom: wp(15)}]}>
-              <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity
+                onPress={() => {
+                  Auth.signOut();
+                }}
+                style={{flexDirection: 'row'}}>
                 <View>
                   <Image
                     style={styles.itemIcon}
@@ -155,7 +159,7 @@ export default class Menu extends React.Component<MenuProps, any> {
                   />
                 </View>
                 <Text style={styles.itemText}>Sign out</Text>
-              </View>
+              </TouchableOpacity>
             </TouchableOpacity>
           </View>
         </ScrollView>

@@ -23,7 +23,7 @@ import {validateEmail} from '@utils';
 import {RouteProp} from '@react-navigation/native';
 import {animation} from '@theme';
 import styles from './styles';
-import {validatePassword} from '@utils';
+import {validatePassword, mainPass} from '@utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
 import {Auth} from 'aws-amplify';
@@ -70,7 +70,7 @@ class Signup extends React.Component<SignupProps, any> {
         try {
           const signUpResponse: any = await Auth.signUp({
             username: this.state.username,
-            password: 'Safety_Connect1',
+            password: mainPass,
             attributes: {
               profile: 'NotConfirmed',
             },
@@ -80,8 +80,6 @@ class Signup extends React.Component<SignupProps, any> {
           // });
           console.log(signUpResponse);
           if (signUpResponse.userConfirmed) {
-            console.log('line 79');
-            console.log('user confirmed');
             // check if limit is not reached else send email for forgot password
             const sendEmail = await Auth.forgotPassword(
               this.state.username,
@@ -94,12 +92,9 @@ class Signup extends React.Component<SignupProps, any> {
                   conentLoading: 'Attempt limit Reached!',
                 });
 
-                console.log('Attempt limit Reached');
                 // SHOW ATTEMPT LIMIT REACHED
               }
             });
-            console.log('line 93');
-            console.log(sendEmail);
             if (sendEmail) {
               this.setState({loading: false, errorModal: false});
               // Redirect => TO Forgot Password
@@ -122,7 +117,7 @@ class Signup extends React.Component<SignupProps, any> {
             });
           }
 
-          Auth.signIn(this.state.username, 'Safety_Connect1')
+          Auth.signIn(this.state.username, mainPass)
             .then()
             .catch(async (err) => {
               console.log(err);
@@ -132,7 +127,6 @@ class Signup extends React.Component<SignupProps, any> {
                 this.props.navigation.navigate('MeetBefore', {
                   email: this.state.username,
                 });
-                console.log('Account Already exitst');
               }
 
               if (e.message.includes('NotConfirmed')) {

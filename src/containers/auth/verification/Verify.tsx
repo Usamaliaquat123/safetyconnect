@@ -88,7 +88,12 @@ class Verify extends React.Component<VerifyProps, any> {
               </Text>
             </View>
             <Text
-              style={{marginTop: wp(3), fontSize: wp(3), color: colors.text}}>
+              style={{
+                marginTop: wp(3),
+                fontSize: wp(3),
+                color: colors.text,
+                textAlign: 'center',
+              }}>
               {this.props.route.params.email}
             </Text>
             {/* <TouchableOpacity style={styles.siginBtnContainer}>
