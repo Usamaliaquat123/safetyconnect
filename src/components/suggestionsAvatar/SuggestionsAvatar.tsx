@@ -20,35 +20,56 @@ class SuggestionsAvatar extends React.Component<SuggestionsAvatarProps, any> {
     return (
       <View>
         {this.props.type == 'location' ? (
-          <View style={styles.involveSuggestCont}>
+          <View style={[styles.involveSuggestCont, {padding: wp(1)}]}>
             {/* {this.props.users.map((d: string, i: number) => ( */}
             <TouchableOpacity
-              onPress={() => this.props.onSelect(this.props.text)}
-              style={[styles.involvePsuggCont, {borderBottomWidth: wp(0)}]}>
+              style={[
+                styles.involvePsuggCont,
+                {
+                  borderBottomWidth: wp(0),
+                  padding: wp(1),
+                  paddingBottom: wp(1),
+                },
+              ]}>
               <View>
-                <Icon
-                  //   onPress={() => this.props.navigation.goBack()}
-                  size={wp(6)}
-                  containerStyle={{opacity: 0.6}}
-                  name="add-circle-outline"
-                  type="ionicon"
-                  color={colors.text}
-                />
-                <Text
-                  style={{fontSize: wp(3), opacity: 0.5, marginLeft: wp(1)}}>
-                  Add
-                </Text>
-                <Text style={styles.involvePSt}> {this.props.text}</Text>
+                <View>
+                  {this.props.locations != undefined && (
+                    <>
+                      {this.props.locations?.length != 0 && (
+                        <>
+                          {this.props.locations.splice(0, 5).map((d, i) => (
+                            <TouchableOpacity
+                              onPress={() => this.props.onSelect(d.name)}
+                              style={{flexDirection: 'row', padding: wp(1)}}>
+                              <Icon
+                                //   onPress={() => this.props.navigation.goBack()}
+                                size={wp(7)}
+                                containerStyle={{opacity: 0.6}}
+                                name="add-circle-outline"
+                                type="ionicon"
+                                color={colors.text}
+                              />
+                              <Text
+                                style={[
+                                  styles.involvePSt,
+                                  {
+                                    fontSize: wp(3),
+                                    justifyContent: 'center',
+                                    marginLeft: wp(2),
+                                    marginTop: wp(1.5),
+                                  },
+                                ]}>
+                                {d.name}
+                              </Text>
+                            </TouchableOpacity>
+                          ))}
+                        </>
+                      )}
+                    </>
+                  )}
+                </View>
+                {/* <Text style={styles.involvePSt}> {this.props.text}</Text> */}
               </View>
-              {this.props.locations?.length != 0 && (
-                <>
-                  {this.props.locations.map((d, i) => {
-                    <View>
-                      <Text>{d.name}</Text>
-                    </View>;
-                  })}
-                </>
-              )}
             </TouchableOpacity>
             {/* ))} */}
           </View>

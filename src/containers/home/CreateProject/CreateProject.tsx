@@ -355,8 +355,8 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     {' '}
                     Assign Locations
                   </Text>
-                  <View style={[styles.inputContainer]}>
-                    {this.state.assignLocations < 6 ? (
+                  {this.state.assignLocations.length < 1 ? (
+                    <View style={[styles.inputContainer]}>
                       <TextInput
                         placeholder={'Add Locations'}
                         style={styles.authInputs}
@@ -365,9 +365,8 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                           this.filterContries(e.nativeEvent.text);
                         }}
                       />
-                    ) : null}
-                  </View>
-
+                    </View>
+                  ) : null}
                   {/* Assign Locations suggestions */}
                   {this.state.assignLocationsText != '' ? (
                     <SuggestionsAvatar
@@ -390,7 +389,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       marginTop: wp(2),
                     }}>
                     <Tags
-                      type={'addTeamMem'}
+                      type={'location'}
                       onClose={(d: any) => {
                         this.setState({
                           assignLocations: this.state.assignLocations.filter(
