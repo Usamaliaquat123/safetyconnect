@@ -113,18 +113,9 @@ class Login extends React.Component<LoginProps, any> {
           const user = await Auth.signIn(
             this.state.username,
             this.state.password,
-            {
-              profile: 'NotConfirmed',
-            },
           );
 
-          if (user.userConfirmed) {
-            const sendEmail = await Auth.forgotPassword(this.state.username);
-            this.setState({loading: false});
-            if (sendEmail) this.props.navigation.navigate('Home');
-          } else {
-            this.setState({loading: false});
-          }
+          console.log(user);
         } catch (err) {
           this.setState({errorModal: true, loading: false});
         }

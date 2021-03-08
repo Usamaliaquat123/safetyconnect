@@ -52,7 +52,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       assignLocations: [],
       assignLocationsText: '',
       projectName: '',
-      laoding: false,
+      loading: false,
       projects: [],
       email: 'inconnent12345@outlook.com',
       // errors popup
@@ -155,12 +155,17 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
             </View>
           </View>
           {/* content */}
-          <View style={styles.content}>
+          <View
+            style={[
+              styles.content,
+              // this.state.loading ? {height: wp(100)} : {height: wp(100)},
+            ]}>
             {this.state.loading == true ? (
               <View
                 style={{
                   alignSelf: 'center',
                   marginTop: wp(40),
+                  marginBottom: wp(40),
                 }}>
                 <LottieView
                   autoPlay={true}

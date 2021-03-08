@@ -37,13 +37,45 @@ const checkuser = async () => {
 
 export const Navigator = () => {
   // Check user if authenticated
-  const [isAuth, setIsAuth] = useState(false);
-  console.log('=======');
-  checkuser().then((res) => console.log((res: boolean) => setIsAuth(res)));
+  const [isAuth, setIsAuthenticated] = useState(Boolean);
+  // console.log('=======');
+  // checkuser().then((res) => console.log(res));
+
+  try {
+    const session: any = Auth.currentSession(); // checks if there is any valid session of authenticated user
+
+    const tempUser: any = Auth.currentAuthenticatedUser(); // returns a promise if user then object else error
+    if (session && tempUser.attributes) {
+      setIsAuthenticated(true);
+    }
+    if (!tempUser.attributes) {
+      if (session.idToken) {
+        const token = session.idToken.jwtToken;
+        const decoded: any = jwtDecode(token);
+        tempUser.attributes = {email: decoded.email};
+      }
+    }
+    // setUser(tempUser);
+
+    // setLoaded(true);
+  } catch (err) {
+    console.log(err);
+    setIsAuthenticated(false);
+    // setLoaded(true);
+    if (err === 'No current user') {
+      console.log(err);
+      setIsAuthenticated(false);
+      // setLoaded(true);
+    }
+
+    console.log(isAuth);
+  }
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        {isAuth ? <BottomTabNavigator /> : <AuthStackNavigator />}
+        {isAuth == true && <BottomTabNavigator />}
+        {isAuth == false && <AuthStackNavigator />}
       </NavigationContainer>
     </SafeAreaProvider>
   );
