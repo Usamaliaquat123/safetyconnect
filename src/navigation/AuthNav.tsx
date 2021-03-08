@@ -53,87 +53,85 @@ export const AuthStackNavigator = () => {
   // console.log(route);
   return (
     // <SafeAreaProvider>
-    <NavigationContainer>
-      <Auth.Navigator initialRouteName={'Login'}>
-        <Auth.Screen
-          name="MeetBefore"
-          component={MeetBefore}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Auth.Screen
-          name="Verify"
-          component={Verify}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Auth.Screen
-          name="ForgotEmailSend"
-          component={ForgotEmailSend}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Auth.Screen
-          name="Forgot"
-          component={Forgot}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Auth.Screen
-          name="Signup"
-          component={Signup}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Auth.Screen
-          name="Login"
-          component={Login}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Auth.Screen
-          name="tellAboutYou"
-          component={TellAboutYou}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Auth.Screen
-          name="CreatePass"
-          component={CreatePass}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Auth.Screen
-          name="CreateOrg"
-          component={CreateOrg}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Auth.Screen
-          name="CreateProj"
-          component={CreateProject}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Auth.Screen
-          name="Home"
-          component={BottomTabNavigator}
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Auth.Navigator>
-    </NavigationContainer>
+    <Auth.Navigator initialRouteName={'Login'}>
+      <Auth.Screen
+        name="MeetBefore"
+        component={MeetBefore}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Auth.Screen
+        name="Verify"
+        component={Verify}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Auth.Screen
+        name="ForgotEmailSend"
+        component={ForgotEmailSend}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Auth.Screen
+        name="Forgot"
+        component={Forgot}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Auth.Screen
+        name="Signup"
+        component={Signup}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Auth.Screen
+        name="Login"
+        component={Login}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Auth.Screen
+        name="tellAboutYou"
+        component={TellAboutYou}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Auth.Screen
+        name="CreatePass"
+        component={CreatePass}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Auth.Screen
+        name="CreateOrg"
+        component={CreateOrg}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Auth.Screen
+        name="CreateProj"
+        component={CreateProject}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Auth.Screen
+        name="Home"
+        component={BottomTabNavigator}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Auth.Navigator>
     // </SafeAreaProvider>
   );
 };

@@ -38,11 +38,11 @@ export interface TabBarProps {
 }
 const Tab = createBottomTabNavigator<BottomTabNavigatorProp>();
 export type BottomTabNavigatorProp = {
-  home: undefined;
-  sor: undefined;
-  addNew: undefined;
-  create: undefined;
-  more: undefined;
+  home: {user?: any};
+  sor: {user?: any};
+  addNew: {user?: any};
+  create: {user?: any};
+  more: {user?: any};
 };
 
 export const BottomTabNavigator = () => {

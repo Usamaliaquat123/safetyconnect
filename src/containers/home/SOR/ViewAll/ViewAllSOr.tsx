@@ -126,7 +126,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
     console.log(tempUser);
 
-    AsyncStorage.setItem('user', JSON.Stringify(tempUser));
+    AsyncStorage.setItem('user', JSON.stringify(tempUser));
 
     createApi
       .createApi()
