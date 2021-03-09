@@ -60,7 +60,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       errorTeamMem: false,
     };
   }
-
+  // Filter All countries
   filterContries = (contries: string) => {
     this.setState({assignLocationsText: contries});
     api
@@ -78,6 +78,12 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
         }
       })
       .catch((err) => console.log(err));
+  };
+
+  // Saved current project id with current organization id
+  savedCurrentStatus = async (pid: string, orgId: string) => {
+    await AsyncStorage.setItem('pid', pid);
+    await AsyncStorage.setItem('orgId', orgId);
   };
 
   createProject = async () => {
@@ -107,10 +113,14 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     .createApi()
                     .getUser({email: email})
                     .then((res: any) => {
-                      AsyncStorage.setItem('id', res.data.data._id);
                       AsyncStorage.setItem(
                         'organization',
                         this.props.route.params.organization,
+                      );
+
+                      this.savedCurrentStatus(
+                        this.props.route.params.orgnaization,
+                        res.data.data.project_id,
                       );
                       this.setState({loading: false});
                       this.props.navigation.navigate('Home');
