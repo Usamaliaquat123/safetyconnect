@@ -53,16 +53,16 @@ class Forgot extends React.Component<ForgotProps, any> {
     if (validateEmail(email)) {
       this.setState({loading: true});
 
-      const forgot = await Auth.forgotPassword(email).catch((err) => {
-        if (err.message.includes('limit')) {
-          // SHOW ATTEMPT LIMIT REACHED
-        }
-      });
-      if (forgot) {
-        this.setState({loading: false, error: false});
-
-        this.props.navigation.navigate('ForgotEmailSend');
-      }
+      const forgot = await Auth.forgotPassword(email)
+        .then((res) => {
+          this.setState({loading: false, error: false});
+          this.props.navigation.navigate('ForgotEmailSend');
+        })
+        .catch((err) => {
+          if (err.message.includes('limit')) {
+            // SHOW ATTEMPT LIMIT REACHED
+          }
+        });
     } else {
       this.setState({loading: false, error: true});
     }

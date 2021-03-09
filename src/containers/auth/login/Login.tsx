@@ -280,7 +280,10 @@ class Login extends React.Component<LoginProps, any> {
                   </View>
                 )}
               </View>
-              <Text style={styles.forgetPassText}>Forget Password ? </Text>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Forgot')}>
+                <Text style={styles.forgetPassText}>Forget Password ? </Text>
+              </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => this.submitSignin()}
                 style={styles.siginBtnContainer}>
