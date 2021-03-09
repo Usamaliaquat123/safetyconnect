@@ -62,6 +62,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
   componentWillUnmount = () => {
     this.setState({
       password: '',
+      passMatchText: '',
     });
   };
 
