@@ -28,8 +28,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
 import {Auth} from 'aws-amplify';
 
-type SignupNavigationProp = StackNavigationProp<AuthNavigatorProp, 'Login'>;
-type SignupRouteProp = RouteProp<AuthNavigatorProp, 'Login'>;
+type SignupNavigationProp = StackNavigationProp<AuthNavigatorProp, 'Signup'>;
+type SignupRouteProp = RouteProp<AuthNavigatorProp, 'Signup'>;
 
 export interface SignupProps {
   navigation: SignupNavigationProp;
