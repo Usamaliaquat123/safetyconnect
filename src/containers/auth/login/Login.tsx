@@ -128,6 +128,16 @@ class Login extends React.Component<LoginProps, any> {
       this.setState({emailError: true});
     }
   };
+  // Continue with google
+  loginWithGoogle = async () => {
+    try {
+      var user = await Auth.federatedSignIn({provider: 'google'});
+      console.log(user);
+      this.props.navigation.navigate('Home');
+    } catch (e) {
+      console.log(e);
+    }
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -283,7 +293,11 @@ class Login extends React.Component<LoginProps, any> {
                 <View style={styles.line} />
               </View>
               {/* Google Signin */}
-              <TouchableOpacity style={styles.siginwithGoogle}>
+              <TouchableOpacity
+                onPress={() => {
+                  this.loginWithGoogle();
+                }}
+                style={styles.siginwithGoogle}>
                 <View style={{width: wp(7), height: wp(7), marginRight: wp(3)}}>
                   <Image source={images.google} style={GlStyles.images} />
                 </View>

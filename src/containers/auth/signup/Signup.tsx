@@ -159,6 +159,15 @@ class Signup extends React.Component<SignupProps, any> {
       this.setState({error: true});
     }
   }
+
+  continuewithgoogle = async () => {
+    try {
+      const user = await Auth.federatedSignIn({provider: 'Google '});
+      console.log(user);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -228,8 +237,7 @@ class Signup extends React.Component<SignupProps, any> {
               {/* Google Signin */}
               <TouchableOpacity
                 onPress={() => {
-                  // Auth.federatedSignIn({provider: }).then(res => {
-                  // })
+                  this.continuewithgoogle();
                 }}
                 style={styles.siginwithGoogle}>
                 <View style={{width: wp(5), height: wp(5), marginRight: wp(3)}}>
