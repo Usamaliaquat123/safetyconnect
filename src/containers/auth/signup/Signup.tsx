@@ -55,18 +55,7 @@ class Signup extends React.Component<SignupProps, any> {
       if (validateEmail(this.state.username)) {
         console.log(this.state.username);
         this.setState({loading: true, errorModal: true});
-        // setTimeout(() => {
 
-        // Auth.forgotPassword('')
-        // await AsyncStorage.setItem('email', this.state.username).then((res) => {
-        //   this.setState({loading: false, error: false, errorModal: false});
-        // });
-
-        // createPass = async () => {
-        // if (this.state.password !== '') {
-        // if (validatePassword(this.state.password)) {
-        // this.setState({loading: true, errorModal: true});
-        // const sii =  await Auth.signUp()
         try {
           const signUpResponse: any = await Auth.signUp({
             username: this.state.username,
@@ -84,15 +73,11 @@ class Signup extends React.Component<SignupProps, any> {
             const sendEmail = await Auth.forgotPassword(
               this.state.username,
             ).catch((error) => {
-              console.log('line 84');
-              console.log(error);
               if (error.message.includes('limit')) {
                 this.setState({
                   loading: false,
                   conentLoading: 'Attempt limit Reached!',
                 });
-
-                // SHOW ATTEMPT LIMIT REACHED
               }
             });
             if (sendEmail) {
@@ -121,6 +106,7 @@ class Signup extends React.Component<SignupProps, any> {
             .then()
             .catch(async (err) => {
               console.log(err);
+              console.log('=======');
               if (err.message.includes('Incorrect')) {
                 // Toast Account Already exist
                 this.setState({loading: false, errorModal: false});
@@ -129,7 +115,10 @@ class Signup extends React.Component<SignupProps, any> {
                 });
               }
 
-              if (e.message.includes('NotConfirmed')) {
+              if (err.message.includes('NotConfirmed')) {
+                console.log('-------');
+                console.log(err);
+
                 const sendEmail = await Auth.forgotPassword(
                   this.state.username,
                 ).catch((error) => {
