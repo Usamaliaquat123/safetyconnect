@@ -116,9 +116,6 @@ class Signup extends React.Component<SignupProps, any> {
               }
 
               if (err.message.includes('NotConfirmed')) {
-                console.log('-------');
-                console.log(err);
-
                 const sendEmail = await Auth.forgotPassword(
                   this.state.username,
                 ).catch((error) => {
@@ -129,7 +126,6 @@ class Signup extends React.Component<SignupProps, any> {
                       loading: false,
                       conentLoading: 'Attempt limit Reached!',
                     });
-                    // console.log('Attempt limit reached. Try again later.');
                   }
                 });
                 if (sendEmail) {
@@ -152,7 +148,6 @@ class Signup extends React.Component<SignupProps, any> {
   continuewithgoogle = async () => {
     try {
       const user = await Auth.federatedSignIn({provider: 'Google '});
-      console.log(user);
     } catch (err) {
       console.log(err);
     }
@@ -171,20 +166,6 @@ class Signup extends React.Component<SignupProps, any> {
           </View>
           {/* content */}
           <View style={styles.content}>
-            {/* {this.state.loading == true ? (
-              <View
-                style={{
-                  alignSelf: 'center',
-                  marginTop: wp(40),
-                }}>
-                <LottieView
-                  autoPlay={true}
-                  style={{width: wp(90)}}
-                  source={animation.loading}
-                  loop={true}
-                />
-              </View>
-            ) : ( */}
             <View>
               <Text style={styles.headingContainer}>Sign up</Text>
               {/* inputs container */}
@@ -196,11 +177,6 @@ class Signup extends React.Component<SignupProps, any> {
                     style={styles.authInputs}
                     value={this.state.username}
                     onChange={(e) => {
-                      // if (validateEmail(e.nativeEvent.text)) {
-                      //   this.setState({error: false});
-                      // } else {
-                      //   this.setState({error: true});
-                      // }
                       this.setState({username: e.nativeEvent.text});
                     }}
                     placeholder={'Enter your email'}
@@ -246,11 +222,8 @@ class Signup extends React.Component<SignupProps, any> {
                 </Text>
               </TouchableOpacity>
             </View>
-            {/* )} */}
           </View>
         </ScrollView>
-        {/* validations error */}
-        {/* Modal Container */}
         <Modal
           isVisible={this.state.errorModal}
           onBackdropPress={() =>
