@@ -1,5 +1,8 @@
 import * as Sentry from '@sentry/react-native';
 import Amplify from 'aws-amplify';
+import {fromCognitoIdentityPool} from '@aws-sdk/credential-provider-cognito-identity';
+import {CognitoIdentityClient} from '@aws-sdk/client-cognito-identity';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 // configure Sentry
 const configSentry = () => {
@@ -16,6 +19,13 @@ const configSentry = () => {
   });
 };
 
+// const googleSignInSetup = () => {
+//   GoogleSignin.configure({
+//     scopes:[]
+//   })
+
+// }
+
 const AmlifyConfigure = () => {
   return new Promise((resolve, reject) => {
     try {
@@ -25,7 +35,6 @@ const AmlifyConfigure = () => {
           region: 'us-east-2',
           userPoolId: 'us-east-2_dCVQj7g1N',
           identityPoolId: 'us-east-2:2d678d8d-d65a-42e0-9dd8-b9533c0c3bb1',
-
           userPoolWebClientId: '5n6tdp3pqcoj0q44ch83963gfp',
         },
         oauth: {

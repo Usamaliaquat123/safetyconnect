@@ -30,7 +30,7 @@ export type AuthNavigatorProp = {
   Forgot: undefined;
   CreateProj: {organization: string};
   Home: undefined;
-  ForgotEmailSend: undefined;
+  ForgotEmailSend: {email: string};
   Verify: {email: string};
   MeetBefore: {email: string};
 };

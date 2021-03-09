@@ -43,7 +43,7 @@ class Forgot extends React.Component<ForgotProps, any> {
     this.state = {
       email: '',
       laoding: false,
-      error: true,
+      error: false,
     };
   }
 
@@ -56,7 +56,7 @@ class Forgot extends React.Component<ForgotProps, any> {
       const forgot = await Auth.forgotPassword(email)
         .then((res) => {
           this.setState({loading: false, error: false});
-          this.props.navigation.navigate('ForgotEmailSend');
+          this.props.navigation.navigate('ForgotEmailSend', {email});
         })
         .catch((err) => {
           if (err.message.includes('limit')) {

@@ -67,10 +67,10 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
   }
 
   componentDidMount = () => {
-    // Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png').then((res) => {
-    //   console.log(res);
-    //   this.setState({uploadedImage: res});
-    // });
+    Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png').then((res) => {
+      console.log(res);
+      this.setState({uploadedImage: res});
+    });
   };
 
   imgCap = (str: string) => {
