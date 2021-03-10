@@ -69,18 +69,10 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
             .then((res: any) => {
               console.log(res);
               if (res.status == 200) {
-                //   console.log(res);
-                //   this.setState({laoding: false});
-                // AsyncStorage.setItem(
-                //   'organizations',
-                //   res.data.data.organization_id,
-                // );
                 this.setState({loading: false, errorModal: false});
                 this.props.navigation.navigate('CreateProj', {
                   organization: res.data.data.organization_id,
                 });
-
-                //   // AsyncStorage.setItem('organizations', {});
               } else {
                 this.setState({loading: false, errorModal: false});
               }
