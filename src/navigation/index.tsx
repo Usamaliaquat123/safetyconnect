@@ -12,70 +12,40 @@ import jwtDecode from 'jwt-decode';
 
 import {Auth} from 'aws-amplify';
 
-const checkuser = async () => {
-  try {
-    const session: any = await Auth.currentSession();
-    const tempUser = await Auth.currentAuthenticatedUser(); // returns a promise if user then object else error
-
-    if (await session.idToken) {
-      const token = await session.idToken.jwtToken;
-      const decoded: any = await jwtDecode(token);
-      tempUser.attributes = await {email: decoded.email};
-    }
-
-    if ((await session) && tempUser.attributes) {
-      // await setIsAuth(true);
-      return true;
-    }
-  } catch (error) {
-    return false;
-  }
-
-  // return tempUser
-  // if (await !tempUser.attributes) {
-};
-
 export const Navigator = () => {
-  // Check user if authenticated
-  const [isAuth, setIsAuthenticated] = useState(Boolean);
-  // console.log('=======');
-  // checkuser().then((res) => console.log(res));
+  const [isAuthenticated, setIsAuthenticated] = useState(Boolean);
+  const [isAuthenticating, setIsAuthenticating] = useState(Boolean);
+  const [user, setUser] = useState('');
+  const checkUser = async () => {
+    try {
+      const session: any = await Auth.currentSession(); // checks if there is any valid session of authenticated user
 
-  try {
-    const session: any = Auth.currentSession(); // checks if there is any valid session of authenticated user
-
-    const tempUser: any = Auth.currentAuthenticatedUser(); // returns a promise if user then object else error
-    if (session && tempUser.attributes) {
-      setIsAuthenticated(true);
-    }
-    if (!tempUser.attributes) {
-      if (session.idToken) {
-        const token = session.idToken.jwtToken;
-        const decoded: any = jwtDecode(token);
-        tempUser.attributes = {email: decoded.email};
+      const tempUser = await Auth.currentAuthenticatedUser(); // returns a promise if user then object else error
+      if ((await session) && tempUser.attributes) {
+        await setIsAuthenticated(true);
+      }
+      if (await !tempUser.attributes) {
+        if (await session.idToken) {
+          const token = await session.idToken.jwtToken;
+          const decoded: any = await jwtDecode(token);
+          tempUser.attributes = await {email: decoded.email};
+        }
+      }
+      await setUser(tempUser);
+    } catch (err) {
+      if (err === 'No current user') {
+        setIsAuthenticating(() => false);
+        setIsAuthenticated(() => false);
       }
     }
-    // setUser(tempUser);
-
-    // setLoaded(true);
-  } catch (err) {
-    console.log(err);
-    setIsAuthenticated(false);
-    // setLoaded(true);
-    if (err === 'No current user') {
-      console.log(err);
-      setIsAuthenticated(false);
-      // setLoaded(true);
-    }
-
-    console.log(isAuth);
-  }
-
+  };
+  checkUser();
+  console.log(isAuthenticated);
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        {isAuth == true && <BottomTabNavigator />}
-        {isAuth == false && <AuthStackNavigator />}
+        {isAuthenticated == true && <BottomTabNavigator />}
+        {isAuthenticated == false && <AuthStackNavigator />}
       </NavigationContainer>
     </SafeAreaProvider>
   );
