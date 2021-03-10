@@ -54,7 +54,34 @@ class Forgot extends React.Component<ForgotProps, any> {
       this.setState({errModal: true, loading: true, error: false});
 
       // Authenticated user signin
-      const signin = await Auth.signIn(this.state.email, '');
+      await Auth.signIn(this.state.email, 'Safety_Connect1')
+        .then()
+        .catch((err) => {
+          if (err.message.includes('not exists')) {
+            this.setState({
+              loading: false,
+              conentLoading: 'Attempt limit Reached!',
+            });
+          } else {
+            Auth.forgotPassword(email)
+              .then((data) => {
+                console.log(data);
+                this.props.navigation.navigate('ForgotEmailSend', {
+                  email: email,
+                });
+              })
+              .catch((err) => {
+                console.log(err);
+                if (err.message.includes('limit')) {
+                  console.log('here');
+                  this.setState({
+                    loading: false,
+                    conentLoading: 'Attempt limit Reached!',
+                  });
+                }
+              });
+          }
+        });
 
       const forgot = await Auth.forgotPassword(email)
         .then((res) => {
