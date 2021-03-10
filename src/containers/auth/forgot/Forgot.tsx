@@ -42,8 +42,9 @@ class Forgot extends React.Component<ForgotProps, any> {
     super(props);
     this.state = {
       email: '',
-      laoding: false,
+      laoding: true,
       error: false,
+      errModal: false,
     };
   }
 
@@ -83,18 +84,18 @@ class Forgot extends React.Component<ForgotProps, any> {
           }
         });
 
-      const forgot = await Auth.forgotPassword(email)
-        .then((res) => {
-          console.log(res);
-          this.setState({loading: false, errorModal: false, error: false});
-          this.props.navigation.navigate('ForgotEmailSend', {email});
-        })
-        .catch((err) => {
-          this.setState({loading: false, errorModal: false, error: false});
-          if (err.message.includes('limit')) {
-            // SHOW ATTEMPT LIMIT REACHED
-          }
-        });
+      // const forgot = await Auth.forgotPassword(email)
+      //   .then((res) => {
+      //     console.log(res);
+      //     this.setState({loading: false, errorModal: false, error: false});
+      //     this.props.navigation.navigate('ForgotEmailSend', {email});
+      //   })
+      //   .catch((err) => {
+      //     this.setState({loading: false, errorModal: false, error: false});
+      //     if (err.message.includes('limit')) {
+      //       // SHOW ATTEMPT LIMIT REACHED
+      //     }
+      //   });
     } else {
       this.setState({loading: false, error: true, errorModal: true});
     }
@@ -173,9 +174,9 @@ class Forgot extends React.Component<ForgotProps, any> {
         </ScrollView>
 
         <Modal
-          isVisible={this.state.errorModal}
+          isVisible={this.state.errModal}
           onBackdropPress={() =>
-            this.setState({errorModal: false, loading: false})
+            this.setState({errModal: false, loading: false})
           }>
           {this.state.loading == true ? (
             <View>
