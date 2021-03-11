@@ -22,9 +22,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {AuthStackNavigator} from './AuthNav';
 import {MainStackNavigator} from './Main';
 import Modal from 'react-native-modal';
-
-// import BottomSheet from 'reanimated-bottom-sheet';
-// import Animated from 'react-native-reanimated';
+import styles from './styles';
 export interface TabBarProps {
   state: any;
   descriptors: any;
@@ -206,14 +204,7 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                       onPress={() => {
                         console.log('test');
                       }}
-                      style={{
-                        position: 'absolute',
-                        zIndex: wp(2),
-                        top: wp(-7),
-                        backgroundColor: colors.primary,
-                        borderRadius: wp(10),
-                        padding: wp(4),
-                      }}>
+                      style={styles.addNewContainer}>
                       <Icon
                         size={30}
                         name="pluscircleo"
@@ -223,13 +214,13 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                     </TouchableOpacity>
 
                     <Text
-                      style={{
-                        color: isFocused ? '#4BA735' : '#6C6C6C',
-                        //   textAlign: 'center',
-                        marginLeft: wp(2.2),
-                        marginTop: wp(10),
-                        fontSize: wp(3),
-                      }}>
+                      style={[
+                        {
+                          color: isFocused ? '#4BA735' : '#6C6C6C',
+                          //   textAlign: 'center',
+                        },
+                        styles.addNewText,
+                      ]}>
                       Add New
                     </Text>
                   </View>
@@ -253,26 +244,38 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                     backgroundColor: colors.secondary,
                     borderRadius: wp(3),
                     padding: wp(5),
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexDirection: 'row',
                   }}>
-                  <View style={{width: wp(8), height: wp(8)}}>
-                    <Image
-                      source={images.homeIcon.incidentreporting}
-                      style={GlStyles.images}
-                    />
-                  </View>
+                  {/* Create New sor */}
+                  <View style={styles.containerOfIcon}>
+                    <View style={{width: wp(8), height: wp(8)}}>
+                      <Image
+                        source={images.homeIcon.incidentreporting}
+                        style={GlStyles.images}
+                      />
+                    </View>
 
-                  <Text
-                    style={{
-                      paddingLeft: wp(2),
-                      fontSize: wp(3),
-                      fontWeight: 'bold',
-                      textAlign: 'center',
-                    }}>
-                    New SOR
-                  </Text>
+                    <Text
+                      style={{
+                        paddingLeft: wp(2),
+                        fontSize: wp(3),
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                      }}>
+                      New SOR
+                    </Text>
+                  </View>
+                  {/* Audit and Inspection */}
+                  <View style={styles.containerOfIcon}>
+                    <View style={{width: wp(8), height: wp(8)}}>
+                      <Image
+                        source={images.homeIcon.auditAndReporting}
+                        style={GlStyles.images}
+                      />
+                    </View>
+                    <Text style={styles.auditReportText}>
+                      Audit and Inspection Report
+                    </Text>
+                  </View>
                 </View>
               </Modal>
             </View>
