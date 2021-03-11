@@ -57,7 +57,8 @@ class Signup extends React.Component<SignupProps, any> {
         this.setState({loading: true, errorModal: true});
 
         try {
-          const signUpResponse: any = await Auth.signUp({
+          console.log(this.state.username);
+          let signUpResponse: any = await Auth.signUp({
             username: this.state.username,
             password: mainPass,
             attributes: {
@@ -67,6 +68,7 @@ class Signup extends React.Component<SignupProps, any> {
           // signUpResponse.then((res) => {
           //   console.log(res);
           // });
+          console.log('line 70');
           console.log(signUpResponse);
           if (signUpResponse.userConfirmed) {
             // check if limit is not reached else send email for forgot password
@@ -90,6 +92,7 @@ class Signup extends React.Component<SignupProps, any> {
           }
         } catch (e: any) {
           console.log('line 101');
+          console.log(e);
           console.log(e.messsage);
           if (e.message.includes('google')) {
             this.setState({loading: false, errorModal: false});

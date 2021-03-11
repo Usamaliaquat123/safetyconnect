@@ -96,9 +96,11 @@ class Verify extends React.Component<VerifyProps, any> {
               }}>
               {this.props.route.params.email}
             </Text>
-            {/* <TouchableOpacity style={styles.siginBtnContainer}>
+            <TouchableOpacity
+              // onPress={() => this.props.navigation.navigate("")}
+              style={styles.siginBtnContainer}>
               <Text style={styles.signinText}>Continue</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
             {/* Don't have a Acctouny */}
             <Text style={styles.dontHaveAccount}>
               Didn't receive an email ?{' '}

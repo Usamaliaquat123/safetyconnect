@@ -1,12 +1,5 @@
 import * as React from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Image,
-  Modal,
-} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {
   Home,
@@ -18,7 +11,7 @@ import {
   Signup,
 } from '@containers';
 import {Icon} from 'react-native-elements';
-import {colors, images, GlStyles} from '@theme';
+import {colors, images, GlStyles, fonts} from '@theme';
 import {default as Model} from 'react-native-modal';
 import {
   widthPercentageToDP as wp,
@@ -28,6 +21,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {AuthStackNavigator} from './AuthNav';
 import {MainStackNavigator} from './Main';
+import Modal from 'react-native-modal';
 
 // import BottomSheet from 'reanimated-bottom-sheet';
 // import Animated from 'react-native-reanimated';
@@ -63,7 +57,7 @@ export const BottomTabNavigator = () => {
           component={() => MainStackNavigator('MyTasks')}
           options={{}}
         />
-        <Tab.Screen name="addNew" component={Home} options={{}} />
+        <Tab.Screen name="addNew" component={Home} />
         <Tab.Screen
           name="create"
           component={() => MainStackNavigator('CreateSOR')}
@@ -85,7 +79,7 @@ export default class TabBar extends React.Component<TabBarProps, any> {
     super(props);
 
     this.state = {
-      createModal: false,
+      createModal: true,
       icons: [],
     };
   }
@@ -209,9 +203,9 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                 {route.name == 'addNew' ? (
                   <View>
                     <TouchableOpacity
-                      onPress={() =>
-                        this.setState({createModal: !this.state.createModal})
-                      }
+                      onPress={() => {
+                        console.log('test');
+                      }}
                       style={{
                         position: 'absolute',
                         zIndex: wp(2),
@@ -249,6 +243,38 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                   </Text>
                 )}
               </TouchableOpacity>
+              <Modal
+                isVisible={this.state.createModal}
+                onBackdropPress={() =>
+                  this.setState({createModal: false, loading: false})
+                }>
+                <View
+                  style={{
+                    backgroundColor: colors.secondary,
+                    borderRadius: wp(3),
+                    padding: wp(5),
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexDirection: 'row',
+                  }}>
+                  <View style={{width: wp(8), height: wp(8)}}>
+                    <Image
+                      source={images.homeIcon.incidentreporting}
+                      style={GlStyles.images}
+                    />
+                  </View>
+
+                  <Text
+                    style={{
+                      paddingLeft: wp(2),
+                      fontSize: wp(3),
+                      fontWeight: 'bold',
+                      textAlign: 'center',
+                    }}>
+                    New SOR
+                  </Text>
+                </View>
+              </Modal>
             </View>
           );
         })}

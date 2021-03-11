@@ -41,7 +41,7 @@ import {createApi} from '@service';
 import {Storage} from 'aws-amplify';
 
 import jwtDecode from 'jwt-decode';
-import {Isor, classifySorBtn} from '@typings';
+import {Isor, classifySorBtn, involved_persons} from '@typings';
 // import {  } from "";
 type ViewAllSOrNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -110,23 +110,23 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     //   console.log(res);
     // });
 
-    const session: any = await Auth.currentSession();
+    // const session: any = await Auth.currentSession();
 
-    const tempUser = await Auth.currentAuthenticatedUser(); // returns a promise if user then object else error
-    if ((await session) && tempUser.attributes) {
-      await this.setState({isAuthenticated: true});
-    }
-    if (await !tempUser.attributes) {
-      if (await session.idToken) {
-        const token = await session.idToken.jwtToken;
-        const decoded: any = await jwtDecode(token);
-        tempUser.attributes = await {email: decoded.email};
-      }
-    }
+    // const tempUser = await Auth.currentAuthenticatedUser(); // returns a promise if user then object else error
+    // if ((await session) && tempUser.attributes) {
+    //   await this.setState({isAuthenticated: true});
+    // }
+    // if (await !tempUser.attributes) {
+    //   if (await session.idToken) {
+    //     const token = await session.idToken.jwtToken;
+    //     const decoded: any = await jwtDecode(token);
+    //     tempUser.attributes = await {email: decoded.email};
+    //   }
+    // }
 
-    console.log(tempUser);
+    // console.log(tempUser);
 
-    AsyncStorage.setItem('user', JSON.stringify(tempUser));
+    // AsyncStorage.setItem('user', JSON.stringify(tempUser));
 
     createApi
       .createApi()
@@ -136,25 +136,33 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         page: 0,
         query: {status: [1, 2, 3, 4, 5]},
       })
-      .then((res: any) => {
-        AsyncStorage.setItem(
+      .then(async (res: any) => {
+        console.log(res.data.data.report);
+        if (res.data.data.involved_persons == undefined) {
+        } else {
+        }
+        await AsyncStorage.setItem(
           'involved_persons',
           JSON.stringify(res.data.data.involved_persons),
-        ).then(() => {
-          for (let i = 0; i < res.data.data.report.length; i++) {
-            if (res.data.data.report[i].status == 1) {
-              this.state.draft.push(res.data.data.report[i]);
-            } else if (res.data.data.report[i].status == 2) {
-              this.state.submitted.push(res.data.data.report[i]);
-            } else if (res.data.data.report[i].status == 3) {
-              this.state.exclated.push(res.data.data.report[i]);
-            } else if (res.data.data.report[i].status == 4) {
-              this.state.inprogress.push(res.data.data.report[i]);
-            } else if (res.data.data.report[i].status == 5) {
-              this.state.completed.push(res.data.data.report[i]);
+        )
+          .then(() => {
+            console.log('text');
+            console.log(res);
+            for (let i = 0; i < res.data.data.report.length; i++) {
+              if (res.data.data.report[i].status == 1) {
+                this.state.draft.push(res.data.data.report[i]);
+              } else if (res.data.data.report[i].status == 2) {
+                this.state.submitted.push(res.data.data.report[i]);
+              } else if (res.data.data.report[i].status == 3) {
+                this.state.exclated.push(res.data.data.report[i]);
+              } else if (res.data.data.report[i].status == 4) {
+                this.state.inprogress.push(res.data.data.report[i]);
+              } else if (res.data.data.report[i].status == 5) {
+                this.state.completed.push(res.data.data.report[i]);
+              }
             }
-          }
-        });
+          })
+          .catch((er) => console.log(er));
 
         console.log(res.data.data.report);
         this.setState({draft: res.data.data.report});
@@ -196,7 +204,10 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   };
 
   render() {
-    // console.log(this.props.initial.list);
+    console.log(this.state.draft);
+    console.log(this.state.submitted);
+    console.log(this.state.exclated);
+    console.log(this.state.completed);
     // console.log();
     return (
       <View style={{backgroundColor: colors.primary}}>
@@ -268,10 +279,10 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   }}
                   showsVerticalScrollIndicator={false}>
                   {/* when you have 0 reports */}
-                  {this.state.draft.length == 0 ||
-                  this.state.inprogress.length == 0 ||
-                  this.state.exclated.length == 0 ||
-                  this.state.completed.length == 0 ||
+                  {this.state.draft.length == 0 &&
+                  this.state.inprogress.length == 0 &&
+                  this.state.exclated.length == 0 &&
+                  this.state.completed.length == 0 &&
                   this.state.submitted == 0 ? (
                     <View style={styles.nonReport}>
                       <Text style={styles.nonReportText}>
