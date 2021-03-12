@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
     fontSize: wp(3),
   },
   containerOfIcon: {
-    justifyContent: 'center',
+    marginTop: wp(1),
+    // justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
   },

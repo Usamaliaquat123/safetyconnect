@@ -247,9 +247,16 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                   }}>
                   {/* Create New sor */}
                   <View style={styles.containerOfIcon}>
-                    <View style={{width: wp(8), height: wp(8)}}>
+                    <View
+                      style={{
+                        padding: wp(3),
+                        backgroundColor: colors.lightGreen,
+                        width: wp(12),
+                        height: wp(12),
+                        borderRadius: wp(3),
+                      }}>
                       <Image
-                        source={images.homeIcon.incidentreporting}
+                        source={images.bottomTab.note}
                         style={GlStyles.images}
                       />
                     </View>
@@ -266,7 +273,14 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                   </View>
                   {/* Audit and Inspection */}
                   <View style={styles.containerOfIcon}>
-                    <View style={{width: wp(8), height: wp(8)}}>
+                    <View
+                      style={{
+                        padding: wp(3),
+                        backgroundColor: colors.lightGreen,
+                        width: wp(12),
+                        height: wp(12),
+                        borderRadius: wp(3),
+                      }}>
                       <Image
                         source={images.homeIcon.auditAndReporting}
                         style={GlStyles.images}
@@ -274,6 +288,25 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                     </View>
                     <Text style={styles.auditReportText}>
                       Audit and Inspection Report
+                    </Text>
+                  </View>
+                  {/* Incident and Accident Report */}
+                  <View style={styles.containerOfIcon}>
+                    <View
+                      style={{
+                        padding: wp(3),
+                        backgroundColor: colors.lightGreen,
+                        width: wp(12),
+                        height: wp(12),
+                        borderRadius: wp(3),
+                      }}>
+                      <Image
+                        source={images.homeIcon.incidentreporting}
+                        style={GlStyles.images}
+                      />
+                    </View>
+                    <Text style={styles.auditReportText}>
+                      Incident & Accident Report
                     </Text>
                   </View>
                 </View>
