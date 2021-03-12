@@ -204,11 +204,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   };
 
   render() {
-    console.log(this.state.draft);
-    console.log(this.state.submitted);
-    console.log(this.state.exclated);
-    console.log(this.state.completed);
-    // console.log();
     return (
       <View style={{backgroundColor: colors.primary}}>
         <ScrollView showsVerticalScrollIndicator={false}>
