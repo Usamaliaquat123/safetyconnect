@@ -131,7 +131,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     createApi
       .createApi()
       .filterSors({
-        project: '6038cf8472762b29b1bed1f3',
+        project: '604b13d114ba138bd23d7f75',
         limit: 10,
         page: 0,
         query: {status: [1, 2, 3, 4, 5]},
@@ -357,12 +357,12 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       {this.state.isDraft == true ? (
                         <View style={[styles.listViewContent]}>
                           {this.state.draft
-                            .slice(0, 5)
+                            .slice(0, 3)
                             .map((d: Isor, i: number) => (
                               <ListCard
                                 classify={d.sor_type}
                                 styles={
-                                  this.state.draft.slice(0, 5).length == i + 1
+                                  this.state.draft.slice(0, 3).length == i + 1
                                     ? {borderBottomWidth: wp(0)}
                                     : null
                                 }
@@ -383,7 +383,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 date={d.occured_at}
                               />
                             ))}
-                          {this.state.draft.length > 5 && (
+                          {this.state.draft.length > 3 && (
                             <TouchableOpacity
                               onPress={() =>
                                 this.props.navigation.navigate('ViewAll', {

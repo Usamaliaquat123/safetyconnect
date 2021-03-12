@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   content: {
     // flex: 1,
-    // height: hp(100),
+    height: hp(200),
     backgroundColor: colors.secondary,
     borderTopLeftRadius: wp(6),
     borderTopRightRadius: wp(6),

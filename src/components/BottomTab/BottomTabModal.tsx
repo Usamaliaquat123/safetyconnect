@@ -8,16 +8,25 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {StackNavigatorProps} from '@nav';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
+
+type BottomPopNavigationProp = StackNavigationProp<StackNavigatorProps, ''>;
+type BottomPopRouteProp = RouteProp<StackNavigatorProps, ''>;
+
 export interface BottomPopProps {}
 
 class BottomPop extends React.Component<BottomPopProps, any> {
   render() {
+    console.log('asd');
     return (
       <View>
         <Model
-          isVisible={this.state.createModal}
-          onBackdropPress={() =>
-            this.setState({createModal: false, loading: false})
+          isVisible={true}
+          onBackdropPress={
+            () => console.log('Test')
+            // this.setState({createModal: false, loading: false})
           }>
           <View
             style={{

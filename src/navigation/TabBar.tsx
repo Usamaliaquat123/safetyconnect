@@ -11,6 +11,7 @@ import {
   Signup,
 } from '@containers';
 import {Icon} from 'react-native-elements';
+import {BottomPop} from '@components';
 import {colors, images, GlStyles, fonts} from '@theme';
 import {default as Model} from 'react-native-modal';
 import {
@@ -55,7 +56,7 @@ export const BottomTabNavigator = () => {
           component={() => MainStackNavigator('MyTasks')}
           options={{}}
         />
-        <Tab.Screen name="addNew" component={Home} />
+        <Tab.Screen name="addNew" component={BottomPop} />
         <Tab.Screen
           name="create"
           component={() => MainStackNavigator('CreateSOR')}
@@ -200,11 +201,7 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                 )}
                 {route.name == 'addNew' ? (
                   <View>
-                    <TouchableOpacity
-                      onPress={() => {
-                        console.log('test');
-                      }}
-                      style={styles.addNewContainer}>
+                    <TouchableOpacity style={styles.addNewContainer}>
                       <Icon
                         size={30}
                         name="pluscircleo"
@@ -217,7 +214,6 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                       style={[
                         {
                           color: isFocused ? '#4BA735' : '#6C6C6C',
-                          //   textAlign: 'center',
                         },
                         styles.addNewText,
                       ]}>
