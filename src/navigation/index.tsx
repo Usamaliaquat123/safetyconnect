@@ -11,6 +11,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import jwtDecode from 'jwt-decode';
 
 import {Auth} from 'aws-amplify';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const setitems = async (key: string, value: string) => {
+  await AsyncStorage.setItem(key, value);
+};
 
 export const Navigator = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(Boolean);
@@ -41,11 +46,14 @@ export const Navigator = () => {
   };
   checkUser();
   console.log(isAuthenticated);
+
+  AsyncStorage.setItem('current_project', '604b13d114ba138bd23d7f75');
+
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        {isAuthenticated == true && <BottomTabNavigator />}
-        {isAuthenticated == false && <AuthStackNavigator />}
+        <BottomTabNavigator />
+        {/* {isAuthenticated == false && <AuthStackNavigator />} */}
       </NavigationContainer>
     </SafeAreaProvider>
   );

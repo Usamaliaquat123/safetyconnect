@@ -61,6 +61,12 @@ class ViewAll extends React.Component<ViewAllProps, any> {
         <ScrollView>
           <View style={styles.header}>
             <View style={styles.headertle}>
+              <Icon
+                size={25}
+                name="arrow-back-outline"
+                type="ionicon"
+                color={colors.secondary}
+              />
               <View style={{alignSelf: 'center'}}>
                 <Text style={styles.orgTitle}>
                   {this.props.route.params.title}
@@ -87,7 +93,9 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                 backgroundColor: colors.secondary,
                 padding: wp(3),
                 paddingBottom: this.state.bottomWidth,
+                paddingLeft: wp(5),
 
+                paddingRight: wp(3),
                 borderTopLeftRadius: wp(4),
                 borderTopRightRadius: wp(4),
               }}>

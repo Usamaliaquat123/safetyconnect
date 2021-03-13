@@ -128,6 +128,16 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
     // AsyncStorage.setItem('user', JSON.stringify(tempUser));
 
+    AsyncStorage.getItem('current_project')
+      .then((res) => {
+        // Get the current Project
+        console.log(res)
+
+
+        
+      })
+      .catch((err) => console.log(err));
+
     createApi
       .createApi()
       .filterSors({
@@ -137,7 +147,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         query: {status: [1, 2, 3, 4, 5]},
       })
       .then(async (res: any) => {
-        console.log(res.data.data.report);
+        console.log(res.data);
         if (res.data.data.involved_persons == undefined) {
         } else {
         }
