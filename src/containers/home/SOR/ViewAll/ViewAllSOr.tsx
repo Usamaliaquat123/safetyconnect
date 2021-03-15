@@ -179,7 +179,12 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 <TouchableOpacity
                   style={styles.selector}
                   onPress={() => {
-                    this.setState({selectP: !this.state.selectP});
+                    this.setState({
+                      project:
+                        this.state.project == 'Board View'
+                          ? 'List View'
+                          : 'Board View',
+                    });
                   }}>
                   <Text style={styles.selectorBox}>{this.state.project}</Text>
                 </TouchableOpacity>
@@ -190,7 +195,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   type="antdesign"
                   color={colors.secondary}
                 />
-                {this.state.selectP == true ? (
+                {/* {this.state.selectP == true ? (
                   <View style={styles.slctContainer}>
                     <TouchableOpacity
                       onPress={() =>
@@ -205,7 +210,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       <Text style={styles.itemH}>List View</Text>
                     </TouchableOpacity>
                   </View>
-                ) : null}
+                ) : null} */}
               </View>
             </View>
           </View>
@@ -216,6 +221,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 style={{
                   alignSelf: 'center',
                   marginTop: wp(40),
+                  marginBottom: wp(40),
                 }}>
                 <LottieView
                   // ref={(animation) => {
@@ -251,7 +257,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       this.state.inprogress.length == 0 &&
                       this.state.exclated.length == 0 &&
                       this.state.completed.length == 0 &&
-                      this.state.submitted == 0 ? (
+                      this.state.submitted.length == 0 ? (
                         <View style={styles.nonReport}>
                           <Text style={styles.nonReportText}>
                             You don't have any reports yet...
@@ -394,9 +400,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             <View style={styles.listHeader}>
                               <TouchableOpacity
                                 onPress={() => {
-                                  this.dropdownAnimated(
-                                    this.state.isInProgress,
-                                  );
                                   this.setState({
                                     isInProgress: !this.state.isInProgress,
                                   });
@@ -492,7 +495,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             <View style={styles.listHeader}>
                               <TouchableOpacity
                                 onPress={() => {
-                                  this.dropdownAnimated(this.state.isExclated);
                                   this.setState({
                                     isExclated: !this.state.isExclated,
                                   });
@@ -589,7 +591,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             <View style={styles.listHeader}>
                               <TouchableOpacity
                                 onPress={() => {
-                                  this.dropdownAnimated(this.state.isCompleted);
                                   this.setState({
                                     isCompleted: !this.state.isCompleted,
                                   });
@@ -691,7 +692,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             <View style={styles.listHeader}>
                               <TouchableOpacity
                                 onPress={() => {
-                                  this.dropdownAnimated(this.state.isSubmited);
                                   this.setState({
                                     isSubmited: !this.state.isSubmited,
                                   });
@@ -806,7 +806,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 ) : (
                   <ScrollView
                     style={{
-                      marginTop: wp(15),
+                      marginTop: wp(10),
                       height: Dimensions.get('screen').height,
                     }}
                     showsHorizontalScrollIndicator={false}
@@ -814,11 +814,11 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     decelerationRate="fast"
                     horizontal={true}>
                     {/* when you have 0 reports */}
-                    {this.state.draft.length == 0 ||
-                    this.state.inprogress.length == 0 ||
-                    this.state.exclated.length == 0 ||
-                    this.state.completed.length == 0 ||
-                    this.state.submitted == 0 ? (
+                    {this.state.draft.length == 0 &&
+                    this.state.inprogress.length == 0 &&
+                    this.state.exclated.length == 0 &&
+                    this.state.completed.length == 0 &&
+                    this.state.submitted.length == 0 ? (
                       <View style={[styles.nonReport, {padding: wp(25)}]}>
                         <Text style={styles.nonReportText}>
                           You don't have any reports yet...
@@ -842,191 +842,375 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     {this.state.draft.length == 0 ? null : (
                       <View>
                         <View style={styles.draftTextContainer}>
-                          <Text style={styles.draftText}>Draft</Text>
-                          <Icon
-                            size={22}
-                            name="filter"
-                            type="ionicon"
-                            color={colors.primary}
-                          />
+                          <Text style={styles.draftText}>Drafts</Text>
+                          <View style={{flexDirection: 'row'}}>
+                            <Icon
+                              size={wp(5)}
+                              name="filter"
+                              type="ionicon"
+                              color={colors.text}
+                            />
+                            <Text
+                              style={{
+                                fontSize: wp(3),
+                                marginLeft: wp(3),
+                                fontWeight: 'bold',
+                                color: colors.text,
+                              }}>
+                              Filter
+                            </Text>
+                          </View>
                         </View>
-                        {this.state.draft.map((d: Isor, i: number) => (
-                          <Card
-                            data={d}
-                            onPress={(d: Isor) =>
-                              this.props.navigation.navigate('ViewSOR', {
-                                data: d,
+
+                        {this.state.draft
+                          .slice(0, 3)
+                          .map((d: Isor, i: number) => (
+                            <Card
+                              type={'all'}
+                              data={d}
+                              onPress={(d: Isor) =>
+                                this.props.navigation.navigate('ViewSOR', {
+                                  data: d,
+                                })
+                              }
+                              date={d.occured_at}
+                              risk={d.risk.severity * d.risk.likelihood}
+                              viewPortWidth={80}
+                              observation={d.details}
+                              classify={d.sor_type}
+                              iconConf={classifySor.find(
+                                (e: any) => e.title == d.sor_type,
+                              )}
+                              location={d.location}
+                              style={[
+                                styles.draftCardContainer,
+                                // {marginBottom: wp()},
+                              ]}
+                              user1={d.user1}
+                              user2={d.user2}
+                            />
+                          ))}
+                        {this.state.draft.length > 3 && (
+                          <TouchableOpacity
+                            onPress={() =>
+                              this.props.navigation.navigate('ViewAll', {
+                                data: this.state.draft,
+                                title: 'Draft',
                               })
                             }
-                            date={d.occured_at}
-                            risk={d.risk.severity * d.risk.likelihood}
-                            viewPortWidth={80}
-                            observation={d.details}
-                            classify={d.sor_type}
-                            iconConf={classifySor.find(
-                              (e: any) => e.title == d.sor_type,
-                            )}
-                            location={d.location}
-                            style={[
-                              styles.draftCardContainer,
-                              {marginBottom: wp(10)},
-                            ]}
-                            user1={d.user1}
-                            user2={d.user2}
-                          />
-                        ))}
+                            style={{
+                              alignSelf: 'center',
+                              padding: wp(3),
+                              paddingLeft: wp(10),
+                              paddingRight: wp(10),
+                              borderRadius: wp(3),
+                              backgroundColor: colors.primary,
+                            }}>
+                            <Text
+                              style={{
+                                fontSize: wp(3),
+                                color: colors.secondary,
+                              }}>
+                              See More
+                            </Text>
+                          </TouchableOpacity>
+                        )}
                       </View>
                     )}
                     {this.state.inprogress.length == 0 ? null : (
                       <View>
                         <View style={styles.draftTextContainer}>
                           <Text style={styles.draftText}>In Progress</Text>
-                          <Icon
-                            size={22}
-                            name="filter"
-                            type="ionicon"
-                            color={colors.primary}
-                          />
+                          <View style={{flexDirection: 'row'}}>
+                            <Icon
+                              size={wp(5)}
+                              name="filter"
+                              type="ionicon"
+                              color={colors.text}
+                            />
+                            <Text
+                              style={{
+                                fontSize: wp(3),
+                                marginLeft: wp(3),
+                                fontWeight: 'bold',
+                                color: colors.text,
+                              }}>
+                              Filter
+                            </Text>
+                          </View>
                         </View>
-                        {this.state.inprogress.map((d: Isor, i: number) => (
-                          <Card
-                            data={d}
-                            onPress={(d: Isor) =>
-                              this.props.navigation.navigate('ViewSOR', {
-                                data: d,
+                        {this.state.inprogress
+                          .slice(0, 3)
+                          .map((d: Isor, i: number) => (
+                            <Card
+                              type={'all'}
+                              data={d}
+                              onPress={(d: Isor) =>
+                                this.props.navigation.navigate('ViewSOR', {
+                                  data: d,
+                                })
+                              }
+                              date={d.occured_at}
+                              risk={d.risk.severity * d.risk.likelihood}
+                              viewPortWidth={80}
+                              observation={d.details}
+                              classify={d.sor_type}
+                              iconConf={classifySor.find(
+                                (e: any) => e.title == d.sor_type,
+                              )}
+                              location={d.location}
+                              style={[styles.draftCardContainer]}
+                              user1={d.user1}
+                              user2={d.user2}
+                            />
+                          ))}
+                        {this.state.inprogress.length > 3 && (
+                          <TouchableOpacity
+                            onPress={() =>
+                              this.props.navigation.navigate('ViewAll', {
+                                data: this.state.inprogress,
+                                title: 'In Progress',
                               })
                             }
-                            date={d.occured_at}
-                            risk={d.risk.severity * d.risk.likelihood}
-                            viewPortWidth={80}
-                            observation={d.details}
-                            classify={d.sor_type}
-                            iconConf={classifySor.find(
-                              (e: any) => e.title == d.sor_type,
-                            )}
-                            location={d.location}
-                            style={[
-                              styles.draftCardContainer,
-                              {marginBottom: wp(10)},
-                            ]}
-                            user1={d.user1}
-                            user2={d.user2}
-                          />
-                        ))}
+                            style={{
+                              alignSelf: 'center',
+                              padding: wp(3),
+                              paddingLeft: wp(10),
+                              paddingRight: wp(10),
+                              borderRadius: wp(3),
+                              backgroundColor: colors.primary,
+                            }}>
+                            <Text
+                              style={{
+                                fontSize: wp(3),
+                                color: colors.secondary,
+                              }}>
+                              See More
+                            </Text>
+                          </TouchableOpacity>
+                        )}
                       </View>
                     )}
                     {this.state.exclated.length == 0 ? null : (
                       <View>
                         <View style={styles.draftTextContainer}>
                           <Text style={styles.draftText}>In Progress</Text>
-                          <Icon
-                            size={22}
-                            name="filter"
-                            type="ionicon"
-                            color={colors.primary}
-                          />
+                          <View style={{flexDirection: 'row'}}>
+                            <Icon
+                              size={wp(5)}
+                              name="filter"
+                              type="ionicon"
+                              color={colors.text}
+                            />
+                            <Text
+                              style={{
+                                fontSize: wp(3),
+                                marginLeft: wp(3),
+                                fontWeight: 'bold',
+                                color: colors.text,
+                              }}>
+                              Filter
+                            </Text>
+                          </View>
                         </View>
-                        {this.state.exclated.map((d: Isor, i: number) => (
-                          <Card
-                            data={d}
-                            onPress={(d: Isor) =>
-                              this.props.navigation.navigate('ViewSOR', {
-                                data: d,
+                        {this.state.exclated
+                          .slice(0, 3)
+                          .map((d: Isor, i: number) => (
+                            <Card
+                              type={'all'}
+                              data={d}
+                              onPress={(d: Isor) =>
+                                this.props.navigation.navigate('ViewSOR', {
+                                  data: d,
+                                })
+                              }
+                              date={d.occured_at}
+                              risk={d.risk.severity * d.risk.likelihood}
+                              viewPortWidth={80}
+                              observation={d.details}
+                              classify={d.sor_type}
+                              iconConf={classifySor.find(
+                                (e: any) => e.title == d.sor_type,
+                              )}
+                              location={d.location}
+                              style={[styles.draftCardContainer]}
+                              user1={d.user1}
+                              user2={d.user2}
+                            />
+                          ))}
+                        {this.state.exclated.length > 3 && (
+                          <TouchableOpacity
+                            onPress={() =>
+                              this.props.navigation.navigate('ViewAll', {
+                                data: this.state.exclated,
+                                title: 'Exclated',
                               })
                             }
-                            date={d.occured_at}
-                            risk={d.risk.severity * d.risk.likelihood}
-                            viewPortWidth={80}
-                            observation={d.details}
-                            classify={d.sor_type}
-                            iconConf={classifySor.find(
-                              (e: any) => e.title == d.sor_type,
-                            )}
-                            location={d.location}
-                            style={[
-                              styles.draftCardContainer,
-                              {marginBottom: wp(10)},
-                            ]}
-                            user1={d.user1}
-                            user2={d.user2}
-                          />
-                        ))}
+                            style={{
+                              alignSelf: 'center',
+                              padding: wp(3),
+                              paddingLeft: wp(10),
+                              paddingRight: wp(10),
+                              borderRadius: wp(3),
+                              backgroundColor: colors.primary,
+                            }}>
+                            <Text
+                              style={{
+                                fontSize: wp(3),
+                                color: colors.secondary,
+                              }}>
+                              See More
+                            </Text>
+                          </TouchableOpacity>
+                        )}
                       </View>
                     )}
                     {this.state.completed.length == 0 ? null : (
                       <View>
                         <View style={styles.draftTextContainer}>
                           <Text style={styles.draftText}>In Progress</Text>
-                          <Icon
-                            size={22}
-                            name="filter"
-                            type="ionicon"
-                            color={colors.primary}
-                          />
+                          <View style={{flexDirection: 'row'}}>
+                            <Icon
+                              size={wp(5)}
+                              name="filter"
+                              type="ionicon"
+                              color={colors.text}
+                            />
+                            <Text
+                              style={{
+                                fontSize: wp(3),
+                                marginLeft: wp(3),
+                                fontWeight: 'bold',
+                                color: colors.text,
+                              }}>
+                              Filter
+                            </Text>
+                          </View>
                         </View>
-                        {this.state.completed.map((d: Isor, i: number) => (
-                          <Card
-                            data={d}
-                            onPress={(d: Isor) =>
-                              this.props.navigation.navigate('ViewSOR', {
-                                data: d,
+                        {this.state.completed
+                          .slice(0, 3)
+                          .map((d: Isor, i: number) => (
+                            <Card
+                              type={'all'}
+                              data={d}
+                              onPress={(d: Isor) =>
+                                this.props.navigation.navigate('ViewSOR', {
+                                  data: d,
+                                })
+                              }
+                              date={d.occured_at}
+                              risk={d.risk.severity * d.risk.likelihood}
+                              viewPortWidth={80}
+                              observation={d.details}
+                              classify={d.sor_type}
+                              iconConf={classifySor.find(
+                                (e: any) => e.title == d.sor_type,
+                              )}
+                              location={d.location}
+                              style={[styles.draftCardContainer]}
+                              user1={d.user1}
+                              user2={d.user2}
+                            />
+                          ))}
+                        {this.state.completed.length > 3 && (
+                          <TouchableOpacity
+                            onPress={() =>
+                              this.props.navigation.navigate('ViewAll', {
+                                data: this.state.completed,
+                                title: 'Completed',
                               })
                             }
-                            date={d.occured_at}
-                            risk={d.risk.severity * d.risk.likelihood}
-                            viewPortWidth={80}
-                            observation={d.details}
-                            classify={d.sor_type}
-                            iconConf={classifySor.find(
-                              (e: any) => e.title == d.sor_type,
-                            )}
-                            location={d.location}
-                            style={[
-                              styles.draftCardContainer,
-                              {marginBottom: wp(10)},
-                            ]}
-                            user1={d.user1}
-                            user2={d.user2}
-                          />
-                        ))}
+                            style={{
+                              alignSelf: 'center',
+                              padding: wp(3),
+                              paddingLeft: wp(10),
+                              paddingRight: wp(10),
+                              borderRadius: wp(3),
+                              backgroundColor: colors.primary,
+                            }}>
+                            <Text
+                              style={{
+                                fontSize: wp(3),
+                                color: colors.secondary,
+                              }}>
+                              See More
+                            </Text>
+                          </TouchableOpacity>
+                        )}
                       </View>
                     )}
                     {this.state.submitted.length == 0 ? null : (
                       <View>
                         <View style={styles.submitTextContaienr}>
                           <Text style={styles.submitText}>Closed</Text>
-                          <Icon
-                            size={22}
-                            name="filter"
-                            type="ionicon"
-                            color={colors.primary}
-                          />
+                          <View style={{flexDirection: 'row'}}>
+                            <Icon
+                              size={wp(5)}
+                              name="filter"
+                              type="ionicon"
+                              color={colors.text}
+                            />
+                            <Text
+                              style={{
+                                fontSize: wp(3),
+                                marginLeft: wp(3),
+                                fontWeight: 'bold',
+                                color: colors.text,
+                              }}>
+                              Filter
+                            </Text>
+                          </View>
                         </View>
-                        {this.state.submitted.map((d: Isor, i: number) => (
-                          <Card
-                            data={d}
-                            onPress={(d: Isor) =>
-                              this.props.navigation.navigate('ViewSOR', {
-                                data: d,
+                        {this.state.submitted
+                          .slice(0, 3)
+                          .map((d: Isor, i: number) => (
+                            <Card
+                              type={'all'}
+                              data={d}
+                              onPress={(d: Isor) =>
+                                this.props.navigation.navigate('ViewSOR', {
+                                  data: d,
+                                })
+                              }
+                              date={d.occured_at}
+                              risk={d.risk.severity * d.risk.likelihood}
+                              viewPortWidth={80}
+                              user1={d.user1}
+                              user2={d.user2}
+                              observation={d.details}
+                              classify={d.sor_type}
+                              iconConf={classifySor.find(
+                                (e: any) => e.title == d.sor_type,
+                              )}
+                              location={d.location}
+                              style={[styles.submitCardContainer]}
+                            />
+                          ))}
+                        {this.state.submitted.length > 3 && (
+                          <TouchableOpacity
+                            onPress={() =>
+                              this.props.navigation.navigate('ViewAll', {
+                                data: this.state.submitted,
+                                title: 'Submitted',
                               })
                             }
-                            date={d.occured_at}
-                            risk={d.risk.severity * d.risk.likelihood}
-                            viewPortWidth={80}
-                            user1={d.user1}
-                            user2={d.user2}
-                            observation={d.details}
-                            classify={d.sor_type}
-                            iconConf={classifySor.find(
-                              (e: any) => e.title == d.sor_type,
-                            )}
-                            location={d.location}
-                            style={[
-                              styles.submitCardContainer,
-                              {marginBottom: wp(10)},
-                            ]}
-                          />
-                        ))}
+                            style={{
+                              alignSelf: 'center',
+                              padding: wp(3),
+                              paddingLeft: wp(10),
+                              paddingRight: wp(10),
+                              borderRadius: wp(3),
+                              backgroundColor: colors.primary,
+                            }}>
+                            <Text
+                              style={{
+                                fontSize: wp(3),
+                                color: colors.secondary,
+                              }}>
+                              See More
+                            </Text>
+                          </TouchableOpacity>
+                        )}
                       </View>
                     )}
                   </ScrollView>

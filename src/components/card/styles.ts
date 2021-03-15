@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   cardtime: {
     fontSize: wp(3),
     fontWeight: 'bold',
-    opacity:.5,
+    opacity: 0.5,
     color: colors.text,
   },
   cardDate: {
@@ -42,7 +42,9 @@ const styles = StyleSheet.create({
   cardBottom: {
     justifyContent: 'space-between',
     flexDirection: 'row',
-    marginTop: wp(6),
+    width: wp(80) - wp(10),
+    // marginTop: wp(6),
+    // flex: 1,
   },
   cardLocation: {
     flexDirection: 'row',
@@ -82,16 +84,16 @@ const styles = StyleSheet.create({
     padding: wp(5),
     flex: 1,
     marginBottom: IS_IOS ? 0 : -1, // Prevent a random Android rendering issue
-    shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 30,
-      },
-      shadowOpacity: 0.50,
-      shadowRadius: 2.22,
-      
-      elevation: 10,
-    borderRadius: entryBorderRadius
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 30,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 2.22,
+
+    elevation: 2,
+    borderRadius: entryBorderRadius,
     //   borderTopLeftRadius: entryBorderRadius,
     // borderTopRightRadius: entryBorderRadius,
     // borderBottomLeftRadius: entryBorderRadius,
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
   //   },
   //   // shadowOpacity: 0.50,
   //   shadowRadius: 2.22,
-    
+
   //   elevation: 1,
   // },
   slideInnerContainer: {

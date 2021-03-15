@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   content: {
     // flex: 1,
-    height: hp(200),
+    // height: hp(200),
     backgroundColor: colors.secondary,
     borderTopLeftRadius: wp(6),
     borderTopRightRadius: wp(6),
@@ -116,13 +116,13 @@ const styles = StyleSheet.create({
     marginBottom: wp(3),
   },
   draftText: {
-    fontSize: wp(4),
+    fontSize: wp(3.5),
     fontWeight: 'bold',
     color: colors.primary,
   },
   draftCardContainer: {
     marginLeft: wp(1),
-    marginBottom: wp(5),
+    marginBottom: wp(4),
     marginRight: wp(1),
   },
   // submite
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     paddingRight: wp(12),
   },
   submitText: {
-    fontSize: wp(4),
+    fontSize: wp(3.4),
     fontWeight: 'bold',
     color: colors.primary,
   },
