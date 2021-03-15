@@ -27,7 +27,7 @@ import {
 } from 'react-native-responsive-screen';
 
 import DocumentPicker from 'react-native-document-picker';
-import {Chart, Suggestions, RepeatedSor, Tags} from '@components';
+import {Chart, Suggestions, RepeatedSor, Tags, Calendars} from '@components';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
@@ -74,6 +74,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       actionRecommendationsText: '',
       classifySorbtns: classifySor,
       observation: '',
+      calendarModal: true,
       // esclateTo / submit To
       SelectsubmitTo: false,
       submitToArr: [],
@@ -88,7 +89,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       actionsTags: [],
       // Selected input
       selectedInputIndex: 1,
-
+      img_url: '',
       liklihood: riskxSeverityxliklihood.liklihood,
       severity: riskxSeverityxliklihood.severity,
       // Involved Persons of this project
@@ -287,7 +288,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 <Avatar
                   rounded
                   source={{
-                    uri: this.state.user.img_url,
+                    uri: this.state.img_url,
                   }}
                 />
               </View>
@@ -818,6 +819,19 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               <Text style={styles.submitsorbtnSbtxt}>Submit</Text>
             </TouchableOpacity>
           </Animated.View>
+
+          <Modal
+            animationInTiming={1000}
+            animationIn={'bounceInUp'}
+            animationOut={'bounceOutDown'}
+            animationOutTiming={1000}
+            useNativeDriver={true}
+            isVisible={this.state.calendarModal}>
+            <View
+              style={{backgroundColor: colors.secondary, borderRadius: wp(4)}}>
+              <Calendars currentDate={Date.now()} />
+            </View>
+          </Modal>
 
           <Modal
             animationInTiming={1000}

@@ -9,12 +9,14 @@ import SuggestionsAvatar from './suggestionsAvatar/SuggestionsAvatar';
 import RepeatedSor from './RepeatedSorModal/RepeatedSor';
 import ListCard from './listCard/ListCard';
 import CommentPop from './ViewSor/Popup/Comments/CommentPop';
+import Calendars from './calendars/Calendars';
 import BottomPop from './BottomTab/BottomTabModal';
 import SuggestionsPop from './ViewSor/Popup/Suggestions/SuggestionsPop';
 export {
   Suggestions,
   Chart,
   Card,
+  Calendars,
   Search,
   User,
   BottomPop,

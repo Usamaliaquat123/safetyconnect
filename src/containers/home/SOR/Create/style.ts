@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
   // Header
   header: {
     padding: wp(7),
-    paddingTop: wp(10),
-    paddingBottom: wp(10),
+    paddingTop: wp(5),
+    paddingBottom: wp(5),
     backgroundColor: colors.primary,
   },
   title: {
@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     // flex: 2,
     // marginTop: wp(80),
-    borderTopLeftRadius: wp(6),
-    borderTopRightRadius: wp(6),
+    borderTopLeftRadius: wp(3),
+    borderTopRightRadius: wp(3),
   },
   // OBSERVATION
   cnHeading: {
