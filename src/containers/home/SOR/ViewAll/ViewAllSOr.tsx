@@ -107,36 +107,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   }
 
   componentDidMount = async () => {
-    // aws s3 storage
-    // Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png').then((res) => {
-    //   console.log(res);
-    // });
-
-    // const session: any = await Auth.currentSession();
-
-    // const tempUser = await Auth.currentAuthenticatedUser(); // returns a promise if user then object else error
-    // if ((await session) && tempUser.attributes) {
-    //   await this.setState({isAuthenticated: true});
-    // }
-    // if (await !tempUser.attributes) {
-    //   if (await session.idToken) {
-    //     const token = await session.idToken.jwtToken;
-    //     const decoded: any = await jwtDecode(token);
-    //     tempUser.attributes = await {email: decoded.email};
-    //   }
-    // }
-
-    // console.log(tempUser);
-
-    // AsyncStorage.setItem('user', JSON.stringify(tempUser));
-
-    AsyncStorage.getItem('current_project')
-      .then((res) => {
-        // Get the current Project
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
-
+    // this.props.initialList.addList('asdds');
+    // console.log(this.props.initialList);
+    // console.log(this.props.initial.list);
     this.setState({loading: true});
     createApi
       .createApi()
@@ -147,7 +120,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         query: {status: [1, 2, 3, 4, 5]},
       })
       .then(async (res: any) => {
-        console.log(res.data);
         if (res.data.data.involved_persons !== undefined) {
           await AsyncStorage.setItem(
             'involved_persons',
@@ -169,55 +141,12 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           }
           this.setState({loading: false});
         }
-        // await AsyncStorage.setItem(
-        //   'involved_persons',
 
-        // )
-        //   .then(() => {
-        // console.log('text');
-        // console.log(res);
-
-        // })
-        // .catch((er) => console.log(er));
-
-        console.log(res.data.data.report);
         this.setState({draft: res.data.data.report});
       });
-    // initialList.initialList();
-    // this.props.initialList.addList('602e54a3fbfaf078abab8466');
-    // console.log(RootState);
-    // console.log(this.props.initial);
-    // initialList.addList('602e54a3fbfaf078abab8466');
   };
 
-  dropdownAnimated = (d: string) => {
-    // Animated.timing(this.state.AnimatedDown, {
-    //   toValue: wp(20),
-    //   duration: 1500,
-    //   easing: Easing.elastic(3),
-    //   useNativeDriver: false,
-    // }).start();
-    // Animated.timing(this.state.AnimatedOpac, {
-    //   toValue: 1,
-    //   duration: 1500,
-    //   easing: Easing.elastic(3),
-    //   useNativeDriver: false,
-    // }).start();
-  };
-  closeDropDown = (d: string) => {
-    // Animated.timing(d, {
-    //   toValue: wp(0),
-    //   duration: 1500,
-    //   easing: Easing.elastic(3),
-    //   useNativeDriver: false,
-    // }).start();
-    // Animated.timing(this.state.AnimatedOpac, {
-    //   toValue: 0,
-    //   duration: 1500,
-    //   easing: Easing.elastic(3),
-    //   useNativeDriver: false,
-    // }).start();
-  };
+  filterDecending = (sors: Array<any>, name: string) => {};
 
   render() {
     return (
@@ -357,10 +286,10 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               onPress={() => {
                                 if (this.state.isDraft == true) {
                                   this.setState({isDraft: false});
-                                  this.closeDropDown(this.state.isDraft);
+                                  // this.closeDropDown(this.state.isDraft);
                                 } else {
                                   this.setState({isDraft: true});
-                                  this.dropdownAnimated(this.state.isDraft);
+                                  // this.dropdownAnimated(this.state.isDraft);
                                 }
                               }}
                               style={{flexDirection: 'row'}}>
@@ -373,7 +302,13 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               />
                               <Text style={styles.listDraftText}>Drafts</Text>
                             </TouchableOpacity>
-                            <View
+                            <TouchableOpacity
+                              onPress={() => {
+                                const filtered = this.state.draft.sort(
+                                  (a: any, b: any) => b - a,
+                                );
+                                this.setState({draft: filtered});
+                              }}
                               style={{
                                 position: 'absolute',
                                 right: wp(4),
@@ -393,7 +328,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 }}>
                                 Filter
                               </Text>
-                            </View>
+                            </TouchableOpacity>
                           </View>
 
                           {this.state.isDraft == true ? (
@@ -1110,8 +1045,10 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = (dispatch: unknown) => {
+  // console.log(dispatch);
+  // console.log(initialList);
   return {
-    initialList,
+    addList: dispatch,
   };
 };
 
