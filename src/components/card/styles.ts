@@ -1,5 +1,5 @@
 import {StyleSheet, Platform, Dimensions} from 'react-native';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -75,9 +75,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   cardTitle: {
-    fontSize: wp(3.6),
+    fontSize: wp(3),
     color: colors.primary,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayBold,
     marginTop: wp(8),
   },
   imageContainer: {

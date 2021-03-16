@@ -32,7 +32,7 @@ export interface CardProps {
   isclassify?: boolean;
   backgroundColor?: string;
   onPress: Function;
-  type: string;
+  type?: string;
 }
 function dp(percentage: any) {
   const value = (percentage * viewportWidth) / 100;
@@ -212,53 +212,62 @@ export default class Card extends React.Component<CardProps, any> {
                 <View>
                   <Text style={styles.cardTitle}>{this.props.observation}</Text>
                 </View>
-                <View style={styles.cardBottom}>
-                  <View style={styles.cardRisk}>
-                    <Icon
-                      style={{padding: 3}}
-                      size={wp(3)}
-                      name={this.props.iconConf.icon}
-                      type={this.props.iconConf.type}
-                      color={this.props.iconConf.color}
-                    />
-                    <Text
-                      style={[
-                        styles.cardBorderText,
-                        {color: this.props.iconConf.color},
-                      ]}>
-                      {this.props.classify}
-                    </Text>
-                  </View>
-                  <View style={styles.cardLocation}>
-                    <Icon
-                      style={{paddingRight: 3}}
-                      size={wp(5)}
-                      name="location"
-                      type="evilicon"
-                      color={colors.primary}
-                    />
-                    <Text style={styles.cardBorderText}>
-                      {this.props.location}
-                    </Text>
-                  </View>
-                  <View style={{flexDirection: 'row', marginTop: wp(-2)}}>
-                    <Avatar
-                      size={wp(8)}
-                      containerStyle={{marginRight: wp(-5)}}
-                      rounded
-                      source={{
-                        uri: this.props.user1,
-                      }}
-                    />
-                    <Avatar
-                      size={wp(8)}
-                      rounded
-                      source={{
-                        uri: this.props.user1,
-                      }}
-                    />
+                {/* Card Bottom */}
+                <View
+                  style={{
+                    position: 'absolute',
+                    bottom: wp(3),
+                    alignSelf: 'center',
+                  }}>
+                  <View style={[styles.cardBottom, {width: wp(80) - wp(20)}]}>
+                    <View style={styles.cardRisk}>
+                      <Icon
+                        style={{padding: 3}}
+                        size={wp(3)}
+                        name={this.props.iconConf.icon}
+                        type={this.props.iconConf.type}
+                        color={this.props.iconConf.color}
+                      />
+                      <Text
+                        style={[
+                          styles.cardBorderText,
+                          {color: this.props.iconConf.color},
+                        ]}>
+                        {this.props.classify}
+                      </Text>
+                    </View>
+                    <View style={styles.cardLocation}>
+                      <Icon
+                        style={{paddingRight: 3}}
+                        size={wp(5)}
+                        name="location"
+                        type="evilicon"
+                        color={colors.primary}
+                      />
+                      <Text style={styles.cardBorderText}>
+                        {this.props.location}
+                      </Text>
+                    </View>
+                    <View style={{flexDirection: 'row', marginTop: wp(-2)}}>
+                      <Avatar
+                        size={wp(8)}
+                        containerStyle={{marginRight: wp(-5)}}
+                        rounded
+                        source={{
+                          uri: this.props.user1,
+                        }}
+                      />
+                      <Avatar
+                        size={wp(8)}
+                        rounded
+                        source={{
+                          uri: this.props.user1,
+                        }}
+                      />
+                    </View>
                   </View>
                 </View>
+
                 <View style={[this.props.even ? styles.radiusMaskEven : {}]} />
               </View>
             </TouchableOpacity>

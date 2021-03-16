@@ -47,7 +47,7 @@ export default class RepeatedModal extends React.Component<
               {this.state.submittedSelected == true ? (
                 <Icon
                   onPress={() => this.setState({submittedSelected: false})}
-                  size={25}
+                  size={wp(5)}
                   containerStyle={styles.containerStyleOfFiledTick}
                   name="checkmark-circle"
                   type="ionicon"
@@ -56,7 +56,7 @@ export default class RepeatedModal extends React.Component<
               ) : (
                 <Icon
                   onPress={() => this.setState({submittedSelected: true})}
-                  size={25}
+                  size={wp(5)}
                   containerStyle={styles.containerStyleOfNotTick}
                   name="checkmark-circle-outline"
                   type="ionicon"
@@ -90,7 +90,7 @@ export default class RepeatedModal extends React.Component<
               {this.state.completedSelected == true ? (
                 <Icon
                   onPress={() => this.setState({completedSelected: false})}
-                  size={25}
+                  size={wp(5)}
                   containerStyle={styles.containerStyleOfFiledTick}
                   name="checkmark-circle"
                   type="ionicon"
@@ -99,7 +99,7 @@ export default class RepeatedModal extends React.Component<
               ) : (
                 <Icon
                   onPress={() => this.setState({completedSelected: true})}
-                  size={25}
+                  size={wp(5)}
                   containerStyle={styles.containerStyleOfNotTick}
                   name="checkmark-circle-outline"
                   type="ionicon"
@@ -134,7 +134,7 @@ export default class RepeatedModal extends React.Component<
               {this.state.draftSelected == true ? (
                 <Icon
                   onPress={() => this.setState({draftSelected: false})}
-                  size={25}
+                  size={wp(5)}
                   containerStyle={styles.containerStyleOfFiledTick}
                   name="checkmark-circle"
                   type="ionicon"
@@ -143,7 +143,7 @@ export default class RepeatedModal extends React.Component<
               ) : (
                 <Icon
                   onPress={() => this.setState({draftSelected: true})}
-                  size={25}
+                  size={wp(5)}
                   containerStyle={styles.containerStyleOfNotTick}
                   name="checkmark-circle-outline"
                   type="ionicon"
@@ -176,7 +176,14 @@ export default class RepeatedModal extends React.Component<
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => this.props.onSubmit()}
-              style={styles.submitBtn}>
+              style={[
+                styles.submitBtn,
+                this.state.draftSelected == false ||
+                this.state.completedSelected == false ||
+                this.state.submittedSelected == false
+                  ? {backgroundColor: colors.lightGrey}
+                  : {backgroundColor: colors.primary},
+              ]}>
               <Text style={styles.subBtnText}>Link with SOR</Text>
             </TouchableOpacity>
           </View>

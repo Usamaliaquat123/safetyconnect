@@ -1,13 +1,14 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '@theme/colors';
+import {colors, fonts} from '@theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 const styles = StyleSheet.create({
   actionSuggHeading: {
-    fontSize: wp(3.4),
+    fontSize: wp(3),
     marginTop: wp(5),
+    fontFamily: fonts.SFuiDisplayMedium,
     color: colors.text,
     fontStyle: 'italic',
   },
@@ -23,7 +24,9 @@ const styles = StyleSheet.create({
     borderRadius: wp(5),
   },
   ActionsugItmTxt: {
-    fontSize: wp(3.5),
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayLight,
+
     color: colors.text,
   },
 });

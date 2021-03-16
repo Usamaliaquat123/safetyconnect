@@ -1,6 +1,6 @@
 // import { colors } from './../../../../theme/colors';
 import {StyleSheet} from 'react-native';
-import {colors} from '@theme/colors';
+import {colors, fonts} from '@theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -18,10 +18,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
   },
   title: {
+    fontFamily: fonts.SFuiDisplayBold,
     fontSize: wp(4),
     marginLeft: wp(5),
     color: colors.secondary,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
   },
   underScrore: {
     backgroundColor: colors.green,
@@ -98,8 +99,9 @@ const styles = StyleSheet.create({
   // OBSERVATION
   cnHeading: {
     color: colors.primary,
-    fontWeight: 'bold',
-    fontSize: wp(4),
+    // fontWeight: 'bold',
+    fontSize: wp(3.6),
+    fontFamily: fonts.SFuiDisplayBold,
   },
   observationDetail: {
     borderRadius: wp(5),
@@ -108,22 +110,26 @@ const styles = StyleSheet.create({
     borderWidth: wp(0.3),
   },
   observationT: {
-    fontWeight: 'bold',
     fontSize: wp(3.4),
     padding: wp(5),
+    fontFamily: fonts.SFuiDisplayMedium,
+
     paddingBottom: wp(2.5),
     paddingLeft: wp(0),
     color: colors.text,
   },
   obserttle: {
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    color: colors.text,
+    fontFamily: fonts.SFuiDisplayBold,
     fontSize: wp(3.4),
   },
   obInput: {borderBottomWidth: 0},
   obInputText: {
     fontSize: 15,
-    fontWeight: 'bold',
-    color: colors.text,
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayThin,
+    // color: colors.text,
     opacity: 0.5,
   },
   obText: {fontWeight: 'bold', fontSize: 12},
@@ -153,7 +159,9 @@ const styles = StyleSheet.create({
   clasSorContainer: {},
   clasSorHeading: {
     fontSize: wp(3),
-    fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayMedium,
+
+    // fontWeight: 'bold',
     marginTop: wp(7),
     marginBottom: wp(2),
   },
@@ -185,13 +193,16 @@ const styles = StyleSheet.create({
     marginTop: wp(5),
   },
   involvePText: {
-    fontWeight: 'bold',
-    color: colors.text,
+    // fontWeight: 'bold',
+    // color: colors.text,
+    fontFamily: fonts.SFuiDisplayMedium,
     fontSize: wp(3),
   },
   involvePTextOtional: {
     fontStyle: 'italic',
     fontWeight: 'normal',
+    fontFamily: fonts.SFuiDisplayThin,
+    fontSize: wp(2.5),
   },
   involvePInput: {
     marginTop: wp(2),
@@ -223,10 +234,12 @@ const styles = StyleSheet.create({
     fontSize: wp(3),
   },
   RiskHeading: {
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     color: colors.text,
     fontSize: wp(3),
-    marginTop: wp(10),
+    // marginTop: wp(10),
+    marginRight: wp(2),
+    fontFamily: fonts.SFuiDisplaySemiBold,
   },
   uploadBorder: {
     borderRadius: wp(5),

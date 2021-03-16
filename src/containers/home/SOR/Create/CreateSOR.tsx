@@ -74,7 +74,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       actionRecommendationsText: '',
       classifySorbtns: classifySor,
       observation: '',
-      calendarModal: true,
+      calendarModal: false,
       // esclateTo / submit To
       SelectsubmitTo: false,
       submitToArr: [],
@@ -194,7 +194,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   // search in observatiosn
   searchInObservation = (str: string) => {
     const form = new FormData();
-    form.append('obs1', str);
+    form.append('q', str);
     createApi
       .createApi()
       .observationSuggestions(form)
@@ -302,7 +302,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 marginTop: this.state.contentAnim,
               },
             ]}>
-            <Text style={styles.cnHeading}>Create New SOR</Text>
+            <Text style={styles.cnHeading}>Create SOR</Text>
             {/* Observation Details */}
             <Text style={styles.observationT}>Observation Detail</Text>
             <View
@@ -444,13 +444,24 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             {/* Risk Chart*/}
             {this.state.classifySorbtns[1].selected == false ? (
               <View>
-                <Text style={styles.RiskHeading}>Risk</Text>
+                <View style={{flexDirection: 'row', marginTop: wp(10)}}>
+                  <Text style={styles.RiskHeading}>Risk</Text>
+                  <Text style={{fontStyle: 'italic', fontSize: wp(3)}}>
+                    {this.state.liklihood * this.state.severity}
+                  </Text>
+                </View>
 
                 <Chart
                   liklihood={this.state.liklihood}
                   severity={this.state.severity}
                   style={{alignSelf: 'center', marginTop: wp(3)}}
-                  onPress={(v: object) => console.log(v)}
+                  onPress={(v: any) => {
+                    if (v.liklihood == undefined) {
+                      this.setState({severity: v.severity});
+                    } else {
+                      this.setState({liklihood: v.liklihood});
+                    }
+                  }}
                 />
               </View>
             ) : null}
