@@ -93,7 +93,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
               style={{
                 backgroundColor: colors.secondary,
                 padding: wp(3),
-                paddingBottom: this.state.bottomWidth,
+                // paddingBottom: this.state.bottomWidth,
                 paddingLeft: wp(5),
 
                 paddingRight: wp(3),
