@@ -685,7 +685,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           <View
                             style={[
                               {
-                                paddingBottom: this.state.bottomWidth,
+                                paddingBottom: wp(3),
                               },
                               styles.closedTop,
                             ]}>
@@ -807,7 +807,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   <ScrollView
                     style={{
                       marginTop: wp(10),
-                      height: Dimensions.get('screen').height,
+                      // height: Dimensions.get('screen').height,
                     }}
                     showsHorizontalScrollIndicator={false}
                     snapToInterval={wp(83)}
