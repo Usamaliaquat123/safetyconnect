@@ -278,9 +278,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     );
     var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
     var severity = this.state.severity.filter((d: any) => d.selected == true);
-    var involvePersonText = this.state.involvePersonText;
+    // var involvePersonText = this.state.involvePersonText;
     var actionRecommendationsText = this.state.actionRecommendationsText;
-
+    var submitTo = this.state.submitTo;
+    var esclateTo = this.state.esclateTo
     // Check If the observation text is detected
     if (this.state.observationT != '') {
       // Check if any of classify sor btn its selected
