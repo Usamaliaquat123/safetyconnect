@@ -284,29 +284,33 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     var esclateTo = this.state.esclateTo;
     // Check If the observation text is detected
     if (this.state.observationT != '') {
-      if (liklihood[0].selected !== '') {
-      if (severity[0].selected !== '') {
-        if (actionRecommendationsText !== ' ') {
-          if (submitTo !== '') {
-            if (esclateTo !== ' ') {
+      if (sorbtns[0].selected !== '') {
+        if (liklihood[0].selected !== '') {
+          if (severity[0].selected !== '') {
+            if (actionRecommendationsText !== ' ') {
+              if (submitTo !== '') {
+                if (esclateTo !== ' ') {
+                } else {
+                  // Error on esclated to
+                }
+              } else {
+                // Error on submitted to
+              }
             } else {
-              // Error on esclated to
+              // Error on actions and recommendations
             }
           } else {
-            // Error on submitted to
+            // Error on severity
           }
         } else {
-          // Error on actions and recommendations
+          // Error on liklihood
         }
       } else {
-        // Error on severity
+        // Error on sor btns
       }
     } else {
-      // Error on liklihood
+      // Error on Observations
     }
-  }else{
-    // Error on Observatios 
-  }
     if (this.state.observationT != '') {
       // Check if any of classify sor btn its selected
       if (sorbtns.length != 0) {
