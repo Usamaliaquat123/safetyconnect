@@ -36,6 +36,7 @@ import Modal from 'react-native-modal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {parse} from 'react-native-svg';
 import {createApi} from '@service';
+import {StackAnimationTypes} from 'react-native-screens';
 type CreateSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'CreateSOR'
@@ -83,6 +84,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       esclateTo: '',
       // repeated sor modal
       repeatedSorModal: false,
+      repeatedSorData: [],
       submitToTags: [],
       exclateToTags: [],
       involvePersonTags: [],
@@ -262,7 +264,39 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     }).start();
   };
 
-  onSubmit = () => {};
+  onCreateSor = () => {
+    // this.setState({repeatedSorModal: true});
+    // repeatedSorData
+    // liklihood={this.state.liklihood}
+    // severity={this.state.severity}
+
+    console.log(this.state.liklihood);
+    console.log(this.state.severity);
+
+    var sorbtns = this.state.classifySorbtns.filter(
+      (d: any) => d.selected == true,
+    );
+    var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
+    var severity = this.state.severity.filter((d: any) => d.selected == true);
+    // var
+    // Check If the observation text is detected
+    if (this.state.observationT != '') {
+      // Check if any of classify sor btn its selected
+      if (sorbtns.length != 0) {
+        console.log('asds');
+        const form = new FormData();
+        form.append('q', this.state.observationT);
+
+        createApi
+          .createApi()
+          .repeatedsorsugg(form)
+          .then((res: any) => {
+            // console.log(res.data.results);
+          })
+          .catch((err) => console.log(err));
+      }
+    }
+  };
 
   componentWillUnmount = () => {};
 
@@ -387,9 +421,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 styles={{}}
                 type={'observation'}
                 arr={this.state.suggestions}
-                onPress={(d: string) =>
-                  this.setState({observationT: d, suggestions: []})
-                }
+                onPress={(d: any) => {
+                  this.setState({observationT: d.obs, suggestions: []});
+                }}
               />
             ) : null}
 
@@ -825,7 +859,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               <Text style={styles.submitsorbtntxt}>Save as Draft</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.setState({repeatedSorModal: true})}
+              // this.setState({repeatedSorModal: true})
+              onPress={() => this.onCreateSor()}
               style={styles.submitsorbtnSb}>
               <Text style={styles.submitsorbtnSbtxt}>Submit</Text>
             </TouchableOpacity>
@@ -852,6 +887,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             useNativeDriver={true}
             isVisible={this.state.repeatedSorModal}>
             <RepeatedSor
+              repeatedSor={this.state.repeatedSorData}
               onViewSor={(d: Isor) => {
                 this.setState({repeatedSorModal: false});
                 this.props.navigation.navigate('ViewSOR', {data: d});

@@ -17,6 +17,7 @@ export interface RepeatedModalProps {
   onSubmit: Function;
   onSkip: Function;
   onViewSor: Function;
+  repeatedSor: Array<Isor>;
 }
 
 export default class RepeatedModal extends React.Component<

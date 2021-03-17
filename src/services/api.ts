@@ -45,8 +45,8 @@ const createApi = (
   const contriesAll = (data: country) => contries.get(`name/${data.name}`);
 
   const suggestiosns = (data: any) => aiBaseAi.post('act', data);
-  const repeatedsorsugg = (keyword: string) =>
-    aiRepBaseApi.post(`repeatedsor?resorobs=${keyword}`, {resorobs: 'general'});
+  const repeatedsorsugg = (keyword: any) =>
+    aiRepBaseApi.post(`repeatedsor`, keyword);
   const observationSuggestions = (data: any) => aiBaseAi.post('obs', data);
   // sor api
 

@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   submitBtn: {
-    backgroundColor: colors.primary,
+    // backgroundColor: colors.primary,
     padding: wp(4),
     paddingLeft: wp(10),
     borderRadius: wp(3),

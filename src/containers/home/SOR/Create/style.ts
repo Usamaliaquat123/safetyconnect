@@ -126,9 +126,9 @@ const styles = StyleSheet.create({
   },
   obInput: {borderBottomWidth: 0},
   obInputText: {
-    fontSize: 15,
+    fontSize: wp(4),
     // fontWeight: 'bold',
-    fontFamily: fonts.SFuiDisplayThin,
+    fontFamily: fonts.SFuiDisplayMedium,
     // color: colors.text,
     opacity: 0.5,
   },
