@@ -101,6 +101,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   }
   submitDraft = async () => {
     // do shinhomet
+    var body = {
+      report: {
+        created_by: 'inconnent12345@outlook.com',
+        comments: '',
+        status: 1,
+      },
+      project: '604b13d114ba138bd23d7f75',
+    };
   };
   // Document Picker and update the state
   pickupDoc = async () => {
@@ -284,12 +292,22 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     var esclateTo = this.state.esclateTo;
     // Check If the observation text is detected
     if (this.state.observationT != '') {
-      if (sorbtns[0].selected !== '') {
+      if (sorbtns.length != 0) {
         if (liklihood[0].selected !== '') {
           if (severity[0].selected !== '') {
             if (actionRecommendationsText !== ' ') {
               if (submitTo !== '') {
                 if (esclateTo !== ' ') {
+                  const form = new FormData();
+                  form.append('q', this.state.observationT);
+
+                  createApi
+                    .createApi()
+                    .repeatedsorsugg(form)
+                    .then((res: any) => {
+                      console.log(res.data.results);
+                    })
+                    .catch((err) => console.log(err));
                 } else {
                   // Error on esclated to
                 }
@@ -892,7 +910,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             <TouchableOpacity
               // this.setState({repeatedSorModal: true})
               onPress={() => this.onCreateSor()}
-              style={styles.submitsorbtnSb}>
+              style={[styles.submitsorbtnSb, {marginBottom: wp(10)}]}>
               <Text style={styles.submitsorbtnSbtxt}>Submit</Text>
             </TouchableOpacity>
           </Animated.View>
@@ -909,7 +927,31 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               <Calendars currentDate={Date.now()} />
             </View>
           </Modal>
-
+          {/* validations error */}
+          {/* Modal Container */}
+          <Modal
+            isVisible={this.state.errorModal}
+            onBackdropPress={() =>
+              this.setState({errorModal: false, loading: false})
+            }>
+            {/* {this.state.loading == true ? (
+            <View>
+              <ActivityIndicator color={colors.primary} size={'large'} />
+            </View>
+          ) : ( */}
+            {/* <View style={styles.modelContainer}>
+              <View>
+                <Text style={styles.errHeadPop}>
+                  Incorrect Email / Password !
+                </Text>
+                <Text style={styles.errEmailPassDesc}>
+                  We don't recognize that email and password.
+                </Text>
+                <Text style={styles.plzTryAgain}>Please try again later.</Text>
+              </View>
+            </View> */}
+            {/* )} */}
+          </Modal>
           <Modal
             animationInTiming={1000}
             animationIn={'bounceInUp'}
