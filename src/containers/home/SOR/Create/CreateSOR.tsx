@@ -96,20 +96,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       severity: riskxSeverityxliklihood.severity,
       // Involved Persons of this project
       involved_persons: [],
+      errorModal: true,
       user: {},
+      errHeadingText: '',
+      errDesText: '',
     };
   }
-  submitDraft = async () => {
-    // do shinhomet
-    var body = {
-      report: {
-        created_by: 'inconnent12345@outlook.com',
-        comments: '',
-        status: 1,
-      },
-      project: '604b13d114ba138bd23d7f75',
-    };
-  };
+
   // Document Picker and update the state
   pickupDoc = async () => {
     try {
@@ -216,6 +209,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     // get involved users
     // AsyncStorage.getItem('involved_persons').then((res: any) =>
     // );
+
     console.log(this.state.involved_persons);
     // Get User info
     AsyncStorage.getItem('user').then((user: any) => {
@@ -271,7 +265,78 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       useNativeDriver: false,
     }).start();
   };
-
+  submitDraft = async () => {
+    // do shinhomet
+    var bodyInitial = {
+      report: {
+        created_by: 'inconnent12345@outlook.com',
+        comments: '',
+        status: 1,
+      },
+      project: '604b13d114ba138bd23d7f75',
+    };
+    createApi
+      .createApi()
+      .createSorInit(bodyInitial)
+      .then((res: any) => {
+        if (res.data.data.report_id !== undefined) {
+          var draftSor = {
+            report: {
+              _id: res.data.data.report_id,
+              created_by: 'inconnent12345@outlook.com',
+              details: this.state.observationT,
+              occured_at: Date.now(),
+              involved_persons: this.state.involvePersonTags,
+              risk: {
+                severity: this.state.severity.filter(
+                  (d: any) => d.selected == true,
+                )[0].value,
+                likelihood: this.state.liklihood.filter(
+                  (d: any) => d.selected == true,
+                )[0].value,
+              },
+              // action_required: [
+              //   {
+              //     content: 'kam kro baatein na kro ',
+              //     assigned_to: 'waqas@gmail.com',
+              //     category: 'sasti category',
+              //     date: '2020-01-01',
+              //     is_complete: true,
+              //     is_selected: true,
+              //   },
+              // ],
+              // user_location: {
+              //   latitude: 66.666,
+              //   longitude: 66.666,
+              // },
+              location: 'pindi boys',
+              submit_to: this.state.submitToTags,
+              esclate_to: this.state.exclateToTags,
+              status: 5,
+              attachments: this.state.filename,
+              comments: [
+                // {
+                //   email: 'haiderali333222@gmail.com',
+                //   comment: 'mera apna comment',
+                //   date: '2020-01-01',
+                //   files: ['abc'],
+                //   is_comment: true,
+                // },
+              ],
+            },
+            project: '604b13d114ba138bd23d7f75',
+          };
+          createApi
+            .createApi()
+            .createSor(draftSor)
+            .then((draft) => {})
+            .catch((err) => console.log(err));
+        }
+        createApi.createApi();
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
   onCreateSor = () => {
     // this.setState({repeatedSorModal: true});
     // repeatedSorData
@@ -309,24 +374,52 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     })
                     .catch((err) => console.log(err));
                 } else {
+                  this.setState({
+                    errHeadingText: 'You didnt esclated anyone',
+                    errDesText: 'you are not selected esclated users',
+                  });
                   // Error on esclated to
                 }
               } else {
+                this.setState({
+                  errHeadingText: 'You didnt submitted anyone',
+                  errDesText: 'you are not selected submitted users',
+                });
                 // Error on submitted to
               }
             } else {
+              this.setState({
+                errHeadingText: 'You didnt recommended anyone',
+                errDesText: 'you are not selected recommended actions',
+              });
               // Error on actions and recommendations
             }
           } else {
+            this.setState({
+              errHeadingText: 'Select your severity numbers',
+              errDesText: 'you are not selected severity numberss',
+            });
             // Error on severity
           }
         } else {
+          this.setState({
+            errHeadingText: 'Select your liklihood numbers',
+            errDesText: 'you are not selected likelihood numberss',
+          });
           // Error on liklihood
         }
       } else {
+        this.setState({
+          errHeadingText: 'Select your sor classification',
+          errDesText: 'you are not selected any classification',
+        });
         // Error on sor btns
       }
     } else {
+      this.setState({
+        errHeadingText: 'Type your observation',
+        errDesText: 'looks like your observation isnt valid',
+      });
       // Error on Observations
     }
     if (this.state.observationT != '') {
@@ -339,9 +432,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         createApi
           .createApi()
           .repeatedsorsugg(form)
-          .then((res: any) => {
-            // console.log(res.data.results);
-          })
+          .then((res: any) => {})
           .catch((err) => console.log(err));
       }
     }
@@ -939,17 +1030,17 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               <ActivityIndicator color={colors.primary} size={'large'} />
             </View>
           ) : ( */}
-            {/* <View style={styles.modelContainer}>
+            <View style={styles.modelContainer}>
               <View>
                 <Text style={styles.errHeadPop}>
-                  Incorrect Email / Password !
+                  {this.state.errHeadingText}
                 </Text>
                 <Text style={styles.errEmailPassDesc}>
-                  We don't recognize that email and password.
+                  {this.state.errDesText}
                 </Text>
-                <Text style={styles.plzTryAgain}>Please try again later.</Text>
+                {/* <Text style={styles.plzTryAgain}>Please try again later.</Text> */}
               </View>
-            </View> */}
+            </View>
             {/* )} */}
           </Modal>
           <Modal

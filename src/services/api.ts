@@ -86,7 +86,10 @@ const createApi = (
       query: data.query,
     });
   const updateSor = (data: sor) => baseapi.put('project/report', {data});
-  const createSor = (data: sor) => baseapi.put('project/newreport', {data});
+  // Create initial to get the reportId
+  const createSorInit = (data: any) => baseapi.post('project/newreport', data);
+  const createSor = (data: any) => baseapi.post('project/publish', data);
+
   return {
     suggestiosns,
     repeatedsorsugg,
@@ -98,6 +101,7 @@ const createApi = (
     getProject,
     project,
     Postproject,
+    createSorInit,
     updateOrganization,
     getOrganization,
     contriesAll,
