@@ -343,18 +343,19 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     // liklihood={this.state.liklihood}
     // severity={this.state.severity}
 
-    console.log(this.state.liklihood);
-    console.log(this.state.severity);
-    console.log('=============');
-    console.log(this.state.observationT);
-    console.log('=============');
+    // console.log(this.state.liklihood);
+    // console.log(this.state.severity);
+    // console.log('=============');
+    // console.log(this.state.observationT);
+    // console.log('=============');
 
     var sorbtns = this.state.classifySorbtns.filter(
       (d: any) => d.selected == true,
     );
+
     var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
-    console.log(this.state.liklihood);
-    console.log(this.state.severity);
+    // console.log(this.state.liklihood);
+    // console.log(this.state.severity);
     var severity = this.state.severity.filter((d: any) => d.selected == true);
 
     // var involvePersonText = this.state.involvePersonText;
@@ -365,135 +366,209 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     var esclateTo = this.state.esclateTo;
     // Check If the observation text is detected
     if (this.state.observationT != '') {
-      if (sorbtns.length != 0) {
-        console.log(sorbtns);
-        if (sorbtns[0].title == 'positive') {
-          // if (this.state.actionsTags.length !== 0) {
-          if (this.state.submitToTags.length !== 0) {
-            if (this.state.exclateToTags.length !== 0) {
-              this.setState({loading: true});
-              const form = new FormData();
-              form.append('q', this.state.observationT);
+      if (this.state.observation != '') {
+        if (sorbtns.length != 0) {
+          console.log(sorbtns);
+          if (sorbtns[0].title == 'positive') {
+            // if (this.state.actionsTags.length !== 0) {
+            if (this.state.submitToTags.length !== 0) {
+              if (this.state.exclateToTags.length !== 0) {
+                this.setState({loading: true});
+                const form = new FormData();
+                form.append('q', this.state.observationT);
 
-              createApi
-                .createApi()
-                .repeatedsorsugg(form)
-                .then((res: any) => {
-                  // Repeated observations
-                  // res.data.results
+                createApi
+                  .createApi()
+                  .repeatedsorsugg(form)
+                  .then((res: any) => {
+                    // Repeated observations
+                    // res.data.results
 
-                  var bodyInitial = {
-                    report: {
-                      created_by: 'inconnent12345@outlook.com',
-                      comments: '',
-                      status: 1,
-                    },
-                    project: '604b13d114ba138bd23d7f75',
-                  };
-                  createApi
-                    .createApi()
-                    .createSorInit(bodyInitial)
-                    .then((res) => {})
-                    .catch((err) => console.log(err));
-                })
-                .catch((err) => console.log(err));
-            } else {
-              this.setState({
-                errorModal: true,
-
-                errHeadingText: 'You didnt esclated anyone.',
-                errDesText: 'you are not selected esclated users.',
-              });
-              // Error on esclated to
-            }
-          } else {
-            this.setState({
-              errorModal: true,
-
-              errHeadingText: 'You didnt submitted anyone.',
-              errDesText: 'you are not selected submitted users.',
-            });
-            // Error on submitted to
-          }
-          // } else {
-          //   this.setState({
-          //     errorModal: true,
-
-          //     errHeadingText: 'You didnt recommended anyone.',
-          //     errDesText: 'you are not selected recommended actions.',
-          //   });
-          //   // Error on actions and recommendations
-          // }
-        } else {
-          if (liklihood.length !== 0) {
-            if (severity.length !== 0) {
-              if (this.state.actionsTags.length !== 0) {
-                if (this.state.submitToTags.length !== 0) {
-                  if (this.state.exclateToTags.length !== 0) {
-                    const form = new FormData();
-                    form.append('q', this.state.observationT);
-
+                    var bodyInitial = {
+                      report: {
+                        created_by: 'inconnent12345@outlook.com',
+                        comments: '',
+                        status: 1,
+                      },
+                      project: '604b13d114ba138bd23d7f75',
+                    };
                     createApi
                       .createApi()
-                      .repeatedsorsugg(form)
+                      .createSorInit(bodyInitial)
                       .then((res: any) => {
-                        console.log(res.data.results);
+                        // Report Id
+                        // res.data.data.report_id
+
+                        var sor = {
+                          report: {
+                            _id: res.data.data.report_id,
+                            created_by: 'haider@gmail.com',
+                            details: this.state.observationT,
+                            occured_at: moment().format('YYYY-MM-DD'),
+                            involved_persons: ['5fcf965695ea5a58dd5c62e0'],
+                            sor_type: sorbtns[0].title,
+                            risk: {
+                              severity: 5,
+                              likelihood: 5,
+                            },
+                            action_required: [
+                              {
+                                content: 'kam kro baatein n a kro ',
+                                assigned_to: 'waqas@gmail.com',
+                                category: 'sasti category',
+                                date: '2020-01-01',
+                                is_complete: true,
+                                is_selected: true,
+                              },
+                            ],
+                            user_location: {
+                              latitude: 66.666,
+                              longitude: 66.666,
+                            },
+                            location: this.state.observation,
+                            submit_to: this.state.submitToTags.filter(
+                              (d: any) => d.name,
+                            ),
+                            esclate_to: this.state.exclateToTags.filter(
+                              (d: any) => d.name,
+                            ),
+                            status: 5,
+                            attachments: this.state.filename.filter(
+                              (d: any) => d.name,
+                            ),
+                            comments: [
+                              // {
+                              //   email: 'haiderali333222@gmail.com',
+                              //   comment: 'mera apna comment',
+                              //   date: '2020-01-01',
+                              //   files: ['abc'],
+                              //   is_comment: true,
+                              // },
+                            ],
+                          },
+                          project: '604b13d114ba138bd23d7f75',
+                        };
+                        console.log(sor);
+
+                        // createApi
+                        //   .createApi()
+                        //   .createSor(sor)
+                        //   .then((res) => {});
                       })
-                      .catch((err) => console.log(err));
-                  } else {
-                    this.setState({
-                      errorModal: true,
-
-                      errHeadingText: 'You didnt esclated anyone.',
-                      errDesText: 'you are not selected esclated users.',
-                    });
-                    // Error on esclated to
-                  }
-                } else {
-                  this.setState({
-                    errorModal: true,
-
-                    errHeadingText: 'You didnt submitted anyone.',
-                    errDesText: 'you are not selected submitted users.',
+                      .catch((err) => {
+                        this.setState({loading: false});
+                        console.log(err);
+                      });
+                  })
+                  .catch((err) => {
+                    this.setState({loading: false});
+                    console.log(err);
                   });
-                  // Error on submitted to
-                }
               } else {
                 this.setState({
                   errorModal: true,
 
-                  errHeadingText: 'You didnt recommended anyone.',
-                  errDesText: 'you are not selected recommended actions.',
+                  errHeadingText: 'You didnt esclated anyone.',
+                  errDesText: 'you are not selected esclated users.',
                 });
-                // Error on actions and recommendations
+                // Error on esclated to
               }
             } else {
               this.setState({
                 errorModal: true,
 
-                errHeadingText: 'Select your severity numbers.',
-                errDesText: 'you are not selected severity numberss.',
+                errHeadingText: 'You didnt submitted anyone.',
+                errDesText: 'you are not selected submitted users.',
               });
-              // Error on severity
+              // Error on submitted to
             }
-          } else {
-            this.setState({
-              errorModal: true,
+            // } else {
+            //   this.setState({
+            //     errorModal: true,
 
-              errHeadingText: 'Select your liklihood numbers.',
-              errDesText: 'you are not selected likelihood numberss.',
-            });
-            // Error on liklihood
+            //     errHeadingText: 'You didnt recommended anyone.',
+            //     errDesText: 'you are not selected recommended actions.',
+            //   });
+            //   // Error on actions and recommendations
+            // }
+          } else {
+            if (liklihood.length !== 0) {
+              if (severity.length !== 0) {
+                if (this.state.actionsTags.length !== 0) {
+                  if (this.state.submitToTags.length !== 0) {
+                    if (this.state.exclateToTags.length !== 0) {
+                      const form = new FormData();
+                      form.append('q', this.state.observationT);
+
+                      createApi
+                        .createApi()
+                        .repeatedsorsugg(form)
+                        .then((res: any) => {
+                          console.log(res.data.results);
+                        })
+                        .catch((err) => console.log(err));
+                    } else {
+                      this.setState({
+                        errorModal: true,
+
+                        errHeadingText: 'You didnt esclated anyone.',
+                        errDesText: 'you are not selected esclated users.',
+                      });
+                      // Error on esclated to
+                    }
+                  } else {
+                    this.setState({
+                      errorModal: true,
+
+                      errHeadingText: 'You didnt submitted anyone.',
+                      errDesText: 'you are not selected submitted users.',
+                    });
+                    // Error on submitted to
+                  }
+                } else {
+                  this.setState({
+                    errorModal: true,
+
+                    errHeadingText: 'You didnt recommended anyone.',
+                    errDesText: 'you are not selected recommended actions.',
+                  });
+                  // Error on actions and recommendations
+                }
+              } else {
+                this.setState({
+                  errorModal: true,
+
+                  errHeadingText: 'Select your severity numbers.',
+                  errDesText: 'you are not selected severity numberss.',
+                });
+                // Error on severity
+              }
+            } else {
+              this.setState({
+                errorModal: true,
+
+                errHeadingText: 'Select your liklihood numbers.',
+                errDesText: 'you are not selected likelihood numberss.',
+              });
+              // Error on liklihood
+            }
           }
+        } else {
+          this.setState({
+            errorModal: true,
+
+            errHeadingText: 'Select your sor classification.',
+            errDesText: 'you are not selected any classification.',
+          });
+          // Error on sor btns
         }
       } else {
         this.setState({
           errorModal: true,
 
-          errHeadingText: 'Select your sor classification.',
+          errHeadingText: 'Type your current location.',
           errDesText: 'you are not selected any classification.',
         });
-        // Error on sor btns
       }
     } else {
       this.setState({
@@ -602,7 +677,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 </Text>{' '} */}
                 </Text>
                 <TextInput
-                  value={this.state.observationr}
+                  value={this.state.observation}
                   style={{
                     marginTop: wp(-4.5),
                     borderBottomWidth: 0,
