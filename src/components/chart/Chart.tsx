@@ -48,7 +48,7 @@ const Chart = (props: Props) => {
                       }
                     });
                     setliklihood(likelihoodarr);
-                    props.onPress({liklihood: d.value});
+                    props.onPress({liklihood: d});
                   }}
                   style={[
                     {
@@ -122,7 +122,7 @@ const Chart = (props: Props) => {
                         }
                       });
                       setseverity(severityArr);
-                      props.onPress({severity: d.value});
+                      props.onPress({severity: d});
                     }}
                     style={[
                       {

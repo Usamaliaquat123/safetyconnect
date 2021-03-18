@@ -38,7 +38,6 @@ const Suggestions = (props: Props) => {
               ))}
             </View>
           )}
-
           {/* Observations  */}
           {props.type == 'observation' && (
             <View>

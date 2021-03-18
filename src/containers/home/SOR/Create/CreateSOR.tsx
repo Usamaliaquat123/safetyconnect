@@ -96,7 +96,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       severity: riskxSeverityxliklihood.severity,
       // Involved Persons of this project
       involved_persons: [],
-      errorModal: true,
+      errorModal: false,
       user: {},
       errHeadingText: '',
       errDesText: '',
@@ -182,7 +182,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     } else {
       const form = new FormData();
       this.setState({actionRecommendationsText: str});
-      form.append('act1', str);
+      form.append('q', str);
       createApi
         .createApi()
         .suggestiosns(form)
@@ -345,80 +345,145 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
     console.log(this.state.liklihood);
     console.log(this.state.severity);
+    console.log('=============');
+    console.log(this.state.observationT);
+    console.log('=============');
 
     var sorbtns = this.state.classifySorbtns.filter(
       (d: any) => d.selected == true,
     );
     var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
+    console.log(this.state.liklihood);
+    console.log(this.state.severity);
     var severity = this.state.severity.filter((d: any) => d.selected == true);
+
     // var involvePersonText = this.state.involvePersonText;
+
+    console.log(this.state.actionsTag);
     var actionRecommendationsText = this.state.actionRecommendationsText;
     var submitTo = this.state.submitTo;
     var esclateTo = this.state.esclateTo;
     // Check If the observation text is detected
     if (this.state.observationT != '') {
       if (sorbtns.length != 0) {
-        if (liklihood[0].selected !== '') {
-          if (severity[0].selected !== '') {
-            if (actionRecommendationsText !== ' ') {
-              if (submitTo !== '') {
-                if (esclateTo !== ' ') {
-                  const form = new FormData();
-                  form.append('q', this.state.observationT);
+        console.log(sorbtns);
+        if (sorbtns[0].type == 'positive') {
+          if (this.state.actionsTags.length !== 0) {
+            if (this.state.submitToTags.length !== 0) {
+              if (this.state.exclateToTags.length !== 0) {
+                const form = new FormData();
+                form.append('q', this.state.observationT);
 
-                  createApi
-                    .createApi()
-                    .repeatedsorsugg(form)
-                    .then((res: any) => {
-                      console.log(res.data.results);
-                    })
-                    .catch((err) => console.log(err));
-                } else {
-                  this.setState({
-                    errHeadingText: 'You didnt esclated anyone',
-                    errDesText: 'you are not selected esclated users',
-                  });
-                  // Error on esclated to
-                }
+                createApi
+                  .createApi()
+                  .repeatedsorsugg(form)
+                  .then((res: any) => {
+                    console.log(res.data.results);
+                  })
+                  .catch((err) => console.log(err));
               } else {
                 this.setState({
-                  errHeadingText: 'You didnt submitted anyone',
-                  errDesText: 'you are not selected submitted users',
+                  errorModal: true,
+
+                  errHeadingText: 'You didnt esclated anyone.',
+                  errDesText: 'you are not selected esclated users.',
                 });
-                // Error on submitted to
+                // Error on esclated to
               }
             } else {
               this.setState({
-                errHeadingText: 'You didnt recommended anyone',
-                errDesText: 'you are not selected recommended actions',
+                errorModal: true,
+
+                errHeadingText: 'You didnt submitted anyone.',
+                errDesText: 'you are not selected submitted users.',
               });
-              // Error on actions and recommendations
+              // Error on submitted to
             }
           } else {
             this.setState({
-              errHeadingText: 'Select your severity numbers',
-              errDesText: 'you are not selected severity numberss',
+              errorModal: true,
+
+              errHeadingText: 'You didnt recommended anyone.',
+              errDesText: 'you are not selected recommended actions.',
             });
-            // Error on severity
+            // Error on actions and recommendations
           }
         } else {
-          this.setState({
-            errHeadingText: 'Select your liklihood numbers',
-            errDesText: 'you are not selected likelihood numberss',
-          });
-          // Error on liklihood
+          if (liklihood.length !== 0) {
+            if (severity.length !== 0) {
+              if (this.state.actionsTags.length !== 0) {
+                if (this.state.submitToTags.length !== 0) {
+                  if (this.state.exclateToTags.length !== 0) {
+                    const form = new FormData();
+                    form.append('q', this.state.observationT);
+
+                    createApi
+                      .createApi()
+                      .repeatedsorsugg(form)
+                      .then((res: any) => {
+                        console.log(res.data.results);
+                      })
+                      .catch((err) => console.log(err));
+                  } else {
+                    this.setState({
+                      errorModal: true,
+
+                      errHeadingText: 'You didnt esclated anyone.',
+                      errDesText: 'you are not selected esclated users.',
+                    });
+                    // Error on esclated to
+                  }
+                } else {
+                  this.setState({
+                    errorModal: true,
+
+                    errHeadingText: 'You didnt submitted anyone.',
+                    errDesText: 'you are not selected submitted users.',
+                  });
+                  // Error on submitted to
+                }
+              } else {
+                this.setState({
+                  errorModal: true,
+
+                  errHeadingText: 'You didnt recommended anyone.',
+                  errDesText: 'you are not selected recommended actions.',
+                });
+                // Error on actions and recommendations
+              }
+            } else {
+              this.setState({
+                errorModal: true,
+
+                errHeadingText: 'Select your severity numbers.',
+                errDesText: 'you are not selected severity numberss.',
+              });
+              // Error on severity
+            }
+          } else {
+            this.setState({
+              errorModal: true,
+
+              errHeadingText: 'Select your liklihood numbers.',
+              errDesText: 'you are not selected likelihood numberss.',
+            });
+            // Error on liklihood
+          }
         }
       } else {
         this.setState({
-          errHeadingText: 'Select your sor classification',
-          errDesText: 'you are not selected any classification',
+          errorModal: true,
+
+          errHeadingText: 'Select your sor classification.',
+          errDesText: 'you are not selected any classification.',
         });
         // Error on sor btns
       }
     } else {
       this.setState({
-        errHeadingText: 'Type your observation',
-        errDesText: 'looks like your observation isnt valid',
+        errorModal: true,
+        errHeadingText: 'Type your observation.',
+        errDesText: 'looks like your observation isnt valid.',
       });
       // Error on Observations
     }
@@ -621,7 +686,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 <View style={{flexDirection: 'row', marginTop: wp(10)}}>
                   <Text style={styles.RiskHeading}>Risk</Text>
                   <Text style={{fontStyle: 'italic', fontSize: wp(3)}}>
-                    {this.state.liklihood * this.state.severity}
+                    {/* {this.state.liklihood. * this.state.severity} */}
                   </Text>
                 </View>
 
@@ -630,10 +695,16 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   severity={this.state.severity}
                   style={{alignSelf: 'center', marginTop: wp(3)}}
                   onPress={(v: any) => {
+                    console.log(v);
+
+                    // if (v.liklihood == undefined) {
+                    //   this.setState({severity: v.severity});
+                    // } else {
+                    // }
                     if (v.liklihood == undefined) {
-                      this.setState({severity: v.severity});
+                      this.setState({severity: [v.severity]});
                     } else {
-                      this.setState({liklihood: v.liklihood});
+                      this.setState({liklihood: [v.liklihood]});
                     }
                   }}
                 />
@@ -789,20 +860,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   />
                 )}
 
-                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                  <Tags
-                    type={'sugg'}
-                    onClose={(d: any) => {
-                      this.setState({
-                        actionsTags: this.state.actionsTags.filter(
-                          (v: any) => v !== d,
-                        ),
-                      });
-                    }}
-                    tags={this.state.actionsTags}
-                  />
-                </View>
-
                 {/* Suggestions  */}
                 {this.state.actionRecommendations.length != 0 ? (
                   <Suggestions
@@ -830,6 +887,19 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     }}
                   />
                 ) : null}
+                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                  <Tags
+                    type={'sugg'}
+                    onClose={(d: any) => {
+                      this.setState({
+                        actionsTags: this.state.actionsTags.filter(
+                          (v: any) => v !== d,
+                        ),
+                      });
+                    }}
+                    tags={this.state.actionsTags}
+                  />
+                </View>
               </View>
             ) : null}
 
@@ -860,18 +930,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     }}
                     value={this.state.submitTo}></TextInput>
                 </View>
-                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                  <Tags
-                    onClose={(d: any) => {
-                      this.setState({
-                        submitToTags: this.state.submitToTags.filter(
-                          (v: any) => v !== d,
-                        ),
-                      });
-                    }}
-                    tags={this.state.submitToTags}
-                  />
-                </View>
+
                 {this.state.submitToArr.length != 0 ? (
                   <View style={styles.involveSuggestCont}>
                     {this.state.submitToArr.map(
@@ -913,6 +972,18 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     )}
                   </View>
                 ) : null}
+                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                  <Tags
+                    onClose={(d: any) => {
+                      this.setState({
+                        submitToTags: this.state.submitToTags.filter(
+                          (v: any) => v !== d,
+                        ),
+                      });
+                    }}
+                    tags={this.state.submitToTags}
+                  />
+                </View>
               </View>
               <View>
                 <Text style={styles.sbBtnText}>Escalate to</Text>
@@ -939,18 +1010,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     style={styles.optnselectorText}
                     value={this.state.esclateTo}></TextInput>
                 </View>
-                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                  <Tags
-                    onClose={(d: any) => {
-                      this.setState({
-                        exclateToTags: this.state.exclateToTags.filter(
-                          (v: any) => v !== d,
-                        ),
-                      });
-                    }}
-                    tags={this.state.exclateToTags}
-                  />
-                </View>
+
                 {this.state.exclateToArr.length != 0 ? (
                   <View>
                     <View style={styles.involveSuggestCont}>
@@ -990,6 +1050,18 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     </View>
                   </View>
                 ) : null}
+                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                  <Tags
+                    onClose={(d: any) => {
+                      this.setState({
+                        exclateToTags: this.state.exclateToTags.filter(
+                          (v: any) => v !== d,
+                        ),
+                      });
+                    }}
+                    tags={this.state.exclateToTags}
+                  />
+                </View>
               </View>
             </View>
             {/* Draft And Submit Btns */}
