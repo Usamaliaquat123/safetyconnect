@@ -18,6 +18,7 @@ import {
   filterLocation,
   classifySor,
   suggestInActionsRecommendations,
+  validateEmail,
 } from '@utils';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors} from '@theme';
@@ -157,13 +158,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
   // Search in Esclated To
   suggestInEsclatedTo = (str: string) => {
-    var srchSug = searchInSuggestions(str, this.state.involved_persons);
     if (str == '') {
       this.setState({
         involvePersonSuggestions: [],
         involvePersonText: str,
       });
     } else {
+      var srchSug = searchInSuggestions(str, this.state.involved_persons);
       console.log(srchSug);
       this.setState({
         involvePersonSuggestions: [...srchSug],
@@ -210,7 +211,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     // AsyncStorage.getItem('involved_persons').then((res: any) =>
     // );
 
-    console.log(this.state.involved_persons);
+    // console.log(this.state.involved_persons);
     // Get User info
     AsyncStorage.getItem('user').then((user: any) => {
       this.setState({user: JSON.parse(user)});
@@ -221,7 +222,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         projectid: '603b8c1b83176628f90f8dbe',
       })
       .then((res: any) => {
-        // console.log(res.data.data.involved_persons);
         this.setState({involved_persons: res.data.data.involved_persons});
       });
     // Time Update on every seconds
@@ -404,36 +404,38 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             _id: res.data.data.report_id,
                             created_by: 'haider@gmail.com',
                             details: this.state.observationT,
-                            occured_at: moment().format('YYYY-MM-DD'),
-                            involved_persons: ['5fcf965695ea5a58dd5c62e0'],
+                            occured_at: moment().format('YY-MM-DD'),
+                            involved_persons: this.state.involved_persons.map(
+                              (d: any) => d._id,
+                            ),
                             sor_type: sorbtns[0].title,
                             risk: {
                               severity: 5,
                               likelihood: 5,
                             },
                             action_required: [
-                              {
-                                content: 'kam kro baatein n a kro ',
-                                assigned_to: 'waqas@gmail.com',
-                                category: 'sasti category',
-                                date: '2020-01-01',
-                                is_complete: true,
-                                is_selected: true,
-                              },
+                              // {
+                              //   content: 'kam kro baatein n a kro ',
+                              //   assigned_to: 'waqas@gmail.com',
+                              //   category: 'sasti category',
+                              //   date: '2020-01-01',
+                              //   is_complete: true,
+                              //   is_selected: true,
+                              // },
                             ],
                             user_location: {
                               latitude: 66.666,
                               longitude: 66.666,
                             },
                             location: this.state.observation,
-                            submit_to: this.state.submitToTags.filter(
+                            submit_to: this.state.submitToTags.map(
                               (d: any) => d.name,
                             ),
-                            esclate_to: this.state.exclateToTags.filter(
+                            esclate_to: this.state.exclateToTags.map(
                               (d: any) => d.name,
                             ),
                             status: 5,
-                            attachments: this.state.filename.filter(
+                            attachments: this.state.filename.map(
                               (d: any) => d.name,
                             ),
                             comments: [
@@ -567,7 +569,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           errorModal: true,
 
           errHeadingText: 'Type your current location.',
-          errDesText: 'you are not selected any classification.',
+          errDesText: 'You dont specify specify your location .',
         });
       }
     } else {
