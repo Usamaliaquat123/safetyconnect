@@ -367,47 +367,63 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     if (this.state.observationT != '') {
       if (sorbtns.length != 0) {
         console.log(sorbtns);
-        if (sorbtns[0].type == 'positive') {
-          if (this.state.actionsTags.length !== 0) {
-            if (this.state.submitToTags.length !== 0) {
-              if (this.state.exclateToTags.length !== 0) {
-                const form = new FormData();
-                form.append('q', this.state.observationT);
+        if (sorbtns[0].title == 'positive') {
+          // if (this.state.actionsTags.length !== 0) {
+          if (this.state.submitToTags.length !== 0) {
+            if (this.state.exclateToTags.length !== 0) {
+              this.setState({loading: true});
+              const form = new FormData();
+              form.append('q', this.state.observationT);
 
-                createApi
-                  .createApi()
-                  .repeatedsorsugg(form)
-                  .then((res: any) => {
-                    console.log(res.data.results);
-                  })
-                  .catch((err) => console.log(err));
-              } else {
-                this.setState({
-                  errorModal: true,
+              createApi
+                .createApi()
+                .repeatedsorsugg(form)
+                .then((res: any) => {
+                  // Repeated observations
+                  // res.data.results
 
-                  errHeadingText: 'You didnt esclated anyone.',
-                  errDesText: 'you are not selected esclated users.',
-                });
-                // Error on esclated to
-              }
+                  var bodyInitial = {
+                    report: {
+                      created_by: 'inconnent12345@outlook.com',
+                      comments: '',
+                      status: 1,
+                    },
+                    project: '604b13d114ba138bd23d7f75',
+                  };
+                  createApi
+                    .createApi()
+                    .createSorInit(bodyInitial)
+                    .then((res) => {})
+                    .catch((err) => console.log(err));
+                })
+                .catch((err) => console.log(err));
             } else {
               this.setState({
                 errorModal: true,
 
-                errHeadingText: 'You didnt submitted anyone.',
-                errDesText: 'you are not selected submitted users.',
+                errHeadingText: 'You didnt esclated anyone.',
+                errDesText: 'you are not selected esclated users.',
               });
-              // Error on submitted to
+              // Error on esclated to
             }
           } else {
             this.setState({
               errorModal: true,
 
-              errHeadingText: 'You didnt recommended anyone.',
-              errDesText: 'you are not selected recommended actions.',
+              errHeadingText: 'You didnt submitted anyone.',
+              errDesText: 'you are not selected submitted users.',
             });
-            // Error on actions and recommendations
+            // Error on submitted to
           }
+          // } else {
+          //   this.setState({
+          //     errorModal: true,
+
+          //     errHeadingText: 'You didnt recommended anyone.',
+          //     errDesText: 'you are not selected recommended actions.',
+          //   });
+          //   // Error on actions and recommendations
+          // }
         } else {
           if (liklihood.length !== 0) {
             if (severity.length !== 0) {
