@@ -8,6 +8,7 @@ import {
   TextInput,
   Animated,
   Easing,
+  ActivityIndicator,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {Create_sor, riskxSeverityxliklihood} from '@service/mock';
@@ -100,6 +101,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       errorModal: false,
       user: {},
       errHeadingText: '',
+      loading: false,
       errDesText: '',
     };
   }
@@ -157,21 +159,20 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   };
 
   // Search in Esclated To
-  suggestInEsclatedTo = (str: string) => {
-    if (str == '') {
-      this.setState({
-        involvePersonSuggestions: [],
-        involvePersonText: str,
-      });
-    } else {
-      var srchSug = searchInSuggestions(str, this.state.involved_persons);
-      console.log(srchSug);
-      this.setState({
-        involvePersonSuggestions: [...srchSug],
-        involvePersonText: str,
-      });
-    }
-  };
+  // suggestInEsclatedTo = (str: string) => {
+  //   if (str == '') {
+  //     this.setState({
+  //       involvePersonSuggestions: [],
+  //       involvePersonText: str,
+  //     });
+  //   } else {
+  //     var srchSug = searchInSuggestions(str, this.state.involved_persons);
+  //     this.setState({
+  //       involvePersonSuggestions: [...srchSug],
+  //       involvePersonText: str,
+  //     });
+  //   }
+  // };
 
   // Search Action / Recommendation Suggestions
   actionRecommendSuggestion = (str: string) => {
@@ -222,6 +223,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         projectid: '603b8c1b83176628f90f8dbe',
       })
       .then((res: any) => {
+        console.log(res.data.data.involved_persons.map);
         this.setState({involved_persons: res.data.data.involved_persons});
       });
     // Time Update on every seconds
@@ -275,6 +277,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       },
       project: '604b13d114ba138bd23d7f75',
     };
+    this.setState({loading: true, errorModal: true});
     createApi
       .createApi()
       .createSorInit(bodyInitial)
@@ -329,7 +332,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           createApi
             .createApi()
             .createSor(draftSor)
-            .then((draft) => {})
+            .then((draft) => {
+              this.setState({loading: false, errorModal: false});
+              this.props.navigation.navigate('ViewAllSOr');
+            })
             .catch((err) => console.log(err));
         }
         createApi.createApi();
@@ -359,7 +365,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     var severity = this.state.severity.filter((d: any) => d.selected == true);
 
     // var involvePersonText = this.state.involvePersonText;
-
+    console.log(this.state.submitToTags);
     console.log(this.state.actionsTag);
     var actionRecommendationsText = this.state.actionRecommendationsText;
     var submitTo = this.state.submitTo;
@@ -373,7 +379,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             // if (this.state.actionsTags.length !== 0) {
             if (this.state.submitToTags.length !== 0) {
               if (this.state.exclateToTags.length !== 0) {
-                this.setState({loading: true});
+                this.setState({loading: true, errorModal: true});
                 const form = new FormData();
                 form.append('q', this.state.observationT);
 
@@ -404,10 +410,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             _id: res.data.data.report_id,
                             created_by: 'haider@gmail.com',
                             details: this.state.observationT,
-                            occured_at: moment().format('YY-MM-DD'),
-                            involved_persons: this.state.involved_persons.map(
-                              (d: any) => d._id,
-                            ),
+                            occured_at: moment().format('YYYY-MM-DD'),
+                            // involved_persons: this.state.involved_persons.map(
+                            //   (d: any) => d._,
+                            // ),
                             sor_type: sorbtns[0].title,
                             risk: {
                               severity: 5,
@@ -429,15 +435,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             },
                             location: this.state.observation,
                             submit_to: this.state.submitToTags.map(
-                              (d: any) => d.name,
+                              (d: any) => d.email,
                             ),
                             esclate_to: this.state.exclateToTags.map(
-                              (d: any) => d.name,
+                              (d: any) => d.email,
                             ),
-                            status: 5,
-                            attachments: this.state.filename.map(
-                              (d: any) => d.name,
-                            ),
+                            status: 2,
+                            attachments: [],
                             comments: [
                               // {
                               //   email: 'haiderali333222@gmail.com',
@@ -452,18 +456,24 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         };
                         console.log(sor);
 
-                        // createApi
-                        //   .createApi()
-                        //   .createSor(sor)
-                        //   .then((res) => {});
+                        createApi
+                          .createApi()
+                          .createSor(sor)
+                          .then((res) => {
+                            this.setState({loading: false, errorModal: false});
+                            this.props.navigation.navigate('ViewAllSOr');
+                          })
+                          .catch((err) =>
+                            this.setState({loading: false, errorModal: false}),
+                          );
                       })
                       .catch((err) => {
-                        this.setState({loading: false});
+                        this.setState({loading: false, errorModal: false});
                         console.log(err);
                       });
                   })
                   .catch((err) => {
-                    this.setState({loading: false});
+                    this.setState({loading: false, errorModal: false});
                     console.log(err);
                   });
               } else {
@@ -499,6 +509,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 if (this.state.actionsTags.length !== 0) {
                   if (this.state.submitToTags.length !== 0) {
                     if (this.state.exclateToTags.length !== 0) {
+                      this.setState({loading: true, errorModal: true});
                       const form = new FormData();
                       form.append('q', this.state.observationT);
 
@@ -506,9 +517,104 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         .createApi()
                         .repeatedsorsugg(form)
                         .then((res: any) => {
-                          console.log(res.data.results);
+                          // Repeated observations
+                          // res.data.results
+
+                          var bodyInitial = {
+                            report: {
+                              created_by: 'inconnent12345@outlook.com',
+                              comments: '',
+                              status: 1,
+                            },
+                            project: '604b13d114ba138bd23d7f75',
+                          };
+                          createApi
+                            .createApi()
+                            .createSorInit(bodyInitial)
+                            .then((res: any) => {
+                              // Report Id
+                              // res.data.data.report_id
+
+                              var sor = {
+                                report: {
+                                  _id: res.data.data.report_id,
+                                  created_by: 'haider@gmail.com',
+                                  details: this.state.observationT,
+                                  occured_at: moment().format('YYYY-MM-DD'),
+                                  // involved_persons: this.state.involved_persons.map(
+                                  //   (d: any) => d._,
+                                  // ),
+                                  sor_type: sorbtns[0].title,
+                                  risk: {
+                                    severity: liklihood[0].value,
+                                    likelihood: severity[0].value,
+                                  },
+                                  action_required: [
+                                    // {
+                                    //   content: 'kam kro baatein n a kro ',
+                                    //   assigned_to: 'waqas@gmail.com',
+                                    //   category: 'sasti category',
+                                    //   date: '2020-01-01',
+                                    //   is_complete: true,
+                                    //   is_selected: true,
+                                    // },
+                                  ],
+                                  user_location: {
+                                    latitude: 66.666,
+                                    longitude: 66.666,
+                                  },
+                                  location: this.state.observation,
+                                  submit_to: this.state.submitToTags.map(
+                                    (d: any) => d.email,
+                                  ),
+                                  esclate_to: this.state.exclateToTags.map(
+                                    (d: any) => d.email,
+                                  ),
+                                  status: 2,
+                                  attachments: [],
+                                  comments: [
+                                    // {
+                                    //   email: 'haiderali333222@gmail.com',
+                                    //   comment: 'mera apna comment',
+                                    //   date: '2020-01-01',
+                                    //   files: ['abc'],
+                                    //   is_comment: true,
+                                    // },
+                                  ],
+                                },
+                                project: '604b13d114ba138bd23d7f75',
+                              };
+                              console.log(sor);
+
+                              createApi
+                                .createApi()
+                                .createSor(sor)
+                                .then((res) => {
+                                  this.setState({
+                                    loading: false,
+                                    errorModal: false,
+                                  });
+                                  this.props.navigation.navigate('ViewAllSOr');
+                                })
+                                .catch((err) =>
+                                  this.setState({
+                                    loading: false,
+                                    errorModal: false,
+                                  }),
+                                );
+                            })
+                            .catch((err) => {
+                              this.setState({
+                                loading: false,
+                                errorModal: false,
+                              });
+                              console.log(err);
+                            });
                         })
-                        .catch((err) => console.log(err));
+                        .catch((err) => {
+                          this.setState({loading: false, errorModal: false});
+                          console.log(err);
+                        });
                     } else {
                       this.setState({
                         errorModal: true,
@@ -1190,23 +1296,23 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             onBackdropPress={() =>
               this.setState({errorModal: false, loading: false})
             }>
-            {/* {this.state.loading == true ? (
-            <View>
-              <ActivityIndicator color={colors.primary} size={'large'} />
-            </View>
-          ) : ( */}
-            <View style={styles.modelContainer}>
+            {this.state.loading == true ? (
               <View>
-                <Text style={styles.errHeadPop}>
-                  {this.state.errHeadingText}
-                </Text>
-                <Text style={styles.errEmailPassDesc}>
-                  {this.state.errDesText}
-                </Text>
-                {/* <Text style={styles.plzTryAgain}>Please try again later.</Text> */}
+                <ActivityIndicator color={colors.primary} size={'large'} />
               </View>
-            </View>
-            {/* )} */}
+            ) : (
+              <View style={styles.modelContainer}>
+                <View>
+                  <Text style={styles.errHeadPop}>
+                    {this.state.errHeadingText}
+                  </Text>
+                  <Text style={styles.errEmailPassDesc}>
+                    {this.state.errDesText}
+                  </Text>
+                  {/* <Text style={styles.plzTryAgain}>Please try again later.</Text> */}
+                </View>
+              </View>
+            )}
           </Modal>
           <Modal
             animationInTiming={1000}
@@ -1227,7 +1333,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               }}
               onSubmit={() => {
                 this.setState({repeatedSorModal: false});
-                this.props.navigation.navigate('ViewAll');
+                this.props.navigation.navigate('ViewAllSOr');
               }}
             />
           </Modal>
