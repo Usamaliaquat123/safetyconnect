@@ -375,7 +375,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 <TouchableOpacity
                                   onPress={() =>
                                     this.props.navigation.navigate('ViewAll', {
-                                      data: this.state.draft,
+                                      data: 1,
                                       title: 'Draft',
                                     })
                                   }

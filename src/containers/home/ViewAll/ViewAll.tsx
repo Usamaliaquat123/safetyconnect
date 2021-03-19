@@ -60,7 +60,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
   componentDidMount = async () => {
     this.setState({loading: true});
 
-    console.log(this.state.data);
+    console.log(this.props.route.params.data);
     await createApi
       .createApi()
       .filterSors({
@@ -71,6 +71,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       })
       .then(async (res: any) => {
         console.log(res.data.data);
+        console.log('----------');
         if (res.data.data.involved_persons !== undefined) {
           await AsyncStorage.setItem(
             'involved_persons',
@@ -162,7 +163,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                   borderTopLeftRadius: wp(4),
                   borderTopRightRadius: wp(4),
                 }}>
-                {this.props.route.params.data.map((d, i) => (
+                {this.state.reports.map((d, i) => (
                   <ListCard
                     classify={d.sor_type}
                     styles={
