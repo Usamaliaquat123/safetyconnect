@@ -18,6 +18,8 @@ export interface Isor {
   sor_type: string;
   color: string;
   type: string;
+  esclate_to: Array<string>;
+  submit_to: Array<string>;
   involved_persons: [];
   location: string;
   user1: string;

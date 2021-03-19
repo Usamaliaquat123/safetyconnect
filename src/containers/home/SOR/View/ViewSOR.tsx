@@ -80,8 +80,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       observation: this.props.route.params.data.details,
       date: this.props.route.params.data.occured_at,
       comments: View_sor.user.comments,
-      involvedPerson: View_sor.user.InvolvedPersons,
-      notifiedPerson: View_sor.user.NotifiedTo,
+      involvedPerson: this.props.route.params.data.involved_persons,
+      notifiedPerson: this.props.route.params.data.esclate_to,
       attachments: View_sor.user.Attachments,
 
       actionsAndRecommendations: this.props.route.params.data.action_required,
@@ -113,6 +113,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
       // actions and recommendations
       actionsAndRecommendationText: '',
+      // Submited to
+      submitted_to: this.props.route.params.data.submit_to,
+      esclate_to: this.props.route.params.data.esclate_to,
     };
 
     this.animation = React.createRef();
@@ -132,9 +135,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         var result = this.props.route.params.data.involved_persons.filter(
           (a: any) => oneIDs.indexOf(a) === -1,
         );
-        console.log('==============');
-        console.log(result);
-        console.log('==============');
       });
 
     this.fileAndImageCapturer(this.props.route.params.data.attachments);
@@ -146,6 +146,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       View_sor.user.Risk.liklihood,
     );
   };
+
+  // Submitted To
 
   AnimatedViews = () => {
     Animated.timing(this.state.contentAnim, {
@@ -311,7 +313,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
 
   render() {
+    console.log('===================');
     console.log(this.props.route.params.data.attachments);
+    console.log('===================');
+
     return (
       <Animated.View style={[styles.container, {opacity: this.state.initAnim}]}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -434,20 +439,20 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 <View style={styles.submittedTo}>
                   <Text style={styles.subText}>Submitted to : </Text>
                   <Text style={styles.obvText}>
-                    {View_sor.user.observer[0].name}
+                    {this.state.submitted_to[0].split('@')[0]}
                   </Text>
                 </View>
                 <View style={styles.observerTo}>
                   <Text style={styles.obvText}>Observer : </Text>
                   <Text style={styles.obvText}>
-                    {View_sor.user.submittedTo[0].name}{' '}
+                    {this.state.esclate_to[0].split('@')[0]}
                   </Text>
                 </View>
               </View>
               <View style={styles.involveNortify}>
                 {/* Notified To Section */}
                 <View style={styles.notifiedSec}>
-                  <Text style={styles.notifyPText}>Notified to : </Text>
+                  <Text style={styles.notifyPText}>Esclate to : </Text>
                   {this.state.notifiedPerson.map((d: any, i: number) => {
                     var j = 2;
 
@@ -554,7 +559,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       liklihood={this.state.liklihood}
                       severity={this.state.severity}
                       style={{alignSelf: 'center', marginTop: wp(3)}}
-                      onPress={(v: object) => console.log(v)}
+                      onPress={(v: object) => {}}
                     />
                   </View>
                 ) : (

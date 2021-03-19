@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   subText: {
     fontSize: wp(3),
     color: colors.text,
-    fontFamily: fonts.latoRegular,
+    fontFamily: fonts.SFuiDisplayMedium,
   },
   obvText: {
     fontSize: wp(3),
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   notifyPText: {
     fontSize: wp(3.2),
     marginTop: wp(1),
-    marginRight: wp(15),
+    // marginRight: wp(5),
   },
   addCircle: {
     borderRadius: wp(10),
