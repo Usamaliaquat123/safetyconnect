@@ -587,22 +587,22 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               };
                               console.log(sor);
 
-                              // createApi
-                              //   .createApi()
-                              //   .createSor(sor)
-                              //   .then((res) => {
-                              //     this.setState({
-                              //       loading: false,
-                              //       errorModal: false,
-                              //     });
-                              //     this.props.navigation.navigate('ViewAllSOr');
-                              //   })
-                              //   .catch((err) =>
-                              //     this.setState({
-                              //       loading: false,
-                              //       errorModal: false,
-                              //     }),
-                              //   );
+                              createApi
+                                .createApi()
+                                .createSor(sor)
+                                .then((res) => {
+                                  this.setState({
+                                    loading: false,
+                                    errorModal: false,
+                                  });
+                                  this.props.navigation.navigate('ViewAllSOr');
+                                })
+                                .catch((err) =>
+                                  this.setState({
+                                    loading: false,
+                                    errorModal: false,
+                                  }),
+                                );
                             })
                             .catch((err) => {
                               this.setState({
