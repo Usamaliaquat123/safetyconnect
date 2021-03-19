@@ -23,6 +23,7 @@ import {
   notified,
   Create_sor,
   riskxSeverityxliklihood,
+  createApi,
 } from '@service';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -119,22 +120,25 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     this.fileNotSupported = React.createRef();
   }
   componentDidMount = () => {
-    AsyncStorage.getItem('involved_persons')
+    // console.log(this.props.route.params.data.involved_persons);
+    createApi
+      .createApi()
+      .getProject({projectid: '6038cf8472762b29b1bed1f3'})
       .then((res: any) => {
-        for (
-          let i = 0;
-          i < this.props.route.params.data.involved_persons.length;
-          i++
-        ) {
-          if (
-            JSON.parse(res)._id == this.props.route.params.data.involved_persons
-          ) {
-          }
-        }
-      })
-      .catch((err) => console.log(err));
+        res.data.data.involved_persons;
+
+        var oneIDs = res.data.data.involved_persons.map((a: any) => a._id);
+
+        var result = this.props.route.params.data.involved_persons.filter(
+          (a: any) => oneIDs.indexOf(a) === -1,
+        );
+        console.log('==============');
+        console.log(result);
+        console.log('==============');
+      });
+
     this.fileAndImageCapturer(this.props.route.params.data.attachments);
-    console.log(this.props.route.params.data);
+    // console.log(this.props.route.params.data);
     this.mapViewSorPhoto();
     this.AnimatedViews();
     this.mappingMapping(

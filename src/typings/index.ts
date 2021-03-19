@@ -18,6 +18,7 @@ export interface Isor {
   sor_type: string;
   color: string;
   type: string;
+  involved_persons: [];
   location: string;
   user1: string;
   user2: string;
