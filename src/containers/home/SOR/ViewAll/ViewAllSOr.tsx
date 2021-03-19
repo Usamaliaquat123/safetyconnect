@@ -465,7 +465,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                       this.props.navigation.navigate(
                                         'ViewAll',
                                         {
-                                          data: this.state.inprogress,
+                                          data: 4,
                                           title: 'In Progress',
                                         },
                                       )
@@ -560,7 +560,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                       this.props.navigation.navigate(
                                         'ViewAll',
                                         {
-                                          data: this.state.exclated,
+                                          data: 3,
                                           title: 'Exclated',
                                         },
                                       )
@@ -656,7 +656,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                       this.props.navigation.navigate(
                                         'ViewAll',
                                         {
-                                          data: this.state.completed,
+                                          data: 5,
                                           title: 'Completed',
                                         },
                                       )
@@ -778,7 +778,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                       this.props.navigation.navigate(
                                         'ViewAll',
                                         {
-                                          data: this.state.submitted,
+                                          data: 2,
                                           title: 'Submitted',
                                         },
                                       )
@@ -894,7 +894,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           <TouchableOpacity
                             onPress={() =>
                               this.props.navigation.navigate('ViewAll', {
-                                data: this.state.draft,
+                                data: 1,
                                 title: 'Draft',
                               })
                             }

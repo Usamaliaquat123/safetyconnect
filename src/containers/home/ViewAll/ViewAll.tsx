@@ -57,29 +57,20 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     };
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
     this.setState({loading: true});
-    if (this.state.data == 'Draft') {
-      this.setState({data: 1});
-    } else if (this.state.data == 'submitted') {
-      this.setState({data: 2});
-    } else if (this.state.data == 'Exclated') {
-      this.setState({data: 3});
-    } else if (this.state.data == 'In Progress') {
-      this.setState({data: 4});
-    } else if (this.state.data == 'Completed') {
-      this.setState({data: 5});
-    }
 
-    createApi
+    console.log(this.state.data);
+    await createApi
       .createApi()
       .filterSors({
         project: '604b13d114ba138bd23d7f75',
         limit: 100,
         page: 0,
-        query: {status: [this.state.data]},
+        query: {status: [this.props.route.params.data]},
       })
       .then(async (res: any) => {
+        console.log(res.data.data);
         if (res.data.data.involved_persons !== undefined) {
           await AsyncStorage.setItem(
             'involved_persons',
@@ -92,7 +83,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
         this.setState({reports: res.data.data.report});
       })
       .catch((err) => console.log(err));
-  }
+  };
 
   componentWillUnmount = () => {
     this.setState({reports: []});
