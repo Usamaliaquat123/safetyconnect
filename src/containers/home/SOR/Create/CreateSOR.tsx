@@ -85,7 +85,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       selectEsclateTo: false,
       esclateTo: '',
       // repeated sor modal
-      repeatedSorModal: true,
+      repeatedSorModal: false,
       repeatedSorData: [],
       submitToTags: [],
       exclateToTags: [],
@@ -358,6 +358,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     var sorbtns = this.state.classifySorbtns.filter(
       (d: any) => d.selected == true,
     );
+    console.log(this.state.observationT);
 
     var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
     // console.log(this.state.liklihood);
@@ -371,7 +372,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     var submitTo = this.state.submitTo;
     var esclateTo = this.state.esclateTo;
     // Check If the observation text is detected
-    if (this.state.observationT != '') {
+    if (this.state.observationT !== '') {
       if (this.state.observation != '') {
         if (sorbtns.length != 0) {
           console.log(sorbtns);
@@ -586,22 +587,22 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               };
                               console.log(sor);
 
-                              createApi
-                                .createApi()
-                                .createSor(sor)
-                                .then((res) => {
-                                  this.setState({
-                                    loading: false,
-                                    errorModal: false,
-                                  });
-                                  this.props.navigation.navigate('ViewAllSOr');
-                                })
-                                .catch((err) =>
-                                  this.setState({
-                                    loading: false,
-                                    errorModal: false,
-                                  }),
-                                );
+                              // createApi
+                              //   .createApi()
+                              //   .createSor(sor)
+                              //   .then((res) => {
+                              //     this.setState({
+                              //       loading: false,
+                              //       errorModal: false,
+                              //     });
+                              //     this.props.navigation.navigate('ViewAllSOr');
+                              //   })
+                              //   .catch((err) =>
+                              //     this.setState({
+                              //       loading: false,
+                              //       errorModal: false,
+                              //     }),
+                              //   );
                             })
                             .catch((err) => {
                               this.setState({

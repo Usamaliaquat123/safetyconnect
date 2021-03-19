@@ -14,7 +14,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import styles from './styles';
-import {allRecentActivity} from '@service';
+import {allRecentActivity, createApi} from '@service';
 import {classifySor} from '@utils';
 import {Avatar, Icon} from 'react-native-elements';
 import {View_sor, myTasks, recentActivity} from '@service';
@@ -22,11 +22,13 @@ import {ListCard} from '@components';
 // import {colors} from '@theme';
 import {route} from '@nav';
 import {PieChart} from 'react-native-svg-charts';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {animation} from '@theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import LottieView from 'lottie-react-native';
 
 // import {connect} from '../../decorators/index';
 // import {color} from 'react-native-reanimated';
@@ -48,14 +50,56 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     super(props);
     this.state = {
       selectedStats: 1,
+      reports: [],
+      data: this.props.route.params.title,
       searchValue: '',
       bottomWidth: wp(100),
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.setState({loading: true});
+    if (this.state.data == 'Draft') {
+      this.setState({data: 1});
+    } else if (this.state.data == 'submitted') {
+      this.setState({data: 2});
+    } else if (this.state.data == 'Exclated') {
+      this.setState({data: 3});
+    } else if (this.state.data == 'In Progress') {
+      this.setState({data: 4});
+    } else if (this.state.data == 'Completed') {
+      this.setState({data: 5});
+    }
+
+    createApi
+      .createApi()
+      .filterSors({
+        project: '604b13d114ba138bd23d7f75',
+        limit: 100,
+        page: 0,
+        query: {status: [this.state.data]},
+      })
+      .then(async (res: any) => {
+        if (res.data.data.involved_persons !== undefined) {
+          await AsyncStorage.setItem(
+            'involved_persons',
+            JSON.stringify(res.data.data.involved_persons),
+          );
+          this.setState({loading: false});
+        } else {
+          this.setState({loading: false});
+        }
+        this.setState({reports: res.data.data.report});
+      })
+      .catch((err) => console.log(err));
+  }
+
+  componentWillUnmount = () => {
+    this.setState({reports: []});
+  };
 
   render() {
+    console.log(this.state.reports);
     return (
       <View style={{flex: 1, backgroundColor: colors.primary}}>
         <ScrollView>
@@ -89,37 +133,67 @@ class ViewAll extends React.Component<ViewAllProps, any> {
             </View>
           </View>
           <View style={styles.content}>
-            <View
-              style={{
-                backgroundColor: colors.secondary,
-                padding: wp(3),
-                // paddingBottom: this.state.bottomWidth,
-                paddingLeft: wp(5),
-
-                paddingRight: wp(3),
-                borderTopLeftRadius: wp(4),
-                borderTopRightRadius: wp(4),
-              }}>
-              {this.props.route.params.data.map((d, i) => (
-                <ListCard
-                  classify={d.sor_type}
-                  styles={
-                    myTasks.rercently.length == i + 1
-                      ? {borderBottomWidth: wp(0)}
-                      : null
-                  }
-                  user1={d.user1}
-                  user2={d.user2}
-                  observation={d.details}
-                  username={d.created_by}
-                  iconconf={classifySor.find((e: any) => e.title == d.sor_type)}
-                  onPress={() =>
-                    this.props.navigation.navigate('ViewSOR', {data: d})
-                  }
-                  date={d.occured_at}
+            {this.state.loading == true ? (
+              <View
+                style={{
+                  alignSelf: 'center',
+                  marginTop: wp(40),
+                  marginBottom: wp(40),
+                }}>
+                <LottieView
+                  // ref={(animation) => {
+                  //   this.photoAnim = animation;
+                  // }}
+                  autoPlay={true}
+                  style={{width: wp(90)}}
+                  source={animation.loading}
+                  loop={true}
                 />
-              ))}
-            </View>
+                <Text
+                  style={{
+                    fontSize: wp(3),
+                    opacity: 0.5,
+                    textAlign: 'center',
+                    marginTop: wp(-5),
+                  }}>
+                  loading...
+                </Text>
+              </View>
+            ) : (
+              <View
+                style={{
+                  backgroundColor: colors.secondary,
+                  padding: wp(3),
+                  // paddingBottom: this.state.bottomWidth,
+                  paddingLeft: wp(5),
+
+                  paddingRight: wp(3),
+                  borderTopLeftRadius: wp(4),
+                  borderTopRightRadius: wp(4),
+                }}>
+                {this.props.route.params.data.map((d, i) => (
+                  <ListCard
+                    classify={d.sor_type}
+                    styles={
+                      myTasks.rercently.length == i + 1
+                        ? {borderBottomWidth: wp(0)}
+                        : null
+                    }
+                    user1={d.user1}
+                    user2={d.user2}
+                    observation={d.details}
+                    username={d.created_by}
+                    iconconf={classifySor.find(
+                      (e: any) => e.title == d.sor_type,
+                    )}
+                    onPress={() =>
+                      this.props.navigation.navigate('ViewSOR', {data: d})
+                    }
+                    date={d.occured_at}
+                  />
+                ))}
+              </View>
+            )}
           </View>
         </ScrollView>
       </View>

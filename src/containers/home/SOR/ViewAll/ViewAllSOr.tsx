@@ -115,7 +115,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       .createApi()
       .filterSors({
         project: '604b13d114ba138bd23d7f75',
-        limit: 10,
+        limit: 100,
         page: 0,
         query: {status: [1, 2, 3, 4, 5]},
       })
@@ -142,7 +142,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           this.setState({loading: false});
         }
 
-        this.setState({draft: res.data.data.report});
+        // this.setState({draft: res.data.data.report});
       });
   };
 
@@ -560,8 +560,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                       this.props.navigation.navigate(
                                         'ViewAll',
                                         {
-                                          data: this.state.notified,
-                                          title: 'In Progress',
+                                          data: this.state.exclated,
+                                          title: 'Exclated',
                                         },
                                       )
                                     }
@@ -779,7 +779,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                         'ViewAll',
                                         {
                                           data: this.state.submitted,
-                                          title: 'Closed',
+                                          title: 'Submitted',
                                         },
                                       )
                                     }
