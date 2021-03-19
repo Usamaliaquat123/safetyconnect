@@ -44,6 +44,7 @@ import {
   downloadFile,
 } from '@utils';
 import DocumentPicker from 'react-native-document-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // import listAction from './../../../../store/actions/listActions';
 type ViewSORNavigationProp = StackNavigationProp<
@@ -118,6 +119,20 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     this.fileNotSupported = React.createRef();
   }
   componentDidMount = () => {
+    AsyncStorage.getItem('involved_persons')
+      .then((res: any) => {
+        for (
+          let i = 0;
+          i < this.props.route.params.data.involved_persons.length;
+          i++
+        ) {
+          if (
+            JSON.parse(res)._id == this.props.route.params.data.involved_persons
+          ) {
+          }
+        }
+      })
+      .catch((err) => console.log(err));
     this.fileAndImageCapturer(this.props.route.params.data.attachments);
     console.log(this.props.route.params.data);
     this.mapViewSorPhoto();
