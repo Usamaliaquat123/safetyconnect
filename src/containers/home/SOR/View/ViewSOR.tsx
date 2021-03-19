@@ -779,7 +779,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               </View>
               <View style={styles.attachmentsContainer}>
                 <Text style={styles.attachmentsFont}>Attachments</Text>
-                {this.props.route.params.data.attachments == undefined ? (
+                {this.props.route.params.data.attachments.length == 0 ? (
                   <Text style={styles.youdonthaveAnyAttachments}>
                     You don't have any attachments
                   </Text>
