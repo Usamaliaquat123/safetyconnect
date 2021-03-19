@@ -46,7 +46,7 @@ import {
 } from '@utils';
 import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+// import {colors} from '@theme';
 // import listAction from './../../../../store/actions/listActions';
 type ViewSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -369,7 +369,17 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             ? 'font-awesome-5'
                             : 'antdesign'
                         }
-                        color={colors.text}
+                        color={
+                          this.state.sor_type == 'lsr'
+                            ? colors.classify_sor_btns.lsr
+                            : this.state.sor_type == 'positive'
+                            ? colors.classify_sor_btns.positive
+                            : this.state.sor_type == 'concern'
+                            ? colors.classify_sor_btns.concern
+                            : this.state.sor_type == 'near miss'
+                            ? colors.classify_sor_btns.nearmiss
+                            : 'frowno'
+                        }
                       />
                     ) : null}
                   </View>
@@ -388,7 +398,19 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     <Image source={images.nearMiss} style={GlStyles.images} />
                   </View>
                 ) : null}
-                <Text style={styles.clasifyT}>
+                <Text
+                  style={[
+                    styles.clasifyT,
+                    this.state.sor_type == 'lsr'
+                      ? {color: colors.classify_sor_btns.lsr}
+                      : this.state.sor_type == 'positive'
+                      ? {color: colors.classify_sor_btns.positive}
+                      : this.state.sor_type == 'concern'
+                      ? {color: colors.classify_sor_btns.concern}
+                      : this.state.sor_type == 'near miss'
+                      ? {color: colors.classify_sor_btns.nearmiss}
+                      : null,
+                  ]}>
                   {capitalizeFirstLetter(this.state.sor_type)}
                 </Text>
               </TouchableOpacity>
