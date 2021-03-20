@@ -420,7 +420,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               (d: any) => d.email,
                             ),
                             status: 2,
-                            attachments: [],
+                            attachments: this.state.filename,
                             comments: [
                               // {
                               //   email: 'haiderali333222@gmail.com',
@@ -965,38 +965,39 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </View>
               {this.state.filename.length != 0 ? (
                 <View>
-                  {this.state.filename.map((d: string, i: number) => (
-                    <View
-                      style={{
-                        flexWrap: 'wrap',
-                        flexDirection: 'row',
-                      }}>
-                      <Tags
-                        onClose={(d: any) => {
-                          this.setState({
-                            filename: this.state.filename.filter(
-                              (v: any) => v !== d,
-                            ),
-                          });
-                        }}
-                        type={'attachments'}
-                        style={{alignContent: 'center'}}
-                        tags={this.state.filename}
-                      />
-                    </View>
-                  ))}
+                  {/* {this.state.filename.map((d: string, i: number) => ( */}
+                  <View
+                    style={{
+                      flexWrap: 'wrap',
+                      flexDirection: 'row',
+                    }}>
+                    <Tags
+                      onClose={(d: any) => {
+                        this.setState({
+                          filename: this.state.filename.filter(
+                            (v: any) => v !== d,
+                          ),
+                        });
+                      }}
+                      type={'attachments'}
+                      style={{alignContent: 'center'}}
+                      tags={this.state.filename}
+                    />
+                  </View>
+                  {/* ))} */}
                 </View>
               ) : null}
-
-              <TouchableOpacity
-                onPress={() => {
-                  if (this.state.filename.length < 5) {
-                    this.pickupDoc();
-                  }
-                }}
-                style={styles.uplaodBtn}>
-                <Text style={styles.uploadfileText}>Upload File</Text>
-              </TouchableOpacity>
+              {this.state.filename.length < 5 ? null : (
+                <TouchableOpacity
+                  onPress={() => {
+                    if (this.state.filename.length < 5) {
+                      this.pickupDoc();
+                    }
+                  }}
+                  style={styles.uplaodBtn}>
+                  <Text style={styles.uploadfileText}>Upload File</Text>
+                </TouchableOpacity>
+              )}
             </View>
 
             {/* Actions/Recommendation */}
