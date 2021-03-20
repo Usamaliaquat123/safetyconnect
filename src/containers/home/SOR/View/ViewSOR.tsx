@@ -126,7 +126,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     // console.log(this.props.route.params.data.involved_persons);
     createApi
       .createApi()
-      .getProject({projectid: '6038cf8472762b29b1bed1f3'})
+      .getProject({projectid: '6056061f49cf9ae72efe8e6e'})
       .then((res: any) => {
         res.data.data.involved_persons;
 

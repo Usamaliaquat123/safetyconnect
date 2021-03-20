@@ -39,6 +39,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {parse} from 'react-native-svg';
 import {createApi} from '@service';
 import {StackAnimationTypes} from 'react-native-screens';
+import Amplify, {Storage} from 'aws-amplify';
+
 type CreateSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'CreateSOR'
@@ -190,7 +192,17 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         });
     }
   };
+  uploadimages = async () => {
+    const object = {
+      uri: `users/sors/${id}/`,
+      name: `${userId}${file}${date}`,
+      type: '',
+    };
 
+    await Storage.put(`${userId}${file}${date}`, object).then((res) => {
+      console.log(res);
+    });
+  };
   // search in observatiosn
   searchInObservation = (str: string) => {
     const form = new FormData();
@@ -293,7 +305,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   (d: any) => d.selected == true,
                 )[0].value,
               },
-              action_required: [  ],
+              action_required: [],
               // user_location: {
               //   latitude: 66.666,
               //   longitude: 66.666,
@@ -303,7 +315,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               esclate_to: this.state.exclateToTags,
               status: 5,
               attachments: this.state.filename,
-              comments: [ ],
+              comments: [],
             },
             project: '604b13d114ba138bd23d7f75',
           };

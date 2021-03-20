@@ -107,6 +107,11 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   }
 
   componentDidMount = async () => {
+    Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png')
+      .then((res: string | any) => {
+        var ts = res.split('?')[0].replace(/%20/g, '+').replace('/public', '');
+      })
+      .catch((err) => console.log(err));
     // this.props.initialList.addList('asdds');
     // console.log(this.props.initialList);
     // console.log(this.props.initial.list);
@@ -114,7 +119,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     createApi
       .createApi()
       .filterSors({
-        project: '604b13d114ba138bd23d7f75',
+        project: '6056061f49cf9ae72efe8e6e',
         limit: 100,
         page: 0,
         query: {status: [1, 2, 3, 4, 5]},
