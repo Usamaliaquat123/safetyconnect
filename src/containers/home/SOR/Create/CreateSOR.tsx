@@ -144,18 +144,21 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   suggestInvolvePersons = (str: string) => {
     // console.log(this.state.involved_persons);
     var srchSug = searchInSuggestions(str, this.state.involved_persons);
-    if (str == '') {
-      this.setState({
-        involvePersonSuggestions: [],
-        involvePersonText: str,
-      });
-    } else {
-      console.log(srchSug);
-      this.setState({
-        involvePersonSuggestions: [...srchSug],
-        involvePersonText: str,
-      });
-    }
+    console.log(this.state.involved_persons);
+
+    console.log(srchSug);
+    // if (str == '') {
+    //   this.setState({
+    //     involvePersonSuggestions: [],
+    //     involvePersonText: str,
+    //   });
+    // } else {
+    //   console.log(srchSug);
+    //   this.setState({
+    //     involvePersonSuggestions: [...srchSug],
+    //     involvePersonText: str,
+    //   });
+    // }
   };
 
   // Search in Esclated To
@@ -456,16 +459,16 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         };
                         console.log(sor);
 
-                        createApi
-                          .createApi()
-                          .createSor(sor)
-                          .then((res) => {
-                            this.setState({loading: false, errorModal: false});
-                            this.props.navigation.navigate('ViewAllSOr');
-                          })
-                          .catch((err) =>
-                            this.setState({loading: false, errorModal: false}),
-                          );
+                        // createApi
+                        //   .createApi()
+                        //   .createSor(sor)
+                        //   .then((res) => {
+                        //     this.setState({loading: false, errorModal: false});
+                        //     this.props.navigation.navigate('ViewAllSOr');
+                        //   })
+                        //   .catch((err) =>
+                        //     this.setState({loading: false, errorModal: false}),
+                        //   );
                       })
                       .catch((err) => {
                         this.setState({loading: false, errorModal: false});
@@ -569,22 +572,22 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               };
                               console.log(sor);
 
-                              createApi
-                                .createApi()
-                                .createSor(sor)
-                                .then((res) => {
-                                  this.setState({
-                                    loading: false,
-                                    errorModal: false,
-                                  });
-                                  this.props.navigation.navigate('ViewAllSOr');
-                                })
-                                .catch((err) =>
-                                  this.setState({
-                                    loading: false,
-                                    errorModal: false,
-                                  }),
-                                );
+                              // createApi
+                              //   .createApi()
+                              //   .createSor(sor)
+                              //   .then((res) => {
+                              //     this.setState({
+                              //       loading: false,
+                              //       errorModal: false,
+                              //     });
+                              //     this.props.navigation.navigate('ViewAllSOr');
+                              //   })
+                              //   .catch((err) =>
+                              //     this.setState({
+                              //       loading: false,
+                              //       errorModal: false,
+                              //     }),
+                              //   );
                             })
                             .catch((err) => {
                               this.setState({
