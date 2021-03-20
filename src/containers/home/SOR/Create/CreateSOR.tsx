@@ -293,16 +293,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   (d: any) => d.selected == true,
                 )[0].value,
               },
-              // action_required: [
-              //   {
-              //     content: 'kam kro baatein na kro ',
-              //     assigned_to: 'waqas@gmail.com',
-              //     category: 'sasti category',
-              //     date: '2020-01-01',
-              //     is_complete: true,
-              //     is_selected: true,
-              //   },
-              // ],
+              action_required: [  ],
               // user_location: {
               //   latitude: 66.666,
               //   longitude: 66.666,
@@ -312,15 +303,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               esclate_to: this.state.exclateToTags,
               status: 5,
               attachments: this.state.filename,
-              comments: [
-                // {
-                //   email: 'haiderali333222@gmail.com',
-                //   comment: 'mera apna comment',
-                //   date: '2020-01-01',
-                //   files: ['abc'],
-                //   is_comment: true,
-                // },
-              ],
+              comments: [ ],
             },
             project: '604b13d114ba138bd23d7f75',
           };
@@ -398,16 +381,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               severity: 5,
                               likelihood: 5,
                             },
-                            action_required: [
-                              // {
-                              //   content: 'kam kro baatein n a kro ',
-                              //   assigned_to: 'waqas@gmail.com',
-                              //   category: 'sasti category',
-                              //   date: '2020-01-01',
-                              //   is_complete: true,
-                              //   is_selected: true,
-                              // },
-                            ],
+                            action_required: [],
                             user_location: {
                               latitude: 66.666,
                               longitude: 66.666,
@@ -421,15 +395,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             ),
                             status: 2,
                             attachments: this.state.filename,
-                            comments: [
-                              // {
-                              //   email: 'haiderali333222@gmail.com',
-                              //   comment: 'mera apna comment',
-                              //   date: '2020-01-01',
-                              //   files: ['abc'],
-                              //   is_comment: true,
-                              // },
-                            ],
+                            comments: [],
                           },
                           project: '604b13d114ba138bd23d7f75',
                         };
