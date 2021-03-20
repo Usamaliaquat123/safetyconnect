@@ -435,16 +435,16 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         };
                         console.log(sor);
 
-                        // createApi
-                        //   .createApi()
-                        //   .createSor(sor)
-                        //   .then((res) => {
-                        //     this.setState({loading: false, errorModal: false});
-                        //     this.props.navigation.navigate('ViewAllSOr');
-                        //   })
-                        //   .catch((err) =>
-                        //     this.setState({loading: false, errorModal: false}),
-                        //   );
+                        createApi
+                          .createApi()
+                          .createSor(sor)
+                          .then((res) => {
+                            this.setState({loading: false, errorModal: false});
+                            this.props.navigation.navigate('ViewAllSOr');
+                          })
+                          .catch((err) =>
+                            this.setState({loading: false, errorModal: false}),
+                          );
                       })
                       .catch((err) => {
                         this.setState({loading: false, errorModal: false});
@@ -548,22 +548,22 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               };
                               console.log(sor);
 
-                              // createApi
-                              //   .createApi()
-                              //   .createSor(sor)
-                              //   .then((res) => {
-                              //     this.setState({
-                              //       loading: false,
-                              //       errorModal: false,
-                              //     });
-                              //     this.props.navigation.navigate('ViewAllSOr');
-                              //   })
-                              //   .catch((err) =>
-                              //     this.setState({
-                              //       loading: false,
-                              //       errorModal: false,
-                              //     }),
-                              //   );
+                              createApi
+                                .createApi()
+                                .createSor(sor)
+                                .then((res) => {
+                                  this.setState({
+                                    loading: false,
+                                    errorModal: false,
+                                  });
+                                  this.props.navigation.navigate('ViewAllSOr');
+                                })
+                                .catch((err) =>
+                                  this.setState({
+                                    loading: false,
+                                    errorModal: false,
+                                  }),
+                                );
                             })
                             .catch((err) => {
                               this.setState({
@@ -987,7 +987,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   {/* ))} */}
                 </View>
               ) : null}
-              {this.state.filename.length < 5 ? null : (
+              {this.state.filename.length < 5 ? (
                 <TouchableOpacity
                   onPress={() => {
                     if (this.state.filename.length < 5) {
@@ -997,7 +997,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   style={styles.uplaodBtn}>
                   <Text style={styles.uploadfileText}>Upload File</Text>
                 </TouchableOpacity>
-              )}
+              ) : null}
             </View>
 
             {/* Actions/Recommendation */}
