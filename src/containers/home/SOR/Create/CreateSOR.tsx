@@ -168,22 +168,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     }
   };
 
-  // Search in Esclated To
-  // suggestInEsclatedTo = (str: string) => {
-  //   if (str == '') {
-  //     this.setState({
-  //       involvePersonSuggestions: [],
-  //       involvePersonText: str,
-  //     });
-  //   } else {
-  //     var srchSug = searchInSuggestions(str, this.state.involved_persons);
-  //     this.setState({
-  //       involvePersonSuggestions: [...srchSug],
-  //       involvePersonText: str,
-  //     });
-  //   }
-  // };
-
   // Search Action / Recommendation Suggestions
   actionRecommendSuggestion = (str: string) => {
     if (str == '') {
@@ -354,30 +338,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       .catch((err) => console.log(err));
   };
   onCreateSor = () => {
-    // this.setState({repeatedSorModal: true});
-    // repeatedSorData
-    // liklihood={this.state.liklihood}
-    // severity={this.state.severity}
-
-    // console.log(this.state.liklihood);
-    // console.log(this.state.severity);
-    // console.log('=============');
-    // console.log(this.state.observationT);
-    // console.log('=============');
-
     var sorbtns = this.state.classifySorbtns.filter(
       (d: any) => d.selected == true,
     );
     console.log(this.state.observationT);
 
     var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
-    // console.log(this.state.liklihood);
-    // console.log(this.state.severity);
     var severity = this.state.severity.filter((d: any) => d.selected == true);
 
-    // var involvePersonText = this.state.involvePersonText;
-    console.log(this.state.submitToTags);
-    console.log(this.state.actionsTag);
     var actionRecommendationsText = this.state.actionRecommendationsText;
     var submitTo = this.state.submitTo;
     var esclateTo = this.state.esclateTo;
@@ -996,27 +964,26 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </View>
               {this.state.filename.length != 0 ? (
                 <View>
-                  {/* {this.state.filename.map((d: string, i: number) => ( */}
-
-                  <View
-                    style={{
-                      flexWrap: 'wrap',
-                      flexDirection: 'row',
-                    }}>
-                    <Tags
-                      onClose={(d: any) => {
-                        this.setState({
-                          filename: this.state.filename.filter(
-                            (v: any) => v !== d,
-                          ),
-                        });
-                      }}
-                      style={{alignContent: 'center'}}
-                      tags={this.state.filename}
-                    />
-                  </View>
-                  {/* // <Text style={styles.uplaodText}>{d}</Text> */}
-                  {/* ))} */}
+                  {this.state.filename.map((d: string, i: number) => (
+                    <View
+                      style={{
+                        flexWrap: 'wrap',
+                        flexDirection: 'row',
+                      }}>
+                      <Tags
+                        onClose={(d: any) => {
+                          this.setState({
+                            filename: this.state.filename.filter(
+                              (v: any) => v !== d,
+                            ),
+                          });
+                        }}
+                        type={'attachments'}
+                        style={{alignContent: 'center'}}
+                        tags={this.state.filename}
+                      />
+                    </View>
+                  ))}
                 </View>
               ) : null}
 

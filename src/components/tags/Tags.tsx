@@ -23,6 +23,7 @@ export interface TagsProps {
 
 class Tags extends React.Component<TagsProps, any> {
   render() {
+    console.log(this.props.tags);
     if (this.props.type == 'sugg') {
       return this.props.tags.map((d: any, i: number) => (
         <View key={i} style={[styles.container, this.props.style]}>
@@ -42,6 +43,24 @@ class Tags extends React.Component<TagsProps, any> {
         </View>
       ));
     } else if (this.props.type == 'addTeamMem') {
+      return this.props.tags.map((d: any, i: number) => (
+        <View key={i} style={[styles.container, this.props.style]}>
+          <Text style={styles.tagsText}>{d}</Text>
+          <TouchableOpacity
+            onPress={() => this.props.onClose(d)}
+            style={styles.containerIcon}>
+            <Icon
+              style={styles.crossIcon}
+              onPress={() => this.props.onClose(d)}
+              size={wp(3)}
+              name="cross"
+              type="entypo"
+              color={colors.secondary}
+            />
+          </TouchableOpacity>
+        </View>
+      ));
+    } else if (this.props.type == 'attachments') {
       return this.props.tags.map((d: any, i: number) => (
         <View key={i} style={[styles.container, this.props.style]}>
           <Text style={styles.tagsText}>{d}</Text>
