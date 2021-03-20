@@ -142,23 +142,30 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   };
   // Search in InvolvePersons Array
   suggestInvolvePersons = (str: string) => {
-    // console.log(this.state.involved_persons);
-    var srchSug = searchInSuggestions(str, this.state.involved_persons);
-    console.log(this.state.involved_persons);
+    var strArr = [];
 
-    console.log(srchSug);
-    // if (str == '') {
-    //   this.setState({
-    //     involvePersonSuggestions: [],
-    //     involvePersonText: str,
-    //   });
-    // } else {
-    //   console.log(srchSug);
-    //   this.setState({
-    //     involvePersonSuggestions: [...srchSug],
-    //     involvePersonText: str,
-    //   });
-    // }
+    for (var j = 0; j < this.state.involved_persons.length; j++) {
+      if (
+        this.state.involved_persons[j].name
+          .toLowerCase()
+          .match(str.toLowerCase())
+      ) {
+        strArr.push(this.state.involved_persons[j]);
+      }
+    }
+
+    if (str === '') {
+      this.setState({
+        involvePersonSuggestions: [],
+        involvePersonText: str,
+      });
+    } else {
+      console.log(strArr);
+      this.setState({
+        involvePersonSuggestions: strArr,
+        involvePersonText: str,
+      });
+    }
   };
 
   // Search in Esclated To
@@ -925,7 +932,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   tags={this.state.involvePersonTags}
                 />
               </View>
-              {this.state.involvePersonSuggestions.length != 0 ? (
+              {this.state.involvePersonSuggestions.length !== 0 ? (
                 <View style={styles.involveSuggestCont}>
                   {this.state.involvePersonSuggestions.map(
                     (d: involved_persons, i: number) => (
