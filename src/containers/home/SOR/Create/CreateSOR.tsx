@@ -112,6 +112,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.allFiles],
       });
+
       this.state.filename.push(
         res.name.length > 7
           ? res.name.substring(0, 8) + `...${res.type}`
