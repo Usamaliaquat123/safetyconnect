@@ -288,7 +288,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               _id: res.data.data.report_id,
               created_by: 'inconnent12345@outlook.com',
               details: this.state.observationT,
-              occured_at: Date.now(),
+              occured_at: new Date(),
               involved_persons: this.state.involvePersonTags,
               risk: {
                 severity: this.state.severity.filter(
@@ -411,10 +411,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             _id: res.data.data.report_id,
                             created_by: 'haider@gmail.com',
                             details: this.state.observationT,
-                            occured_at: moment().format('YYYY-MM-DD'),
-                            // involved_persons: this.state.involved_persons.map(
-                            //   (d: any) => d._,
-                            // ),
+                            occured_at: new Date(),
+                            involved_persons: this.state.involvePersonTags,
+
                             sor_type: sorbtns[0].title,
                             risk: {
                               severity: 5,
@@ -541,25 +540,16 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   _id: res.data.data.report_id,
                                   created_by: 'haider@gmail.com',
                                   details: this.state.observationT,
-                                  occured_at: moment().format('YYYY-MM-DD'),
-                                  // involved_persons: this.state.involved_persons.map(
-                                  //   (d: any) => d._,
-                                  // ),
+                                  occured_at: new Date(),
+                                  involved_persons: this.state
+                                    .involvePersonTags,
+
                                   sor_type: sorbtns[0].title,
                                   risk: {
                                     severity: liklihood[0].value,
                                     likelihood: severity[0].value,
                                   },
-                                  action_required: [
-                                    // {
-                                    //   content: 'kam kro baatein n a kro ',
-                                    //   assigned_to: 'waqas@gmail.com',
-                                    //   category: 'sasti category',
-                                    //   date: '2020-01-01',
-                                    //   is_complete: true,
-                                    //   is_selected: true,
-                                    // },
-                                  ],
+                                  action_required: [],
                                   user_location: {
                                     latitude: 66.666,
                                     longitude: 66.666,
@@ -573,15 +563,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   ),
                                   status: 2,
                                   attachments: [],
-                                  comments: [
-                                    // {
-                                    //   email: 'haiderali333222@gmail.com',
-                                    //   comment: 'mera apna comment',
-                                    //   date: '2020-01-01',
-                                    //   files: ['abc'],
-                                    //   is_comment: true,
-                                    // },
-                                  ],
+                                  comments: [],
                                 },
                                 project: '604b13d114ba138bd23d7f75',
                               };
