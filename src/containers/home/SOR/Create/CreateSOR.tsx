@@ -192,17 +192,35 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         });
     }
   };
-  uploadimages = async () => {
+  // Upload Files  to S3
+  upoadFiles = async (
+    userId: string,
+    file: string,
+    date: Date,
+    type: string,
+  ) => {
     const object = {
-      uri: `users/sors/${id}/`,
+      uri: `users/sors/${userId}/`,
       name: `${userId}${file}${date}`,
-      type: '',
+      type: `${type}`,
     };
-
-    await Storage.put(`${userId}${file}${date}`, object).then((res) => {
-      console.log(res);
-    });
+    // Uploading files to S3
+    await Storage.put(`${userId}${file}${date}`, object)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
+  // Getting files from the s3 storage
+  getFiles = async (userId: string) => {
+    await Storage.get(`users/sors/${userId}/`)
+      .then((res: string | any) => {
+        // var ts = res.split('?')[0].replace(/%20/g, '+').replace('/public', '');
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
+
   // search in observatiosn
   searchInObservation = (str: string) => {
     const form = new FormData();
