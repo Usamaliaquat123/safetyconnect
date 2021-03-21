@@ -1,5 +1,5 @@
 package com.safetyconnect;
-
+import com.rnfs.RNFSPackage;
 import com.facebook.react.ReactActivity;
 
 public class MainActivity extends ReactActivity {

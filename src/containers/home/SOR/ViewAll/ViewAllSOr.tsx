@@ -107,14 +107,15 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   }
 
   componentDidMount = async () => {
-    Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png')
-      .then((res: string | any) => {
-        var ts = res.split('?')[0].replace(/%20/g, '+').replace('/public', '');
-      })
-      .catch((err) => console.log(err));
+    // Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png')
+    //   .then((res: string | any) => {
+    //     var ts = res.split('?')[0].replace(/%20/g, '+').replace('/public', '');
+    //   })
+    //   .catch((err) => console.log(err));
     // this.props.initialList.addList('asdds');
     // console.log(this.props.initialList);
     // console.log(this.props.initial.list);
+
     this.setState({loading: true});
     createApi
       .createApi()
@@ -125,6 +126,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         query: {status: [1, 2, 3, 4, 5]},
       })
       .then(async (res: any) => {
+        console.log(res);
         if (res.data.data.involved_persons !== undefined) {
           await AsyncStorage.setItem(
             'involved_persons',
@@ -147,13 +149,15 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           this.setState({loading: false});
         }
 
-        // this.setState({draft: res.data.data.report});
-      });
+        this.setState({draft: res.data.data.report});
+      })
+      .catch((err) => console.log(err));
   };
 
   filterDecending = (sors: Array<any>, name: string) => {};
 
   render() {
+    console.log(this.state.submitted);
     return (
       <View style={{backgroundColor: colors.primary}}>
         <ScrollView showsVerticalScrollIndicator={false}>

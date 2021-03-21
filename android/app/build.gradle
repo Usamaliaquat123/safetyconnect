@@ -197,6 +197,7 @@ dependencies {
 implementation project(':lottie-react-native')
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 implementation project(':rn-fetch-blob') 
+implementation project(':react-native-fs')
 compile project(':react-native-vector-icons')
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'

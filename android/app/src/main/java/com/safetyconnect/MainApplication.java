@@ -13,6 +13,7 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import com.RNFetchBlob.RNFetchBlobPackage; 
+import com.rnfs.RNFSPackage;
 import com.airbnb.android.react.lottie.LottiePackage;
 // import com.oblador.vectoricons.VectorIconsPackage;
 public class MainApplication extends Application implements ReactApplication {

@@ -19,6 +19,7 @@ import {
   searchInInVolvedPersons,
   mainPass,
   suggestInActionsRecommendations,
+  getFiles,
   imageAndVideoObjectMap,
   capitalizeFirstLetter,
 } from './utils';
@@ -28,6 +29,7 @@ export {
   getLinkParam,
   mainPass,
   filterLocation,
+  getFiles,
   imageVideoDetector,
   searchInInVolvedPersons,
   capitalizeFirstLetter,

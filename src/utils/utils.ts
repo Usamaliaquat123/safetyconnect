@@ -10,6 +10,7 @@ import {
 import {PermissionsAndroid} from 'react-native';
 import {resolvePlugin} from '@babel/core';
 import {involved_persons} from '@typings';
+import Amplify, {Storage} from 'aws-amplify';
 export const mainPass: string = 'Safety_Connect1';
 export const classifySor: Array<Object> = [
   {
@@ -94,6 +95,26 @@ export const searchInObjects = (k: string, arr: Array<any>) => {
     return strArr;
   }
 };
+
+// Getting files from S3 STORAGE BUCKET RETURN Arr<str>
+export const getFiles = (userId: string, dir: string): Array<string> => {
+  var arr: Array<string> = [];
+  Storage.list(`${dir}/${userId}/`, {
+    customPrefix: `public/`,
+  }).then((res) => {
+    res.forEach((result: any, i: number) => {
+      if (i !== 0) {
+        console.log();
+        Storage.get(result.key.split('/')[2]).then((uri: any) => {
+          arr.push(uri);
+        });
+      }
+    });
+  });
+  return arr;
+};
+// Saving files to S3 STORAGE
+// export const saveFiles = (userId : string, dir: string)
 
 export const setHeaderAllign = {
   HEADER_MAX_HEIGHT: wp(65),
