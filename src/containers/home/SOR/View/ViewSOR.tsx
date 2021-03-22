@@ -613,6 +613,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         <TouchableOpacity
                           onLongPress={() => {
                             console.log(d);
+
                             // allActionsEdit: {
                             //   status: 'Completed',
                             //   observation: this.state.actionsAndRecommendationText,
@@ -627,7 +628,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 observation: d.content,
                                 AssignedTo: d.assigned_to,
                                 time: d.date,
-                                type: d.default,
+                                type: 'Elimination',
                               },
                               SuggestionPop: true,
                               //   allActionsEditIndex: i,

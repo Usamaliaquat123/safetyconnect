@@ -35,7 +35,7 @@ export default class SuggestionsPop extends React.Component<
 
     this.state = {
       suggestedUsers: props.suggestedUsers,
-      observation: props.suggestions.content,
+      observation: props.suggestions.observation,
       submittedTo: props.suggestions.SubmittedTo,
       type: props.suggestions.type,
       status: props.suggestions.status,
@@ -68,9 +68,7 @@ export default class SuggestionsPop extends React.Component<
               name="checkcircle"
               type="antdesign"
               color={
-                this.state.status == 'Completed'
-                  ? colors.green
-                  : colors.lightGrey
+                this.state.status == true ? colors.green : colors.lightGrey
               }
             />
             <Text style={styles.containerTextString}>
@@ -231,9 +229,9 @@ export default class SuggestionsPop extends React.Component<
                   onPress={() => {
                     this.setState({type: 'Elimination'});
                   }}
-                  style={{marginRight: wp(20)}}>
+                  style={{marginLeft: wp(2), marginRight: wp(2)}}>
                   <Icon
-                    size={wp(10)}
+                    size={wp(7)}
                     name="team"
                     type="antdesign"
                     color={
@@ -242,26 +240,85 @@ export default class SuggestionsPop extends React.Component<
                         : colors.lightGrey
                     }
                   />
-                  <Text style={{fontSize: wp(3), opacity: 0.5}}>
+                  <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
                     Elimination
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    this.setState({type: 'Administrative'});
-                  }}>
+                    this.setState({type: 'Admin'});
+                  }}
+                  style={{marginLeft: wp(2), marginRight: wp(2)}}>
                   <Icon
-                    size={wp(10)}
+                    size={wp(7)}
                     name="admin-panel-settings"
                     type="material"
                     color={
-                      this.state.type == 'Administrative'
+                      this.state.type == 'Admin'
                         ? colors.green
                         : colors.lightGrey
                     }
                   />
-                  <Text style={{fontSize: wp(3), opacity: 0.5}}>
-                    Administrative
+                  <Text style={{fontSize: wp(2.5), opacity: 0.5}}>Admin</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({type: 'Substitution'});
+                  }}
+                  style={{marginLeft: wp(2), marginRight: wp(2)}}>
+                  <Icon
+                    size={wp(7)}
+                    name="unlink"
+                    type="font-awesome"
+                    color={
+                      this.state.type == 'Substitution'
+                        ? colors.green
+                        : colors.lightGrey
+                    }
+                  />
+                  <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                    Substitution
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({type: 'Engineering'});
+                  }}
+                  style={{marginLeft: wp(2), marginRight: wp(2)}}>
+                  <Icon
+                    size={wp(7)}
+                    name="engineering"
+                    type="material"
+                    color={
+                      this.state.type == 'Engineering'
+                        ? colors.green
+                        : colors.lightGrey
+                    }
+                  />
+                  <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                    Engineering
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({type: 'PPE'});
+                  }}
+                  style={{marginLeft: wp(2), marginRight: wp(2)}}>
+                  <Icon
+                    size={wp(7)}
+                    name="engineering"
+                    type="material"
+                    color={
+                      this.state.type == 'PPE' ? colors.green : colors.lightGrey
+                    }
+                  />
+                  <Text
+                    style={{
+                      fontSize: wp(2.5),
+                      opacity: 0.5,
+                      textAlign: 'center',
+                    }}>
+                    PPE
                   </Text>
                 </TouchableOpacity>
               </View>
