@@ -211,7 +211,7 @@ export default class SuggestionsPop extends React.Component<
                 </View>
               )}
               <View style={styles.tagsContainer}>
-                <Tags
+                {/* <Tags
                   onClose={(d: any) => {
                     this.setState({
                       AssignedTo: this.state.AssignedTo.filter(
@@ -220,7 +220,7 @@ export default class SuggestionsPop extends React.Component<
                     });
                   }}
                   tags={this.state.AssignedTo}
-                />
+                /> */}
               </View>
               {/* Elimination / Administrative */}
               <Text style={styles.selectYourElemination}>

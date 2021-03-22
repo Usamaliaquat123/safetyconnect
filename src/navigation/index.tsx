@@ -52,7 +52,7 @@ export const Navigator = () => {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <BottomTabNavigator />
+        <AuthStackNavigator />
         {/* {isAuthenticated == false && <AuthStackNavigator />} */}
       </NavigationContainer>
     </SafeAreaProvider>

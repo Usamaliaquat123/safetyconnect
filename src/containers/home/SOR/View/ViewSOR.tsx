@@ -622,9 +622,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             //   type: 'Elimination',
                             // },
                             this.setState({
-                              // allActionsEdit: {
-                              //   s
-                              // },
+                              allActionsEdit: {
+                                status: d.is_complete,
+                                observation: d.content,
+                                AssignedTo: d.assigned_to,
+                                time: d.date,
+                                type: d.default,
+                              },
                               SuggestionPop: true,
                               //   allActionsEditIndex: i,
                             });

@@ -19,6 +19,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
+
 export interface ForgotEmailSendProps {
   navigation: forgotEmailSendNavigationProp;
   route: forgotEmailSendRouteProp;
@@ -38,8 +40,32 @@ class ForgotEmailSend extends React.Component<ForgotEmailSendProps, any> {
     this.state = {};
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    dynamicLinks()
+      .getInitialLink()
+      .then((link) => this.handleDynamicLink(link));
+    dynamicLinks().onLink(this.handleDynamicLink);
+  }
 
+  handleDynamicLink = (link: any) => {
+    console.log(link);
+    if (link != null) {
+      if (link.url.split('/')[3].split('?')[0] == 'user-info') {
+        this.props.navigation.navigate('CreatePass', {
+          email: link.url
+            .split('/')[3]
+            .split('?')[1]
+            .split('email=')[1]
+            .split('&')[0],
+          code: link.url
+            .split('/')[3]
+            .split('?')[1]
+            .split('&')[1]
+            .split('=')[1],
+        });
+      }
+    }
+  };
   render() {
     return (
       <View style={styles.container}>
