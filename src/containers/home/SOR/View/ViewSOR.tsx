@@ -83,7 +83,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       comments: View_sor.user.comments,
       involvedPerson: [],
       notifiedPerson: this.props.route.params.data.esclate_to,
-      attachments: View_sor.user.Attachments,
+      attachments: [],
 
       actionsAndRecommendations: this.props.route.params.data.action_required,
       // popup Assigners
@@ -612,6 +612,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       (d: actions, i: number) => (
                         <TouchableOpacity
                           onLongPress={() => {
+                            console.log(d);
                             // allActionsEdit: {
                             //   status: 'Completed',
                             //   observation: this.state.actionsAndRecommendationText,
@@ -813,7 +814,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               </View>
               <View style={styles.attachmentsContainer}>
                 <Text style={styles.attachmentsFont}>Attachments</Text>
-                {this.props.route.params.data.attachments.length == 0 ? (
+                {this.state.attachments.length == 0 ? (
                   <Text style={styles.youdonthaveAnyAttachments}>
                     You don't have any attachments
                   </Text>
