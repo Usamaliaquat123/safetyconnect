@@ -46,6 +46,7 @@ import {
 } from '@utils';
 import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {involved_persons, actions} from '@typings';
 // import {colors} from '@theme';
 // import listAction from './../../../../store/actions/listActions';
 type ViewSORNavigationProp = StackNavigationProp<
@@ -80,7 +81,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       observation: this.props.route.params.data.details,
       date: this.props.route.params.data.occured_at,
       comments: View_sor.user.comments,
-      involvedPerson: this.props.route.params.data.involved_persons,
+      involvedPerson: [],
       notifiedPerson: this.props.route.params.data.esclate_to,
       attachments: View_sor.user.Attachments,
 
@@ -116,6 +117,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       // Submited to
       submitted_to: this.props.route.params.data.submit_to,
       esclate_to: this.props.route.params.data.esclate_to,
+
+      editInvolvedAndEsclatedPersons: false,
+      involvePersonsSelected: false,
     };
 
     this.animation = React.createRef();
@@ -123,18 +127,20 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     this.fileNotSupported = React.createRef();
   }
   componentDidMount = () => {
-    // console.log(this.props.route.params.data.involved_persons);
+    console.log(this.props.route.params.data.action_required);
     createApi
       .createApi()
       .getProject({projectid: '6056061f49cf9ae72efe8e6e'})
       .then((res: any) => {
-        res.data.data.involved_persons;
+        this.setState({involvedPerson: res.data.data.involved_persons});
+        // console.log(res.data.data.involved_persons);
+        // var oneIDs = res.data.data.involved_persons.map((a: any) => a._id);
 
-        var oneIDs = res.data.data.involved_persons.map((a: any) => a._id);
+        // var result = this.props.route.params.data.involved_persons.filter(
+        //   (a: any) => oneIDs.indexOf(a) === -1,
+        // );
 
-        var result = this.props.route.params.data.involved_persons.filter(
-          (a: any) => oneIDs.indexOf(a) === -1,
-        );
+        // console.log(result);
       });
 
     this.fileAndImageCapturer(this.props.route.params.data.attachments);
@@ -182,9 +188,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
      *      url: d.uri,
      */
     var mapped = imageAndVideoObjectMap(attachments);
-    console.log(attachments);
-    console.log(mapped);
-    console.log(imageVideoDetector(mapped));
+    // console.log(attachments);
+    // console.log(mapped);
+    // console.log(imageVideoDetector(mapped));
   };
 
   imgCap = (str: string, arr: Array<Object>) => {
@@ -313,9 +319,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
 
   render() {
-    console.log('===================');
-    console.log(this.props.route.params.data.attachments);
-    console.log('===================');
+    // console.log('===================');
+    // console.log(this.props.route.params.data.attachments);
+    // console.log('===================');
 
     return (
       <Animated.View style={[styles.container, {opacity: this.state.initAnim}]}>
@@ -453,22 +459,33 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 {/* Notified To Section */}
                 <View style={styles.notifiedSec}>
                   <Text style={styles.notifyPText}>Esclate to : </Text>
-                  {this.state.notifiedPerson.map((d: any, i: number) => {
-                    var j = 2;
+                  {this.state.notifiedPerson.map(
+                    (d: involved_persons, i: number) => {
+                      var j = 2;
 
-                    return (
-                      <View>
-                        <Avatar
-                          containerStyle={{marginLeft: wp(-(j + 1))}}
-                          size={wp(8)}
-                          rounded
-                          source={{
-                            uri: d.photo,
-                          }}
-                        />
-                      </View>
-                    );
-                  })}
+                      return (
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.setState({
+                              editInvolvedAndEsclatedPersons: true,
+                            });
+                          }}>
+                          <Avatar
+                            containerStyle={{
+                              marginLeft: wp(-(j + 1)),
+                              borderColor: colors.secondary,
+                              borderWidth: wp(0.5),
+                            }}
+                            size={wp(8)}
+                            rounded
+                            source={{
+                              uri: d.img_url,
+                            }}
+                          />
+                        </TouchableOpacity>
+                      );
+                    },
+                  )}
                   {this.state.notifiedPerson.length < 6 ? (
                     <TouchableOpacity
                       onPress={() => {
@@ -506,16 +523,23 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   {this.state.involvedPerson.map((d: any, i: number) => {
                     var j = 1;
                     return (
-                      <View>
+                      <TouchableOpacity
+                        onPress={() =>
+                          this.setState({editInvolvedAndEsclatedPersons: true})
+                        }>
                         <Avatar
-                          containerStyle={{marginLeft: wp(-(j + 1))}}
+                          containerStyle={{
+                            marginLeft: wp(-(j + 1)),
+                            borderWidth: wp(0.5),
+                            borderColor: colors.secondary,
+                          }}
                           size={wp(8)}
                           rounded
                           source={{
-                            uri: d.photo,
+                            uri: d.img_url,
                           }}
                         />
-                      </View>
+                      </TouchableOpacity>
                     );
                   })}
                   {this.state.involvedPerson.length < 6 ? (
@@ -585,11 +609,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 ) : (
                   <View>
                     {this.state.actionsAndRecommendations.map(
-                      (d: any, i: number) => (
+                      (d: actions, i: number) => (
                         <TouchableOpacity
                           onLongPress={() => {
+                            // allActionsEdit: {
+                            //   status: 'Completed',
+                            //   observation: this.state.actionsAndRecommendationText,
+                            //   SubmittedTo: [],
+                            //   AssignedTo: [],
+                            //   time: Date.now,
+                            //   type: 'Elimination',
+                            // },
                             this.setState({
-                              allActionsEdit: d,
+                              // allActionsEdit: {
+                              //   s
+                              // },
                               SuggestionPop: true,
                               //   allActionsEditIndex: i,
                             });
@@ -652,7 +686,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             <Text
                               style={[
                                 styles.obvTextAction,
-                                d.status == true
+                                d.is_complete == true
                                   ? {color: colors.text, opacity: 0.5}
                                   : null,
                               ]}>
@@ -666,7 +700,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 Assigned to:{' '}
                                 <Text style={styles.subAssuser}>
                                   {d.assigned_to}
-                                  {/* {d.AssignedTo.length > 1 && (
+                                  {/* {d.assigned_to.length > 1 && (
                                     <Text
                                       onPress={() => {
                                         this.setState({
@@ -686,7 +720,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                         },
                                       ]}>
                                       {' '}
-                                      {d.AssignedTo.length - 1} + more
+                                      {d.assigned_to.length - 1} + more
                                     </Text>
                                   )} */}
                                 </Text>
@@ -812,7 +846,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                       .then((res: any) => {
                                         // console.log(res);
                                       })
-                                      .catch((err) => console.log(err));
+                                      .catch((err) => {});
                                   }
                                 }}
                                 style={styles.lottieDownloadContainer}>
@@ -1398,7 +1432,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               <View style={[styles.commentTextInput, {width: wp(70)}]}>
                 <TextInput
                   style={{fontSize: wp(3)}}
-                  onChange={(e) => console.log(e)}
+                  onChange={(e) => {}}
                   placeholder={'Type users email to add '}
                 />
                 <View
@@ -1425,7 +1459,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             </View>
           </View>
         </Model>
-        {/*  */}
+        {/* Add Involved Users  */}
         <Model
           animationIn={'bounceInUp'}
           animationOut={'bounceOutDown'}
@@ -1456,15 +1490,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     .catch((err) => this.setState({invPhoto: ''}));
                 }}>
                 {this.state.invPhoto === '' ? (
-                  // <Icon
-                  //   containerStyle={{
-                  //     opacity: 0.5,
-                  //   }}
-                  //   size={wp(10)}
-                  //   name="user-edit"
-                  //   type="font-awesome-5"
-                  //   color={colors.text}
-                  // />
                   <View
                     style={{
                       borderWidth: wp(0.2),
@@ -1542,9 +1567,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   this.setState({
                     addInvolvedandNotifiedUsers: searchInSuggestions(
                       v.nativeEvent.text,
-                      this.state.involvedAndNotifiedUserType == 'involved'
-                        ? Create_sor.Observation.esclateTo
-                        : Create_sor.Observation.submitTo,
+                      this.state.involvedPerson,
                     ),
                     involveAndNotifiedUsersName: v.nativeEvent.text,
                   });
@@ -1555,12 +1578,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               {this.state.addInvolvedandNotifiedUsers.length != 0 ? (
                 <View style={styles.involveSuggestCont}>
                   {this.state.addInvolvedandNotifiedUsers.map(
-                    (d: string, i: number) => (
+                    (d: involved_persons, i: number) => (
                       <TouchableOpacity
                         key={i}
                         onPress={() => {
                           this.setState({
-                            involveAndNotifiedUsersName: d,
+                            involveAndNotifiedUsersName: d.email,
+                            invPhoto: d.img_url,
                             addInvolvedandNotifiedUsers: [],
                           });
                         }}
@@ -1574,11 +1598,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           containerStyle={{marginRight: wp(3)}}
                           rounded
                           source={{
-                            uri:
-                              'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                            uri: d.img_url,
                           }}
                         />
-                        <Text style={styles.involvePSt}>{d}</Text>
+                        <View>
+                          <Text style={styles.involvePSt}>
+                            {d.email.split('@')[0]}
+                          </Text>
+                          <Text style={{fontSize: wp(2.5)}}>{d.email}</Text>
+                        </View>
                       </TouchableOpacity>
                     ),
                   )}
@@ -1589,18 +1617,24 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   if (this.state.involveAndNotifiedUsersName !== '') {
                     if (this.state.involvedAndNotifiedUserType == 'involved') {
                       this.state.involvedPerson.push({
-                        id: Date.now(),
-                        name: this.state.involveAndNotifiedUsersName,
-                        photo:
+                        _id: Date.now(),
+                        email: this.state.involveAndNotifiedUsersName,
+                        name: this.state.involveAndNotifiedUsersName.split(
+                          '@',
+                        )[0],
+                        img_url:
                           this.state.invPhoto === ''
                             ? `https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png`
                             : this.state.invPhoto,
                       });
                     } else {
                       this.state.notifiedPerson.push({
-                        id: Date.now(),
-                        name: this.state.involveAndNotifiedUsersName,
-                        photo:
+                        _id: Date.now(),
+                        email: this.state.involveAndNotifiedUsersName,
+                        name: this.state.involveAndNotifiedUsersName.split(
+                          '@',
+                        )[0],
+                        img_url:
                           this.state.invPhoto === ''
                             ? `https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png`
                             : this.state.invPhoto,
@@ -1645,12 +1679,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           <ImageViewer
             enableSwipeDown={true}
             flipThreshold={100}
-            onCancel={() => console.log('close Viewer')}
+            onCancel={() => {}}
             imageUrls={this.state.images}
           />
         </Modal>
         {this.state.SuggestionPop == true && (
           <SuggestionsPop
+            suggestedUsers={this.state.involvedPerson}
             onClose={() =>
               this.setState({SuggestionPop: !this.state.SuggestionPop})
             }

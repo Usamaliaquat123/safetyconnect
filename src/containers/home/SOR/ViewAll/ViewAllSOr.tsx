@@ -120,7 +120,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     createApi
       .createApi()
       .filterSors({
-        project: '6056061f49cf9ae72efe8e6e',
+        project: '6038cf8472762b29b1bed1f3',
         limit: 100,
         page: 0,
         query: {status: [1, 2, 3, 4, 5]},
@@ -128,6 +128,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       .then(async (res: any) => {
         console.log(res);
         if (res.data.data.involved_persons !== undefined) {
+          this.setState({loading: false});
           await AsyncStorage.setItem(
             'involved_persons',
             JSON.stringify(res.data.data.involved_persons),
@@ -149,15 +150,18 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           this.setState({loading: false});
         }
 
-        this.setState({draft: res.data.data.report});
+        // this.setState({draft: res.data.data.report});
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        this.setState({loading: false});
+        console.log(err);
+      });
   };
 
   filterDecending = (sors: Array<any>, name: string) => {};
 
   render() {
-    console.log(this.state.submitted);
+    // console.log(this.state.submitted);
     return (
       <View style={{backgroundColor: colors.primary}}>
         <ScrollView showsVerticalScrollIndicator={false}>

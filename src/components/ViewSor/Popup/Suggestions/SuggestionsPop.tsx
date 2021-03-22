@@ -10,10 +10,11 @@ import {default as Model} from 'react-native-modal';
 import {Icon} from 'react-native-elements';
 import styles from './styles';
 import {Tags, Suggestions} from '@components';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 import {Avatar} from 'react-native-elements';
 import {Create_sor} from '@service';
 import {searchInSuggestions} from '@utils';
+import {involved_persons} from '@typings';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 export interface SuggestionsPopProps {
   onClose: Function;
@@ -21,6 +22,7 @@ export interface SuggestionsPopProps {
   suggestions: Array<any>;
   save: Function;
   discard: Function;
+  suggestedUsers: Array<involved_persons>;
   allSuggestions: Array<any>;
 }
 
@@ -32,6 +34,7 @@ export default class SuggestionsPop extends React.Component<
     super(props);
 
     this.state = {
+      suggestedUsers: props.suggestedUsers,
       observation: props.suggestions.content,
       submittedTo: props.suggestions.SubmittedTo,
       type: props.suggestions.type,
@@ -43,10 +46,12 @@ export default class SuggestionsPop extends React.Component<
     };
   }
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    console.log(this.state.suggestedUsers);
+  };
 
   render() {
-    // console.log()
+    console.log(this.state.AssignedTo);
     return (
       <Model
         animationIn={'bounceInUp'}
@@ -136,7 +141,7 @@ export default class SuggestionsPop extends React.Component<
                         this.setState({
                           suggestions: searchInSuggestions(
                             e.nativeEvent.text,
-                            Create_sor.Observation.emailSuggestions,
+                            this.state.suggestedUsers,
                           ),
                         });
                         this.setState({actionsText: e.nativeEvent.text});
@@ -168,33 +173,37 @@ export default class SuggestionsPop extends React.Component<
 
                     // {this.state.involvePersonSuggestions.length != 0 ? (
                     <View style={styles.involveSuggestCont}>
-                      {this.state.suggestions.map((d: string, i: number) => (
-                        <TouchableOpacity
-                          key={i}
-                          onPress={() => {
-                            this.state.AssignedTo.push(d);
-                            this.setState({
-                              involvePersonText: '',
-                              suggestions: [],
-                            });
-                          }}
-                          style={[
-                            styles.involvePsuggCont,
-                            this.state.suggestions.length == i + 1
-                              ? {borderBottomWidth: wp(0)}
-                              : null,
-                          ]}>
-                          <Avatar
-                            containerStyle={{marginRight: wp(3)}}
-                            rounded
-                            source={{
-                              uri:
-                                'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                      {this.state.suggestions.map(
+                        (d: involved_persons, i: number) => (
+                          <TouchableOpacity
+                            key={i}
+                            onPress={() => {
+                              this.state.AssignedTo.push(d);
+                              this.setState({
+                                involvePersonText: '',
+                                suggestions: [],
+                              });
                             }}
-                          />
-                          <Text style={styles.involvePSt}>{d}</Text>
-                        </TouchableOpacity>
-                      ))}
+                            style={[
+                              styles.involvePsuggCont,
+                              this.state.suggestions.length == i + 1
+                                ? {borderBottomWidth: wp(0)}
+                                : null,
+                            ]}>
+                            <Avatar
+                              containerStyle={{marginRight: wp(3)}}
+                              rounded
+                              source={{
+                                uri: d.img_url,
+                              }}
+                            />
+                            <View>
+                              <Text style={styles.involvePSt}>{d.name}</Text>
+                              <Text style={{fontSize: wp(2.5)}}>{d.email}</Text>
+                            </View>
+                          </TouchableOpacity>
+                        ),
+                      )}
                     </View>
                   ) : // ) : null}
 

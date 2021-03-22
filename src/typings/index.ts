@@ -6,7 +6,7 @@ import {
   observationsSug,
   country,
 } from './api';
-import {involved_persons} from './createSor.d';
+import {involved_persons, actions} from './createSor.d';
 // View sor data interface
 export interface Isor {
   occured_at: number;
@@ -81,6 +81,7 @@ export interface IUser {
 }
 
 export {
+  actions,
   user,
   orgnaization,
   project,
