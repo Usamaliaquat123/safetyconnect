@@ -35,23 +35,24 @@ export default class SuggestionsPop extends React.Component<
 
     this.state = {
       suggestedUsers: props.suggestedUsers,
-      observation: props.suggestions.observation,
+      observation: props.suggestions.content,
       submittedTo: props.suggestions.SubmittedTo,
-      type: props.suggestions.type,
-      status: props.suggestions.status,
+      type: props.suggestions.category,
+      status: props.suggestions.is_complete,
       suggestions: [],
-      AssignedTo: props.suggestions.AssignedTo,
+      AssignedTo: props.suggestions.assigned_to,
       actionsText: '',
       selectedInput: 0,
     };
   }
 
-  componentDidMount = () => {
-    console.log(this.state.suggestedUsers);
-  };
+  componentDidMount = () => {};
 
   render() {
-    console.log(this.state.AssignedTo);
+    console.log('===================');
+    console.log(this.props.suggestions);
+    console.log('===================');
+
     return (
       <Model
         animationIn={'bounceInUp'}
@@ -63,9 +64,10 @@ export default class SuggestionsPop extends React.Component<
         <View style={styles.containerPopup}>
           <View style={styles.containerText}>
             <Icon
-              style={{marginRight: wp(15)}}
+              style={{}}
               size={wp(5)}
               name="checkcircle"
+              onPress={() => this.setState({status: !this.state.status})}
               type="antdesign"
               color={
                 this.state.status == true ? colors.green : colors.lightGrey
@@ -87,25 +89,30 @@ export default class SuggestionsPop extends React.Component<
                 : {borderColor: colors.lightGrey},
             ]}>
             <TextInput
-              maxLength={20}
+              // maxLength={20}
               onFocus={() => this.setState({selectedInput: 1})}
               style={styles.textInputPopup}
               multiline={true}
               value={this.state.observation}
               onChange={(e) => {
+                // console.log(e.nativeEvent.text);
                 this.setState({observation: e.nativeEvent.text});
               }}
-              placeholder={'Type your recommendations here '}
+              placeholder={
+                this.state.observation === ''
+                  ? 'Type your recommendations here '
+                  : this.state.observation
+              }
             />
           </View>
           {this.state.AssignedTo != undefined && (
             <>
-              {this.state.AssignedTo.length >= 5 && (
+              {this.state.AssignedTo.length >= 1 && (
                 <View style={{alignSelf: 'center'}}>
                   <Text style={styles.assignersHead}>Assigners</Text>
                 </View>
               )}
-              {this.state.AssignedTo.length < 5 && (
+              {this.state.AssignedTo.length < 1 && (
                 <View>
                   {/* Assdigned to */}
                   <View style={{alignSelf: 'flex-start'}}>
@@ -176,7 +183,7 @@ export default class SuggestionsPop extends React.Component<
                           <TouchableOpacity
                             key={i}
                             onPress={() => {
-                              this.state.AssignedTo.push(d);
+                              this.state.AssignedTo.push(d.name);
                               this.setState({
                                 involvePersonText: '',
                                 suggestions: [],
@@ -209,16 +216,19 @@ export default class SuggestionsPop extends React.Component<
                 </View>
               )}
               <View style={styles.tagsContainer}>
-                {/* <Tags
-                  onClose={(d: any) => {
-                    this.setState({
-                      AssignedTo: this.state.AssignedTo.filter(
-                        (v: any) => v !== d,
-                      ),
-                    });
-                  }}
-                  tags={this.state.AssignedTo}
-                /> */}
+                {this.state.AssignedTo.length == 0 ? (
+                  <Tags
+                    type={'suggAndRecommendationsPopup'}
+                    onClose={(d: any) => {
+                      this.setState({
+                        AssignedTo: this.state.AssignedTo.filter(
+                          (v: any) => v !== d,
+                        ),
+                      });
+                    }}
+                    tags={this.state.AssignedTo}
+                  />
+                ) : null}
               </View>
               {/* Elimination / Administrative */}
               <Text style={styles.selectYourElemination}>
@@ -335,11 +345,12 @@ export default class SuggestionsPop extends React.Component<
                   onPress={() => {
                     var sugg = {
                       status: this.state.status,
-                      observation: this.state.observation,
-                      SubmittedTo: this.state.submittedTo,
-                      AssignedTo: this.state.AssignedTo,
-                      time: Date.now(),
-                      type: this.state.type,
+                      content: this.state.observation,
+                      assigned_to: this.state.AssignedTo[0],
+                      date: Date.now(),
+                      is_complete: this.state.status,
+                      is_selected: this.state.status,
+                      category: this.state.type,
                     };
 
                     this.props.save(sugg);

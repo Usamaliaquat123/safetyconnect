@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   containerTextString: {
     fontSize: wp(3.5),
     fontWeight: 'bold',
+    marginLeft: wp(14),
     marginBottom: wp(3),
   },
   commentTextInput: {

@@ -47,6 +47,7 @@ import {
 import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {involved_persons, actions} from '@typings';
+import {number} from 'prop-types';
 // import {colors} from '@theme';
 // import listAction from './../../../../store/actions/listActions';
 type ViewSORNavigationProp = StackNavigationProp<
@@ -110,8 +111,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
       SuggestionPop: false,
       allActionsEdit: [],
+      newActions: false,
       allActionsEditIndex: 0,
-
       // actions and recommendations
       actionsAndRecommendationText: '',
       // Submited to
@@ -127,7 +128,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     this.fileNotSupported = React.createRef();
   }
   componentDidMount = () => {
-    console.log(this.props.route.params.data.action_required);
     createApi
       .createApi()
       .getProject({projectid: '6056061f49cf9ae72efe8e6e'})
@@ -144,7 +144,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       });
 
     this.fileAndImageCapturer(this.props.route.params.data.attachments);
-    // console.log(this.props.route.params.data);
     this.mapViewSorPhoto();
     this.AnimatedViews();
     this.mappingMapping(
@@ -188,9 +187,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
      *      url: d.uri,
      */
     var mapped = imageAndVideoObjectMap(attachments);
-    // console.log(attachments);
-    // console.log(mapped);
-    // console.log(imageVideoDetector(mapped));
   };
 
   imgCap = (str: string, arr: Array<Object>) => {
@@ -320,7 +316,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
   render() {
     // console.log('===================');
-    // console.log(this.props.route.params.data.attachments);
+    console.log(this.state.liklihood);
+    console.log(this.state.severity);
     // console.log('===================');
 
     return (
@@ -612,8 +609,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       (d: actions, i: number) => (
                         <TouchableOpacity
                           onLongPress={() => {
-                            console.log(d);
-
                             // allActionsEdit: {
                             //   status: 'Completed',
                             //   observation: this.state.actionsAndRecommendationText,
@@ -623,15 +618,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             //   type: 'Elimination',
                             // },
                             this.setState({
-                              allActionsEdit: {
-                                status: d.is_complete,
-                                observation: d.content,
-                                AssignedTo: d.assigned_to,
-                                time: d.date,
-                                type: 'Elimination',
-                              },
+                              allActionsEdit: d,
                               SuggestionPop: true,
-                              //   allActionsEditIndex: i,
+                              allActionsEditIndex: i,
+                              newActions: false,
                             });
 
                             // setTimeout(() => {
@@ -790,14 +780,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     if (this.state.actionsAndRecommendationText !== '') {
                       this.setState({
                         allActionsEdit: {
-                          status: 'Completed',
-                          observation: this.state.actionsAndRecommendationText,
-                          SubmittedTo: [],
-                          AssignedTo: [],
-                          time: Date.now,
-                          type: 'Elimination',
+                          is_complete: 'Completed',
+                          content: this.state.actionsAndRecommendationText,
+                          assigned_to: [],
+                          date: Date.now,
+                          status: false,
+                          category: 'Elimination',
                         },
+
                         SuggestionPop: true,
+                        newActions: true,
                       });
                     }
                   }}
@@ -849,9 +841,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                   if (d.upload != 'self') {
                                     this.photoAnim.play();
                                     downloadFile(d.url, d.type)
-                                      .then((res: any) => {
-                                        // console.log(res);
-                                      })
+                                      .then((res: any) => {})
                                       .catch((err) => {});
                                   }
                                 }}
@@ -872,7 +862,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                       var arr = [
                                         ...this.state.attachments,
                                       ].filter((b) => b != d);
-                                      // console.log(arr);
                                       this.setState({attachments: arr});
                                     }}>
                                     <Icon
@@ -937,9 +926,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               if (d.upload != 'self') {
                                 this.photoAnim.play();
                                 downloadFile(d.url, d.type)
-                                  .then((res: any) => {
-                                    // console.log(res);
-                                  })
+                                  .then((res: any) => {})
                                   .catch((err) => console.log(err));
                               }
                             }}>
@@ -1699,10 +1686,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             isOpen={this.state.SuggestionPop}
             suggestions={this.state.allActionsEdit}
             save={(d: any) => {
-              this.state.actionsAndRecommendations[
-                this.state.allActionsEditIndex
-              ] = d;
-
+              if (this.state.newActions == true) {
+                this.state.actionsAndRecommendations.push(d);
+              } else {
+                this.state.actionsAndRecommendations[
+                  this.state.allActionsEditIndex
+                ] = d;
+              }
+              // this.state.actionsAndRecommendations.push(d)
               this.setState({SuggestionPop: false});
             }}
             discard={() => {

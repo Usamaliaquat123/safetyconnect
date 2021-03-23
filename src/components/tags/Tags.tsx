@@ -78,6 +78,24 @@ class Tags extends React.Component<TagsProps, any> {
           </TouchableOpacity>
         </View>
       ));
+    } else if (this.props.type == 'suggAndRecommendationsPopup') {
+      return this.props.tags.map((d: any, i: number) => (
+        <View key={i} style={[styles.container, this.props.style]}>
+          <Text style={styles.tagsText}>{d}</Text>
+          <TouchableOpacity
+            onPress={() => this.props.onClose(d)}
+            style={styles.containerIcon}>
+            <Icon
+              style={styles.crossIcon}
+              onPress={() => this.props.onClose(d)}
+              size={wp(3)}
+              name="cross"
+              type="entypo"
+              color={colors.secondary}
+            />
+          </TouchableOpacity>
+        </View>
+      ));
     } else if (this.props.type == 'location') {
       return this.props.tags.map((d: any, i: number) => (
         <View key={i} style={[styles.container, this.props.style]}>
