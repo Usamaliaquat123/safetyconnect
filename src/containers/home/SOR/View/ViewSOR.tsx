@@ -127,6 +127,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     this.photoAnim = React.createRef();
     this.fileNotSupported = React.createRef();
   }
+
   componentDidMount = () => {
     createApi
       .createApi()
@@ -147,8 +148,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     this.mapViewSorPhoto();
     this.AnimatedViews();
     this.mappingMapping(
-      View_sor.user.Risk.severity,
-      View_sor.user.Risk.liklihood,
+      this.props.route.params.data.risk.severity,
+      this.props.route.params.data.risk.likelihood,
     );
   };
 
@@ -304,11 +305,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     this.state.liklihood.map((d: any, i: number) => {
       if (sev == d.value) {
         d.selected = true;
+      } else {
+        d.selected = false;
       }
     });
     this.state.severity.map((d: any, i: number) => {
       if (lik == d.value) {
         d.selected = true;
+      } else {
+        d.selected = false;
       }
     });
     this.setState({});
@@ -1349,7 +1354,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             </View>
           </Animated.View>
         </ScrollView>
-
         <Model
           animationIn={'bounceInUp'}
           animationOut={'bounceOutDown'}
@@ -1657,6 +1661,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             </View>
           </View>
         </Model>
+        {/*
+         *
+         * @ Edit Actions and Recommendations :Options *
+         * desc: Acrions popup that allow us to edit or delete actions
+         */}
         <Modal visible={this.state.imageViewer} transparent={true}>
           <TouchableOpacity
             onPress={() => this.setState({imageViewer: false})}
@@ -1706,6 +1715,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             }}
           />
         )}
+        {/*
+         *
+         * @Comment
+         * :Options * desc: comment popup that allow us to edit or delete comments
+         */}
         <CommentPop
           onClose={() =>
             this.setState({editDelComment: !this.state.editDelComment})

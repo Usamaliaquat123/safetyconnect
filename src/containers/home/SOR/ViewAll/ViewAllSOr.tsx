@@ -652,14 +652,14 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                       iconconf={classifySor.find(
                                         (e: any) => e.title == d.sor_type,
                                       )}
-                                      onPress={() =>
+                                      onPress={() => {
                                         this.props.navigation.navigate(
                                           'ViewSOR',
                                           {
                                             data: d,
                                           },
-                                        )
-                                      }
+                                        );
+                                      }}
                                       date={d.occured_at}
                                     />
                                   ))}

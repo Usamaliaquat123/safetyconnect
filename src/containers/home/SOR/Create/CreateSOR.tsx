@@ -316,11 +316,15 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     this.state.liklihood.map((d: any, i: number) => {
       if (sev == d.value) {
         d.selected = true;
+      } else {
+        d.selected = false;
       }
     });
     this.state.severity.map((d: any, i: number) => {
       if (lik == d.value) {
         d.selected = true;
+      } else {
+        d.selected = false;
       }
     });
     this.setState({});
