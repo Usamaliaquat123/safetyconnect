@@ -153,6 +153,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     );
   };
 
+  // onSubmitUpdateSor = async () => {
+
+  // };
+
   // Submitted To
 
   AnimatedViews = () => {
@@ -216,7 +220,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   // Document Attachments
   openDoc = async (attach: Array<Object>) => {
     try {
-      const res = await DocumentPicker.pickMultiple({
+      var res = await DocumentPicker.pickMultiple({
         type: [DocumentPicker.types.allFiles],
       });
       // DocType(res, this.state.attachments).then((res) => {
@@ -628,7 +632,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               allActionsEditIndex: i,
                               newActions: false,
                             });
-
+                            // is_complete: 'Completed',
+                            // content: this.state.actionsAndRecommendationText,
+                            // assigned_to: [],
+                            // date: Date.now,
+                            // status: false,
+                            // category: 'Elimination',
                             // setTimeout(() => {
                             //   this.setState({
                             //   });

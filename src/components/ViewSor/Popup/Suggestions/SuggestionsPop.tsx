@@ -40,7 +40,10 @@ export default class SuggestionsPop extends React.Component<
       type: props.suggestions.category,
       status: props.suggestions.is_complete,
       suggestions: [],
-      AssignedTo: props.suggestions.assigned_to,
+      AssignedTo:
+        typeof props.suggestions.assigned_to == 'string'
+          ? [props.suggestions.assigned_to]
+          : props.suggestions.assigned_to,
       actionsText: '',
       selectedInput: 0,
     };
@@ -50,7 +53,7 @@ export default class SuggestionsPop extends React.Component<
 
   render() {
     console.log('===================');
-    console.log(this.props.suggestions);
+    console.log(typeof this.props.suggestions.assigned_to);
     console.log('===================');
 
     return (
@@ -216,14 +219,12 @@ export default class SuggestionsPop extends React.Component<
                 </View>
               )}
               <View style={styles.tagsContainer}>
-                {this.state.AssignedTo.length == 0 ? (
+                {this.state.AssignedTo.length != 0 ? (
                   <Tags
                     type={'suggAndRecommendationsPopup'}
                     onClose={(d: any) => {
                       this.setState({
-                        AssignedTo: this.state.AssignedTo.filter(
-                          (v: any) => v !== d,
-                        ),
+                        AssignedTo: [],
                       });
                     }}
                     tags={this.state.AssignedTo}
@@ -241,6 +242,7 @@ export default class SuggestionsPop extends React.Component<
                   }}
                   style={{marginLeft: wp(2), marginRight: wp(2)}}>
                   <Icon
+                    //@ts-ignore
                     size={wp(7)}
                     name="team"
                     type="antdesign"
@@ -343,17 +345,18 @@ export default class SuggestionsPop extends React.Component<
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    var sugg = {
-                      status: this.state.status,
-                      content: this.state.observation,
-                      assigned_to: this.state.AssignedTo[0],
-                      date: Date.now(),
-                      is_complete: this.state.status,
-                      is_selected: this.state.status,
-                      category: this.state.type,
-                    };
-
-                    this.props.save(sugg);
+                    if (this.state.AssignedTo.length != 0) {
+                      var sugg = {
+                        status: this.state.status,
+                        content: this.state.observation,
+                        assigned_to: this.state.AssignedTo[0],
+                        date: Date.now(),
+                        is_complete: this.state.status,
+                        is_selected: this.state.status,
+                        category: this.state.type,
+                      };
+                      this.props.save(sugg);
+                    }
                   }}
                   style={styles.saveBtn}>
                   <Text style={styles.sveBtnText}>Save</Text>
