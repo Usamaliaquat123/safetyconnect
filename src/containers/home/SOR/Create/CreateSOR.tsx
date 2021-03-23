@@ -720,7 +720,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             <View style={styles.uploadBorder}>
               <View style={styles.uploadBIcmTxt}>
                 <Icon
-                  style={{padding: 3}}
+                  containerStyle={{padding: 3}}
                   size={wp(10)}
                   name="file-text"
                   type="feather"
