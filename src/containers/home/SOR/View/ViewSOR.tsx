@@ -134,14 +134,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .getProject({projectid: '6056061f49cf9ae72efe8e6e'})
       .then((res: any) => {
         this.setState({involvedPerson: res.data.data.involved_persons});
-        // console.log(res.data.data.involved_persons);
         // var oneIDs = res.data.data.involved_persons.map((a: any) => a._id);
 
         // var result = this.props.route.params.data.involved_persons.filter(
         //   (a: any) => oneIDs.indexOf(a) === -1,
         // );
-
-        // console.log(result);
       });
 
     this.fileAndImageCapturer(this.props.route.params.data.attachments);
@@ -153,9 +150,53 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     );
   };
 
-  // onSubmitUpdateSor = async () => {
-
-  // };
+  onSubmitUpdateSor = async () => {
+    var update = [
+      {
+        report: {
+          _id: this.props.route.params.data._id,
+          created_by: 'haider@gmail.com',
+          details: this.state.observation,
+          occured_at: moment().format('MMMM-MM-DD'),
+          involved_persons: ['5fcf965695ea5a58dd5c62e0'],
+          risk: {
+            severity: 5,
+            likelihood: 5,
+          },
+          action_required: [
+            {
+              content: 'kam kro baatein na kro ',
+              assigned_to: 'waqas@gmail.com',
+              category: 'sasti category',
+              date: '2020-01-01',
+              is_complete: true,
+              is_selected: true,
+            },
+          ],
+          user_location: {
+            latitude: 66.666,
+            longitude: 66.666,
+          },
+          location: 'pindi boys',
+          submit_to: ['haiderali333222@gmail.com'],
+          esclate_to: ['haiderali333222@gmail.com'],
+          status: 2,
+          attachments: ['attachment1'],
+          comments: [
+            {
+              email: 'haiderali333222@gmail.com',
+              comment: 'mera apna comment',
+              date: '2020-01-01',
+              files: ['abc'],
+              is_comment: true,
+            },
+          ],
+        },
+        project: '604b13d114ba138bd23d7f75',
+      },
+    ];
+    createApi.createApi().updateSor({});
+  };
 
   // Submitted To
 
@@ -324,11 +365,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
 
   render() {
-    // console.log('===================');
-    console.log(this.state.liklihood);
-    console.log(this.state.severity);
-    // console.log('===================');
-
     return (
       <Animated.View style={[styles.container, {opacity: this.state.initAnim}]}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -941,7 +977,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 this.photoAnim.play();
                                 downloadFile(d.url, d.type)
                                   .then((res: any) => {})
-                                  .catch((err) => console.log(err));
+                                  .catch((err) => {});
                               }
                             }}>
                             <LottieView
@@ -960,7 +996,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 var arr = [...this.state.attachments].filter(
                                   (b) => b != d,
                                 );
-                                // console.log(arr);
                                 this.setState({attachments: arr});
                               }}>
                               <Icon
@@ -1357,7 +1392,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               <TouchableOpacity style={styles.saveAsDraftContainer}>
                 <Text style={styles.saveAsDraftText}>Save as Draft</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.saveAsSubmitContainer}>
+              <TouchableOpacity
+                onPress={() => this.onSubmitUpdateSor()}
+                style={styles.saveAsSubmitContainer}>
                 <Text style={styles.saveAsSubmitText}>Submit</Text>
               </TouchableOpacity>
             </View>

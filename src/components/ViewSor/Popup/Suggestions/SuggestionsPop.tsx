@@ -52,10 +52,6 @@ export default class SuggestionsPop extends React.Component<
   componentDidMount = () => {};
 
   render() {
-    console.log('===================');
-    console.log(typeof this.props.suggestions.assigned_to);
-    console.log('===================');
-
     return (
       <Model
         animationIn={'bounceInUp'}

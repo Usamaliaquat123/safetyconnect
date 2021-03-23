@@ -9,6 +9,7 @@ import {
 import {involved_persons, actions} from './createSor.d';
 // View sor data interface
 export interface Isor {
+  _id?: string;
   occured_at: number;
   details: string;
   risk: {
