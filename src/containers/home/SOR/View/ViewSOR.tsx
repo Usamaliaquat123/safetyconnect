@@ -134,23 +134,37 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .getProject({projectid: '6056061f49cf9ae72efe8e6e'})
       .then((res: any) => {
         this.setState({involvedPerson: res.data.data.involved_persons});
-        // var oneIDs = res.data.data.involved_persons.map((a: any) => a._id);
-
-        // var result = this.props.route.params.data.involved_persons.filter(
-        //   (a: any) => oneIDs.indexOf(a) === -1,
-        // );
+        this.mappingInvolved(
+          res.data.data.involved_persons,
+          this.props.route.params.data.involved_persons[0],
+        );
+        for (let i = 0; i < res.data.data.involved_persons.length; i++) {
+          res.data.data.involved_persons[i]['selected'] = false;
+        }
+        console.log(res.data.data.involved_persons);
       });
 
     this.fileAndImageCapturer(this.props.route.params.data.attachments);
     this.mapViewSorPhoto();
     this.AnimatedViews();
+
     this.mappingMapping(
       this.props.route.params.data.risk.severity,
       this.props.route.params.data.risk.likelihood,
     );
   };
 
-  onSubmitUpdateSor = async () => {
+  mappingInvolved = (persons: Array<any>, person: string | undefined) => {
+    persons.map((d: any, i: number) => {
+      console.log(d);
+      if (d._id == person) {
+        d.selected = true;
+      } else {
+        d.selected = false;
+      }
+    });
+  };
+  onSubmitUpdateSor = async (status: number) => {
     var update = [
       {
         report: {
@@ -163,39 +177,33 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             severity: 5,
             likelihood: 5,
           },
-          action_required: [
-            {
-              content: 'kam kro baatein na kro ',
-              assigned_to: 'waqas@gmail.com',
-              category: 'sasti category',
-              date: '2020-01-01',
-              is_complete: true,
-              is_selected: true,
-            },
-          ],
+          action_required: this.state.actionsAndRecommendations,
           user_location: {
             latitude: 66.666,
             longitude: 66.666,
           },
-          location: 'pindi boys',
+          location: this.props.route.params.data.location,
           submit_to: ['haiderali333222@gmail.com'],
           esclate_to: ['haiderali333222@gmail.com'],
           status: 2,
-          attachments: ['attachment1'],
+          attachments: [],
           comments: [
-            {
-              email: 'haiderali333222@gmail.com',
-              comment: 'mera apna comment',
-              date: '2020-01-01',
-              files: ['abc'],
-              is_comment: true,
-            },
+            // {
+            //   email: 'haiderali333222@gmail.com',
+            //   comment: 'mera apna comment',
+            //   date: '2020-01-01',
+            //   files: ['abc'],
+            //   is_comment: true,
+            // },
           ],
         },
         project: '604b13d114ba138bd23d7f75',
       },
     ];
-    createApi.createApi().updateSor({});
+
+    console.log(this.state.involvedPerson);
+    console.log(update);
+    // createApi.createApi().updateSor({});
   };
 
   // Submitted To
@@ -365,6 +373,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
 
   render() {
+    console.log('@###############');
+    console.log();
     return (
       <Animated.View style={[styles.container, {opacity: this.state.initAnim}]}>
         <ScrollView showsVerticalScrollIndicator={false}>

@@ -25,7 +25,7 @@ export type AuthNavigatorProp = {
   Login: undefined;
   Signup: undefined;
   tellAboutYou: {username: string};
-  CreatePass: {email: string; code: any};
+  CreatePass: {email: string; code: any; type?: string};
   CreateOrg: undefined;
   Forgot: undefined;
   CreateProj: {organization: string};
@@ -53,7 +53,7 @@ export const AuthStackNavigator = () => {
   // console.log(route);
   return (
     // <SafeAreaProvider>
-    <Auth.Navigator initialRouteName={'CreateProj'}>
+    <Auth.Navigator initialRouteName={'Login'}>
       <Auth.Screen
         name="MeetBefore"
         component={MeetBefore}

@@ -86,10 +86,15 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                 this.props.route.params.email,
                 this.state.password,
               ).then((res) => {
-                this.setState({loading: false, errorModal: false});
-                this.props.navigation.navigate('tellAboutYou', {
-                  username: this.props.route.params.email,
-                });
+                if (this.props.route.params.type == 'forgot') {
+                  this.setState({loading: false, errorModal: false});
+                  this.props.navigation.navigate('Login');
+                } else if (this.props.route.params.type == 'verify') {
+                  this.setState({loading: false, errorModal: false});
+                  this.props.navigation.navigate('tellAboutYou', {
+                    username: this.props.route.params.email,
+                  });
+                }
               });
             })
             .catch((err) => {

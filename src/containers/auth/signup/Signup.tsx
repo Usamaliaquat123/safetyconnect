@@ -149,11 +149,12 @@ class Signup extends React.Component<SignupProps, any> {
   }
 
   continuewithgoogle = async () => {
-    try {
-      const user = await Auth.federatedSignIn({provider: 'Google'});
-    } catch (err) {
-      console.log(err);
-    }
+    // it isn't working at all
+    // try {
+    //   const user = await Auth.federatedSignIn({provider: 'Google'});
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
   render() {
     return (

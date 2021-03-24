@@ -62,6 +62,21 @@ class ForgotEmailSend extends React.Component<ForgotEmailSendProps, any> {
             .split('?')[1]
             .split('&')[1]
             .split('=')[1],
+          type: 'verify',
+        });
+      } else {
+        this.props.navigation.navigate('CreatePass', {
+          email: link.url
+            .split('/')[3]
+            .split('?')[1]
+            .split('email=')[1]
+            .split('&')[0],
+          code: link.url
+            .split('/')[3]
+            .split('?')[1]
+            .split('&')[1]
+            .split('=')[1],
+          type: 'forgot',
         });
       }
     }
