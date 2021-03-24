@@ -66,16 +66,15 @@ class Login extends React.Component<LoginProps, any> {
   };
 
   componentDidMount() {
-    // dynamicLinks().onLink(this.handleDynamicLink);
-
+    // dynamicLinks().app.;
     dynamicLinks()
       .getInitialLink()
       .then((link) => this.handleDynamicLink(link));
-    dynamicLinks().onLink(this.handleDynamicLink);
+    dynamicLinks().onLink((l) => console.log(l));
   }
 
   handleDynamicLink = (link: any) => {
-    console.log(link);
+    // console.log(link);
     if (link != null) {
       if (link.url.split('/')[3].split('?')[0] == 'user-info') {
         this.props.navigation.navigate('CreatePass', {
