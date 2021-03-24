@@ -7,6 +7,7 @@ import {
   Dimensions,
   Animated,
   Easing,
+  ActivityIndicator,
   PanResponder,
 } from 'react-native';
 import {
@@ -27,6 +28,7 @@ import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Auth} from 'aws-amplify';
 import LottieView from 'lottie-react-native';
+import Modal from 'react-native-modal';
 
 // import * as initialApp from '@store';
 // import { Create_sor, viewas, notified, submitted, draft, profileSetupSelections } from '@service';
@@ -1231,6 +1233,33 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
               </>
             )}
           </View>
+
+
+             {/* when you don't have any sors  */}
+        {/* Modal Container */}
+        <Modal
+          isVisible={this.state.errorModal}
+          onBackdropPress={() =>
+            this.setState({errorModal: false, loading: false})
+          }>
+          {this.state.loading == true ? (
+            <View>
+              <ActivityIndicator color={colors.primary} size={'large'} />
+            </View>
+          ) : (
+            <View style={styles.modelContainer}>
+              <View>
+                <Text style={styles.errHeadPop}>
+                  Incorrect Email / Password !
+                </Text>
+                <Text style={styles.errEmailPassDesc}>
+                  We don't recognize that email and password.
+                </Text>
+                <Text style={styles.plzTryAgain}>Please try again later.</Text>
+              </View>
+            </View>
+          )}
+        </Modal>
         </ScrollView>
       </View>
     );

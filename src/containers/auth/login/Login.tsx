@@ -133,7 +133,6 @@ class Login extends React.Component<LoginProps, any> {
           this.setState({errorModal: false, loading: false});
 
           this.props.navigation.navigate('Home');
-          console.log(user);
         } catch (err) {
           this.setState({errorModal: true, loading: false});
         }
