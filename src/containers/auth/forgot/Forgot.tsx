@@ -66,7 +66,7 @@ class Forgot extends React.Component<ForgotProps, any> {
           } else {
             Auth.forgotPassword(email)
               .then((data) => {
-                this.setState({loading: false});
+                this.setState({loading: false, errModal: false});
                 console.log(data);
                 this.props.navigation.navigate('ForgotEmailSend', {
                   email: email,
