@@ -39,12 +39,17 @@ const styles = StyleSheet.create({
   plzTryAgain: {
     textAlign: 'center',
     fontSize: wp(3),
+    fontWeight: 'bold',
+    padding: wp(3),
     color: colors.text,
   },
   errEmailPassDesc: {
     marginTop: wp(2),
     textAlign: 'center',
     fontSize: wp(3),
+    padding: wp(3),
+    fontWeight: 'bold',
+
     color: colors.text,
   },
   modelContainer: {
@@ -63,7 +68,7 @@ const styles = StyleSheet.create({
     fontSize: wp(4),
     textAlign: 'center',
     fontWeight: 'bold',
-    color: colors.error,
+    color: colors.primary,
   },
   hselectort: {color: colors.secondary, fontWeight: 'bold', fontSize: wp(3)},
   selectorBox: {

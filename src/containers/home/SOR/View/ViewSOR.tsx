@@ -165,6 +165,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
   };
   onSubmitUpdateSor = async (status: number) => {
+    console.log(
+      this.props.route.params.data.involved_persons.map((d: any) => d._id),
+    );
+
+    console.log(this.props.route.params.data.involved_persons);
     var update = [
       {
         report: {
@@ -172,7 +177,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           created_by: 'haider@gmail.com',
           details: this.state.observation,
           occured_at: moment().format('MMMM-MM-DD'),
-          involved_persons: ['5fcf965695ea5a58dd5c62e0'],
+          involved_persons: this.props.route.params.data.involved_persons,
           risk: {
             severity: 5,
             likelihood: 5,
@@ -1532,7 +1537,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               paddingBottom: wp(5),
             }}>
             <View style={{alignSelf: 'center'}}>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() => {
                   imagePicker()
                     .then((res: any) => {
@@ -1584,7 +1589,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     }}
                   />
                 )}
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
               <Text
                 style={{

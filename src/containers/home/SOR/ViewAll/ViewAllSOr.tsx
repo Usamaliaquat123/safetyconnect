@@ -105,6 +105,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
       bottomWidth: wp(100),
       setUser: '',
+      // New sor modal popup
+      newsorModal: true,
     };
   }
 
@@ -1237,29 +1239,32 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           {/* when you don't have any sors  */}
           {/* Modal Container */}
           <Modal
-            isVisible={this.state.errorModal}
-            onBackdropPress={() =>
-              this.setState({errorModal: false, loading: false})
-            }>
-            {this.state.loading == true ? (
+            isVisible={this.state.newsorModal}
+            onBackdropPress={() => this.setState({newsorModal: false})}>
+            <View style={styles.modelContainer}>
               <View>
-                <ActivityIndicator color={colors.primary} size={'large'} />
+                <Text style={styles.errHeadPop}>
+                  looks like you don't have any sors yet
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.navigation.navigate('CreateSOR');
+
+                    this.setState({newsorModal: false});
+                  }}>
+                  <Text style={styles.errEmailPassDesc}>Create New SOR</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.navigation.navigate('createProject');
+
+                    this.setState({newsorModal: false});
+                  }}>
+                  <Text style={styles.plzTryAgain}>Create New Project</Text>
+                </TouchableOpacity>
               </View>
-            ) : (
-              <View style={styles.modelContainer}>
-                <View>
-                  <Text style={styles.errHeadPop}>
-                    Incorrect Email / Password !
-                  </Text>
-                  <Text style={styles.errEmailPassDesc}>
-                    We don't recognize that email and password.
-                  </Text>
-                  <Text style={styles.plzTryAgain}>
-                    Please try again later.
-                  </Text>
-                </View>
-              </View>
-            )}
+            </View>
           </Modal>
         </ScrollView>
       </View>
