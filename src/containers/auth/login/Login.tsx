@@ -92,6 +92,7 @@ class Login extends React.Component<LoginProps, any> {
           type: 'verify',
         });
       } else {
+        // consoel.l;
         this.props.navigation.navigate('CreatePass', {
           email: link.url
             .split('/')[3]
