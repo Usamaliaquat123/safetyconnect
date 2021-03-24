@@ -169,46 +169,41 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.props.route.params.data.involved_persons.map((d: any) => d._id),
     );
 
-    console.log(this.props.route.params.data.involved_persons);
-    var update = [
-      {
-        report: {
-          _id: this.props.route.params.data._id,
-          created_by: 'haider@gmail.com',
-          details: this.state.observation,
-          occured_at: moment().format('MMMM-MM-DD'),
-          involved_persons: this.props.route.params.data.involved_persons,
-          risk: {
-            severity: 5,
-            likelihood: 5,
-          },
-          action_required: this.state.actionsAndRecommendations,
-          user_location: {
-            latitude: 66.666,
-            longitude: 66.666,
-          },
-          location: this.props.route.params.data.location,
-          submit_to: ['haiderali333222@gmail.com'],
-          esclate_to: ['haiderali333222@gmail.com'],
-          status: 2,
-          attachments: [],
-          comments: [
-            // {
-            //   email: 'haiderali333222@gmail.com',
-            //   comment: 'mera apna comment',
-            //   date: '2020-01-01',
-            //   files: ['abc'],
-            //   is_comment: true,
-            // },
-          ],
+    console.log(this.state.submitted_to);
+    var update = {
+      report: {
+        _id: this.props.route.params.data._id,
+        created_by: 'haider@gmail.com',
+        details: this.state.observation,
+        occured_at: moment().format('MMMM-MM-DD'),
+        involved_persons: this.props.route.params.data.involved_persons,
+        risk: {
+          severity: 5,
+          likelihood: 5,
         },
-        project: '604b13d114ba138bd23d7f75',
+        action_required: this.state.actionsAndRecommendations,
+        user_location: {
+          latitude: 66.666,
+          longitude: 66.666,
+        },
+        location: this.props.route.params.data.location,
+        submit_to: this.state.submitted_to,
+        esclate_to: this.state.esclate_to,
+        status: 2,
+        attachments: [],
+        comments: [ ],
       },
-    ];
+      project: '604b13d114ba138bd23d7f75',
+    };
 
     console.log(this.state.involvedPerson);
     console.log(update);
-    // createApi.createApi().updateSor({});
+    createApi
+      .createApi()
+      .updateSor(update)
+      .then((res) => {
+        console.log(res);
+      });
   };
 
   // Submitted To
