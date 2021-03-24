@@ -1234,32 +1234,33 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
             )}
           </View>
 
-
-             {/* when you don't have any sors  */}
-        {/* Modal Container */}
-        <Modal
-          isVisible={this.state.errorModal}
-          onBackdropPress={() =>
-            this.setState({errorModal: false, loading: false})
-          }>
-          {this.state.loading == true ? (
-            <View>
-              <ActivityIndicator color={colors.primary} size={'large'} />
-            </View>
-          ) : (
-            <View style={styles.modelContainer}>
+          {/* when you don't have any sors  */}
+          {/* Modal Container */}
+          <Modal
+            isVisible={this.state.errorModal}
+            onBackdropPress={() =>
+              this.setState({errorModal: false, loading: false})
+            }>
+            {this.state.loading == true ? (
               <View>
-                <Text style={styles.errHeadPop}>
-                  Incorrect Email / Password !
-                </Text>
-                <Text style={styles.errEmailPassDesc}>
-                  We don't recognize that email and password.
-                </Text>
-                <Text style={styles.plzTryAgain}>Please try again later.</Text>
+                <ActivityIndicator color={colors.primary} size={'large'} />
               </View>
-            </View>
-          )}
-        </Modal>
+            ) : (
+              <View style={styles.modelContainer}>
+                <View>
+                  <Text style={styles.errHeadPop}>
+                    Incorrect Email / Password !
+                  </Text>
+                  <Text style={styles.errEmailPassDesc}>
+                    We don't recognize that email and password.
+                  </Text>
+                  <Text style={styles.plzTryAgain}>
+                    Please try again later.
+                  </Text>
+                </View>
+              </View>
+            )}
+          </Modal>
         </ScrollView>
       </View>
     );
