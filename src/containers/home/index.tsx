@@ -75,7 +75,6 @@ class Home extends React.Component<HomeProps, any> {
 
     AsyncStorage.getItem('user').then((res: any) => {
       const arr = JSON.parse(res);
-
       this.setState({username: arr.name, orgName: arr.organizations[0].name});
     });
   }

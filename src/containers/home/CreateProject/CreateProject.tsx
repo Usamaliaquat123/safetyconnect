@@ -63,14 +63,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   // Filter All countries
   filterContries = (contries: string) => {
     this.setState({assignLocationsText: contries});
-    // api
-    //   .createApi()
-    //   .contriesAll({name: contries})
-    //   .then((res: any) => {
-    //     // console.log(res.data.length);
-
-    //   })
-    //   .catch((err) => console.log(err));
   };
 
   // Saved current project id with current organization id
