@@ -241,7 +241,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     form.append('q', str);
     createApi
       .createApi()
-      .observationSuggestions(form)
+      .observationSuggestions(str)
       .then((res: any) => {
         this.setState({suggestions: res.data.results});
       });
