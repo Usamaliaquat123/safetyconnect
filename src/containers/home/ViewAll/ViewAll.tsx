@@ -64,7 +64,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     await createApi
       .createApi()
       .filterSors({
-        project: '604b13d114ba138bd23d7f75',
+        project: '6038cf8472762b29b1bed1f3',
         limit: 100,
         page: 0,
         query: {status: [this.props.route.params.data]},

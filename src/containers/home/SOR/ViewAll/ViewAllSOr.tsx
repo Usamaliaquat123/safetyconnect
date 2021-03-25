@@ -7,6 +7,7 @@ import {
   Dimensions,
   Animated,
   Easing,
+  RefreshControl,
   ActivityIndicator,
   PanResponder,
 } from 'react-native';
@@ -109,7 +110,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       newsorModal: true,
     };
   }
-
+componentWillUnmount = () => {
+    this.setState({draft : [] , submitted : [],exclated : [] , inprogress: [],completed : []})
+}
   componentDidMount = async () => {
     // Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png')
     //   .then((res: string | any) => {
@@ -161,14 +164,25 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         console.log(err);
       });
   };
-
+  _onRefresh = () => {
+    this.setState({draft : [] , submitted : [],exclated : [] , inprogress: [],completed : []})
+   this.componentDidMount()
+  }
   filterDecending = (sors: Array<any>, name: string) => {};
 
   render() {
     // console.log(this.state.submitted);
     return (
       <View style={{backgroundColor: colors.primary}}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView   
+         refreshControl={
+          <RefreshControl
+            refreshing={this.state.loading}
+            onRefresh={this._onRefresh}
+          />
+        }
+        
+        showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon

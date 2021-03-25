@@ -161,13 +161,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         for (let i = 0; i < res.data.data.involved_persons.length; i++) {
           res.data.data.involved_persons[i]['selected'] = false;
         }
-        console.log(res.data.data.involved_persons);
       });
 
     this.fileAndImageCapturer(this.props.route.params.data.attachments);
     this.mapViewSorPhoto();
     this.AnimatedViews();
-
+    console.log(this.props.route.params.data.risk);
     this.mappingMapping(
       this.props.route.params.data.risk.severity,
       this.props.route.params.data.risk.likelihood,
@@ -176,7 +175,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
   mappingInvolved = (persons: Array<any>, person: string | undefined) => {
     persons.map((d: any, i: number) => {
-      console.log(d);
       if (d._id == person) {
         d.selected = true;
       } else {
@@ -187,6 +185,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   onSubmitUpdateSor = async (status: number) => {
     this.setState({loading: true});
 
+    var liklihood = this.state.liklihood.filter(
+      (d: any) => d.selected == true,
+    )[0].value;
+    var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
+      .value;
+    console.log(this.props.route.params.data._id);
     var update = {
       report: {
         _id: this.props.route.params.data._id,
@@ -195,8 +199,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         occured_at: moment().format('YYYY-MM-DD'),
         involved_persons: this.props.route.params.data.involved_persons,
         risk: {
-          severity: 5,
-          likelihood: 5,
+          severity: severity,
+          likelihood: liklihood,
         },
         action_required: this.state.actionsAndRecommendations,
         user_location: {
@@ -220,9 +224,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         this.setState({loading: false});
         this.props.navigation.navigate('ViewAllSOr');
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   // Submitted To
@@ -392,8 +394,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
 
   render() {
-    console.log('@###############');
-    console.log();
     return (
       <Animated.View style={[styles.container, {opacity: this.state.initAnim}]}>
         <ScrollView showsVerticalScrollIndicator={false}>
