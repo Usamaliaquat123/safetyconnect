@@ -73,6 +73,13 @@ export const MainStackNavigator = (route?: route) => {
     <SafeAreaProvider>
       <Stack.Navigator initialRouteName={route}>
         <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="NoInternet"
           component={NoInternet}
           options={{
