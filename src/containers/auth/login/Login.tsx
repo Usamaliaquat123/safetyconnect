@@ -168,32 +168,6 @@ class Login extends React.Component<LoginProps, any> {
           </View>
           {/* content */}
           <View style={[styles.content]}>
-            {/* {this.state.loading == true ? (
-              <View
-                style={{
-                  alignSelf: 'center',
-                  marginTop: wp(40),
-                }}>
-                <LottieView
-                  // ref={(animation) => {
-                  //   this.photoAnim = animation;
-                  // }}
-                  autoPlay={true}
-                  style={{width: wp(90)}}
-                  source={animation.loading}
-                  loop={true}
-                />
-                <Text
-                  style={{
-                    fontSize: wp(3),
-                    opacity: 0.5,
-                    textAlign: 'center',
-                    marginTop: wp(-5),
-                  }}>
-                  loading...
-                </Text>
-              </View>
-            ) : ( */}
             <View>
               <Text style={styles.headingContainer}>Sign In</Text>
               {/* inputs container */}
