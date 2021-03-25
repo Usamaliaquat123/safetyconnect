@@ -1273,7 +1273,11 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   looks like you don't have any sors yet
                 </Text>
                 <TouchableOpacity
-                  style={{flexDirection: 'row', padding: wp(3)}}
+                  style={{
+                    flexDirection: 'row',
+                    padding: wp(3),
+                    alignItems: 'center',
+                  }}
                   onPress={() => {
                     this.props.navigation.navigate('CreateSOR');
 
@@ -1289,7 +1293,11 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  style={{flexDirection: 'row', padding: wp(3)}}
+                  style={{
+                    flexDirection: 'row',
+                    padding: wp(3),
+                    alignItems: 'center',
+                  }}
                   onPress={() => {
                     this.props.navigation.navigate('createProject');
 
