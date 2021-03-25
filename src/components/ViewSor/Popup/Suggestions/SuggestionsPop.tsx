@@ -184,7 +184,7 @@ export default class SuggestionsPop extends React.Component<
                           <TouchableOpacity
                             key={i}
                             onPress={() => {
-                              this.state.AssignedTo.push(d.name);
+                              this.state.AssignedTo.push(d.email);
                               this.setState({
                                 involvePersonText: '',
                                 suggestions: [],
@@ -343,6 +343,7 @@ export default class SuggestionsPop extends React.Component<
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
+                    console..l
                     if (this.state.AssignedTo.length != 0) {
                       var sugg = {
                         status: this.state.status,

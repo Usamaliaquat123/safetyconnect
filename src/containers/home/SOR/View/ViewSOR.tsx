@@ -182,12 +182,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       }
     });
   };
-  onSubmitUpdateSor = async (status: number) => {
+  onSubmitUpdateSor = async (status?: number) => {
     this.setState({loading: true});
+    console.log('==================');
     console.log(this.state.actionsAndRecommendations);
+    console.log('==================');
+
     var liklihood = this.state.liklihood.filter(
       (d: any) => d.selected == true,
     )[0].value;
+    // this.state.actionsAndRecommendations.filter(())
     var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
       .value;
     console.log(this.props.route.params.data._id);
@@ -217,14 +221,19 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       project: '6038cf8472762b29b1bed1f3',
     };
 
+    console.log(update);
+
     createApi
       .createApi()
       .updateSor(update)
       .then((res) => {
+        console.log(res);
         this.setState({loading: false});
         this.props.navigation.navigate('ViewAllSOr');
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // Submitted To
@@ -1777,6 +1786,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   this.state.allActionsEditIndex
                 ] = d;
               }
+              console.log(this.state.actionsAndRecommendations);
               // this.state.actionsAndRecommendations.push(d)
               this.setState({SuggestionPop: false});
             }}
