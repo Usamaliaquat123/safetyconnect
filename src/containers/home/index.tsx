@@ -64,7 +64,13 @@ class Home extends React.Component<HomeProps, any> {
         query: {status: [1, 2, 3, 4, 5]},
       })
       .then((res: any) => {
-        this.setState({recentActivity: res.data.data.report.slice(0, 3)});
+        console.log(res.data.data.report.length);
+
+        if (res.data.data.report.length > 3) {
+          this.setState({recentActivity: res.data.data.report.slice(0, 3)});
+        } else {
+          this.setState({recentActivity: res.data.data.report});
+        }
       });
 
     AsyncStorage.getItem('user').then((res: any) => {
@@ -189,7 +195,7 @@ class Home extends React.Component<HomeProps, any> {
                   <Text style={styles.viewAll}>View All</Text>
                 ) : null}
               </View>
-              {this.state.recentActivity.length != 0 ? (
+              {this.state.recentActivity.length == 0 ? (
                 <View
                   style={{
                     justifyContent: 'center',
