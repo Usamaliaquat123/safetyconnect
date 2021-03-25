@@ -11,8 +11,9 @@ import {string} from 'prop-types';
 // our "constructor"
 const createApi = (
   baseURL: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:12222/',
+  obsbaseUrl: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:5003',
   repBaseAi: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:5002/',
-  baseAi: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:5001/',
+  baseAi: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:500/',
   // External Countries api
   countries: string = 'https://restcountries.eu/rest/v2/',
 ) => {
@@ -23,6 +24,11 @@ const createApi = (
 
   const aiRepBaseApi = apisauce.create({
     baseURL: repBaseAi,
+    // headers,
+    timeout: 10000,
+  });
+  const obsRepApi = apisauce.create({
+    baseURL: obsbaseUrl,
     // headers,
     timeout: 10000,
   });
@@ -44,10 +50,10 @@ const createApi = (
 
   const contriesAll = (data: country) => contries.get(`name/${data.name}`);
 
-  const suggestiosns = (data: any) => aiBaseAi.post('act', data);
+  const suggestiosns = (data: any) => aiBaseAi.post(`act`, data);
   const repeatedsorsugg = (keyword: any) =>
     aiRepBaseApi.post(`repeatedsor`, keyword);
-  const observationSuggestions = (data: any) => aiBaseAi.post('obs', data);
+  const observationSuggestions = (data: any) => obsRepApi.post(`obs?q=${data}`);
   // sor api
 
   /*

@@ -256,6 +256,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       .createApi()
       .observationSuggestions(form)
       .then((res: any) => {
+        console.log(res.data.results);
         this.setState({suggestions: res.data.results});
       });
   };
@@ -555,7 +556,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 type={'observation'}
                 arr={this.state.suggestions}
                 onPress={(d: any) => {
-                  this.setState({observationT: d.obs, suggestions: []});
+                  this.setState({observationT: d.details, suggestions: []});
                 }}
               />
             ) : null}

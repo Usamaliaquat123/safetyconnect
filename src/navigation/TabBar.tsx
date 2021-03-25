@@ -48,7 +48,7 @@ export const BottomTabNavigator = () => {
         initialRouteName={'home'}>
         <Tab.Screen
           name="home"
-          component={() => MainStackNavigator('Home')}
+          component={() => MainStackNavigator('CreateSOR')}
           options={{}}
         />
         <Tab.Screen

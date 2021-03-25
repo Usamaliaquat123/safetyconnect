@@ -46,7 +46,7 @@ const Suggestions = (props: Props) => {
                   key={i}
                   onPress={() => props.onPress(d)}
                   style={styles.ActionsugItm}>
-                  <Text style={styles.ActionsugItmTxt}>{d.obs}</Text>
+                  <Text style={styles.ActionsugItmTxt}>{d.details}</Text>
                   {/* <Text style={{fontSize: wp(3), color: colors.black}}>
                 {d.email}
               </Text> */}
