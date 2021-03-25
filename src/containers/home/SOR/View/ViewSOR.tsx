@@ -868,11 +868,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     if (this.state.actionsAndRecommendationText !== '') {
                       this.setState({
                         allActionsEdit: {
-                          is_complete: 'Completed',
+                          is_complete: true,
+                          is_selected: true,
                           content: this.state.actionsAndRecommendationText,
                           assigned_to: [],
                           date: moment().format('YYYY-MM-DD'),
-                          status: false,
+                          status: 0,
                           category: 'Elimination',
                         },
 

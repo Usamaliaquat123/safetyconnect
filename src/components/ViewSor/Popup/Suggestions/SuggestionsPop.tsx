@@ -40,8 +40,10 @@ export default class SuggestionsPop extends React.Component<
       observation: props.suggestions.content,
       submittedTo: props.suggestions.SubmittedTo,
       type: props.suggestions.category,
-      status: props.suggestions.is_complete,
+      status: props.suggestions.status,
       suggestions: [],
+      is_complete: props.suggestions.is_complete,
+      is_selected: props.suggestions.is_selected,
       AssignedTo:
         typeof props.suggestions.assigned_to == 'string'
           ? [props.suggestions.assigned_to]
@@ -54,6 +56,7 @@ export default class SuggestionsPop extends React.Component<
   componentDidMount = () => {};
 
   render() {
+    // console.log(this.props.suggestions.status);
     return (
       <Model
         animationIn={'bounceInUp'}
@@ -71,7 +74,7 @@ export default class SuggestionsPop extends React.Component<
               onPress={() => this.setState({status: !this.state.status})}
               type="antdesign"
               color={
-                this.state.status == true ? colors.green : colors.lightGrey
+                this.state.is_complete == true ? colors.green : colors.lightGrey
               }
             />
             <Text style={styles.containerTextString}>
@@ -343,15 +346,14 @@ export default class SuggestionsPop extends React.Component<
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    console..l
                     if (this.state.AssignedTo.length != 0) {
                       var sugg = {
-                        status: this.state.status,
+                        // status: this.state.status,
                         content: this.state.observation,
                         assigned_to: this.state.AssignedTo[0],
                         date: moment().format('YYYY-MM-DD'),
-                        is_complete: this.state.status,
-                        is_selected: this.state.status,
+                        is_complete: this.state.is_complete,
+                        is_selected: this.state.is_selected,
                         category: this.state.type,
                       };
                       this.props.save(sugg);
