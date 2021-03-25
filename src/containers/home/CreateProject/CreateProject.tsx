@@ -63,21 +63,14 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   // Filter All countries
   filterContries = (contries: string) => {
     this.setState({assignLocationsText: contries});
-    api
-      .createApi()
-      .contriesAll({name: contries})
-      .then((res: any) => {
-        // console.log(res.data.length);
+    // api
+    //   .createApi()
+    //   .contriesAll({name: contries})
+    //   .then((res: any) => {
+    //     // console.log(res.data.length);
 
-        if (res.data != undefined) {
-          // for (let i = 0; i < res.data.length; i++) {
-          //   console.log(res.data[i]);
-          // }
-
-          this.setState({locations: res.data});
-        }
-      })
-      .catch((err) => console.log(err));
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   // Saved current project id with current organization id
@@ -385,7 +378,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                   {/* Assign Locations suggestions */}
                   {this.state.assignLocationsText != '' ? (
                     <SuggestionsAvatar
-                      type={'location'}
+                      // type={'location'}
                       locations={this.state.locations}
                       onSelect={(d: string) => {
                         this.state.assignLocations.push(d);
