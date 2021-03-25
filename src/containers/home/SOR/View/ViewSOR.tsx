@@ -12,6 +12,7 @@ import {
   Modal,
   Easing,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 import moment from 'moment';
@@ -48,6 +49,7 @@ import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {involved_persons, actions} from '@typings';
 import {number} from 'prop-types';
+import {ForceTouchGestureHandler} from 'react-native-gesture-handler';
 // import {colors} from '@theme';
 // import listAction from './../../../../store/actions/listActions';
 type ViewSORNavigationProp = StackNavigationProp<
@@ -121,6 +123,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
       editInvolvedAndEsclatedPersons: false,
       involvePersonsSelected: false,
+
+      // Loading
+      loading: false,
     };
 
     this.animation = React.createRef();
@@ -129,6 +134,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
+    // this.props.route.params.data.action_required
+    for (
+      let i = 0;
+      i < this.props.route.params.data.action_required.length;
+      i++
+    ) {
+      this.props.route.params.data.action_required[i]['date'] = moment(
+        this.props.route.params.data.action_required[i].date,
+      ).format('YYYY-MM-DD');
+    }
+
+    this.props.route.params.data.action_required.forEach(
+      (v) => delete v.default,
+    );
+
     createApi
       .createApi()
       .getProject({projectid: '6056061f49cf9ae72efe8e6e'})
@@ -165,17 +185,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
   };
   onSubmitUpdateSor = async (status: number) => {
-    console.log(
-      this.props.route.params.data.involved_persons.map((d: any) => d._id),
-    );
+    this.setState({loading: true});
 
-    console.log(this.state.submitted_to);
     var update = {
       report: {
         _id: this.props.route.params.data._id,
         created_by: 'haider@gmail.com',
         details: this.state.observation,
-        occured_at: moment().format('MMMM-MM-DD'),
+        occured_at: moment().format('YYYY-MM-DD'),
         involved_persons: this.props.route.params.data.involved_persons,
         risk: {
           severity: 5,
@@ -186,23 +203,25 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           latitude: 66.666,
           longitude: 66.666,
         },
-        location: this.props.route.params.data.location,
+        location: 'pindi boys',
         submit_to: this.state.submitted_to,
         esclate_to: this.state.esclate_to,
         status: 2,
         attachments: [],
-        comments: [ ],
+        comments: [],
       },
-      project: '604b13d114ba138bd23d7f75',
+      project: '6038cf8472762b29b1bed1f3',
     };
 
-    console.log(this.state.involvedPerson);
-    console.log(update);
     createApi
       .createApi()
       .updateSor(update)
       .then((res) => {
-        console.log(res);
+        this.setState({loading: false});
+        this.props.navigation.navigate('ViewAllSOr');
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -843,7 +862,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           is_complete: 'Completed',
                           content: this.state.actionsAndRecommendationText,
                           assigned_to: [],
-                          date: Date.now,
+                          date: moment().format('YYYY-MM-DD'),
                           status: false,
                           category: 'Elimination',
                         },
@@ -1812,6 +1831,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           }}
         />
         <FlashMessage ref="myLocalFlashMessage" />
+
+        <Model
+          animationIn={'bounceInUp'}
+          animationOut={'bounceOutDown'}
+          animationInTiming={1000}
+          animationOutTiming={1000}
+          isVisible={this.state.loading}
+          onBackdropPress={() => this.setState({loading: false})}>
+          <ActivityIndicator color={colors.primary} size={'large'} />
+        </Model>
       </Animated.View>
     );
   }

@@ -85,7 +85,7 @@ const createApi = (
       page: data.page,
       query: data.query,
     });
-  const updateSor = (data: any) => baseapi.put('project/report', {data});
+  const updateSor = (data: any) => baseapi.put('project/report', data);
   // Create initial to get the reportId
   const createSorInit = (data: any) => baseapi.post('project/newreport', data);
   const createSor = (data: any) => baseapi.post('project/publish', data);

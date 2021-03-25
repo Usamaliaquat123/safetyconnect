@@ -15,6 +15,8 @@ import {Avatar} from 'react-native-elements';
 import {Create_sor} from '@service';
 import {searchInSuggestions} from '@utils';
 import {involved_persons} from '@typings';
+import moment from 'moment';
+
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 export interface SuggestionsPopProps {
   onClose: Function;
@@ -346,7 +348,7 @@ export default class SuggestionsPop extends React.Component<
                         status: this.state.status,
                         content: this.state.observation,
                         assigned_to: this.state.AssignedTo[0],
-                        date: Date.now(),
+                        date: moment().format('YYYY-MM-DD'),
                         is_complete: this.state.status,
                         is_selected: this.state.status,
                         category: this.state.type,
