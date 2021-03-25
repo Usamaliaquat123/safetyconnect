@@ -20,6 +20,7 @@ import {ListCard} from '@components';
 import {route} from '@nav';
 import {PieChart} from 'react-native-svg-charts';
 import {createApi} from '@service';
+import Modal from 'react-native-modal';
 
 import {
   widthPercentageToDP as wp,
@@ -364,6 +365,59 @@ class Home extends React.Component<HomeProps, any> {
             </View>
           </View>
         </ScrollView>
+        {/* when you don't have any sors  */}
+        {/* Modal Container */}
+        <Modal
+          isVisible={this.state.newsorModal}
+          onBackdropPress={() => this.setState({newsorModal: false})}>
+          <View style={styles.modelContainer}>
+            <View>
+              <Text style={styles.errHeadPop}>
+                looks like you don't have any sors yet
+              </Text>
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  padding: wp(3),
+                  alignItems: 'center',
+                }}
+                onPress={() => {
+                  this.props.navigation.navigate('CreateSOR');
+
+                  this.setState({newsorModal: false});
+                }}>
+                <Icon
+                  size={wp(5)}
+                  name="add-outline"
+                  type="ionicon"
+                  color={colors.primary}
+                />
+                <Text style={styles.errEmailPassDesc}>Create New SOR</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  padding: wp(3),
+                  alignItems: 'center',
+                }}
+                onPress={() => {
+                  this.props.navigation.navigate('createProject');
+
+                  this.setState({newsorModal: false});
+                }}>
+                {/* <Image source={images.} /> */}
+                <Icon
+                  size={wp(5)}
+                  name="add-outline"
+                  type="ionicon"
+                  color={colors.primary}
+                />
+                <Text style={styles.plzTryAgain}>Create New Project</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </View>
     );
   }

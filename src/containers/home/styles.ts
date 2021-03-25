@@ -189,6 +189,37 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     color: colors.primary,
   },
+  modelContainer: {
+    backgroundColor: colors.secondary,
+    padding: wp(10),
+    borderRadius: wp(5),
+  },
+  errEmailPassDesc: {
+    marginTop: wp(2),
+    marginLeft: wp(2),
+
+    textAlign: 'center',
+    fontSize: wp(3),
+    // padding: wp(3),
+    fontWeight: 'bold',
+
+    color: colors.text,
+  },
+
+  errHeadPop: {
+    fontSize: wp(4),
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: colors.primary,
+  },
+  plzTryAgain: {
+    textAlign: 'center',
+    fontSize: wp(3),
+    marginLeft: wp(2),
+    fontWeight: 'bold',
+    // padding: wp(3),
+    color: colors.text,
+  },
 });
 
 export default styles;
