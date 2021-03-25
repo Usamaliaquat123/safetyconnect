@@ -692,30 +692,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       (d: actions, i: number) => (
                         <TouchableOpacity
                           onLongPress={() => {
-                            // allActionsEdit: {
-                            //   status: 'Completed',
-                            //   observation: this.state.actionsAndRecommendationText,
-                            //   SubmittedTo: [],
-                            //   AssignedTo: [],
-                            //   time: Date.now,
-                            //   type: 'Elimination',
-                            // },
                             this.setState({
                               allActionsEdit: d,
                               SuggestionPop: true,
                               allActionsEditIndex: i,
                               newActions: false,
                             });
-                            // is_complete: 'Completed',
-                            // content: this.state.actionsAndRecommendationText,
-                            // assigned_to: [],
-                            // date: Date.now,
-                            // status: false,
-                            // category: 'Elimination',
-                            // setTimeout(() => {
-                            //   this.setState({
-                            //   });
-                            // }, 5000);
                           }}
                           onPress={() => {
                             var data = [
@@ -868,8 +850,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     if (this.state.actionsAndRecommendationText !== '') {
                       this.setState({
                         allActionsEdit: {
-                          is_complete: true,
-                          is_selected: true,
+                          is_complete: false,
+                          is_selected: false,
                           content: this.state.actionsAndRecommendationText,
                           assigned_to: [],
                           date: moment().format('YYYY-MM-DD'),
