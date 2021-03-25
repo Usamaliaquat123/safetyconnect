@@ -27,7 +27,7 @@ class Tags extends React.Component<TagsProps, any> {
     if (this.props.type == 'sugg') {
       return this.props.tags.map((d: any, i: number) => (
         <View key={i} style={[styles.container, this.props.style]}>
-          <Text style={styles.tagsText}>{d.action.substring(0, 40)}...</Text>
+          <Text style={styles.tagsText}>{d.content.substring(0, 40)}...</Text>
           <TouchableOpacity
             onPress={() => this.props.onClose(d)}
             style={styles.containerIcon}>

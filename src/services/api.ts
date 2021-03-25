@@ -13,7 +13,7 @@ const createApi = (
   baseURL: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:12222/',
   obsbaseUrl: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:5003',
   repBaseAi: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:5002/',
-  baseAi: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:500/',
+  baseAi: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:5004/',
   // External Countries api
   countries: string = 'https://restcountries.eu/rest/v2/',
 ) => {
