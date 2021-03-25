@@ -184,7 +184,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
   onSubmitUpdateSor = async (status: number) => {
     this.setState({loading: true});
-
+    console.log(this.state.actionsAndRecommendations);
     var liklihood = this.state.liklihood.filter(
       (d: any) => d.selected == true,
     )[0].value;

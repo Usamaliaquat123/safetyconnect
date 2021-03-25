@@ -108,7 +108,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       bottomWidth: wp(100),
       setUser: '',
       // New sor modal popup
-      newsorModal: true,
+      newsorModal: false,
     };
   }
   componentWillUnmount = () => {

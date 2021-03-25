@@ -1041,7 +1041,20 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 </Text>
                 {this.state.actionsTags.length < 3 && (
                   <TextInput
-                    onFocus={() => this.setState({selectedInputIndex: 3})}
+                    onFocus={() => {
+                      const form = new FormData();
+                      form.append('q', this.state.observationT);
+                      createApi
+                        .createApi()
+                        .suggestiosns(form)
+                        .then((res: any) => {
+                          this.setState({
+                            actionRecommendations: [...res.data.results],
+                          });
+                        });
+
+                      this.setState({selectedInputIndex: 3});
+                    }}
                     style={[
                       styles.actionInput,
                       this.state.selectedInputIndex == 3
@@ -1108,7 +1121,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       : null,
                   ]}>
                   <TextInput
-                    onFocus={() => this.setState({selectedInputIndex: 4})}
+                    onFocus={() => {
+                      this.setState({selectedInputIndex: 4});
+                      if (this.state.actionsTags.length == 0) {
+                        this.state.actionsTags.push(
+                          this.state.actionRecommendations[0],
+                        );
+                      }
+                    }}
                     style={styles.optnselectorText}
                     placeholder={'Enter person name / email'}
                     underlineColorAndroid="transparent"
