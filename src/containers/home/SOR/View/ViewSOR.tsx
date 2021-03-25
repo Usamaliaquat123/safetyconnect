@@ -184,9 +184,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
   onSubmitUpdateSor = async (status?: number) => {
     this.setState({loading: true});
-    console.log('==================');
-    console.log(this.state.actionsAndRecommendations);
-    console.log('==================');
 
     var liklihood = this.state.liklihood.filter(
       (d: any) => d.selected == true,
@@ -691,14 +688,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     {this.state.actionsAndRecommendations.map(
                       (d: actions, i: number) => (
                         <TouchableOpacity
-                          onLongPress={() => {
-                            this.setState({
-                              allActionsEdit: d,
-                              SuggestionPop: true,
-                              allActionsEditIndex: i,
-                              newActions: false,
-                            });
-                          }}
                           onPress={() => {
                             var data = [
                               ...this.state.actionsAndRecommendations,
@@ -709,6 +698,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               data[i].is_complete = true;
                             }
                             this.setState({actionsAndRecommendations: data});
+                          }}
+                          onLongPress={() => {
+                            this.setState({
+                              allActionsEdit: d,
+                              SuggestionPop: true,
+                              allActionsEditIndex: i,
+                              newActions: false,
+                            });
                           }}
                           style={[
                             styles.actionRecomCon,
@@ -766,29 +763,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 Assigned to:{' '}
                                 <Text style={styles.subAssuser}>
                                   {d.assigned_to}
-                                  {/* {d.assigned_to.length > 1 && (
-                                    <Text
-                                      onPress={() => {
-                                        this.setState({
-                                          allActionsEdit: d,
-                                          SuggestionPop: true,
-                                          //   allActionsEditIndex: i,s
-                                        });
-                                      }}
-                                      style={[
-                                        styles.subAssuser,
-
-                                        {
-                                          opacity: 0.5,
-                                          // marginTop: wp(3,
-                                          fontWeight: 'bold',
-                                          fontSize: wp(2.7),
-                                        },
-                                      ]}>
-                                      {' '}
-                                      {d.assigned_to.length - 1} + more
-                                    </Text>
-                                  )} */}
                                 </Text>
                               </Text>
                             </TouchableOpacity>

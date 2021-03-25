@@ -104,6 +104,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       severity: riskxSeverityxliklihood.severity,
       // Involved Persons of this project
       involved_persons: [],
+
       errorModal: false,
       user: {},
       errHeadingText: '',
@@ -1123,11 +1124,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   <TextInput
                     onFocus={() => {
                       this.setState({selectedInputIndex: 4});
-                      if (this.state.actionsTags.length == 0) {
-                        this.state.actionsTags.push(
-                          this.state.actionRecommendations[0],
-                        );
-                      }
+                      // if (this.state.actionsTags.length == 0) {
+                      //   this.state.actionsTags.push(
+                      //     this.state.actionRecommendations[0],
+                      //   );
+                      // }
                     }}
                     style={styles.optnselectorText}
                     placeholder={'Enter person name / email'}
@@ -1351,6 +1352,37 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               }}
             />
           </Modal>
+          {this.state.SuggestionPop == true && (
+            <SuggestionsPop
+              suggestedUsers={this.state.involvedPerson}
+              onClose={() =>
+                this.setState({SuggestionPop: !this.state.SuggestionPop})
+              }
+              allSuggestions={this.state.actionsAndRecommendations}
+              isOpen={this.state.SuggestionPop}
+              suggestions={this.state.allActionsEdit}
+              save={(d: any) => {
+                if (this.state.newActions == true) {
+                  this.state.actionsAndRecommendations.push(d);
+                } else {
+                  this.state.actionsAndRecommendations[
+                    this.state.allActionsEditIndex
+                  ] = d;
+                }
+                console.log(this.state.actionsAndRecommendations);
+                // this.state.actionsAndRecommendations.push(d)
+                this.setState({SuggestionPop: false});
+              }}
+              discard={() => {
+                this.setState({
+                  actionsAndRecommendations: this.state.actionsAndRecommendations.filter(
+                    (d: any) => d != this.state.allActionsEdit,
+                  ),
+                  SuggestionPop: false,
+                });
+              }}
+            />
+          )}
         </ScrollView>
       </Animated.View>
     );

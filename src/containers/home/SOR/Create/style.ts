@@ -395,6 +395,95 @@ const styles = StyleSheet.create({
     padding: wp(10),
     borderRadius: wp(5),
   },
+
+  actionText: {fontSize: wp(3.5), fontWeight: 'bold', color: colors.primary},
+  sugForYouText: {
+    fontSize: wp(3),
+    color: colors.text,
+    fontWeight: 'bold',
+    marginTop: wp(1),
+  },
+  actionRecomCon: {
+    padding: wp(3),
+    marginTop: wp(3),
+    borderRadius: wp(4),
+  },
+  obvTextAction: {
+    // fontWeight: 'bold',
+    fontSize: wp(3.3),
+    marginTop: wp(3),
+    color: colors.primary,
+  },
+  subAss: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: wp(3),
+  },
+  subAssText: {
+    // fontWeight: 'bold',
+    fontSize: wp(2.8),
+    opacity: 0.5,
+  },
+  subAssuser: {
+    // marginLeft: wp,
+    // fontStyle: 'italic',
+  },
+  textaddActionContainer: {
+    width: wp(70),
+    fontSize: wp(3.5),
+  },
+  addActionAndRecommendation: {
+    borderWidth: wp(0.3),
+    borderRadius: wp(3),
+    marginTop: wp(3),
+    paddingLeft: wp(1),
+    borderColor: colors.lightGrey,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  statusARText: {
+    color: colors.text,
+    opacity: 0.8,
+    fontSize: wp(3),
+    marginLeft: wp(3),
+  },
+  actionTypeElemAsdmin: {
+    fontSize: wp(2.7),
+    opacity: 0.5,
+  },
+  nosuchActionsAndRecommendations: {
+    marginTop: wp(3),
+    fontSize: wp(3),
+    opacity: 0.5,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  saveAsDraftContainer: {
+    width: wp(45),
+    borderColor: colors.primary,
+    borderWidth: wp(0.3),
+    padding: wp(4),
+    marginRight: wp(3),
+    borderRadius: wp(4),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  saveAsDraftText: {
+    color: colors.primary,
+    fontSize: wp(3),
+  },
+  saveAsSubmitText: {
+    fontSize: wp(3),
+    color: colors.secondary,
+  },
+  saveAsSubmitContainer: {
+    width: wp(45),
+    backgroundColor: colors.primary,
+    padding: wp(4),
+    justifyContent: 'center',
+    borderRadius: wp(4),
+    alignItems: 'center',
+  },
 });
 
 export default styles;

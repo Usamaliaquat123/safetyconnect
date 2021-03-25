@@ -6,6 +6,7 @@ import {
   ScrollView,
   Image,
   Animated,
+  RefreshControl,
 } from 'react-native';
 import {colors, GlStyles, images, fonts} from '@theme';
 import {connect} from 'react-redux';
@@ -51,6 +52,7 @@ class Home extends React.Component<HomeProps, any> {
       recentActivity: [],
       username: '',
       orgName: '',
+      newsorModal: true,
     };
   }
 
@@ -79,6 +81,12 @@ class Home extends React.Component<HomeProps, any> {
     });
   }
 
+  _onRefresh = () => {
+    this.setState({
+      recentActivity: [],
+    });
+    this.componentDidMount();
+  };
   render() {
     const data = [
       {val: 40, color: '#8DCF7F'},
@@ -98,7 +106,13 @@ class Home extends React.Component<HomeProps, any> {
       }));
     return (
       <View style={{flex: 1, backgroundColor: colors.primary}}>
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.loading}
+              onRefresh={this._onRefresh}
+            />
+          }>
           <View style={styles.header}>
             <View style={styles.headertle}>
               <View style={styles.orgLogo}>
@@ -191,7 +205,9 @@ class Home extends React.Component<HomeProps, any> {
               <View style={styles.recentlyHead}>
                 <Text style={styles.actHeading}>Recently Activity</Text>
                 {this.state.recentActivity.length > 3 ? (
-                  <Text style={styles.viewAll}>View All</Text>
+                  <TouchableOpacity>
+                    <Text style={styles.viewAll}>View All</Text>
+                  </TouchableOpacity>
                 ) : null}
               </View>
               {this.state.recentActivity.length == 0 ? (
