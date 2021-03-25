@@ -119,7 +119,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         type: [DocumentPicker.types.allFiles],
       });
 
-      console.log(res.name);
       this.state.filename.push({
         name: res.name,
         uri: res.uri,
@@ -168,7 +167,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         involvePersonText: str,
       });
     } else {
-      console.log(strArr);
       this.setState({
         involvePersonSuggestions: strArr,
         involvePersonText: str,
@@ -191,7 +189,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         .createApi()
         .suggestiosns(form)
         .then((res: any) => {
-          console.log(res.data);
           this.setState({
             actionRecommendations: [...res.data.results],
           });
@@ -207,27 +204,16 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     type: string,
     uri: string,
   ) => {
-    console.log(userId);
-    console.log(file);
-    console.log(date);
-    console.log(type);
-    console.log(uri);
-
     RNFS.readFile(uri, 'base64')
       .then((res: any) => {
         Storage.put(
           `/public/sors/${userId}/${userId}-${file}-${date}`,
           Buffer.from(res, 'base64'),
         )
-          .then((stored) => {
-            console.log('stored', JSON.stringify(stored));
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        console.log(res);
+          .then((stored) => {})
+          .catch((err) => {});
       })
-      .catch((err: any) => console.log(err));
+      .catch((err: any) => {});
     // const result = await Storage.put('test.txt', 'Hello');
 
     // console.log(results);
@@ -257,7 +243,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       .createApi()
       .observationSuggestions(form)
       .then((res: any) => {
-        console.log(res.data.results);
         this.setState({suggestions: res.data.results});
       });
   };
@@ -278,8 +263,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     return {files, folders};
   }
   componentDidMount = async () => {
-    console.log('=====================');
-
     // {key: "test.txt"} .catch(err => conso.le.log(err)});
     // const result = Storage.put('test.txt', 'Hello');
     // console.log(result);
@@ -797,7 +780,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     styles={{}}
                     arr={this.state.actionRecommendations}
                     onPress={(d: any) => {
-                      // console.log(d);
                       // this.state.actionsTags.push(d);
 
                       if (

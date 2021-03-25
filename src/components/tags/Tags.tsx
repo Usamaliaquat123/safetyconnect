@@ -23,7 +23,6 @@ export interface TagsProps {
 
 class Tags extends React.Component<TagsProps, any> {
   render() {
-    console.log(this.props.tags);
     if (this.props.type == 'sugg') {
       return this.props.tags.map((d: any, i: number) => (
         <View key={i} style={[styles.container, this.props.style]}>
