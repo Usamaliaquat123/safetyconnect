@@ -10,6 +10,7 @@ import {
   RefreshControl,
   ActivityIndicator,
   PanResponder,
+  Image,
 } from 'react-native';
 import {
   allDraft,
@@ -20,7 +21,7 @@ import {
   Create_sor,
 } from '@service';
 import {Icon, Avatar} from 'react-native-elements';
-import {colors, fonts, animation} from '@theme';
+import {colors, fonts, animation, images} from '@theme';
 import {initialList} from '@store';
 import {RootState} from '../../../../store/store';
 import {InitialAppStateDTO, ListStateDTO} from '@dtos';
@@ -110,9 +111,15 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       newsorModal: true,
     };
   }
-componentWillUnmount = () => {
-    this.setState({draft : [] , submitted : [],exclated : [] , inprogress: [],completed : []})
-}
+  componentWillUnmount = () => {
+    this.setState({
+      draft: [],
+      submitted: [],
+      exclated: [],
+      inprogress: [],
+      completed: [],
+    });
+  };
   componentDidMount = async () => {
     // Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png')
     //   .then((res: string | any) => {
@@ -165,24 +172,29 @@ componentWillUnmount = () => {
       });
   };
   _onRefresh = () => {
-    this.setState({draft : [] , submitted : [],exclated : [] , inprogress: [],completed : []})
-   this.componentDidMount()
-  }
+    this.setState({
+      draft: [],
+      submitted: [],
+      exclated: [],
+      inprogress: [],
+      completed: [],
+    });
+    this.componentDidMount();
+  };
   filterDecending = (sors: Array<any>, name: string) => {};
 
   render() {
     // console.log(this.state.submitted);
     return (
       <View style={{backgroundColor: colors.primary}}>
-        <ScrollView   
-         refreshControl={
-          <RefreshControl
-            refreshing={this.state.loading}
-            onRefresh={this._onRefresh}
-          />
-        }
-        
-        showsVerticalScrollIndicator={false}>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.loading}
+              onRefresh={this._onRefresh}
+            />
+          }
+          showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
@@ -1261,20 +1273,35 @@ componentWillUnmount = () => {
                   looks like you don't have any sors yet
                 </Text>
                 <TouchableOpacity
+                  style={{flexDirection: 'row', padding: wp(3)}}
                   onPress={() => {
                     this.props.navigation.navigate('CreateSOR');
 
                     this.setState({newsorModal: false});
                   }}>
+                  <Icon
+                    size={wp(5)}
+                    name="add-outline"
+                    type="ionicon"
+                    color={colors.primary}
+                  />
                   <Text style={styles.errEmailPassDesc}>Create New SOR</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
+                  style={{flexDirection: 'row', padding: wp(3)}}
                   onPress={() => {
                     this.props.navigation.navigate('createProject');
 
                     this.setState({newsorModal: false});
                   }}>
+                  {/* <Image source={images.} /> */}
+                  <Icon
+                    size={wp(5)}
+                    name="add-outline"
+                    type="ionicon"
+                    color={colors.primary}
+                  />
                   <Text style={styles.plzTryAgain}>Create New Project</Text>
                 </TouchableOpacity>
               </View>

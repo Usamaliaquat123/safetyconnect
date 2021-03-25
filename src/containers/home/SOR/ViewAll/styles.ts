@@ -39,15 +39,18 @@ const styles = StyleSheet.create({
   plzTryAgain: {
     textAlign: 'center',
     fontSize: wp(3),
+    marginLeft: wp(2),
     fontWeight: 'bold',
-    padding: wp(3),
+    // padding: wp(3),
     color: colors.text,
   },
   errEmailPassDesc: {
     marginTop: wp(2),
+    marginLeft: wp(2),
+
     textAlign: 'center',
     fontSize: wp(3),
-    padding: wp(3),
+    // padding: wp(3),
     fontWeight: 'bold',
 
     color: colors.text,
