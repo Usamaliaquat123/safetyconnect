@@ -8,6 +8,7 @@ import {
   Image,
   ActivityIndicator,
   TextInput,
+  Linking,
 } from 'react-native';
 import {Avatar, Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
@@ -66,6 +67,9 @@ class Login extends React.Component<LoginProps, any> {
   };
 
   componentDidMount() {
+    Linking.addEventListener('sd', (e) => {
+      console.log(e);
+    });
     // dynamicLinks().app.;
     dynamicLinks()
       .getInitialLink()
