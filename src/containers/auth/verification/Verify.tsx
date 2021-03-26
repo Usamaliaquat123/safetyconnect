@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {AuthNavigatorProp, StackNavigatorProps} from '@nav';
+import {StackNavigatorProps} from '@nav';
 import {
   View,
   ScrollView,
@@ -19,8 +19,8 @@ import {RouteProp} from '@react-navigation/native';
 import styles from './styles';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 
-type VerifyNavigationProp = StackNavigationProp<AuthNavigatorProp, 'Verify'>;
-type VerifyRouteProp = RouteProp<AuthNavigatorProp, 'Verify'>;
+type VerifyNavigationProp = StackNavigationProp<StackNavigatorProps, 'Verify'>;
+type VerifyRouteProp = RouteProp<StackNavigatorProps, 'Verify'>;
 
 export interface VerifyProps {
   navigation: VerifyNavigationProp;

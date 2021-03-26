@@ -16,7 +16,7 @@ import {
 } from 'react-native-responsive-screen';
 import {Icon, Avatar} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {AuthNavigatorProp} from '@nav';
+import {StackNavigatorProps} from '@nav';
 import {colors, images, GlStyles} from '@theme';
 import LottieView from 'lottie-react-native';
 import {validateEmail} from '@utils';
@@ -28,8 +28,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
 import {Auth} from 'aws-amplify';
 
-type SignupNavigationProp = StackNavigationProp<AuthNavigatorProp, 'Signup'>;
-type SignupRouteProp = RouteProp<AuthNavigatorProp, 'Signup'>;
+type SignupNavigationProp = StackNavigationProp<StackNavigatorProps, 'Signup'>;
+type SignupRouteProp = RouteProp<StackNavigatorProps, 'Signup'>;
 
 export interface SignupProps {
   navigation: SignupNavigationProp;

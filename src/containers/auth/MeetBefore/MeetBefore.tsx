@@ -11,7 +11,7 @@ import {
 import {connect} from 'react-redux';
 import {RouteProp, CommonActions} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {AuthNavigatorProp} from '@nav';
+import {StackNavigatorProps} from '@nav';
 import styles from './styles';
 import {colors, images, GlStyles} from '@theme';
 import {Icon} from 'react-native-elements';
@@ -27,10 +27,10 @@ export interface MeetBeforeProps {
 }
 
 type MeetBeforeNavigationProp = StackNavigationProp<
-  AuthNavigatorProp,
+  StackNavigatorProps,
   'MeetBefore'
 >;
-type MeetBeforeRouteProp = RouteProp<AuthNavigatorProp, 'MeetBefore'>;
+type MeetBeforeRouteProp = RouteProp<StackNavigatorProps, 'MeetBefore'>;
 
 class MeetBefore extends React.Component<MeetBeforeProps, any> {
   constructor(props: any) {

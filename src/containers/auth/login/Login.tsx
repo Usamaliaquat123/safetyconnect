@@ -14,7 +14,7 @@ import {Avatar, Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {AuthNavigatorProp} from '@nav';
+import {StackNavigatorProps} from '@nav';
 import {Create_sor} from '@service';
 import {RouteProp} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
@@ -28,8 +28,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {validateEmail, validatePassword} from '@utils';
-type LoginNavigationProp = StackNavigationProp<AuthNavigatorProp, 'Login'>;
-type LoginRouteProp = RouteProp<AuthNavigatorProp, 'Login'>;
+type LoginNavigationProp = StackNavigationProp<StackNavigatorProps, 'Login'>;
+type LoginRouteProp = RouteProp<StackNavigatorProps, 'Login'>;
 
 export interface LoginProps {
   navigation: LoginNavigationProp;

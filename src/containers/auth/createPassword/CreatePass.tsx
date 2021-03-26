@@ -17,7 +17,7 @@ import {Auth} from 'aws-amplify';
 import {connect} from 'react-redux';
 import {Icon} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {AuthNavigatorProp} from '@nav';
+import {StackNavigatorProps} from '@nav';
 import {validatePassword} from '@utils';
 import {colors, images, GlStyles} from '@theme';
 import {RouteProp, ThemeProvider} from '@react-navigation/native';
@@ -28,10 +28,10 @@ import {animation} from '@theme';
 import Modal from 'react-native-modal';
 
 type CreatePassNavigationProp = StackNavigationProp<
-  AuthNavigatorProp,
+  StackNavigatorProps,
   'CreatePass'
 >;
-type CreatePassRouteProp = RouteProp<AuthNavigatorProp, 'CreatePass'>;
+type CreatePassRouteProp = RouteProp<StackNavigatorProps, 'CreatePass'>;
 
 export interface CreatePassProps {
   navigation: CreatePassNavigationProp;

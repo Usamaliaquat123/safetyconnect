@@ -17,7 +17,7 @@ import {View_sor, profileSetupSelections} from '@service';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {AuthNavigatorProp, route} from '@nav';
+import {StackNavigatorProps, route} from '@nav';
 import {Avatar, Icon} from 'react-native-elements';
 import {colors, images, GlStyles} from '@theme';
 import {RouteProp} from '@react-navigation/native';
@@ -29,10 +29,10 @@ import {createApi as api} from '@service';
 import {animation} from '@theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 type TellAboutYouNavigationProp = StackNavigationProp<
-  AuthNavigatorProp,
+  StackNavigatorProps,
   'tellAboutYou'
 >;
-type TellAboutYouRouteProp = RouteProp<AuthNavigatorProp, 'tellAboutYou'>;
+type TellAboutYouRouteProp = RouteProp<StackNavigatorProps, 'tellAboutYou'>;
 
 export interface TellAboutYouProps {
   navigation: TellAboutYouNavigationProp;

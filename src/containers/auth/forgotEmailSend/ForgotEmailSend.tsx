@@ -11,7 +11,7 @@ import {
 import {connect} from 'react-redux';
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {AuthNavigatorProp} from '@nav';
+import {StackNavigatorProps} from '@nav';
 import styles from './styles';
 import {colors, images} from '@theme';
 import {Icon} from 'react-native-elements';
@@ -29,10 +29,10 @@ export interface ForgotEmailSendProps {
 }
 
 type forgotEmailSendNavigationProp = StackNavigationProp<
-  AuthNavigatorProp,
+  StackNavigatorProps,
   'Forgot'
 >;
-type forgotEmailSendRouteProp = RouteProp<AuthNavigatorProp, 'Forgot'>;
+type forgotEmailSendRouteProp = RouteProp<StackNavigatorProps, 'Forgot'>;
 
 class ForgotEmailSend extends React.Component<ForgotEmailSendProps, any> {
   constructor(props: any) {

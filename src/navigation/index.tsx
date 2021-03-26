@@ -4,8 +4,8 @@ import TabBar, {
   BottomTabNavigatorProp,
 } from './TabBar';
 import React, {useState} from 'react';
-import {MainStackNavigator, StackNavigatorProps, route} from './Main';
-import {AuthStackNavigator, AuthNavigatorProp} from './AuthNav';
+// import {MainStackNavigator, StackNavigatorProps, route} from './Main';
+import {MainStackNavigator, StackNavigatorProps, route} from './AuthNav';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import jwtDecode from 'jwt-decode';
@@ -52,8 +52,7 @@ export const Navigator = () => {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <BottomTabNavigator />
-        {/* <AuthStackNavigator /> */}
+        <MainStackNavigator />
       </NavigationContainer>
     </SafeAreaProvider>
   );
@@ -61,12 +60,10 @@ export const Navigator = () => {
 
 export {
   MainStackNavigator,
-  AuthStackNavigator,
   StackNavigatorProps,
   route,
   BottomTabNavigator,
   BottomTabNavigatorProp,
-  AuthNavigatorProp,
   TabBarProps,
   TabBar,
 };

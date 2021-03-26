@@ -12,7 +12,7 @@ import {
 import {connect} from 'react-redux';
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {AuthNavigatorProp} from '@nav';
+import {StackNavigatorProps} from '@nav';
 import styles from './styles';
 import {colors, images} from '@theme';
 import {Auth} from 'aws-amplify';
@@ -32,10 +32,10 @@ export interface ForgotProps {
 }
 
 type forgotPassNavigationProp = StackNavigationProp<
-  AuthNavigatorProp,
+  StackNavigatorProps,
   'Forgot'
 >;
-type forgotRouteProp = RouteProp<AuthNavigatorProp, 'Forgot'>;
+type forgotRouteProp = RouteProp<StackNavigatorProps, 'Forgot'>;
 
 class Forgot extends React.Component<ForgotProps, any> {
   constructor(props: any) {

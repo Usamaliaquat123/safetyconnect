@@ -68,10 +68,10 @@ export type route =
   | 'Menu'
   | 'NoInternet'
   | undefined;
-export const MainStackNavigator = (route?: route) => {
+export const MainStackNavigator = () => {
   return (
     <SafeAreaProvider>
-      <Stack.Navigator initialRouteName={route}>
+      <Stack.Navigator initialRouteName={'Login'}>
         <Stack.Screen
           name="Home"
           component={Home}
@@ -153,13 +153,6 @@ export const MainStackNavigator = (route?: route) => {
           }}
         />
 
-        {/* <Stack.Screen
-          name="ViewAll"
-          component={ViewAll}
-          options={{
-            headerShown: false,
-          }}
-        /> */}
         <Stack.Screen
           name="createProject"
           component={CreateProject}
