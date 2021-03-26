@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  RefreshControl,
   TextInput,
   Animated,
 } from 'react-native';
@@ -90,11 +91,24 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     this.setState({reports: []});
   };
 
+  _onRefresh = () => {
+    this.setState({
+      reports: [],
+    });
+    this.componentDidMount();
+  };
+
   render() {
     console.log(this.state.reports);
     return (
       <View style={{flex: 1, backgroundColor: colors.primary}}>
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.loading}
+              onRefresh={this._onRefresh}
+            />
+          }>
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
