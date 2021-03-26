@@ -10,6 +10,7 @@ import {
   Login,
   Signup,
   Menu,
+  ViewAllSOr,
 } from '@containers';
 import {Icon} from 'react-native-elements';
 import {BottomPop} from '@components';
@@ -46,7 +47,7 @@ export const BottomTabNavigator = () => {
         tabBar={(props) => <TabBar {...props} />}
         sceneContainerStyle={{backgroundColor: colors.error}}
         initialRouteName={'home'}>
-        <Tab.Screen name="home" component={ViewAll} options={{}} />
+        <Tab.Screen name="home" component={ViewAllSOr} options={{}} />
         <Tab.Screen name="sor" component={CreateSOR} options={{}} />
         <Tab.Screen name="addNew" component={BottomPop} />
         <Tab.Screen name="create" component={ViewAll} options={{}} />

@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
   content: {
     // flex: 1,
     // height: hp(200),
+    paddingBottom: wp(60),
     backgroundColor: colors.secondary,
     borderTopLeftRadius: wp(6),
     borderTopRightRadius: wp(6),
