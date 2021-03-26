@@ -108,7 +108,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         res.data.data.project_id,
                       );
                       this.setState({loading: false});
-                      this.props.navigation.navigate('Home');
+                      this.props.navigation.navigate('Main');
                       //  AsyncStorage.setItem('token', res.)
                       console.log(res);
                     });

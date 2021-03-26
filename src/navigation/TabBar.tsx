@@ -9,6 +9,7 @@ import {
   CreateSOR,
   Login,
   Signup,
+  Menu,
 } from '@containers';
 import {Icon} from 'react-native-elements';
 import {BottomPop} from '@components';
@@ -20,7 +21,6 @@ import {
 } from 'react-native-responsive-screen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import {AuthStackNavigator} from './AuthNav';
 import {MainStackNavigator} from './Main';
 import Modal from 'react-native-modal';
 import styles from './styles';
@@ -46,27 +46,11 @@ export const BottomTabNavigator = () => {
         tabBar={(props) => <TabBar {...props} />}
         sceneContainerStyle={{backgroundColor: colors.error}}
         initialRouteName={'home'}>
-        <Tab.Screen
-          name="home"
-          component={() => MainStackNavigator('ViewAllSOr')}
-          options={{}}
-        />
-        <Tab.Screen
-          name="sor"
-          component={() => MainStackNavigator('CreateSOR')}
-          options={{}}
-        />
+        <Tab.Screen name="home" component={ViewAll} options={{}} />
+        <Tab.Screen name="sor" component={CreateSOR} options={{}} />
         <Tab.Screen name="addNew" component={BottomPop} />
-        <Tab.Screen
-          name="create"
-          component={() => MainStackNavigator('CreateSOR')}
-          options={{}}
-        />
-        <Tab.Screen
-          name="more"
-          component={() => MainStackNavigator('Menu')}
-          options={{}}
-        />
+        <Tab.Screen name="create" component={ViewAll} options={{}} />
+        <Tab.Screen name="more" component={Menu} options={{}} />
       </Tab.Navigator>
       {/* </NavigationContainer> */}
     </SafeAreaProvider>
