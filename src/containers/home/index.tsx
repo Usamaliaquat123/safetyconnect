@@ -52,7 +52,7 @@ class Home extends React.Component<HomeProps, any> {
       recentActivity: [],
       username: '',
       orgName: '',
-      newsorModal: true,
+      newsorModal: false,
     };
   }
 

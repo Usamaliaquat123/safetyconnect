@@ -53,7 +53,7 @@ export const BottomTabNavigator = () => {
         />
         <Tab.Screen
           name="sor"
-          component={() => MainStackNavigator('MyTasks')}
+          component={() => MainStackNavigator('CreateSOR')}
           options={{}}
         />
         <Tab.Screen name="addNew" component={BottomPop} />
