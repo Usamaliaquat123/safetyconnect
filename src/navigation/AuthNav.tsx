@@ -56,6 +56,7 @@ export type StackNavigatorProps = {
   Menu: undefined;
   NothingFound: undefined;
   NoInternet: undefined;
+  Main: undefined;
 };
 
 const Stack = createStackNavigator<StackNavigatorProps>();

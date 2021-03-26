@@ -152,7 +152,7 @@ class Login extends React.Component<LoginProps, any> {
     try {
       const user = await Auth.federatedSignIn({provider: 'Google'});
       console.log(user);
-      this.props.navigation.navigate('Home');
+      this.props.navigation.navigate('Main');
     } catch (e) {
       console.log(e);
     }
