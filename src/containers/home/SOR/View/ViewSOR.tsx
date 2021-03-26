@@ -688,6 +688,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     {this.state.actionsAndRecommendations.map(
                       (d: actions, i: number) => (
                         <TouchableOpacity
+                        
                           onPress={() => {
                             var data = [
                               ...this.state.actionsAndRecommendations,
@@ -763,6 +764,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 Assigned to:{' '}
                                 <Text style={styles.subAssuser}>
                                   {d.assigned_to}
+                                 
                                 </Text>
                               </Text>
                             </TouchableOpacity>

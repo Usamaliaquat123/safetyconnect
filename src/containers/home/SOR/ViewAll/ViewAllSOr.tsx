@@ -129,7 +129,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     // this.props.initialList.addList('asdds');
     // console.log(this.props.initialList);
     // console.log(this.props.initial.list);
-
+    console.log(this.props.initialList);
     this.setState({loading: true});
     createApi
       .createApi()

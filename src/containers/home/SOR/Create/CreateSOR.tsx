@@ -263,7 +263,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     });
     return {files, folders};
   }
-  componentDidMount = async () => {
+  componentDidMount = () => {
     // {key: "test.txt"} .catch(err => conso.le.log(err)});
     // const result = Storage.put('test.txt', 'Hello');
     // console.log(result);
