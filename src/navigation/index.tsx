@@ -5,7 +5,8 @@ import TabBar, {
 } from './TabBar';
 import React, {useState} from 'react';
 // import {MainStackNavigator, StackNavigatorProps, route} from './Main';
-import {MainStackNavigator, StackNavigatorProps, route} from './AuthNav';
+import {StackNavigatorProps, route} from './typings';
+import {MainStackNavigator} from './AuthNav';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import jwtDecode from 'jwt-decode';

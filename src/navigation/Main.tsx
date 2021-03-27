@@ -5,6 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Isor, Imessage} from '@typings';
+import {StackNavigatorProps} from './typings';
 import {
   ViewSOR,
   Signup,
@@ -27,47 +28,7 @@ import {
 } from '@containers';
 
 const Stack = createStackNavigator<StackNavigatorProps>();
-export type StackNavigatorProps = {
-  Home: undefined;
-  CreateSOR: undefined;
-  ViewAllSOr: undefined;
-  ViewSOR: {data: Isor};
-  Messaging: undefined;
-  Verify: undefined;
-  Chat: {data: Imessage};
-  Login: undefined;
-  Signup: undefined;
-  CreatePass: undefined;
-  MyTasks: undefined;
-  tellAboutYou: undefined;
-  ViewAll: {data: number; title: string};
-  createProject: undefined;
-  CreateOrganization: undefined;
-  Menu: undefined;
-  NothingFound: undefined;
-  ForgotEmailSend: undefined;
-  NoInternet: undefined;
-};
-export type route =
-  | 'Home'
-  | 'CreateSOR'
-  | 'ViewAllSOr'
-  | 'ViewSOR'
-  | 'Messaging'
-  | 'Verify'
-  | 'Chat'
-  | 'Login'
-  | 'Signup'
-  | 'CreatePass'
-  | 'MyTasks'
-  | 'tellAboutYou'
-  | 'createProject'
-  | 'NothingFound'
-  | 'CreateOrganization'
-  | 'ViewAll'
-  | 'Menu'
-  | 'NoInternet'
-  | undefined;
+
 export const MainStackNavigator = () => {
   return (
     <SafeAreaProvider>
