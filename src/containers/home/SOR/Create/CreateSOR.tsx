@@ -217,22 +217,18 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       .catch((err: any) => {});
     // const result = await Storage.put('test.txt', 'Hello');
 
-    // console.log(results);
-
     // const object = {
     //   uri: `${uri}`,
     //   name: `${userId}${file}${date}`,
     //   type: `${type}`,
     // };
-    // console.log(object);
     // // Uploading files to S3
     // await Storage.put(
     //   `Users/sors/${userId}/${userId}${file}${date}`,
     //   object,
     // ).then((res) => {
-    //   // console.log(res);
     // });
-    // .catch((err) => console.log(err));
+    // .catch((err) => {});
   };
   // Getting files from the s3 storage
 
@@ -266,13 +262,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   componentDidMount = () => {
     // {key: "test.txt"} .catch(err => conso.le.log(err)});
     // const result = Storage.put('test.txt', 'Hello');
-    // console.log(result);
     // this.upoadFiles('602b81d95878d33f1081800e');
     // get involved users
     // AsyncStorage.getItem('involved_persons').then((res: any) =>
     // );
 
-    // console.log(this.state.involved_persons);
     // Get User info
     // AsyncStorage.getItem('user').then((user: any) => {
     //   this.setState({user: JSON.parse(user)});
@@ -391,7 +385,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     var sorbtns = this.state.classifySorbtns.filter(
       (d: any) => d.selected == true,
     );
-    // console.log(this.state.observationT);
 
     var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
     var severity = this.state.severity.filter((d: any) => d.selected == true);
@@ -425,7 +418,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     if (this.state.observationT !== '') {
       if (this.state.observation != '') {
         if (sorbtns.length != 0) {
-          console.log(sorbtns);
           if (sorbtns[0].title == 'positive') {
             // if (this.state.actionsTags.length !== 0) {
             if (this.state.submitToTags.length !== 0) {
@@ -487,7 +479,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           },
                           project: '604b13d114ba138bd23d7f75',
                         };
-                        console.log(sor);
 
                         createApi
                           .createApi()
@@ -502,12 +493,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       })
                       .catch((err) => {
                         this.setState({loading: false, errorModal: false});
-                        console.log(err);
                       });
                   })
                   .catch((err) => {
                     this.setState({loading: false, errorModal: false});
-                    console.log(err);
                   });
               } else {
                 this.setState({
@@ -600,7 +589,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 },
                                 project: '6038cf8472762b29b1bed1f3',
                               };
-                              console.log(sor);
 
                               createApi
                                 .createApi()
@@ -624,12 +612,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 loading: false,
                                 errorModal: false,
                               });
-                              console.log(err);
                             });
                         })
                         .catch((err) => {
                           this.setState({loading: false, errorModal: false});
-                          console.log(err);
                         });
                     } else {
                       this.setState({
@@ -890,8 +876,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   severity={this.state.severity}
                   style={{alignSelf: 'center', marginTop: wp(3)}}
                   onPress={(v: any) => {
-                    // console.log(v);
-
                     // if (v.liklihood == undefined) {
                     //   this.setState({severity: v.severity});
                     // } else {
@@ -1369,7 +1353,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     this.state.allActionsEditIndex
                   ] = d;
                 }
-                console.log(this.state.actionsAndRecommendations);
                 // this.state.actionsAndRecommendations.push(d)
                 this.setState({SuggestionPop: false});
               }}
@@ -1402,7 +1385,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(CreateSOR);
 // if (this.state.observationT !== '') {
 //   if (this.state.observation != '') {
 //     if (sorbtns.length != 0) {
-//       console.log(sorbtns);
 //       if (sorbtns[0].title == 'positive') {
 //         // if (this.state.actionsTags.length !== 0) {
 //         if (this.state.submitToTags.length !== 0) {
@@ -1464,7 +1446,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(CreateSOR);
 //                       },
 //                       project: '604b13d114ba138bd23d7f75',
 //                     };
-//                     console.log(sor);
 
 //                     createApi
 //                       .createApi()
@@ -1479,12 +1460,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(CreateSOR);
 //                   })
 //                   .catch((err) => {
 //                     this.setState({loading: false, errorModal: false});
-//                     console.log(err);
 //                   });
 //               })
 //               .catch((err) => {
 //                 this.setState({loading: false, errorModal: false});
-//                 console.log(err);
 //               });
 //           } else {
 //             this.setState({
@@ -1577,7 +1556,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(CreateSOR);
 //                             },
 //                             project: '604b13d114ba138bd23d7f75',
 //                           };
-//                           console.log(sor);
 
 //                           createApi
 //                             .createApi()
@@ -1601,12 +1579,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(CreateSOR);
 //                             loading: false,
 //                             errorModal: false,
 //                           });
-//                           console.log(err);
 //                         });
 //                     })
 //                     .catch((err) => {
 //                       this.setState({loading: false, errorModal: false});
-//                       console.log(err);
 //                     });
 //                 } else {
 //                   this.setState({
@@ -1682,7 +1658,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(CreateSOR);
 // if (this.state.observationT != '') {
 //   // Check if any of classify sor btn its selected
 //   if (sorbtns.length != 0) {
-//     console.log('asds');
 //     const form = new FormData();
 //     form.append('q', this.state.observationT);
 
@@ -1690,6 +1665,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(CreateSOR);
 //       .createApi()
 //       .repeatedsorsugg(form)
 //       .then((res: any) => {})
-//       .catch((err) => console.log(err));
+//       .catch((err) => {});
 //   }
 // }

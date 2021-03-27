@@ -53,11 +53,9 @@ class Signup extends React.Component<SignupProps, any> {
   async signup() {
     if (this.state.username !== '') {
       if (validateEmail(this.state.username)) {
-        console.log(this.state.username);
         this.setState({loading: true, errorModal: true});
 
         try {
-          console.log(this.state.username);
           let signUpResponse: any = await Auth.signUp({
             username: this.state.username,
             password: mainPass,
@@ -66,10 +64,7 @@ class Signup extends React.Component<SignupProps, any> {
             },
           });
           // signUpResponse.then((res) => {
-          //   console.log(res);
           // });
-          console.log('line 70');
-          console.log(signUpResponse);
           if (signUpResponse.userConfirmed) {
             // check if limit is not reached else send email for forgot password
             const sendEmail = await Auth.forgotPassword(
@@ -91,13 +86,9 @@ class Signup extends React.Component<SignupProps, any> {
             }
           }
         } catch (e: any) {
-          console.log('line 101');
-          console.log(e);
-          console.log(e.messsage);
           if (e.message.includes('google')) {
             this.setState({loading: false, errorModal: false});
 
-            console.log('Looks like you already signup with google.');
             // Redirect to => Alredy met screen
             // Auth.federatedSignIn({})
             this.props.navigation.navigate('MeetBefore', {
@@ -108,8 +99,6 @@ class Signup extends React.Component<SignupProps, any> {
           Auth.signIn(this.state.username, mainPass)
             .then()
             .catch(async (err) => {
-              console.log(err);
-              console.log('=======');
               if (err.message.includes('Incorrect')) {
                 // Toast Account Already exist
                 this.setState({loading: false, errorModal: false});
@@ -153,7 +142,6 @@ class Signup extends React.Component<SignupProps, any> {
     // try {
     //   const user = await Auth.federatedSignIn({provider: 'Google'});
     // } catch (err) {
-    //   console.log(err);
     // }
   };
   render() {

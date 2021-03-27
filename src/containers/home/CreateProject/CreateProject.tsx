@@ -80,7 +80,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
           .then((email: any) => {
             this.setState({errorTeamMem: false});
 
-            console.log(email);
             api
               .createApi()
               .Postproject({
@@ -91,8 +90,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               })
 
               .then((res: any) => {
-                console.log(res);
-
                 if (res.status == 200) {
                   api
                     .createApi()
@@ -110,16 +107,13 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       this.setState({loading: false});
                       this.props.navigation.navigate('Main');
                       //  AsyncStorage.setItem('token', res.)
-                      console.log(res);
                     });
                 }
               })
-              .catch((err) => console.log(err));
+              .catch((err) => {});
             // this.props.navigation.pop();
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch((err) => {});
       } else {
         this.setState({loading: false});
         this.setState({errorTeamMem: true});

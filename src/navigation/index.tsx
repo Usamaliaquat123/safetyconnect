@@ -45,7 +45,6 @@ export const Navigator = () => {
   //   }
   // };
   // checkUser();
-  console.log(isAuthenticated);
 
   AsyncStorage.setItem('current_project', '604b13d114ba138bd23d7f75');
 

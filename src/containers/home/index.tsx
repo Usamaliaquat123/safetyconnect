@@ -66,8 +66,6 @@ class Home extends React.Component<HomeProps, any> {
         query: {status: [1, 2, 3, 4, 5]},
       })
       .then((res: any) => {
-        console.log(res.data.data.report.length);
-
         if (res.data.data.report.length > 3) {
           this.setState({recentActivity: res.data.data.report.slice(0, 3)});
         } else {
@@ -100,7 +98,7 @@ class Home extends React.Component<HomeProps, any> {
         value: value.val,
         svg: {
           fill: value.color,
-          onPress: () => console.log('press', index),
+          onPress: () => {},
         },
         key: `pie-${index}`,
       }));

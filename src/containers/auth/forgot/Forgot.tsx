@@ -67,15 +67,12 @@ class Forgot extends React.Component<ForgotProps, any> {
             Auth.forgotPassword(email)
               .then((data) => {
                 this.setState({loading: false, errModal: false});
-                console.log(data);
                 this.props.navigation.navigate('ForgotEmailSend', {
                   email: email,
                 });
               })
               .catch((err) => {
-                console.log(err);
                 if (err.message.includes('limit')) {
-                  console.log('here');
                   this.setState({
                     loading: false,
                     conentLoading: 'Attempt limit Reached!',

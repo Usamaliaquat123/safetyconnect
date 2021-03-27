@@ -55,9 +55,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       loading: true,
     };
   }
-  componentDidMount() {
-    console.log(this.props.route.params.email, this.props.route.params.code);
-  }
+  componentDidMount() {}
 
   componentWillUnmount = () => {
     this.setState({
@@ -82,12 +80,10 @@ class CreatePass extends React.Component<CreatePassProps, any> {
             this.state.password,
           )
             .then((res) => {
-              console.log(res, 85);
               Auth.signIn(
                 this.props.route.params.email,
                 this.state.password,
               ).then((res) => {
-                console.log(res, 90);
                 if (this.props.route.params.type == 'forgot') {
                   this.setState({loading: false, errorModal: false});
                   this.props.navigation.navigate('Login');
@@ -100,18 +96,12 @@ class CreatePass extends React.Component<CreatePassProps, any> {
               });
             })
             .catch((err) => {
-              console.log(103);
               this.setState({loading: false, errorModal: false});
-              console.log(err);
             })
             .catch((err) => {
-              console.log(108);
               this.setState({loading: false, errorModal: false});
-              console.log(err);
             });
         } catch (err) {
-          console.log(113);
-          console.log(err);
           this.setState({loading: false, errorModal: false});
         }
       } else {
@@ -348,13 +338,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(CreatePass);
 //         profile: 'NotConfirmed',
 //       },
 //     });
-//     console.log(signUpResponse);
 //     // check if user profile is confirmed or not.
 //     if (signUpResponse.userConfirmed) {
 //       // check if limit is not reached else send email for forgot password
 //       const sendEmail = await Auth.forgotPassword(email).catch((error) => {
 //         if (error.message.includes('limit')) {
-//           console.log('here');
 //           toast((t) => (
 //             <Toast
 //               type="error"
@@ -368,14 +356,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(CreatePass);
 //     }
 //     // navigate('/verify-email', navigate('/verify-email', {state: { email }}));
 //   } catch (e) {
-//     console.log(e.message);
 //     if (e.message.includes('google')) {
 //       navigate('/already-met');
 //     }
 //     Auth.signIn(email, process.env.REACT_APP_DEFAULT_PASSWORD)
 //       .then()
 //       .catch(async (err) => {
-//         console.log(err);
 //         if (err.message.includes('Incorrect')) {
 //           toast((t) => (
 //             <Toast
@@ -389,7 +375,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(CreatePass);
 //           const sendEmail = await Auth.forgotPassword(email).catch(
 //             (error) => {
 //               if (error.message.includes('limit')) {
-//                 console.log('here');
 //                 toast((t) => (
 //                   <Toast
 //                     type="error"

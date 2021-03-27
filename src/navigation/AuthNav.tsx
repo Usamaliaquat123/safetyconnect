@@ -87,7 +87,6 @@ export type route =
   | 'NoInternet'
   | undefined;
 export const MainStackNavigator = () => {
-  // console.log(route);
   return (
     <SafeAreaProvider>
       <Stack.Navigator initialRouteName={'Login'}>

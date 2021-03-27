@@ -104,7 +104,6 @@ export const getFiles = (userId: string, dir: string): Array<string> => {
   }).then((res) => {
     res.forEach((result: any, i: number) => {
       if (i !== 0) {
-        console.log();
         Storage.get(result.key.split('/')[2]).then((uri: any) => {
           arr.push(uri);
         });

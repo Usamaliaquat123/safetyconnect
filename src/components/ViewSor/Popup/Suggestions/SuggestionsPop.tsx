@@ -56,7 +56,6 @@ export default class SuggestionsPop extends React.Component<
   componentDidMount = () => {};
 
   render() {
-    // console.log(this.props.suggestions.status);
     return (
       <Model
         animationIn={'bounceInUp'}
@@ -99,7 +98,6 @@ export default class SuggestionsPop extends React.Component<
               multiline={true}
               value={this.state.observation}
               onChange={(e) => {
-                // console.log(e.nativeEvent.text);
                 this.setState({observation: e.nativeEvent.text});
               }}
               placeholder={

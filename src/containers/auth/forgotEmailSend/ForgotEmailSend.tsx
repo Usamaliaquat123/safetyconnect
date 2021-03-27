@@ -48,7 +48,6 @@ class ForgotEmailSend extends React.Component<ForgotEmailSendProps, any> {
   }
 
   handleDynamicLink = (link: any) => {
-    console.log(link);
     if (link != null) {
       if (link.url.split('/')[3].split('?')[0] == 'user-info') {
         this.props.navigation.navigate('CreatePass', {

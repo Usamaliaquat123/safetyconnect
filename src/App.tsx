@@ -37,8 +37,8 @@ export default class App extends React.Component<AppProps, any> {
     );
 
     AmlifyConfigure()
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => {})
+      .catch((err) => {});
 
     // dynamicLinks().onLink(this.handleDynamicLink);
   };

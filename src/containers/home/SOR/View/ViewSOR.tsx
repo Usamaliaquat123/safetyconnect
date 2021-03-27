@@ -166,7 +166,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     this.fileAndImageCapturer(this.props.route.params.data.attachments);
     this.mapViewSorPhoto();
     this.AnimatedViews();
-    console.log(this.props.route.params.data.risk);
     this.mappingMapping(
       this.props.route.params.data.risk.severity,
       this.props.route.params.data.risk.likelihood,
@@ -191,7 +190,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     // this.state.actionsAndRecommendations.filter(())
     var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
       .value;
-    console.log(this.props.route.params.data._id);
     var update = {
       report: {
         _id: this.props.route.params.data._id,
@@ -218,19 +216,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       project: '6038cf8472762b29b1bed1f3',
     };
 
-    console.log(update);
-
     createApi
       .createApi()
       .updateSor(update)
       .then((res) => {
-        console.log(res);
         this.setState({loading: false});
         this.props.navigation.navigate('ViewAllSOr');
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   // Submitted To
@@ -688,7 +681,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     {this.state.actionsAndRecommendations.map(
                       (d: actions, i: number) => (
                         <TouchableOpacity
-                        
                           onPress={() => {
                             var data = [
                               ...this.state.actionsAndRecommendations,
@@ -764,7 +756,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 Assigned to:{' '}
                                 <Text style={styles.subAssuser}>
                                   {d.assigned_to}
-                                 
                                 </Text>
                               </Text>
                             </TouchableOpacity>
@@ -1745,7 +1736,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   this.state.allActionsEditIndex
                 ] = d;
               }
-              console.log(this.state.actionsAndRecommendations);
               // this.state.actionsAndRecommendations.push(d)
               this.setState({SuggestionPop: false});
             }}

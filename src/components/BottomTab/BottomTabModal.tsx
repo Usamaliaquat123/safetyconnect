@@ -19,13 +19,12 @@ export interface BottomPopProps {}
 
 class BottomPop extends React.Component<BottomPopProps, any> {
   render() {
-    console.log('asd');
     return (
       <View>
         <Model
           isVisible={true}
           onBackdropPress={
-            () => console.log('Test')
+            () => {}
             // this.setState({createModal: false, loading: false})
           }>
           <View

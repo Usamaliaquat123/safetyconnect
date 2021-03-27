@@ -100,7 +100,6 @@ export default class CommentPop extends React.Component<CommentPopProps, any> {
                             var arr = [...this.props.attachments].filter(
                               (b) => b != d,
                             );
-                            console.log(arr);
                             this.props.deleteAttachment(arr);
                           }}>
                           <Icon

@@ -7,7 +7,6 @@ const updateList = createAction(ActionTypes.LIST_CHANGE);
 
 export const initialList = (): IThunkAction => {
   return async (dispatch, getState) => {
-    console.log('sdasda');
     dispatch(
       initList({
         list: ['sads', 'asd'],
@@ -55,7 +54,6 @@ export const delList = (id: string): IThunkAction => {
       list.findIndex((e: any) => e.id === id),
       1,
     );
-    console.log('res', list);
 
     dispatch(
       updateList({

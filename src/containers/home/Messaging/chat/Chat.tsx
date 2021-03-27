@@ -115,7 +115,6 @@ class Chat extends React.Component<ChatProps, any> {
 
     var messageBelongsToCurrentUser = 2 == props.currentMessage?.user._id;
 
-    console.log(typeof props.currentMessage?.video);
     return (
       <View>
         {messageBelongsToCurrentUser == true ? (
@@ -210,11 +209,10 @@ class Chat extends React.Component<ChatProps, any> {
     />
   );
   renderSend = (props: SendProps<IMessage>) => {
-    // console.log(props.text.)
     return (
       <View style={{flexDirection: 'row'}}>
         <Icon
-          onPress={() => console.log('sds')}
+          onPress={() => {}}
           containerStyle={{marginRight: wp(3)}}
           size={wp(4)}
           name="attachment"
@@ -330,7 +328,7 @@ class Chat extends React.Component<ChatProps, any> {
           <ImageViewer
             style={{backgroundColor: colors.secondary}}
             flipThreshold={100}
-            onCancel={() => console.log('sdsd')}
+            onCancel={() => {}}
             imageUrls={this.state.images}
           />
         </Modal>

@@ -46,7 +46,7 @@ class Messaging extends React.Component<MessagingProps, any> {
           />
           <View style={styles.content}>
             <Search
-              onChange={(e: string) => console.log(e)}
+              onChange={(e: string) => {}}
               value={'Search messages'}
               iconName={'search'}
               placeHolder={'Searh messages'}

@@ -61,7 +61,6 @@ class ViewAll extends React.Component<ViewAllProps, any> {
   componentDidMount = async () => {
     this.setState({loading: true});
 
-    console.log(this.props.route.params.data);
     await createApi
       .createApi()
       .filterSors({
@@ -71,8 +70,6 @@ class ViewAll extends React.Component<ViewAllProps, any> {
         query: {status: [this.props.route.params.data]},
       })
       .then(async (res: any) => {
-        console.log(res.data.data);
-        console.log('----------');
         if (res.data.data.involved_persons !== undefined) {
           await AsyncStorage.setItem(
             'involved_persons',
@@ -83,8 +80,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
           this.setState({loading: false});
         }
         this.setState({reports: res.data.data.report});
-      })
-      .catch((err) => console.log(err));
+      });
   };
 
   componentWillUnmount = () => {
@@ -99,7 +95,6 @@ class ViewAll extends React.Component<ViewAllProps, any> {
   };
 
   render() {
-    console.log(this.state.reports);
     return (
       <View style={{flex: 1, backgroundColor: colors.primary}}>
         <ScrollView

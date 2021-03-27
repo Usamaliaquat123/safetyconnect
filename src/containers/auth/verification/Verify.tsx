@@ -42,7 +42,6 @@ class Verify extends React.Component<VerifyProps, any> {
     dynamicLinks().onLink(this.handleDynamicLink);
   }
   handleDynamicLink = (link: any) => {
-    console.log(link);
     if (link != null) {
       if (link.url.split('/')[3].split('?')[0] == 'user-info') {
         this.props.navigation.navigate('CreatePass', {

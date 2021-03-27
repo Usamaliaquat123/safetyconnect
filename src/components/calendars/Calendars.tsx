@@ -27,19 +27,13 @@ class Calendars extends React.Component<CalendarsProps, any> {
           // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
           maxDate={'2012-05-30'}
           // Handler which gets executed on day press. Default = undefined
-          onDayPress={(day: any) => {
-            console.log('selected day', day);
-          }}
+          onDayPress={(day: any) => {}}
           // Handler which gets executed on day long press. Default = undefined
-          onDayLongPress={(day: any) => {
-            console.log('selected day', day);
-          }}
+          onDayLongPress={(day: any) => {}}
           // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
           monthFormat={'yyyy MM'}
           // Handler which gets executed when visible month changes in calendar. Default = undefined
-          onMonthChange={(month: any) => {
-            console.log('month changed', month);
-          }}
+          onMonthChange={(month: any) => {}}
           // Hide month navigation arrows. Default = false
           hideArrows={true}
           // Replace default arrows with custom ones (direction can be 'left' or 'right')

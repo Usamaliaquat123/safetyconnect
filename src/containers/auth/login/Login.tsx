@@ -67,18 +67,15 @@ class Login extends React.Component<LoginProps, any> {
   };
 
   componentDidMount() {
-    Linking.addEventListener('sd', (e) => {
-      console.log(e);
-    });
+    Linking.addEventListener('sd', (e) => {});
     // dynamicLinks().app.;
     dynamicLinks()
       .getInitialLink()
       .then((link) => this.handleDynamicLink(link));
-    dynamicLinks().onLink((l) => console.log(l));
+    dynamicLinks().onLink((l) => {});
   }
 
   handleDynamicLink = (link: any) => {
-    // console.log(link);
     if (link != null) {
       if (link.url.split('/')[3].split('?')[0] == 'user-info') {
         this.props.navigation.navigate('CreatePass', {
@@ -151,11 +148,8 @@ class Login extends React.Component<LoginProps, any> {
   loginWithGoogle = async () => {
     try {
       const user = await Auth.federatedSignIn({provider: 'Google'});
-      console.log(user);
       this.props.navigation.navigate('Menu');
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
   render() {
     return (

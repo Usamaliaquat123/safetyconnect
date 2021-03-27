@@ -125,11 +125,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     //   .then((res: string | any) => {
     //     var ts = res.split('?')[0].replace(/%20/g, '+').replace('/public', '');
     //   })
-    //   .catch((err) => console.log(err));
+    //   .catch((err) =>{});
     // this.props.initialList.addList('asdds');
-    // console.log(this.props.initialList);
-    // console.log(this.props.initial.list);
-    console.log(this.props.initialList);
     this.setState({loading: true});
     createApi
       .createApi()
@@ -140,7 +137,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         query: {status: [1, 2, 3, 4, 5]},
       })
       .then(async (res: any) => {
-        console.log(res);
         if (res.data.data.involved_persons !== undefined) {
           this.setState({loading: false});
           await AsyncStorage.setItem(
@@ -168,7 +164,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       })
       .catch((err) => {
         this.setState({loading: false});
-        console.log(err);
       });
   };
   _onRefresh = () => {
@@ -184,7 +179,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   filterDecending = (sors: Array<any>, name: string) => {};
 
   render() {
-    // console.log(this.state.submitted);
     return (
       <View style={{backgroundColor: colors.primary}}>
         <ScrollView
@@ -1326,8 +1320,6 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = (dispatch: unknown) => {
-  // console.log(dispatch);
-  // console.log(initialList);
   return {
     addList: dispatch,
   };

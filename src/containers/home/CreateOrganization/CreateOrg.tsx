@@ -55,7 +55,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
       this.setState({loading: true, errorModal: true});
       AsyncStorage.getItem('email')
         .then((email: any) => {
-          console.log(email);
           // this.props.navigation.navigate('CreateProj', {})
           api
             .createApi()
@@ -67,7 +66,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
               projects: [],
             })
             .then((res: any) => {
-              console.log(res);
               if (res.status == 200) {
                 this.setState({loading: false, errorModal: false});
                 this.props.navigation.navigate('CreateProj', {
@@ -79,11 +77,9 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
             })
             .catch((err) => {
               this.setState({loading: false, errorModal: false});
-              console.log(err);
             });
         })
         .catch((err) => {
-          console.log(err);
           this.setState({loading: true, errorModal: true});
         });
     } else {

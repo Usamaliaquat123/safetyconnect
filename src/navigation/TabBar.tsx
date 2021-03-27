@@ -87,7 +87,6 @@ export default class TabBar extends React.Component<TabBarProps, any> {
         d['icon'] = images.bottomTab.menu;
       }
     });
-    console.log(this.props.state.routes);
   };
 
   render() {

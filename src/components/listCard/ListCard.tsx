@@ -30,9 +30,7 @@ export interface ListCardProps {
 }
 
 export default class ListCard extends React.Component<ListCardProps, any> {
-  componentDidMount = () => {
-    console.log(this.props.user1);
-  };
+  componentDidMount = () => {};
   render() {
     return (
       <TouchableOpacity
