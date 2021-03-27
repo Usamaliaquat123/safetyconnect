@@ -1,27 +1,42 @@
 import {Isor, Imessage} from '@typings';
 export type StackNavigatorProps = {
+  Login: undefined;
+  Signup: undefined;
+  tellAboutYou: {username: string};
+  CreatePass: {email: string; code: any; type?: string};
+  CreateOrg: undefined;
+  Forgot: undefined;
+  CreateProj: {organization: string};
   Home: undefined;
+  ForgotEmailSend: {email: string};
+  Verify: {email: string};
+  MeetBefore: {email: string};
   CreateSOR: undefined;
   ViewAllSOr: undefined;
   ViewSOR: {data: Isor};
   Messaging: undefined;
-  Verify: undefined;
   Chat: {data: Imessage};
-  Login: undefined;
-  Signup: undefined;
-  CreatePass: undefined;
   MyTasks: undefined;
-  tellAboutYou: undefined;
   ViewAll: {data: number; title: string};
   createProject: undefined;
   CreateOrganization: undefined;
   Menu: undefined;
   NothingFound: undefined;
-  ForgotEmailSend: undefined;
   NoInternet: undefined;
+  Main: undefined;
 };
 
 export type route =
+  | 'Signup'
+  | 'Login'
+  | 'CreatePass'
+  | 'tellAboutYou'
+  | 'CreateProj'
+  | 'Main'
+  | 'Verify'
+  | 'Forgot'
+  | 'MeetBefore'
+  | 'ForgotEmailSend'
   | 'Home'
   | 'CreateSOR'
   | 'ViewAllSOr'
@@ -29,11 +44,7 @@ export type route =
   | 'Messaging'
   | 'Verify'
   | 'Chat'
-  | 'Login'
-  | 'Signup'
-  | 'CreatePass'
   | 'MyTasks'
-  | 'tellAboutYou'
   | 'createProject'
   | 'NothingFound'
   | 'CreateOrganization'

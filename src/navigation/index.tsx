@@ -4,14 +4,11 @@ import TabBar, {
   BottomTabNavigatorProp,
 } from './TabBar';
 import React, {useState} from 'react';
-// import {MainStackNavigator, StackNavigatorProps, route} from './Main';
 import {StackNavigatorProps, route} from './typings';
 import {MainStackNavigator} from './AuthNav';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
-import jwtDecode from 'jwt-decode';
 
-import {Auth} from 'aws-amplify';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const setitems = async (key: string, value: string) => {

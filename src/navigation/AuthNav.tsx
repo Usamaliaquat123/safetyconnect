@@ -1,6 +1,4 @@
 import * as React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
-import {connect} from 'react-redux';
 import {
   Login,
   TellAboutYou,
@@ -24,68 +22,13 @@ import {
   CreateSOR,
   ViewAllSOr,
 } from '@containers';
-import {Isor, Imessage} from '@typings';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {BottomTabNavigator} from './TabBar';
-
-export type StackNavigatorProps = {
-  Login: undefined;
-  Signup: undefined;
-  tellAboutYou: {username: string};
-  CreatePass: {email: string; code: any; type?: string};
-  CreateOrg: undefined;
-  Forgot: undefined;
-  CreateProj: {organization: string};
-  Home: undefined;
-  ForgotEmailSend: {email: string};
-  Verify: {email: string};
-  MeetBefore: {email: string};
-  // Home
-  CreateSOR: undefined;
-  ViewAllSOr: undefined;
-  ViewSOR: {data: Isor};
-  Messaging: undefined;
-  Chat: {data: Imessage};
-  MyTasks: undefined;
-  ViewAll: {data: number; title: string};
-  createProject: undefined;
-  CreateOrganization: undefined;
-  Menu: undefined;
-  NothingFound: undefined;
-  NoInternet: undefined;
-  Main: undefined;
-};
+import {StackNavigatorProps} from './typings';
 
 const Stack = createStackNavigator<StackNavigatorProps>();
-export type route =
-  | 'Signup'
-  | 'Login'
-  | 'CreatePass'
-  | 'tellAboutYou'
-  | 'CreateProj'
-  | 'Main'
-  | 'Verify'
-  | 'Forgot'
-  | 'MeetBefore'
-  | 'ForgotEmailSend'
-  | 'Home'
-  | 'CreateSOR'
-  | 'ViewAllSOr'
-  | 'ViewSOR'
-  | 'Messaging'
-  | 'Verify'
-  | 'Chat'
-  | 'MyTasks'
-  | 'createProject'
-  | 'NothingFound'
-  | 'CreateOrganization'
-  | 'ViewAll'
-  | 'Menu'
-  | 'NoInternet'
-  | undefined;
+
 export const MainStackNavigator = () => {
   return (
     <SafeAreaProvider>
