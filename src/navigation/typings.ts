@@ -25,7 +25,13 @@ export type StackNavigatorProps = {
   NoInternet: undefined;
   Main: undefined;
 };
-
+export type BottomTabNavigatorProp = {
+  home: {user?: any};
+  sor: {user?: any};
+  addNew: {user?: any};
+  create: {user?: any};
+  more: {user?: any};
+};
 export type route =
   | 'Signup'
   | 'Login'

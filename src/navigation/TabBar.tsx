@@ -21,24 +21,10 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {NavigationContainer} from '@react-navigation/native';
-import {MainStackNavigator} from './Main';
-import Modal from 'react-native-modal';
 import styles from './styles';
-export interface TabBarProps {
-  state: any;
-  descriptors: any;
-  navigation: any;
-}
-const Tab = createBottomTabNavigator<BottomTabNavigatorProp>();
-export type BottomTabNavigatorProp = {
-  home: {user?: any};
-  sor: {user?: any};
-  addNew: {user?: any};
-  create: {user?: any};
-  more: {user?: any};
-};
+import {BottomTabNavigatorProp} from './typings';
 
+const Tab = createBottomTabNavigator<BottomTabNavigatorProp>();
 export const BottomTabNavigator = () => {
   return (
     <SafeAreaProvider>
@@ -58,6 +44,11 @@ export const BottomTabNavigator = () => {
   );
 };
 
+export interface TabBarProps {
+  state: any;
+  descriptors: any;
+  navigation: any;
+}
 export default class TabBar extends React.Component<TabBarProps, any> {
   constructor(props: any) {
     super(props);
