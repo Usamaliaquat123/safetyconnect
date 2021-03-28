@@ -96,10 +96,6 @@ export default class TabBar extends React.Component<TabBarProps, any> {
           },
           shadowOpacity: 0.5,
           shadowRadius: 2.22,
-
-          //   elevation: 10,
-
-          //   elevation: 1,
         }}>
         {this.props.state.routes.map((route: any, index: number) => {
           const {options} = this.props.descriptors[route.key];
