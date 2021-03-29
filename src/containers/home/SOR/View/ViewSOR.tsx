@@ -216,6 +216,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       project: '6038cf8472762b29b1bed1f3',
     };
 
+
     createApi
       .createApi()
       .updateSor(update)
@@ -223,7 +224,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         this.setState({loading: false});
         this.props.navigation.navigate('ViewAllSOr');
       })
-      .catch((err) => {});
+      .catch((err) => {
+      });
   };
 
   // Submitted To
@@ -681,6 +683,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     {this.state.actionsAndRecommendations.map(
                       (d: actions, i: number) => (
                         <TouchableOpacity
+                        
                           onPress={() => {
                             var data = [
                               ...this.state.actionsAndRecommendations,
@@ -756,6 +759,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 Assigned to:{' '}
                                 <Text style={styles.subAssuser}>
                                   {d.assigned_to}
+                                 
                                 </Text>
                               </Text>
                             </TouchableOpacity>

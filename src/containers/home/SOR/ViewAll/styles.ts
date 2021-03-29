@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
     borderRadius: wp(5),
   },
   content: {
-    flex: 2,
+    flex: 1,
+    // maxHeight: '100%',
     // marginBottom: wp(10),
     // height: '100%',
     // paddingBottom: wp(60),

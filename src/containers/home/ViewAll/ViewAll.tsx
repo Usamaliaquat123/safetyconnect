@@ -96,7 +96,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
 
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: colors.primary}}>
+      <View style={{flex: 1, backgroundColor: colors.secondary}}>
         <ScrollView
           refreshControl={
             <RefreshControl
