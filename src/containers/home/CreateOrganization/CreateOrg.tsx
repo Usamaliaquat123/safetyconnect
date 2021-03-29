@@ -17,7 +17,8 @@ import {
 } from 'react-native-responsive-screen';
 import {Icon} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {StackNavigatorProps, AuthNavigatorProp} from '@nav';
+import {StackNavigatorProps} from '@nav';
+
 import {RouteProp} from '@react-navigation/native';
 import {colors, images, GlStyles} from '@theme';
 import {animation} from '@theme';
@@ -27,8 +28,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
 import {getActiveChildNavigationOptions} from 'react-navigation';
 // import {validateEmail} from '@utils/';
-type CreateOrgNavigationProp = StackNavigationProp<AuthNavigatorProp, 'Login'>;
-type CreateOrgRouteProp = RouteProp<AuthNavigatorProp, 'Login'>;
+type CreateOrgNavigationProp = StackNavigationProp<
+  StackNavigatorProps,
+  'Login'
+>;
+type CreateOrgRouteProp = RouteProp<StackNavigatorProps, 'Login'>;
 
 export interface CreateOrgProps {
   navigation: CreateOrgNavigationProp;

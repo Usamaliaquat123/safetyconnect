@@ -16,7 +16,7 @@ import {
 } from 'react-native-responsive-screen';
 import {colors} from '@theme';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {StackNavigatorProps, AuthNavigatorProp} from '@nav';
+import {StackNavigatorProps} from '@nav';
 import {Tags, SuggestionsAvatar} from '@components';
 import {RouteProp} from '@react-navigation/native';
 import styles from './styles';
@@ -27,10 +27,10 @@ import LottieView from 'lottie-react-native';
 import {orgnaization} from '@typings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 type CreateProjectNavigationProp = StackNavigationProp<
-  AuthNavigatorProp,
+  StackNavigatorProps,
   'CreateProj'
 >;
-type CreateProjectRouteProp = RouteProp<AuthNavigatorProp, 'CreateProj'>;
+type CreateProjectRouteProp = RouteProp<StackNavigatorProps, 'CreateProj'>;
 
 export interface CreateProjectProps {
   navigation: CreateProjectNavigationProp;
@@ -101,10 +101,11 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       );
 
                       this.savedCurrentStatus(
-                        this.props.route.params.orgnaization,
+                        this.props.route.params.organization,
                         res.data.data.project_id,
                       );
                       this.setState({loading: false});
+                      AsyncStorage.setItem('email', this.state.email);
                       this.props.navigation.navigate('Main');
                       //  AsyncStorage.setItem('token', res.)
                     });
