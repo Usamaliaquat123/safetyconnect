@@ -201,5 +201,12 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     );
   }
 }
+const mapStateToProps = (state: unknown) => {
+  return {};
+};
 
-export default ViewAll;
+const mapDispatchToProps = (dispatch: unknown) => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewAll);

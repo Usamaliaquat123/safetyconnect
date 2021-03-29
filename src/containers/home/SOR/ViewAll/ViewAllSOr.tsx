@@ -123,7 +123,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     console.log();
   };
   componentDidMount = async () => {
-    console.log(this.state.initialList);
+    console.log(this.props.initial);
+    console.log('==================');
+    console.log(this.props.initialList);
 
     // Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png')
     //   .then((res: string | any) => {
@@ -1321,6 +1323,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
 const mapStateToProps = (state: RootState) => ({
   initial: state.list,
+  loading: state,
 });
 
 const mapDispatchToProps = (dispatch: unknown) => {
