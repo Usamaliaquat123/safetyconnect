@@ -8,7 +8,7 @@ import {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.secondary,
   },
   header: {
     padding: wp(5),
@@ -37,8 +37,9 @@ const styles = StyleSheet.create({
 
   headertle: {flexDirection: 'row'},
   content: {
+    flex: 1,
     // flex: 3,
-    marginTop: wp(80),
+    // marginTop: wp(80),
 
     backgroundColor: colors.secondary,
     borderTopLeftRadius: wp(6),
