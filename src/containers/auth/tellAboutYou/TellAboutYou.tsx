@@ -129,10 +129,10 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                 })
                 .then((res) => {
                   this.setState({loading: false, errorModal: false});
-                  AsyncStorage.setItem(
-                    'email',
-                    this.props.route.params.username,
-                  );
+                  // AsyncStorage.setItem(
+                  //   'email',
+                  //   this.props.route.params.username,
+                  // );
                   AsyncStorage.setItem(
                     'photo',
                     this.state.uploadedImage === ''

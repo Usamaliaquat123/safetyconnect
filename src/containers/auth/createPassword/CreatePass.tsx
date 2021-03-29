@@ -26,6 +26,7 @@ import LottieView from 'lottie-react-native';
 import {createApi as api} from '@service';
 import {animation} from '@theme';
 import Modal from 'react-native-modal';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type CreatePassNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -88,6 +89,8 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                   this.setState({loading: false, errorModal: false});
                   this.props.navigation.navigate('Login');
                 } else if (this.props.route.params.type == 'verify') {
+                  AsyncStorage.setItem('email', this.props.route.params.email);
+
                   this.setState({loading: false, errorModal: false});
                   this.props.navigation.navigate('tellAboutYou', {
                     username: this.props.route.params.email,
