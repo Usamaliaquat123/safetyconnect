@@ -28,6 +28,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {validateEmail, validatePassword} from '@utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 type LoginNavigationProp = StackNavigationProp<StackNavigatorProps, 'Login'>;
 type LoginRouteProp = RouteProp<StackNavigatorProps, 'Login'>;
 
@@ -134,6 +135,7 @@ class Login extends React.Component<LoginProps, any> {
           this.setState({errorModal: false, loading: false});
 
           this.props.navigation.navigate('Main');
+          AsyncStorage.setItem('email', this.state.username);
         } catch (err) {
           this.setState({errorModal: true, loading: false});
         }
@@ -148,7 +150,8 @@ class Login extends React.Component<LoginProps, any> {
   loginWithGoogle = async () => {
     try {
       const user = await Auth.federatedSignIn({provider: 'Google'});
-      this.props.navigation.navigate('Menu');
+
+      this.props.navigation.navigate('Main');
     } catch (e) {}
   };
   render() {

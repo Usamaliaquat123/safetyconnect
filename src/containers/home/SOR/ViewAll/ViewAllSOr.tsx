@@ -119,8 +119,14 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       inprogress: [],
       completed: [],
     });
+
+
+    console.log()
   };
   componentDidMount = async () => {
+    console.log(this.state.initialList)
+
+
     // Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png')
     //   .then((res: string | any) => {
     //     var ts = res.split('?')[0].replace(/%20/g, '+').replace('/public', '');

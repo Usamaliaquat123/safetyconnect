@@ -25,14 +25,14 @@ import {
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
 import {BottomTabNavigator} from './TabBar';
-import {StackNavigatorProps} from './typings';
+import {StackNavigatorProps, route} from './typings';
 
 const Stack = createStackNavigator<StackNavigatorProps>();
 
-export const MainStackNavigator = () => {
+export const MainStackNavigator = (screen: route) => {
   return (
     <SafeAreaProvider>
-      <Stack.Navigator initialRouteName={'Login'}>
+      <Stack.Navigator initialRouteName={screen.screen}>
         <Stack.Screen
           name="MeetBefore"
           component={MeetBefore}
