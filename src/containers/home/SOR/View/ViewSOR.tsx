@@ -226,6 +226,51 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .catch((err) => {});
   };
 
+  saveAsDraft = () => {
+    this.setState({loading: true});
+
+    var liklihood = this.state.liklihood.filter(
+      (d: any) => d.selected == true,
+    )[0].value;
+    // this.state.actionsAndRecommendations.filter(())
+    var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
+      .value;
+    var update = {
+      report: {
+        _id: this.props.route.params.data._id,
+        created_by: 'haider@gmail.com',
+        details: this.state.observation,
+        occured_at: moment().format('YYYY-MM-DD'),
+        involved_persons: this.props.route.params.data.involved_persons,
+        risk: {
+          severity: severity,
+          likelihood: liklihood,
+        },
+        action_required: this.state.actionsAndRecommendations,
+        user_location: {
+          latitude: 66.666,
+          longitude: 66.666,
+        },
+        location: 'pindi boys',
+        submit_to: this.state.submitted_to,
+        esclate_to: this.state.esclate_to,
+        status: 1,
+        attachments: [],
+        comments: [],
+      },
+      project: '6038cf8472762b29b1bed1f3',
+    };
+
+    createApi
+      .createApi()
+      .updateSor(update)
+      .then((res) => {
+        this.setState({loading: false});
+        this.props.navigation.navigate('ViewAllSOr');
+      })
+      .catch((err) => {});
+  };
+
   // Submitted To
 
   AnimatedViews = () => {
@@ -1377,7 +1422,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 justifyContent: 'center',
                 marginTop: wp(5),
               }}>
-              <TouchableOpacity style={styles.saveAsDraftContainer}>
+              <TouchableOpacity
+                onPress={() => this.saveAsDraft()}
+                style={styles.saveAsDraftContainer}>
                 <Text style={styles.saveAsDraftText}>Save as Draft</Text>
               </TouchableOpacity>
               <TouchableOpacity
