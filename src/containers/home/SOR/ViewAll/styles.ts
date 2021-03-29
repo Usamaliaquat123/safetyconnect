@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     padding: wp(5),
     paddingRight: wp(7),
     paddingLeft: wp(7),
-    // flex: 1,
+    flex: 1,
     backgroundColor: colors.primary,
   },
   title: {
@@ -61,9 +61,10 @@ const styles = StyleSheet.create({
     borderRadius: wp(5),
   },
   content: {
-    // flex: 1,
-    // height: hp(200),
-    paddingBottom: wp(60),
+    flex: 2,
+    // marginBottom: wp(10),
+    // height: '100%',
+    // paddingBottom: wp(60),
     backgroundColor: colors.secondary,
     borderTopLeftRadius: wp(6),
     borderTopRightRadius: wp(6),

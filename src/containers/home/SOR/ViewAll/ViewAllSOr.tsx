@@ -120,12 +120,10 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       completed: [],
     });
 
-
-    console.log()
+    console.log();
   };
   componentDidMount = async () => {
-    console.log(this.state.initialList)
-
+    console.log(this.state.initialList);
 
     // Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png')
     //   .then((res: string | any) => {
@@ -186,7 +184,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
   render() {
     return (
-      <View style={{backgroundColor: colors.primary}}>
+      <View style={{backgroundColor: colors.secondary}}>
         <ScrollView
           refreshControl={
             <RefreshControl
