@@ -2,7 +2,7 @@ import ActionTypes, {IAction} from '../ActionTypes';
 import {ListStateDTO} from '@dtos';
 
 export const initialState: ListStateDTO = {
-  list: [],
+  allSors: [],
 };
 
 const ListSorReducer = (
@@ -10,16 +10,22 @@ const ListSorReducer = (
   actions: IAction<ListStateDTO>,
 ) => {
   switch (actions.type) {
-    case ActionTypes.LIST_INIT: {
-      return {
-        ...initialState,
-        ...actions.payload,
-      };
-    }
-    case ActionTypes.LIST_CHANGE: {
+    case ActionTypes.START_LOADING: {
       return {
         ...state,
-        ...actions.payload,
+        loading: true,
+      };
+    }
+    case ActionTypes.STOP_LOADING: {
+      return {
+        ...state,
+        loading: false,
+      };
+    }
+    case ActionTypes.ALL_SORS: {
+      return {
+        ...state,
+        allSors: actions.payload,
       };
     }
     default:

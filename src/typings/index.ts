@@ -3,6 +3,7 @@ import {
   orgnaization,
   project,
   sor,
+  report,
   observationsSug,
   country,
 } from './api';
@@ -28,6 +29,7 @@ export interface Isor {
   action_required: Array<object>;
   attachments: Array<string>;
   created_by: string;
+  comments?: string;
 }
 /*
  * @Imessage
@@ -86,6 +88,7 @@ export {
   user,
   orgnaization,
   project,
+  report,
   sor,
   involved_persons,
   observationsSug,

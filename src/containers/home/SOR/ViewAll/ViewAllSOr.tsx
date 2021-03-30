@@ -31,7 +31,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Auth} from 'aws-amplify';
 import LottieView from 'lottie-react-native';
 import Modal from 'react-native-modal';
-
+import {bindActionCreators} from 'redux';
+import * as reduxActions from '../../../../store/actions/listSorActions';
 // import * as initialApp from '@store';
 // import { Create_sor, viewas, notified, submitted, draft, profileSetupSelections } from '@service';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -59,7 +60,7 @@ export interface ViewAllProps {
   route: ViewAllSOrRouteProp;
   navigation: ViewAllSOrNavigationProp;
   reduxActions: any;
-  reduxState: RootState;
+  reduxState: any;
   initial: ListStateDTO;
   initialList: any;
 }
@@ -123,10 +124,13 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     console.log();
   };
   componentDidMount = async () => {
-    console.log(this.props.initial);
+    // this.props.initialList();
+    // initialList.addList('sdsd');a
+    this.props.reduxActions.initialList();
+    // initialList.initialList();
     console.log('==================');
+    console.log('adsad', this.props.initialList);
     console.log(this.props.initialList);
-
     // Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png')
     //   .then((res: string | any) => {
     //     var ts = res.split('?')[0].replace(/%20/g, '+').replace('/public', '');
@@ -1321,15 +1325,22 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   }
 }
 
-const mapStateToProps = (state: RootState) => ({
-  initial: state.list,
-  loading: state,
+// const mapStateToProps = (state: RootState) => ({
+//   initial: state.list,
+//   loading: state.init,
+// });
+
+// const mapDispatchToProps = (dispatch: unknown) => {
+//   return {
+//     addList: dispatch,
+//   };
+// };
+
+const mapStateToProps = (state) => ({
+  reduxState: state.reducers,
 });
 
-const mapDispatchToProps = (dispatch: unknown) => {
-  return {
-    addList: dispatch,
-  };
-};
-
+const mapDispatchToProps = (dispatch) => ({
+  reduxActions: bindActionCreators(reduxActions, dispatch),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(ViewAllSOr);

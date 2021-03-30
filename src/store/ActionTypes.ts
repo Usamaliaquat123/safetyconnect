@@ -12,6 +12,13 @@ enum ActionTypes {
   /** List */
   LIST_INIT = 'LIST_INIT',
   LIST_CHANGE = 'LIST_CHANGE',
+
+  /* Loading */
+  START_LOADING = 'START_LOADING',
+  STOP_LOADING = 'STOP_LOADING',
+
+  // Render AllSOR
+  ALL_SORS = 'ALL_SORS',
 }
 
 export interface IAction<T> {

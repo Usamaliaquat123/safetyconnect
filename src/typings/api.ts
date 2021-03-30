@@ -65,14 +65,22 @@ export interface sor {
   page?: number;
   query?: Object;
 }
+export interface user_location {
+  latitude: string;
+  longitude: string;
+}
 export interface report {
   status?: number;
   _id?: string;
   created_by?: string;
+  updatedAt?: string;
   details?: string;
+  user_location: user_location;
   occured_at?: string;
+  pending_persons?: Array<string>;
   involved_persons?: Array<string>;
   risk?: risk;
+  sor_type: string;
   action_required?: Array<actionRequired>;
   location?: location;
   submit_to?: Array<string>;
@@ -81,6 +89,7 @@ export interface report {
   comments?: Array<comments>;
 }
 export interface actionRequired {
+  _id?: string;
   content?: string;
   assigned_to?: string;
   category?: string;
