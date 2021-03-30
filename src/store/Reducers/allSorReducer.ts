@@ -3,6 +3,7 @@ import {AllSorDTO} from '@dtos';
 
 export const initialState: AllSorDTO = {
   allSors: [],
+  loading: false,
 };
 
 const allSorReducer = (state = initialState, actions: IAction<AllSorDTO>) => {
@@ -10,7 +11,7 @@ const allSorReducer = (state = initialState, actions: IAction<AllSorDTO>) => {
     case ActionTypes.LOADING: {
       return {
         ...state,
-        loading: false,
+        loading: actions.payload,
       };
     }
 

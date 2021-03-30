@@ -46,23 +46,26 @@ export type orgnaization = {
 };
 
 /** ALL sor reducers */
-export const getAllSors = (projectId: string): IThunkAction => {
+export const getAllSors = (
+  projectId: string,
+  sorType: Array<number>,
+): IThunkAction => {
   return async (dispatch, getState) => {
-    dispatch(loading({loading: true}));
+    dispatch(loading(true));
     createApi
       .createApi()
       .filterSors({
         project: projectId,
         limit: 100,
         page: 0,
-        query: {status: [1, 2, 3, 4, 5]},
+        query: {status: sorType},
       })
       .then(async (res: any) => {
-        dispatch(loading({loading: true}));
-        dispatch(allSors({allSors: res.data.data.report}));
+        dispatch(loading(false));
+        dispatch(allSors(res.data.data.report));
       })
       .catch((err) => {
-        dispatch(loading({loading: false}));
+        dispatch(loading(false));
       });
   };
 };

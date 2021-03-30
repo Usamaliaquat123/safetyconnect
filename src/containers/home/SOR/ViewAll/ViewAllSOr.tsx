@@ -24,7 +24,7 @@ import {Icon, Avatar} from 'react-native-elements';
 import {colors, fonts, animation, images} from '@theme';
 import {initialList} from '@store';
 import {RootState} from '../../../../store/store';
-import {InitialAppStateDTO} from '@dtos';
+import {AllSorDTO} from '@dtos';
 import {connect} from 'react-redux';
 import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -60,8 +60,8 @@ export interface ViewAllProps {
   route: ViewAllSOrRouteProp;
   navigation: ViewAllSOrNavigationProp;
   reduxActions: any;
-  reduxState: any;
-  // initial: ListStateDTO;
+  reduxState: AllSorDTO;
+  // initial: AllSorDTO;
   initialList: any;
 }
 const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
@@ -127,11 +127,17 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     // this.props.initialList();
     // initialList.addList('sdsd');a
     console.log(this.props.reduxState);
-    this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3');
-    console.log(this.props.reduxState.loading);
+    this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
+      1,
+      2,
+      3,
+      4,
+      5,
+    ]);
+    // console.log(this.props.reduxState.loading);
     // initialList.initialList();
-    console.log('==================');
-    // console.log('adsad', this.props.reduxState.allSors.allSors);
+    // console.log('==================');
+    // console.log('adsad', this.props.reduxState.allSors);
     // Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png')
     //   .then((res: string | any) => {
     //     var ts = res.split('?')[0].replace(/%20/g, '+').replace('/public', '');
@@ -147,17 +153,17 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     //     JSON.stringify(this.props.reduxState.allSors.allSors.involved_persons),
     //   );
     // } else {
-    for (let i = 0; i < this.props.reduxState.allSors.allSors.length; i++) {
-      if (this.props.reduxState.allSors.allSors[i].status == 1) {
-        this.state.draft.push(this.props.reduxState.allSors.allSors[i]);
-      } else if (this.props.reduxState.allSors.allSors[i].status == 2) {
-        this.state.submitted.push(this.props.reduxState.allSors.allSors[i]);
-      } else if (this.props.reduxState.allSors.allSors[i].status == 3) {
-        this.state.exclated.push(this.props.reduxState.allSors.allSors[i]);
-      } else if (this.props.reduxState.allSors.allSors[i].status == 4) {
-        this.state.inprogress.push(this.props.reduxState.allSors.allSors[i]);
-      } else if (this.props.reduxState.allSors.allSors[i].status == 5) {
-        this.state.completed.push(this.props.reduxState.allSors.allSors[i]);
+    for (let i = 0; i < this.props.reduxState.allSors.length; i++) {
+      if (this.props.reduxState.allSors[i].status == 1) {
+        this.state.draft.push(this.props.reduxState.allSors[i]);
+      } else if (this.props.reduxState.allSors[i].status == 2) {
+        this.state.submitted.push(this.props.reduxState.allSors[i]);
+      } else if (this.props.reduxState.allSors[i].status == 3) {
+        this.state.exclated.push(this.props.reduxState.allSors[i]);
+      } else if (this.props.reduxState.allSors[i].status == 4) {
+        this.state.inprogress.push(this.props.reduxState.allSors[i]);
+      } else if (this.props.reduxState.allSors[i].status == 5) {
+        this.state.completed.push(this.props.reduxState.allSors[i]);
       }
     }
     // this.setState({loading: false});
@@ -180,14 +186,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   render() {
     return (
       <View style={{backgroundColor: colors.secondary, flex: 1}}>
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={this.props.reduxState.loading}
-              onRefresh={this._onRefresh}
-            />
-          }
-          showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
@@ -1325,11 +1324,11 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 //   };
 // };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AllSorDTO) => ({
   reduxState: state.allSors,
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: any) => ({
   reduxActions: bindActionCreators(reduxActions, dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ViewAllSOr);
