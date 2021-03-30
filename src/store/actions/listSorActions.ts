@@ -9,8 +9,7 @@ import {report} from '@typings';
  */
 const initList = createAction(ActionTypes.LIST_INIT);
 export const updateList = createAction(ActionTypes.LIST_CHANGE);
-export const startLoading = createAction(ActionTypes.START_LOADING);
-export const stopLoading = createAction(ActionTypes.STOP_LOADING);
+export const loading = createAction(ActionTypes.LOADING);
 export const allSors = createAction(ActionTypes.ALL_SORS);
 /** @typings Sor [types] */
 export type SorType = {
@@ -40,57 +39,34 @@ export type orgnaization = {
   projects: Array<string>;
   project_name: string;
 };
-
-export const getAllSors = (): IThunkAction => {
+/** ALL sor reducers */
+export const getAllSors = (projectId: string): IThunkAction => {
   return async (dispatch, getState) => {
-    dispatch(startLoading());
+    dispatch(loading({loading: true}));
     createApi
       .createApi()
       .filterSors({
-        project: '6038cf8472762b29b1bed1f3',
+        project: projectId,
         limit: 100,
         page: 0,
         query: {status: [1, 2, 3, 4, 5]},
       })
       .then(async (res: any) => {
-        dispatch(stopLoading());
-
-        var data: SorType;
-
-        if (res.data.data.involved_persons !== undefined) {
-          await AsyncStorage.setItem(
-            'involved_persons',
-            JSON.stringify(res.data.data.involved_persons),
-          );
-        } else {
-          for (let i = 0; i < res.data.data.report.length; i++) {
-            if (res.data.data.report[i].status == 1) {
-              data['draft'] = res.data.data.report[i];
-            } else if (res.data.data.report[i].status == 2) {
-              data['submitted'] = res.data.data.report[i];
-            } else if (res.data.data.report[i].status == 3) {
-              data['exclated'] = res.data.data.report[i];
-            } else if (res.data.data.report[i].status == 4) {
-              data['inprogress'] = res.data.data.report[i];
-            } else if (res.data.data.report[i].status == 5) {
-              data['completed'] = res.data.data.report[i];
-            }
-          }
-
-          dispatch(allSors({allSors: data}));
-          // console.log(data);
-        }
+        dispatch(loading({loading: false}));
+        dispatch(allSors({allSors: res.data.data.report}));
       })
       .catch((err) => {
-        dispatch(stopLoading());
+        dispatch(loading({loading: false}));
       });
-
-    // dispatch(
-    //   initList({
-    //     list: ['sads', 'asd'],
-    //   }),
-    // );
   };
+};
+/** Update sor */
+export const updateSor = (data: any): IThunkAction => {
+  return async (dispatch, getState) => {};
+};
+/** create sor  */
+export const createSor = (data: any): IThunkAction => {
+  return async (dispatch, getState) => {};
 };
 
 export const addList = (text: any): IThunkAction => {

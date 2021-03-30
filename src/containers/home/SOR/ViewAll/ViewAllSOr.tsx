@@ -126,10 +126,10 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   componentDidMount = async () => {
     // this.props.initialList();
     // initialList.addList('sdsd');a
-    this.props.reduxActions.getAllSors();
+    this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3');
     // initialList.initialList();
     console.log('==================');
-    console.log('adsad', this.props.reduxState.allSors);
+    console.log('adsad', this.props.reduxState);
     console.log(this.props.initial);
     // Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png')
     //   .then((res: string | any) => {

@@ -10,7 +10,7 @@ const allSorReducer = (state = initialState, actions: IAction<AllSorDTO>) => {
     case ActionTypes.START_LOADING: {
       return {
         ...state,
-        loading: true,
+        loading: false,
       };
     }
     case ActionTypes.STOP_LOADING: {
