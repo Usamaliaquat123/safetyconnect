@@ -14,21 +14,26 @@ import {connect} from 'react-redux';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
+import * as reduxActions from '../../../store/actions/listSorActions';
+
 import styles from './styles';
 import {allRecentActivity, createApi} from '@service';
 import {classifySor} from '@utils';
 import {Avatar, Icon} from 'react-native-elements';
+import {bindActionCreators} from 'redux';
 import {View_sor, myTasks, recentActivity} from '@service';
 import {ListCard} from '@components';
 // import {colors} from '@theme';
 import {route} from '@nav';
 import {PieChart} from 'react-native-svg-charts';
+import {AllSorDTO} from '@dtos';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {animation} from '@theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {report} from '@typings';
 import LottieView from 'lottie-react-native';
 
 // import {connect} from '../../decorators/index';
@@ -42,8 +47,9 @@ type ViewAllRouteProp = RouteProp<StackNavigatorProps, 'ViewAll'>;
 export interface ViewAllProps {
   route: ViewAllRouteProp;
   navigation: ViewAllNavigationProp;
+
   reduxActions: any;
-  reduxState: any;
+  reduxState: AllSorDTO;
 }
 
 class ViewAll extends React.Component<ViewAllProps, any> {
@@ -57,53 +63,51 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       bottomWidth: wp(100),
     };
   }
-
   componentDidMount = async () => {
-    this.setState({loading: true});
-
-    await createApi
-      .createApi()
-      .filterSors({
-        project: '6038cf8472762b29b1bed1f3',
-        limit: 100,
-        page: 0,
-        query: {status: [this.props.route.params.data]},
-      })
-      .then(async (res: any) => {
-        if (res.data.data.involved_persons !== undefined) {
-          await AsyncStorage.setItem(
-            'involved_persons',
-            JSON.stringify(res.data.data.involved_persons),
-          );
-          this.setState({loading: false});
-        } else {
-          this.setState({loading: false});
-        }
-        this.setState({reports: res.data.data.report});
-      });
+    // this.setState({loading: true});
+    // await createApi
+    //   .createApi()
+    //   .filterSors({
+    //     project: '6038cf8472762b29b1bed1f3',
+    //     limit: 100,
+    //     page: 0,
+    //     query: {status: [this.props.route.params.data]},
+    //   })
+    //   .then(async (res: any) => {
+    //     if (res.data.data.involved_persons !== undefined) {
+    //       await AsyncStorage.setItem(
+    //         'involved_persons',
+    //         JSON.stringify(res.data.data.involved_persons),
+    //       );
+    //       this.setState({loading: false});
+    //     } else {
+    //       this.setState({loading: false});
+    //     }
+    //     this.setState({reports: res.data.data.report});
+    //   });
+    for (let i = 0; i < this.props.reduxState.allSors.length; i++) {
+      if (
+        this.props.reduxState.allSors[i].status == this.props.route.params.data
+      ) {
+        this.state.reports.push(this.props.reduxState.allSors[i]);
+      }
+    }
   };
 
   componentWillUnmount = () => {
     this.setState({reports: []});
   };
 
-  _onRefresh = () => {
-    this.setState({
-      reports: [],
-    });
-    this.componentDidMount();
-  };
+  isCloseToBottom({layoutMeasurement, contentOffset, contentSize}) {
+    return (
+      layoutMeasurement.height + contentOffset.y >= contentSize.height - 50
+    );
+  }
 
   render() {
     return (
       <View style={{flex: 1, backgroundColor: colors.secondary}}>
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.loading}
-              onRefresh={this._onRefresh}
-            />
-          }>
+        <ScrollView>
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
@@ -134,7 +138,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
             </View>
           </View>
           <View style={styles.content}>
-            {this.state.loading == true ? (
+            {this.props.reduxState.loading == true ? (
               <View
                 style={{
                   alignSelf: 'center',
@@ -172,8 +176,9 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                   borderTopLeftRadius: wp(4),
                   borderTopRightRadius: wp(4),
                 }}>
-                {this.state.reports.map((d, i) => (
+                {this.state.reports.map((d: any, i: number) => (
                   <ListCard
+                    key={i}
                     classify={d.sor_type}
                     styles={
                       myTasks.rercently.length == i + 1
@@ -201,12 +206,18 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     );
   }
 }
-const mapStateToProps = (state: unknown) => {
-  return {};
-};
+// const mapStateToProps = (state: AllSorDTO) => ({
 
-const mapDispatchToProps = (dispatch: unknown) => {
-  return {};
-};
+// })
+// const mapDispatchToProps = (dispatch: unknown) => {
+//   return {};
+// };
 
+const mapStateToProps = (state: AllSorDTO) => ({
+  reduxState: state.allSors,
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+  reduxActions: bindActionCreators(reduxActions, dispatch),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(ViewAll);

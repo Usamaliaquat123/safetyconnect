@@ -52,7 +52,7 @@ export const getAllSors = (
 ): IThunkAction => {
   return async (dispatch, getState) => {
     dispatch(loading(true));
-    createApi
+    await createApi
       .createApi()
       .filterSors({
         project: projectId,
@@ -60,7 +60,7 @@ export const getAllSors = (
         page: 0,
         query: {status: sorType},
       })
-      .then(async (res: any) => {
+      .then((res: any) => {
         dispatch(loading(false));
         dispatch(allSors(res.data.data.report));
       })
