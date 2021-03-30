@@ -63,40 +63,17 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       bottomWidth: wp(100),
     };
   }
-  componentDidMount = async () => {
-    // this.setState({loading: true});
-    // await createApi
-    //   .createApi()
-    //   .filterSors({
-    //     project: '6038cf8472762b29b1bed1f3',
-    //     limit: 100,
-    //     page: 0,
-    //     query: {status: [this.props.route.params.data]},
-    //   })
-    //   .then(async (res: any) => {
-    //     if (res.data.data.involved_persons !== undefined) {
-    //       await AsyncStorage.setItem(
-    //         'involved_persons',
-    //         JSON.stringify(res.data.data.involved_persons),
-    //       );
-    //       this.setState({loading: false});
-    //     } else {
-    //       this.setState({loading: false});
-    //     }
-    //     this.setState({reports: res.data.data.report});
-    //   });
+  componentDidMount() {
+    var d = [];
     for (let i = 0; i < this.props.reduxState.allSors.length; i++) {
       if (
         this.props.reduxState.allSors[i].status == this.props.route.params.data
       ) {
-        this.state.reports.push(this.props.reduxState.allSors[i]);
+        d.push(this.props.reduxState.allSors[i]);
       }
     }
-  };
-
-  componentWillUnmount = () => {
-    this.setState({reports: []});
-  };
+    this.setState({reports: d});
+  }
 
   isCloseToBottom({layoutMeasurement, contentOffset, contentSize}) {
     return (

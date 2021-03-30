@@ -1316,7 +1316,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 // const mapStateToProps = (state: RootState) => ({
 //   initial: state.list,
 //   loading: state.init,
-// });
+// });V
 
 // const mapDispatchToProps = (dispatch: unknown) => {
 //   return {
