@@ -1,7 +1,7 @@
 import {report} from '@typings';
 
-interface ListStateDTO {
+interface AllSorDTO {
   allSors: Array<report>;
 }
 
-export default ListStateDTO;
+export default AllSorDTO;

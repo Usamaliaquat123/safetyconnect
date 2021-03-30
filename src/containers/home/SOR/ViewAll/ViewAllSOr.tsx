@@ -24,7 +24,7 @@ import {Icon, Avatar} from 'react-native-elements';
 import {colors, fonts, animation, images} from '@theme';
 import {initialList} from '@store';
 import {RootState} from '../../../../store/store';
-import {InitialAppStateDTO, ListStateDTO} from '@dtos';
+import {InitialAppStateDTO} from '@dtos';
 import {connect} from 'react-redux';
 import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -61,7 +61,7 @@ export interface ViewAllProps {
   navigation: ViewAllSOrNavigationProp;
   reduxActions: any;
   reduxState: any;
-  initial: ListStateDTO;
+  // initial: ListStateDTO;
   initialList: any;
 }
 const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
@@ -126,11 +126,11 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   componentDidMount = async () => {
     // this.props.initialList();
     // initialList.addList('sdsd');a
-    this.props.reduxActions.initialList();
+    this.props.reduxActions.getAllSors();
     // initialList.initialList();
     console.log('==================');
-    console.log('adsad', this.props.initialList);
-    console.log(this.props.initialList);
+    console.log('adsad', this.props.reduxState.allSors);
+    console.log(this.props.initial);
     // Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png')
     //   .then((res: string | any) => {
     //     var ts = res.split('?')[0].replace(/%20/g, '+').replace('/public', '');
@@ -1337,7 +1337,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 // };
 
 const mapStateToProps = (state) => ({
-  reduxState: state.reducers,
+  reduxState: state.allSors,
 });
 
 const mapDispatchToProps = (dispatch) => ({

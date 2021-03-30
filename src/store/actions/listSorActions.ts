@@ -2,6 +2,7 @@ import {createAction} from '@utils';
 import ActionTypes from '../ActionTypes';
 import {IThunkAction} from '../Store';
 import {createApi} from '@service';
+import {report} from '@typings';
 
 /**
  *  Action Types
@@ -11,8 +12,36 @@ export const updateList = createAction(ActionTypes.LIST_CHANGE);
 export const startLoading = createAction(ActionTypes.START_LOADING);
 export const stopLoading = createAction(ActionTypes.STOP_LOADING);
 export const allSors = createAction(ActionTypes.ALL_SORS);
+/** @typings Sor [types] */
+export type SorType = {
+  draft: Array<report>;
+  submitted: Array<report>;
+  exclated: Array<report>;
+  inprogress: Array<report>;
+  completed: Array<report>;
+};
+/** @typings project [types] */
+export type project = {
+  created_by: string;
+  project_name: string;
+  total_documents: number;
+  reports: Array<report>;
+  locations: string;
+  involved_persons: Array<string>;
+  pending_persons: Array<string>;
+};
+/** @typings Organization [types] */
+export type orgnaization = {
+  name: string;
+  details: string;
+  created_by: string;
+  pending_members: Array<string>;
+  members: Array<string>;
+  projects: Array<string>;
+  project_name: string;
+};
 
-export const initialList = (): IThunkAction => {
+export const getAllSors = (): IThunkAction => {
   return async (dispatch, getState) => {
     dispatch(startLoading());
     createApi
@@ -24,31 +53,33 @@ export const initialList = (): IThunkAction => {
         query: {status: [1, 2, 3, 4, 5]},
       })
       .then(async (res: any) => {
-        console.log(res.data.data);
         dispatch(stopLoading());
-        dispatch(allSors({allSors: res.data.data}));
-        // if (res.data.data.involved_persons !== undefined) {
-        //   await AsyncStorage.setItem(
-        //     'involved_persons',
-        //     JSON.stringify(res.data.data.involved_persons),
-        //   );
-        // } else {
-        //   for (let i = 0; i < res.data.data.report.length; i++) {
-        //     if (res.data.data.report[i].status == 1) {
-        //       this.state.draft.push(res.data.data.report[i]);
-        //     } else if (res.data.data.report[i].status == 2) {
-        //       this.state.submitted.push(res.data.data.report[i]);
-        //     } else if (res.data.data.report[i].status == 3) {
-        //       this.state.exclated.push(res.data.data.report[i]);
-        //     } else if (res.data.data.report[i].status == 4) {
-        //       this.state.inprogress.push(res.data.data.report[i]);
-        //     } else if (res.data.data.report[i].status == 5) {
-        //       this.state.completed.push(res.data.data.report[i]);
-        //     }
-        //   }
-        //   this.setState({loading: false});
-        // }
-        // this.setState({draft: res.data.data.report});
+
+        var data: SorType;
+
+        if (res.data.data.involved_persons !== undefined) {
+          await AsyncStorage.setItem(
+            'involved_persons',
+            JSON.stringify(res.data.data.involved_persons),
+          );
+        } else {
+          for (let i = 0; i < res.data.data.report.length; i++) {
+            if (res.data.data.report[i].status == 1) {
+              data['draft'] = res.data.data.report[i];
+            } else if (res.data.data.report[i].status == 2) {
+              data['submitted'] = res.data.data.report[i];
+            } else if (res.data.data.report[i].status == 3) {
+              data['exclated'] = res.data.data.report[i];
+            } else if (res.data.data.report[i].status == 4) {
+              data['inprogress'] = res.data.data.report[i];
+            } else if (res.data.data.report[i].status == 5) {
+              data['completed'] = res.data.data.report[i];
+            }
+          }
+
+          dispatch(allSors({allSors: data}));
+          // console.log(data);
+        }
       })
       .catch((err) => {
         dispatch(stopLoading());
@@ -111,7 +142,7 @@ export const delList = (id: string): IThunkAction => {
 };
 
 const listAction = {
-  initialList,
+  getAllSors,
   addList,
   editList,
   delList,

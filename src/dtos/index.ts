@@ -1,3 +1,3 @@
 import InitialAppStateDTO from './InitialAppStateDTO';
-import ListStateDTO from './listStateDTO';
-export {InitialAppStateDTO, ListStateDTO};
+import AllSorDTO from './AllSorDTO';
+export {InitialAppStateDTO, AllSorDTO};

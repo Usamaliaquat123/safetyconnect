@@ -6,9 +6,9 @@ import InitialAppReducer, {
   initialState as initState,
 } from './Reducers/InitialAppReducer';
 // import {  } from "./Reducers/listSorReducers";
-import ListSorReducer, {
+import allSorReducer, {
   initialState as listState,
-} from './Reducers/listSorReducers';
+} from './Reducers/allSorReducer';
 
 export type RootState = {
   init: typeof initState;
@@ -34,7 +34,7 @@ function configureStore() {
   const composeEnhancers = (__DEV__ && composeDevToolsWithOption) || compose;
   let rootReducer = combineReducers({
     init: InitialAppReducer,
-    list: ListSorReducer,
+    allSors: allSorReducer,
     // auto-plugin
   });
 
