@@ -143,6 +143,8 @@ export const imageAndVideoObjectMap = (
   return arr;
 };
 
+export const sorProjectMapper = () => {};
+
 export const imageVideoDetector = (attachments: any): Array<Object> => {
   var arr = attachments;
   for (let i = 0; i < arr.length; i++) {

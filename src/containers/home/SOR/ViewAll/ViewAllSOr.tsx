@@ -126,7 +126,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   componentDidMount = async () => {
     // this.props.initialList();
     // initialList.addList('sdsd');a
-    console.log(this.props.reduxState.loading);
+    console.log(this.props.reduxState);
     this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3');
     console.log(this.props.reduxState.loading);
     // initialList.initialList();
@@ -138,7 +138,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     //   })
     //   .catch((err) =>{});
     // this.props.initialList.addList('asdds');
-    this.setState({loading: true});
+    // this.setState({loading: true});
 
     // if (this.props.reduxState.allSors.allSors.involved_persons !== undefined) {
     //   this.setState({loading: false});
@@ -160,7 +160,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         this.state.completed.push(this.props.reduxState.allSors.allSors[i]);
       }
     }
-    this.setState({loading: false});
+    // this.setState({loading: false});
     // }
 
     // this.setState({draft: res.data.data.report});

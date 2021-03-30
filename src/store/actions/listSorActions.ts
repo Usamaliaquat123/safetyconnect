@@ -21,13 +21,18 @@ export type SorType = {
 };
 /** @typings project [types] */
 export type project = {
-  created_by: string;
+  _id: string;
+  project_id: {
+    created_by: string;
+    updatedAt: string;
+    project_name: string;
+    total_documents: number;
+    reports: Array<report>;
+    locations: Array<string>;
+    involved_persons: Array<string>;
+    pending_persons: Array<string>;
+  };
   project_name: string;
-  total_documents: number;
-  reports: Array<report>;
-  locations: string;
-  involved_persons: Array<string>;
-  pending_persons: Array<string>;
 };
 /** @typings Organization [types] */
 export type orgnaization = {
@@ -53,7 +58,7 @@ export const getAllSors = (projectId: string): IThunkAction => {
         query: {status: [1, 2, 3, 4, 5]},
       })
       .then(async (res: any) => {
-        // dispatch(loading({loading: true}));
+        dispatch(loading({loading: true}));
         dispatch(allSors({allSors: res.data.data.report}));
       })
       .catch((err) => {
@@ -63,11 +68,29 @@ export const getAllSors = (projectId: string): IThunkAction => {
 };
 /** Update sor */
 export const updateSor = (data: report): IThunkAction => {
-  return async (dispatch, getState) => {};
+  return async (dispatch, getState) => {
+    dispatch(loading({loading: true}));
+  };
 };
 /** create sor  */
 export const createSor = (data: report): IThunkAction => {
-  return async (dispatch, getState) => {};
+  return async (dispatch, getState) => {
+    dispatch(loading({loading: true}));
+  };
+};
+/** Create Organization */
+export const CreateOrganization = (
+  orgnaization: orgnaization,
+): IThunkAction => {
+  return async (dispatch, getState) => {
+    dispatch(loading({loading: true}));
+  };
+};
+/** Create Project */
+export const createProject = (): IThunkAction => {
+  return async (dispatch, getState) => {
+    dispatch(loading({loading: true}));
+  };
 };
 
 export const addList = (text: any): IThunkAction => {
