@@ -7,18 +7,13 @@ export const initialState: AllSorDTO = {
 
 const allSorReducer = (state = initialState, actions: IAction<AllSorDTO>) => {
   switch (actions.type) {
-    case ActionTypes.START_LOADING: {
+    case ActionTypes.LOADING: {
       return {
         ...state,
         loading: false,
       };
     }
-    case ActionTypes.STOP_LOADING: {
-      return {
-        ...state,
-        loading: false,
-      };
-    }
+
     case ActionTypes.ALL_SORS: {
       return {
         ...state,

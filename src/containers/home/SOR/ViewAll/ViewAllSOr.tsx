@@ -126,11 +126,12 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   componentDidMount = async () => {
     // this.props.initialList();
     // initialList.addList('sdsd');a
+    console.log(this.props.reduxState.loading);
     this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3');
+    console.log(this.props.reduxState.loading);
     // initialList.initialList();
     console.log('==================');
-    console.log('adsad', this.props.reduxState);
-    console.log(this.props.initial);
+    // console.log('adsad', this.props.reduxState.allSors.allSors);
     // Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png')
     //   .then((res: string | any) => {
     //     var ts = res.split('?')[0].replace(/%20/g, '+').replace('/public', '');
@@ -138,43 +139,31 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     //   .catch((err) =>{});
     // this.props.initialList.addList('asdds');
     this.setState({loading: true});
-    createApi
-      .createApi()
-      .filterSors({
-        project: '6038cf8472762b29b1bed1f3',
-        limit: 100,
-        page: 0,
-        query: {status: [1, 2, 3, 4, 5]},
-      })
-      .then(async (res: any) => {
-        if (res.data.data.involved_persons !== undefined) {
-          this.setState({loading: false});
-          await AsyncStorage.setItem(
-            'involved_persons',
-            JSON.stringify(res.data.data.involved_persons),
-          );
-        } else {
-          for (let i = 0; i < res.data.data.report.length; i++) {
-            if (res.data.data.report[i].status == 1) {
-              this.state.draft.push(res.data.data.report[i]);
-            } else if (res.data.data.report[i].status == 2) {
-              this.state.submitted.push(res.data.data.report[i]);
-            } else if (res.data.data.report[i].status == 3) {
-              this.state.exclated.push(res.data.data.report[i]);
-            } else if (res.data.data.report[i].status == 4) {
-              this.state.inprogress.push(res.data.data.report[i]);
-            } else if (res.data.data.report[i].status == 5) {
-              this.state.completed.push(res.data.data.report[i]);
-            }
-          }
-          this.setState({loading: false});
-        }
 
-        // this.setState({draft: res.data.data.report});
-      })
-      .catch((err) => {
-        this.setState({loading: false});
-      });
+    // if (this.props.reduxState.allSors.allSors.involved_persons !== undefined) {
+    //   this.setState({loading: false});
+    //   await AsyncStorage.setItem(
+    //     'involved_persons',
+    //     JSON.stringify(this.props.reduxState.allSors.allSors.involved_persons),
+    //   );
+    // } else {
+    for (let i = 0; i < this.props.reduxState.allSors.allSors.length; i++) {
+      if (this.props.reduxState.allSors.allSors[i].status == 1) {
+        this.state.draft.push(this.props.reduxState.allSors.allSors[i]);
+      } else if (this.props.reduxState.allSors.allSors[i].status == 2) {
+        this.state.submitted.push(this.props.reduxState.allSors.allSors[i]);
+      } else if (this.props.reduxState.allSors.allSors[i].status == 3) {
+        this.state.exclated.push(this.props.reduxState.allSors.allSors[i]);
+      } else if (this.props.reduxState.allSors.allSors[i].status == 4) {
+        this.state.inprogress.push(this.props.reduxState.allSors.allSors[i]);
+      } else if (this.props.reduxState.allSors.allSors[i].status == 5) {
+        this.state.completed.push(this.props.reduxState.allSors.allSors[i]);
+      }
+    }
+    this.setState({loading: false});
+    // }
+
+    // this.setState({draft: res.data.data.report});
   };
   _onRefresh = () => {
     this.setState({
@@ -194,7 +183,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         <ScrollView
           refreshControl={
             <RefreshControl
-              refreshing={this.state.loading}
+              refreshing={this.props.reduxState.loading}
               onRefresh={this._onRefresh}
             />
           }
@@ -263,7 +252,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           </View>
 
           <View style={styles.content}>
-            {this.state.loading == true ? (
+            {this.props.reduxState.loading == true ? (
               <View
                 style={{
                   alignSelf: 'center',

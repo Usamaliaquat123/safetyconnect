@@ -39,6 +39,7 @@ export type orgnaization = {
   projects: Array<string>;
   project_name: string;
 };
+
 /** ALL sor reducers */
 export const getAllSors = (projectId: string): IThunkAction => {
   return async (dispatch, getState) => {
@@ -52,7 +53,7 @@ export const getAllSors = (projectId: string): IThunkAction => {
         query: {status: [1, 2, 3, 4, 5]},
       })
       .then(async (res: any) => {
-        dispatch(loading({loading: false}));
+        // dispatch(loading({loading: true}));
         dispatch(allSors({allSors: res.data.data.report}));
       })
       .catch((err) => {
@@ -61,11 +62,11 @@ export const getAllSors = (projectId: string): IThunkAction => {
   };
 };
 /** Update sor */
-export const updateSor = (data: any): IThunkAction => {
+export const updateSor = (data: report): IThunkAction => {
   return async (dispatch, getState) => {};
 };
 /** create sor  */
-export const createSor = (data: any): IThunkAction => {
+export const createSor = (data: report): IThunkAction => {
   return async (dispatch, getState) => {};
 };
 
