@@ -373,6 +373,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             },
             project: '604b13d114ba138bd23d7f75',
           };
+
+          this.props.reduxActions.createSor(draftSor, this.props.navigation);
+
           createApi
             .createApi()
             .createSor(draftSor)
@@ -429,7 +432,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 this.setState({loading: true, errorModal: true});
                 const form = new FormData();
                 form.append('q', this.state.observationT);
-
+                this.props.reduxActions.createSor(
+                  sor,
+                  '604b13d114ba138bd23d7f75',
+                  'inconnent12345@outlook.com',
+                  this.props.navigation,
+                );
                 createApi
                   .createApi()
                   .repeatedsorsugg(form)
@@ -439,12 +447,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                     var bodyInitial = {
                       report: {
-                        created_by: 'inconnent12345@outlook.com',
+                        created_by: '',
                         comments: '',
                         status: 1,
                       },
-                      project: '604b13d114ba138bd23d7f75',
+                      project: '',
                     };
+
                     createApi
                       .createApi()
                       .createSorInit(bodyInitial)
@@ -454,7 +463,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                         var sor = {
                           report: {
-                            _id: res.data.data.report_id,
                             created_by: 'haider@gmail.com',
                             details: this.state.observationT,
                             occured_at: new Date(),
@@ -484,16 +492,17 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           project: '604b13d114ba138bd23d7f75',
                         };
 
-                        createApi
-                          .createApi()
-                          .createSor(sor)
-                          .then((res) => {
-                            this.setState({loading: false, errorModal: false});
-                            this.props.navigation.navigate('ViewAllSOr');
-                          })
-                          .catch((err) =>
-                            this.setState({loading: false, errorModal: false}),
-                          );
+                        console.log(sor);
+                        // createApi
+                        //   .createApi()
+                        //   .createSor(sor)
+                        //   .then((res) => {
+                        //     this.setState({loading: false, errorModal: false});
+                        //     this.props.navigation.navigate('ViewAllSOr');
+                        //   })
+                        //   .catch((err) =>
+                        //     this.setState({loading: false, errorModal: false}),
+                        //   );
                       })
                       .catch((err) => {
                         this.setState({loading: false, errorModal: false});

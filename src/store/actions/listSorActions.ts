@@ -104,27 +104,61 @@ export const updateSor = (data: report, nav: any): IThunkAction => {
   };
 };
 /** create sor  */
-export const createSor = (data: report, nav: any): IThunkAction => {
+export const createSor = (
+  data: any,
+  projectId: string,
+  createdBy: string,
+  nav: any,
+): IThunkAction => {
   return async (dispatch, getState) => {
     dispatch(loading({loading: true}));
 
+    var bodyInitial = {
+      report: {
+        created_by: createdBy,
+        comments: '',
+        status: 1,
+      },
+      project: projectId,
+    };
     createApi
       .createApi()
-      .createSor(data)
-      .then((res) => {
-        dispatch(loading(false));
-        dispatch(error(false));
-        nav.navigate('ViewAllSOr');
-        // this.setState({loading: false, errorModal: false});
-        // this.props.navigation.navigate('ViewAllSOr');
-      })
-      .catch(
-        (err) => {
+      .createSorInit(bodyInitial)
+      .then((ini: any) => {
+        if (ini.status == 200) {
+          data.report._id = ini.data.data.report_id;
+          data.project = projectId;
+          createApi
+            .createApi()
+            .createSor(data)
+            .then((res) => {
+              if (res.status == 200) {
+                dispatch(loading(false));
+                dispatch(error(false));
+                nav.navigate('ViewAllSOr');
+                // this.setState({loading: false, errorModal: false});
+                // this.props.navigation.navigate('ViewAllSOr');
+              } else {
+                dispatch(loading(false));
+                dispatch(error(true));
+              }
+            })
+            .catch(
+              (err) => {
+                dispatch(loading(false));
+                dispatch(error(true));
+              },
+              // this.setState({loading: false, errorModal: false}),
+            );
+        } else {
           dispatch(loading(false));
           dispatch(error(true));
-        },
-        // this.setState({loading: false, errorModal: false}),
-      );
+        }
+      })
+      .catch((err) => {
+        dispatch(loading(false));
+        dispatch(error(true));
+      });
   };
 };
 /** Create Organization */
