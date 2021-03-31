@@ -127,13 +127,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     // this.props.initialList();
     // initialList.addList('sdsd');a
     console.log(this.props.reduxState);
-    this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
-      1,
-      2,
-      3,
-      4,
-      5,
-    ]);
+
     // console.log(this.props.reduxState.loading);
     // initialList.initialList();
     // console.log('==================');

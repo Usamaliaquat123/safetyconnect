@@ -35,6 +35,8 @@ import LottieView from 'lottie-react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {default as Model} from 'react-native-modal';
 import ImageViewer from 'react-native-image-zoom-viewer';
+import {bindActionCreators} from 'redux';
+import {AllSorDTO} from '@dtos';
 import {
   imagePicker,
   capitalizeFirstLetter,
@@ -48,8 +50,8 @@ import {
 import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {involved_persons, actions} from '@typings';
-import {number} from 'prop-types';
-import {ForceTouchGestureHandler} from 'react-native-gesture-handler';
+import * as reduxActions from '../../../../store/actions/listSorActions';
+
 // import {colors} from '@theme';
 // import listAction from './../../../../store/actions/listActions';
 type ViewSORNavigationProp = StackNavigationProp<
@@ -1862,12 +1864,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 }
 
-const mapStateToProps = (state: unknown) => {
-  return {};
-};
+const mapStateToProps = (state: AllSorDTO) => ({
+  reduxState: state.allSors,
+});
 
-const mapDispatchToProps = (dispatch: unknown) => {
-  return {};
-};
-
+const mapDispatchToProps = (dispatch: any) => ({
+  reduxActions: bindActionCreators(reduxActions, dispatch),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(ViewSOR);
