@@ -74,7 +74,7 @@ export const getAllSors = (
   };
 };
 /** Update sor */
-export const updateSor = (data: report): IThunkAction => {
+export const updateSor = (data: report, nav: any): IThunkAction => {
   return async (dispatch, getState) => {
     dispatch(loading({loading: true}));
 
@@ -85,6 +85,7 @@ export const updateSor = (data: report): IThunkAction => {
       .then((res) => {
         dispatch(loading(false));
         dispatch(error(false));
+        nav.navigate('ViewAllSOr');
         // this.setState({loading: false});
         // this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
         //   1,
@@ -103,21 +104,27 @@ export const updateSor = (data: report): IThunkAction => {
   };
 };
 /** create sor  */
-export const createSor = (data: report): IThunkAction => {
+export const createSor = (data: report, nav: any): IThunkAction => {
   return async (dispatch, getState) => {
     dispatch(loading({loading: true}));
 
     createApi
-    .createApi()
-    .createSor(data)
-    .then((res) => {
-      // this.setState({loading: false, errorModal: false});
-      // this.props.navigation.navigate('ViewAllSOr');
-    })
-    .catch((err) =>
-      // this.setState({loading: false, errorModal: false}),
-    );
-
+      .createApi()
+      .createSor(data)
+      .then((res) => {
+        dispatch(loading(false));
+        dispatch(error(false));
+        nav.navigate('ViewAllSOr');
+        // this.setState({loading: false, errorModal: false});
+        // this.props.navigation.navigate('ViewAllSOr');
+      })
+      .catch(
+        (err) => {
+          dispatch(loading(false));
+          dispatch(error(true));
+        },
+        // this.setState({loading: false, errorModal: false}),
+      );
   };
 };
 /** Create Organization */

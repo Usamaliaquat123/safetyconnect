@@ -21,6 +21,9 @@ import {
   suggestInActionsRecommendations,
   validateEmail,
 } from '@utils';
+import {bindActionCreators} from 'redux';
+import * as reduxActions from '../../../../store/actions/listSorActions';
+
 import {Icon, Avatar} from 'react-native-elements';
 import {colors} from '@theme';
 import Amplify, {Storage} from 'aws-amplify';
@@ -42,6 +45,7 @@ import {createApi} from '@service';
 import {StackAnimationTypes} from 'react-native-screens';
 import * as RNFS from 'react-native-fs';
 import {Buffer} from 'buffer';
+import {AllSorDTO} from '@dtos';
 
 import {Results} from 'realm';
 
@@ -1372,14 +1376,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   }
 }
 
-const mapStateToProps = (state: unknown) => {
-  return {};
-};
+const mapStateToProps = (state: AllSorDTO) => ({
+  reduxState: state.allSors,
+});
 
-const mapDispatchToProps = (dispatch: unknown) => {
-  return {};
-};
-
+const mapDispatchToProps = (dispatch: any) => ({
+  reduxActions: bindActionCreators(reduxActions, dispatch),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(CreateSOR);
 
 // if (this.state.observationT !== '') {
