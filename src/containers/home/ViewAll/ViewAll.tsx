@@ -64,22 +64,28 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     };
   }
   componentDidMount() {
-    var d = [];
-    for (let i = 0; i < this.props.reduxState.allSors.length; i++) {
-      if (
-        this.props.reduxState.allSors[i].status == this.props.route.params.data
-      ) {
-        d.push(this.props.reduxState.allSors[i]);
-      }
-    }
-    this.setState({reports: d});
+    // var d = [];
+    // for (let i = 0; i < this.props.reduxState.allSors.length; i++) {
+    //   if (
+    //     this.props.reduxState.allSors[i].status == this.props.route.params.data
+    //   ) {
+    //     d.push(this.props.reduxState.allSors[i]);
+    //   }
+    // }
+    // this.setState({reports: d});
+    // console.log(this.props.route.params.data);
+    this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
+      this.props.route.params.data,
+    ]);
+    this.setState({reports: this.props.reduxState.allSors});
+    // console.log(this.props.reduxState.allSors);
   }
 
-  isCloseToBottom({layoutMeasurement, contentOffset, contentSize}) {
-    return (
-      layoutMeasurement.height + contentOffset.y >= contentSize.height - 50
-    );
-  }
+  // isCloseToBottom({layoutMeasurement, contentOffset, contentSize}) {
+  //   return (
+  //     layoutMeasurement.height + contentOffset.y >= contentSize.height - 50
+  //   );
+  // }
 
   render() {
     return (

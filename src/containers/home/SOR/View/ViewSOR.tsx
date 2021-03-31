@@ -134,6 +134,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
+    console.log(this.props.route.params.data);
     // this.props.route.params.data.action_required
     for (
       let i = 0;
@@ -221,9 +222,18 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .updateSor(update)
       .then((res) => {
         this.setState({loading: false});
+        this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
+          1,
+          2,
+          3,
+          4,
+          5,
+        ]);
         this.props.navigation.navigate('ViewAllSOr');
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   saveAsDraft = () => {

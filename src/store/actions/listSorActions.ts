@@ -10,6 +10,7 @@ import {report} from '@typings';
 const initList = createAction(ActionTypes.LIST_INIT);
 export const updateList = createAction(ActionTypes.LIST_CHANGE);
 export const loading = createAction(ActionTypes.LOADING);
+export const error = createAction(ActionTypes.ERROR);
 export const allSors = createAction(ActionTypes.ALL_SORS);
 /** @typings Sor [types] */
 export type SorType = {
@@ -36,13 +37,14 @@ export type project = {
 };
 /** @typings Organization [types] */
 export type orgnaization = {
-  name: string;
-  details: string;
-  created_by: string;
-  pending_members: Array<string>;
-  members: Array<string>;
-  projects: Array<string>;
-  project_name: string;
+  name?: string;
+  details?: string;
+  email?: string;
+  created_by?: string;
+  pending_members?: Array<string>;
+  members?: Array<string>;
+  projects?: Array<string>;
+  project_name?: string;
 };
 
 /** ALL sor reducers */
@@ -61,11 +63,13 @@ export const getAllSors = (
         query: {status: sorType},
       })
       .then((res: any) => {
+        dispatch(error(false));
         dispatch(loading(false));
         dispatch(allSors(res.data.data.report));
       })
       .catch((err) => {
         dispatch(loading(false));
+        dispatch(error(true));
       });
   };
 };
@@ -82,10 +86,34 @@ export const createSor = (data: report): IThunkAction => {
   };
 };
 /** Create Organization */
-export const CreateOrganization = (
+export const createOrganization = (
   orgnaization: orgnaization,
 ): IThunkAction => {
   return async (dispatch, getState) => {
+    dispatch(loading(true));
+    await createApi
+      .createApi()
+      .organization({
+        created_by: orgnaization.email,
+        name: orgnaization.name,
+        details: orgnaization.details,
+        members: orgnaization.members,
+        projects: orgnaization.projects,
+      })
+      .then((res) => {
+        dispatch(loading(false));
+        if (res.status == 200) {
+          dispatch(error(false));
+
+          // this.props.navigation.navigate('CreateProj', {
+          //   organization: res.data.data.organization_id,
+          // });
+        } else {
+          dispatch(error(true));
+          // this.setState({loading: false, errorModal: false});
+        }
+      });
+
     dispatch(loading({loading: true}));
   };
 };
@@ -96,20 +124,20 @@ export const createProject = (): IThunkAction => {
   };
 };
 
-export const addList = (text: any): IThunkAction => {
-  return async (dispatch, getState) => {
-    const state = getState();
-    const textObj = {
-      id: Math.random().toString(36).substring(2, 15),
-      text: text,
-    };
-    dispatch(
-      updateList({
-        list: [textObj, ...state.list.list],
-      }),
-    );
-  };
-};
+// export const addList = (text: any): IThunkAction => {
+//   return async (dispatch, getState) => {
+//     const state = getState();
+//     const textObj = {
+//       id: Math.random().toString(36).substring(2, 15),
+//       text: text,
+//     };
+//     dispatch(
+//       updateList({
+//         list: [textObj, ...state.list.list],
+//       }),
+//     );
+//   };
+// };
 
 export const editList = (id: string, text: string): IThunkAction => {
   return async (dispatch, getState) => {
@@ -146,7 +174,6 @@ export const delList = (id: string): IThunkAction => {
 
 const listAction = {
   getAllSors,
-  addList,
   editList,
   delList,
 };

@@ -15,7 +15,8 @@ enum ActionTypes {
 
   /* Loading */
   LOADING = 'LOADING',
-
+  /* ERROR */
+  ERROR = 'ERROR',
   // Render AllSOR
   ALL_SORS = 'ALL_SORS',
 }

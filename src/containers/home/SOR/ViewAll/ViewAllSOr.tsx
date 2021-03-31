@@ -52,9 +52,9 @@ import {Isor, classifySorBtn, involved_persons} from '@typings';
 // import {  } from "";
 type ViewAllSOrNavigationProp = StackNavigationProp<
   StackNavigatorProps,
-  'ViewAll'
+  'ViewAllSOr'
 >;
-type ViewAllSOrRouteProp = RouteProp<StackNavigatorProps, 'ViewAll'>;
+type ViewAllSOrRouteProp = RouteProp<StackNavigatorProps, 'ViewAllSOr'>;
 
 export interface ViewAllProps {
   route: ViewAllSOrRouteProp;

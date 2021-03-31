@@ -15,6 +15,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import * as reduxActions from '../../../store/actions/listSorActions';
+
 import {Icon} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
@@ -26,6 +28,9 @@ import LottieView from 'lottie-react-native';
 import {createApi as api} from '@service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
+import {bindActionCreators} from 'redux';
+
+import {AllSorDTO} from '@dtos';
 import {getActiveChildNavigationOptions} from 'react-navigation';
 // import {validateEmail} from '@utils/';
 type CreateOrgNavigationProp = StackNavigationProp<
@@ -57,9 +62,19 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
   createOrg = () => {
     if (this.state.org !== '') {
       this.setState({loading: true, errorModal: true});
+
       AsyncStorage.getItem('email')
         .then((email: any) => {
-          // this.props.navigation.navigate('CreateProj', {})
+          // this.props.navigation.navigate('CreateProj', {}
+          // var org = {
+          //   created_by: email,
+          //   name: this.state.org,
+          //   details: 'details of the organizations',
+          //   members: [],
+          //   projects: [],
+          // };
+          // this.props.reduxActions.createOrganization(org);
+
           api
             .createApi()
             .organization({
@@ -187,12 +202,20 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
   }
 }
 
-const mapStateToProps = (state: any) => {
-  return {};
-};
+// const mapStateToProps = (state: any) => {
+//   return {};
+// };
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {};
-};
+// const mapDispatchToProps = (dispatch: any) => {
+//   return {};
+// };
+
+const mapStateToProps = (state: AllSorDTO) => ({
+  reduxState: state.allSors,
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+  reduxActions: bindActionCreators(reduxActions, dispatch),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateOrg);
