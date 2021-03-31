@@ -77,12 +77,47 @@ export const getAllSors = (
 export const updateSor = (data: report): IThunkAction => {
   return async (dispatch, getState) => {
     dispatch(loading({loading: true}));
+
+    console.log();
+    createApi
+      .createApi()
+      .updateSor(data)
+      .then((res) => {
+        dispatch(loading(false));
+        dispatch(error(false));
+        // this.setState({loading: false});
+        // this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
+        //   1,
+        //   2,
+        //   3,
+        //   4,
+        //   5,
+        // ]);
+        // this.props.navigation.navigate('ViewAllSOr');
+      })
+      .catch((err) => {
+        dispatch(loading(false));
+        dispatch(error(true));
+        console.log(err);
+      });
   };
 };
 /** create sor  */
 export const createSor = (data: report): IThunkAction => {
   return async (dispatch, getState) => {
     dispatch(loading({loading: true}));
+
+    createApi
+    .createApi()
+    .createSor(data)
+    .then((res) => {
+      // this.setState({loading: false, errorModal: false});
+      // this.props.navigation.navigate('ViewAllSOr');
+    })
+    .catch((err) =>
+      // this.setState({loading: false, errorModal: false}),
+    );
+
   };
 };
 /** Create Organization */

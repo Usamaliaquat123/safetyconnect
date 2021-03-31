@@ -52,8 +52,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {involved_persons, actions} from '@typings';
 import * as reduxActions from '../../../../store/actions/listSorActions';
 
-// import {colors} from '@theme';
-// import listAction from './../../../../store/actions/listActions';
 type ViewSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'ViewSOR'
@@ -193,6 +191,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     // this.state.actionsAndRecommendations.filter(())
     var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
       .value;
+
+
+
+      
     var update = {
       report: {
         _id: this.props.route.params.data._id,
@@ -219,6 +221,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       project: '6038cf8472762b29b1bed1f3',
     };
 
+
+
+
+    console.log()
     createApi
       .createApi()
       .updateSor(update)
