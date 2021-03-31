@@ -432,12 +432,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 this.setState({loading: true, errorModal: true});
                 const form = new FormData();
                 form.append('q', this.state.observationT);
-                this.props.reduxActions.createSor(
-                  sor,
-                  '604b13d114ba138bd23d7f75',
-                  'inconnent12345@outlook.com',
-                  this.props.navigation,
-                );
+
                 createApi
                   .createApi()
                   .repeatedsorsugg(form)
@@ -555,77 +550,74 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           // Repeated observations
                           // res.data.results
 
-                          var bodyInitial = {
+                          // createApi
+                          //   .createApi()
+                          //   .createSorInit(bodyInitial)
+                          //   .then((res: any) => {
+                          // Report Id
+                          // res.data.data.report_id
+
+                          var sor = {
                             report: {
-                              created_by: 'inconnent12345@outlook.com',
-                              comments: '',
-                              status: 1,
+                              // _id: res.data.data.report_id,
+                              // created_by: 'haider@gmail.com',
+                              details: this.state.observationT,
+                              occured_at: new Date(),
+                              involved_persons: this.state.involvePersonTags,
+
+                              sor_type: sorbtns[0].title,
+                              risk: {
+                                severity: liklihood[0].value,
+                                likelihood: severity[0].value,
+                              },
+                              action_required: [],
+                              user_location: {
+                                latitude: 66.666,
+                                longitude: 66.666,
+                              },
+                              location: this.state.observation,
+                              submit_to: this.state.submitToTags.map(
+                                (d: any) => d.email,
+                              ),
+                              esclate_to: this.state.exclateToTags.map(
+                                (d: any) => d.email,
+                              ),
+                              status: 2,
+                              attachments: [],
+                              comments: ' ',
                             },
                             project: '6038cf8472762b29b1bed1f3',
                           };
-                          createApi
-                            .createApi()
-                            .createSorInit(bodyInitial)
-                            .then((res: any) => {
-                              // Report Id
-                              // res.data.data.report_id
-
-                              var sor = {
-                                report: {
-                                  _id: res.data.data.report_id,
-                                  created_by: 'haider@gmail.com',
-                                  details: this.state.observationT,
-                                  occured_at: new Date(),
-                                  involved_persons: this.state
-                                    .involvePersonTags,
-
-                                  sor_type: sorbtns[0].title,
-                                  risk: {
-                                    severity: liklihood[0].value,
-                                    likelihood: severity[0].value,
-                                  },
-                                  action_required: [],
-                                  user_location: {
-                                    latitude: 66.666,
-                                    longitude: 66.666,
-                                  },
-                                  location: this.state.observation,
-                                  submit_to: this.state.submitToTags.map(
-                                    (d: any) => d.email,
-                                  ),
-                                  esclate_to: this.state.exclateToTags.map(
-                                    (d: any) => d.email,
-                                  ),
-                                  status: 2,
-                                  attachments: [],
-                                  comments: [],
-                                },
-                                project: '6038cf8472762b29b1bed1f3',
-                              };
-
-                              createApi
-                                .createApi()
-                                .createSor(sor)
-                                .then((res) => {
-                                  this.setState({
-                                    loading: false,
-                                    errorModal: false,
-                                  });
-                                  this.props.navigation.navigate('ViewAllSOr');
-                                })
-                                .catch((err) =>
-                                  this.setState({
-                                    loading: false,
-                                    errorModal: false,
-                                  }),
-                                );
-                            })
-                            .catch((err) => {
-                              this.setState({
-                                loading: false,
-                                errorModal: false,
-                              });
-                            });
+                          this.props.reduxActions.createSor(
+                            sor,
+                            '604b13d114ba138bd23d7f75',
+                            'inconnent12345@outlook.com',
+                            this.props.navigation,
+                          );
+                          // console.log(sor);
+                          // createApi
+                          //   .createApi()
+                          //   .createSor(sor)
+                          //   .then((res) => {
+                          //     this.setState({
+                          //       loading: false,
+                          //       errorModal: false,
+                          //     });
+                          //     this.props.navigation.navigate('ViewAllSOr');
+                          //   })
+                          //   .catch((err) =>
+                          //     this.setState({
+                          //       loading: false,
+                          //       errorModal: false,
+                          //     }),
+                          //   );
+                          // })
+                          // .catch((err) => {
+                          //   this.setState({
+                          //     loading: false,
+                          //     errorModal: false,
+                          //   });
+                          // });
                         })
                         .catch((err) => {
                           this.setState({loading: false, errorModal: false});
@@ -1305,10 +1297,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           {/* Modal Container */}
           <Modal
             isVisible={this.state.errorModal}
-            onBackdropPress={() =>
-              this.setState({errorModal: false, loading: false})
-            }>
-            {this.state.loading == true ? (
+            onBackdropPress={() => {
+              this.setState({errorModal: false, loading: false});
+
+              // this.props.r
+            }}>
+            {this.props.reduxState.loading == true ? (
               <View>
                 <ActivityIndicator color={colors.primary} size={'large'} />
               </View>

@@ -112,32 +112,30 @@ export const createSor = (
 ): IThunkAction => {
   return async (dispatch, getState) => {
     dispatch(loading({loading: true}));
-
-    var bodyInitial = {
-      report: {
-        created_by: createdBy,
-        comments: '',
-        status: 1,
-      },
-      project: projectId,
-    };
     createApi
       .createApi()
-      .createSorInit(bodyInitial)
+      .createSorInit({
+        report: {
+          created_by: createdBy,
+          comments: '',
+          status: 1,
+        },
+        project: projectId,
+      })
       .then((ini: any) => {
         if (ini.status == 200) {
           data.report._id = ini.data.data.report_id;
           data.project = projectId;
+          data.report.created_by = createdBy;
           createApi
             .createApi()
             .createSor(data)
             .then((res) => {
               if (res.status == 200) {
+                console.log(data);
                 dispatch(loading(false));
                 dispatch(error(false));
                 nav.navigate('ViewAllSOr');
-                // this.setState({loading: false, errorModal: false});
-                // this.props.navigation.navigate('ViewAllSOr');
               } else {
                 dispatch(loading(false));
                 dispatch(error(true));
