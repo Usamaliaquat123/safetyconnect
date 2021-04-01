@@ -63,7 +63,7 @@ class Verify extends React.Component<VerifyProps, any> {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {/* content */}
           {/* <View style={styles.content}> */}
           {/* <View style={{alignSelf: 'center'}}>

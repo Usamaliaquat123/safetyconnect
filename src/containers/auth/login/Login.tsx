@@ -157,7 +157,7 @@ class Login extends React.Component<LoginProps, any> {
   render() {
     return (
       <View style={styles.content}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {/* <View style={styles.header}>
             <View style={styles.headertle}>
               <View>
