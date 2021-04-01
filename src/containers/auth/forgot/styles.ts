@@ -3,11 +3,12 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
+    padding: wp(5),
+    backgroundColor: colors.secondary,
   },
   header: {
     padding: wp(7),
@@ -57,6 +58,12 @@ const styles = StyleSheet.create({
     fontSize: wp(4),
     color: colors.primary,
     fontWeight: 'bold',
+  },
+  headingCotent: {
+    fontSize: wp(3.8),
+    color: colors.text,
+    opacity: 0.5,
+    fontFamily: fonts.SFuiDisplayMedium,
   },
   inputsContainer: {
     marginTop: wp(7),

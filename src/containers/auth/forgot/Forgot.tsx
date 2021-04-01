@@ -90,7 +90,7 @@ class Forgot extends React.Component<ForgotProps, any> {
     return (
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.header}>
+          {/* <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
                 containerStyle={{marginLeft: wp(2)}}
@@ -105,12 +105,16 @@ class Forgot extends React.Component<ForgotProps, any> {
                 <View style={styles.underScrore} />
               </View>
             </View>
-          </View>
+          </View> */}
           {/* content */}
-          <View style={styles.content}>
+          <View>
             <View>
               <Text style={styles.headingContainer}>Forgot Password</Text>
               {/* inputs container */}
+              <Text style={styles.headingCotent}>
+                Enter your email to reset your password{' '}
+              </Text>
+
               <View style={styles.inputsContainer}>
                 {/* Email Container */}
                 <Text style={styles.emailTextContainer}>Email</Text>
