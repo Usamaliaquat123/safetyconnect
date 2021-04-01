@@ -2,12 +2,13 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.secondary,
+    padding: wp(5),
   },
   header: {
     padding: wp(1),
@@ -29,19 +30,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   headertle: {flexDirection: 'row'},
-  //  content
-  content: {
-    height: hp(100),
-    padding: wp(5),
-    paddingBottom: hp(20),
-    backgroundColor: colors.secondary,
-    borderTopLeftRadius: wp(3),
-    borderTopRightRadius: wp(3),
-  },
+
   headingContainer: {
-    fontSize: wp(4),
+    fontSize: wp(5),
     color: colors.primary,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayBold,
   },
   inputsContainer: {
     marginTop: wp(7),
@@ -52,24 +46,27 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginTop: wp(2),
-    borderColor: colors.green,
+    borderColor: colors.text,
     borderWidth: wp(0.3),
+    opacity: 0.5,
     paddingLeft: wp(3),
-    borderRadius: wp(3),
+    borderRadius: wp(1),
     flexDirection: 'row',
     alignItems: 'center',
   },
   passTextContainer: {
     fontSize: wp(3.5),
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayMedium,
   },
   authInputs: {
-    fontSize: wp(4),
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
     width: wp(80),
   },
   signinText: {
     fontSize: wp(4),
-    fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayMedium,
     color: colors.secondary,
   },
   signinTextGoogle: {
@@ -80,12 +77,13 @@ const styles = StyleSheet.create({
   siginBtnContainer: {
     marginTop: wp(10),
     alignSelf: 'center',
+    flexDirection: 'row',
     backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    width: wp(70),
+    width: wp(90),
     padding: wp(4),
-    borderRadius: wp(3),
+    borderRadius: wp(1),
   },
   siginwithGoogle: {
     marginTop: wp(5),
@@ -117,12 +115,13 @@ const styles = StyleSheet.create({
     marginRight: wp(3),
   },
   dontHaveAccount: {
-    fontSize: wp(3),
+    fontSize: wp(3.4),
     opacity: 0.5,
     color: colors.text,
     // opacity: 0.5,
-    marginTop: wp(1.5),
-    fontWeight: 'bold',
+    // marginTop: wp(1.5),
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayMedium,
   },
   createNewAccount: {
     color: colors.text,

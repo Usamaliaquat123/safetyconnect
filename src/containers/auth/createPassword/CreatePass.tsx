@@ -116,24 +116,8 @@ class CreatePass extends React.Component<CreatePassProps, any> {
     return (
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.header}>
-            <View style={styles.headertle}>
-              {/* <Icon
-                containerStyle={{marginLeft: wp(2)}}
-                onPress={() => this.props.navigation.goBack()}
-                size={25}
-                name="arrow-back-outline"
-                type="ionicon"
-                color={colors.secondary}
-              /> */}
-              <View>
-                <Text style={styles.title}>Sign up</Text>
-                <View style={styles.underScrore} />
-              </View>
-            </View>
-          </View>
           {/* content */}
-          <View style={styles.content}>
+          <View>
             {/* {this.state.loading == true ? ( */}
             {/* <View
               style={{
@@ -157,13 +141,13 @@ class CreatePass extends React.Component<CreatePassProps, any> {
               </Text>
             </View> */}
             {/* ) : ( */}
-            <View>
-              <Text style={styles.headingContainer}>
-                Welcome to Safety Connect
-              </Text>
+            <View style={{marginTop: wp(5)}}>
+              <Text style={styles.headingContainer}>Create New Password</Text>
               {/* inputs container */}
               <View style={styles.inputsContainer}>
-                <Text style={styles.passTextContainer}>Create Password</Text>
+                <Text style={styles.passTextContainer}>
+                  Enter your password
+                </Text>
                 <View style={[styles.inputContainer]}>
                   <TextInput
                     secureTextEntry={this.state.isEye}
@@ -214,24 +198,21 @@ class CreatePass extends React.Component<CreatePassProps, any> {
               </View>
 
               {/* {this.state.error && ( */}
-              <View>
+              <View style={{marginTop: wp(3)}}>
                 <Text style={[styles.dontHaveAccount]}>
-                  * Password must be a 8 characters long.
+                  Password must contain atleast 8 characters
                 </Text>
                 <Text style={[styles.dontHaveAccount]}>
-                  * Password must be at least one uppercase character.
+                  and must include numbers and special{' '}
                 </Text>
-                <Text style={[styles.dontHaveAccount]}>
-                  * Password must be at least one lowercase character
-                </Text>
-                <Text style={[styles.dontHaveAccount]}>
-                  * Password must be include one special character
-                </Text>
+                <Text style={[styles.dontHaveAccount]}>character</Text>
               </View>
               {/* )} */}
 
               <View style={styles.inputsContainer}>
-                <Text style={styles.passTextContainer}>Confirm Password</Text>
+                <Text style={styles.passTextContainer}>
+                  Confirm your password
+                </Text>
                 <View style={[styles.inputContainer]}>
                   <TextInput
                     secureTextEntry={this.state.isEye}
@@ -285,6 +266,13 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                 onPress={() => this.setupPass()}
                 style={styles.siginBtnContainer}>
                 <Text style={styles.signinText}>Continue</Text>
+                <Icon
+                  containerStyle={{marginLeft: wp(3)}}
+                  size={wp(5)}
+                  name="arrowright"
+                  type="antdesign"
+                  color={colors.secondary}
+                />
               </TouchableOpacity>
             </View>
             {/* )} */}
