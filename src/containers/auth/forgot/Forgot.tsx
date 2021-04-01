@@ -107,8 +107,17 @@ class Forgot extends React.Component<ForgotProps, any> {
             </View>
           </View> */}
           {/* content */}
-          <View style={{marginTop: wp(10)}}>
-            <View>
+          <View style={{marginTop: wp(1)}}>
+            <View style={{flexDirection: 'row'}}>
+              <Icon
+                onPress={() => this.props.navigation.goBack()}
+                size={wp(6)}
+                name="arrow-back-outline"
+                type="ionicon"
+                color={colors.primary}
+              />
+            </View>
+            <View style={{marginTop: wp(8)}}>
               <Text style={styles.headingContainer}>Forgot Password</Text>
               {/* inputs container */}
               <Text style={styles.headingCotent}>

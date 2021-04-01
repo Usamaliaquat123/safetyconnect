@@ -56,9 +56,10 @@ const styles = StyleSheet.create({
     color: colors.secondary,
   },
   headingContainer: {
-    fontSize: wp(4),
+    fontSize: wp(5),
     color: colors.primary,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayBold,
   },
   headingCotent: {
     fontSize: wp(3.8),
