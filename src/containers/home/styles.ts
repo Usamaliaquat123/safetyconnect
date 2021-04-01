@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
     // flex: 2,
 
     // marginTop: wp(80),
-    borderTopLeftRadius: wp(4),
-    borderTopRightRadius: wp(4),
+    // borderTopLeftRadius: wp(4),
+    // borderTopRightRadius: wp(4),
   },
 
   // Content

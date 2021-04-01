@@ -50,7 +50,7 @@ class Home extends React.Component<HomeProps, any> {
     this.state = {
       selectedStats: 1,
       recentActivity: [],
-      username: '',
+      username: 'Usama',
       orgName: '',
       newsorModal: false,
     };
