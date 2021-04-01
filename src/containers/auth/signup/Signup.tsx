@@ -148,22 +148,28 @@ class Signup extends React.Component<SignupProps, any> {
     return (
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.header}>
+          {/* <View style={styles.header}>
             <View style={styles.headertle}>
               <View>
                 <Text style={styles.title}>Sign up</Text>
                 <View style={styles.underScrore} />
               </View>
             </View>
-          </View>
+          </View> */}
           {/* content */}
-          <View style={styles.content}>
-            <View>
-              <Text style={styles.headingContainer}>Sign up</Text>
+          <View>
+            <View style={{marginTop: wp(10)}}>
+              <Text style={styles.headingContainer}>
+                Welcome to Safety Connect
+              </Text>
+              <Text style={styles.headingContent}>
+                Create your account and get started with SafetyConnect to ensure
+                the safety and well-being of workplaces
+              </Text>
               {/* inputs container */}
               <View style={styles.inputsContainer}>
                 {/* Email Container */}
-                <Text style={styles.emailTextContainer}>Email</Text>
+                <Text style={styles.emailTextContainer}>Enter your email</Text>
                 <View style={[styles.inputContainer]}>
                   <TextInput
                     style={styles.authInputs}
@@ -184,7 +190,16 @@ class Signup extends React.Component<SignupProps, any> {
                 onPress={() => this.signup()}
                 style={styles.siginBtnContainer}>
                 <Text style={styles.signinText}>Continue</Text>
+                <View style={{marginLeft: wp(1)}}>
+                  <Icon
+                    size={wp(4)}
+                    name="arrowright"
+                    type="antdesign"
+                    color={colors.secondary}
+                  />
+                </View>
               </TouchableOpacity>
+
               {/* Or */}
               <View style={styles.orContainer}>
                 <View style={styles.line} />
@@ -204,15 +219,35 @@ class Signup extends React.Component<SignupProps, any> {
                   Continue with Google{' '}
                 </Text>
               </TouchableOpacity>
-              {/* Don't have a Acctouny */}
-              <Text style={styles.dontHaveAccount}>Already a member ? </Text>
+              {/* Apple  Signin */}
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Login')}
-                style={styles.createnewaccountContainer}>
-                <Text style={styles.createNewAccount}>
-                  Sign in to your existing account!
+                onPress={() => {
+                  this.continuewithgoogle();
+                }}
+                style={styles.signUpWithApple}>
+                <View style={{width: wp(5), height: wp(5), marginRight: wp(3)}}>
+                  <Icon
+                    size={wp(5)}
+                    name="apple1"
+                    type="antdesign"
+                    color={colors.text}
+                  />
+                </View>
+                <Text style={styles.signinWithApple}>
+                  Continue with Apple ID
                 </Text>
               </TouchableOpacity>
+              {/* Don't have a Acctouny */}
+              <View style={{marginTop: wp(25)}}>
+                <Text style={styles.dontHaveAccount}>
+                  Already have a account ?{' '}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('Login')}
+                  style={styles.createnewaccountContainer}>
+                  <Text style={styles.createNewAccount}>Sign in here</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </ScrollView>

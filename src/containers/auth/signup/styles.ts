@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -7,7 +7,8 @@ import {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
+    padding: wp(5),
+    backgroundColor: colors.secondary,
   },
   header: {
     padding: wp(7),
@@ -30,32 +31,33 @@ const styles = StyleSheet.create({
   },
   headertle: {flexDirection: 'row'},
   //  content
-  content: {
-    height: hp(100),
-    padding: wp(5),
-    paddingBottom: hp(20),
-    backgroundColor: colors.secondary,
-    borderTopLeftRadius: wp(3),
-    borderTopRightRadius: wp(3),
+  headingContent: {
+    fontSize: wp(3.4),
+    color: colors.text,
+    fontFamily: fonts.SFuiDisplaySemiBold,
+    opacity: 0.5,
   },
   headingContainer: {
-    fontSize: wp(4),
+    fontSize: wp(4.5),
     color: colors.primary,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayBold,
   },
   inputsContainer: {
-    marginTop: wp(7),
+    // alignSelf: 'center',
+
+    marginTop: wp(4),
   },
   emailTextContainer: {
-    fontSize: wp(3.5),
-    fontWeight: 'bold',
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
   },
   inputContainer: {
     marginTop: wp(2),
-    borderColor: colors.green,
+    borderColor: colors.textOpa,
     borderWidth: wp(0.4),
     paddingLeft: wp(3),
-    borderRadius: wp(3),
+    borderRadius: wp(1),
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -69,14 +71,22 @@ const styles = StyleSheet.create({
     width: wp(100),
   },
   signinText: {
-    fontSize: wp(4.5),
-    fontWeight: 'bold',
+    fontSize: wp(3.4),
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplaySemiBold,
     color: colors.secondary,
   },
   signinTextGoogle: {
-    fontSize: wp(4),
-    fontWeight: 'bold',
-    color: colors.primary,
+    fontSize: wp(3.4),
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplaySemiBold,
+    color: colors.text,
+  },
+  signinWithApple: {
+    fontSize: wp(3.4),
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplaySemiBold,
+    color: colors.text,
   },
   siginBtnContainer: {
     marginTop: wp(10),
@@ -84,9 +94,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    width: wp(70),
+    flexDirection: 'row',
+    width: wp(90),
     padding: wp(4),
-    borderRadius: wp(3),
+    borderRadius: wp(1),
   },
   siginwithGoogle: {
     marginTop: wp(5),
@@ -94,12 +105,25 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     justifyContent: 'center',
     alignItems: 'center',
-    width: wp(70),
+    width: wp(90),
     padding: wp(4),
     flexDirection: 'row',
     borderWidth: wp(0.2),
-    borderColor: colors.primary,
-    borderRadius: wp(3),
+    borderColor: colors.text,
+    borderRadius: wp(1),
+  },
+  signUpWithApple: {
+    marginTop: wp(4),
+    alignSelf: 'center',
+    backgroundColor: colors.secondary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: wp(90),
+    padding: wp(4),
+    flexDirection: 'row',
+    borderWidth: wp(0.2),
+    borderColor: colors.text,
+    borderRadius: wp(1),
   },
   orContainer: {
     marginTop: wp(5),
@@ -122,17 +146,19 @@ const styles = StyleSheet.create({
     fontSize: wp(3),
     color: colors.text,
     opacity: 0.7,
+    fontFamily: fonts.SFuiDisplaySemiBold,
     marginTop: wp(3),
   },
   createNewAccount: {
     color: colors.primary,
-    opacity: 0.7,
-    fontSize: wp(3.4),
-    fontWeight: 'bold',
+    // opacity: 0.7,
+    fontSize: wp(3),
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplaySemiBold,
     textAlign: 'center',
   },
   createnewaccountContainer: {
-    marginTop: wp(3),
+    marginTop: wp(1),
   },
   errEmailPassDesc: {
     marginTop: wp(2),

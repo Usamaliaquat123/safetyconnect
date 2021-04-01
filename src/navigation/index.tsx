@@ -46,7 +46,7 @@ export const Navigator = () => {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <MainStackNavigator screen={user === '' ? 'Login' : 'CreateSOR'} />
+        <MainStackNavigator screen={user === '' ? 'Login' : 'Signup'} />
       </NavigationContainer>
     </SafeAreaProvider>
   );
