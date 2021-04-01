@@ -4,10 +4,12 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {fonts} from '@theme';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
+    padding: wp(5),
+    backgroundColor: colors.secondary,
   },
   header: {
     padding: wp(7),
@@ -39,9 +41,10 @@ const styles = StyleSheet.create({
     borderTopRightRadius: wp(4),
   },
   headingContainer: {
-    textAlign: 'center',
-    fontSize: wp(3.2),
+    fontSize: wp(4),
     color: colors.primary,
+    fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplaySemiBold,
     // fontWeight: ,
   },
   signinText: {

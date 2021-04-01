@@ -64,65 +64,51 @@ class Verify extends React.Component<VerifyProps, any> {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <View style={styles.header}>
-            <View style={styles.headertle}>
-              <View>
-                <Text style={styles.title}>Sign up</Text>
-                <View style={styles.underScrore} />
-              </View>
-            </View>
-          </View>
           {/* content */}
-          <View style={styles.content}>
-            <View style={{alignSelf: 'center'}}>
-              <Image
-                source={images.forgotPass}
-                width={wp(40)}
-                height={wp(40)}
-              />
-            </View>
-            <View style={styles.containerVerifyText}>
-              <Text style={styles.headingContainer}>
-                Please verify your email address!
-              </Text>
-            </View>
-            <Text
-              style={{
-                marginTop: wp(3),
-                fontSize: wp(3),
-                color: colors.text,
-                textAlign: 'center',
-              }}>
-              {this.props.route.params.email}
+          {/* <View style={styles.content}> */}
+          {/* <View style={{alignSelf: 'center'}}>
+            <Image source={images.forgotPass} width={wp(40)} height={wp(40)} />
+          </View> */}
+          <View style={styles.containerVerifyText}>
+            <Text style={styles.headingContainer}>
+              Please verify your email before signing in!
             </Text>
-            <TouchableOpacity
-              // onPress={() => this.props.navigation.navigate("")}
-              style={styles.siginBtnContainer}>
-              <Text style={styles.signinText}>Continue</Text>
-            </TouchableOpacity>
-            {/* Don't have a Acctouny */}
-            <Text style={styles.dontHaveAccount}>
-              Didn't receive an email ?{' '}
-            </Text>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Login')}
-              style={styles.createnewaccountContainer}>
-              <Text style={styles.createNewAccount}>Resend Email</Text>
-            </TouchableOpacity>
-            {/* Or */}
-            <View style={styles.orContainer}>
-              <View style={styles.line} />
-              <Text style={styles.orText}>OR</Text>
-              <View style={styles.line} />
-            </View>
-            {/* Google Signin */}
-            <TouchableOpacity style={styles.siginwithGoogle}>
-              <View style={{width: wp(5), height: wp(5), marginRight: wp(3)}}>
-                <Image source={images.google} style={GlStyles.images} />
-              </View>
-              <Text style={styles.signinTextGoogle}>Continue with Google </Text>
-            </TouchableOpacity>
           </View>
+          <Text
+            style={{
+              marginTop: wp(3),
+              fontSize: wp(3),
+              color: colors.text,
+              textAlign: 'center',
+            }}>
+            {/* {this.props.route.params.email} */}
+          </Text>
+          <TouchableOpacity
+            // onPress={() => this.props.navigation.navigate("")}
+            style={styles.siginBtnContainer}>
+            <Text style={styles.signinText}>Continue</Text>
+          </TouchableOpacity>
+          {/* Don't have a Acctouny */}
+          <Text style={styles.dontHaveAccount}>Didn't receive an email ? </Text>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Login')}
+            style={styles.createnewaccountContainer}>
+            <Text style={styles.createNewAccount}>Resend Email</Text>
+          </TouchableOpacity>
+          {/* Or */}
+          <View style={styles.orContainer}>
+            <View style={styles.line} />
+            <Text style={styles.orText}>OR</Text>
+            <View style={styles.line} />
+          </View>
+          {/* Google Signin */}
+          <TouchableOpacity style={styles.siginwithGoogle}>
+            <View style={{width: wp(5), height: wp(5), marginRight: wp(3)}}>
+              <Image source={images.google} style={GlStyles.images} />
+            </View>
+            <Text style={styles.signinTextGoogle}>Continue with Google </Text>
+          </TouchableOpacity>
+          {/* </View> */}
         </ScrollView>
       </View>
     );
