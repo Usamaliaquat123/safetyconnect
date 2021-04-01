@@ -117,7 +117,7 @@ class Forgot extends React.Component<ForgotProps, any> {
                 color={colors.primary}
               />
             </View>
-            <View style={{marginTop: wp(8)}}>
+            <View style={{marginTop: wp(5)}}>
               <Text style={styles.headingContainer}>Forgot Password</Text>
               {/* inputs container */}
               <Text style={styles.headingCotent}>
