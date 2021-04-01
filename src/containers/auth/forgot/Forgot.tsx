@@ -107,7 +107,7 @@ class Forgot extends React.Component<ForgotProps, any> {
             </View>
           </View> */}
           {/* content */}
-          <View>
+          <View style={{marginTop: wp(10)}}>
             <View>
               <Text style={styles.headingContainer}>Forgot Password</Text>
               {/* inputs container */}
@@ -117,7 +117,7 @@ class Forgot extends React.Component<ForgotProps, any> {
 
               <View style={styles.inputsContainer}>
                 {/* Email Container */}
-                <Text style={styles.emailTextContainer}>Email</Text>
+                <Text style={styles.emailTextContainer}>Enter your email</Text>
                 <View style={[styles.inputContainer]}>
                   <TextInput
                     style={styles.authInputs}
@@ -138,25 +138,32 @@ class Forgot extends React.Component<ForgotProps, any> {
                 onPress={() => this.forgotPass(this.state.email)}
                 style={styles.siginBtnContainer}>
                 <Text style={styles.signinText}>Continue</Text>
+                <Icon
+                  containerStyle={{marginLeft: wp(3)}}
+                  size={wp(5)}
+                  name="arrowright"
+                  type="antdesign"
+                  color={colors.secondary}
+                />
               </TouchableOpacity>
 
               {/* Don't have a Acctouny */}
               <View style={styles.dtHaveContainer}>
                 <Text style={styles.dontHaveAccount}>
-                  Confirmation Link will be sent to you{' '}
+                  Make sure to check your Spam or Junk{' '}
                 </Text>
                 <Text style={styles.dontHaveAccount}>
-                  on your given email address.{' '}
+                  folders before requesting verification link
                 </Text>
+                <Text style={styles.dontHaveAccount}>again.</Text>
               </View>
-              <View style={{alignSelf: 'center', marginTop: wp(5)}}>
-                <Image
-                  // style={{width: wp(30)}}
-                  source={images.forgotPassEmail}
-                  style={{width: wp(40), height: wp(40)}}
-                  width={wp(57)}
-                  height={wp(40)}
-                />
+              <View style={{marginTop: wp(10)}}>
+                <Text style={styles.dontHaveAccount}>
+                  Didn't received email. ?
+                </Text>
+                <Text style={styles.dontHaveAccountLink}>
+                  Resend Password Reset Email
+                </Text>
               </View>
             </View>
           </View>

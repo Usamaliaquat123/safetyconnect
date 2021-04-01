@@ -45,13 +45,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    width: wp(70),
+    width: wp(90),
+    flexDirection: 'row',
     padding: wp(4),
     borderRadius: wp(3),
   },
   signinText: {
-    fontSize: wp(4.5),
-    fontWeight: 'bold',
+    fontSize: wp(4),
+    fontFamily: fonts.SFuiDisplayMedium,
     color: colors.secondary,
   },
   headingContainer: {
@@ -74,11 +75,13 @@ const styles = StyleSheet.create({
   },
   emailTextContainer: {
     fontSize: wp(3.5),
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayMedium,
   },
   inputContainer: {
     marginTop: wp(2),
-    borderColor: colors.green,
+    borderColor: colors.textOpa,
+    // opacity: 0.5,
     borderWidth: wp(0.4),
     paddingLeft: wp(3),
     borderRadius: wp(3),
@@ -88,12 +91,22 @@ const styles = StyleSheet.create({
   dontHaveAccount: {
     textAlign: 'center',
     fontSize: wp(3.2),
-    color: colors.primary,
+    color: colors.text,
     opacity: 0.7,
-    marginTop: wp(1),
+    fontFamily: fonts.SFuiDisplayMedium,
+    // marginTop: wp(1),
+  },
+
+  dontHaveAccountLink: {
+    textAlign: 'center',
+    fontSize: wp(3.2),
+    color: colors.primary,
+
+    fontFamily: fonts.SFuiDisplayBold,
+    // marginTop: wp(1),
   },
   dtHaveContainer: {
-    marginTop: wp(8),
+    marginTop: wp(40),
   },
 
   errHeadPop: {
