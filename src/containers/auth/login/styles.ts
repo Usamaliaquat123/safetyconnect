@@ -5,10 +5,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.primary,
-  },
   header: {
     padding: wp(7),
     paddingTop: wp(1),
@@ -31,23 +27,23 @@ const styles = StyleSheet.create({
   headertle: {flexDirection: 'row'},
   //  content
   content: {
-    height: hp(100),
+    flex: 1,
     padding: wp(5),
     backgroundColor: colors.secondary,
-    borderTopLeftRadius: wp(3),
-    borderTopRightRadius: wp(3),
   },
   headingContainer: {
-    fontSize: wp(4),
+    fontSize: wp(5),
     color: colors.primary,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayBold,
   },
   inputsContainer: {
     marginTop: wp(7),
   },
   emailTextContainer: {
     fontSize: wp(3),
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayMedium,
   },
   inputContainer: {
     marginTop: wp(2),
@@ -55,49 +51,53 @@ const styles = StyleSheet.create({
     borderWidth: wp(0.4),
     paddingLeft: wp(3),
 
-    borderRadius: wp(3),
+    borderRadius: wp(1),
     flexDirection: 'row',
     alignItems: 'center',
   },
   passTextContainer: {
     marginTop: wp(4),
     fontSize: wp(3),
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayMedium,
   },
   authInputs: {
     fontSize: wp(3),
     width: wp(70),
+    fontFamily: fonts.SFuiDisplayMedium,
   },
   forgetPassText: {
     fontSize: wp(3),
-    color: colors.primary,
+    color: colors.green,
     fontWeight: 'bold',
     opacity: 0.7,
-    marginTop: wp(5),
+    marginTop: wp(2),
   },
   eyeIconContainer: {
     position: 'absolute',
     right: wp(3),
   },
   signinText: {
-    fontSize: wp(4),
-    fontWeight: 'bold',
+    fontSize: wp(3.5),
+    fontFamily: fonts.SFuiDisplayMedium,
     color: colors.secondary,
   },
   signinTextGoogle: {
-    fontSize: wp(4),
-    fontWeight: 'bold',
-    color: colors.primary,
+    fontSize: wp(3.4),
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayMedium,
+    color: colors.text,
   },
   siginBtnContainer: {
-    marginTop: wp(10),
+    flexDirection: 'row',
+    marginTop: wp(2),
     alignSelf: 'center',
     backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    width: wp(70),
+    width: wp(90),
     padding: wp(4),
-    borderRadius: wp(3),
+    borderRadius: wp(1),
   },
   siginwithGoogle: {
     marginTop: wp(5),
@@ -105,12 +105,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     justifyContent: 'center',
     alignItems: 'center',
-    width: wp(70),
+    width: wp(90),
     padding: wp(3),
     flexDirection: 'row',
     borderWidth: wp(0.3),
-    borderColor: colors.primary,
-    borderRadius: wp(2),
+    borderColor: colors.text,
+    borderRadius: wp(1),
   },
   orContainer: {
     marginTop: wp(5),
@@ -132,8 +132,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: wp(3),
     color: colors.text,
-    opacity: 0.7,
-    marginTop: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
+    // opacity: 0.7,
+    marginTop: wp(18),
   },
   passwordError: {
     fontSize: wp(3),
@@ -143,14 +144,16 @@ const styles = StyleSheet.create({
   },
   createNewAccount: {
     color: colors.primary,
-    opacity: 0.7,
+    // opacity: 0.7,
     fontSize: wp(3.4),
 
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+
+    fontFamily: fonts.SFuiDisplayBold,
     textAlign: 'center',
   },
   createnewaccountContainer: {
-    marginTop: wp(3),
+    // marginTop: wp(3),
     // width: wp(30),
     // height: wp(10),
   },

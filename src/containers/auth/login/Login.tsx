@@ -156,9 +156,9 @@ class Login extends React.Component<LoginProps, any> {
   };
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.content}>
         <ScrollView>
-          <View style={styles.header}>
+          {/* <View style={styles.header}>
             <View style={styles.headertle}>
               <View>
                 <Text>{this.state.dynamicLink}</Text>
@@ -166,15 +166,15 @@ class Login extends React.Component<LoginProps, any> {
                 <View style={styles.underScrore} />
               </View>
             </View>
-          </View>
+          </View> */}
           {/* content */}
-          <View style={[styles.content]}>
+          <View style={{marginTop: wp(8)}}>
             <View>
               <Text style={styles.headingContainer}>Sign In</Text>
               {/* inputs container */}
               <View style={styles.inputsContainer}>
                 {/* Email Container */}
-                <Text style={styles.emailTextContainer}>Email</Text>
+                <Text style={styles.emailTextContainer}>Enter your email</Text>
                 <View
                   style={[
                     styles.inputContainer,
@@ -204,7 +204,9 @@ class Login extends React.Component<LoginProps, any> {
                   </Text>
                 )}
                 {/* Password Container */}
-                <Text style={styles.passTextContainer}>Password</Text>
+                <Text style={styles.passTextContainer}>
+                  Enter your password
+                </Text>
                 <View
                   style={[
                     styles.inputContainer,
@@ -277,7 +279,15 @@ class Login extends React.Component<LoginProps, any> {
               <TouchableOpacity
                 onPress={() => this.submitSignin()}
                 style={styles.siginBtnContainer}>
-                <Text style={styles.signinText}>Sign in </Text>
+                <Text style={styles.signinText}>Continue </Text>
+
+                <Icon
+                  containerStyle={{marginLeft: wp(3)}}
+                  size={wp(5)}
+                  name="arrowright"
+                  type="antdesign"
+                  color={colors.secondary}
+                />
               </TouchableOpacity>
               {/* Or */}
               <View style={styles.orContainer}>
@@ -298,6 +308,27 @@ class Login extends React.Component<LoginProps, any> {
                   Continue with Google{' '}
                 </Text>
               </TouchableOpacity>
+              {/* Apple Signin */}
+              <TouchableOpacity
+                onPress={() => {
+                  this.loginWithGoogle();
+                }}
+                style={styles.siginwithGoogle}>
+                <View
+                  style={{width: wp(10), height: wp(7), marginRight: wp(3)}}>
+                  {/* <Image source={images.} style={GlStyles.images} /> */}
+                  <Icon
+                    containerStyle={{marginLeft: wp(3)}}
+                    size={wp(5)}
+                    name="apple1"
+                    type="antdesign"
+                    color={colors.text}
+                  />
+                </View>
+                <Text style={styles.signinTextGoogle}>
+                  Continue with Apple ID{' '}
+                </Text>
+              </TouchableOpacity>
               {/* Don't have a Acctouny */}
               <Text style={styles.dontHaveAccount}>
                 Don't have an Account ?
@@ -305,7 +336,7 @@ class Login extends React.Component<LoginProps, any> {
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('Signup')}
                 style={styles.createnewaccountContainer}>
-                <Text style={styles.createNewAccount}>Create New Account</Text>
+                <Text style={styles.createNewAccount}>Sign up here</Text>
               </TouchableOpacity>
             </View>
             {/* )} */}
