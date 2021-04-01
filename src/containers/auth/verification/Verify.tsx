@@ -71,42 +71,65 @@ class Verify extends React.Component<VerifyProps, any> {
           </View> */}
           <View style={styles.containerVerifyText}>
             <Text style={styles.headingContainer}>
-              Please verify your email before signing in!
+              Please verify your email before
             </Text>
+            <Text style={styles.headingContainer}>signing in.</Text>
           </View>
-          <Text
-            style={{
-              marginTop: wp(3),
-              fontSize: wp(3),
-              color: colors.text,
-              textAlign: 'center',
-            }}>
-            {/* {this.props.route.params.email} */}
-          </Text>
-          <TouchableOpacity
-            // onPress={() => this.props.navigation.navigate("")}
-            style={styles.siginBtnContainer}>
-            <Text style={styles.signinText}>Continue</Text>
-          </TouchableOpacity>
-          {/* Don't have a Acctouny */}
-          <Text style={styles.dontHaveAccount}>Didn't receive an email ? </Text>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Login')}
-            style={styles.createnewaccountContainer}>
-            <Text style={styles.createNewAccount}>Resend Email</Text>
-          </TouchableOpacity>
+
           {/* Or */}
-          <View style={styles.orContainer}>
+          {/* <View style={styles.orContainer}>
             <View style={styles.line} />
             <Text style={styles.orText}>OR</Text>
             <View style={styles.line} />
-          </View>
-          {/* Google Signin */}
+          </View> */}
+          {/* Open Gmail */}
           <TouchableOpacity style={styles.siginwithGoogle}>
-            <View style={{width: wp(5), height: wp(5), marginRight: wp(3)}}>
-              <Image source={images.google} style={GlStyles.images} />
+            <View style={{width: wp(7), height: wp(7), marginRight: wp(3)}}>
+              <Image source={images.socialIcon.gmail} style={GlStyles.images} />
             </View>
-            <Text style={styles.signinTextGoogle}>Continue with Google </Text>
+            <Text style={styles.signinTextGoogle}>Open Gmail </Text>
+          </TouchableOpacity>
+          {/* Open Outlook */}
+          <TouchableOpacity style={styles.siginwithGoogle}>
+            <View style={{width: wp(7), height: wp(7), marginRight: wp(3)}}>
+              <Image
+                source={images.socialIcon.outlook}
+                style={GlStyles.images}
+              />
+            </View>
+            <Text style={styles.signinTextGoogle}>Open Outlook </Text>
+          </TouchableOpacity>
+          {/* Open Yahoo */}
+          <TouchableOpacity style={styles.siginwithGoogle}>
+            <View style={{width: wp(7), height: wp(7), marginRight: wp(3)}}>
+              <Image source={images.socialIcon.yahoo} style={GlStyles.images} />
+            </View>
+            <Text style={styles.signinTextGoogle}>Open Yahoo </Text>
+          </TouchableOpacity>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignSelf: 'center',
+              marginTop: wp(10),
+            }}>
+            <Text style={styles.detailContainer}>
+              {/* {this.props.route.params.email} */}
+              Make sure to check your Spam or Junk again.
+            </Text>
+            <Text style={styles.detailContainer}>
+              folders before requesting verfication link
+            </Text>
+            <Text style={styles.detailContainer}>again.</Text>
+          </View>
+
+          {/* Don't have a Acctouny */}
+          <Text style={styles.dontHaveAccount}>Didn't received email ? </Text>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Login')}
+            style={styles.createnewaccountContainer}>
+            <Text style={styles.createNewAccount}>
+              Resend Verification Email
+            </Text>
           </TouchableOpacity>
           {/* </View> */}
         </ScrollView>

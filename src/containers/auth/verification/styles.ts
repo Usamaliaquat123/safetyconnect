@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: wp(4),
   },
   headingContainer: {
-    fontSize: wp(4),
+    fontSize: wp(4.5),
     color: colors.primary,
     fontWeight: 'bold',
     fontFamily: fonts.SFuiDisplaySemiBold,
@@ -53,9 +53,10 @@ const styles = StyleSheet.create({
     color: colors.secondary,
   },
   signinTextGoogle: {
-    fontSize: wp(4),
-    fontWeight: 'bold',
-    color: colors.primary,
+    fontSize: wp(3.5),
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplaySemiBold,
+    color: colors.text,
   },
   siginBtnContainer: {
     marginTop: wp(10),
@@ -73,17 +74,26 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     justifyContent: 'center',
     alignItems: 'center',
-    width: wp(70),
+    width: wp(90),
     padding: wp(4),
     flexDirection: 'row',
     borderWidth: wp(0.2),
     borderColor: colors.primary,
-    borderRadius: wp(3),
+    borderRadius: wp(1),
   },
   orContainer: {
     marginTop: wp(5),
     justifyContent: 'center',
     flexDirection: 'row',
+  },
+  detailContainer: {
+    // marginTop: wp(3),
+    opacity: 0.6,
+    fontSize: wp(3),
+    width: wp(80),
+    color: colors.text,
+    textAlign: 'center',
+    flexWrap: 'wrap',
   },
   line: {
     width: wp(40),
@@ -101,20 +111,21 @@ const styles = StyleSheet.create({
     fontSize: wp(3),
     color: colors.text,
     opacity: 0.7,
-    marginTop: wp(3),
+    marginTop: wp(20),
   },
   createNewAccount: {
     color: colors.primary,
-    opacity: 0.7,
     fontSize: wp(3.4),
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayBold,
     textAlign: 'center',
   },
   createnewaccountContainer: {
-    marginTop: wp(3),
+    marginTop: wp(1),
   },
   containerVerifyText: {
     marginTop: wp(10),
+    marginBottom: wp(10),
   },
 });
 export default styles;

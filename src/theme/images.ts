@@ -20,6 +20,11 @@ export const images = {
   lsr: require('./images/icons/lsr.png'),
   nearMiss: require('./images/icons/nearmiss.png'),
 
+  socialIcon: {
+    gmail: require('./images/gmail-icon.png'),
+    outlook: require('./images/outlook-icon.png'),
+    yahoo: require('./images/yahoo-icon.png'),
+  },
   menuIcons: {
     edit: require('./images/more/edit.png'),
     observation: require('./images/more/observation.png'),
