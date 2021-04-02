@@ -52,6 +52,7 @@ export const getAllSors = (
   projectId: string,
   sorType: Array<number>,
 ): IThunkAction => {
+  console.log(sorType);
   return async (dispatch, getState) => {
     dispatch(loading(true));
     await createApi

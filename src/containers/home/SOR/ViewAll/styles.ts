@@ -260,14 +260,14 @@ const styles = StyleSheet.create({
   },
   optnselectorText: {
     fontSize: wp(3.4),
-    width: wp(50),
+    width: wp(52),
     fontFamily: fonts.SFuiDisplayMedium,
   },
   searchContainer: {
     // padding: wp(3),
     alignItems: 'center',
     width: wp(68),
-    // height: wp(12),
+    height: wp(13),
     flexDirection: 'row',
     borderWidth: wp(0.5),
     paddingLeft: wp(3),
