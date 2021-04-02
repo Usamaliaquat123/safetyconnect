@@ -133,14 +133,14 @@ export default class Card extends React.Component<CardProps, any> {
                         styles.riskCapacity,
                         this.props.risk < 6
                           ? {backgroundColor: colors.green}
-                          : this.props.risk < 7
+                          : this.props.risk < 14
                           ? {backgroundColor: colors.yellow}
                           : {backgroundColor: colors.error},
                       ]}>
                       <Text style={styles.riskCapacityText}>
                         {this.props.risk < 6
                           ? `${this.props.risk}-low`
-                          : this.props.risk < 7
+                          : this.props.risk < 14
                           ? `${this.props.risk}-Medium`
                           : `${this.props.risk}-High`}
                       </Text>

@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
     // fontWeight: 'bold',
     fontFamily: fonts.SFuiDisplayMedium,
-    marginTop: wp(5),
+    marginTop: wp(1),
   },
   imageContainer: {
     padding: wp(5),

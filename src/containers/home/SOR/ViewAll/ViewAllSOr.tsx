@@ -870,7 +870,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 ) : (
                   <ScrollView
                     style={{
-                      marginTop: wp(10),
+                      marginTop: wp(5),
                       // height: Dimensions.get('screen').height,
                     }}
                     showsHorizontalScrollIndicator={false}
