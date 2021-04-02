@@ -20,7 +20,7 @@ const itemHorizontalMargin = dp(2);
 export const sliderWidth = viewportWidth;
 export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
-const entryBorderRadius = 15;
+const entryBorderRadius = wp(1);
 
 const styles = StyleSheet.create({
   cardHeader: {
@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
   },
   cardtime: {
     fontSize: wp(3),
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayMedium,
     opacity: 0.5,
     color: colors.text,
   },
@@ -40,11 +41,14 @@ const styles = StyleSheet.create({
   },
 
   cardBottom: {
-    justifyContent: 'space-between',
-    flexDirection: 'row',
+    // justifyContent: ,
+    // flexDirection: 'row',
     width: wp(80) - wp(10),
-    // marginTop: wp(6),
-    // flex: 1,
+    // marginTop: wp(10),
+    position: 'absolute',
+    bottom: wp(3),
+    alignSelf: 'center',
+    // left: wp(2),
   },
   cardLocation: {
     flexDirection: 'row',
@@ -52,6 +56,8 @@ const styles = StyleSheet.create({
   cardBorderText: {
     fontSize: wp(3),
     color: colors.text,
+    opacity: 0.5,
+    fontFamily: fonts.SFuiDisplayMedium,
   },
   cardRisk: {
     flexDirection: 'row',
@@ -76,22 +82,24 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: wp(3),
-    color: colors.primary,
+    color: colors.text,
+    opacity: 0.5,
     // fontWeight: 'bold',
-    fontFamily: fonts.SFuiDisplayBold,
-    marginTop: wp(8),
+    fontFamily: fonts.SFuiDisplayMedium,
+    marginTop: wp(5),
   },
   imageContainer: {
     padding: wp(5),
     flex: 1,
     marginBottom: IS_IOS ? 0 : -1, // Prevent a random Android rendering issue
-    shadowColor: '#000',
+    shadowColor: '#C3C9DB',
     shadowOffset: {
       width: 0,
       height: 30,
     },
     shadowOpacity: 0.5,
     shadowRadius: 2.22,
+    backgroundColor: '#F8F9FF',
 
     elevation: 2,
     borderRadius: entryBorderRadius,
@@ -120,12 +128,34 @@ const styles = StyleSheet.create({
 
   //   elevation: 1,
   // },
+
+  userAndlocationContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  userNameEmail: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  riskCapacity: {
+    borderRadius: wp(4),
+    padding: wp(1),
+    width: wp(20),
+    alignItems: 'center',
+    backgroundColor: colors.error,
+  },
   slideInnerContainer: {
     width: itemWidth,
     height: slideHeight,
+    backgroundColor: '#F8F9FF',
     paddingHorizontal: itemHorizontalMargin,
     // backgroundColor: colors.secondary
     // paddingBottom: wp(10), // needed for shadow
+  },
+  riskCapacityText: {
+    fontSize: wp(3),
+    color: colors.secondary,
   },
 });
 

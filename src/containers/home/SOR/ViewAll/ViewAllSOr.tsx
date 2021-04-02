@@ -93,7 +93,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       AnimatedDownSubmitted: new Animated.Value(0),
       AnimatedOpacSubmitted: new Animated.Value(0),
       currentlocation: Create_sor.Observation.locations[0],
-      project: 'List View',
+      project: 'Board View',
       isInProgress: true,
       isDraft: true,
       isSubmited: true,
@@ -937,6 +937,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                   data: d,
                                 })
                               }
+                              name={d.created_by}
                               date={d.occured_at}
                               risk={d.risk.severity * d.risk.likelihood}
                               viewPortWidth={80}
@@ -1008,6 +1009,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           .map((d: Isor, i: number) => (
                             <Card
                               type={'all'}
+                              name={d.created_by}
                               data={d}
                               onPress={(d: Isor) =>
                                 this.props.navigation.navigate('ViewSOR', {
@@ -1082,6 +1084,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           .map((d: Isor, i: number) => (
                             <Card
                               type={'all'}
+                              name={d.created_by}
                               data={d}
                               onPress={(d: Isor) =>
                                 this.props.navigation.navigate('ViewSOR', {
@@ -1157,6 +1160,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             <Card
                               type={'all'}
                               data={d}
+                              name={d.created_by}
                               onPress={(d: Isor) =>
                                 this.props.navigation.navigate('ViewSOR', {
                                   data: d,
@@ -1231,6 +1235,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             <Card
                               type={'all'}
                               data={d}
+                              name={d.created_by}
                               onPress={(d: Isor) =>
                                 this.props.navigation.navigate('ViewSOR', {
                                   data: d,

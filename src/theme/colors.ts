@@ -1,10 +1,10 @@
 export const colors = {
   primary: '#112565',
-  
+
   secondary: '#FCFCFC',
   textOpa: '#D9D3D6',
   text: '#333337',
-  
+  yellow: '#FF9900',
   error: '#F14031',
   green: '#4BA735',
   lightBlue: '#EBEFF3',
@@ -21,27 +21,25 @@ export const colors = {
     darkGreen: '#009144',
     orrange: '#FB9120',
     red: '#F14030',
-// orignal
-    likelihood : {
-      rare:  "#C4E19E",
-      likely: "#F8F092",
-      possibly: "#F8F092",
-      unlikely: "#FC9121",
-      Rare: "#EA9189"
+    // orignal
+    likelihood: {
+      rare: '#C4E19E',
+      likely: '#F8F092',
+      possibly: '#F8F092',
+      unlikely: '#FC9121',
+      Rare: '#EA9189',
     },
     severity: {
-      rare:  "#C4E19E",
-      likely: "#F8F092",
-      possibly: "#F8F092",
-      unlikely: "#FDBD7A",
-      Rare: "#F14031"
-
-    }
-
+      rare: '#C4E19E',
+      likely: '#F8F092',
+      possibly: '#F8F092',
+      unlikely: '#FDBD7A',
+      Rare: '#F14031',
+    },
   },
-  darkLightGrey : "#DEDEDE",
+  darkLightGrey: '#DEDEDE',
   Viewcont: '#EDF1F5',
   chatTextbg: '#EBF1F5',
-  lightGrey:  "#CDD2D6",
-  extraLightBlue: "#F0F8EE"
+  lightGrey: '#CDD2D6',
+  extraLightBlue: '#F0F8EE',
 };
