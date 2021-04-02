@@ -1,5 +1,5 @@
 import {StyleSheet, Dimensions, Platform} from 'react-native';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     paddingRight: wp(3),
   },
   lineheight: {
-    height: wp(2),
+    height: wp(0.7),
     backgroundColor: colors.darkLightGrey,
   },
   nonReport: {
@@ -243,6 +243,36 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     opacity: 0.7,
     color: colors.primary,
+  },
+
+  searchbarContainer: {
+    backgroundColor: colors.secondary,
+    padding: wp(3),
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  filerText: {
+    fontSize: wp(3.6),
+    fontFamily: fonts.SFuiDisplayLight,
+    marginLeft: wp(3),
+    color: colors.primary,
+    marginRight: wp(3),
+  },
+  optnselectorText: {
+    fontSize: wp(3.4),
+    width: wp(50),
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  searchContainer: {
+    // padding: wp(3),
+    alignItems: 'center',
+    width: wp(68),
+    // height: wp(12),
+    flexDirection: 'row',
+    borderWidth: wp(0.5),
+    paddingLeft: wp(3),
+    borderRadius: wp(10),
+    borderColor: colors.darkLightGrey,
   },
 });
 

@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
   PanResponder,
   Image,
+  TextInput,
 } from 'react-native';
 import {
   allDraft,
@@ -190,8 +191,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 color={colors.secondary}
               />
               <View>
-                <Text style={styles.title}>View SOR Reports</Text>
-                <View style={styles.underScrore} />
+                <Text style={styles.title}>Observations and Feedback</Text>
+                {/* <View style={styles.underScrore} /> */}
               </View>
               <View style={styles.avatarView}>
                 <Avatar
@@ -245,6 +246,34 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           </View>
 
           <View style={styles.content}>
+            {/* Search bar  */}
+            <View style={styles.searchbarContainer}>
+              <Icon
+                style={{padding: 3}}
+                size={wp(7)}
+                name="filter-variant"
+                type="material-community"
+                color={colors.primary}
+              />
+              <Text style={styles.filerText}>Filters </Text>
+              <View style={styles.searchContainer}>
+                <TextInput
+                  onFocus={() => this.setState({selectedInputIndex: 5})}
+                  underlineColorAndroid="transparent"
+                  onChange={(v: any) => console.log(v)}
+                  placeholder={'Search'}
+                  style={styles.optnselectorText}
+                  value={this.state.esclateTo}></TextInput>
+                <Icon
+                  style={{padding: 3, opacity: 0.5}}
+                  size={wp(7)}
+                  name="search1"
+                  type="antdesign"
+                  color={colors.text}
+                />
+              </View>
+            </View>
+            <View style={styles.lineheight}></View>
             {this.props.reduxState.loading == true ? (
               <View
                 style={{
