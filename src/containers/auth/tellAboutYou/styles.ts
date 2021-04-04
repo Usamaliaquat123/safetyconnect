@@ -2,55 +2,55 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
+    padding: wp(5),
+    backgroundColor: colors.secondary,
   },
-  header: {
-    padding: wp(1),
-    paddingTop: wp(5),
-    paddingBottom: wp(5),
-    backgroundColor: colors.primary,
+
+  headingPara: {
+    fontSize: wp(3.4),
+    opacity: 0.5,
+    fontFamily: fonts.SFuiDisplayMedium,
   },
-  title: {
-    fontSize: wp(4),
-    marginLeft: wp(5),
-    color: colors.secondary,
-    fontWeight: 'bold',
-  },
-  underScrore: {
-    backgroundColor: colors.green,
-    width: wp(3),
-    marginLeft: wp(5),
-    padding: wp(0.5),
-    borderRadius: 10,
+  headingParaEmail: {
+    fontSize: wp(3.4),
+    opacity: 9,
+    fontFamily: fonts.SFuiDisplaySemiBold,
   },
   headertle: {flexDirection: 'row'},
   //  content
-  content: {
-    height: hp(100),
-    padding: wp(5),
-    paddingBottom: hp(20),
-    backgroundColor: colors.secondary,
-    borderTopLeftRadius: wp(3),
-    borderTopRightRadius: wp(3),
-  },
+  // content: {
+  //   height: hp(100),
+  //   padding: wp(5),
+  //   paddingBottom: hp(20),
+  //   backgroundColor: colors.secondary,
+  //   borderTopLeftRadius: wp(3),
+  //   borderTopRightRadius: wp(3),
+  // },
   headingContainer: {
-    fontSize: wp(4),
+    fontSize: wp(5),
     color: colors.primary,
-    fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplaySemiBold,
   },
   inputsContainer: {
-    marginTop: wp(1),
+    marginTop: wp(8),
   },
   emailTextContainer: {
-    fontSize: wp(3),
+    fontSize: wp(3.4),
     marginTop: wp(5),
-    fontWeight: 'bold',
     opacity: 0.7,
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  passwordWarning: {
+    marginTop: wp(2),
+    fontSize: wp(3.4),
+    color: colors.text,
+    opacity: 0.5,
+    fontFamily: fonts.SFuiDisplayMedium,
   },
   inputContainer: {
     marginTop: wp(1),
@@ -78,8 +78,8 @@ const styles = StyleSheet.create({
   },
   signinText: {
     fontSize: wp(4),
-    fontWeight: 'bold',
     color: colors.secondary,
+    fontFamily: fonts.SFuiDisplayMedium,
   },
   signinTextGoogle: {
     fontSize: wp(4),
@@ -87,12 +87,13 @@ const styles = StyleSheet.create({
     color: colors.primary,
   },
   siginBtnContainer: {
+    flexDirection: 'row',
     marginTop: wp(10),
     alignSelf: 'center',
     backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    width: wp(70),
+    width: wp(90),
     padding: wp(4),
     borderRadius: wp(3),
   },

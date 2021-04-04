@@ -79,7 +79,8 @@ export default class Card extends React.Component<CardProps, any> {
                 <View style={{flexDirection: 'column'}}>
                   <View style={styles.cardHeader}>
                     <Text style={styles.cardtime}>
-                      Reported at {moment().format('LT, DD MMM YYYY')}
+                      Reported at{' '}
+                      {moment(this.props.date).format('LT, DD MMM YYYY')}
                     </Text>
                     {this.props.isclassify == true ? (
                       <TouchableOpacity

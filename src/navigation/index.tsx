@@ -40,13 +40,13 @@ export const Navigator = () => {
     setUser(res);
   });
   // console.log(user);
-
+  console.log(user);
   AsyncStorage.setItem('current_project', '604b13d114ba138bd23d7f75');
 
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <MainStackNavigator screen={user === '' ? 'Login' : 'ViewAllSOr'} />
+        <MainStackNavigator screen={user === null ? 'Login' : 'ViewAllSOr'} />
       </NavigationContainer>
     </SafeAreaProvider>
   );

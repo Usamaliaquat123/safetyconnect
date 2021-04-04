@@ -66,6 +66,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
   };
 
   setupPass = () => {
+    console.log(this.state.password);
     if (validatePassword(this.state.password)) {
       if (this.state.password == this.state.passMatchText) {
         try {
@@ -85,6 +86,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                 this.props.route.params.email,
                 this.state.password,
               ).then((res) => {
+                console.log(res);
                 if (this.props.route.params.type == 'forgot') {
                   this.setState({loading: false, errorModal: false});
                   this.props.navigation.navigate('Login');
@@ -97,12 +99,15 @@ class CreatePass extends React.Component<CreatePassProps, any> {
               });
             })
             .catch((err) => {
+              console.log(err);
               this.setState({loading: false, errorModal: false});
             })
             .catch((err) => {
+              console.log(err);
               this.setState({loading: false, errorModal: false});
             });
         } catch (err) {
+          console.log(err);
           this.setState({loading: false, errorModal: false});
         }
       } else {

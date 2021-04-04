@@ -66,11 +66,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
     };
   }
 
-  componentDidMount = () => {
-    // Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png').then((res) => {
-    //   this.setState({uploadedImage: res});
-    // });
-  };
+  componentDidMount = () => {};
 
   imgCap = (str: string) => {
     if (str == 'upload') {
@@ -164,24 +160,8 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
     return (
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.header}>
-            <View style={styles.headertle}>
-              {/* <Icon
-                containerStyle={{marginLeft: wp(2)}}
-                onPress={() => this.props.navigation.goBack()}
-                size={25}
-                name="arrow-back-outline"
-                type="ionicon"
-                color={colors.secondary}
-              /> */}
-              <View>
-                <Text style={styles.title}>Sign up</Text>
-                <View style={styles.underScrore} />
-              </View>
-            </View>
-          </View>
           {/* content */}
-          <View style={styles.content}>
+          <View>
             {this.state.loading == true ? (
               <View
                 style={{
@@ -196,75 +176,26 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                 />
               </View>
             ) : (
-              <View>
-                <Text style={styles.headingContainer}>Tell about yourself</Text>
-                {/* Photo Seclector  */}
-                <TouchableOpacity style={styles.imageUploadContainer}>
-                  {this.state.uploadedImage === '' ? (
-                    <TouchableOpacity
-                      onPress={() => this.setState({photoModal: true})}
-                      style={styles.imagenotUpoad}>
-                      <View style={styles.imagenotuploadContainer}>
-                        <Icon
-                          size={wp(13)}
-                          containerStyle={{opacity: 0.5}}
-                          name="camera"
-                          type="evilicon"
-                          color={colors.text}
-                        />
-                        <Text style={styles.uploadPicText}>Upload</Text>
-                        <Text style={styles.uploadPicText}>Picture</Text>
-                      </View>
-                    </TouchableOpacity>
-                  ) : (
-                    <TouchableOpacity
-                      onPress={() => this.setState({photoModal: true})}
-                      style={styles.avatarPencil}>
-                      <View
-                        style={{position: 'absolute', zIndex: 1, right: wp(5)}}>
-                        <View
-                          style={{
-                            backgroundColor: colors.green,
-                            borderRadius: wp(10),
-                            padding: wp(2),
-                            zIndex: 1,
-                          }}>
-                          <Icon
-                            size={wp(4)}
-                            containerStyle={{opacity: 0.5}}
-                            name="pencil"
-                            type="font-awesome"
-                            color={colors.secondary}
-                          />
-                        </View>
-                      </View>
-
-                      <Avatar
-                        size={'xlarge'}
-                        rounded
-                        source={{
-                          uri: this.state.uploadedImage,
-                        }}
-                      />
-                    </TouchableOpacity>
-                  )}
-                </TouchableOpacity>
+              <View style={{marginTop: wp(10)}}>
+                <Text style={styles.headingContainer}>
+                  Welcome to SafetyConnect
+                </Text>
+                <Text style={styles.headingPara}>
+                  You are signed up as
+                  <Text style={styles.headingParaEmail}>
+                    {' '}
+                    {this.props.route.params.username}
+                  </Text>
+                </Text>
                 <View style={styles.inputsContainer}>
                   <Text style={[styles.emailTextContainer, {marginTop: wp(2)}]}>
-                    Name
-                    <Text
-                      style={{
-                        fontSize: wp(3),
-                        color: colors.error,
-                      }}>
-                      *
-                    </Text>
+                    What is your Full Name ?
                   </Text>
                   <View
                     style={[
                       styles.inputContainer,
                       this.state.selected == 0
-                        ? {borderColor: colors.green, padding: wp(0)}
+                        ? {borderColor: colors.primary, padding: wp(0)}
                         : {
                             borderColor: colors.textOpa,
                             padding: wp(0),
@@ -278,7 +209,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       onChange={(e) =>
                         this.setState({name: e.nativeEvent.text})
                       }
-                      placeholder={'First Name'}
+                      placeholder={'Your Full Name'}
                     />
                   </View>
                   {this.state.nameError && (
@@ -287,19 +218,22 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     </Text>
                   )}
                   {/*Industry selectionv   */}
-                  <Text style={styles.emailTextContainer}>Industry</Text>
+                  <Text style={styles.emailTextContainer}>
+                    Enter your new Password
+                  </Text>
 
                   <View
                     style={[
                       styles.inputContainer,
                       this.state.selected == 2
-                        ? {borderColor: colors.green, padding: wp(0)}
+                        ? {borderColor: colors.primary, padding: wp(0)}
                         : {
                             borderColor: colors.textOpa,
                             padding: wp(0),
                           },
                     ]}>
                     <TextInput
+                      secureTextEntry={true}
                       onFocus={() => this.setState({selected: 2})}
                       underlineColorAndroid="transparent"
                       style={styles.selectText}
@@ -309,18 +243,23 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                           IndustrySelectionText: e.nativeEvent.text,
                         })
                       }
-                      placeholder={'Industry Type'}
+                      placeholder={'***********'}
                     />
                   </View>
-
+                  <Text style={styles.passwordWarning}>
+                    Password must contain at least 8 characters and must include
+                    numbers and special character.
+                  </Text>
                   {/*Deraprtment selectionv   */}
-                  <Text style={styles.emailTextContainer}>Department</Text>
+                  <Text style={styles.emailTextContainer}>
+                    Confirm Your Password
+                  </Text>
 
                   <View
                     style={[
                       styles.inputContainer,
                       this.state.selected == 3
-                        ? {borderColor: colors.green, padding: wp(0)}
+                        ? {borderColor: colors.primary, padding: wp(0)}
                         : {
                             borderColor: colors.textOpa,
                             padding: wp(0),
@@ -339,46 +278,19 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       placeholder={'department'}
                     />
                   </View>
-
-                  {/*job role selectionv   */}
-                  <Text style={styles.emailTextContainer}>
-                    What is your role in the organization
-                    <Text style={{fontSize: wp(3), color: colors.error}}>
-                      *
-                    </Text>{' '}
-                    ?
-                  </Text>
-                  <View
-                    style={[
-                      styles.inputContainer,
-                      this.state.selected == 4
-                        ? {borderColor: colors.green, padding: wp(0)}
-                        : {
-                            borderColor: colors.textOpa,
-                            padding: wp(0),
-                          },
-                    ]}>
-                    <TextInput
-                      onFocus={() => this.setState({selected: 4})}
-                      underlineColorAndroid="transparent"
-                      style={styles.selectText}
-                      value={this.state.role}
-                      onChange={(e) =>
-                        this.setState({role: e.nativeEvent.text})
-                      }
-                      placeholder={'Design and Architecture'}
-                    />
-                  </View>
-                  {this.state.roleError && (
-                    <Text style={{color: colors.error, fontSize: wp(3)}}>
-                      * Enter you role in the organization
-                    </Text>
-                  )}
                 </View>
+
                 <TouchableOpacity
                   onPress={() => this.updateProfile()}
                   style={styles.siginBtnContainer}>
                   <Text style={styles.signinText}>Continue</Text>
+                  <Icon
+                    containerStyle={{marginLeft: wp(2)}}
+                    size={wp(5)}
+                    name="arrowright"
+                    type="antdesign"
+                    color={colors.secondary}
+                  />
                 </TouchableOpacity>
               </View>
             )}
@@ -398,7 +310,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
             )}
           </Modal> */}
           {/* Modal Container */}
-          <Modal
+          {/* <Modal
             isVisible={this.state.photoModal}
             onBackdropPress={() => this.setState({photoModal: false})}>
             <View
@@ -449,7 +361,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                 />
               </TouchableOpacity>
             </View>
-          </Modal>
+          </Modal> */}
         </ScrollView>
       </View>
     );
