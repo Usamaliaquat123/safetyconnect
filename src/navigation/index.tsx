@@ -39,6 +39,7 @@ export const Navigator = () => {
   AsyncStorage.getItem('email').then((res: any) => {
     setUser(res);
   });
+
   // console.log(user);
   console.log(user);
   AsyncStorage.setItem('current_project', '604b13d114ba138bd23d7f75');
@@ -46,9 +47,7 @@ export const Navigator = () => {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <MainStackNavigator
-          screen={user === null ? 'CreatePass' : 'CreatePass'}
-        />
+        <MainStackNavigator screen={user === null ? 'Login' : 'ViewAllSOr'} />
       </NavigationContainer>
     </SafeAreaProvider>
   );

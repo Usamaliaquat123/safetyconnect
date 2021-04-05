@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.SFuiDisplayBold,
   },
   inputsContainer: {
-    marginTop: wp(7),
+    marginTop: wp(5),
   },
   emailTextContainer: {
     fontSize: wp(3.5),

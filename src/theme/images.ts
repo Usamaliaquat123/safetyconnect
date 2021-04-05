@@ -16,6 +16,9 @@ export const images = {
   meetBefore: require('./images/metBefore.png'),
   // excel: require('./images/excel.png'),
   // powerpoint: require('./images/powerpoint.png'),
+
+  listview: require('./images/icons/list.png'),
+  boardView: require('./images/icons/board.png'),
   organizationLogo: require('./images/organizationLogo.png'),
   lsr: require('./images/icons/lsr.png'),
   nearMiss: require('./images/icons/nearmiss.png'),

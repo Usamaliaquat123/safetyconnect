@@ -22,7 +22,7 @@ import {
   Create_sor,
 } from '@service';
 import {Icon, Avatar} from 'react-native-elements';
-import {colors, fonts, animation, images} from '@theme';
+import {colors, fonts, animation, images, GlStyles} from '@theme';
 import {initialList} from '@store';
 import {RootState} from '../../../../store/store';
 import {AllSorDTO} from '@dtos';
@@ -112,6 +112,13 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       // New sor modal popup
       newsorModal: false,
     };
+    this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
+      1,
+      2,
+      3,
+      4,
+      5,
+    ]);
   }
   componentWillUnmount = () => {
     this.setState({
@@ -127,14 +134,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   componentDidMount = async () => {
     // this.props.initialList();
     // initialList.addList('sdsd');a
-    console.log(this.props.reduxState);
-    this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
-      1,
-      2,
-      3,
-      4,
-      5,
-    ]);
+    // console.log(this.props.reduxState);
+
     // console.log(this.props.reduxState.loading);
     // initialList.initialList();
     // console.log('==================');
@@ -212,7 +213,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
             <View style={styles.headerSelect}>
               {/* Project selector */}
               <View style={styles.leftSelector}>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={styles.selector}
                   onPress={() => {
                     this.setState({
@@ -223,14 +224,34 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     });
                   }}>
                   <Text style={styles.selectorBox}>{this.state.project}</Text>
+                </TouchableOpacity> */}
+                <TouchableOpacity
+                  onPress={() => this.setState({project: 'List View'})}
+                  style={{width: wp(5), height: wp(5)}}>
+                  <Image
+                    source={images.listview}
+                    style={[
+                      GlStyles.images,
+                      this.state.project == 'List View'
+                        ? {tintColor: colors.green}
+                        : {tintColor: colors.lightGrey},
+                    ]}
+                  />
                 </TouchableOpacity>
-                <Icon
-                  style={{padding: 3}}
-                  size={10}
-                  name="down"
-                  type="antdesign"
-                  color={colors.secondary}
-                />
+                <TouchableOpacity
+                  onPress={() => this.setState({project: 'Board View'})}
+                  style={{width: wp(5), height: wp(5), marginLeft: wp(5)}}>
+                  <Image
+                    source={images.boardView}
+                    style={[
+                      GlStyles.images,
+                      this.state.project != 'List View'
+                        ? {tintColor: colors.green}
+                        : {tintColor: colors.lightGrey},
+                    ]}
+                  />
+                </TouchableOpacity>
+
                 {/* {this.state.selectP == true ? (
                   <View style={styles.slctContainer}>
                     <TouchableOpacity
@@ -870,7 +891,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 ) : (
                   <ScrollView
                     style={{
-                      marginTop: wp(5),
+                      marginTop: wp(4),
                       // height: Dimensions.get('screen').height,
                     }}
                     showsHorizontalScrollIndicator={false}
@@ -907,7 +928,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       <View>
                         <View style={styles.draftTextContainer}>
                           <Text style={styles.draftText}>Drafts</Text>
-                          <View style={{flexDirection: 'row'}}>
+                          {/* <View style={{flexDirection: 'row'}}>
                             <Icon
                               size={wp(5)}
                               name="filter"
@@ -923,7 +944,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               }}>
                               Filter
                             </Text>
-                          </View>
+                          </View> */}
                         </View>
 
                         {this.state.draft
@@ -964,6 +985,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               })
                             }
                             style={{
+                              marginTop: wp(10),
+                              // marginBottom: wp(),
                               alignSelf: 'center',
                               padding: wp(3),
                               paddingLeft: wp(10),
@@ -986,23 +1009,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       <View>
                         <View style={styles.draftTextContainer}>
                           <Text style={styles.draftText}>In Progress</Text>
-                          <View style={{flexDirection: 'row'}}>
-                            <Icon
-                              size={wp(5)}
-                              name="filter"
-                              type="ionicon"
-                              color={colors.text}
-                            />
-                            <Text
-                              style={{
-                                fontSize: wp(3),
-                                marginLeft: wp(3),
-                                fontWeight: 'bold',
-                                color: colors.text,
-                              }}>
-                              Filter
-                            </Text>
-                          </View>
                         </View>
                         {this.state.inprogress
                           .slice(0, 3)
@@ -1042,6 +1048,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               alignSelf: 'center',
                               padding: wp(3),
                               paddingLeft: wp(10),
+                              marginTop: wp(10),
                               paddingRight: wp(10),
                               borderRadius: wp(3),
                               backgroundColor: colors.primary,
@@ -1061,23 +1068,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       <View>
                         <View style={styles.draftTextContainer}>
                           <Text style={styles.draftText}>In Progress</Text>
-                          <View style={{flexDirection: 'row'}}>
-                            <Icon
-                              size={wp(5)}
-                              name="filter"
-                              type="ionicon"
-                              color={colors.text}
-                            />
-                            <Text
-                              style={{
-                                fontSize: wp(3),
-                                marginLeft: wp(3),
-                                fontWeight: 'bold',
-                                color: colors.text,
-                              }}>
-                              Filter
-                            </Text>
-                          </View>
                         </View>
                         {this.state.exclated
                           .slice(0, 3)
@@ -1117,6 +1107,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               alignSelf: 'center',
                               padding: wp(3),
                               paddingLeft: wp(10),
+                              marginTop: wp(10),
                               paddingRight: wp(10),
                               borderRadius: wp(3),
                               backgroundColor: colors.primary,
@@ -1136,23 +1127,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       <View>
                         <View style={styles.draftTextContainer}>
                           <Text style={styles.draftText}>In Progress</Text>
-                          <View style={{flexDirection: 'row'}}>
-                            <Icon
-                              size={wp(5)}
-                              name="filter"
-                              type="ionicon"
-                              color={colors.text}
-                            />
-                            <Text
-                              style={{
-                                fontSize: wp(3),
-                                marginLeft: wp(3),
-                                fontWeight: 'bold',
-                                color: colors.text,
-                              }}>
-                              Filter
-                            </Text>
-                          </View>
                         </View>
                         {this.state.completed
                           .slice(0, 3)
@@ -1194,6 +1168,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               paddingLeft: wp(10),
                               paddingRight: wp(10),
                               borderRadius: wp(3),
+                              marginTop: wp(10),
                               backgroundColor: colors.primary,
                             }}>
                             <Text
@@ -1211,23 +1186,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       <View>
                         <View style={styles.submitTextContaienr}>
                           <Text style={styles.submitText}>Closed</Text>
-                          <View style={{flexDirection: 'row'}}>
-                            <Icon
-                              size={wp(5)}
-                              name="filter"
-                              type="ionicon"
-                              color={colors.text}
-                            />
-                            <Text
-                              style={{
-                                fontSize: wp(3),
-                                marginLeft: wp(3),
-                                fontWeight: 'bold',
-                                color: colors.text,
-                              }}>
-                              Filter
-                            </Text>
-                          </View>
                         </View>
                         {this.state.submitted
                           .slice(0, 3)

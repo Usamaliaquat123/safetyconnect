@@ -206,7 +206,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                 <Text style={styles.headingPra}>
                   You are signing up as{' '}
                   <Text style={styles.headingParaEmail}>
-                    {/* {this.props.route.params.email} */}
+                    {this.props.route.params.email}
                   </Text>
                 </Text>
               </View>
