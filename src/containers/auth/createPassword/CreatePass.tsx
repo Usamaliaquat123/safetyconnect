@@ -54,6 +54,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       errorModal: false,
       passMatchText: '',
       loading: true,
+      name: '',
     };
   }
   componentDidMount() {}
@@ -67,54 +68,105 @@ class CreatePass extends React.Component<CreatePassProps, any> {
 
   setupPass = () => {
     console.log(this.state.password);
-    if (validatePassword(this.state.password)) {
-      if (this.state.password == this.state.passMatchText) {
-        try {
-          this.setState({
-            passMachErr: false,
-            error: false,
-            loading: true,
-            errorModal: true,
-          });
-          Auth.forgotPasswordSubmit(
-            this.props.route.params.email,
-            this.props.route.params.code,
-            this.state.password,
-          )
-            .then((res) => {
-              Auth.signIn(
-                this.props.route.params.email,
-                this.state.password,
-              ).then((res) => {
-                console.log(res);
-                if (this.props.route.params.type == 'forgot') {
-                  this.setState({loading: false, errorModal: false});
-                  this.props.navigation.navigate('Login');
-                } else if (this.props.route.params.type == 'verify') {
-                  this.setState({loading: false, errorModal: false});
-                  this.props.navigation.navigate('tellAboutYou', {
-                    username: this.props.route.params.email,
-                  });
-                }
-              });
-            })
-            .catch((err) => {
-              console.log(err);
-              this.setState({loading: false, errorModal: false});
-            })
-            .catch((err) => {
-              console.log(err);
-              this.setState({loading: false, errorModal: false});
+    if (this.state.name !== ' ') {
+      if (validatePassword(this.state.password)) {
+        if (this.state.password == this.state.passMatchText) {
+          try {
+            this.setState({
+              passMachErr: false,
+              error: false,
+              loading: true,
+              errorModal: true,
             });
-        } catch (err) {
-          console.log(err);
-          this.setState({loading: false, errorModal: false});
+            Auth.forgotPasswordSubmit(
+              this.props.route.params.email,
+              this.props.route.params.code,
+              this.state.password,
+            )
+              .then((res) => {
+                Auth.signIn(
+                  this.props.route.params.email,
+                  this.state.password,
+                ).then((res) => {
+                  this.setState({loading: false, errorModal: false});
+
+                  api
+                    .createApi()
+                    .createUser({
+                      name: this.state.name,
+                      email: this.props.route.params.email,
+                      organization: [],
+                    })
+                    .then((res) => {
+                      if (res.status == 200) {
+                        api
+                          .createApi()
+                          .setUserInfo({
+                            email: this.props.route.params.email,
+                            role: '',
+                            department: '',
+                            industry: '',
+                            img_url: '',
+                          })
+                          .then((res) => {
+                            if ((res.status = 200)) {
+                              this.setState({
+                                loading: false,
+                                errorModal: false,
+                              });
+                              AsyncStorage.setItem(
+                                'email',
+                                this.props.route.params.email,
+                              );
+                              AsyncStorage.setItem(
+                                'photo',
+                                this.state.uploadedImage === ''
+                                  ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                                  : this.state.uploadedImage,
+                              );
+                              this.props.navigation.navigate('CreateOrg');
+                            }
+                          });
+                      } else {
+                        this.setState({loading: false, errorModal: false});
+                      }
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+
+                  // console.log(res);
+                  // if (this.props.route.params.type == 'forgot') {
+                  //   this.setState({loading: false, errorModal: false});
+                  //   this.props.navigation.navigate('Login');
+                  // } else if (this.props.route.params.type == 'verify') {
+                  //   this.setState({loading: false, errorModal: false});
+                  //   this.props.navigation.navigate('tellAboutYou', {
+                  //     username: this.props.route.params.email,
+                  //   });
+                  // }
+                });
+              })
+              .catch((err) => {
+                console.log(err);
+                this.setState({loading: false, errorModal: false});
+              })
+              .catch((err) => {
+                console.log(err);
+                this.setState({loading: false, errorModal: false});
+              });
+          } catch (err) {
+            console.log(err);
+            this.setState({loading: false, errorModal: false});
+          }
+        } else {
+          this.setState({passMachErr: true, error: false});
         }
       } else {
-        this.setState({passMachErr: true, error: false});
+        this.setState({error: true});
       }
     } else {
-      this.setState({error: true});
+      this.setState({error: true, loading: false});
     }
   };
   render() {
@@ -147,8 +199,37 @@ class CreatePass extends React.Component<CreatePassProps, any> {
             </View> */}
             {/* ) : ( */}
             <View style={{marginTop: wp(5)}}>
-              <Text style={styles.headingContainer}>Create New Password</Text>
+              <View style={{marginBottom: wp(10)}}>
+                <Text style={styles.headingContainer}>
+                  Welcome to SafetyConnect
+                </Text>
+                <Text style={styles.headingPra}>
+                  You are signing up as{' '}
+                  <Text style={styles.headingParaEmail}>
+                    {/* {this.props.route.params.email} */}
+                  </Text>
+                </Text>
+              </View>
+
               {/* inputs container */}
+              <Text style={styles.passTextContainer}>
+                What is your First Name ?
+              </Text>
+              <View style={[styles.inputContainer]}>
+                <TextInput
+                  style={styles.authInputs}
+                  value={this.state.name}
+                  onChange={(e) => {
+                    // if (validatePassword(this.state.password)) {
+                    //   this.setState({error: false});
+                    // } else {
+                    //   this.setState({error: true});
+                    // }
+                    this.setState({name: e.nativeEvent.text});
+                  }}
+                  placeholder={'Your First Name'}
+                />
+              </View>
               <View style={styles.inputsContainer}>
                 <Text style={styles.passTextContainer}>
                   Enter your password

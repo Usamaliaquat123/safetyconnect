@@ -63,6 +63,8 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
       errorModal: false,
       nameError: false,
       laoding: false,
+
+      password: '',
     };
   }
 
@@ -233,17 +235,18 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                           },
                     ]}>
                     <TextInput
-                      secureTextEntry={true}
-                      onFocus={() => this.setState({selected: 2})}
-                      underlineColorAndroid="transparent"
-                      style={styles.selectText}
-                      value={this.state.IndustrySelectionText}
-                      onChange={(e) =>
-                        this.setState({
-                          IndustrySelectionText: e.nativeEvent.text,
-                        })
-                      }
-                      placeholder={'***********'}
+                      secureTextEntry={this.state.isEye}
+                      style={styles.authInputs}
+                      value={this.state.password}
+                      onChange={(e) => {
+                        // if (validatePassword(this.state.password)) {
+                        //   this.setState({error: false});
+                        // } else {
+                        //   this.setState({error: true});
+                        // }
+                        this.setState({password: e.nativeEvent.text});
+                      }}
+                      placeholder={'******'}
                     />
                   </View>
                   <Text style={styles.passwordWarning}>

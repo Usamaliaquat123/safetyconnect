@@ -74,6 +74,33 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: colors.primary,
   },
+  selectText: {
+    opacity: 0.5,
+    fontSize: wp(3),
+    // textAlignVertical: 'top',
+    fontWeight: 'bold',
+    width: wp(80),
+  },
+  headingPra: {
+    fontSize: wp(3.4),
+    opacity: 0.5,
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  nameinputContainer: {
+    marginTop: wp(1),
+    // borderColor: colors.green,
+    borderWidth: wp(0.3),
+    paddingLeft: wp(3),
+    padding: wp(4),
+    borderRadius: wp(3),
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headingParaEmail: {
+    fontSize: wp(3.4),
+    opacity: 9,
+    fontFamily: fonts.SfuiDisplayHeavy,
+  },
   siginBtnContainer: {
     marginTop: wp(10),
     alignSelf: 'center',
