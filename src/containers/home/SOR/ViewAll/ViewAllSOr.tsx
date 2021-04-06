@@ -123,7 +123,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
     console.log();
   };
-  componentDidMount = async () => {
+  componentDidMount = () => {
     // this.props.initialList();
     // initialList.addList('sdsd');a
     // console.log(this.props.reduxState);
