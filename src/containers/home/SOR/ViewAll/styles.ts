@@ -14,11 +14,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
   },
   title: {
-    fontSize: wp(3.5),
-    marginLeft: wp(5),
+    fontSize: wp(4),
+    marginLeft: wp(3.5),
     color: colors.secondary,
     // fontWeight: 'bold',
-    fontFamily: 'SFuiDisplayBlack',
+    fontFamily: fonts.SFuiDisplaySemiBold,
   },
   underScrore: {
     backgroundColor: colors.green,
@@ -252,14 +252,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   filerText: {
-    fontSize: wp(3.6),
-    fontFamily: fonts.SFuiDisplayLight,
+    fontSize: wp(4),
+    fontFamily: fonts.SFuiDisplayMedium,
     marginLeft: wp(3),
     color: colors.primary,
     marginRight: wp(3),
   },
   optnselectorText: {
-    fontSize: wp(3.4),
+    fontSize: wp(4),
     width: wp(52),
     fontFamily: fonts.SFuiDisplayMedium,
   },
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderWidth: wp(0.5),
     paddingLeft: wp(3),
-    borderRadius: wp(10),
+    borderRadius: wp(1),
     borderColor: colors.darkLightGrey,
   },
 });

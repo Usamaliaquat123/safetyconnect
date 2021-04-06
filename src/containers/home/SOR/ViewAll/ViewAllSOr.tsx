@@ -193,14 +193,14 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 <Text style={styles.title}>Observations and Feedback</Text>
                 {/* <View style={styles.underScrore} /> */}
               </View>
-              <View style={styles.avatarView}>
+              {/* <View style={styles.avatarView}>
                 <Avatar
                   rounded
                   source={{
                     uri: Create_sor.user.profile,
                   }}
                 />
-              </View>
+              </View> */}
             </View>
             <View style={styles.headerSelect}>
               {/* Project selector */}
@@ -267,14 +267,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           <View style={styles.content}>
             {/* Search bar  */}
             <View style={styles.searchbarContainer}>
-              <Icon
-                style={{padding: 3}}
-                size={wp(7)}
-                name="filter-variant"
-                type="material-community"
-                color={colors.primary}
-              />
-              <Text style={styles.filerText}>Filters </Text>
               <View style={styles.searchContainer}>
                 <TextInput
                   onFocus={() => this.setState({selectedInputIndex: 5})}
@@ -285,12 +277,20 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   value={this.state.esclateTo}></TextInput>
                 <Icon
                   style={{padding: 3, opacity: 0.5}}
-                  size={wp(7)}
+                  size={wp(6)}
                   name="search1"
                   type="antdesign"
                   color={colors.text}
                 />
               </View>
+              <Icon
+                style={{padding: 3}}
+                size={wp(7)}
+                name="filter-variant"
+                type="material-community"
+                color={colors.primary}
+              />
+              <Text style={styles.filerText}>Filters </Text>
             </View>
             <View style={styles.lineheight}></View>
             {this.props.reduxState.loading == true ? (

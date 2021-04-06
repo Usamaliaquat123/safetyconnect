@@ -151,7 +151,7 @@ export default class Card extends React.Component<CardProps, any> {
                   <View style={styles.userAndlocationContainer}>
                     <View style={styles.userNameEmail}>
                       <Avatar
-                        size={wp(8)}
+                        size={wp(5)}
                         containerStyle={{marginRight: wp(-5)}}
                         rounded
                         source={{

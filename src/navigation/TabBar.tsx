@@ -21,10 +21,7 @@ import {AllSorDTO} from '@dtos';
 import * as reduxActions from '../store/actions/listSorActions';
 import {connect} from 'react-redux';
 import {default as Model} from 'react-native-modal';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import styles from './styles';
 import {BottomTabNavigatorProp} from './typings';
@@ -53,8 +50,10 @@ export interface TabBarProps {
   state: any;
   descriptors: any;
   navigation: any;
+  reduxActions: any;
+  reduxState: AllSorDTO;
 }
-class TabBar extends React.Component<TabBarProps, any> {
+export default class TabBar extends React.Component<TabBarProps, any> {
   constructor(props: any) {
     super(props);
 
@@ -65,6 +64,14 @@ class TabBar extends React.Component<TabBarProps, any> {
   }
 
   componentDidMount = () => {
+    // console.log(this.props.reduxActions);
+    // this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
+    //   1,
+    //   2,
+    //   3,
+    //   4,
+    //   5,
+    // ]);
     const focusedOptions = this.props.descriptors[
       this.props.state.routes[this.props.state.index].key
     ].options;
@@ -215,11 +222,11 @@ class TabBar extends React.Component<TabBarProps, any> {
   }
 }
 
-const mapStateToProps = (state: AllSorDTO) => ({
-  reduxState: state.allSors,
-});
+// const mapStateToProps = (state: AllSorDTO) => ({
+//   reduxState: state.allSors,
+// });
 
-const mapDispatchToProps = (dispatch: any) => ({
-  reduxActions: bindActionCreators(reduxActions, dispatch),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(TabBar);
+// const mapDispatchToProps = (dispatch: any) => ({
+//   reduxActions: bindActionCreators(reduxActions, dispatch),
+// });
+// export default connect(mapStateToProps, mapDispatchToProps)(TabBar);
