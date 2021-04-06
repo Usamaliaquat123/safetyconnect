@@ -1,4 +1,4 @@
-package com.safetyconnect;
+package com.safetyconnect.ai;
 
 import android.app.Application;
 import android.content.Context;

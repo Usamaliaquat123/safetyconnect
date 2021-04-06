@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.safetyconnect">
+  package="com.safetyconnect.ai">
 
     <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission

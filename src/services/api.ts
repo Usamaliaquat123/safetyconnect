@@ -9,13 +9,14 @@ import {
 } from '@typings';
 import {string} from 'prop-types';
 // our "constructor"
+const base_uri = `https://dev.safetyconnect.ai`;
 const createApi = (
-  baseURL: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:12222/',
-  obsbaseUrl: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:5003',
-  repBaseAi: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:5002/',
-  baseAi: string = 'http://hns-lb-1607158382.us-east-2.elb.amazonaws.com:5004/',
+  baseURL: string = `${base_uri}:12222/`,
+  obsbaseUrl: string = `${base_uri}:5003`,
+  repBaseAi: string = `${base_uri}:5002/`,
+  baseAi: string = `${base_uri}:5004/`,
   // External Countries api
-  countries: string = 'https://restcountries.eu/rest/v2/',
+  countries: string = `https://restcountries.eu/rest/v2/`,
 ) => {
   const baseapi = apisauce.create({
     baseURL,
