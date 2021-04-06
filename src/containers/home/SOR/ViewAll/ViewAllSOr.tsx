@@ -13,18 +13,10 @@ import {
   Image,
   TextInput,
 } from 'react-native';
-import {
-  allDraft,
-  allRecentActivity,
-  allSubmitted,
-  allNotified,
-  draft,
-  Create_sor,
-} from '@service';
+import {Create_sor} from '@service';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors, fonts, animation, images, GlStyles} from '@theme';
-import {initialList} from '@store';
-import {RootState} from '../../../../store/store';
+
 import {AllSorDTO} from '@dtos';
 import {connect} from 'react-redux';
 import styles from './styles';
@@ -45,11 +37,11 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {createApi} from '@service';
-import {Storage} from 'aws-amplify';
+// import {createApi} from '@service';
+// import {Storage} from 'aws-amplify';
 
-import jwtDecode from 'jwt-decode';
-import {Isor, classifySorBtn, involved_persons} from '@typings';
+// import jwtDecode from 'jwt-decode';
+import {Isor} from '@typings';
 // import {  } from "";
 type ViewAllSOrNavigationProp = StackNavigationProp<
   StackNavigatorProps,
