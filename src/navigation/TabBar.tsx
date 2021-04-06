@@ -12,9 +12,14 @@ import {
   Menu,
   ViewAllSOr,
 } from '@containers';
+
+import {bindActionCreators} from 'redux';
 import {Icon} from 'react-native-elements';
 import {BottomPop} from '@components';
 import {colors, images, GlStyles, fonts} from '@theme';
+import {AllSorDTO} from '@dtos';
+import * as reduxActions from '../store/actions/listSorActions';
+import {connect} from 'react-redux';
 import {default as Model} from 'react-native-modal';
 import {
   widthPercentageToDP as wp,
@@ -49,7 +54,7 @@ export interface TabBarProps {
   descriptors: any;
   navigation: any;
 }
-export default class TabBar extends React.Component<TabBarProps, any> {
+class TabBar extends React.Component<TabBarProps, any> {
   constructor(props: any) {
     super(props);
 
@@ -209,3 +214,12 @@ export default class TabBar extends React.Component<TabBarProps, any> {
     );
   }
 }
+
+const mapStateToProps = (state: AllSorDTO) => ({
+  reduxState: state.allSors,
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+  reduxActions: bindActionCreators(reduxActions, dispatch),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(TabBar);
