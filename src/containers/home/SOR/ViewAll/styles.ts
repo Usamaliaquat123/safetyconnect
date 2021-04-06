@@ -154,9 +154,9 @@ const styles = StyleSheet.create({
     color: colors.primary,
   },
   draftCardContainer: {
-    marginLeft: wp(1),
-    marginBottom: wp(4),
-    marginRight: wp(1),
+    // marginLeft: wp(1),
+    marginBottom: wp(5),
+    // marginRight: wp(1),
   },
   // submite
   submitTextContaienr: {
