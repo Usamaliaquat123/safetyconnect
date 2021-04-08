@@ -134,7 +134,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
-    console.log(this.props.route.params.data);
+    // console.log(this.props.route.params.data.comments);
+
+    this.getAllComments();
+
     // this.props.route.params.data.action_required
     for (
       let i = 0;
@@ -149,7 +152,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     this.props.route.params.data.action_required.forEach(
       (v) => delete v.default,
     );
-
     createApi
       .createApi()
       .getProject({projectid: '6056061f49cf9ae72efe8e6e'})
@@ -192,9 +194,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
       .value;
 
-
-
-      
     var update = {
       report: {
         _id: this.props.route.params.data._id,
@@ -221,10 +220,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       project: '6038cf8472762b29b1bed1f3',
     };
 
-
-
-
-    console.log()
+    console.log();
     createApi
       .createApi()
       .updateSor(update)
@@ -242,6 +238,22 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  getAllComments = () => {
+    this.props.route.params.data.comments;
+
+    console.log(this.props.route.params.data.comments);
+
+    createApi
+      .createApi()
+      .getAllComents(this.props.route.params.data.comments?.toString())
+      .then((res) => {
+        console.log('sdsds');
+        console.log(res.data.data.all_comments);
+        console.log('sdsds');
+      })
+      .catch((err) => console.log(err));
   };
 
   saveAsDraft = () => {
@@ -575,18 +587,23 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </Text>
               </View>
               <View style={styles.subContainer}>
-                <View style={styles.submittedTo}>
-                  <Text style={styles.subText}>Submitted to : </Text>
-                  <Text style={styles.obvText}>
-                    {this.state.submitted_to[0].split('@')[0]}
-                  </Text>
-                </View>
-                <View style={styles.observerTo}>
-                  <Text style={styles.obvText}>Observer : </Text>
-                  <Text style={styles.obvText}>
-                    {this.state.esclate_to[0].split('@')[0]}
-                  </Text>
-                </View>
+                {this.state.submitted_to.length == 0 ? null : (
+                  <View style={styles.submittedTo}>
+                    <Text style={styles.subText}>Submitted to : </Text>
+                    <Text style={styles.obvText}>
+                      {this.state.submitted_to[0].split('@')[0]}
+                    </Text>
+                  </View>
+                )}
+
+                {this.state.esclate_to.length == 0 ? null : (
+                  <View style={styles.observerTo}>
+                    <Text style={styles.obvText}>Observer : </Text>
+                    <Text style={styles.obvText}>
+                      {this.state.esclate_to[0].split('@')[0]}
+                    </Text>
+                  </View>
+                )}
               </View>
               <View style={styles.involveNortify}>
                 {/* Notified To Section */}

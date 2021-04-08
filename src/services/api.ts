@@ -97,7 +97,20 @@ const createApi = (
   const createSorInit = (data: any) => baseapi.post('project/newreport', data);
   const createSor = (data: any) => baseapi.post('project/publish', data);
 
+  /*
+   * @comments
+   */
+  const getAllComents = (commentId: string) =>
+    baseapi.get(`comment/?comment_document_id=${commentId}`);
+  const delComment = (data: any) => baseapi.delete(`comment`, data);
+  const editComment = (data: any) => baseapi.get(`comment`, data);
+  const createComment = (data: any) => baseapi.post(`comment`, data);
+
   return {
+    getAllComents,
+    createComment,
+    delComment,
+    editComment,
     suggestiosns,
     repeatedsorsugg,
     observationSuggestions,
