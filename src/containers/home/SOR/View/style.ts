@@ -280,6 +280,15 @@ const styles = StyleSheet.create({
     borderWidth: wp(0.3),
     marginTop: wp(1),
   },
+  commentSuggContainer: {
+    borderColor: colors.darkLightGrey,
+    borderRadius: wp(3),
+    padding: wp(2),
+    borderWidth: wp(0.3),
+    marginTop: wp(1),
+    marginLeft: wp(7),
+    marginRight: wp(3),
+  },
   involvePSt: {
     fontSize: wp(3),
   },
@@ -291,6 +300,14 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  commentPSuggCont: {
+    borderColor: colors.textOpa,
+    borderBottomWidth: wp(0.1),
+    paddingTop: wp(1),
+    paddingBottom: wp(3),
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   involvePsuggCont: {
     borderColor: colors.textOpa,
@@ -313,20 +330,25 @@ const styles = StyleSheet.create({
   },
   userComments: {
     flexDirection: 'row',
+    // justifyContent: 'space-between',
     marginBottom: wp(3),
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   userCommentName: {
     fontSize: wp(3),
+    color: colors.text,
+    opacity: 0.7,
+    fontFamily: fonts.SFuiDisplayBold,
   },
   usercomment: {
+    fontFamily: fonts.SFuiDisplayLight,
     fontSize: wp(2.7),
     width: wp(50),
   },
   commentUser: {
     // flexDirection: "row",
-    marginTop: wp(0.7),
-    marginLeft: wp(10),
+    // marginTop: wp(0.7),
+    marginLeft: wp(2),
   },
   dateComments: {
     position: 'absolute',
@@ -334,7 +356,8 @@ const styles = StyleSheet.create({
     top: 0,
   },
   dateTextComment: {
-    fontSize: wp(3),
+    fontSize: wp(2.7),
+    fontFamily: fonts.SFuiDisplayLight,
     opacity: 0.5,
   },
   commentTextInput: {

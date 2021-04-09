@@ -49,7 +49,7 @@ import {
 } from '@utils';
 import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {involved_persons, actions} from '@typings';
+import {involved_persons, actions, comments} from '@typings';
 import * as reduxActions from '../../../../store/actions/listSorActions';
 
 type ViewSORNavigationProp = StackNavigationProp<
@@ -83,9 +83,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       sor_type: this.props.route.params.data.sor_type,
       observation: this.props.route.params.data.details,
       date: this.props.route.params.data.occured_at,
-      comments: View_sor.user.comments,
+      comments: [],
       involvedPerson: [],
       notifiedPerson: this.props.route.params.data.esclate_to,
+
+      commentsSugg: [],
       attachments: [],
 
       actionsAndRecommendations: this.props.route.params.data.action_required,
@@ -126,6 +128,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
       // Loading
       loading: false,
+
+      AllUsers: [],
     };
 
     this.animation = React.createRef();
@@ -156,7 +160,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .createApi()
       .getProject({projectid: '6056061f49cf9ae72efe8e6e'})
       .then((res: any) => {
-        this.setState({involvedPerson: res.data.data.involved_persons});
+        this.setState({
+          involvedPerson: res.data.data.involved_persons,
+          commentsSugg: res.data.data.involved_persons,
+        });
+
         this.mappingInvolved(
           res.data.data.involved_persons,
           this.props.route.params.data.involved_persons[0],
@@ -240,22 +248,48 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       });
   };
 
+  // delete comment through commentId
+  deleteComment = (commentId: any) => {
+    console.log(commentId);
+
+    // createApi
+    //   .createApi()
+    //   .delComment(commentId)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => console.log(err));
+  };
+
+  // Get All Comments
   getAllComments = () => {
     this.props.route.params.data.comments;
 
     console.log(this.props.route.params.data.comments);
+    console.log(this.state.involvedPerson);
 
     createApi
       .createApi()
-      .getAllComents(this.props.route.params.data.comments?.toString())
-      .then((res) => {
-        console.log('sdsds');
+      .getAllComents(this.props.route.params.data.comments)
+      .then((res: any) => {
+        for (let i = 0; i < res.data.data.all_comments.length; i++) {
+          if (res.data.data.all_comments[i].email !== undefined) {
+            res.data.data.all_comments[i]['user'] = res.data.data.all_comments[
+              i
+            ].email.split('@')[0];
+          }
+          res.data.data.all_comments[i]['image'] = '';
+          // res.data.data.all_comments[i]['files'
+
+          this.setState({comments: res.data.data.all_comments});
+          // console.log(res.data.data.all_comments[i].email.split('@')[0]);
+        }
+
         console.log(res.data.data.all_comments);
-        console.log('sdsds');
       })
       .catch((err) => console.log(err));
   };
-
+  // Save aas draft
   saveAsDraft = () => {
     this.setState({loading: true});
 
@@ -1153,11 +1187,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       }}
                       style={styles.userComments}>
                       <Avatar
-                        containerStyle={{position: 'absolute', top: wp(0)}}
+                        // containerStyle={{position: 'absolute', top: wp(0)}}
                         size={wp(6)}
                         rounded
                         source={{
-                          uri: d.image,
+                          uri:
+                            d.image === ''
+                              ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                              : d.image,
                         }}
                       />
                       <View style={styles.commentUser}>
@@ -1269,9 +1306,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     style={{fontSize: wp(3), width: wp(50)}}
                     multiline={true}
                     value={this.state.commentText}
-                    onChange={(e) =>
-                      this.setState({commentText: e.nativeEvent.text})
-                    }
+                    onChange={(e) => {
+                      // mentionComment
+
+                      this.setState({commentText: e.nativeEvent.text});
+                    }}
                     placeholder={'Your comment here '}
                   />
                   <View
@@ -1333,6 +1372,45 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </View>
                 </View>
               </View>
+              {this.state.commentsSugg.length !== 0 ? (
+                <View style={styles.commentSuggContainer}>
+                  {this.state.commentsSugg.map(
+                    (d: involved_persons, i: number) => (
+                      <View key={i}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.setState({
+                              commentText: this.state.commentText.concat(
+                                d.name,
+                              ),
+                            });
+                            // this.state.involvePersonTags.push(d);
+                          }}
+                          style={[
+                            styles.commentPSuggCont,
+                            this.state.commentsSugg.length == i + 1
+                              ? {borderBottomWidth: wp(0)}
+                              : null,
+                          ]}>
+                          <Avatar
+                            containerStyle={{marginRight: wp(3)}}
+                            rounded
+                            source={{
+                              uri: d.img_url,
+                            }}
+                          />
+                          <View>
+                            <Text style={styles.involvePSt}>{d.name}</Text>
+                            <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                              {d.email}
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    ),
+                  )}
+                </View>
+              ) : null}
               {this.state.commentAttachment.length != 0 ? (
                 <ScrollView
                   horizontal={true}
@@ -1854,7 +1932,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             this.setState({editAttachedCommentArr: e});
           }}
           discardComment={(e: any) => {
+            // this.deleteComment(
+            //   this.state.comments.findIndex(this.state.editDiscardCommentIndex),
+            // );
             this.state.comments.splice(this.state.editDiscardCommentIndex, 1);
+
             this.setState({editDelComment: false});
           }}
           submitComment={(e: any) => {

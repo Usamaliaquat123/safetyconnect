@@ -31,6 +31,19 @@ export interface Isor {
   created_by: string;
   comments?: string;
 }
+
+/*
+ * @comments
+ */
+export interface comments {
+  comment: string;
+  date: string;
+  email: string;
+  files: Array<any>;
+  is_comment: boolean;
+  _id: string;
+}
+
 /*
  * @Imessage
  */
@@ -41,6 +54,7 @@ export interface Imessage {
   isonline: boolean;
   userId: number;
 }
+
 /*
  * @classifySorBtn
  */

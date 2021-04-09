@@ -162,9 +162,9 @@ export default class CommentPop extends React.Component<CommentPopProps, any> {
           )}
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              onPress={() => this.props.discardComment()}
+              onPress={() => this.props.discardComment(this.props.comments)}
               style={styles.discardContainer}>
-              <Text style={styles.discardText}>Discard</Text>
+              <Text style={styles.discardText}>Delete</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => this.props.submitComment()}
