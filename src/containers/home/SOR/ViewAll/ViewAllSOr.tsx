@@ -207,7 +207,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
               <View style={styles.leftSelector}>
                 {/* <TouchableOpacity
                   style={styles.selector}
-                  onPress={() => {
+                  onPress={() => { 
                     this.setState({
                       project:
                         this.state.project == 'Board View'

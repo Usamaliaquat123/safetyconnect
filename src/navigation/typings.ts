@@ -31,7 +31,7 @@ export type BottomTabNavigatorProp = {
   addNew: {user?: any};
   create: {user?: any};
   more: {user?: any};
-};
+}; 
 export type route =
   | 'Signup'
   | 'Login'

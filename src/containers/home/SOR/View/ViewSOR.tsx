@@ -162,7 +162,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .then((res: any) => {
         this.setState({
           involvedPerson: res.data.data.involved_persons,
-          commentsSugg: res.data.data.involved_persons,
         });
 
         this.mappingInvolved(
@@ -395,6 +394,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         });
     }
   };
+  onCommenting = (e : string) => {
+this.setState({ commentText : e, commentsSugg : this.state.involvedPerson })
+  
+    
+  }
   // Document Attachments
   openDoc = async (attach: Array<Object>) => {
     try {
@@ -508,35 +512,39 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
+
                 onPress={() => this.props.navigation.goBack()}
                 size={25}
                 name="arrow-back-outline"
                 type="ionicon"
                 color={colors.secondary}
               />
-              <View>
-                <Text style={styles.title}>SOR Report</Text>
-                <View style={styles.underScrore} />
-              </View>
-              <View style={styles.avatarView}>
-                <Avatar
-                  rounded
-                  source={{
-                    uri: View_sor.user.profile,
-                  }}
-                />
-              </View>
+                <Text style={styles.title}>Obervation Summary</Text>
+                {/* <View style={styles.underScrore} /> */}
+             
             </View>
           </View>
           <Animated.View
             style={[styles.content, {marginTop: this.state.contentAnim}]}>
             <View style={styles.contentPadding}>
-              <TouchableOpacity style={styles.classittleicon}>
+
+            {/*  Observation Details */}
+            <View style={styles.observationsDetailsContainer}>
+             {/* Observations Id */}
+              <View style={styles.observationIdContainer}>
+      <Text style={styles.observationIdTitle}>Observation ID  : </Text>
+
+      <Text style={styles.observationIdAns}>1234</Text>
+              </View>
+      {/* Observations Type */}
+      <View style={styles.observationTypeContainer}>
+        <Text style={styles.observationTypettle}>Observation Type: </Text>
+        <TouchableOpacity style={styles.classittleicon}>
                 {this.state.sor_type != 'lsr' ? (
                   <View>
                     {this.state.sor_type != 'near miss' ? (
                       <Icon
-                        size={wp(6)}
+                        size={wp(3.5)}
                         name={
                           this.state.sor_type == 'lsr'
                             ? 'aperture'
@@ -576,7 +584,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 ) : null}
 
                 {this.state.sor_type == 'lsr' ? (
-                  <View style={{width: wp(7), height: wp(7)}}>
+                  <View style={{width: wp(3.5), height: wp(3.5)}}>
                     <Image
                       source={images.lsr}
                       style={[GlStyles.images, {tintColor: colors.text}]}
@@ -584,7 +592,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </View>
                 ) : null}
                 {this.state.sor_type == 'near miss' ? (
-                  <View style={{width: wp(8), height: wp(8)}}>
+                  <View style={{width: wp(3.5), height: wp(3.5)}}>
                     <Image source={images.nearMiss} style={GlStyles.images} />
                   </View>
                 ) : null}
@@ -604,6 +612,27 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   {capitalizeFirstLetter(this.state.sor_type)}
                 </Text>
               </TouchableOpacity>
+      </View>
+          {/* Reported On  */}
+          <View style={styles.reportedOnContainer}>
+            <Text style={styles.reportedOnText}>Reported On: </Text>
+            <Text style={styles.reportedOnAns}>{moment().format('MMM DD, YYYY LT')}</Text>
+          </View>
+          {/* Project Name */}
+          <View style={styles.projectNameContainer}>
+            <Text style={styles.projectNameTitle}>
+              Project: 
+            </Text>
+            <Text style={styles.projectNameAns}>
+              Project: 
+            </Text>
+          </View>
+      {/* Location */}
+      <View></View>
+
+            </View>
+
+
               <View style={styles.obserContainer}>
                 <View>
                   <TextInput
@@ -1308,8 +1337,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     value={this.state.commentText}
                     onChange={(e) => {
                       // mentionComment
-
-                      this.setState({commentText: e.nativeEvent.text});
+                      this.onCommenting(e.nativeEvent.text)
+                      // this.setState({commentText: e.nativeEvent.text});
                     }}
                     placeholder={'Your comment here '}
                   />
@@ -1382,7 +1411,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             this.setState({
                               commentText: this.state.commentText.concat(
                                 d.name,
-                              ),
+                                ),
+                                commentsSugg : []
                             });
                             // this.state.involvePersonTags.push(d);
                           }}
