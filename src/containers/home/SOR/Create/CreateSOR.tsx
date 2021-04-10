@@ -374,16 +374,21 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             project: '604b13d114ba138bd23d7f75',
           };
 
-          this.props.reduxActions.createSor(draftSor, this.props.navigation);
-
-          createApi
-            .createApi()
-            .createSor(draftSor)
-            .then((draft) => {
-              this.setState({loading: false, errorModal: false});
-              this.props.navigation.navigate('ViewAllSOr');
-            })
-            .catch((err) => {});
+          // this.props.reduxActions.createSor(draftSor, this.props.navigation);
+          this.props.reduxActions.createSor(
+            draftSor,
+            '604b13d114ba138bd23d7f75',
+            'inconnent12345@outlook.com',
+            this.props.navigation,
+          );
+          // createApi
+          //   .createApi()
+          //   .createSor(draftSor)
+          //   .then((draft) => {
+          //     this.setState({loading: false, errorModal: false});
+          //     this.props.navigation.navigate('ViewAllSOr');
+          //   })
+          //   .catch((err) => {});
         }
       })
       .catch((err) => {});
@@ -486,8 +491,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           },
                           project: '604b13d114ba138bd23d7f75',
                         };
-
-                        console.log(sor);
+                        this.props.reduxActions.createSor(
+                          sor,
+                          '604b13d114ba138bd23d7f75',
+                          'inconnent12345@outlook.com',
+                          this.props.navigation,
+                        );
                         // createApi
                         //   .createApi()
                         //   .createSor(sor)
