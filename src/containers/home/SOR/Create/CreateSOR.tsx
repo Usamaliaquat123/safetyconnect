@@ -698,8 +698,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   // componentWillUnmount = () => {};
 
   render() {
-    this.state.liklihood[0].selected = true;
-    this.state.severity[0].selected = true;
+    // this.state.liklihood[0].selected = true;
+    // this.state.severity[0].selected = true;
     return (
       <Animated.View style={[styles.container]}>
         {/* Header */}
@@ -887,11 +887,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     //   this.setState({severity: v.severity});
                     // } else {
                     // }
-                    if (v.liklihood == undefined) {
-                      this.setState({severity: [v.severity]});
-                    } else {
-                      this.setState({liklihood: [v.liklihood]});
-                    }
+                    // if (v.liklihood == undefined) {
+                    //   console.log(
+                    //     this.state.severity.filter((d) => d == v.severity),
+                    //   );
+                    //   this.setState({severity: [v.severity]});
+                    // } else {
+                    //   this.setState({liklihood: [v.liklihood]});
+                    // }
                   }}
                 />
               </View>

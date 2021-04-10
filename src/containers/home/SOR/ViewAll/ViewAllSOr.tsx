@@ -85,12 +85,12 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       AnimatedDownSubmitted: new Animated.Value(0),
       AnimatedOpacSubmitted: new Animated.Value(0),
       currentlocation: Create_sor.Observation.locations[0],
-      project: 'Board View',
-      isInProgress: true,
-      isDraft: true,
-      isSubmited: true,
-      isExclated: true,
-      isCompleted: true,
+      project: 'List View',
+      isInProgress: false,
+      isDraft: false,
+      isSubmited: false,
+      isExclated: false,
+      isCompleted: false,
       selectP: false,
       draft: [],
       exclated: [],
@@ -884,6 +884,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   <ScrollView
                     style={{
                       marginTop: wp(4),
+                      marginBottom: wp(5),
                       // height: Dimensions.get('screen').height,
                     }}
                     showsHorizontalScrollIndicator={false}
@@ -977,10 +978,10 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               })
                             }
                             style={{
-                              marginTop: wp(10),
                               // marginBottom: wp(),
                               alignSelf: 'center',
                               padding: wp(3),
+
                               paddingLeft: wp(10),
                               paddingRight: wp(10),
                               borderRadius: wp(3),
@@ -1040,7 +1041,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               alignSelf: 'center',
                               padding: wp(3),
                               paddingLeft: wp(10),
-                              marginTop: wp(10),
                               paddingRight: wp(10),
                               borderRadius: wp(3),
                               backgroundColor: colors.primary,
@@ -1059,7 +1059,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     {this.state.exclated.length == 0 ? null : (
                       <View>
                         <View style={styles.draftTextContainer}>
-                          <Text style={styles.draftText}>In Progress</Text>
+                          <Text style={styles.draftText}>Esclated</Text>
                         </View>
                         {this.state.exclated
                           .slice(0, 3)
@@ -1099,7 +1099,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               alignSelf: 'center',
                               padding: wp(3),
                               paddingLeft: wp(10),
-                              marginTop: wp(10),
                               paddingRight: wp(10),
                               borderRadius: wp(3),
                               backgroundColor: colors.primary,
@@ -1118,7 +1117,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     {this.state.completed.length == 0 ? null : (
                       <View>
                         <View style={styles.draftTextContainer}>
-                          <Text style={styles.draftText}>In Progress</Text>
+                          <Text style={styles.draftText}>Completed</Text>
                         </View>
                         {this.state.completed
                           .slice(0, 3)
@@ -1160,7 +1159,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               paddingLeft: wp(10),
                               paddingRight: wp(10),
                               borderRadius: wp(3),
-                              marginTop: wp(10),
                               backgroundColor: colors.primary,
                             }}>
                             <Text
@@ -1177,7 +1175,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     {this.state.submitted.length == 0 ? null : (
                       <View>
                         <View style={styles.submitTextContaienr}>
-                          <Text style={styles.submitText}>Closed</Text>
+                          <Text style={styles.submitText}>Submitted</Text>
                         </View>
                         {this.state.submitted
                           .slice(0, 3)
