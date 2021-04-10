@@ -12,6 +12,8 @@ export const updateList = createAction(ActionTypes.LIST_CHANGE);
 export const loading = createAction(ActionTypes.LOADING);
 export const error = createAction(ActionTypes.ERROR);
 export const allSors = createAction(ActionTypes.ALL_SORS);
+export const emptyAllSors = createAction(ActionTypes.EMPTY_ALL_SORS);
+
 /** @typings Sor [types] */
 export type SorType = {
   draft: Array<report>;
@@ -55,6 +57,7 @@ export const getAllSors = (
   console.log(sorType);
   return (dispatch, getState) => {
     dispatch(loading(true));
+    dispatch(allSors([]));
     createApi
       .createApi()
       .filterSors({
@@ -125,6 +128,7 @@ export const createSor = (
       })
       .then((ini: any) => {
         if (ini.status == 200) {
+          console.log(data);
           data.report._id = ini.data.data.report_id;
           data.project = projectId;
           data.report.created_by = createdBy;
@@ -132,6 +136,7 @@ export const createSor = (
             .createApi()
             .createSor(data)
             .then((res) => {
+              console.log(res);
               if (res.status == 200) {
                 console.log(data);
                 dispatch(loading(false));

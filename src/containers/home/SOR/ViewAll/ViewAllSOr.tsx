@@ -134,7 +134,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     // console.log('adsad', this.props.reduxState.allSors);
     // Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png')
     //   .then((res: string | any) => {
-    //     var ts = res.split('?')[0].replace(/%20/g, '+').replace('/public', '');
+    //     var ts = res.split('?')[0].replace(/%20/g, '+').replace('/public', '');~
     //   })
     //   .catch((err) =>{});
     // this.props.initialList.addList('asdds');

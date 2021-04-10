@@ -330,6 +330,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   };
   submitDraft = async () => {
     // do shinhomet
+    var sorbtns = this.state.classifySorbtns.filter(
+      (d: any) => d.selected == true,
+    );
     var bodyInitial = {
       report: {
         created_by: 'inconnent12345@outlook.com',
@@ -339,59 +342,66 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       project: '604b13d114ba138bd23d7f75',
     };
     this.setState({loading: true, errorModal: true});
-    createApi
-      .createApi()
-      .createSorInit(bodyInitial)
-      .then((res: any) => {
-        if (res.data.data.report_id !== undefined) {
-          var draftSor = {
-            report: {
-              _id: res.data.data.report_id,
-              created_by: 'inconnent12345@outlook.com',
-              details: this.state.observationT,
-              occured_at: new Date(),
-              involved_persons: this.state.involvePersonTags,
-              risk: {
-                severity: this.state.severity.filter(
-                  (d: any) => d.selected == true,
-                )[0].value,
-                likelihood: this.state.liklihood.filter(
-                  (d: any) => d.selected == true,
-                )[0].value,
-              },
-              action_required: [],
-              // user_location: {
-              //   latitude: 66.666,
-              //   longitude: 66.666,
-              // },
-              location: 'pindi boys',
-              submit_to: this.state.submitToTags,
-              esclate_to: this.state.exclateToTags,
-              status: 5,
-              attachments: this.state.filename,
-              comments: [],
-            },
-            project: '604b13d114ba138bd23d7f75',
-          };
+    if (this.state.observationT !== '') {
+      if (this.state.observation !== '') {
+        var sor = {
+          report: {
+            created_by: 'haider@gmail.com',
+            details: this.state.observationT,
+            occured_at: new Date(),
+            involved_persons: this.state.involvePersonTags,
 
-          // this.props.reduxActions.createSor(draftSor, this.props.navigation);
-          this.props.reduxActions.createSor(
-            draftSor,
-            '604b13d114ba138bd23d7f75',
-            'inconnent12345@outlook.com',
-            this.props.navigation,
-          );
-          // createApi
-          //   .createApi()
-          //   .createSor(draftSor)
-          //   .then((draft) => {
-          //     this.setState({loading: false, errorModal: false});
-          //     this.props.navigation.navigate('ViewAllSOr');
-          //   })
-          //   .catch((err) => {});
-        }
-      })
-      .catch((err) => {});
+            sor_type: sorbtns[0].title,
+            risk: {
+              severity: 5,
+              likelihood: 5,
+            },
+            action_required: [],
+            user_location: {
+              latitude: 66.666,
+              longitude: 66.666,
+            },
+            location: this.state.observation,
+            submit_to: this.state.submitToTags.map((d: any) => d.email),
+            esclate_to: this.state.exclateToTags.map((d: any) => d.email),
+            status: 1,
+            // attachments: this.state.filename,
+            comments: ' ',
+          },
+          project: '604b13d114ba138bd23d7f75',
+        };
+
+        // this.props.reduxActions.createSor(draftSor, this.props.navigation);
+        this.props.reduxActions.createSor(
+          sor,
+          '604b13d114ba138bd23d7f75',
+          'inconnent12345@outlook.com',
+          this.props.navigation,
+        );
+      } else {
+        this.setState({
+          errorModal: true,
+
+          errHeadingText: 'Type your current location.',
+          errDesText: 'You dont specify specify your location .',
+        });
+      }
+    } else {
+      this.setState({
+        errorModal: true,
+        errHeadingText: 'Type your observation.',
+        errDesText: 'looks like your observation isnt valid.',
+      });
+    }
+
+    // createApi
+    //   .createApi()
+    //   .createSor(draftSor)
+    //   .then((draft) => {
+    //     this.setState({loading: false, errorModal: false});
+    //     this.props.navigation.navigate('ViewAllSOr');
+    //   })
+    //   .catch((err) => {});
   };
   onCreateSor = () => {
     var sorbtns = this.state.classifySorbtns.filter(
@@ -454,63 +464,63 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       project: '',
                     };
 
-                    createApi
-                      .createApi()
-                      .createSorInit(bodyInitial)
-                      .then((res: any) => {
-                        // Report Id
-                        // res.data.data.report_id
+                    // createApi
+                    //   .createApi()
+                    //   .createSorInit(bodyInitial)
+                    //   .then((res: any) => {
+                    // Report Id
+                    // res.data.data.report_id
 
-                        var sor = {
-                          report: {
-                            created_by: 'haider@gmail.com',
-                            details: this.state.observationT,
-                            occured_at: new Date(),
-                            involved_persons: this.state.involvePersonTags,
+                    var sor = {
+                      report: {
+                        created_by: 'haider@gmail.com',
+                        details: this.state.observationT,
+                        occured_at: new Date(),
+                        involved_persons: this.state.involvePersonTags,
 
-                            sor_type: sorbtns[0].title,
-                            risk: {
-                              severity: 5,
-                              likelihood: 5,
-                            },
-                            action_required: [],
-                            user_location: {
-                              latitude: 66.666,
-                              longitude: 66.666,
-                            },
-                            location: this.state.observation,
-                            submit_to: this.state.submitToTags.map(
-                              (d: any) => d.email,
-                            ),
-                            esclate_to: this.state.exclateToTags.map(
-                              (d: any) => d.email,
-                            ),
-                            status: 2,
-                            // attachments: this.state.filename,
-                            comments: [],
-                          },
-                          project: '604b13d114ba138bd23d7f75',
-                        };
-                        this.props.reduxActions.createSor(
-                          sor,
-                          '604b13d114ba138bd23d7f75',
-                          'inconnent12345@outlook.com',
-                          this.props.navigation,
-                        );
-                        // createApi
-                        //   .createApi()
-                        //   .createSor(sor)
-                        //   .then((res) => {
-                        //     this.setState({loading: false, errorModal: false});
-                        //     this.props.navigation.navigate('ViewAllSOr');
-                        //   })
-                        //   .catch((err) =>
-                        //     this.setState({loading: false, errorModal: false}),
-                        //   );
-                      })
-                      .catch((err) => {
-                        this.setState({loading: false, errorModal: false});
-                      });
+                        sor_type: sorbtns[0].title,
+                        risk: {
+                          severity: 5,
+                          likelihood: 5,
+                        },
+                        action_required: [],
+                        user_location: {
+                          latitude: 66.666,
+                          longitude: 66.666,
+                        },
+                        location: this.state.observation,
+                        submit_to: this.state.submitToTags.map(
+                          (d: any) => d.email,
+                        ),
+                        esclate_to: this.state.exclateToTags.map(
+                          (d: any) => d.email,
+                        ),
+                        status: 2,
+                        // attachments: this.state.filename,
+                        comments: [],
+                      },
+                      project: '604b13d114ba138bd23d7f75',
+                    };
+                    this.props.reduxActions.createSor(
+                      sor,
+                      '604b13d114ba138bd23d7f75',
+                      'inconnent12345@outlook.com',
+                      this.props.navigation,
+                    );
+                    // createApi
+                    //   .createApi()
+                    //   .createSor(sor)
+                    //   .then((res) => {
+                    //     this.setState({loading: false, errorModal: false});
+                    //     this.props.navigation.navigate('ViewAllSOr');
+                    //   })
+                    //   .catch((err) =>
+                    //     this.setState({loading: false, errorModal: false}),
+                    //   );
+                    // })
+                    // .catch((err) => {
+                    //   this.setState({loading: false, errorModal: false});
+                    // });
                   })
                   .catch((err) => {
                     this.setState({loading: false, errorModal: false});
