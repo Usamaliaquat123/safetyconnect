@@ -6,83 +6,20 @@ import {
 } from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
-// Observation Details
-
-observationsDetailsContainer :  {
-
-},
-observationIdContainer : {
-  flexDirection  :"row"
-
-},
-
-observationIdTitle  : {
-  fontSize : wp(3.7),
-  opacity : .6,
-  fontFamily : fonts.SFuiDisplaySemiBold
-},
-observationIdAns : {
-  fontSize : wp(3.7),
- opacity : .6,
-  fontFamily : fonts.SFuiDisplayMedium
-},
-observationTypeContainer :{ 
-
-flexDirection  :"row"
-
-},
-observationTypettle : {
-   fontSize : wp(3.7),
-   opacity : .6,
-   fontFamily : fonts.SFuiDisplaySemiBold
-},
-
-reportedOnContainer : {
-  flexDirection : "row",
-
-},
-reportedOnText : {
-fontSize : wp(3.7),
-opacity : .6,
-fontFamily: fonts.SFuiDisplaySemiBold
-},
-reportedOnAns : {
-  marginLeft : wp(4),
-  fontSize : wp(3.7),
-  opacity : .6,
-  fontFamily : fonts.SFuiDisplayMedium
-},
-projectNameContainer :  {
-    flexDirection  :"row",
-
-},
-projectNameTitle:  {
-  fontSize  :wp(3.7),
-  opacity: .6,
-  fontFamily  :fonts.SFuiDisplayMedium
-},
-
-projectNameAns : {
-  fontSize : wp(3.7),
-  fontFamily :fonts.SFuiDisplayMedium,
-opacity : .6
-},
   container: {
     flex: 1,
     backgroundColor: colors.secondary,
   },
   header: {
-    padding: wp(3),
-    // paddingRight: wp(7),
-    paddingLeft: wp(5),
-    paddingTop : wp(7),
-    // flex: 1,
+    padding: wp(5),
+    paddingRight: wp(7),
+    paddingLeft: wp(7),
+    flex: 1,
     backgroundColor: colors.primary,
   },
   title: {
-    marginTop: wp(1),
     fontSize: wp(4),
-    marginLeft: wp(3),
+    marginLeft: wp(5),
     color: colors.secondary,
     fontWeight: 'bold',
   },
@@ -116,15 +53,12 @@ opacity : .6
   },
   clasifyT: {
     fontSize: wp(3.5),
-    // marginTop: wp(1),
-    fontFamily : fonts.SFuiDisplayLight,
+    marginTop: wp(1),
     marginLeft: wp(2),
     color: colors.text,
   },
   classittleicon: {
     flexDirection: 'row',
-    marginLeft  : wp(5),
-    alignItems : "center"
   },
   contentPadding: {
     paddingLeft: wp(5),

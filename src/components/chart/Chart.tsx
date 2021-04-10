@@ -6,6 +6,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {fonts} from '@theme';
 // import {chartTy} from '@typings';
 interface Props {
   severity: Array<Object>;
@@ -22,18 +23,17 @@ const Chart = (props: Props) => {
     <View style={props.style}>
       <View style={{paddingTop: wp(3), paddingBottom: wp(3)}}>
         {/* Liklihood */}
+        <Text
+          style={{
+            fontSize: wp(4),
+            // marginTop: wp(-2),
+            marginTop: wp(3),
+            fontFamily: fonts.SFuiDisplayMedium,
+            marginRight: wp(3),
+          }}>
+          LIKELIHOOD
+        </Text>
         <View style={{flexDirection: 'row'}}>
-          <Text
-            style={{
-              fontSize: wp(3),
-              fontWeight: 'bold',
-              marginTop: wp(-2),
-
-              marginRight: wp(3),
-              alignSelf: 'center',
-            }}>
-            LIKELIHOOD
-          </Text>
           {liklihood.map((d: any, i: number) => {
             return (
               <View key={i}>
@@ -95,19 +95,55 @@ const Chart = (props: Props) => {
             );
           })}
         </View>
-        {/* severity */}
-        <View style={{flexDirection: 'row'}}>
+        <View
+          style={{
+            right: 0,
+            top: wp(25),
+
+            position: 'absolute',
+          }}>
+          <View
+            style={{
+              borderRadius: wp(1),
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: colors.error,
+              padding: wp(8),
+            }}>
+            <Text
+              style={{
+                position: 'absolute',
+                fontSize: wp(8),
+                color: colors.secondary,
+                fontFamily: fonts.SFuiDisplayBold,
+              }}>
+              {4 * 3}
+            </Text>
+          </View>
           <Text
             style={{
-              fontSize: wp(3),
-              fontWeight: 'bold',
-              marginRight: wp(3),
-              alignSelf: 'center',
-              marginTop: wp(-2),
+              fontSize: wp(4),
+              fontFamily: fonts.SFuiDisplayBold,
+              textAlign: 'center',
+              color: colors.error,
             }}>
-            SEVERITY
+            High
           </Text>
-          <View style={{flexDirection: 'row', marginLeft: wp(3)}}>
+        </View>
+
+        {/* severity */}
+        <Text
+          style={{
+            marginTop: wp(3),
+            fontSize: wp(4),
+            // fontWeight:   'bold',
+            fontFamily: fonts.SFuiDisplayMedium,
+            // marginRight: wp(3),
+          }}>
+          SEVERITY
+        </Text>
+        <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row'}}>
             {severity.map((d: any, i) => {
               return (
                 <View key={i}>

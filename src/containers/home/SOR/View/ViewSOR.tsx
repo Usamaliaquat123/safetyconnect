@@ -162,6 +162,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .then((res: any) => {
         this.setState({
           involvedPerson: res.data.data.involved_persons,
+          commentsSugg: res.data.data.involved_persons,
         });
 
         this.mappingInvolved(
@@ -394,11 +395,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         });
     }
   };
-  onCommenting = (e : string) => {
-this.setState({ commentText : e, commentsSugg : this.state.involvedPerson })
-  
-    
-  }
   // Document Attachments
   openDoc = async (attach: Array<Object>) => {
     try {
@@ -512,39 +508,35 @@ this.setState({ commentText : e, commentsSugg : this.state.involvedPerson })
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
-
                 onPress={() => this.props.navigation.goBack()}
                 size={25}
                 name="arrow-back-outline"
                 type="ionicon"
                 color={colors.secondary}
               />
-                <Text style={styles.title}>Obervation Summary</Text>
-                {/* <View style={styles.underScrore} /> */}
-             
+              <View>
+                <Text style={styles.title}>SOR Report</Text>
+                <View style={styles.underScrore} />
+              </View>
+              <View style={styles.avatarView}>
+                <Avatar
+                  rounded
+                  source={{
+                    uri: View_sor.user.profile,
+                  }}
+                />
+              </View>
             </View>
           </View>
           <Animated.View
             style={[styles.content, {marginTop: this.state.contentAnim}]}>
             <View style={styles.contentPadding}>
-
-            {/*  Observation Details */}
-            <View style={styles.observationsDetailsContainer}>
-             {/* Observations Id */}
-              <View style={styles.observationIdContainer}>
-      <Text style={styles.observationIdTitle}>Observation ID  : </Text>
-
-      <Text style={styles.observationIdAns}>1234</Text>
-              </View>
-      {/* Observations Type */}
-      <View style={styles.observationTypeContainer}>
-        <Text style={styles.observationTypettle}>Observation Type: </Text>
-        <TouchableOpacity style={styles.classittleicon}>
+              <TouchableOpacity style={styles.classittleicon}>
                 {this.state.sor_type != 'lsr' ? (
                   <View>
                     {this.state.sor_type != 'near miss' ? (
                       <Icon
-                        size={wp(3.5)}
+                        size={wp(6)}
                         name={
                           this.state.sor_type == 'lsr'
                             ? 'aperture'
@@ -584,7 +576,7 @@ this.setState({ commentText : e, commentsSugg : this.state.involvedPerson })
                 ) : null}
 
                 {this.state.sor_type == 'lsr' ? (
-                  <View style={{width: wp(3.5), height: wp(3.5)}}>
+                  <View style={{width: wp(7), height: wp(7)}}>
                     <Image
                       source={images.lsr}
                       style={[GlStyles.images, {tintColor: colors.text}]}
@@ -592,7 +584,7 @@ this.setState({ commentText : e, commentsSugg : this.state.involvedPerson })
                   </View>
                 ) : null}
                 {this.state.sor_type == 'near miss' ? (
-                  <View style={{width: wp(3.5), height: wp(3.5)}}>
+                  <View style={{width: wp(8), height: wp(8)}}>
                     <Image source={images.nearMiss} style={GlStyles.images} />
                   </View>
                 ) : null}
@@ -612,27 +604,6 @@ this.setState({ commentText : e, commentsSugg : this.state.involvedPerson })
                   {capitalizeFirstLetter(this.state.sor_type)}
                 </Text>
               </TouchableOpacity>
-      </View>
-          {/* Reported On  */}
-          <View style={styles.reportedOnContainer}>
-            <Text style={styles.reportedOnText}>Reported On: </Text>
-            <Text style={styles.reportedOnAns}>{moment().format('MMM DD, YYYY LT')}</Text>
-          </View>
-          {/* Project Name */}
-          <View style={styles.projectNameContainer}>
-            <Text style={styles.projectNameTitle}>
-              Project: 
-            </Text>
-            <Text style={styles.projectNameAns}>
-              Project: 
-            </Text>
-          </View>
-      {/* Location */}
-      <View></View>
-
-            </View>
-
-
               <View style={styles.obserContainer}>
                 <View>
                   <TextInput
@@ -795,7 +766,7 @@ this.setState({ commentText : e, commentsSugg : this.state.involvedPerson })
                     <Chart
                       liklihood={this.state.liklihood}
                       severity={this.state.severity}
-                      style={{alignSelf: 'center', marginTop: wp(3)}}
+                      style={{marginTop: wp(3)}}
                       onPress={(v: object) => {}}
                     />
                   </View>
@@ -1337,8 +1308,8 @@ this.setState({ commentText : e, commentsSugg : this.state.involvedPerson })
                     value={this.state.commentText}
                     onChange={(e) => {
                       // mentionComment
-                      this.onCommenting(e.nativeEvent.text)
-                      // this.setState({commentText: e.nativeEvent.text});
+
+                      this.setState({commentText: e.nativeEvent.text});
                     }}
                     placeholder={'Your comment here '}
                   />
@@ -1411,8 +1382,7 @@ this.setState({ commentText : e, commentsSugg : this.state.involvedPerson })
                             this.setState({
                               commentText: this.state.commentText.concat(
                                 d.name,
-                                ),
-                                commentsSugg : []
+                              ),
                             });
                             // this.state.involvePersonTags.push(d);
                           }}
