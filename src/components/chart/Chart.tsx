@@ -101,7 +101,7 @@ const Chart = (props: Props) => {
                     ]}>
                     <Text
                       style={[
-                        {fontSize: wp(3.5), fontWeight: 'bold'},
+                        {fontSize: wp(3.5), fontWeight: 'bold', color: d.color},
                         d.selected == true
                           ? {
                               color: colors.secondary,
