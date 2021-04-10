@@ -61,6 +61,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       data: this.props.route.params.title,
       searchValue: '',
       bottomWidth: wp(100),
+      loading: false,
     };
   }
   componentDidMount() {
@@ -74,10 +75,23 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     // }
     // this.setState({reports: d});
     // console.log(this.props.route.params.data);
-    this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
-      this.props.route.params.data,
-    ]);
-    this.setState({reports: this.props.reduxState.allSors});
+    this.setState({loading: true});
+
+    createApi
+      .createApi()
+      .filterSors({
+        project: '604b13d114ba138bd23d7f75',
+        limit: 1000,
+        page: 0,
+        query: {status: [this.props.route.params.data]},
+      })
+      .then((res: any) => {
+        // dispatch(error(false));
+        this.setState({reports: res.data.data.report});
+        this.setState({loading: false});
+      })
+      .catch((err) => {});
+
     // console.log(this.props.reduxState.allSors);
   }
 
@@ -95,7 +109,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
             <View style={styles.headertle}>
               <Icon
                 onPress={() => this.props.navigation.goBack()}
-                size={25}
+                size={wp(10)}
                 name="arrow-back-outline"
                 type="ionicon"
                 color={colors.secondary}
@@ -121,7 +135,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
             </View>
           </View>
           <View style={styles.content}>
-            {this.props.reduxState.loading == true ? (
+            {this.state.loading == true ? (
               <View
                 style={{
                   alignSelf: 'center',

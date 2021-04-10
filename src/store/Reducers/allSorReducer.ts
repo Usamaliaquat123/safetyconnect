@@ -27,6 +27,12 @@ const allSorReducer = (state = initialState, actions: IAction<AllSorDTO>) => {
         allSors: actions.payload,
       };
     }
+    case ActionTypes.CLEAN_SOR: {
+      return {
+        ...state,
+        allSors: [],
+      };
+    }
 
     default:
       return state;

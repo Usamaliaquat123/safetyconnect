@@ -33,6 +33,7 @@ import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import {classifySor} from '@utils';
 import {Card, ListCard} from '@components';
+import {createApi} from '@service';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -95,6 +96,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       draft: [],
       exclated: [],
       submitted: [],
+      loading: false,
       completed: [],
       inprogress: [],
       isAuthenticated: false,
@@ -103,14 +105,15 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       setUser: '',
       // New sor modal popup
       newsorModal: false,
+      reports: [],
     };
-    this.props.reduxActions.getAllSors('604b13d114ba138bd23d7f75', [
-      1,
-      2,
-      3,
-      4,
-      5,
-    ]);
+    // this.props.reduxActions.getAllSors('604b13d114ba138bd23d7f75', [
+    //   1,
+    //   2,
+    //   3,
+    //   4,
+    //   5,
+    // ]);
   }
   componentWillUnmount = () => {
     this.setState({
@@ -139,7 +142,36 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     //   .catch((err) =>{});
     // this.props.initialList.addList('asdds');
     // this.setState({loading: true});
+    this.setState({loading: true});
+    createApi
+      .createApi()
+      .filterSors({
+        project: '604b13d114ba138bd23d7f75',
+        limit: 1000,
+        page: 0,
+        query: {status: [1, 2, 3, 4, 5]},
+      })
+      .then((res: any) => {
+        console.log(res);
+        // dispatch(error(false));
+        this.setState({reports: res.data.data.report});
 
+        for (let i = 0; i < res.data.data.report.length; i++) {
+          if (res.data.data.report[i].status == 1) {
+            this.state.draft.push(res.data.data.report[i]);
+          } else if (res.data.data.report[i].status == 2) {
+            this.state.submitted.push(res.data.data.report[i]);
+          } else if (res.data.data.report[i].status == 3) {
+            this.state.exclated.push(res.data.data.report[i]);
+          } else if (res.data.data.report[i].status == 4) {
+            this.state.inprogress.push(res.data.data.report[i]);
+          } else if (res.data.data.report[i].status == 5) {
+            this.state.completed.push(res.data.data.report[i]);
+          }
+        }
+        this.setState({loading: false});
+      })
+      .catch((err) => {});
     // if (this.props.reduxState.allSors.allSors.involved_persons !== undefined) {
     //   this.setState({loading: false});
     //   await AsyncStorage.setItem(
@@ -147,19 +179,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     //     JSON.stringify(this.props.reduxState.allSors.allSors.involved_persons),
     //   );
     // } else {
-    for (let i = 0; i < this.props.reduxState.allSors.length; i++) {
-      if (this.props.reduxState.allSors[i].status == 1) {
-        this.state.draft.push(this.props.reduxState.allSors[i]);
-      } else if (this.props.reduxState.allSors[i].status == 2) {
-        this.state.submitted.push(this.props.reduxState.allSors[i]);
-      } else if (this.props.reduxState.allSors[i].status == 3) {
-        this.state.exclated.push(this.props.reduxState.allSors[i]);
-      } else if (this.props.reduxState.allSors[i].status == 4) {
-        this.state.inprogress.push(this.props.reduxState.allSors[i]);
-      } else if (this.props.reduxState.allSors[i].status == 5) {
-        this.state.completed.push(this.props.reduxState.allSors[i]);
-      }
-    }
+
     // this.setState({loading: false});
     // }
 
@@ -293,7 +313,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
               <Text style={styles.filerText}>Filters </Text>
             </View>
             <View style={styles.lineheight}></View>
-            {this.props.reduxState.loading == true ? (
+            {this.state.loading == true ? (
               <View
                 style={{
                   alignSelf: 'center',
@@ -450,12 +470,12 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 ))}
                               {this.state.draft.length > 3 && (
                                 <TouchableOpacity
-                                  onPress={() =>
+                                  onPress={() => {
                                     this.props.navigation.navigate('ViewAll', {
                                       data: 1,
                                       title: 'Draft',
-                                    })
-                                  }
+                                    });
+                                  }}
                                   style={{marginLeft: wp(4)}}>
                                   <Text
                                     style={{
@@ -538,15 +558,15 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                   ))}
                                 {this.state.inprogress.length > 3 && (
                                   <TouchableOpacity
-                                    onPress={() =>
+                                    onPress={() => {
                                       this.props.navigation.navigate(
                                         'ViewAll',
                                         {
                                           data: 4,
                                           title: 'In Progress',
                                         },
-                                      )
-                                    }
+                                      );
+                                    }}
                                     style={{
                                       marginLeft: wp(4),
                                       marginTop: wp(3),
@@ -633,15 +653,15 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                   ))}
                                 {this.state.exclated.length > 3 && (
                                   <TouchableOpacity
-                                    onPress={() =>
+                                    onPress={() => {
                                       this.props.navigation.navigate(
                                         'ViewAll',
                                         {
                                           data: 3,
                                           title: 'Exclated',
                                         },
-                                      )
-                                    }
+                                      );
+                                    }}
                                     style={{
                                       marginLeft: wp(4),
                                       marginTop: wp(3),
@@ -729,15 +749,15 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                   ))}
                                 {this.state.completed.length > 5 && (
                                   <TouchableOpacity
-                                    onPress={() =>
+                                    onPress={() => {
                                       this.props.navigation.navigate(
                                         'ViewAll',
                                         {
                                           data: 5,
                                           title: 'Completed',
                                         },
-                                      )
-                                    }
+                                      );
+                                    }}
                                     style={{
                                       marginLeft: wp(4),
                                       marginTop: wp(3),
@@ -851,15 +871,15 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                   ))}
                                 {this.state.submitted.length > 3 && (
                                   <TouchableOpacity
-                                    onPress={() =>
+                                    onPress={() => {
                                       this.props.navigation.navigate(
                                         'ViewAll',
                                         {
                                           data: 2,
                                           title: 'Submitted',
                                         },
-                                      )
-                                    }
+                                      );
+                                    }}
                                     style={{
                                       marginLeft: wp(4),
                                       marginTop: wp(3),
@@ -971,12 +991,16 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           ))}
                         {this.state.draft.length > 3 && (
                           <TouchableOpacity
-                            onPress={() =>
+                            onPress={() => {
+                              this.props.reduxActions.getAllSors(
+                                '6038cf8472762b29b1bed1f3',
+                                [this.props.route.params.data],
+                              );
                               this.props.navigation.navigate('ViewAll', {
                                 data: 1,
                                 title: 'Draft',
-                              })
-                            }
+                              });
+                            }}
                             style={{
                               // marginBottom: wp(),
                               alignSelf: 'center',
@@ -1031,12 +1055,16 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           ))}
                         {this.state.inprogress.length > 3 && (
                           <TouchableOpacity
-                            onPress={() =>
+                            onPress={() => {
+                              this.props.reduxActions.getAllSors(
+                                '6038cf8472762b29b1bed1f3',
+                                [this.props.route.params.data],
+                              );
                               this.props.navigation.navigate('ViewAll', {
                                 data: this.state.inprogress,
                                 title: 'In Progress',
-                              })
-                            }
+                              });
+                            }}
                             style={{
                               alignSelf: 'center',
                               padding: wp(3),
@@ -1089,12 +1117,13 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           ))}
                         {this.state.exclated.length > 3 && (
                           <TouchableOpacity
-                            onPress={() =>
+                            onPress={() => {
+                              this.props.reduxActions.clearAllSor();
                               this.props.navigation.navigate('ViewAll', {
                                 data: this.state.exclated,
                                 title: 'Exclated',
-                              })
-                            }
+                              });
+                            }}
                             style={{
                               alignSelf: 'center',
                               padding: wp(3),
@@ -1147,12 +1176,13 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           ))}
                         {this.state.completed.length > 3 && (
                           <TouchableOpacity
-                            onPress={() =>
+                            onPress={() => {
+                              this.props.reduxActions.clearAllSor();
                               this.props.navigation.navigate('ViewAll', {
                                 data: this.state.completed,
                                 title: 'Completed',
-                              })
-                            }
+                              });
+                            }}
                             style={{
                               alignSelf: 'center',
                               padding: wp(3),
@@ -1205,12 +1235,13 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           ))}
                         {this.state.submitted.length > 3 && (
                           <TouchableOpacity
-                            onPress={() =>
+                            onPress={() => {
+                              this.props.reduxActions.clearAllSor();
                               this.props.navigation.navigate('ViewAll', {
                                 data: this.state.submitted,
                                 title: 'Submitted',
-                              })
-                            }
+                              });
+                            }}
                             style={{
                               alignSelf: 'center',
                               padding: wp(3),

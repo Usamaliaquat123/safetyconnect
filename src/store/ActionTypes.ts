@@ -15,10 +15,12 @@ enum ActionTypes {
 
   /* Loading */
   LOADING = 'LOADING',
+
   /* ERROR */
   ERROR = 'ERROR',
   // Render AllSOR
   ALL_SORS = 'ALL_SORS',
+  CLEAN_SOR = 'CLEAN_SOR',
 }
 
 export interface IAction<T> {

@@ -12,6 +12,7 @@ export const updateList = createAction(ActionTypes.LIST_CHANGE);
 export const loading = createAction(ActionTypes.LOADING);
 export const error = createAction(ActionTypes.ERROR);
 export const allSors = createAction(ActionTypes.ALL_SORS);
+export const cleanSors = createAction(ActionTypes.CLEAN_SOR);
 
 /** @typings Sor [types] */
 export type SorType = {
@@ -53,10 +54,9 @@ export const getAllSors = (
   projectId: string,
   sorType: Array<number>,
 ): IThunkAction => {
-  console.log(sorType);
   return (dispatch, getState) => {
     dispatch(loading(true));
-    dispatch(allSors([]));
+    dispatch(cleanSors([]));
     createApi
       .createApi()
       .filterSors({
@@ -66,7 +66,7 @@ export const getAllSors = (
         query: {status: sorType},
       })
       .then((res: any) => {
-        dispatch(error(false));
+        // dispatch(error(false));
         dispatch(loading(false));
         dispatch(allSors(res.data.data.report));
       })
@@ -76,6 +76,14 @@ export const getAllSors = (
       });
   };
 };
+/* Clear all sors */
+
+export const clearAllSor = (): IThunkAction => {
+  return (dispatch, getState) => {
+    dispatch(cleanSors([]));
+  };
+};
+
 /** Update sor */
 export const updateSor = (data: report, nav: any): IThunkAction => {
   return async (dispatch, getState) => {
@@ -140,7 +148,7 @@ export const createSor = (
                 console.log(data);
                 dispatch(loading(false));
                 dispatch(error(false));
-                nav.navigate('ViewAllSOr');
+                nav.navigate('Main');
               } else {
                 dispatch(loading(false));
                 dispatch(error(true));
