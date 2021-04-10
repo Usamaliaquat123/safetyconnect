@@ -12,7 +12,6 @@ export const updateList = createAction(ActionTypes.LIST_CHANGE);
 export const loading = createAction(ActionTypes.LOADING);
 export const error = createAction(ActionTypes.ERROR);
 export const allSors = createAction(ActionTypes.ALL_SORS);
-export const emptyAllSors = createAction(ActionTypes.EMPTY_ALL_SORS);
 
 /** @typings Sor [types] */
 export type SorType = {

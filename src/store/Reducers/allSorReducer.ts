@@ -27,12 +27,7 @@ const allSorReducer = (state = initialState, actions: IAction<AllSorDTO>) => {
         allSors: actions.payload,
       };
     }
-    case ActionTypes.EMPTY_ALL_SORS: {
-      return {
-        ...state,
-        allSors: [],
-      };
-    }
+
     default:
       return state;
   }

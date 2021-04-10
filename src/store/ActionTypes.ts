@@ -19,7 +19,6 @@ enum ActionTypes {
   ERROR = 'ERROR',
   // Render AllSOR
   ALL_SORS = 'ALL_SORS',
-  EMPTY_ALL_SORS = 'EMPTY_ALL_SORS',
 }
 
 export interface IAction<T> {
