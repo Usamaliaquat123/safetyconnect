@@ -19,6 +19,12 @@ interface Props {
 const Chart = (props: Props) => {
   const [liklihood, setliklihood] = useState(props.liklihood);
   const [severity, setseverity] = useState(props.severity);
+  const [total, setTotal] = useState();
+
+  var ttl: number =
+    props.liklihood.filter((i: any) => i.selected === true)[0].value *
+    props.severity.filter((i: any) => i.selected === true)[0].value;
+  // setTotal(ttl);
 
   return (
     <View style={props.style}>
@@ -134,31 +140,47 @@ const Chart = (props: Props) => {
             position: 'absolute',
           }}>
           <View
-            style={{
-              borderRadius: wp(1),
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: colors.error,
-              padding: wp(8),
-            }}>
+            style={[
+              {
+                borderRadius: wp(1),
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: colors.error,
+                padding: wp(8),
+              },
+              ttl < 7
+                ? {backgroundColor: colors.green}
+                : ttl < 14
+                ? {backgroundColor: colors.riskIcons.orrange}
+                : {backgroundColor: colors.error},
+            ]}>
             <Text
-              style={{
-                position: 'absolute',
-                fontSize: wp(8),
-                color: colors.secondary,
-                fontFamily: fonts.SFuiDisplayBold,
-              }}>
-              {4 * 3}
+              style={[
+                {
+                  position: 'absolute',
+                  fontSize: wp(8),
+                  color: colors.secondary,
+                  fontFamily: fonts.SFuiDisplayBold,
+                },
+              ]}>
+              {ttl}
             </Text>
           </View>
           <Text
-            style={{
-              fontSize: wp(4),
-              fontFamily: fonts.SFuiDisplayBold,
-              textAlign: 'center',
-              color: colors.error,
-            }}>
-            High
+            style={[
+              {
+                fontSize: wp(4),
+                fontFamily: fonts.SFuiDisplayBold,
+                textAlign: 'center',
+                // color: colors.error,
+              },
+              ttl < 7
+                ? {color: colors.green}
+                : ttl < 14
+                ? {color: colors.riskIcons.orrange}
+                : {color: colors.error},
+            ]}>
+            {ttl < 7 ? `Low` : ttl < 14 ? `Medium` : 'High'}
           </Text>
           <Text
             style={{

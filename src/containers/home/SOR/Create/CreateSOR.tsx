@@ -879,7 +879,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 <Chart
                   liklihood={this.state.liklihood}
                   severity={this.state.severity}
-                  style={{alignSelf: 'center', marginTop: wp(3)}}
+                  style={{marginTop: wp(3)}}
                   onPress={(v: any) => {
                     // if (v.liklihood == undefined) {
                     //   this.setState({severity: v.severity});
