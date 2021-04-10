@@ -59,7 +59,7 @@ export const getAllSors = (
       .createApi()
       .filterSors({
         project: projectId,
-        limit: 100,
+        limit: 1000,
         page: 0,
         query: {status: sorType},
       })

@@ -294,25 +294,28 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     //   });
     // }, 1000);
     // this.AnimatedViews();
+
+    this.state.liklihood[0].selected = true;
+    this.state.severity[0].selected = true;
   };
 
-  mappingMapping = (sev: number, lik: number) => {
-    this.state.liklihood.map((d: any, i: number) => {
-      if (sev == d.value) {
-        d.selected = true;
-      } else {
-        d.selected = false;
-      }
-    });
-    this.state.severity.map((d: any, i: number) => {
-      if (lik == d.value) {
-        d.selected = true;
-      } else {
-        d.selected = false;
-      }
-    });
-    this.setState({});
-  };
+  // mappingMapping = (sev: number, lik: number) => {
+  //   this.state.liklihood.map((d: any, i: number) => {
+  //     if (sev == d.value) {
+  //       d.selected = true;
+  //     } else {
+  //       d.selected = false;
+  //     }
+  //   });
+  //   this.state.severity.map((d: any, i: number) => {
+  //     if (lik == d.value) {
+  //       d.selected = true;
+  //     } else {
+  //       d.selected = false;
+  //     }
+  //   });
+  //   this.setState({});
+  // };
 
   AnimatedViews = () => {
     Animated.timing(this.state.contentAnim, {
@@ -586,7 +589,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               attachments: [],
                               comments: ' ',
                             },
-                            project: '6038cf8472762b29b1bed1f3',
+                            project: '604b13d114ba138bd23d7f75',
                           };
                           this.props.reduxActions.createSor(
                             sor,

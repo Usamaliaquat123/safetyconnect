@@ -104,7 +104,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       // New sor modal popup
       newsorModal: false,
     };
-    this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
+    this.props.reduxActions.getAllSors('604b13d114ba138bd23d7f75', [
       1,
       2,
       3,

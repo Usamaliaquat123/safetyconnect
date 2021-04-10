@@ -100,8 +100,10 @@ const createApi = (
   /*
    * @comments
    */
-  const getAllComents = (commentId: string) =>
-    baseapi.get(`comment/?comment_document_id=${commentId}`);
+  const getAllComents = (commentId: string, reportId: string) =>
+    baseapi.get(
+      `comment/?comment_document_id=${commentId}&reportId=${reportId}`,
+    );
   const delComment = (data: any) => baseapi.delete(`comment`, data);
   const editComment = (data: any) => baseapi.get(`comment`, data);
   const createComment = (data: any) => baseapi.post(`comment`, data);

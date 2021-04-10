@@ -49,7 +49,7 @@ import {
 } from '@utils';
 import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {involved_persons, actions, comments} from '@typings';
+import {involved_persons, actions} from '@typings';
 import * as reduxActions from '../../../../store/actions/listSorActions';
 
 type ViewSORNavigationProp = StackNavigationProp<
@@ -264,13 +264,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   // Get All Comments
   getAllComments = () => {
     this.props.route.params.data.comments;
-
+    console.log('=========');
     console.log(this.props.route.params.data.comments);
     console.log(this.state.involvedPerson);
 
     createApi
       .createApi()
-      .getAllComents(this.props.route.params.data.comments)
+      .getAllComents(
+        this.props.route.params.data.comments,
+        this.props.route.params.data._id,
+      )
       .then((res: any) => {
         for (let i = 0; i < res.data.data.all_comments.length; i++) {
           if (res.data.data.all_comments[i].email !== undefined) {
@@ -279,13 +282,35 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             ].email.split('@')[0];
           }
           res.data.data.all_comments[i]['image'] = '';
+
+          // console.log(res.data.data.all_comments);
           // res.data.data.all_comments[i]['files'
 
-          this.setState({comments: res.data.data.all_comments});
           // console.log(res.data.data.all_comments[i].email.split('@')[0]);
         }
-
+        this.setState({comments: res.data.data.all_comments});
         console.log(res.data.data.all_comments);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // Add Comment
+  addComment = (comment: string) => {
+    var comments = {
+      data: {
+        user: '6038cd5172762b0d86bed1eb',
+        comment: comment,
+        date: moment().format('YYYY-MM-DD'),
+        files: [],
+        is_comment: true,
+      },
+      comment_document_id: this.props.route.params.data.comments,
+    };
+    createApi
+      .createApi()
+      .createComment(comments)
+      .then((res) => {
+        console.log(res);
       })
       .catch((err) => console.log(err));
   };
@@ -1186,19 +1211,22 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         });
                       }}
                       style={styles.userComments}>
-                      <Avatar
-                        // containerStyle={{position: 'absolute', top: wp(0)}}
-                        size={wp(6)}
-                        rounded
-                        source={{
-                          uri:
-                            d.image === ''
-                              ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
-                              : d.image,
-                        }}
-                      />
+                      {d.user == '' ? null : (
+                        <Avatar
+                          // containerStyle={{position: 'absolute', top: wp(0)}}
+                          size={wp(6)}
+                          rounded
+                          source={{
+                            uri:
+                              d.user.img_url == undefined
+                                ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                                : d.user.img_url,
+                          }}
+                        />
+                      )}
+
                       <View style={styles.commentUser}>
-                        <Text style={styles.userCommentName}>{d.user}</Text>
+                        {/* <Text style={styles.userCommentName}>{d.user.}</Text> */}
                         <Text style={styles.usercomment}>{d.comment}</Text>
                       </View>
                       <View style={styles.dateComments}>
@@ -1340,6 +1368,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         if (this.state.commentText != '') {
                           var map = [...this.state.comments];
 
+                          this.addComment(this.state.commentText);
                           map.push({
                             user: 'TestUser',
                             date: Date.now(),
