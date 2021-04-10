@@ -79,25 +79,35 @@ const Chart = (props: Props) => {
                       marginTop: wp(0.4),
                       // marginLeft: wp(1),
                     },
-                    d.selected == true
-                      ? {
-                          borderWidth: wp(0.2),
-                          borderRadius: wp(2),
-
-                          borderColor: colors.primary,
-                        }
-                      : null,
                   ]}>
                   <View
-                    style={{
-                      backgroundColor: d.color,
-                      alignItems: 'center',
-                      width: wp(10),
-                      height: wp(10),
-                      justifyContent: 'center',
-                      borderRadius: wp(3),
-                    }}>
-                    <Text style={{fontSize: wp(3.5), fontWeight: 'bold'}}>
+                    style={[
+                      {
+                        // backgroundColor: d.color,
+                        borderColor: d.color,
+                        borderWidth: wp(0.7),
+                        alignItems: 'center',
+                        width: wp(10),
+                        height: wp(10),
+                        justifyContent: 'center',
+                        borderRadius: wp(2),
+                      },
+
+                      d.selected == true
+                        ? {
+                            backgroundColor: d.color,
+                          }
+                        : null,
+                    ]}>
+                    <Text
+                      style={[
+                        {fontSize: wp(3.5), fontWeight: 'bold'},
+                        d.selected == true
+                          ? {
+                              color: colors.secondary,
+                            }
+                          : null,
+                      ]}>
                       {d.value}
                     </Text>
                   </View>
@@ -218,28 +228,54 @@ const Chart = (props: Props) => {
                         borderRadius: wp(3),
                         // marginLeft: wp(1),
                       },
-                      d.selected == true
-                        ? {
-                            borderWidth: wp(0.2),
-                            borderRadius: wp(2),
-                            borderColor: colors.primary,
-                          }
-                        : null,
                     ]}>
-                    <View
-                      style={{
-                        backgroundColor: d.color,
-                        alignItems: 'center',
-                        width: wp(10),
-                        // position: 'absolute',
-                        height: wp(10),
-                        justifyContent: 'center',
-                        borderRadius: wp(3),
-                      }}>
-                      <Text style={{fontSize: wp(3.5), fontWeight: 'bold'}}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        var severityArr: Array<any> = [...severity];
+                        severityArr.map((b: object, j: number) => {
+                          if (severityArr[j] == d) {
+                            severityArr[j].selected = !severityArr[j].selected;
+                          } else {
+                            severityArr[j].selected = false;
+                          }
+                        });
+                        setseverity(severityArr);
+                        props.onPress({severity: d});
+                      }}
+                      style={[
+                        {
+                          borderColor: d.color,
+                          alignItems: 'center',
+                          width: wp(10),
+                          borderWidth: wp(0.5),
+                          // position: 'absolute',
+                          height: wp(10),
+                          justifyContent: 'center',
+                          borderRadius: wp(2),
+                        },
+                        d.selected == true
+                          ? {
+                              backgroundColor: d.color,
+                            }
+                          : null,
+                      ]}>
+                      <Text
+                        style={[
+                          {
+                            fontSize: wp(3.5),
+                            fontWeight: 'bold',
+                            color: d.color,
+                          },
+
+                          d.selected == true
+                            ? {
+                                color: colors.secondary,
+                              }
+                            : null,
+                        ]}>
                         {d.value}
                       </Text>
-                    </View>
+                    </TouchableOpacity>
                     <Text
                       style={{
                         textAlign: 'center',
