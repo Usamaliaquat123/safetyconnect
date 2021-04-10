@@ -22,12 +22,17 @@ const Chart = (props: Props) => {
   const [total, setTotal] = useState();
 
   console.log(props.liklihood);
-  console.log(props.severity);
+  // console.log(props.liklihood.filter((i: any) => i.selected == true)[0].value);
+  // if (
+  //   props.liklihood.filter((i: any) => i.selected == true)[0].value == undefined
+  // ) {
+  //   var ttl = 0;
+  // } else {
   var ttl: number =
     props.liklihood.filter((i: any) => i.selected == true)[0].value *
     props.severity.filter((i: any) => i.selected == true)[0].value;
-  // setTotal(ttl);
-  var ttl;
+  // }
+
   return (
     <View style={props.style}>
       <View style={{paddingTop: wp(3), paddingBottom: wp(3)}}>

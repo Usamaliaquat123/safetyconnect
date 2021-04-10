@@ -294,9 +294,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     //   });
     // }, 1000);
     // this.AnimatedViews();
-
-    this.state.liklihood[0].selected = true;
-    this.state.severity[0].selected = true;
   };
 
   // mappingMapping = (sev: number, lik: number) => {
@@ -701,6 +698,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   // componentWillUnmount = () => {};
 
   render() {
+    this.state.liklihood[0].selected = true;
+    this.state.severity[0].selected = true;
     return (
       <Animated.View style={[styles.container]}>
         {/* Header */}
