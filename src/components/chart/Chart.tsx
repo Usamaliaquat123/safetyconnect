@@ -7,6 +7,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {fonts} from '@theme';
+import {Icon} from 'react-native-elements';
 // import {chartTy} from '@typings';
 interface Props {
   severity: Array<Object>;
@@ -23,16 +24,37 @@ const Chart = (props: Props) => {
     <View style={props.style}>
       <View style={{paddingTop: wp(3), paddingBottom: wp(3)}}>
         {/* Liklihood */}
-        <Text
-          style={{
-            fontSize: wp(4),
-            // marginTop: wp(-2),
-            marginTop: wp(3),
-            fontFamily: fonts.SFuiDisplayMedium,
-            marginRight: wp(3),
-          }}>
-          LIKELIHOOD
-        </Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text
+            style={{
+              fontSize: wp(4),
+              // marginTop: wp(-2),
+              marginTop: wp(3),
+              fontFamily: fonts.SFuiDisplayMedium,
+              marginRight: wp(3),
+            }}>
+            LIKELIHOOD
+          </Text>
+
+          <Text
+            style={{
+              fontSize: wp(2.8),
+              fontFamily: fonts.SFuiDisplayMedium,
+              opacity: 0.5,
+              // marginLeft: wp(2),
+              marginTop: wp(2),
+            }}>
+            View Risk Matrix{' '}
+          </Text>
+          <Icon
+            iconStyle={{opacity: 0.5, marginTop: wp(1), marginLeft: wp(1)}}
+            size={wp(4)}
+            name="infocirlceo"
+            type="antdesign"
+            color={colors.text}
+          />
+        </View>
+
         <View style={{flexDirection: 'row'}}>
           {liklihood.map((d: any, i: number) => {
             return (
@@ -98,8 +120,7 @@ const Chart = (props: Props) => {
         <View
           style={{
             right: 0,
-            top: wp(25),
-
+            top: wp(24),
             position: 'absolute',
           }}>
           <View
@@ -129,19 +150,48 @@ const Chart = (props: Props) => {
             }}>
             High
           </Text>
+          <Text
+            style={{
+              fontSize: wp(3),
+              fontFamily: fonts.SFuiDisplayMedium,
+              textAlign: 'center',
+              opacity: 0.5,
+            }}>
+            (L X S)
+          </Text>
         </View>
 
         {/* severity */}
-        <Text
-          style={{
-            marginTop: wp(3),
-            fontSize: wp(4),
-            // fontWeight:   'bold',
-            fontFamily: fonts.SFuiDisplayMedium,
-            // marginRight: wp(3),
-          }}>
-          SEVERITY
-        </Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text
+            style={{
+              marginTop: wp(3),
+              fontSize: wp(4),
+              // fontWeight:   'bold',
+              fontFamily: fonts.SFuiDisplayMedium,
+              // marginRight: wp(3),
+            }}>
+            SEVERITY
+          </Text>
+          <Text
+            style={{
+              fontSize: wp(2.8),
+              fontFamily: fonts.SFuiDisplayMedium,
+              opacity: 0.5,
+              marginLeft: wp(3),
+              marginTop: wp(2),
+            }}>
+            View Risk Matrix{' '}
+          </Text>
+          <Icon
+            iconStyle={{opacity: 0.5, marginTop: wp(1), marginLeft: wp(1)}}
+            size={wp(4)}
+            name="infocirlceo"
+            type="antdesign"
+            color={colors.text}
+          />
+        </View>
+
         <View style={{flexDirection: 'row'}}>
           <View style={{flexDirection: 'row'}}>
             {severity.map((d: any, i) => {
