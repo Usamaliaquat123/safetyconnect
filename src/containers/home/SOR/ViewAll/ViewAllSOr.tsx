@@ -33,7 +33,6 @@ import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import {classifySor} from '@utils';
 import {Card, ListCard} from '@components';
-import {createApi} from '@service';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -96,7 +95,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       draft: [],
       exclated: [],
       submitted: [],
-      loading: false,
       completed: [],
       inprogress: [],
       isAuthenticated: false,
@@ -105,15 +103,16 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       setUser: '',
       // New sor modal popup
       newsorModal: false,
-      reports: [],
     };
-    // this.props.reduxActions.getAllSors('604b13d114ba138bd23d7f75', [
-    //   1,
-    //   2,
-    //   3,
-    //   4,
-    //   5,
-    // ]);
+    this.props.reduxActions.getAllSors('604b13d114ba138bd23d7f75', [
+      1,
+      2,
+      3,
+      4,
+      5,
+    ]).then(res => {
+      console.log(res)
+    });
   }
   componentWillUnmount = () => {
     this.setState({
@@ -124,13 +123,26 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       completed: [],
     });
 
-    console.log();
+    // console.log();
   };
   componentDidMount = () => {
+
+    for (let i = 0; i < this.props.reduxState.allSors.length; i++) {
+      if (this.props.reduxState.allSors[i].status == 1) {
+        this.state.draft.push(this.props.reduxState.allSors[i]);
+      } else if (this.props.reduxState.allSors[i].status == 2) {
+        this.state.submitted.push(this.props.reduxState.allSors[i]);
+      } else if (this.props.reduxState.allSors[i].status == 3) {
+        this.state.exclated.push(this.props.reduxState.allSors[i]);
+      } else if (this.props.reduxState.allSors[i].status == 4) {
+        this.state.inprogress.push(this.props.reduxState.allSors[i]);
+      } else if (this.props.reduxState.allSors[i].status == 5) {
+        this.state.completed.push(this.props.reduxState.allSors[i]);
+      }
+    }
     // this.props.initialList();
     // initialList.addList('sdsd');a
     // console.log(this.props.reduxState);
-
     // console.log(this.props.reduxState.loading);
     // initialList.initialList();
     // console.log('==================');
@@ -142,36 +154,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     //   .catch((err) =>{});
     // this.props.initialList.addList('asdds');
     // this.setState({loading: true});
-    this.setState({loading: true});
-    createApi
-      .createApi()
-      .filterSors({
-        project: '604b13d114ba138bd23d7f75',
-        limit: 1000,
-        page: 0,
-        query: {status: [1, 2, 3, 4, 5]},
-      })
-      .then((res: any) => {
-        console.log(res);
-        // dispatch(error(false));
-        this.setState({reports: res.data.data.report});
-
-        for (let i = 0; i < res.data.data.report.length; i++) {
-          if (res.data.data.report[i].status == 1) {
-            this.state.draft.push(res.data.data.report[i]);
-          } else if (res.data.data.report[i].status == 2) {
-            this.state.submitted.push(res.data.data.report[i]);
-          } else if (res.data.data.report[i].status == 3) {
-            this.state.exclated.push(res.data.data.report[i]);
-          } else if (res.data.data.report[i].status == 4) {
-            this.state.inprogress.push(res.data.data.report[i]);
-          } else if (res.data.data.report[i].status == 5) {
-            this.state.completed.push(res.data.data.report[i]);
-          }
-        }
-        this.setState({loading: false});
-      })
-      .catch((err) => {});
     // if (this.props.reduxState.allSors.allSors.involved_persons !== undefined) {
     //   this.setState({loading: false});
     //   await AsyncStorage.setItem(
@@ -179,10 +161,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     //     JSON.stringify(this.props.reduxState.allSors.allSors.involved_persons),
     //   );
     // } else {
-
     // this.setState({loading: false});
     // }
-
     // this.setState({draft: res.data.data.report});
   };
   _onRefresh = () => {
@@ -313,7 +293,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
               <Text style={styles.filerText}>Filters </Text>
             </View>
             <View style={styles.lineheight}></View>
-            {this.state.loading == true ? (
+            {this.props.reduxState.loading == true ? (
               <View
                 style={{
                   alignSelf: 'center',
