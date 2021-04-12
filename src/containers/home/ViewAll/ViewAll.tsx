@@ -154,7 +154,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
             </View>
           </View>
           <View style={styles.content}>
-            {this.props.reduxState.loading == true ? (
+            {this.state.loading == true ? (
               <View
                 style={{
                   alignSelf: 'center',
