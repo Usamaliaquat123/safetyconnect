@@ -311,7 +311,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .createApi()
       .createComment(comments)
       .then((res) => {
-        this.setState({ })
+        this.setState({});
       })
       .catch((err) => console.log(err));
   };
