@@ -223,25 +223,32 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         esclate_to: this.state.esclate_to,
         status: 2,
         attachments: [],
-        comments: '',
+        comments: ' ',
       },
       project: '6038cf8472762b29b1bed1f3',
     };
 
     console.log(update);
+
+    // createApi
+    //   .createApi()
+    //   .updateSor(update)
+    //   .then((res) => {})
+    //   .catch((err) => console.log(err));
     createApi
       .createApi()
       .updateSor(update)
       .then((res) => {
         console.log(res);
         this.setState({loading: false});
-        this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
-          1,
-          2,
-          3,
-          4,
-          5,
-        ]);
+
+        // this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
+        //   1,
+        //   2,
+        //   3,
+        //   4,
+        //   5,
+        // ]);
         // this.props.navigation.navigate('ViewAllSOr');
       })
       .catch((err) => {

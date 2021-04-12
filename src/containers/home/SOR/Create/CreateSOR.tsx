@@ -388,14 +388,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               .createSor(sor)
               .then((res: any) => {
                 this.setState({loading: false, errorModal: false});
-                if (res.data.status == 200) {
-                  this.props.navigation.navigate('Main');
+                console.log(res);
+                if (res.status == 200) {
+                  this.props.navigation.navigate('ViewAllSOr');
                 } else {
                   this.setState({
                     errorModal: true,
-
-                    errHeadingText: `CreateSor api returns ${res.data.status}.`,
-                    errDesText: res.data.data,
+                    errHeadingText: `CreateSor api returns ${res.status}.`,
+                    errDesText: res.data.message,
                   });
                 }
               });
@@ -482,7 +482,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     var bodyInitial = {
                       report: {
                         created_by: '',
-                        comments: '',
+                        comments: ' ',
                         status: 1,
                       },
                       project: '604b13d114ba138bd23d7f75',
@@ -521,7 +521,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             ),
                             status: 2,
                             // attachments: this.state.filename,
-                            comments: [],
+                            comments: ' ',
                           },
                           project: '604b13d114ba138bd23d7f75',
                         };
@@ -537,14 +537,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           .createSor(sor)
                           .then((res: any) => {
                             this.setState({loading: false, errorModal: false});
-                            if (res.data.status == 200) {
-                              this.props.navigation.navigate('Main');
+                            console.log(res);
+                            if (res.status == 200) {
+                              this.props.navigation.navigate('ViewAllSOr');
                             } else {
                               this.setState({
                                 errorModal: true,
-
                                 errHeadingText: `CreateSor api returns ${res.data.status}.`,
-                                errDesText: res.data.data,
+                                errDesText: res.data.message,
                               });
                             }
                           })
@@ -664,14 +664,16 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                     loading: false,
                                     errorModal: false,
                                   });
-                                  if (res.data.status == 200) {
-                                    this.props.navigation.navigate('Main');
+                                  console.log(res);
+                                  if (res.status == 200) {
+                                    this.props.navigation.navigate(
+                                      'ViewAllSOr',
+                                    );
                                   } else {
                                     this.setState({
                                       errorModal: true,
-
-                                      errHeadingText: `CreateSor api returns ${res.data.status}.`,
-                                      errDesText: res.data.data,
+                                      errHeadingText: `CreateSor api returns ${res.status}.`,
+                                      errDesText: res.data.message,
                                     });
                                   }
                                 })

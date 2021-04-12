@@ -123,7 +123,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       .createApi()
       .filterSors(data)
       .then((res: any) => {
-        
         for (let i = 0; i < res.data.data.report.length; i++) {
           if (res.data.data.report[i].status == 1) {
             this.state.draft.push(res.data.data.report[i]);
