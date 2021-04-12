@@ -75,7 +75,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     // this.setState({reports: d});
     // console.log(this.props.route.params.data);
     // s.setState({reports: this.props.reduxState.allSors});
-
+    this.setState({loading: true});
     var data = {
       project: '604b13d114ba138bd23d7f75',
       limit: 1000,
@@ -87,10 +87,12 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       .createApi()
       .filterSors(data)
       .then((res: any) => {
+        this.setState({loading: false});
+
         this.setState({reports: res.data.data.report});
       })
       .catch((err) => {
-        console.log(err);
+        this.setState({loading: false});
       });
 
     // console.log(this.props.reduxState.allSors);
@@ -103,13 +105,13 @@ class ViewAll extends React.Component<ViewAllProps, any> {
   // }
 
   _onRefresh = () => {
-    // this.setState({
-    //   draft: [],
-    //   submitted: [],
-    //   exclated: [],
-    //   inprogress: [],
-    //   completed: [],
-    // });
+    this.setState({
+      draft: [],
+      submitted: [],
+      exclated: [],
+      inprogress: [],
+      completed: [],
+    });
     this.componentDidMount();
   };
   render() {
