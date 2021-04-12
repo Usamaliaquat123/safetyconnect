@@ -354,10 +354,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         createApi
           .createApi()
           .createSorInit(bodyInitial)
-          .then((res) => {
+          .then((res: any) => {
             var sor = {
               report: {
-                created_by: 'haider@gmail.com',
+                _id: res.data.data.report_id,
+                created_by: this.state.email,
                 details: this.state.observationT,
                 occured_at: new Date(),
                 involved_persons: this.state.involvePersonTags,
@@ -381,6 +382,16 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               },
               project: '604b13d114ba138bd23d7f75',
             };
+
+            createApi
+              .createApi()
+              .createSor(sor)
+              .then((res: any) => {
+                this.setState({loading: false, errorModal: false});
+                if (res.data.status == 200) {
+                  this.props.navigation.navigate('Main');
+                }
+              });
 
             // this.props.reduxActions.createSor(draftSor, this.props.navigation);
           });
@@ -517,9 +528,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         createApi
                           .createApi()
                           .createSor(sor)
-                          .then((res) => {
+                          .then((res: any) => {
                             this.setState({loading: false, errorModal: false});
-                            this.props.navigation.navigate('Main');
+                            if (res.data.status == 200) {
+                              this.props.navigation.navigate('Main');
+                            } else {
+                              console.log(res.data);
+                            }
                           })
                           .catch((err) =>
                             this.setState({loading: false, errorModal: false}),
@@ -632,12 +647,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               createApi
                                 .createApi()
                                 .createSor(sor)
-                                .then((res) => {
+                                .then((res: any) => {
                                   this.setState({
                                     loading: false,
                                     errorModal: false,
                                   });
-                                  this.props.navigation.navigate('Main');
+                                  if (res.data.status == 200) {
+                                    this.props.navigation.navigate('Main');
+                                  }
                                 })
                                 .catch((err) =>
                                   this.setState({
