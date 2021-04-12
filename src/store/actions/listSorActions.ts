@@ -55,29 +55,25 @@ export const getAllSors = (
   sorType: Array<number>,
 ): IThunkAction => {
   return (dispatch, getState) => {
-    return new Promise((resolve, reject) => {
-      dispatch(loading(true));
-      dispatch(cleanSors([]));
-      createApi
-        .createApi()
-        .filterSors({
-          project: projectId,
-          limit: 1000,
-          page: 0,
-          query: {status: sorType},
-        })
-        .then(async (res: any) => {
-          // dispatch(error(false));
-          dispatch(loading(false));
-          dispatch(allSors(res.data.data.report));
-          resolve(res.data.data.report);
-        })
-        .catch((err) => {
-          reject(err);
-          dispatch(loading(false));
-          dispatch(error(true));
-        });
-    });
+    dispatch(loading(true));
+    dispatch(cleanSors([]));
+    createApi
+      .createApi()
+      .filterSors({
+        project: projectId,
+        limit: 1000,
+        page: 0,
+        query: {status: sorType},
+      })
+      .then((res: any) => {
+        // dispatch(error(false));
+        dispatch(loading(false));
+        dispatch(allSors(res.data.data.report));
+      })
+      .catch((err) => {
+        dispatch(loading(false));
+        dispatch(error(true));
+      });
   };
 };
 /* Clear all sors */

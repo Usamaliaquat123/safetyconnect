@@ -35,7 +35,6 @@ import {
 } from 'react-native-responsive-screen';
 import {report} from '@typings';
 import LottieView from 'lottie-react-native';
-
 // import {connect} from '../../decorators/index';
 // import {color} from 'react-native-reanimated';
 type ViewAllNavigationProp = StackNavigationProp<
@@ -60,6 +59,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       reports: [],
       data: this.props.route.params.title,
       searchValue: '',
+      refreshing: false,
       bottomWidth: wp(100),
     };
   }
@@ -74,10 +74,24 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     // }
     // this.setState({reports: d});
     // console.log(this.props.route.params.data);
-    this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
-      this.props.route.params.data,
-    ]);
-    this.setState({reports: this.props.reduxState.allSors});
+    // s.setState({reports: this.props.reduxState.allSors});
+
+    var data = {
+      project: '604b13d114ba138bd23d7f75',
+      limit: 1000,
+      page: 0,
+      query: {status: [this.props.route.params.data]},
+    };
+
+    createApi
+      .createApi()
+      .filterSors(data)
+      .then((res: any) => {
+        this.setState({reports: res.data.data.report});
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     // console.log(this.props.reduxState.allSors);
   }
@@ -88,10 +102,26 @@ class ViewAll extends React.Component<ViewAllProps, any> {
   //   );
   // }
 
+  _onRefresh = () => {
+    // this.setState({
+    //   draft: [],
+    //   submitted: [],
+    //   exclated: [],
+    //   inprogress: [],
+    //   completed: [],
+    // });
+    this.componentDidMount();
+  };
   render() {
     return (
       <View style={{flex: 1, backgroundColor: colors.secondary}}>
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              onRefresh={() => this._onRefresh()}
+              refreshing={this.state.refreshing}
+            />
+          }>
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon

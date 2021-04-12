@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Auth} from 'aws-amplify';
 import jwtDecode from 'jwt-decode';
 
-export const Navigator = () => {
+export const Navigator = (props: any) => {
   const [isAuthenticated, setIsAuthenticated] = useState(Boolean);
   const [isAuthenticating, setIsAuthenticating] = useState(Boolean);
   const [user, setUser] = useState('');
@@ -40,7 +40,6 @@ export const Navigator = () => {
     setUser(res);
   });
 
-  // console.log(user);
   console.log(user);
   AsyncStorage.setItem('current_project', '604b13d114ba138bd23d7f75');
 

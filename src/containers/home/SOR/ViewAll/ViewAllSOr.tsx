@@ -13,7 +13,7 @@ import {
   Image,
   TextInput,
 } from 'react-native';
-import {Create_sor} from '@service';
+import {createApi, Create_sor} from '@service';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors, fonts, animation, images, GlStyles} from '@theme';
 
@@ -103,43 +103,43 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       setUser: '',
       // New sor modal popup
       newsorModal: false,
+      refreshing: false,
+      loading: false,
     };
-    this.props.reduxActions.getAllSors('604b13d114ba138bd23d7f75', [
-      1,
-      2,
-      3,
-      4,
-      5,
-    ]).then(res => {
-      console.log(res)
-    });
   }
-  componentWillUnmount = () => {
-    this.setState({
-      draft: [],
-      submitted: [],
-      exclated: [],
-      inprogress: [],
-      completed: [],
-    });
 
-    // console.log();
-  };
   componentDidMount = () => {
+    // this.updateAllSors();
+    // this.forceUpdate();
 
-    for (let i = 0; i < this.props.reduxState.allSors.length; i++) {
-      if (this.props.reduxState.allSors[i].status == 1) {
-        this.state.draft.push(this.props.reduxState.allSors[i]);
-      } else if (this.props.reduxState.allSors[i].status == 2) {
-        this.state.submitted.push(this.props.reduxState.allSors[i]);
-      } else if (this.props.reduxState.allSors[i].status == 3) {
-        this.state.exclated.push(this.props.reduxState.allSors[i]);
-      } else if (this.props.reduxState.allSors[i].status == 4) {
-        this.state.inprogress.push(this.props.reduxState.allSors[i]);
-      } else if (this.props.reduxState.allSors[i].status == 5) {
-        this.state.completed.push(this.props.reduxState.allSors[i]);
-      }
-    }
+    var data = {
+      project: '604b13d114ba138bd23d7f75',
+      limit: 1000,
+      page: 0,
+      query: {status: [1, 2, 3, 4, 5]},
+    };
+    this.setState({loading: true});
+    createApi
+      .createApi()
+      .filterSors(data)
+      .then((res: any) => {
+        
+        for (let i = 0; i < res.data.data.report.length; i++) {
+          if (res.data.data.report[i].status == 1) {
+            this.state.draft.push(res.data.data.report[i]);
+          } else if (res.data.data.report[i].status == 2) {
+            this.state.submitted.push(res.data.data.report[i]);
+          } else if (res.data.data.report[i].status == 3) {
+            this.state.exclated.push(res.data.data.report[i]);
+          } else if (res.data.data.report[i].status == 4) {
+            this.state.inprogress.push(res.data.data.report[i]);
+          } else if (res.data.data.report[i].status == 5) {
+            this.state.completed.push(res.data.data.report[i]);
+          }
+        }
+        this.setState({loading: false});
+      })
+      .catch((err) => console.log(err));
     // this.props.initialList();
     // initialList.addList('sdsd');a
     // console.log(this.props.reduxState);
@@ -180,7 +180,14 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   render() {
     return (
       <View style={{backgroundColor: colors.secondary, flex: 1}}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              onRefresh={() => this._onRefresh()}
+              refreshing={this.state.refreshing}
+            />
+          }
+          showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
@@ -293,7 +300,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
               <Text style={styles.filerText}>Filters </Text>
             </View>
             <View style={styles.lineheight}></View>
-            {this.props.reduxState.loading == true ? (
+            {this.state.loading == true ? (
               <View
                 style={{
                   alignSelf: 'center',
