@@ -390,6 +390,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 this.setState({loading: false, errorModal: false});
                 if (res.data.status == 200) {
                   this.props.navigation.navigate('Main');
+                } else {
+                  this.setState({
+                    errorModal: true,
+
+                    errHeadingText: `CreateSor api returns ${res.data.status}.`,
+                    errDesText: res.data.data,
+                  });
                 }
               });
 
@@ -533,7 +540,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             if (res.data.status == 200) {
                               this.props.navigation.navigate('Main');
                             } else {
-                              console.log(res.data);
+                              this.setState({
+                                errorModal: true,
+
+                                errHeadingText: `CreateSor api returns ${res.data.status}.`,
+                                errDesText: res.data.data,
+                              });
                             }
                           })
                           .catch((err) =>
@@ -654,6 +666,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   });
                                   if (res.data.status == 200) {
                                     this.props.navigation.navigate('Main');
+                                  } else {
+                                    this.setState({
+                                      errorModal: true,
+
+                                      errHeadingText: `CreateSor api returns ${res.data.status}.`,
+                                      errDesText: res.data.data,
+                                    });
                                   }
                                 })
                                 .catch((err) =>
