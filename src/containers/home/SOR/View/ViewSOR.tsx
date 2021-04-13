@@ -207,6 +207,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         _id: this.props.route.params.data._id,
         created_by: 'haider@gmail.com',
         details: this.state.observation,
+        createdAt :Date.now(),
         occured_at: moment().format('YYYY-MM-DD'),
         involved_persons: this.props.route.params.data.involved_persons,
         risk: {
@@ -224,17 +225,32 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         status: 2,
         attachments: [],
         comments: ' ',
+        updatedAt : Date.now()
+
       },
       project: '6038cf8472762b29b1bed1f3',
     };
 
+
+//     report:
+// action_required: [{…}]
+// attachments: []
+// comments: undefined
+// createdAt: undefined
+// created_by: "asohial.bscs16seecs@seecs.edu.pk"
+// details: "Damaged hammer was being used at  workshop, which can cause hand injury."
+// esclate_to:[]
+// involved_persons: []
+// location: "Boiler Room"
+// occured_at: "2021-03-29T04:16:30.000Z"
+// risk: {severity: 5, likelihood: 5}
+// status: 3
+// submit_to: ["Haider@gmail.com"]
+// updatedAt: "2021-03-29T18:18:54.752Z"
+// _id: "60621984d6398801fdbaa9d1"
+
     console.log(update);
 
-    // createApi
-    //   .createApi()
-    //   .updateSor(update)
-    //   .then((res) => {})
-    //   .catch((err) => console.log(err));
     createApi
       .createApi()
       .updateSor(update)
