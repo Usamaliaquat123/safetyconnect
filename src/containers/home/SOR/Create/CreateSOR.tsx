@@ -183,6 +183,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
   // Search Action / Recommendation Suggestions
   actionRecommendSuggestion = (str: string) => {
+    console.log(str)
     if (str == '') {
       this.setState({
         actionRecommendations: [],
@@ -191,11 +192,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     } else {
       const form = new FormData();
       this.setState({actionRecommendationsText: str});
-      form.append('q', this.state.observationT);
+      form.append('q', str);
       createApi
         .createApi()
         .suggestiosns(form)
         .then((res: any) => {
+          // console.log(res.data.results)
           this.setState({
             actionRecommendations: [...res.data.results],
           });
@@ -538,11 +540,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           .then((res: any) => {
                             this.setState({loading: false, errorModal: false});
                             console.log(res);
+                            
                             if (res.status == 200) {
                               this.props.navigation.navigate('ViewAllSOr');
                             } else {
                               this.setState({
-                                errorModal: true,
+                                errorModal: false,
                                 errHeadingText: `CreateSor api returns ${res.data.status}.`,
                                 errDesText: res.data.message,
                               });
@@ -665,6 +668,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                     errorModal: false,
                                   });
                                   console.log(res);
+
                                   if (res.status == 200) {
                                     this.props.navigation.navigate(
                                       'ViewAllSOr',

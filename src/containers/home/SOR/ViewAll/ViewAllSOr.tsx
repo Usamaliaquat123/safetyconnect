@@ -114,7 +114,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
     var data = {
       project: '604b13d114ba138bd23d7f75',
-      limit: 1000,
+      limit: 10000,
       page: 0,
       query: {status: [1, 2, 3, 4, 5]},
     };

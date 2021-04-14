@@ -78,7 +78,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     this.setState({loading: true});
     var data = {
       project: '604b13d114ba138bd23d7f75',
-      limit: 1000,
+      limit: 10000,
       page: 0,
       query: {status: [this.props.route.params.data]},
     };
