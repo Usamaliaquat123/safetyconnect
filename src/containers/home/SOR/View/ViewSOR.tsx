@@ -193,7 +193,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
   };
   onSubmitUpdateSor = async (status?: number) => {
-    this.setState({loading: true});
+    this.setState({loading: true}); 
+    console.log(this.props.route.params.data.comments)
 
     var liklihood = this.state.liklihood.filter(
       (d: any) => d.selected == true,
@@ -224,7 +225,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         esclate_to: this.state.esclate_to,
         status: 2,
         attachments: [],
-        comments: ' ',
+        comments: this.props.route.params.data.comments,
         updatedAt : Date.now()
 
       },
