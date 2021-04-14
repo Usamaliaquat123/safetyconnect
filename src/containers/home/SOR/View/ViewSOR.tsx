@@ -139,9 +139,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
   componentDidMount = () => {
     // console.log(this.props.route.params.data.comments);
-
+  this.mappingMapping(this.props.route.params.data.risk.severity, this.props.route.params.data.risk.likelihood)
     this.getAllComments();
-
+    console.log(this.props.route.params.data)
     // this.props.route.params.data.action_required
     for (
       let i = 0;
@@ -205,32 +205,32 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
     var update = {
       report: {
-        _id: this.props.route.params.data._id,
-        created_by: 'haider@gmail.com',
-        details: this.state.observation,
-        createdAt :Date.now(),
-        occured_at: moment().format('YYYY-MM-DD'),
-        involved_persons: this.props.route.params.data.involved_persons,
-        risk: {
+        _id: this.props.route.params.data._id, /** done  */
+        created_by: this.props.route.params.data.created_by, /** done */
+        details: this.state.observation, /** done */
+        createdAt :Date.now(), /** done */
+        occured_at: moment().format('YYYY-MM-DD'),  /** done */
+        involved_persons: this.props.route.params.data.involved_persons,  /** done */
+        risk: {  /** done */
           severity: severity,
           likelihood: liklihood,
         },
-        action_required: this.state.actionsAndRecommendations,
-        user_location: {
-          latitude: 66.666,
-          longitude: 66.666,
-        },
-        location: 'pindi boys',
-        submit_to: this.state.submitted_to,
-        esclate_to: this.state.esclate_to,
-        status: 2,
-        attachments: [],
-        comments: this.props.route.params.data.comments,
-        updatedAt : Date.now()
+        action_required: this.state.actionsAndRecommendations,  /** done */
+       
+        location: 'pindi boys',  /** done */
+        submit_to: this.state.submitted_to,  /** done */
+        esclate_to: this.state.esclate_to,  /** done */
+        status: 2,  /** done */
+        attachments: [],  /** done */
+        comments: this.props.route.params.data.comments,  /** done */
+        updatedAt : Date.now()  /** done */
 
       },
-      project: '6038cf8472762b29b1bed1f3',
+      project: '604b13d114ba138bd23d7f75',
     };
+
+
+
 
 
 //     report:
