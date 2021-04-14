@@ -258,7 +258,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .then((res) => {
         console.log(res);
         this.setState({loading: false});
-
+        if(res.status == 200){
+          this.props.navigation.goBack()
+        }
         // this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
         //   1,
         //   2,
