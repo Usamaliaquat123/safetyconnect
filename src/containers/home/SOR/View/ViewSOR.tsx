@@ -1251,7 +1251,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       )}
 
                       <View style={styles.commentUser}>
-                        {/* <Text style={styles.userCommentName}>{d.user.}</Text> */}
+                        <Text style={styles.userCommentName}>{d.user.email}</Text>
                         <Text style={styles.usercomment}>{d.comment}</Text>
                       </View>
                       <View style={styles.dateComments}>
