@@ -286,7 +286,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     createApi
       .createApi()
       .getProject({
-        projectid: '6077f5f4724677a30bf67e2a',
+        projectid: '607820d5724677561cf67ec5',
       })
       .then((res: any) => {
         this.setState({involved_persons: res.data.data.involved_persons});
@@ -347,7 +347,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         comments: '',
         status: 1,
       },
-      project: '6077f5f4724677a30bf67e2a',
+      project: '607820d5724677561cf67ec5',
     };
 
     this.setState({loading: true, errorModal: true});
@@ -379,7 +379,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 // attachments: this.state.filename,
                 comments: ' ',
               },
-              project: '6077f5f4724677a30bf67e2a',
+              project: '607820d5724677561cf67ec5',
             };
 
             createApi
@@ -392,7 +392,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   this.props.navigation.navigate('ViewAllSOr');
                 } else {
                   this.setState({
-                    
+
                     errorModal: true,
                     errHeadingText: `CreateSor api returns ${res.status}.`,
                     errDesText: res.data.message,
@@ -478,7 +478,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         comments: '',
                         status: 1,
                       },
-                      project: '6077f5f4724677a30bf67e2a',
+                      project: '607820d5724677561cf67ec5',
                     };
                     createApi
                       .createApi()
@@ -513,7 +513,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             // attachments: this.state.filename,
                             comments: ' ',
                           },
-                          project: '6077f5f4724677a30bf67e2a',
+                          project: '607820d5724677561cf67ec5',
                         };
                         // this.props.reduxActions.createSor(
                         //   sor,
@@ -589,7 +589,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               comments: '',
                               status: 1,
                             },
-                            project: '6077f5f4724677a30bf67e2a',
+                            project: '607820d5724677561cf67ec5',
                           };
                           createApi
                             .createApi()
@@ -624,7 +624,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   attachments: [],
                                   comments: ' ',
                                 },
-                                project: '6077f5f4724677a30bf67e2a',
+                                project: '607820d5724677561cf67ec5',
                               };
 
 

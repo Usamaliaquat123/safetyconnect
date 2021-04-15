@@ -106,7 +106,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
         api
           .createApi()
           .createUser({
-            name: this.state.name,
+            name: this.state.name,  
             email: this.props.route.params.username,
             organization: [],
           })

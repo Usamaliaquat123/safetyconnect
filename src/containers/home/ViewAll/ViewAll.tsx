@@ -77,7 +77,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     // s.setState({reports: this.props.reduxState.allSors});
     this.setState({loading: true});
     var data = {
-      project: '6077f5f4724677a30bf67e2a',
+      project: '607820d5724677561cf67ec5',
       limit: 10000,
       page: 0,
       query: {status: [this.props.route.params.data]},

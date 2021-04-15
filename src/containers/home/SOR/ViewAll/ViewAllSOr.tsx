@@ -113,7 +113,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     // this.forceUpdate();
 
     var data = {
-      project: '6077f5f4724677a30bf67e2a',
+      project: '607820d5724677561cf67ec5',
       limit: 10000,
       page: 0,
       query: {status: [1, 2, 3, 4, 5]},
