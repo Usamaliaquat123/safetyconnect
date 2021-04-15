@@ -66,7 +66,7 @@ export default class ListCard extends React.Component<ListCardProps, any> {
 
           <Text style={styles.listObDesc}>
             {this.props.observation == undefined
-              ? 'sdsd'
+              ? 'observation not found'
               : `${this.props.observation.slice(0, 30)}...`}
           </Text>
           <View style={styles.listAvatars}>

@@ -127,7 +127,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
 
         if(res.data.data == undefined ){
-          console.log('sdsds')
+        
+
         }else{
           for (let i = 0; i < res.data.data.report.length; i++) {
             if (res.data.data.report[i].status == 1) {

@@ -371,10 +371,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   likelihood: 5,
                 },
                 action_required: [],
-                user_location: {
-                  latitude: 66.666,
-                  longitude: 66.666,
-                },
+              
                 location: this.state.observation,
                 submit_to: this.state.submitToTags.map((d: any) => d.email),
                 esclate_to: this.state.exclateToTags.map((d: any) => d.email),
@@ -382,7 +379,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 // attachments: this.state.filename,
                 comments: ' ',
               },
-              project: '604b13d114ba138bd23d7f75',
+              project: '6077f5f4724677a30bf67e2a',
             };
 
             createApi
@@ -395,6 +392,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   this.props.navigation.navigate('ViewAllSOr');
                 } else {
                   this.setState({
+                    
                     errorModal: true,
                     errHeadingText: `CreateSor api returns ${res.status}.`,
                     errDesText: res.data.message,
@@ -433,7 +431,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     var sorbtns = this.state.classifySorbtns.filter(
       (d: any) => d.selected == true,
     );
-
+ console.log(this.state.observationT)
     var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
     var severity = this.state.severity.filter((d: any) => d.selected == true);
 
@@ -471,38 +469,31 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             if (this.state.submitToTags.length !== 0) {
               if (this.state.exclateToTags.length !== 0) {
                 this.setState({loading: true, errorModal: true});
-                const form = new FormData();
-                form.append('q', this.state.observationT);
-
-                createApi
-                  .createApi()
-                  .repeatedsorsugg(form)
-                  .then((res: any) => {
+              
                     // Repeated observations
                     // res.data.results
-                    this.setState({loading: true});
                     var bodyInitial = {
                       report: {
-                        created_by: '',
-                        comments: ' ',
+                        created_by: this.state.email,
+                        comments: '',
                         status: 1,
                       },
-                      project: '604b13d114ba138bd23d7f75',
+                      project: '6077f5f4724677a30bf67e2a',
                     };
                     createApi
                       .createApi()
                       .createSorInit(bodyInitial)
-                      .then((res: any) => {
+                      .then((ress: any) => {
                         // Report Id
                         // res.data.data.report_id
-
+                        console.log(ress)
                         var sor = {
                           report: {
-                            _id: res.data.data.report_id,
+                            _id: ress.data.data.report_id,
                             created_by: this.state.email,
                             details: this.state.observationT,
                             occured_at: new Date(),
-                            involved_persons: this.state.involvePersonTags,
+                            involved_persons: this.state.involvePersonTags.map((d : any) =>  d._id),
 
                             sor_type: sorbtns[0].title,
                             risk: {
@@ -510,10 +501,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               likelihood: 5,
                             },
                             action_required: [],
-                            user_location: {
-                              latitude: 66.666,
-                              longitude: 66.666,
-                            },
+                          
                             location: this.state.observation,
                             submit_to: this.state.submitToTags.map(
                               (d: any) => d.email,
@@ -525,7 +513,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             // attachments: this.state.filename,
                             comments: ' ',
                           },
-                          project: '604b13d114ba138bd23d7f75',
+                          project: '6077f5f4724677a30bf67e2a',
                         };
                         // this.props.reduxActions.createSor(
                         //   sor,
@@ -540,7 +528,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           .then((res: any) => {
                             this.setState({loading: false, errorModal: false});
                             console.log(res);
-
+                            
                             if (res.status == 200) {
                               this.props.navigation.navigate('ViewAllSOr');
                             } else {
@@ -554,10 +542,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           .catch((err) =>
                             this.setState({loading: false, errorModal: false}),
                           );
-                      })
-                      .catch((err) => {
-                        this.setState({loading: false, errorModal: false});
-                      });
+                    
                   })
                   .catch((err) => {
                     this.setState({loading: false, errorModal: false});
@@ -590,44 +575,36 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             //   // Error on actions and recommendations
             // }
           } else {
-            if (liklihood.length !== 0) {
               if (severity.length !== 0) {
                 if (this.state.actionsTags.length !== 0) {
                   if (this.state.submitToTags.length !== 0) {
                     if (this.state.exclateToTags.length !== 0) {
                       this.setState({loading: true, errorModal: true});
-                      const form = new FormData();
-                      form.append('q', this.state.observationT);
 
-                      createApi
-                        .createApi()
-                        .repeatedsorsugg(form)
-                        .then((res: any) => {
                           // Repeated observations
                           // res.data.results
                           var bodyInitial = {
                             report: {
-                              created_by: '',
+                              created_by: this.state.email,
                               comments: '',
-                              status: 2,
+                              status: 1,
                             },
-                            project: '604b13d114ba138bd23d7f75',
+                            project: '6077f5f4724677a30bf67e2a',
                           };
                           createApi
                             .createApi()
                             .createSorInit(bodyInitial)
-                            .then((res: any) => {
+                            .then((ress: any) => {
                               // Report Id
                               // res.data.data.report_id
 
                               var sor = {
                                 report: {
-                                  _id: res.data.data.report_id,
+                                  _id: ress.data.data.report_id,
                                   created_by: this.state.email,
                                   details: this.state.observationT,
                                   occured_at: new Date(),
-                                  involved_persons: this.state
-                                    .involvePersonTags,
+                                  involved_persons: this.state.involvePersonTags.map((d : any) =>  d._id),
 
                                   sor_type: sorbtns[0].title,
                                   risk: {
@@ -635,10 +612,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                     likelihood: severity[0].value,
                                   },
                                   action_required: [],
-                                  user_location: {
-                                    latitude: 66.666,
-                                    longitude: 66.666,
-                                  },
+                                 
                                   location: this.state.observation,
                                   submit_to: this.state.submitToTags.map(
                                     (d: any) => d.email,
@@ -650,8 +624,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   attachments: [],
                                   comments: ' ',
                                 },
-                                project: '604b13d114ba138bd23d7f75',
+                                project: '6077f5f4724677a30bf67e2a',
                               };
+
+
+                              console.log(sor)
                               // this.props.reduxActions.createSor(
                               //   sor,
                               //   '604b13d114ba138bd23d7f75',
@@ -694,10 +671,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 errorModal: false,
                               });
                             });
-                        })
-                        .catch((err) => {
-                          this.setState({loading: false, errorModal: false});
-                        });
+                      
                     } else {
                       this.setState({
                         errorModal: true,
@@ -734,15 +708,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 });
                 // Error on severity
               }
-            } else {
-              this.setState({
-                errorModal: true,
-
-                errHeadingText: 'Select your liklihood numbers.',
-                errDesText: 'you are not selected likelihood numberss.',
-              });
-              // Error on liklihood
-            }
+            
           }
         } else {
           this.setState({
