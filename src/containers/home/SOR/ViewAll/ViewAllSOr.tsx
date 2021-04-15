@@ -113,7 +113,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     // this.forceUpdate();
 
     var data = {
-      project: '604b13d114ba138bd23d7f75',
+      project: '6077f5f4724677a30bf67e2a',
       limit: 10000,
       page: 0,
       query: {status: [1, 2, 3, 4, 5]},
@@ -123,19 +123,39 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       .createApi()
       .filterSors(data)
       .then((res: any) => {
-        for (let i = 0; i < res.data.data.report.length; i++) {
-          if (res.data.data.report[i].status == 1) {
-            this.state.draft.push(res.data.data.report[i]);
-          } else if (res.data.data.report[i].status == 2) {
-            this.state.submitted.push(res.data.data.report[i]);
-          } else if (res.data.data.report[i].status == 3) {
-            this.state.exclated.push(res.data.data.report[i]);
-          } else if (res.data.data.report[i].status == 4) {
-            this.state.inprogress.push(res.data.data.report[i]);
-          } else if (res.data.data.report[i].status == 5) {
-            this.state.completed.push(res.data.data.report[i]);
+        console.log(res.data)
+
+
+        if(res.data.data == undefined ){
+          console.log('sdsds')
+        }else{
+          for (let i = 0; i < res.data.data.report.length; i++) {
+            if (res.data.data.report[i].status == 1) {
+              this.state.draft.push(res.data.data.report[i]);
+            } else if (res.data.data.report[i].status == 2) {
+  
+  
+  // res.data.data.report.filter((item: any) => {
+  //               // return item.date.getTime() >= fromDate.getTime() &&
+  //               //        item.date.getTime() <= toDate.getTime();
+  
+  
+  //               console.log(item)
+  //           });
+  
+  
+  
+              this.state.submitted.push(res.data.data.report[i]);
+            } else if (res.data.data.report[i].status == 3) {
+              this.state.exclated.push(res.data.data.report[i]);
+            } else if (res.data.data.report[i].status == 4) {
+              this.state.inprogress.push(res.data.data.report[i]);
+            } else if (res.data.data.report[i].status == 5) {
+              this.state.completed.push(res.data.data.report[i]);
+            }
           }
         }
+        
         this.setState({loading: false});
       })
       .catch((err) => console.log(err));

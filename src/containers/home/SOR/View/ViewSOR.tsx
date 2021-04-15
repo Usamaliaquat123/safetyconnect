@@ -158,7 +158,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     );
     createApi
       .createApi()
-      .getProject({projectid: '6056061f49cf9ae72efe8e6e'})
+      .getProject({projectid: '6077f5f4724677a30bf67e2a'})
       .then((res: any) => {
         this.setState({
           involvedPerson: res.data.data.involved_persons,
@@ -226,7 +226,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         updatedAt : Date.now()  /** done */
 
       },
-      project: '604b13d114ba138bd23d7f75',
+      project: '6077f5f4724677a30bf67e2a',
     };
 
 
@@ -325,7 +325,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   addComment = (comment: string) => {
     var comments = {
       data: {
-        user: '6038cd5172762b0d86bed1eb',
+        user: '6077f5f4724677a30bf67e2a',
         comment: comment,
         date: moment().format('YYYY-MM-DD'),
         files: [],
@@ -374,7 +374,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         attachments: [],
         comments: [],
       },
-      project: '604b13d114ba138bd23d7f75',
+      project: '6077f5f4724677a30bf67e2a',
     };
 
     createApi

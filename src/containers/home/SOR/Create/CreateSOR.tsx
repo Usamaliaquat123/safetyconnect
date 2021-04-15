@@ -286,7 +286,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     createApi
       .createApi()
       .getProject({
-        projectid: '603b8c1b83176628f90f8dbe',
+        projectid: '6077f5f4724677a30bf67e2a',
       })
       .then((res: any) => {
         this.setState({involved_persons: res.data.data.involved_persons});
@@ -347,7 +347,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         comments: '',
         status: 1,
       },
-      project: '604b13d114ba138bd23d7f75',
+      project: '6077f5f4724677a30bf67e2a',
     };
 
     this.setState({loading: true, errorModal: true});
@@ -540,7 +540,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           .then((res: any) => {
                             this.setState({loading: false, errorModal: false});
                             console.log(res);
-                            
+
                             if (res.status == 200) {
                               this.props.navigation.navigate('ViewAllSOr');
                             } else {
@@ -677,7 +677,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                     this.setState({
                                       errorModal: true,
                                       errHeadingText: `CreateSor api returns ${res.status}.`,
-                                      errDesText: res.data.message,
+                                        errDesText: res.data.message,
                                     });
                                   }
                                 })
