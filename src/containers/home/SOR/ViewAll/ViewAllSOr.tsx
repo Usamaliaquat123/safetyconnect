@@ -13,7 +13,7 @@ import {
   Image,
   TextInput,
 } from 'react-native';
-import {createApi, Create_sor} from '@service';
+import { createApi, Create_sor, submitted } from '@service';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors, fonts, animation, images, GlStyles} from '@theme';
 
@@ -104,6 +104,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       // New sor modal popup
       newsorModal: false,
       refreshing: false,
+      involvedPerson :[],
       loading: false,
     };
   }
@@ -134,17 +135,26 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
             if (res.data.data.report[i].status == 1) {
               this.state.draft.push(res.data.data.report[i]);
             } else if (res.data.data.report[i].status == 2) {
-  
-  
-  // res.data.data.report.filter((item: any) => {
-  //               // return item.date.getTime() >= fromDate.getTime() &&
-  //               //        item.date.getTime() <= toDate.getTime();
-  
-  
-  //               console.log(item)
-  //           });
-  
-  
+              
+              // res.data.data.report[i].submit_to 
+              console.log(typeof this.state.involvedPerson)
+                const allowed =  res.data.data.report[i].submit_to;
+                const raw = {
+                  item1: { key: 'sdfd', value:'sdfd' },
+                  item2: { key: 'sdfd', value:'sdfd' },
+                  item3: { key: 'sdfd', value:'sdfd' }
+                };
+                console.log(typeof raw)
+                var cal = this.state.involvedPerson[0]
+                const filtered = Object.keys(cal)
+  // .filter(key => allowed.includes(key))
+  // .reduce((obj:any, key:any) => {
+  //   obj[key] = this.state.involvedPerson[0][key];
+  //   return obj;
+  // }, {});
+  console.log('==============')
+  console.log(filtered)
+  console.log('==============')
   
               this.state.submitted.push(res.data.data.report[i]);
             } else if (res.data.data.report[i].status == 3) {
@@ -170,6 +180,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     for (let i = 0; i < involvedPerson.data.data.involved_persons.length; i++) {
       Object.defineProperty(j,involvedPerson.data.data.involved_persons[i].email , {value : involvedPerson.data.data.involved_persons[i], writable : false});
     }
+
+
+    this.state.involvedPerson.push(j)
     AsyncStorage.setItem('involved_person', JSON.stringify(j))
 
 
