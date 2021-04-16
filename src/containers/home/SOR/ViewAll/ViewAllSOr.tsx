@@ -41,7 +41,7 @@ import {
 // import {Storage} from 'aws-amplify';
 
 // import jwtDecode from 'jwt-decode';
-import {Isor} from '@typings';
+import { Isor, involved_persons } from '@typings';
 // import {  } from "";
 type ViewAllSOrNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -160,6 +160,20 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         this.setState({loading: false});
       })
       .catch((err) => console.log(err));
+
+
+
+
+
+   createApi.createApi().getProject({projectid: '607820d5724677561cf67ec5'}).then((involvedPerson : any) => {
+     var j = {}
+    for (let i = 0; i < involvedPerson.data.data.involved_persons.length; i++) {
+      Object.defineProperty(j,involvedPerson.data.data.involved_persons[i].email , {value : involvedPerson.data.data.involved_persons[i], writable : false});
+    }
+    AsyncStorage.setItem('involved_person', JSON.stringify(j))
+
+
+  })
     // this.props.initialList();
     // initialList.addList('sdsd');a
     // console.log(this.props.reduxState);

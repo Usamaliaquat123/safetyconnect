@@ -1251,7 +1251,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       this.setState({
                         exclateToArr: searchInSuggestions(
                           v,
-                          Create_sor.Observation.esclateTo,
+                          this.state.involved_persons,
                         ),
                         esclateTo: v,
                       })
