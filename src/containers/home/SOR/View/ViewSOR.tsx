@@ -162,7 +162,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .getProject({projectid: '607820d5724677561cf67ec5'})
       .then((res: any) => {
         this.setState({
-          involvedPerson: res.data.data.involved_persons,
+          // involvedPerson: res.data.data.involved_persons,
           commentsSugg: res.data.data.involved_persons,
         });
 
@@ -324,9 +324,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
   // Add Comment
   addComment = (comment: string) => {
+    this.setState({
+      commentText: '',
+     
+      commentAttachment: [],
+    });
     AsyncStorage.getItem('user').then(user => {
-
+      console.log(JSON.parse(user))
   var comments = {
+
       data: {
         user: JSON.parse(user)._id,
         comment: comment,
@@ -341,9 +347,25 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .createComment(comments)
       .then((res) => {
         console.log(res)
+        var map = [...this.state.comments];
+     map.push({ 
 
-    
-        this.setState({});
+
+              email : JSON.parse(user).email,
+                            name: JSON.parse(user).name,
+                            date: res.data.data,
+                            img_url:
+                              'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+                            comment: this.state.commentText
+                              .replace(/\s+/g, ' ')
+                              .trim(),
+                            attachments: this.state.commentAttachment,
+                          });
+
+
+
+
+        this.setState({ comments: map});
       })
       .catch((err) => console.log(err));
 
@@ -1410,11 +1432,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
                           this.addComment(this.state.commentText);
                         
-                          this.setState({
-                            commentText: '',
-                            comments: map,
-                            commentAttachment: [],
-                          });
+                         
                         }
                       }}
                       style={{
