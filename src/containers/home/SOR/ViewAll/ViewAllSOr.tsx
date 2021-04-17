@@ -166,13 +166,11 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
           var arr =[]
           res.data.data.report[i].submit_to.map((emails: any, i : number) => {
-            console.log(this.state.involvedPerson.filter((d : any) => d.email == emails))
-            // arr.push( this.state.involvedPerson.map((d : any) => emails == d.email))
+            res.data.data.report[i].submit_to = this.state.involvedPerson.filter((d : any) => d.email == emails)
             
           })
 
           
-          // console.log(arr)
          
 
             this.state.submitted.push(res.data.data.report[i]);
