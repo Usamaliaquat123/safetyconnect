@@ -104,7 +104,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       // New sor modal popup
       newsorModal: false,
       refreshing: false,
-      involvedPerson :[],
+      involvedPerson: [],
       loading: false,
     };
   }
@@ -113,63 +113,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     // this.updateAllSors();
     // this.forceUpdate();
 
-    var data = {
-      project: '607820d5724677561cf67ec5',
-      limit: 10000,
-      page: 0,
-      query: {status: [1, 2, 3, 4, 5]},
-    };
-    this.setState({loading: true});
-    createApi
-      .createApi()
-      .filterSors(data)
-      .then((res: any) => {
-        console.log(res.data)
-
-
-        if(res.data.data == undefined ){
-        
-
-        }else{
-          for (let i = 0; i < res.data.data.report.length; i++) {
-            if (res.data.data.report[i].status == 1) {
-              this.state.draft.push(res.data.data.report[i]);
-            } else if (res.data.data.report[i].status == 2) {
-              
-              // res.data.data.report[i].submit_to 
-              console.log(typeof this.state.involvedPerson)
-                const allowed =  res.data.data.report[i].submit_to;
-                const raw = {
-                  item1: { key: 'sdfd', value:'sdfd' },
-                  item2: { key: 'sdfd', value:'sdfd' },
-                  item3: { key: 'sdfd', value:'sdfd' }
-                };
-                console.log(typeof raw)
-                var cal = this.state.involvedPerson[0]
-                const filtered = Object.keys(cal)
-  // .filter(key => allowed.includes(key))
-  // .reduce((obj:any, key:any) => {
-  //   obj[key] = this.state.involvedPerson[0][key];
-  //   return obj;
-  // }, {});
-  console.log('==============')
-  console.log(filtered)
-  console.log('==============')
   
-              this.state.submitted.push(res.data.data.report[i]);
-            } else if (res.data.data.report[i].status == 3) {
-              this.state.exclated.push(res.data.data.report[i]);
-            } else if (res.data.data.report[i].status == 4) {
-              this.state.inprogress.push(res.data.data.report[i]);
-            } else if (res.data.data.report[i].status == 5) {
-              this.state.completed.push(res.data.data.report[i]);
-            }
-          }
-        }
-        
-        this.setState({loading: false});
-      })
-      .catch((err) => console.log(err));
 
 
 
@@ -177,16 +121,83 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
    createApi.createApi().getProject({projectid: '607820d5724677561cf67ec5'}).then((involvedPerson : any) => {
      var j = {}
+     var arr = []
     for (let i = 0; i < involvedPerson.data.data.involved_persons.length; i++) {
       Object.defineProperty(j,involvedPerson.data.data.involved_persons[i].email , {value : involvedPerson.data.data.involved_persons[i], writable : false});
+      this.state.involvedPerson.push(involvedPerson.data.data.involved_persons[i])
+   
+   
     }
+    // console.log(j)
 
 
-    this.state.involvedPerson.push(j)
+    
+    //  this.state.involvedPerson.push(j)
     AsyncStorage.setItem('involved_person', JSON.stringify(j))
 
 
   })
+
+
+
+
+  var data = {
+    project: '607820d5724677561cf67ec5',
+    limit: 10000,
+    page: 0,
+    query: {status: [1, 2, 3, 4, 5]},
+  };
+  this.setState({loading: true});
+  createApi
+    .createApi()
+    .filterSors(data)
+    .then((res: any) => {
+      console.log(res.data)
+
+
+      if(res.data.data == undefined ){
+      
+
+      }else{
+        for (let i = 0; i < res.data.data.report.length; i++) {
+          if (res.data.data.report[i].status == 1) {
+            this.state.draft.push(res.data.data.report[i]);
+          } else if (res.data.data.report[i].status == 2) {
+
+          var arr =[]
+          res.data.data.report[i].submit_to.map((emails: any, i : number) => {
+            console.log(this.state.involvedPerson.filter((d : any) => d.email == emails))
+            // arr.push( this.state.involvedPerson.map((d : any) => emails == d.email))
+            
+          })
+
+          
+          // console.log(arr)
+         
+
+            this.state.submitted.push(res.data.data.report[i]);
+          } else if (res.data.data.report[i].status == 3) {
+            this.state.exclated.push(res.data.data.report[i]);
+          } else if (res.data.data.report[i].status == 4) {
+            this.state.inprogress.push(res.data.data.report[i]);
+          } else if (res.data.data.report[i].status == 5) {
+            this.state.completed.push(res.data.data.report[i]);
+          }
+        }
+      }
+      
+      this.setState({loading: false});
+    })
+    .catch((err) => console.log(err));
+
+
+
+
+
+
+
+
+
     // this.props.initialList();
     // initialList.addList('sdsd');a
     // console.log(this.props.reduxState);
