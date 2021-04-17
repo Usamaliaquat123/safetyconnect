@@ -325,11 +325,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   // Add Comment
   addComment = (comment: string) => {
     AsyncStorage.getItem('user').then(user => {
-      this.setState({ user  })
-    })
-    var comments = {
+
+  var comments = {
       data: {
-        user: '607a907783f93928854b5e7a',
+        user: JSON.parse(user)._id,
         comment: comment,
         date: moment().format('YYYY-MM-DD'),
         files: [],
@@ -347,6 +346,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         this.setState({});
       })
       .catch((err) => console.log(err));
+
+
+    })
+
+    console.log(this.state.user)
+
+  
   };
   // Save aas draft
   saveAsDraft = () => {
