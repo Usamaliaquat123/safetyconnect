@@ -36,9 +36,9 @@ export const BottomTabNavigator = () => {
         sceneContainerStyle={{backgroundColor: colors.error}}
         initialRouteName={'home'}>
         <Tab.Screen name="home" component={ViewAllSOr} options={{}} />
-        <Tab.Screen name="sor" component={CreateSOR} options={{}} />
+        <Tab.Screen name="create" component={CreateSOR} options={{}} />
         <Tab.Screen name="addNew" component={BottomPop} />
-        <Tab.Screen name="create" component={ViewAll} options={{}} />
+        <Tab.Screen name="sor" component={ViewAllSOr} options={{}} />
         <Tab.Screen name="more" component={Menu} options={{}} />
       </Tab.Navigator>
       {/* </NavigationContainer> */}
