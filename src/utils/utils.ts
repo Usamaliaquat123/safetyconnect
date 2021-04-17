@@ -9,7 +9,7 @@ import {
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import {PermissionsAndroid} from 'react-native';
 import {resolvePlugin} from '@babel/core';
-import {involved_persons} from '@typings';
+import {involved_persons, report} from '@typings';
 import Amplify, {Storage} from 'aws-amplify';
 export const mainPass: string = 'Safety_Connect1';
 export const classifySor: Array<Object> = [
@@ -129,6 +129,23 @@ export const capitalizeFirstLetter = (string: string): string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
+
+// filtering and mapping involved persons data
+export const filterAndMappingPersons = (report: report, persons : Array<any>) : Object => {
+  report.submit_to?.map
+  report.submit_to?.map((emails: any, i : number) => {
+    report.submit_to = persons.filter((d : any) => d.email == emails)
+  })
+  report.esclate_to?.map((emails: any, i : number) => {
+    report.esclate_to = persons.filter((d : any) => d.email == emails)
+  })
+  report.involved_persons?.map((id: any, i : number) => {
+    report.involved_persons = persons.filter((d : any) => d._id == id)
+  })
+
+
+  return report
+}
 export const imageAndVideoObjectMap = (
   attachments: Array<string>,
 ): Array<Object> => {

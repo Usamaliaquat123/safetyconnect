@@ -78,13 +78,13 @@ export interface report {
   user_location: user_location;
   occured_at?: string;
   pending_persons?: Array<string>;
-  involved_persons?: Array<string>;
+  involved_persons?: Array<string> | Array<any>;
   risk?: risk;
   sor_type: string;
   action_required?: Array<actionRequired>;
   location?: location;
-  submit_to?: Array<string>;
-  esclate_to?: Array<string>;
+  submit_to?: Array<string> | Array<any>;
+  esclate_to?: Array<string> | Array<any>;
   attachments?: Array<string>;
   comments?: Array<comments>;
 }

@@ -677,7 +677,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   <View style={styles.submittedTo}>
                     <Text style={styles.subText}>Submitted to : </Text>
                     <Text style={styles.obvText}>
-                      {this.state.submitted_to[0].split('@')[0]}
+                      {/* {this.state.submitted_to[0].split('@')[0]} */}
                     </Text>
                   </View>
                 )}

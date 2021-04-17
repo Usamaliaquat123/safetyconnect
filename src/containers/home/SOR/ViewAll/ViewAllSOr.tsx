@@ -31,7 +31,7 @@ import * as reduxActions from '../../../../store/actions/listSorActions';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
-import {classifySor} from '@utils';
+import {classifySor, filterAndMappingPersons} from '@utils';
 import {Card, ListCard} from '@components';
 import {
   widthPercentageToDP as wp,
@@ -163,23 +163,17 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           if (res.data.data.report[i].status == 1) {
             this.state.draft.push(res.data.data.report[i]);
           } else if (res.data.data.report[i].status == 2) {
-
-          var arr =[]
-          res.data.data.report[i].submit_to.map((emails: any, i : number) => {
-            res.data.data.report[i].submit_to = this.state.involvedPerson.filter((d : any) => d.email == emails)
-            
-          })
-
-          
-         
-
-            this.state.submitted.push(res.data.data.report[i]);
+          var rep = filterAndMappingPersons(res.data.data.report[i],this.state.involvedPerson)
+            this.state.submitted.push(rep);
           } else if (res.data.data.report[i].status == 3) {
-            this.state.exclated.push(res.data.data.report[i]);
+            var rep = filterAndMappingPersons(res.data.data.report[i],this.state.involvedPerson)
+            this.state.exclated.push(rep);
           } else if (res.data.data.report[i].status == 4) {
-            this.state.inprogress.push(res.data.data.report[i]);
+            var rep = filterAndMappingPersons(res.data.data.report[i],this.state.involvedPerson)
+            this.state.inprogress.push(rep);
           } else if (res.data.data.report[i].status == 5) {
-            this.state.completed.push(res.data.data.report[i]);
+            var rep = filterAndMappingPersons(res.data.data.report[i],this.state.involvedPerson)
+            this.state.completed.push(rep);
           }
         }
       }

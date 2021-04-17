@@ -21,12 +21,14 @@ import {
   suggestInActionsRecommendations,
   getFiles,
   imageAndVideoObjectMap,
+  filterAndMappingPersons,
   capitalizeFirstLetter,
 } from './utils';
 export {
   classifySor,
   validatePassword,
   getLinkParam,
+  filterAndMappingPersons,
   mainPass,
   filterLocation,
   getFiles,
