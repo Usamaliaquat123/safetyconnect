@@ -168,8 +168,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         for (let i = 0; i < res.data.data.report.length; i++) {
   
           if (res.data.data.report[i].status == 1) {
-            this.state.draft.push(res.data.data.report[i]);
-
+            var rep = filterAndMappingPersons(res.data.data.report[i],this.state.involvedPerson)
+            this.state.draft.push(rep);
           } else if (res.data.data.report[i].status == 2) {
           var rep = filterAndMappingPersons(res.data.data.report[i],this.state.involvedPerson)
             this.state.submitted.push(rep);
@@ -492,8 +492,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                         ? {borderBottomWidth: wp(0)}
                                         : null
                                     }
-                                    user1={d.involved_persons[0].img_url}
-                                    user2={d.submit_to[0].img_url}
+                                    user1={d.involved_persons[0].img_url == undefined ? "" : d.involved_persons[0].img_url}
+                                      user2={d.submit_to[0].img_url  == undefined  ?  "" : d.submit_to[0].img_url}
                                     observation={d.details}
                                     username={d.created_by}
                                     iconconf={classifySor.find(
@@ -583,8 +583,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           ? {borderBottomWidth: wp(0)}
                                           : null
                                       }
-                                      user1={d.involved_persons[0].img_url}
-                                      user2={d.submit_to[0].img_url}
+                                      user1={d.involved_persons[0].img_url == undefined ? "" : d.involved_persons[0].img_url}
+                                      user2={d.submit_to[0].img_url  == undefined  ?  "" : d.submit_to[0].img_url}
                                       observation={d.details}
                                       username={d.created_by}
                                       iconconf={classifySor.find(
@@ -678,8 +678,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           ? {borderBottomWidth: wp(0)}
                                           : null
                                       }
-                                      user1={d.involved_persons[0].img_url}
-                                      user2={d.submit_to[0].img_url}
+                                      user1={d.involved_persons[0].img_url == undefined ? "" : d.involved_persons[0].img_url}
+                                      user2={d.submit_to[0].img_url  == undefined  ?  "" : d.submit_to[0].img_url}
+
                                       observation={d.details}
                                       username={d.created_by}
                                       iconconf={classifySor.find(
@@ -774,8 +775,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           ? {borderBottomWidth: wp(0)}
                                           : null
                                       }
-                                      user1={d.involved_persons[0].img_url}
-                                      user2={d.submit_to[0].img_url}
+                                        user1={d.involved_persons[0].img_url == undefined ? "" : d.involved_persons[0].img_url}
+                                      user2={d.submit_to[0].img_url  == undefined  ?  "" : d.submit_to[0].img_url}
                                       observation={d.details}
                                       username={d.created_by}
                                       iconconf={classifySor.find(
@@ -896,8 +897,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           ? {borderBottomWidth: wp(0)}
                                           : null
                                       }
-                                      user1={d.involved_persons[0].img_url}
-                                      user2={d.submit_to[0].img_url}
+                                      user1={d.involved_persons[0].img_url == undefined ? "" : d.involved_persons[0].img_url}
+                                      user2={d.submit_to[0].img_url  == undefined  ?  "" : d.submit_to[0].img_url}
                                       observation={d.details}
                                       username={d.created_by}
                                       iconconf={classifySor.find(
