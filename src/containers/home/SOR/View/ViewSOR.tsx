@@ -71,6 +71,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
+      user : {},
       time: this.props.route.params.data.occured_at,
       initAnim: new Animated.Value(0),
       imageViewer: false,
@@ -84,8 +85,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       observation: this.props.route.params.data.details,
       date: this.props.route.params.data.occured_at,
       comments: [],
-      involvedPerson: [],
-      notifiedPerson: this.props.route.params.data.esclate_to,
+      involvedPerson: this.props.route.params.data.involved_persons,
+      notifiedPerson: this.props.route.params.data.involved_persons,
 
       commentsSugg: [],
       attachments: [],
@@ -218,8 +219,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         action_required: this.state.actionsAndRecommendations,  /** done */
        
         location: 'pindi boys',  /** done */
-        submit_to: this.state.submitted_to,  /** done */
-        esclate_to: this.state.esclate_to,  /** done */
+        submit_to: this.state.submitted_to.map((d : any) => d.email),  /** done */
+        esclate_to: this.state.esclate_to.map((d: any) => d.email),  /** done */
         status: 2,  /** done */
         attachments: [],  /** done */
         comments: this.props.route.params.data.comments,  /** done */
@@ -323,9 +324,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
   // Add Comment
   addComment = (comment: string) => {
+    AsyncStorage.getItem('user').then(user => {
+      this.setState({ user  })
+    })
     var comments = {
       data: {
-        user: '607820d5724677561cf67ec5',
+        user: '607a907783f93928854b5e7a',
         comment: comment,
         date: moment().format('YYYY-MM-DD'),
         files: [],
@@ -337,6 +341,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .createApi()
       .createComment(comments)
       .then((res) => {
+        console.log(res)
+
+    
         this.setState({});
       })
       .catch((err) => console.log(err));
@@ -368,8 +375,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           longitude: 66.666,
         },
         location: 'pindi boys',
-        submit_to: this.state.submitted_to,
-        esclate_to: this.state.esclate_to,
+        submit_to: this.state.submitted_to.map((d : any) => d.email),  /** done */
+        esclate_to: this.state.esclate_to.map((d: any) => d.email),
         status: 1,
         attachments: [],
         comments: [],
@@ -677,7 +684,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   <View style={styles.submittedTo}>
                     <Text style={styles.subText}>Submitted to : </Text>
                     <Text style={styles.obvText}>
-                      {/* {this.state.submitted_to[0].split('@')[0]} */}
+                      {this.state.submitted_to[0].name}
                     </Text>
                   </View>
                 )}
@@ -686,7 +693,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   <View style={styles.observerTo}>
                     <Text style={styles.obvText}>Observer : </Text>
                     <Text style={styles.obvText}>
-                      {this.state.esclate_to[0].split('@')[0]}
+                      {this.props.route.params.data.created_by.split('@')[0]}
                     </Text>
                   </View>
                 )}
@@ -695,7 +702,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 {/* Notified To Section */}
                 <View style={styles.notifiedSec}>
                   <Text style={styles.notifyPText}>Esclate to : </Text>
-                  {this.state.notifiedPerson.map(
+                  {this.state.esclate_to.map(
                     (d: involved_persons, i: number) => {
                       var j = 2;
 
@@ -722,15 +729,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       );
                     },
                   )}
-                  {this.state.notifiedPerson.length < 6 ? (
+                  {this.state.esclate_to.length < 6 ? (
                     <TouchableOpacity
                       onPress={() => {
-                        if (this.state.notifiedPerson.length < 6) {
+                        if (this.state.esclate_to.length < 6) {
                           this.setState({
                             notifiedAndInv: 1,
                             photoArr: this.state.notifiedPerson,
                             IsaddInvAndNotifiedUser: true,
-                            involvedAndNotifiedUserType: 'notified',
+                            involvedAndNotifiedUserType: 'Esclate',
                           });
                         }
                       }}
@@ -1238,7 +1245,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         });
                       }}
                       style={styles.userComments}>
-                      {d.user == '' ? null : (
+                      {/* {d.user == '' ? null : (
                         <Avatar
                           // containerStyle={{position: 'absolute', top: wp(0)}}
                           size={wp(6)}
@@ -1250,10 +1257,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 : d.user.img_url,
                           }}
                         />
-                      )}
+                      )} */}
 
                       <View style={styles.commentUser}>
-                        <Text style={styles.userCommentName}>{d.user.email}</Text>
+                        {/* <Text style={styles.userCommentName}>{d.user.email}</Text> */}
                         <Text style={styles.usercomment}>{d.comment}</Text>
                       </View>
                       <View style={styles.dateComments}>
@@ -1396,16 +1403,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           var map = [...this.state.comments];
 
                           this.addComment(this.state.commentText);
-                          map.push({
-                            user: 'TestUser',
-                            date: Date.now(),
-                            image:
-                              'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
-                            comment: this.state.commentText
-                              .replace(/\s+/g, ' ')
-                              .trim(),
-                            attachments: this.state.commentAttachment,
-                          });
+                        
                           this.setState({
                             commentText: '',
                             comments: map,

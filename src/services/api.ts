@@ -61,7 +61,7 @@ const createApi = (
    * @user
    */
   const createUser = (data: user) => baseapi.post('users', data);
-  const getUser = (data: user) => baseapi.get('users', data);
+  const getUser = (data: user) => baseapi.get(`users/?email=${data}`);
   const setUserInfo = (data: user) => baseapi.put('users', data);
 
   /*
@@ -107,6 +107,8 @@ const createApi = (
   const delComment = (data: any) => baseapi.delete(`comment`, data);
   const editComment = (data: any) => baseapi.get(`comment`, data);
   const createComment = (data: any) => baseapi.post(`comment`, data);
+
+  
 
   return {
     getAllComents,
