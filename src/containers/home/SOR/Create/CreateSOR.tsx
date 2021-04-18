@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   View,
-  StyleSheet,
   Text,
   ScrollView,
   TouchableOpacity,
@@ -19,35 +18,26 @@ import {
   filterLocation,
   classifySor,
   suggestInActionsRecommendations,
-  validateEmail,
 } from '@utils';
 import {bindActionCreators} from 'redux';
 import * as reduxActions from '../../../../store/actions/listSorActions';
 
 import {Icon, Avatar} from 'react-native-elements';
 import {colors} from '@theme';
-import Amplify, {Storage} from 'aws-amplify';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import DocumentPicker from 'react-native-document-picker';
 import {Chart, Suggestions, RepeatedSor, Tags, Calendars} from '@components';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
-import {classifySorBtn, Isor, involved_persons, user} from '@typings';
+import {classifySorBtn, Isor, involved_persons} from '@typings';
 import Modal from 'react-native-modal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {parse} from 'react-native-svg';
 import {createApi} from '@service';
-import {StackAnimationTypes} from 'react-native-screens';
-import * as RNFS from 'react-native-fs';
-import {Buffer} from 'buffer';
+// import * as RNFS from 'react-native-fs';
+// import {Buffer} from 'buffer';
 import {AllSorDTO} from '@dtos';
-
-import {Results} from 'realm';
 
 type CreateSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -183,7 +173,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
   // Search Action / Recommendation Suggestions
   actionRecommendSuggestion = (str: string) => {
-    console.log(str)
+    console.log(str);
     if (str == '') {
       this.setState({
         actionRecommendations: [],
@@ -213,18 +203,17 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     type: string,
     uri: string,
   ) => {
-    RNFS.readFile(uri, 'base64')
-      .then((res: any) => {
-        Storage.put(
-          `/public/sors/${userId}/${userId}-${file}-${date}`,
-          Buffer.from(res, 'base64'),
-        )
-          .then((stored) => {})
-          .catch((err) => {});
-      })
-      .catch((err: any) => {});
+    // RNFS.readFile(uri, 'base64')
+    //   .then((res: any) => {
+    //     Storage.put(
+    //       `/public/sors/${userId}/${userId}-${file}-${date}`,
+    //       Buffer.from(res, 'base64'),
+    //     )
+    //       .then((stored) => {})
+    //       .catch((err) => {});
+    //   })
+    //   .catch((err: any) => {});
     // const result = await Storage.put('test.txt', 'Hello');
-
     // const object = {
     //   uri: `${uri}`,
     //   name: `${userId}${file}${date}`,
@@ -260,7 +249,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         files.push(res);
         // sometimes files declare a folder with a / within then
         let possibleFolder = res.key.split('/').slice(0, -1).join('/');
-        if (possibleFolder) folders.add(possibleFolder);
+        if (possibleFolder) {
+          folders.add(possibleFolder);
+        }
       } else {
         folders.add(res.key);
       }
@@ -371,7 +362,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   likelihood: 5,
                 },
                 action_required: [],
-              
+
                 location: this.state.observation,
                 submit_to: this.state.submitToTags.map((d: any) => d.email),
                 esclate_to: this.state.exclateToTags.map((d: any) => d.email),
@@ -392,7 +383,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   this.props.navigation.navigate('ViewAllSOr');
                 } else {
                   this.setState({
-
                     errorModal: true,
                     errHeadingText: `CreateSor api returns ${res.status}.`,
                     errDesText: res.data.message,
@@ -429,15 +419,17 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   };
   onCreateSor = () => {
     var sorbtns = this.state.classifySorbtns.filter(
-      (d: any) => d.selected == true,
+      (d: any) => d.selected === true,
     );
- console.log(this.state.observationT)
+    console.log(this.state.observationT);
+    // eslint-disable-next-line eqeqeq
     var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
+    // eslint-disable-next-line eqeqeq
     var severity = this.state.severity.filter((d: any) => d.selected == true);
 
-    var actionRecommendationsText = this.state.actionRecommendationsText;
-    var submitTo = this.state.submitTo;
-    var esclateTo = this.state.esclateTo;
+    // var actionRecommendationsText = this.state.actionRecommendationsText;
+    // var submitTo = this.state.submitTo;
+    // var esclateTo = this.state.esclateTo;
     // Check If the observation text is detected
 
     // for (let i = 0; i < this.state.filename.length; i++) {
@@ -469,82 +461,83 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             if (this.state.submitToTags.length !== 0) {
               if (this.state.exclateToTags.length !== 0) {
                 this.setState({loading: true, errorModal: true});
-              
-                    // Repeated observations
-                    // res.data.results
-                    var bodyInitial = {
+
+                // Repeated observations
+                // res.data.results
+                var bodyInitial = {
+                  report: {
+                    created_by: this.state.email,
+                    comments: '',
+                    status: 1,
+                  },
+                  project: '607820d5724677561cf67ec5',
+                };
+                createApi
+                  .createApi()
+                  .createSorInit(bodyInitial)
+                  .then((ress: any) => {
+                    // Report Id
+                    // res.data.data.report_id
+                    console.log(ress);
+                    var sor = {
                       report: {
+                        _id: ress.data.data.report_id,
                         created_by: this.state.email,
-                        comments: '',
-                        status: 1,
+                        details: this.state.observationT,
+                        occured_at: new Date(),
+                        involved_persons: this.state.involvePersonTags.map(
+                          (d: any) => d._id,
+                        ),
+
+                        sor_type: sorbtns[0].title,
+                        risk: {
+                          severity: 5,
+                          likelihood: 5,
+                        },
+                        action_required: [],
+
+                        location: this.state.observation,
+                        submit_to: this.state.submitToTags.map(
+                          (d: any) => d.email,
+                        ),
+                        esclate_to: this.state.exclateToTags.map(
+                          (d: any) => d.email,
+                        ),
+                        status: 2,
+                        // attachments: this.state.filename,
+                        comments: ' ',
                       },
                       project: '607820d5724677561cf67ec5',
                     };
+                    // this.props.reduxActions.createSor(
+                    //   sor,
+                    //   '604b13d114ba138bd23d7f75',
+                    //   'inconnent12345@outlook.com',
+                    //   this.props.navigation,
+                    // );
+                    console.log(sor);
                     createApi
                       .createApi()
-                      .createSorInit(bodyInitial)
-                      .then((ress: any) => {
-                        // Report Id
-                        // res.data.data.report_id
-                        console.log(ress)
-                        var sor = {
-                          report: {
-                            _id: ress.data.data.report_id,
-                            created_by: this.state.email,
-                            details: this.state.observationT,
-                            occured_at: new Date(),
-                            involved_persons: this.state.involvePersonTags.map((d : any) =>  d._id),
+                      .createSor(sor)
+                      .then((res: any) => {
+                        this.setState({loading: false, errorModal: false});
+                        console.log(res);
 
-                            sor_type: sorbtns[0].title,
-                            risk: {
-                              severity: 5,
-                              likelihood: 5,
-                            },
-                            action_required: [],
-                          
-                            location: this.state.observation,
-                            submit_to: this.state.submitToTags.map(
-                              (d: any) => d.email,
-                            ),
-                            esclate_to: this.state.exclateToTags.map(
-                              (d: any) => d.email,
-                            ),
-                            status: 2,
-                            // attachments: this.state.filename,
-                            comments: ' ',
-                          },
-                          project: '607820d5724677561cf67ec5',
-                        };
-                        // this.props.reduxActions.createSor(
-                        //   sor,
-                        //   '604b13d114ba138bd23d7f75',
-                        //   'inconnent12345@outlook.com',
-                        //   this.props.navigation,
-                        // );
-                        console.log(sor);
-                        createApi
-                          .createApi()
-                          .createSor(sor)
-                          .then((res: any) => {
-                            this.setState({loading: false, errorModal: false});
-                            console.log(res);
-                            
-                            if (res.status == 200) {
-                              this.props.navigation.navigate('ViewAllSOr');
-                            } else {
-                              this.setState({
-                                errorModal: false,
-                                errHeadingText: `CreateSor api returns ${res.data.status}.`,
-                                errDesText: res.data.message,
-                              });
-                            }
-                          })
-                          .catch((err) =>
-                            this.setState({loading: false, errorModal: false}),
-                          );
-                    
+                        if (res.status == 200) {
+                          this.props.navigation.navigate('ViewAllSOr');
+                        } else {
+                          this.setState({
+                            errorModal: false,
+                            errHeadingText: `CreateSor api returns ${res.data.status}.`,
+                            errDesText: res.data.message,
+                          });
+                        }
+                      })
+                      .catch(() =>
+                        this.setState({loading: false, errorModal: false}),
+                      );
                   })
-                  .catch((err) => {
+                  .catch(() => {
                     this.setState({loading: false, errorModal: false});
                   });
               } else {
@@ -575,140 +568,137 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             //   // Error on actions and recommendations
             // }
           } else {
-              if (severity.length !== 0) {
-                if (this.state.actionsTags.length !== 0) {
-                  if (this.state.submitToTags.length !== 0) {
-                    if (this.state.exclateToTags.length !== 0) {
-                      this.setState({loading: true, errorModal: true});
+            if (severity.length !== 0) {
+              if (this.state.actionsTags.length !== 0) {
+                if (this.state.submitToTags.length !== 0) {
+                  if (this.state.exclateToTags.length !== 0) {
+                    this.setState({loading: true, errorModal: true});
 
-                          // Repeated observations
-                          // res.data.results
-                          var bodyInitial = {
-                            report: {
-                              created_by: this.state.email,
-                              comments: '',
-                              status: 1,
+                    // Repeated observations
+                    // res.data.results
+                    var bodyInitial = {
+                      report: {
+                        created_by: this.state.email,
+                        comments: '',
+                        status: 1,
+                      },
+                      project: '607820d5724677561cf67ec5',
+                    };
+                    createApi
+                      .createApi()
+                      .createSorInit(bodyInitial)
+                      .then((ress: any) => {
+                        // Report Id
+                        // res.data.data.report_id
+
+                        var sor = {
+                          report: {
+                            _id: ress.data.data.report_id,
+                            created_by: this.state.email,
+                            details: this.state.observationT,
+                            occured_at: new Date(),
+                            involved_persons: this.state.involvePersonTags.map(
+                              (d: any) => d._id,
+                            ),
+
+                            sor_type: sorbtns[0].title,
+                            risk: {
+                              severity: liklihood[0].value,
+                              likelihood: severity[0].value,
                             },
-                            project: '607820d5724677561cf67ec5',
-                          };
-                          createApi
-                            .createApi()
-                            .createSorInit(bodyInitial)
-                            .then((ress: any) => {
-                              // Report Id
-                              // res.data.data.report_id
+                            action_required: [],
 
-                              var sor = {
-                                report: {
-                                  _id: ress.data.data.report_id,
-                                  created_by: this.state.email,
-                                  details: this.state.observationT,
-                                  occured_at: new Date(),
-                                  involved_persons: this.state.involvePersonTags.map((d : any) =>  d._id),
+                            location: this.state.observation,
+                            submit_to: this.state.submitToTags.map(
+                              (d: any) => d.email,
+                            ),
+                            esclate_to: this.state.exclateToTags.map(
+                              (d: any) => d.email,
+                            ),
+                            status: 2,
+                            attachments: [],
+                            comments: ' ',
+                          },
+                          project: '607820d5724677561cf67ec5',
+                        };
 
-                                  sor_type: sorbtns[0].title,
-                                  risk: {
-                                    severity: liklihood[0].value,
-                                    likelihood: severity[0].value,
-                                  },
-                                  action_required: [],
-                                 
-                                  location: this.state.observation,
-                                  submit_to: this.state.submitToTags.map(
-                                    (d: any) => d.email,
-                                  ),
-                                  esclate_to: this.state.exclateToTags.map(
-                                    (d: any) => d.email,
-                                  ),
-                                  status: 2,
-                                  attachments: [],
-                                  comments: ' ',
-                                },
-                                project: '607820d5724677561cf67ec5',
-                              };
-
-
-                              console.log(sor)
-                              // this.props.reduxActions.createSor(
-                              //   sor,
-                              //   '604b13d114ba138bd23d7f75',
-                              //   'inconnent12345@outlook.com',
-                              //   this.props.navigation,
-                              // );
-                              // console.log(sor);
-                              createApi
-                                .createApi()
-                                .createSor(sor)
-                                .then((res: any) => {
-                                  this.setState({
-                                    loading: false,
-                                    errorModal: false,
-                                  });
-                                  console.log(res);
-
-                                  if (res.status == 200) {
-                                    this.props.navigation.navigate(
-                                      'ViewAllSOr',
-                                    );
-                                  } else {
-                                    this.setState({
-                                      errorModal: true,
-                                      errHeadingText: `CreateSor api returns ${res.status}.`,
-                                        errDesText: res.data.message,
-                                    });
-                                  }
-                                })
-                                .catch((err) =>
-                                  this.setState({
-                                    loading: false,
-                                    errorModal: false,
-                                  }),
-                                );
-                            })
-                            .catch((err) => {
-                              this.setState({
-                                loading: false,
-                                errorModal: false,
-                              });
+                        console.log(sor);
+                        // this.props.reduxActions.createSor(
+                        //   sor,
+                        //   '604b13d114ba138bd23d7f75',
+                        //   'inconnent12345@outlook.com',
+                        //   this.props.navigation,
+                        // );
+                        // console.log(sor);
+                        createApi
+                          .createApi()
+                          .createSor(sor)
+                          .then((res: any) => {
+                            this.setState({
+                              loading: false,
+                              errorModal: false,
                             });
-                      
-                    } else {
-                      this.setState({
-                        errorModal: true,
+                            console.log(res);
 
-                        errHeadingText: 'You didnt esclated anyone.',
-                        errDesText: 'you are not selected esclated users.',
+                            if (res.status == 200) {
+                              this.props.navigation.navigate('ViewAllSOr');
+                            } else {
+                              this.setState({
+                                errorModal: true,
+                                errHeadingText: `CreateSor api returns ${res.status}.`,
+                                errDesText: res.data.message,
+                              });
+                            }
+                          })
+                          .catch(() =>
+                            this.setState({
+                              loading: false,
+                              errorModal: false,
+                            }),
+                          );
+                      })
+                      .catch(() => {
+                        this.setState({
+                          loading: false,
+                          errorModal: false,
+                        });
                       });
-                      // Error on esclated to
-                    }
                   } else {
                     this.setState({
                       errorModal: true,
 
-                      errHeadingText: 'You didnt submitted anyone.',
-                      errDesText: 'you are not selected submitted users.',
+                      errHeadingText: 'You didnt esclated anyone.',
+                      errDesText: 'you are not selected esclated users.',
                     });
-                    // Error on submitted to
+                    // Error on esclated to
                   }
                 } else {
                   this.setState({
                     errorModal: true,
 
-                    errHeadingText: 'You didnt recommended anyone.',
-                    errDesText: 'you are not selected recommended actions.',
+                    errHeadingText: 'You didnt submitted anyone.',
+                    errDesText: 'you are not selected submitted users.',
                   });
-                  // Error on actions and recommendations
+                  // Error on submitted to
                 }
               } else {
                 this.setState({
                   errorModal: true,
 
-                  errHeadingText: 'Select your severity numbers.',
-                  errDesText: 'you are not selected severity numberss.',
+                  errHeadingText: 'You didnt recommended anyone.',
+                  errDesText: 'you are not selected recommended actions.',
                 });
-                // Error on severity
+                // Error on actions and recommendations
               }
-            
+            } else {
+              this.setState({
+                errorModal: true,
+
+                errHeadingText: 'Select your severity numbers.',
+                errDesText: 'you are not selected severity numberss.',
+              });
+              // Error on severity
+            }
           }
         } else {
           this.setState({
@@ -756,115 +746,53 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 color={colors.secondary}
               />
               <View>
-                <Text style={styles.title}>SOR Report</Text>
-                <View style={styles.underScrore} />
-              </View>
-              <View style={styles.avatarView}>
-                <Avatar
-                  rounded
-                  source={{
-                    uri: this.state.img_url,
-                  }}
-                />
+                <Text style={styles.title}>Create Observation</Text>
               </View>
             </View>
           </View>
           {/* content */}
           <Animated.View style={[styles.content]}>
-            <Text style={styles.cnHeading}>Create SOR</Text>
-            {/* Observation Details */}
-            <Text style={styles.observationT}>Observation Detail</Text>
-            <View
-              style={[
-                styles.observationDetail,
-                this.state.selectedInputIndex == 1
-                  ? {borderColor: colors.green}
-                  : null,
-              ]}>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={styles.obserttle}>On </Text>
-                <Icon
-                  size={15}
-                  name="calendar-clock"
-                  type="material-community"
-                  color={colors.primary}
-                />
-                <Text style={[styles.obserttle, {color: colors.primary}]}>
-                  {moment().format('MMMM DD')}, {moment().format('YYYY')}{' '}
-                </Text>
-                <Text style={styles.obserttle}>
-                  at about {this.state.curTime}
-                </Text>
-              </View>
-              <Text style={styles.obserttle}> it was observed that</Text>
-              <TextInput
-                multiline={true}
-                onFocus={() => this.setState({selectedInputIndex: 1})}
-                value={this.state.observationT}
-                underlineColorAndroid="transparent"
-                placeholder="Enter your observation here"
-                onChange={(t) => {
-                  this.setState({observationT: t.nativeEvent.text});
-                  this.searchInObservation(t.nativeEvent.text);
-                }}
-                style={[styles.obInputText]}></TextInput>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={styles.obText}>
-                  at{' '}
-                  {/* <Text style={{color: colors.primary}}>
-                  {this.state.obserLocation}
-                </Text>{' '} */}
-                </Text>
-                <TextInput
-                  value={this.state.observation}
-                  style={{
-                    marginTop: wp(-4.5),
-                    borderBottomWidth: 0,
-                    color: colors.primary,
-                    fontWeight: 'bold',
-                    fontSize: wp(3),
-                  }}
-                  onChange={(e) =>
-                    this.setState({observation: e.nativeEvent.text})
-                  }
-                  placeholder={'@Add Location'}
-                />
-                <Text style={styles.obText}> and it happend at</Text>
+            {/* Select Project  / Select location */}
+            <View style={styles.selectProjectLocationContainer}>
+              {/* Select Project */}
+              <View style={styles.selectProjectContainer}>
+                <Text style={styles.selectProjHead}>Select Project :</Text>
+                <TouchableOpacity style={styles.selectProj}>
+                  <Text style={styles.projName}>Safety Connect</Text>
+                  <Icon
+                    onPress={() => this.props.navigation.goBack()}
+                    size={wp(3)}
+                    containerStyle={styles.downIcon}
+                    name="down"
+                    type="antdesign"
+                    // color={colo}
+                  />
+                </TouchableOpacity>
               </View>
 
-              <View style={{flexDirection: 'row', marginTop: wp(-7)}}>
-                <Text
-                  style={{
-                    fontSize: wp(3),
-                    opacity: 0.5,
-                    marginTop: wp(3),
-                    marginLeft: wp(1),
-                  }}>
-                  <Text style={{fontWeight: 'bold'}}>
-                    {moment().format('MMMM DD, YYYY')}
-                  </Text>{' '}
-                  at about{' '}
-                  <Text style={{fontWeight: 'bold'}}>
-                    {moment().format('LT')}
-                  </Text>
-                </Text>
+              {/* Select location */}
+              <View style={styles.selectLocationContainer}>
+                <Text style={styles.selectlocationHead}>Select Location :</Text>
+                <TouchableOpacity style={styles.selectLocation}>
+                  <Text style={styles.locaName}>Assembly Line</Text>
+                  <Icon
+                    onPress={() => this.props.navigation.goBack()}
+                    size={wp(3)}
+                    containerStyle={styles.downIcon}
+                    name="down"
+                    type="antdesign"
+                    // color={colo}
+                  />
+                </TouchableOpacity>
               </View>
             </View>
-            {/* Suggestions  */}
-            {this.state.suggestions.length != 0 ? (
-              <Suggestions
-                styles={{}}
-                type={'observation'}
-                arr={this.state.suggestions}
-                onPress={(d: any) => {
-                  this.setState({observationT: d.details, suggestions: []});
-                }}
-              />
-            ) : null}
 
+            {/* Line  */}
+            <View style={styles.lineheight} />
             {/* Classify SOR */}
+
             <View style={styles.clasSorContainer}>
-              <Text style={styles.clasSorHeading}>Classify SOR</Text>
+              <Text style={styles.clasSorHeading}>Classify Observation</Text>
               <View style={styles.clasSorBtnV}>
                 {this.state.classifySorbtns.map(
                   (d: classifySorBtn, i: number) => (
@@ -910,6 +838,101 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 )}
               </View>
             </View>
+            {/* Line  */}
+            <View style={styles.lineheight} />
+            {/* Observation Details */}
+            <View style={styles.observationDetailsContainer}>
+              <Text style={styles.observationT}>Observation Detail</Text>
+              <View
+                style={[
+                  styles.observationDetail,
+                  this.state.selectedInputIndex == 1
+                    ? {borderColor: colors.green}
+                    : null,
+                ]}>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={styles.obserttle}>On </Text>
+                  <Icon
+                    size={15}
+                    name="calendar-clock"
+                    type="material-community"
+                    color={colors.primary}
+                  />
+                  <Text style={[styles.obserttle, {color: colors.primary}]}>
+                    {moment().format('MMMM DD')}, {moment().format('YYYY')}{' '}
+                  </Text>
+                  <Text style={styles.obserttle}>
+                    at about {this.state.curTime}
+                  </Text>
+                </View>
+                <Text style={styles.obserttle}> it was observed that</Text>
+                <TextInput
+                  multiline={true}
+                  onFocus={() => this.setState({selectedInputIndex: 1})}
+                  value={this.state.observationT}
+                  underlineColorAndroid="transparent"
+                  placeholder="Enter your observation here"
+                  onChange={(t) => {
+                    this.setState({observationT: t.nativeEvent.text});
+                    this.searchInObservation(t.nativeEvent.text);
+                  }}
+                  style={[styles.obInputText]}
+                />
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={styles.obText}>
+                    at{' '}
+                    {/* <Text style={{color: colors.primary}}>
+                  {this.state.obserLocation}
+                </Text>{' '} */}
+                  </Text>
+                  <TextInput
+                    value={this.state.observation}
+                    style={{
+                      marginTop: wp(-4.5),
+                      borderBottomWidth: 0,
+                      color: colors.primary,
+                      fontWeight: 'bold',
+                      fontSize: wp(3),
+                    }}
+                    onChange={(e) =>
+                      this.setState({observation: e.nativeEvent.text})
+                    }
+                    placeholder={'@Add Location'}
+                  />
+                  <Text style={styles.obText}> and it happend at</Text>
+                </View>
+
+                <View style={{flexDirection: 'row', marginTop: wp(-7)}}>
+                  <Text
+                    style={{
+                      fontSize: wp(3),
+                      opacity: 0.5,
+                      marginTop: wp(3),
+                      marginLeft: wp(1),
+                    }}>
+                    <Text style={{fontWeight: 'bold'}}>
+                      {moment().format('MMMM DD, YYYY')}
+                    </Text>{' '}
+                    at about{' '}
+                    <Text style={{fontWeight: 'bold'}}>
+                      {moment().format('LT')}
+                    </Text>
+                  </Text>
+                </View>
+              </View>
+              {/* Suggestions  */}
+              {this.state.suggestions.length != 0 ? (
+                <Suggestions
+                  styles={{}}
+                  type={'observation'}
+                  arr={this.state.suggestions}
+                  onPress={(d: any) => {
+                    this.setState({observationT: d.details, suggestions: []});
+                  }}
+                />
+              ) : null}
+            </View>
+
             {/* Risk Chart*/}
             {this.state.classifySorbtns[1].selected == false ? (
               <View>
@@ -1178,7 +1201,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         submitTo: v,
                       });
                     }}
-                    value={this.state.submitTo}></TextInput>
+                    value={this.state.submitTo}
+                  />
                 </View>
 
                 {this.state.submitToArr.length != 0 ? (
@@ -1258,7 +1282,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     }
                     placeholder={'Enter person name / email'}
                     style={styles.optnselectorText}
-                    value={this.state.esclateTo}></TextInput>
+                    value={this.state.esclateTo}
+                  />
                 </View>
 
                 {this.state.exclateToArr.length != 0 ? (

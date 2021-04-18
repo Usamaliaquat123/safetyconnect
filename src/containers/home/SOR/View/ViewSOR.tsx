@@ -45,6 +45,7 @@ import {
   imageVideoDetector,
   DocType,
   imageAndVideoObjectMap,
+  filterAndMappingPersons,
   downloadFile,
 } from '@utils';
 import DocumentPicker from 'react-native-document-picker';
@@ -139,6 +140,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
+
+
+
+
+
+
+
+
+  
+
     // console.log(this.props.route.params.data.comments);
   this.mappingMapping(this.props.route.params.data.risk.severity, this.props.route.params.data.risk.likelihood)
     this.getAllComments();
@@ -166,6 +177,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           commentsSugg: res.data.data.involved_persons,
         });
 
+
+
+        var arr =  filterAndMappingPersons(this.props.route.params.data, res.data.data.involved_persons)
+
+        console.log(arr)
+
+        
         this.mappingInvolved(
           res.data.data.involved_persons,
           this.props.route.params.data.involved_persons[0],
@@ -182,6 +200,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.props.route.params.data.risk.severity,
       this.props.route.params.data.risk.likelihood,
     );
+
+
+   
+
+
+
+
   };
 
   mappingInvolved = (persons: Array<any>, person: string | undefined) => {

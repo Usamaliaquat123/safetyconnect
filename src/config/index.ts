@@ -39,10 +39,13 @@ const AmlifyConfigure = () => {
         },
         oauth: {
           domain: 'homesafety.auth.us-east-2.amazoncognito.com',
-          redirectSignIn: 'http://localhost:3000/view-sor',
-          redirectSignOut: 'http://localhost:3000/signin',
+          redirectSignIn: 'https://dev.safetyconnect.ai/check-social-user',
+          redirectSignOut: 'https://dev.safetyconnect.ai/signin',
 
           responseType: 'code', // or 'token', note that REFRESH token will only be generated when the responseType is code
+        },
+        GoogleSignin : {
+
         },
         Storage: {
           AWSS3: {

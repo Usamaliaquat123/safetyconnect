@@ -98,6 +98,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                       organization: [],
                     })
                     .then((res) => {
+                      console.log(res);
                       if (res.status == 200) {
                         api
                           .createApi()

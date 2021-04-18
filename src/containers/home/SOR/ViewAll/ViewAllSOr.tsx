@@ -156,7 +156,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     .createApi()
     .filterSors(data)
     .then((res: any) => {
-
+      console.log(res)
     //  res.data = Object.assign({}, res.data);
     //  console.log(res.data)
 
@@ -169,19 +169,18 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   
           if (res.data.data.report[i].status == 1) {
             var rep = filterAndMappingPersons(res.data.data.report[i],this.state.involvedPerson)
-            this.state.draft.push(rep);
+            this.state.draft.push(res.data.data.report[i]);
           } else if (res.data.data.report[i].status == 2) {
           var rep = filterAndMappingPersons(res.data.data.report[i],this.state.involvedPerson)
-            this.state.submitted.push(rep);
+            this.state.submitted.push(res.data.data.report[i]);
           } else if (res.data.data.report[i].status == 3) {
             var rep = filterAndMappingPersons(res.data.data.report[i],this.state.involvedPerson)
-            this.state.exclated.push(rep);
+            this.state.exclated.push(res.data.data.report[i]);
           } else if (res.data.data.report[i].status == 4) {
             var rep = filterAndMappingPersons(res.data.data.report[i],this.state.involvedPerson)
-            this.state.inprogress.push(rep);
+            this.state.inprogress.push(res.data.data.report[i]);
           } else if (res.data.data.report[i].status == 5) {
-            var rep = filterAndMappingPersons(res.data.data.report[i],this.state.involvedPerson)
-            this.state.completed.push(rep);
+            this.state.completed.push(res.data.data.report[i]);
           }
         }
       }

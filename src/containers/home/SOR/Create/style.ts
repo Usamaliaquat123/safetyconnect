@@ -13,14 +13,16 @@ const styles = StyleSheet.create({
   // Header
   header: {
     padding: wp(7),
+    paddingLeft : wp(3),
     paddingTop: wp(5),
     paddingBottom: wp(5),
     backgroundColor: colors.primary,
   },
   title: {
+    marginTop : wp(1),
     fontFamily: fonts.SFuiDisplayBold,
     fontSize: wp(4),
-    marginLeft: wp(5),
+    marginLeft: wp(3),
     color: colors.secondary,
     // fontWeight: 'bold',
   },
@@ -55,6 +57,69 @@ const styles = StyleSheet.create({
     width: wp(22),
   },
 
+  selectProjectLocationContainer : {
+    paddingLeft : wp(3),
+    paddingRight : wp(3),
+    marginBottom : wp(5),
+    marginTop : wp(5),
+    // justifyContent : "space-evenly",
+    flexDirection : "row",
+  },
+  selectProjectContainer : {
+
+  },
+  selectProjHead : {
+    fontSize :wp(4),
+    opacity : .6,
+    fontFamily  : fonts.SFuiDisplayMedium
+  },
+  selectlocationHead : {
+    fontSize :wp(4),
+    opacity : .6,
+    fontFamily  : fonts.SFuiDisplayMedium
+  },
+  selectProj : {
+    marginTop : wp(2),
+    alignItems : "center",
+    paddingLeft : wp(5),
+    paddingRight : wp(5),
+    borderWidth : wp(0.4),
+    paddingTop : wp(3),
+    paddingBottom : wp(3),
+    borderColor :colors.textOpa,
+    borderRadius : wp(1),
+    flexDirection : "row"
+  },
+  downIcon : {
+    marginLeft  :wp(7),
+
+   opacity : .7
+  },
+  projName : {
+    fontSize : wp(3),
+    opacity : .7,
+    fontFamily : fonts.SFuiDisplayMedium
+  },
+  locaName  : {
+    fontSize : wp(3),
+    opacity : .7,
+    fontFamily : fonts.SFuiDisplayMedium
+  },
+  selectLocation : {
+    marginTop : wp(2),
+    alignItems : "center",
+    paddingLeft : wp(5),
+    paddingRight : wp(5),
+    borderWidth : wp(0.4),
+    paddingTop : wp(3),
+    paddingBottom : wp(3),
+    borderColor :colors.textOpa,
+    borderRadius : wp(1),
+    flexDirection : "row"
+  },
+  selectLocationContainer : {
+    marginLeft : wp(6),
+  },
   slctContainer: {
     position: 'absolute',
     top: wp(5),
@@ -89,20 +154,10 @@ const styles = StyleSheet.create({
 
   // Content
   content: {
-    padding: wp(5),
+    // padding: wp(5),
     backgroundColor: colors.secondary,
-    // flex: 2,
-    // marginTop: wp(80),
-    borderTopLeftRadius: wp(3),
-    borderTopRightRadius: wp(3),
   },
-  // OBSERVATION
-  cnHeading: {
-    color: colors.primary,
-    // fontWeight: 'bold',
-    fontSize: wp(3.6),
-    fontFamily: fonts.SFuiDisplayBold,
-  },
+
   observationDetail: {
     borderRadius: wp(5),
     padding: wp(4),
@@ -110,7 +165,7 @@ const styles = StyleSheet.create({
     borderWidth: wp(0.3),
   },
   observationT: {
-    fontSize: wp(3.4),
+    fontSize: wp(5),
     padding: wp(5),
     fontFamily: fonts.SFuiDisplayMedium,
 
@@ -123,6 +178,14 @@ const styles = StyleSheet.create({
     color: colors.text,
     fontFamily: fonts.SFuiDisplayBold,
     fontSize: wp(3.4),
+  },
+  lineheight: {
+    height: wp(0.5),
+    backgroundColor: colors.darkLightGrey,
+  },
+  observationDetailsContainer : {
+    paddingLeft : wp(3),
+    paddingRight : wp(3)
   },
   obInput: {borderBottomWidth: 0},
   obInputText: {
@@ -156,36 +219,43 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
   // Classify SOR
-  clasSorContainer: {},
+  clasSorContainer: {
+  paddingLeft : wp(3),
+  paddingRight : wp(3),
+  paddingBottom : wp(4),
+  },
   clasSorHeading: {
-    fontSize: wp(3),
+    fontSize: wp(5),
     fontFamily: fonts.SFuiDisplayMedium,
 
     // fontWeight: 'bold',
     marginTop: wp(7),
     marginBottom: wp(2),
   },
-  clasSorBtnCont: {
-    borderRadius: wp(5),
+    clasSorBtnCont: {
+    borderRadius: wp(1),
     borderWidth: wp(0.3),
-    padding: wp(5),
-    marginTop: wp(1),
-    alignSelf: 'stretch',
-    width: wp('38%'),
+    // padding: wp(),
+    paddingTop : wp(4),
+    paddingBottom : wp(4),
+    marginTop: wp(3),
+    // alignSelf: 'stretch',
+    width: wp(42),
     margin: wp(1),
     // justifyContent: 'center',
   },
   clasSorBtnV: {
-    flexDirection: 'row',
+    flexDirection: "row",
+
     flexWrap: 'wrap',
     alignSelf: 'center',
-    justifyContent: 'center',
+    justifyContent:"space-between",
   },
-  clasSorBtnWrap: {alignSelf: 'center'},
+  clasSorBtnWrap: {flexDirection : "row",justifyContent : "center", alignContent : "center"},
   clasSorBtnTtl: {
     textAlign: 'center',
     fontSize: wp(3),
-    marginTop: wp(2),
+    // marginTop: wp(2),
     marginLeft: wp(1),
   },
   // Involve Person

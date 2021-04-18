@@ -10,10 +10,10 @@ export const colors = {
   lightBlue: '#EBEFF3',
   lightGreen: '#F1F7ED',
   classify_sor_btns: {
-    positive: '#4AA734',
-    concern: '#FF0F0F',
-    nearmiss: '#222222',
-    lsr: '#172A68',
+    positive: '#4FA63C',
+    concern: '#3A99D8',
+    nearmiss: '#EE4239',
+    lsr: '#FA9133',
   },
   riskIcons: {
     yellow: '#F1E326',
