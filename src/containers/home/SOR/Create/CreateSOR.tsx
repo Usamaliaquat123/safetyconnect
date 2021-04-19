@@ -277,6 +277,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     // AsyncStorage.getItem('user').then((user: any) => {
     //   this.setState({user: JSON.parse(user)});
     // });
+    this.mappingMapping(1,1)
 
     AsyncStorage.getItem('email').then((email: any) => {
       this.setState({email});
@@ -302,23 +303,23 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     // this.AnimatedViews();
   };
 
-  // mappingMapping = (sev: number, lik: number) => {
-  //   this.state.liklihood.map((d: any, i: number) => {
-  //     if (sev == d.value) {
-  //       d.selected = true;
-  //     } else {
-  //       d.selected = false;
-  //     }
-  //   });
-  //   this.state.severity.map((d: any, i: number) => {
-  //     if (lik == d.value) {
-  //       d.selected = true;
-  //     } else {
-  //       d.selected = false;
-  //     }
-  //   });
-  //   this.setState({});
-  // };
+  mappingMapping = (sev: number, lik: number) => {
+    this.state.liklihood.map((d: any, i: number) => {
+      if (sev == d.value) {
+        d.selected = true;
+      } else {
+        d.selected = false;
+      }
+    });
+    this.state.severity.map((d: any, i: number) => {
+      if (lik == d.value) {
+        d.selected = true;
+      } else {
+        d.selected = false;
+      }
+    });
+    this.setState({});
+  };
 
   AnimatedViews = () => {
     Animated.timing(this.state.contentAnim, {
@@ -919,11 +920,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   (System Defined)
                   </Text>
                 </View>
-                  <View style={[styles.badgePotientialRisk,  this.state.potientialRisk < 7 ? {borderColor : colors.green}: this.state.potientialRisk < 14 ? {borderColor : colors.riskIcons.orrange} :{borderColor : colors.error} ]}>
+                  {/* <View style={[styles.badgePotientialRisk,  this.state.potientialRisk < 7 ? {borderColor : colors.green}: this.state.potientialRisk < 14 ? {borderColor : colors.riskIcons.orrange} :{borderColor : colors.error} ]}>
               <Text style={[styles.potentialRiskBadgeContainerText, this.state.potientialRisk < 7 ? {color : colors.green}: this.state.potientialRisk < 14 ? {color : colors.riskIcons.orrange} :{color : colors.error} ]}>
                 {this.state.potientialRisk} - { this.state.potientialRisk < 7 ? "Low": this.state.potientialRisk < 14 ? "Medium" :"High"}
               </Text>
-                  </View>
+                  </View> */}
                 </View>
                 {/* Actual Risk */}
                 <View>

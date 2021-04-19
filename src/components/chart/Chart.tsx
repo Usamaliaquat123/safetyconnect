@@ -21,22 +21,22 @@ const Chart = (props: Props) => {
   const [severity, setseverity] = useState(props.severity);
   const [total, setTotal] = useState();
 
-  console.log(props.liklihood);
-
+  // console.log(props.liklihood.filter((i: any) => i.selected == true)[0].value);
+  var ttl ;
   // console.log(props.liklihood.filter((i: any) => i.selected == true).);
   if (props.liklihood.filter((i: any) => i.selected == true).length == 0) {
     props.liklihood[0].selected = true;
     props.severity[0].selected = true;
-    var ttl: number =
+    ttl =
       props.liklihood.filter((i: any) => i.selected == true)[0].value *
       props.severity.filter((i: any) => i.selected == true)[0].value;
   } else {
-    var ttl: number =
+    ttl =
       props.liklihood.filter((i: any) => i.selected == true)[0].value *
       props.severity.filter((i: any) => i.selected == true)[0].value;
   }
 
-  var ttl;
+  // var ttl = 9;
   return (
     <View style={props.style}>
       <View style={{ paddingBottom: wp(3)}}>
@@ -147,7 +147,7 @@ const Chart = (props: Props) => {
         <View
           style={{
             right: 0,
-            top: wp(24),
+            top: wp(16),
             position: 'absolute',
           }}>
           <View
