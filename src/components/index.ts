@@ -12,6 +12,7 @@ import CommentPop from './ViewSor/Popup/Comments/CommentPop';
 import Calendars from './calendars/Calendars';
 import BottomPop from './BottomTab/BottomTabModal';
 import SuggestionsPop from './ViewSor/Popup/Suggestions/SuggestionsPop';
+import Selector from './Views/CreateSor/SelectProjectLocation/Selector';
 export {
   Suggestions,
   Chart,
@@ -26,5 +27,6 @@ export {
   Tags,
   SuggestionsAvatar,
   CommentPop,
+  Selector,
   SuggestionsPop,
 };

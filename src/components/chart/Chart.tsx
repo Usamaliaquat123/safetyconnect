@@ -39,14 +39,14 @@ const Chart = (props: Props) => {
   var ttl;
   return (
     <View style={props.style}>
-      <View style={{paddingTop: wp(3), paddingBottom: wp(3)}}>
+      <View style={{ paddingBottom: wp(3)}}>
         {/* Liklihood */}
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text
             style={{
               fontSize: wp(4),
               // marginTop: wp(-2),
-              marginTop: wp(3),
+              marginTop: wp(1),
               fontFamily: fonts.SFuiDisplayMedium,
               marginRight: wp(3),
             }}>

@@ -1,12 +1,7 @@
 // import { colors } from './../../../../theme/colors';
 import {StyleSheet} from 'react-native';
 import {colors, fonts} from '@theme';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
-import {color} from 'react-native-reanimated';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: colors.primary},
@@ -73,22 +68,22 @@ const styles = StyleSheet.create({
     opacity : .6,
     fontFamily  : fonts.SFuiDisplayMedium
   },
-  selectlocationHead : {
-    fontSize :wp(4),
-    opacity : .6,
-    fontFamily  : fonts.SFuiDisplayMedium
+  selectlocationHead: {
+    fontSize: wp(4),
+    opacity: .6,
+    fontFamily: fonts.SFuiDisplayMedium
   },
-  selectProj : {
-    marginTop : wp(2),
-    alignItems : "center",
-    paddingLeft : wp(5),
-    paddingRight : wp(5),
-    borderWidth : wp(0.4),
-    paddingTop : wp(3),
-    paddingBottom : wp(3),
-    borderColor :colors.textOpa,
-    borderRadius : wp(1),
-    flexDirection : "row"
+  selectProj: {
+    marginTop: wp(2),
+    alignItems: "center",
+    paddingLeft: wp(5),
+    paddingRight: wp(5),
+    borderWidth: wp(0.4),
+    paddingTop: wp(3),
+    paddingBottom: wp(3),
+    borderColor: colors.textOpa,
+    borderRadius: wp(1),
+    flexDirection: "row",
   },
   downIcon : {
     marginLeft  :wp(7),
@@ -185,7 +180,8 @@ const styles = StyleSheet.create({
   },
   observationDetailsContainer : {
     paddingLeft : wp(3),
-    paddingRight : wp(3)
+    paddingRight : wp(3),
+    paddingBottom : wp(5)
   },
   obInput: {borderBottomWidth: 0},
   obInputText: {
@@ -303,13 +299,53 @@ const styles = StyleSheet.create({
   involvePSt: {
     fontSize: wp(3),
   },
-  RiskHeading: {
-    // fontWeight: 'bold',
+
+  // Potiential Risk
+  potentialRiskContainer : {
+    flexDirection : "row",
+   justifyContent : "space-between"
+  },
+  potientialRiskHeading : {
     color: colors.text,
-    fontSize: wp(3),
+    fontSize: wp(5),
+
+    opacity : .6,
     // marginTop: wp(10),
     marginRight: wp(2),
     fontFamily: fonts.SFuiDisplaySemiBold,
+  },
+  riskContainer : {
+    marginTop : wp(5),
+    paddingLeft : wp(3),
+    paddingRight : wp(3)
+  },
+  systemDefinedtext : { 
+    fontSize : wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
+    opacity : .6,
+
+  },  
+  potentialRiskBadgeContainerText : {
+    fontSize  :wp(3),
+    fontFamily : fonts.SFuiDisplayMedium,
+    
+  },
+  badgePotientialRisk : {
+    borderWidth : wp(0.6),
+    paddingLeft : wp(3),
+    paddingRight : wp(3),
+    paddingTop  :wp(1),
+    borderRadius : wp(10),
+    paddingBottom : wp(1)
+  },
+
+  RiskHeading: {
+    // fontWeight: 'bold',
+    color: colors.text,
+    fontSize: wp(5),
+    // marginTop: wp(10),
+    marginRight: wp(2),
+    fontFamily: fonts.SFuiDisplayBold,
   },
   uploadBorder: {
     borderRadius: wp(5),

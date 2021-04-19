@@ -27,7 +27,14 @@ import {colors} from '@theme';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import DocumentPicker from 'react-native-document-picker';
-import {Chart, Suggestions, RepeatedSor, Tags, Calendars} from '@components';
+import {
+  Chart,
+  Suggestions,
+  RepeatedSor,
+  Tags,
+  Calendars,
+  Selector,
+} from '@components';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
@@ -100,7 +107,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       severity: riskxSeverityxliklihood.severity,
       // Involved Persons of this project
       involved_persons: [],
-
+      potientialRisk : 9,
       errorModal: false,
       user: {},
       errHeadingText: '',
@@ -753,40 +760,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           {/* content */}
           <Animated.View style={[styles.content]}>
             {/* Select Project  / Select location */}
-            <View style={styles.selectProjectLocationContainer}>
-              {/* Select Project */}
-              <View style={styles.selectProjectContainer}>
-                <Text style={styles.selectProjHead}>Select Project :</Text>
-                <TouchableOpacity style={styles.selectProj}>
-                  <Text style={styles.projName}>Safety Connect</Text>
-                  <Icon
-                    onPress={() => this.props.navigation.goBack()}
-                    size={wp(3)}
-                    containerStyle={styles.downIcon}
-                    name="down"
-                    type="antdesign"
-                    // color={colo}
-                  />
-                </TouchableOpacity>
-              </View>
-
-              {/* Select location */}
-              <View style={styles.selectLocationContainer}>
-                <Text style={styles.selectlocationHead}>Select Location :</Text>
-                <TouchableOpacity style={styles.selectLocation}>
-                  <Text style={styles.locaName}>Assembly Line</Text>
-                  <Icon
-                    onPress={() => this.props.navigation.goBack()}
-                    size={wp(3)}
-                    containerStyle={styles.downIcon}
-                    name="down"
-                    type="antdesign"
-                    // color={colo}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-
+            <Selector selectedLocation={'Assembly Line'} selectedProject={"Safety Connect"} navigation={this.props.navigation} />
             {/* Line  */}
             <View style={styles.lineheight} />
             {/* Classify SOR */}
@@ -932,12 +906,29 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 />
               ) : null}
             </View>
-
+    {/* Line  */}
+    <View style={styles.lineheight} />
             {/* Risk Chart*/}
             {this.state.classifySorbtns[1].selected == false ? (
-              <View>
-                <View style={{flexDirection: 'row', marginTop: wp(10)}}>
-                  <Text style={styles.RiskHeading}>Risk</Text>
+              <View  style={styles.riskContainer}>
+                {/* Potential Risk */}
+                <View style={styles.potentialRiskContainer}>
+                <View style={{flexDirection: 'row', alignItems : "center"}}>
+                  <Text style={styles.potientialRiskHeading}>Potential Risk</Text>
+                  <Text style={styles.systemDefinedtext}>
+                  (System Defined)
+                  </Text>
+                </View>
+                  <View style={[styles.badgePotientialRisk,  this.state.potientialRisk < 7 ? {borderColor : colors.green}: this.state.potientialRisk < 14 ? {borderColor : colors.riskIcons.orrange} :{borderColor : colors.error} ]}>
+              <Text style={[styles.potentialRiskBadgeContainerText, this.state.potientialRisk < 7 ? {color : colors.green}: this.state.potientialRisk < 14 ? {color : colors.riskIcons.orrange} :{color : colors.error} ]}>
+                {this.state.potientialRisk} - { this.state.potientialRisk < 7 ? "Low": this.state.potientialRisk < 14 ? "Medium" :"High"}
+              </Text>
+                  </View>
+                </View>
+                {/* Actual Risk */}
+                <View>
+                <View style={{flexDirection: 'row', marginTop : wp(1)}}>
+                  <Text style={styles.RiskHeading}>Actual Risk</Text>
                   <Text style={{fontStyle: 'italic', fontSize: wp(3)}}>
                     {/* {this.state.liklihood. * this.state.severity} */}
                   </Text>
@@ -946,7 +937,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 <Chart
                   liklihood={this.state.liklihood}
                   severity={this.state.severity}
-                  style={{marginTop: wp(3)}}
+                  // style={{marginTop: wp(1)}}
                   onPress={(v: any) => {
                     // if (v.liklihood == undefined) {
                     //   this.setState({severity: v.severity});
@@ -962,6 +953,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     // }
                   }}
                 />
+                </View>
+                
               </View>
             ) : null}
             {/* Involved Persons */}
