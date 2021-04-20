@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: wp(8),
+    borderRadius: wp(4),
     paddingTop: wp(5),
     paddingLeft: wp(1),
     paddingRight: wp(1),

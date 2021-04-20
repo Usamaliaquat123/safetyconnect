@@ -182,7 +182,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
   // Search Action / Recommendation Suggestions
   actionRecommendSuggestion = (str: string) => {
-    console.log(str);
     if (str == '') {
       this.setState({
         actionRecommendations: [],
@@ -313,6 +312,31 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       .createApi()
       .suggestiosns(form)
       .then((res: any) => {
+        // is_complete: false,
+        // is_selected: false,
+        // content: d.content,
+        // assigned_to: [],
+        // date: moment().format('YYYY-MM-DD'),
+        // status: 0,
+        // category: d.category,
+        for (let i = 0; i < res.data.results.length; i++) {
+          res.data.result[i].status = 0
+          // Object.assign(res.data.result[i], {assigned_to: []});
+
+          // console.log(res.data.results[i])
+        res.data.result[i]['assigned_to'] = []
+        // res.data.result[i]['date'] =  moment().format('YYYY-MM-DD')
+        // res.data.results[i]['is_complete'] = false
+        // res.data.results[i]['is_selected'] = false
+      }
+
+
+      console.log(res)
+
+
+
+   
+
         // console.log(res.data.results)
         this.setState({
           actionRecommendations: [...res.data.results],
@@ -403,7 +427,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               .createSor(sor)
               .then((res: any) => {
                 this.setState({loading: false, errorModal: false});
-                console.log(res);
                 if (res.status == 200) {
                   this.props.navigation.navigate('ViewAllSOr');
                 } else {
@@ -446,7 +469,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     var sorbtns = this.state.classifySorbtns.filter(
       (d: any) => d.selected === true,
     );
-    console.log(this.state.observationT);
     // eslint-disable-next-line eqeqeq
     var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
     // eslint-disable-next-line eqeqeq
@@ -503,7 +525,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   .then((ress: any) => {
                     // Report Id
                     // res.data.data.report_id
-                    console.log(ress);
                     var sor = {
                       report: {
                         _id: ress.data.data.report_id,
@@ -540,13 +561,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     //   'inconnent12345@outlook.com',
                     //   this.props.navigation,
                     // );
-                    console.log(sor);
                     createApi
                       .createApi()
                       .createSor(sor)
                       .then((res: any) => {
                         this.setState({loading: false, errorModal: false});
-                        console.log(res);
 
                         if (res.status == 200) {
                           this.props.navigation.navigate('ViewAllSOr');
@@ -647,7 +666,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           project: '607820d5724677561cf67ec5',
                         };
 
-                        console.log(sor);
                         // this.props.reduxActions.createSor(
                         //   sor,
                         //   '604b13d114ba138bd23d7f75',
@@ -663,7 +681,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               loading: false,
                               errorModal: false,
                             });
-                            console.log(res);
 
                             if (res.status == 200) {
                               this.props.navigation.navigate('ViewAllSOr');
@@ -1007,27 +1024,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 {/* Suggested Actions */}
                 {this.state.actionRecommendations.map((d : any, i: number) => (
                   <TouchableOpacity onLongPress={() => {
-
-
                     this.setState({
-                      allActionsEdit: {
-                        is_complete: false,
-                        is_selected: false,
-                        content: d.content,
-                        assigned_to: [],
-                        date: moment().format('YYYY-MM-DD'),
-                        status: 0,
-                        category: d.category,
-                      },
+                      allActionsEdit: d,
 
                       SuggestionPop: true,
                       newActions: true,
                     });
-
-
-
-
-
                   }}  key={i} style={styles.suggestedActionsContainer}>
                   <View style={{ flexDirection : "row",width : wp(84) }}>
 
