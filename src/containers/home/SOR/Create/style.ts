@@ -634,7 +634,33 @@ paddingRight : wp(3), marginBottom : wp(5)},
   fileSizeText : {
     fontSize : wp(3),
     fontFamily : fonts.SFuiDisplayMedium
-  }
+  },
+  
+
+
+// Suggested Actions
+
+suggestedActionsContainer : {
+  padding: wp(2),
+  marginTop : wp(2),
+  flexDirection  :"row",
+  borderWidth : wp(0.2),
+  height : wp(14),
+  borderColor : "#686868",
+  borderRadius : wp(1)  
+},
+actionType : {
+  fontSize : wp(4),
+  // opacity :.5,
+  color : "#686868",
+  fontFamily : fonts.SFuiDisplayMedium
+},
+actionDesc : {
+  color : colors.text
+,  fontSize : wp(4),
+  fontFamily : fonts.SFuiDisplayMedium
+
+}
 });
 
 export default styles;

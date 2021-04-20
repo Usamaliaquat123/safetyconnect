@@ -41,7 +41,7 @@ import {RouteProp} from '@react-navigation/native';
 import {classifySorBtn, Isor, involved_persons} from '@typings';
 import Modal from 'react-native-modal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {createApi} from '@service';
+import { createApi, submitted } from '@service';
 // import * as RNFS from 'react-native-fs';
 // import {Buffer} from 'buffer';
 import {AllSorDTO} from '@dtos';
@@ -301,6 +301,21 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     //   });
     // }, 1000);
     // this.AnimatedViews();
+
+
+
+    const form = new FormData();
+    this.setState({actionRecommendationsText: "Damaged hammer was being used at  workshop, which can cause hand injury."});
+    form.append('q', "Damaged hammer was being used at  workshop, which can cause hand injury.");
+    createApi
+      .createApi()
+      .suggestiosns(form)
+      .then((res: any) => {
+        // console.log(res.data.results)
+        this.setState({
+          actionRecommendations: [...res.data.results],
+        });
+      });
   };
 
   mappingMapping = (sev: number, lik: number) => {
@@ -743,7 +758,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     return (
       <Animated.View style={[styles.container]}>
         {/* Header */}
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
@@ -902,6 +917,22 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   type={'observation'}
                   arr={this.state.suggestions}
                   onPress={(d: any) => {
+
+                    const form = new FormData();
+                    form.append('q', d.details);
+                    createApi
+                      .createApi()
+                      .suggestiosns(form)
+                      .then((res: any) => {
+                        this.setState({
+                          actionRecommendations: [...res.data.results],
+                        });
+                      });
+
+                    // this.setState({selectedInputIndex: 3});
+
+
+
                     this.setState({observationT: d.details, suggestions: []});
                   }}
                 />
@@ -972,18 +1003,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 {this.state.actionsTags.length < 3 && (
                   <TextInput
                     onFocus={() => {
-                      const form = new FormData();
-                      form.append('q', this.state.observationT);
-                      createApi
-                        .createApi()
-                        .suggestiosns(form)
-                        .then((res: any) => {
-                          this.setState({
-                            actionRecommendations: [...res.data.results],
-                          });
-                        });
-
-                      this.setState({selectedInputIndex: 3});
+                    
                     }}
                     style={[
                       styles.actionInput,
@@ -996,6 +1016,30 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     placeholder={'Suggest your recommendation / actions'}
                   />
                 )}
+
+
+{/* Suggested Actions */}
+                {this.state.actionRecommendations.map((d : any, i: number) => (
+                  <View style={styles.suggestedActionsContainer}>
+                  <View style={{ flexDirection : "row",width : wp(84) }}>
+
+                    <Text style={styles.actionType}>{d.category}: <Text style={styles.actionDesc}>{d.content.substring(0,50)}...</Text></Text>
+                  </View>
+                    <Icon
+                  size={wp(6)}
+                  name="more-vertical"
+                  type="feather"
+                  color={"#686868"}
+                />
+                </View>
+                ))}
+                
+
+
+
+
+
+
 
                 {/* Suggestions  */}
                 {this.state.actionRecommendations.length != 0 ? (
