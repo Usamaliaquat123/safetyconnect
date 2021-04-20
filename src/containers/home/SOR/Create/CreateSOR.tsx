@@ -1007,12 +1007,15 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 {/* Suggested Actions */}
                 {this.state.actionRecommendations.map((d : any, i: number) => (
                   <TouchableOpacity onLongPress={() => {
+                    console.log(this.state.allActionsEdit)
                     this.setState({
                       allActionsEdit: d,
-
+                      allActionsEditIndex : i,
                       SuggestionPop: true,
-                      newActions: true,
+                      newActions: false,
                     });
+
+
                   }}  key={i} style={styles.suggestedActionsContainer}>
                   <View style={{ flexDirection : "row",width : wp(84) }}>
 
@@ -1506,18 +1509,22 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
          {/* SuggestionPop */}
           {this.state.SuggestionPop == true && (
             <SuggestionsPop
-              suggestedUsers={this.state.involvedPerson}
+              suggestedUsers={this.state.involved_persons}
               onClose={() =>
                 this.setState({SuggestionPop: !this.state.SuggestionPop})
               }
-              allSuggestions={this.state.actionsAndRecommendations}
+              allSuggestions={this.state.actionRecommendations}
               isOpen={this.state.SuggestionPop}
               suggestions={this.state.allActionsEdit}
               save={(d: any) => {
+                console.log(d)
+                // console.log(this.state.newActions)
+                // console.log(this.state.actionRecommendations)
+                // console.log(this.state.allActionsEditIndex)
                 if (this.state.newActions == true) {
-                  this.state.actionsAndRecommendations.push(d);
+                  this.state.actionRecommendations.push(d);
                 } else {
-                  this.state.actionsAndRecommendations[
+                  this.state.actionRecommendations[
                     this.state.allActionsEditIndex
                   ] = d;
                 }
@@ -1525,8 +1532,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 this.setState({SuggestionPop: false});
               }}
               discard={() => {
+                console.log('sdsd')
+                // console.log(this.state.actionRecommendations)
                 this.setState({
-                  actionsAndRecommendations: this.state.actionsAndRecommendations.filter(
+                  actionRecommendations: this.state.actionRecommendations.filter(
                     (d: any) => d != this.state.allActionsEdit,
                   ),
                   SuggestionPop: false,
