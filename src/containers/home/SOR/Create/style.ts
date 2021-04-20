@@ -660,7 +660,17 @@ actionDesc : {
 ,  fontSize : wp(4),
   fontFamily : fonts.SFuiDisplayMedium
 
+},
+
+addActionsAndRecommendationArrow : {
+  position: 'absolute',
+  right: wp(3),
+  padding: wp(2),
+  borderRadius: wp(2),
+  top: wp(2.7),
+  backgroundColor: colors.lightGrey, 
 }
+
 });
 
 export default styles;

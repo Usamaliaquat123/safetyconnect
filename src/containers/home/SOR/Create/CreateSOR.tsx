@@ -1067,11 +1067,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   placeholder={'Add action / recommendation here'}
                 />
 
-
-
-               
-
-
 <TouchableOpacity
                   onPress={() => {
                     if (this.state.actionsAndRecommendationText !== '') {
@@ -1091,14 +1086,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       });
                     }
                   }}
-                  style={{
-                    position: 'absolute',
-                    right: wp(3),
-                    padding: wp(2),
-                    borderRadius: wp(2),
-                    top: wp(2.7),
-                    backgroundColor: colors.lightGrey,
-                  }}>
+                  style={styles.addActionsAndRecommendationArrow}>
                   <Icon
                     size={wp(4)}
                     name="arrowright"
