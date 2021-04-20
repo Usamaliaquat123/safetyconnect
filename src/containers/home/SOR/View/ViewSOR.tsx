@@ -919,6 +919,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             this.setState({actionsAndRecommendations: data});
                           }}
                           onLongPress={() => {
+                            console.log(d)
                             this.setState({
                               allActionsEdit: d,
                               SuggestionPop: true,

@@ -31,6 +31,7 @@ import {
   Chart,
   Suggestions,
   RepeatedSor,
+  SuggestionsPop,
   Tags,
   Calendars,
   Selector,
@@ -113,6 +114,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       errHeadingText: '',
       loading: false,
       errDesText: '',
+      SuggestionPop : false
     };
   }
 
@@ -1000,6 +1002,50 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   Actions / Recommendation
                 </Text>
                 
+               
+
+{/* Suggested Actions */}
+                {this.state.actionRecommendations.map((d : any, i: number) => (
+                  <TouchableOpacity onLongPress={() => {
+
+
+                    this.setState({
+                      allActionsEdit: {
+                        is_complete: false,
+                        is_selected: false,
+                        content: d.content,
+                        assigned_to: [],
+                        date: moment().format('YYYY-MM-DD'),
+                        status: 0,
+                        category: d.category,
+                      },
+
+                      SuggestionPop: true,
+                      newActions: true,
+                    });
+
+
+
+
+
+                  }}  key={i} style={styles.suggestedActionsContainer}>
+                  <View style={{ flexDirection : "row",width : wp(84) }}>
+
+                    <Text style={styles.actionType}>{d.category}: <Text style={styles.actionDesc}>{d.content.substring(0,50)}...</Text></Text>
+                  </View>
+                    <Icon
+                  size={wp(6)}
+                  name="more-vertical"
+                  type="feather"
+                  color={"#686868"}
+                />
+                </TouchableOpacity>
+                ))}
+                
+
+
+
+
                 {this.state.actionsTags.length < 3 && (
                   <TextInput
                     onFocus={() => {
@@ -1016,25 +1062,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     placeholder={'Suggest your recommendation / actions'}
                   />
                 )}
-
-
-{/* Suggested Actions */}
-                {this.state.actionRecommendations.map((d : any, i: number) => (
-                  <View style={styles.suggestedActionsContainer}>
-                  <View style={{ flexDirection : "row",width : wp(84) }}>
-
-                    <Text style={styles.actionType}>{d.category}: <Text style={styles.actionDesc}>{d.content.substring(0,50)}...</Text></Text>
-                  </View>
-                    <Icon
-                  size={wp(6)}
-                  name="more-vertical"
-                  type="feather"
-                  color={"#686868"}
-                />
-                </View>
-                ))}
-                
-
 
 
 
@@ -1465,6 +1492,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </View>
             )}
           </Modal>
+          {/* Repeated SOr Modal */}
           <Modal
             animationInTiming={1000}
             animationIn={'bounceInUp'}
@@ -1488,6 +1516,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               }}
             />
           </Modal>
+         
+         
+         {/* SuggestionPop */}
           {this.state.SuggestionPop == true && (
             <SuggestionsPop
               suggestedUsers={this.state.involvedPerson}
