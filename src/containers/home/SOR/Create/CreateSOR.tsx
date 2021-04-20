@@ -1110,25 +1110,47 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 </View>
               ) : null}
             </View>
-
+  {/* Line  */}
+  <View style={styles.lineheight} />
             {/* Attachment / Upload files */}
-            <View style={{flexDirection: 'row', marginTop: wp(5)}}>
-              <Text style={{fontSize: wp(3), fontWeight: 'bold'}}>
+            <View style={styles.attachmentContainer}>
+            <View style={styles.attachmentheadingContainer}>
+              <Text style={styles.attachmentsHeading}>
                 Attachments{' '}
               </Text>
-              <Text style={{fontStyle: 'italic', fontSize: wp(3)}}>
+              <Text style={styles.attachmentOptionalText}>
                 (optional)
               </Text>
             </View>
+            <View style={styles.attachmentContentContainer}>
             <View style={styles.uploadBorder}>
-              <View style={styles.uploadBIcmTxt}>
-                <Icon
-                  containerStyle={{padding: 3}}
-                  size={wp(10)}
-                  name="file-text"
-                  type="feather"
+            <Icon
+                  size={wp(9)}
+                  name="plus"
+                  type="antdesign"
                   color={colors.primary}
                 />
+            </View>
+            <View style={styles.attachmentsDetailTextContainer} >
+            <Text style={styles.supportedfileFotmatsText}>Supported file formats </Text>
+            <Text style={styles.supportedfileFotmats}>.doc, .pdf, .jpeg, .png, .xlsx</Text>
+
+<View style={{flexDirection : "row"}}>
+  
+
+            <Text style={styles.supportedfileFotmatsText}>Maximum File Size: </Text>
+            <Text style={styles.fileSizeText}>10 MB</Text>
+</View>
+
+            </View>
+
+            </View>
+           
+
+
+
+              <View style={styles.uploadBIcmTxt}>
+                
                 <Text style={styles.uplaodText}>
                   Drag and drop your files to start upload{' '}
                 </Text>
@@ -1168,9 +1190,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   <Text style={styles.uploadfileText}>Upload File</Text>
                 </TouchableOpacity>
               ) : null}
-            </View>
 
-          
+
+            </View>
+                    
             {/* Submit To / Esclate To */}
             <View style={styles.optnToggleContainer}>
               <View>

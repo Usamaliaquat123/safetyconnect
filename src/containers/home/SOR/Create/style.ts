@@ -258,6 +258,7 @@ const styles = StyleSheet.create({
   involvePContainer: {
     marginTop: wp(5),
     paddingLeft  :wp(3),
+    marginBottom : wp(5),
     paddingRight : wp(3)
   },
   involvePText: {
@@ -349,16 +350,7 @@ const styles = StyleSheet.create({
     marginRight: wp(2),
     fontFamily: fonts.SFuiDisplayBold,
   },
-  uploadBorder: {
-    borderRadius: wp(5),
-    padding: wp(5),
-    alignItems: 'center',
-    borderStyle: 'dashed',
-    borderWidth: wp(0.5),
-    marginTop: wp(3),
-    paddingLeft: wp(15),
-    paddingRight: wp(15),
-  },
+
   uplaodText: {
     fontWeight: 'bold',
     fontSize: wp(3),
@@ -594,6 +586,53 @@ const styles = StyleSheet.create({
     borderRadius: wp(4),
     alignItems: 'center',
   },
+
+
+
+
+  // Attachments component
+  attachmentsHeading  : {
+    fontSize: wp(5), 
+    fontFamily  :fonts.SFuiDisplaySemiBold
+  },
+  attachmentOptionalText : {
+    fontFamily : fonts.SFuiDisplayLight, fontStyle : "italic", fontSize: wp(3)
+  },
+  attachmentheadingContainer :  {
+    flexDirection: 'row', marginTop: wp(5), alignItems : "center"
+  },
+  attachmentContainer : {
+    paddingLeft : wp(3),
+    paddingRight : wp(3),
+  },
+  uploadBorder: {
+    borderRadius: wp(3),
+    padding: wp(3),
+    alignItems  :"center",
+    width : wp(17),
+    borderColor : colors.primary,
+    // borderStyle: 'dashed',
+    borderWidth: wp(0.3),
+  },
+  attachmentContentContainer:  {
+    flexDirection : "row",
+  },
+  supportedfileFotmatsText : {
+    opacity: .7,
+    fontSize : wp(3),
+    fontFamily : fonts.SFuiDisplayLight
+  },
+  supportedfileFotmats: { 
+    fontSize : wp(3),
+    fontFamily : fonts.SFuiDisplayLight
+  },
+  attachmentsDetailTextContainer: {
+    marginLeft  :wp(5),
+  },
+  fileSizeText : {
+    fontSize : wp(3),
+    fontFamily : fonts.SFuiDisplayMedium
+  }
 });
 
 export default styles;
