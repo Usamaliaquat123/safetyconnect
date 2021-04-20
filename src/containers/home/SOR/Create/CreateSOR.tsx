@@ -1193,11 +1193,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
 
             </View>
-                    
+                          {/* Line  */}
+            <View style={styles.lineheight} />
             {/* Submit To / Esclate To */}
             <View style={styles.optnToggleContainer}>
               <View>
-                <Text style={styles.sbBtnText}>Submit to</Text>
+                <Text style={styles.sbBtnText}>Submitted to</Text>
                 <View
                   style={[
                     styles.optnselector,
@@ -1215,7 +1216,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       // }
                     }}
                     style={styles.optnselectorText}
-                    placeholder={'Enter person name / email'}
+                    placeholder={'Select or Type Name'}
                     underlineColorAndroid="transparent"
                     onChange={(v: any) => {
                       this.setState({
@@ -1285,7 +1286,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 </View>
               </View>
               <View>
-                <Text style={styles.sbBtnText}>Escalate to</Text>
+                <Text style={styles.sbBtnText}>Notified only </Text>
                 <View
                   style={[
                     styles.optnselector,
@@ -1305,7 +1306,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         esclateTo: v,
                       })
                     }
-                    placeholder={'Enter person name / email'}
+                    placeholder={'Select or Type Name'}
                     style={styles.optnselectorText}
                     value={this.state.esclateTo}
                   />
@@ -1364,6 +1365,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 </View>
               </View>
             </View>
+
+                          {/* Line  */}
+                          <View style={styles.lineheight} />
             {/* Draft And Submit Btns */}
             <TouchableOpacity
               onPress={() => this.submitDraft()}

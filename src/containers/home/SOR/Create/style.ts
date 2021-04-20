@@ -399,15 +399,16 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
 
-  sbBtnText: {fontSize: wp(3), fontWeight: 'bold', color: colors.text},
-  optnToggleContainer: {marginTop: wp(10)},
+  sbBtnText: {fontSize: wp(5), fontFamily : fonts.SFuiDisplayMedium, },
+  optnToggleContainer: {marginTop: wp(10), paddingLeft : wp(3),
+paddingRight : wp(3), marginBottom : wp(5)},
   optnselector: {
     justifyContent: 'space-between',
     flexDirection: 'row',
     marginTop: wp(2),
     marginBottom: wp(3),
     borderWidth: wp(0.2),
-    borderRadius: wp(3),
+    borderRadius: wp(2),
     padding: wp(1),
     // paddingBottom: wp(0),
     borderColor: colors.text,
@@ -603,6 +604,7 @@ const styles = StyleSheet.create({
   },
   attachmentContainer : {
     paddingLeft : wp(3),
+  marginBottom : wp(5),
     paddingRight : wp(3),
   },
   uploadBorder: {
