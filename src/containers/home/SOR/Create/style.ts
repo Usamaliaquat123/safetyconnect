@@ -255,53 +255,10 @@ const styles = StyleSheet.create({
     marginLeft: wp(1),
   },
   // Involve Person
-  involvePContainer: {
-    marginTop: wp(5),
-    paddingLeft  :wp(3),
-    marginBottom : wp(5),
-    paddingRight : wp(3)
-  },
-  involvePText: {
-    // fontWeight: 'bold',
-    // color: colors.text,
-    fontFamily: fonts.SFuiDisplayMedium,
-    fontSize: wp(3),
-  },
-  involvePTextOtional: {
-    fontStyle: 'italic',
-    fontWeight: 'normal',
-    fontFamily: fonts.SFuiDisplayThin,
-    fontSize: wp(2.5),
-  },
-  involvePInput: {
-    marginTop: wp(2),
-    borderColor: colors.text,
-    borderWidth: wp(0.3),
-    padding: wp(2),
-    paddingLeft: wp(4),
-    paddingRight: wp(4),
-    borderRadius: wp(3),
-    fontSize: wp(3.5),
-    color: colors.text,
-  },
-  involveSuggestCont: {
-    borderColor: colors.green,
-    borderRadius: wp(3),
-    padding: wp(3),
-    borderWidth: wp(0.3),
-    marginTop: wp(1),
-  },
-  involvePsuggCont: {
-    borderColor: colors.textOpa,
-    borderBottomWidth: wp(0.1),
-    paddingTop: wp(3),
-    paddingBottom: wp(3),
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  involvePSt: {
-    fontSize: wp(3),
-  },
+ 
+
+
+
 
   // Potiential Risk
   potentialRiskContainer : {

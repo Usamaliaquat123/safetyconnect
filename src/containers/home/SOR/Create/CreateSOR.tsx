@@ -1145,78 +1145,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 </View> */}
               </View>
             ) : null}
-    {/* Line  */}
-    <View style={styles.lineheight} />
 
-            {/* Involved Persons */}
-            <View style={styles.involvePContainer}>
-              <Text style={styles.involvePText}>
-                Involved Person{' '}
-                <Text style={styles.involvePTextOtional}>(Optional)</Text>
-              </Text>
-              <TextInput
-                value={this.state.involvePersonText}
-                style={[
-                  styles.involvePInput,
-                  this.state.selectedInputIndex == 2
-                    ? {borderColor: colors.green}
-                    : null,
-                ]}
-                onFocus={() => this.setState({selectedInputIndex: 2})}
-                onChangeText={(e) => this.suggestInvolvePersons(e)}
-                placeholder={'Enter person name /email'}
-              />
-              <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                <Tags
-                  onClose={(d: any) => {
-                    this.setState({
-                      involvePersonTags: this.state.involvePersonTags.filter(
-                        (v: any) => v !== d,
-                      ),
-                    });
-                  }}
-                  tags={this.state.involvePersonTags}
-                />
-              </View>
-              {this.state.involvePersonSuggestions.length !== 0 ? (
-                <View style={styles.involveSuggestCont}>
-                  {this.state.involvePersonSuggestions.map(
-                    (d: involved_persons, i: number) => (
-                      <View key={i}>
-                        <TouchableOpacity
-                          onPress={() => {
-                            this.state.involvePersonTags.push(d);
-                            this.setState({
-                              involvePersonText: '',
-                              involvePersonSuggestions: [],
-                            });
-                          }}
-                          style={[
-                            styles.involvePsuggCont,
-                            this.state.involvePersonSuggestions.length == i + 1
-                              ? {borderBottomWidth: wp(0)}
-                              : null,
-                          ]}>
-                          <Avatar
-                            containerStyle={{marginRight: wp(3)}}
-                            rounded
-                            source={{
-                              uri: d.img_url,
-                            }}
-                          />
-                          <View>
-                            <Text style={styles.involvePSt}>{d.name}</Text>
-                            <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
-                              {d.email}
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      </View>
-                    ),
-                  )}
-                </View>
-              ) : null}
-            </View>
+
   {/* Line  */}
   <View style={styles.lineheight} />
             {/* Attachment / Upload files */}
