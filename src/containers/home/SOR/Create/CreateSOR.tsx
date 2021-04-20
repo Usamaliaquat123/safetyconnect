@@ -958,6 +958,89 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 
               </View>
             ) : null}
+              {/* Line  */}
+              <View style={styles.lineheight} />
+
+
+  {/* Actions/Recommendation */}
+  {this.state.classifySorbtns[1].selected == false ? (
+              <View style={styles.actionContainer}>
+                <Text style={styles.actionsRecHeading}>
+                  Actions / Recommendation
+                </Text>
+                
+                {this.state.actionsTags.length < 3 && (
+                  <TextInput
+                    onFocus={() => {
+                      const form = new FormData();
+                      form.append('q', this.state.observationT);
+                      createApi
+                        .createApi()
+                        .suggestiosns(form)
+                        .then((res: any) => {
+                          this.setState({
+                            actionRecommendations: [...res.data.results],
+                          });
+                        });
+
+                      this.setState({selectedInputIndex: 3});
+                    }}
+                    style={[
+                      styles.actionInput,
+                      this.state.selectedInputIndex == 3
+                        ? {borderColor: colors.green}
+                        : null,
+                    ]}
+                    value={this.state.actionRecommendationsText}
+                    onChangeText={(e) => this.actionRecommendSuggestion(e)}
+                    placeholder={'Suggest your recommendation / actions'}
+                  />
+                )}
+
+                {/* Suggestions  */}
+                {this.state.actionRecommendations.length != 0 ? (
+                  <Suggestions
+                    type={'suggestions'}
+                    styles={{}}
+                    arr={this.state.actionRecommendations}
+                    onPress={(d: any) => {
+                      // this.state.actionsTags.push(d);
+
+                      if (
+                        this.state.actionsTags.filter((v: any) => v == d)
+                          .length == 0
+                      ) {
+                        this.state.actionsTags.push(d);
+                        this.setState({actionRecommendations: []});
+                      } else {
+                        return null;
+                      }
+
+                      this.setState({
+                        actionRecommendationsText: '',
+                        actionRecommendations: [],
+                      });
+                    }}
+                  />
+                ) : null}
+                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                  <Tags
+                    type={'sugg'}
+                    onClose={(d: any) => {
+                      this.setState({
+                        actionsTags: this.state.actionsTags.filter(
+                          (v: any) => v !== d,
+                        ),
+                      });
+                    }}
+                    tags={this.state.actionsTags}
+                  />
+                </View>
+              </View>
+            ) : null}
+    {/* Line  */}
+    <View style={styles.lineheight} />
+
             {/* Involved Persons */}
             <View style={styles.involvePContainer}>
               <Text style={styles.involvePText}>
@@ -1087,82 +1170,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               ) : null}
             </View>
 
-            {/* Actions/Recommendation */}
-            {this.state.classifySorbtns[1].selected == false ? (
-              <View style={styles.actionContainer}>
-                <Text style={styles.actionsRecHeading}>
-                  Actions / Recommendation
-                </Text>
-                {this.state.actionsTags.length < 3 && (
-                  <TextInput
-                    onFocus={() => {
-                      const form = new FormData();
-                      form.append('q', this.state.observationT);
-                      createApi
-                        .createApi()
-                        .suggestiosns(form)
-                        .then((res: any) => {
-                          this.setState({
-                            actionRecommendations: [...res.data.results],
-                          });
-                        });
-
-                      this.setState({selectedInputIndex: 3});
-                    }}
-                    style={[
-                      styles.actionInput,
-                      this.state.selectedInputIndex == 3
-                        ? {borderColor: colors.green}
-                        : null,
-                    ]}
-                    value={this.state.actionRecommendationsText}
-                    onChangeText={(e) => this.actionRecommendSuggestion(e)}
-                    placeholder={'Suggest your recommendation / actions'}
-                  />
-                )}
-
-                {/* Suggestions  */}
-                {this.state.actionRecommendations.length != 0 ? (
-                  <Suggestions
-                    type={'suggestions'}
-                    styles={{}}
-                    arr={this.state.actionRecommendations}
-                    onPress={(d: any) => {
-                      // this.state.actionsTags.push(d);
-
-                      if (
-                        this.state.actionsTags.filter((v: any) => v == d)
-                          .length == 0
-                      ) {
-                        this.state.actionsTags.push(d);
-                        this.setState({actionRecommendations: []});
-                      } else {
-                        return null;
-                      }
-
-                      this.setState({
-                        actionRecommendationsText: '',
-                        actionRecommendations: [],
-                      });
-                    }}
-                  />
-                ) : null}
-                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                  <Tags
-                    type={'sugg'}
-                    onClose={(d: any) => {
-                      this.setState({
-                        actionsTags: this.state.actionsTags.filter(
-                          (v: any) => v !== d,
-                        ),
-                      });
-                    }}
-                    tags={this.state.actionsTags}
-                  />
-                </View>
-              </View>
-            ) : null}
-
+          
             {/* Submit To / Esclate To */}
             <View style={styles.optnToggleContainer}>
               <View>

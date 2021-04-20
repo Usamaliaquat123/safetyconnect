@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   observationT: {
     fontSize: wp(5),
     padding: wp(5),
-    fontFamily: fonts.SFuiDisplayMedium,
+    fontFamily: fonts.SFuiDisplaySemiBold,
 
     paddingBottom: wp(2.5),
     paddingLeft: wp(0),
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
   },
   clasSorHeading: {
     fontSize: wp(5),
-    fontFamily: fonts.SFuiDisplayMedium,
+    fontFamily: fonts.SFuiDisplaySemiBold,
 
     // fontWeight: 'bold',
     marginTop: wp(7),
@@ -257,6 +257,8 @@ const styles = StyleSheet.create({
   // Involve Person
   involvePContainer: {
     marginTop: wp(5),
+    paddingLeft  :wp(3),
+    paddingRight : wp(3)
   },
   involvePText: {
     // fontWeight: 'bold',
@@ -385,12 +387,14 @@ const styles = StyleSheet.create({
   },
   // Actions/ Recommendations
   actionsRecHeading: {
-    fontSize: wp(3),
-    fontWeight: 'bold',
+    fontSize: wp(5),
     color: colors.text,
+    fontFamily : fonts.SFuiDisplaySemiBold
   },
   actionContainer: {
-    marginTop: wp(10),
+    marginTop: wp(5),
+    paddingLeft : wp(3),
+    paddingRight : wp(3)
   },
   actionInput: {
     marginTop: wp(2),
