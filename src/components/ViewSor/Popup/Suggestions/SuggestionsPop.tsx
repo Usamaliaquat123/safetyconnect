@@ -257,7 +257,7 @@ export default class SuggestionsPop extends React.Component<
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    this.setState({type: 'Admin'});
+                    this.setState({type: 'Administrative'});
                   }}
                   style={{marginLeft: wp(2), marginRight: wp(2)}}>
                   <Icon
@@ -265,7 +265,7 @@ export default class SuggestionsPop extends React.Component<
                     name="admin-panel-settings"
                     type="material"
                     color={
-                      this.state.type == 'Admin'
+                      this.state.type == 'Administrative'
                         ? colors.green
                         : colors.lightGrey
                     }
