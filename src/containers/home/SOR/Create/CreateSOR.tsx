@@ -1030,12 +1030,15 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 </TouchableOpacity>
                 ))}
                 
+                <View
+                style={[
+                  styles.addActionAndRecommendation,
+             
+                ]}>
 
 
 
-
-                {this.state.actionsTags.length < 3 && (
-                  <TextInput
+                  {/* <TextInput
                     onFocus={() => {
                     
                     }}
@@ -1048,9 +1051,66 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     value={this.state.actionRecommendationsText}
                     onChangeText={(e) => this.actionRecommendSuggestion(e)}
                     placeholder={'Suggest your recommendation / actions'}
-                  />
-                )}
+                  /> */}
 
+
+<TextInput
+                  maxLength={500}
+                  onChange={(e) =>
+                    this.setState({
+                      actionsAndRecommendationText: e.nativeEvent.text,
+                    })
+                  }
+                  value={this.state.actionsAndRecommendationText}
+                  multiline={true}
+                  style={styles.textaddActionContainer}
+                  placeholder={'Add action / recommendation here'}
+                />
+
+
+
+               
+
+
+<TouchableOpacity
+                  onPress={() => {
+                    if (this.state.actionsAndRecommendationText !== '') {
+                      this.setState({
+                        allActionsEdit: {
+                          is_complete: false,
+                          is_selected: false,
+                          content: this.state.actionsAndRecommendationText,
+                          assigned_to: [],
+                          date: moment().format('YYYY-MM-DD'),
+                          status: 0,
+                          category: 'Elimination',
+                        },
+
+                        SuggestionPop: true,
+                        newActions: true,
+                      });
+                    }
+                  }}
+                  style={{
+                    position: 'absolute',
+                    right: wp(3),
+                    padding: wp(2),
+                    borderRadius: wp(2),
+                    top: wp(2.7),
+                    backgroundColor: colors.lightGrey,
+                  }}>
+                  <Icon
+                    size={wp(4)}
+                    name="arrowright"
+                    type="antdesign"
+                    color={colors.primary}
+                  />
+                </TouchableOpacity>
+
+
+
+                </View>
+                
 
 
 

@@ -1017,25 +1017,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   style={styles.textaddActionContainer}
                   placeholder={'Add action / recommendation here'}
                 />
-                {/* <TouchableOpacity
-                  onPress={() => {
-                    this.submitActionsAndRecommendations(this.st);
-                  }}
-                  style={{
-                    position: 'absolute',
-                    right: wp(13),
-                    padding: wp(2),
-                    borderRadius: wp(2),
-                    top: wp(2.7),
-                    backgroundColor: colors.lightGrey,
-                  }}>
-                  <Icon
-                    size={wp(4)}
-                    name="admin-panel-settings"
-                    type="material"
-                    color={colors.primary}
-                  />
-                </TouchableOpacity> */}
+               
                 <TouchableOpacity
                   onPress={() => {
                     // this.submitActionsAndRecommendations(
