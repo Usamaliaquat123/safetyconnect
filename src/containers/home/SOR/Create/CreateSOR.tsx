@@ -312,34 +312,17 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       .createApi()
       .suggestiosns(form)
       .then((res: any) => {
-        // is_complete: false,
-        // is_selected: false,
-        // content: d.content,
-        // assigned_to: [],
-        // date: moment().format('YYYY-MM-DD'),
-        // status: 0,
-        // category: d.category,
+        var obj = res.data.results
         for (let i = 0; i < res.data.results.length; i++) {
-          res.data.result[i].status = 0
-          // Object.assign(res.data.result[i], {assigned_to: []});
-
-          // console.log(res.data.results[i])
-        res.data.result[i]['assigned_to'] = []
-        // res.data.result[i]['date'] =  moment().format('YYYY-MM-DD')
-        // res.data.results[i]['is_complete'] = false
-        // res.data.results[i]['is_selected'] = false
+          obj[i]['status'] = 0
+          obj[i]['is_selected'] = false
+          obj[i]['is_complete'] = false
+          obj[i]['date'] =moment().format('YYYY-MM-DD'),
+          obj[i]['assigned_to'] = []
       }
-
-
-      console.log(res)
-
-
-
-   
-
         // console.log(res.data.results)
         this.setState({
-          actionRecommendations: [...res.data.results],
+          actionRecommendations: [...obj],
         });
       });
   };

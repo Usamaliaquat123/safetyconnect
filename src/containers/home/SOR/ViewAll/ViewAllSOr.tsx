@@ -129,7 +129,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
    
    
     }
-    // console.log(j)
 
 
     
@@ -156,9 +155,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     .createApi()
     .filterSors(data)
     .then((res: any) => {
-      console.log('=============')
-      console.log(res)
-      console.log('=======sdsds======')
     //  res.data = Object.assign({}, res.data);
     //  console.log(res.data)
 
