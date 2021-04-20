@@ -1186,12 +1186,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
 
 
-              <View style={styles.uploadBIcmTxt}>
-                
-                <Text style={styles.uplaodText}>
-                  Drag and drop your files to start upload{' '}
-                </Text>
-              </View>
               {this.state.filename.length != 0 ? (
                 <View>
                   {/* {this.state.filename.map((d: string, i: number) => ( */}
@@ -1216,17 +1210,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   {/* ))} */}
                 </View>
               ) : null}
-              {this.state.filename.length < 5 ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    if (this.state.filename.length < 5) {
-                      this.pickupDoc();
-                    }
-                  }}
-                  style={styles.uplaodBtn}>
-                  <Text style={styles.uploadfileText}>Upload File</Text>
-                </TouchableOpacity>
-              ) : null}
+            
 
 
             </View>
@@ -1406,6 +1390,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           {/* Line  */}
                           <View style={styles.lineheight} />
             {/* Draft And Submit Btns */}
+            <View style={{ flexDirection : "row"}}>
             <TouchableOpacity
               onPress={() => this.submitDraft()}
               style={styles.submitsorbtn}>
@@ -1417,6 +1402,21 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               style={[styles.submitsorbtnSb, {marginBottom: wp(10)}]}>
               <Text style={styles.submitsorbtnSbtxt}>Submit</Text>
             </TouchableOpacity>
+            </View>
+                  <View style={{ flexDirection : "row"}}>
+                  <TouchableOpacity
+              onPress={() => this.submitDraft()}
+              style={styles.submitsorbtn}>
+              <Text style={styles.submitsorbtntxt}>Preview</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              // this.setState({repeatedSorModal: true})
+              onPress={() => this.onCreateSor()}
+              style={[styles.submitsorbtnSb, {marginBottom: wp(10)}]}>
+              <Text style={styles.submitsorbtnSbtxt}>Mark as Complete</Text>
+            </TouchableOpacity>
+                  </View>
+         
           </Animated.View>
 
           <Modal
