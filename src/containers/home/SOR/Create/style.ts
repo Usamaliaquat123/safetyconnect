@@ -537,6 +537,7 @@ paddingRight : wp(3), marginBottom : wp(5)},
   },
   addActionAndRecommendation: {
     borderWidth: wp(0.3),
+    marginBottom : wp(5),
     borderRadius: wp(3),
     marginTop: wp(3),
     paddingLeft: wp(1),

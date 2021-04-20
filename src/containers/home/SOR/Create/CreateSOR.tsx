@@ -1104,7 +1104,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
 
 
-                {/* Suggestions  */}
+                {/* Suggestions 
                 {this.state.actionRecommendations.length != 0 ? (
                   <Suggestions
                     type={'suggestions'}
@@ -1129,8 +1129,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       });
                     }}
                   />
-                ) : null}
-                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                ) : null} */}
+                {/* <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
                   <Tags
                     type={'sugg'}
                     onClose={(d: any) => {
@@ -1142,7 +1142,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     }}
                     tags={this.state.actionsTags}
                   />
-                </View>
+                </View> */}
               </View>
             ) : null}
     {/* Line  */}
