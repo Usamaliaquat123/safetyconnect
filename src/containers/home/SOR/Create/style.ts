@@ -407,7 +407,7 @@ paddingRight : wp(3), marginBottom : wp(5)},
     padding: wp(3),
   },
   submitsorbtn: {
-    padding: wp(5),
+    padding: wp(  5),
     marginTop: wp(6),
     alignItems: 'center',
     borderColor: colors.primary,
@@ -417,7 +417,7 @@ paddingRight : wp(3), marginBottom : wp(5)},
   
   },
   submitsorbtntxt: {
-    fontSize: wp(4),
+    fontSize: wp(3.5),
     color: colors.primary,
     fontFamily : fonts.SFuiDisplayMedium,
 
@@ -433,7 +433,7 @@ paddingRight : wp(3), marginBottom : wp(5)},
     borderRadius: wp(3),
   },
   submitsorbtnSbtxt: {
-    fontSize: wp(4),
+    fontSize: wp(3.5),
     color: colors.secondary,
     fontFamily  : fonts.SFuiDisplayMedium
   },
