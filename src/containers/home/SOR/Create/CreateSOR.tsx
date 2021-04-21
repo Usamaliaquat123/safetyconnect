@@ -514,17 +514,17 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 if (this.state.submitToTags.length !== 0) {
                   if (this.state.exclateToTags.length !== 0) {
                     this.setState({loading: true, errorModal: true});
-                    console.log(
-                      this.state.actionRecommendations.filter(
-                        (d: any) => d.selected == true,
-                      ),
-                    );
+
                     this.state.actionRecommendations
                       .filter((d: any) => d.selected == true)
                       .map((d: any, i: number) => {
                         delete d['selected'];
                       });
-
+                    console.log(
+                      this.state.actionRecommendations.filter(
+                        (d: any) => d.selected == true,
+                      ),
+                    );
                     // this.setState();
 
                     // Repeated observations
@@ -674,17 +674,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       //   .filter((d: any) => d.selected == true)
                       //   .filter((d: any) => d.assigned_to.length != 0);
 
-                      this.state.actionRecommendations
-                        .filter((d: any) => d.selected == true)
-                        .map((d: any, i: number) => {
-                          delete d['selected'];
-                        });
-
-                      console.log(
-                        this.state.actionRecommendations.filter(
-                          (d: any) => d.selected == true,
-                        ),
+                      var rec = this.state.actionRecommendations.filter(
+                        (d: any) => d.selected == true,
                       );
+                      console.log(rec);
+                      // console.log(rec.map((d: any) => delete d['selected']));
+
                       var bodyInitial = {
                         report: {
                           created_by: this.state.email,
@@ -715,9 +710,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 severity: liklihood[0].value,
                                 likelihood: severity[0].value,
                               },
-                              action_required: this.state.actionRecommendations.filter(
-                                (d: any) => d.selected == true,
-                              ),
+                              action_required: rec,
 
                               location: this.state.observation,
                               submit_to: this.state.submitToTags.map(
@@ -740,32 +733,32 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           //   this.props.navigation,
                           // );
                           console.log(sor);
-                          createApi
-                            .createApi()
-                            .createSor(sor)
-                            .then((res: any) => {
-                              this.setState({
-                                loading: false,
-                                errorModal: false,
-                              });
+                          // createApi
+                          //   .createApi()
+                          //   .createSor(sor)
+                          //   .then((res: any) => {
+                          //     this.setState({
+                          //       loading: false,
+                          //       errorModal: false,
+                          //     });
 
-                              if (res.status == 200) {
-                                this.props.navigation.navigate('ViewAllSOr');
-                              } else {
-                                console.log(res);
-                                // this.setState({
-                                //   errorModal: true,
-                                //   errHeadingText: `CreateSor api returns ${res.status}.`,
-                                //   errDesText: res.data.message,
-                                // });
-                              }
-                            })
-                            .catch(() =>
-                              this.setState({
-                                loading: false,
-                                errorModal: false,
-                              }),
-                            );
+                          //     if (res.status == 200) {
+                          //       this.props.navigation.navigate('ViewAllSOr');
+                          //     } else {
+                          //       console.log(res);
+                          //       // this.setState({
+                          //       //   errorModal: true,
+                          //       //   errHeadingText: `CreateSor api returns ${res.status}.`,
+                          //       //   errDesText: res.data.message,
+                          //       // });
+                          //     }
+                          //   })
+                          //   .catch(() =>
+                          //     this.setState({
+                          //       loading: false,
+                          //       errorModal: false,
+                          //     }),
+                          //   );
                         })
                         .catch(() => {
                           this.setState({
