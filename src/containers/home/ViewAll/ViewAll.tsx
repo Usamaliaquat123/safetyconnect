@@ -18,7 +18,7 @@ import * as reduxActions from '../../../store/actions/listSorActions';
 
 import styles from './styles';
 import {allRecentActivity, createApi} from '@service';
-import {classifySor} from '@utils';
+import {classifySor, filterAndMappingPersons} from '@utils';
 import {Avatar, Icon} from 'react-native-elements';
 import {bindActionCreators} from 'redux';
 import {View_sor, myTasks, recentActivity} from '@service';
@@ -76,24 +76,39 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     // console.log(this.props.route.params.data);
     // s.setState({reports: this.props.reduxState.allSors});
     this.setState({loading: true});
-    var data = {
-      project: '607820d5724677561cf67ec5',
-      limit: 10000,
-      page: 0,
-      query: {status: [this.props.route.params.data]},
-    };
 
-    createApi
-      .createApi()
-      .filterSors(data)
-      .then((res: any) => {
-        this.setState({loading: false});
+    AsyncStorage.getItem('involved_person').then((involvedPersons: any) => {
+      var data = {
+        project: '607820d5724677561cf67ec5',
+        limit: 10000,
+        page: 0,
+        query: {status: [this.props.route.params.data]},
+      };
 
-        this.setState({reports: res.data.data.report});
-      })
-      .catch((err) => {
-        this.setState({loading: false});
-      });
+      createApi
+        .createApi()
+        .filterSors(data)
+        .then((res: any) => {
+          var sors = [];
+          for (let i = 0; i < res.data.data.report.length; i++) {
+            console.log(res.data.data.report[i]);
+            var rep = filterAndMappingPersons(
+              res.data.data.report[i],
+              JSON.parse(involvedPersons),
+            );
+
+            sors.push(rep);
+          }
+
+          console.log(sors);
+          this.setState({loading: false});
+
+          this.setState({reports: sors});
+        })
+        .catch((err) => {
+          this.setState({loading: false});
+        });
+    });
 
     // console.log(this.props.reduxState.allSors);
   }
