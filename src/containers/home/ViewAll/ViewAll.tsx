@@ -217,8 +217,14 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                         ? {borderBottomWidth: wp(0)}
                         : null
                     }
-                    user1={d.user1}
-                    user2={d.user2}
+                    user1={
+                      d.involved_persons.length == 0
+                        ? ''
+                        : d.involved_persons[0].img_url
+                    }
+                    user2={
+                      d.submit_to.length == 0 ? '' : d.submit_to[0].img_url
+                    }
                     observation={d.details}
                     username={d.created_by}
                     iconconf={classifySor.find(
