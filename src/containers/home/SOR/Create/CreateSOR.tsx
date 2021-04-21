@@ -456,6 +456,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     // eslint-disable-next-line eqeqeq
     var severity = this.state.severity.filter((d: any) => d.selected == true);
 
+    console.log(
+      this.state.actionRecommendations
+        .filter((d: any) => d.selected == true)
+        .filter((d: any) => d.assigned_to.length != 0).length == 0,
+    );
     // for (let i = 0; i < this.state.actionRecommendations.length; i++) {
     //   if (this.state.actionRecommendations[i].assigned_to.length == 0) {
     //     this.state.actionRecommendations[i].assigned_to = '';
@@ -504,21 +509,19 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               if (
                 this.state.actionRecommendations
                   .filter((d: any) => d.selected == true)
-                  .filter((d: any) => d.assigned_to.length != 0)
+                  .filter((d: any) => d.assigned_to.length != 0).length != 0
               ) {
                 if (this.state.submitToTags.length !== 0) {
                   if (this.state.exclateToTags.length !== 0) {
                     this.setState({loading: true, errorModal: true});
 
-                    var actions = this.state.actionRecommendations.filter(
-                      (d: any) => d.selected == true,
-                    );
+                    this.state.actionRecommendations
+                      .filter((d: any) => d.selected == true)
+                      .map((d: any, i: number) => {
+                        delete d['selected'];
+                      });
 
-                    console.log('$$$$$$$$$$$$$$$$&&&&');
-                    console.log(actions);
-                    console.log('$$$$$$$$$$$$$$$$&&&&');
-                    console.log('$$$$$$$$$$$$$$$$&&&&');
-
+                    this.setState();
                     // Repeated observations
                     // res.data.resultss
                     var bodyInitial = {
@@ -643,7 +646,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 if (
                   this.state.actionRecommendations
                     .filter((d: any) => d.selected == true)
-                    .filter((d: any) => d.assigned_to.length != 0)
+                    .filter((d: any) => d.assigned_to.length != 0).length != 0
                 ) {
                   if (this.state.submitToTags.length !== 0) {
                     if (this.state.exclateToTags.length !== 0) {
@@ -662,10 +665,15 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       // Repeated observations
                       // res.data.results
 
+                      // this.state.actionRecommendations
+                      //   .filter((d: any) => d.selected == true)
+                      //   .filter((d: any) => d.assigned_to.length != 0);
+
                       this.state.actionRecommendations
                         .filter((d: any) => d.selected == true)
-                        .filter((d: any) => d.assigned_to.length != 0);
-
+                        .map((d: any, i: number) => {
+                          delete d['selected'];
+                        });
                       var bodyInitial = {
                         report: {
                           created_by: this.state.email,
