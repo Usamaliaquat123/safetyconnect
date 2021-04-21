@@ -963,6 +963,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         var obj = res.data.results;
                         for (let i = 0; i < res.data.results.length; i++) {
                           obj[i]['status'] = 0;
+                          obj[i]['selected'] = false;
                           obj[i]['is_selected'] = false;
                           obj[i]['is_complete'] = false;
                           (obj[i]['date'] = moment().format('YYYY-MM-DD')),
@@ -1050,6 +1051,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 {/* Suggested Actions */}
                 {this.state.actionRecommendations.map((d: any, i: number) => (
                   <TouchableOpacity
+                    onPress={() => {
+                      var arr = this.state.actionRecommendations;
+                      arr[i].selected = !arr[i].selected;
+                      this.setState({actionRecommendations: arr});
+                    }}
                     onLongPress={() => {
                       console.log(this.state.allActionsEdit);
                       this.setState({
@@ -1060,7 +1066,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       });
                     }}
                     key={i}
-                    style={styles.suggestedActionsContainer}>
+                    style={[
+                      styles.suggestedActionsContainer,
+                      d.selected == true
+                        ? {backgroundColor: colors.lightBlue}
+                        : {backgroundColor: colors.secondary},
+                    ]}>
                     <View style={{flexDirection: 'row', width: wp(84)}}>
                       <Text style={styles.actionType}>
                         {d.category}:{' '}
