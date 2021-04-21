@@ -506,8 +506,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 if (this.state.exclateToTags.length !== 0) {
                   this.setState({loading: true, errorModal: true});
 
+                  var actions  =  this.state.actionRecommendations.filter((d : any) => d.selected == true)
+
+
+         
+
                   // Repeated observations
-                  // res.data.results
+                  // res.data.resultss
                   var bodyInitial = {
                     report: {
                       created_by: this.state.email,
