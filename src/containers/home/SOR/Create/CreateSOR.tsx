@@ -1390,30 +1390,30 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           {/* Line  */}
                           <View style={styles.lineheight} />
             {/* Draft And Submit Btns */}
-            <View style={{ flexDirection : "row"}}>
+            <View style={{ flexDirection : "row", justifyContent : "center"}}>
             <TouchableOpacity
               onPress={() => this.submitDraft()}
-              style={styles.submitsorbtn}>
+              style={[styles.submitsorbtn,{ marginRight : wp(3)} ]}>
               <Text style={styles.submitsorbtntxt}>Save as Draft</Text>
             </TouchableOpacity>
             <TouchableOpacity
               // this.setState({repeatedSorModal: true})
               onPress={() => this.onCreateSor()}
-              style={[styles.submitsorbtnSb, {marginBottom: wp(10)}]}>
-              <Text style={styles.submitsorbtnSbtxt}>Submit</Text>
+              style={[styles.submitsorbtn,{ borderColor : colors.green} ]}>
+              <Text style={[styles.submitsorbtntxt, {color: colors.green}]}>Submit</Text>
             </TouchableOpacity>
             </View>
-                  <View style={{ flexDirection : "row"}}>
+                  <View style={{ flexDirection : "row", justifyContent: "center", marginBottom : wp(10)}}>
                   <TouchableOpacity
               onPress={() => this.submitDraft()}
-              style={styles.submitsorbtn}>
+              style={[styles.submitsorbtn, {marginRight : wp(3)}]}>
               <Text style={styles.submitsorbtntxt}>Preview</Text>
             </TouchableOpacity>
             <TouchableOpacity
               // this.setState({repeatedSorModal: true})
               onPress={() => this.onCreateSor()}
-              style={[styles.submitsorbtnSb, {marginBottom: wp(10)}]}>
-              <Text style={styles.submitsorbtnSbtxt}>Mark as Complete</Text>
+              style={[styles.submitsorbtnSb, { backgroundColor : colors.green}]}>
+              <Text style={[styles.submitsorbtnSbtxt, {color : colors.secondary}]}>Mark as Complete</Text>
             </TouchableOpacity>
                   </View>
          

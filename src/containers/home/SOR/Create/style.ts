@@ -413,30 +413,34 @@ paddingRight : wp(3), marginBottom : wp(5)},
     borderColor: colors.primary,
     borderWidth: wp(0.1),
     borderRadius: wp(3),
+    width: wp(45),
+  
   },
   submitsorbtntxt: {
-    fontSize: wp(3),
+    fontSize: wp(4),
     color: colors.primary,
-    fontWeight: 'bold',
+    fontFamily : fonts.SFuiDisplayMedium,
+
   },
   submitsorbtnSb: {
     padding: wp(5),
-    marginTop: wp(3),
+    width : wp(45),
+    borderColor : colors.green,
+    marginTop: wp(6),
     alignItems: 'center',
     backgroundColor: colors.primary,
-    borderColor: colors.primary,
     borderWidth: wp(0.1),
     borderRadius: wp(3),
   },
   submitsorbtnSbtxt: {
-    fontSize: wp(3),
+    fontSize: wp(4),
     color: colors.secondary,
-    fontWeight: 'bold',
+    fontFamily  : fonts.SFuiDisplayMedium
   },
   errHeadPop: {
-    fontSize: wp(4),
+    fontSize: wp(5),
     textAlign: 'center',
-    fontWeight: 'bold',
+    fontFamily : fonts.SFuiDisplayMedium,
     color: colors.error,
   },
   errEmailPassDesc: {
