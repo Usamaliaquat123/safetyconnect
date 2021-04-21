@@ -6,8 +6,8 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 interface Props {
   navigation: any;
-  selectedProject : string,
-  selectedLocation:  string
+  selectedProject: string;
+  selectedLocation: string;
 }
 
 const Selector = (props: Props) => {
