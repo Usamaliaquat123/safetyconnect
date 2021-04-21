@@ -492,14 +492,15 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     // });
     // this.upoadFiles()
 
+      
+
     if (this.state.observationT !== '') {
       if (this.state.observation != '') {
         if (sorbtns.length != 0) {
           if (sorbtns[0].title == 'positive') {
             if (
-              this.state.actionRecommendations.filter(
-                (d: any) => d.assigned_to.length == 0,
-              ).length == 0
+              this.state.actionRecommendations.filter((d : any) => d.selected == true).length != 0
+
             ) {
               if (this.state.submitToTags.length !== 0) {
                 if (this.state.exclateToTags.length !== 0) {
@@ -603,18 +604,16 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             } else {
               this.setState({
                 errorModal: true,
-
-                errHeadingText: 'You didnt recommended anyone.',
-                errDesText: 'you are not selected recommended actions.',
+                errHeadingText: 'You didnt selected any actions.',
+                errDesText: 'you are not selected any recommended actions.',
               });
               // Error on actions and recommendations
             }
           } else {
             if (severity.length !== 0) {
               if (
-                this.state.actionRecommendations.filter(
-                  (d: any) => d.assigned_to.length == 0,
-                ).length == 0
+                this.state.actionRecommendations.filter((d : any) => d.selected == true).length != 0
+
               ) {
                 if (this.state.submitToTags.length !== 0) {
                   if (this.state.exclateToTags.length !== 0) {
@@ -740,8 +739,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 this.setState({
                   errorModal: true,
 
-                  errHeadingText: 'You didnt submitted anyone.',
-                  errDesText: 'you are not selected submitted users.',
+                  errHeadingText: 'You didnt selected any actions.',
+                  errDesText: 'you are not selected any recommended actions.',
                 });
               }
 
