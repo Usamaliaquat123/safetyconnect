@@ -91,7 +91,8 @@ class ViewAll extends React.Component<ViewAllProps, any> {
         .then((res: any) => {
           var sors = [];
           for (let i = 0; i < res.data.data.report.length; i++) {
-            console.log(res.data.data.report[i]);
+            // console.log(res.data.data.report[i]);
+
             var rep = filterAndMappingPersons(
               res.data.data.report[i],
               JSON.parse(involvedPersons),

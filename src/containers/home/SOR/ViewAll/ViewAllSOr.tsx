@@ -138,7 +138,10 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         }
 
         //  this.state.involvedPerson.push(j)
-        AsyncStorage.setItem('involved_person', JSON.stringify(j));
+        AsyncStorage.setItem(
+          'involved_person',
+          JSON.stringify(this.state.involvedPerson),
+        );
       });
 
     var data = {
