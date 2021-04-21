@@ -155,7 +155,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       .then((res: any) => {
         //  res.data = Object.assign({}, res.data);
         //  console.log(res.data)
-
+        console.log(this.state.involved_person);
         if (res.data.data == undefined) {
         } else {
           for (let i = 0; i < res.data.data.report.length; i++) {
@@ -164,27 +164,33 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 res.data.data.report[i],
                 this.state.involvedPerson,
               );
-              this.state.draft.push(res.data.data.report[i]);
+
+              this.state.draft.push(rep);
             } else if (res.data.data.report[i].status == 2) {
               var rep = filterAndMappingPersons(
                 res.data.data.report[i],
                 this.state.involvedPerson,
               );
-              this.state.submitted.push(res.data.data.report[i]);
+
+              this.state.submitted.push(rep);
             } else if (res.data.data.report[i].status == 3) {
               var rep = filterAndMappingPersons(
                 res.data.data.report[i],
                 this.state.involvedPerson,
               );
-              this.state.exclated.push(res.data.data.report[i]);
+              this.state.exclated.push(rep);
             } else if (res.data.data.report[i].status == 4) {
               var rep = filterAndMappingPersons(
                 res.data.data.report[i],
                 this.state.involvedPerson,
               );
-              this.state.inprogress.push(res.data.data.report[i]);
+              this.state.inprogress.push(rep);
             } else if (res.data.data.report[i].status == 5) {
-              this.state.completed.push(res.data.data.report[i]);
+              var rep = filterAndMappingPersons(
+                res.data.data.report[i],
+                this.state.involvedPerson,
+              );
+              this.state.completed.push(rep);
             }
           }
         }
@@ -192,31 +198,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         this.setState({loading: false});
       })
       .catch((err) => console.log(err));
-
-    // this.props.initialList();
-    // initialList.addList('sdsd');a
-    // console.log(this.props.reduxState);
-    // console.log(this.props.reduxState.loading);
-    // initialList.initialList();
-    // console.log('==================');
-    // console.log('adsad', this.props.reduxState.allSors);
-    // Storage.get('Screen Shot 2021-02-25 at 1.40.56 AM.png')
-    //   .then((res: string | any) => {
-    //     var ts = res.split('?')[0].replace(/%20/g, '+').replace('/public', '');~
-    //   })
-    //   .catch((err) =>{});
-    // this.props.initialList.addList('asdds');
-    // this.setState({loading: true});
-    // if (this.props.reduxState.allSors.allSors.involved_persons !== undefined) {
-    //   this.setState({loading: false});
-    //   await AsyncStorage.setItem(
-    //     'involved_persons',
-    //     JSON.stringify(this.props.reduxState.allSors.allSors.involved_persons),
-    //   );
-    // } else {
-    // this.setState({loading: false});
-    // }
-    // this.setState({draft: res.data.data.report});
   };
   _onRefresh = () => {
     this.setState({
@@ -488,12 +469,12 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                         : null
                                     }
                                     user1={
-                                      d.involved_persons[0].img_url == undefined
+                                      d.involved_persons.length == 0
                                         ? ''
                                         : d.involved_persons[0].img_url
                                     }
                                     user2={
-                                      d.submit_to[0].img_url == undefined
+                                      d.submit_to.length == 0
                                         ? ''
                                         : d.submit_to[0].img_url
                                     }
@@ -587,13 +568,12 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           : null
                                       }
                                       user1={
-                                        d.involved_persons[0].img_url ==
-                                        undefined
+                                        d.involved_persons.length == 0
                                           ? ''
                                           : d.involved_persons[0].img_url
                                       }
                                       user2={
-                                        d.submit_to[0].img_url == undefined
+                                        d.submit_to.length == 0
                                           ? ''
                                           : d.submit_to[0].img_url
                                       }
@@ -691,13 +671,12 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           : null
                                       }
                                       user1={
-                                        d.involved_persons[0].img_url ==
-                                        undefined
+                                        d.involved_persons.length == 0
                                           ? ''
                                           : d.involved_persons[0].img_url
                                       }
                                       user2={
-                                        d.submit_to[0].img_url == undefined
+                                        d.submit_to.length == 0
                                           ? ''
                                           : d.submit_to[0].img_url
                                       }
@@ -796,13 +775,12 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           : null
                                       }
                                       user1={
-                                        d.involved_persons[0].img_url ==
-                                        undefined
+                                        d.involved_persons.length == 0
                                           ? ''
                                           : d.involved_persons[0].img_url
                                       }
                                       user2={
-                                        d.submit_to[0].img_url == undefined
+                                        d.submit_to.length == 0
                                           ? ''
                                           : d.submit_to[0].img_url
                                       }
@@ -927,13 +905,12 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           : null
                                       }
                                       user1={
-                                        d.involved_persons[0].img_url ==
-                                        undefined
+                                        d.involved_persons.length == 0
                                           ? ''
                                           : d.involved_persons[0].img_url
                                       }
                                       user2={
-                                        d.submit_to[0].img_url == undefined
+                                        d.submit_to.length == 0
                                           ? ''
                                           : d.submit_to[0].img_url
                                       }
