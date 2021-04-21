@@ -1069,8 +1069,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     style={[
                       styles.suggestedActionsContainer,
                       d.selected == true
-                        ? {backgroundColor: colors.lightBlue}
-                        : {backgroundColor: colors.secondary},
+                        ? {
+                            backgroundColor: colors.lightBlue,
+                            borderWidth: wp(0),
+                          }
+                        : {
+                            backgroundColor: colors.secondary,
+                            borderWidth: wp(0.2),
+                          },
                     ]}>
                     <View style={{flexDirection: 'row', width: wp(84)}}>
                       <Text style={styles.actionType}>
