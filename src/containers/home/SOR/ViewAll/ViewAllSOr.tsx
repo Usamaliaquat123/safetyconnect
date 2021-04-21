@@ -13,7 +13,7 @@ import {
   Image,
   TextInput,
 } from 'react-native';
-import { createApi, Create_sor, submitted } from '@service';
+import {createApi, Create_sor, submitted} from '@service';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors, fonts, animation, images, GlStyles} from '@theme';
 
@@ -41,7 +41,7 @@ import {
 // import {Storage} from 'aws-amplify';
 
 // import jwtDecode from 'jwt-decode';
-import { Isor, involved_persons } from '@typings';
+import {Isor, involved_persons} from '@typings';
 // import {  } from "";
 type ViewAllSOrNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -106,7 +106,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       refreshing: false,
       involvedPerson: [],
       loading: false,
-      
     };
   }
 
@@ -114,86 +113,85 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     // this.updateAllSors();
     // this.forceUpdate();
 
-  
+    createApi
+      .createApi()
+      .getProject({projectid: '607820d5724677561cf67ec5'})
+      .then((involvedPerson: any) => {
+        var j = {};
+        var arr = [];
+        for (
+          let i = 0;
+          i < involvedPerson.data.data.involved_persons.length;
+          i++
+        ) {
+          Object.defineProperty(
+            j,
+            involvedPerson.data.data.involved_persons[i].email,
+            {
+              value: involvedPerson.data.data.involved_persons[i],
+              writable: false,
+            },
+          );
+          this.state.involvedPerson.push(
+            involvedPerson.data.data.involved_persons[i],
+          );
+        }
 
+        //  this.state.involvedPerson.push(j)
+        AsyncStorage.setItem('involved_person', JSON.stringify(j));
+      });
 
+    var data = {
+      project: '607820d5724677561cf67ec5',
+      limit: 10000,
+      page: 0,
+      query: {status: [1, 2, 3, 4, 5]},
+    };
+    this.setState({loading: true});
 
+    createApi
+      .createApi()
+      .filterSors(data)
+      .then((res: any) => {
+        //  res.data = Object.assign({}, res.data);
+        //  console.log(res.data)
 
-
-   createApi.createApi().getProject({projectid: '607820d5724677561cf67ec5'}).then((involvedPerson : any) => {
-     var j = {}
-     var arr = []
-    for (let i = 0; i < involvedPerson.data.data.involved_persons.length; i++) {
-      Object.defineProperty(j,involvedPerson.data.data.involved_persons[i].email , {value : involvedPerson.data.data.involved_persons[i], writable : false});
-      this.state.involvedPerson.push(involvedPerson.data.data.involved_persons[i])
-   
-   
-    }
-
-
-    
-    //  this.state.involvedPerson.push(j)
-    AsyncStorage.setItem('involved_person', JSON.stringify(j))
-
-
-  })
-
-
-
-
-  var data = {
-    project: '607820d5724677561cf67ec5',
-    limit: 10000,
-    page: 0,
-    query: {status: [1, 2, 3, 4, 5]},
-  };
-  this.setState({loading: true});
-
-
-  
-  createApi
-    .createApi()
-    .filterSors(data)
-    .then((res: any) => {
-    //  res.data = Object.assign({}, res.data);
-    //  console.log(res.data)
-
-      if(res.data.data == undefined ){
-      
-
-      }else{
-        
-        for (let i = 0; i < res.data.data.report.length; i++) {
-  
-          if (res.data.data.report[i].status == 1) {
-            var rep = filterAndMappingPersons(res.data.data.report[i],this.state.involvedPerson)
-            this.state.draft.push(res.data.data.report[i]);
-          } else if (res.data.data.report[i].status == 2) {
-          var rep = filterAndMappingPersons(res.data.data.report[i],this.state.involvedPerson)
-            this.state.submitted.push(res.data.data.report[i]);
-          } else if (res.data.data.report[i].status == 3) {
-            var rep = filterAndMappingPersons(res.data.data.report[i],this.state.involvedPerson)
-            this.state.exclated.push(res.data.data.report[i]);
-          } else if (res.data.data.report[i].status == 4) {
-            var rep = filterAndMappingPersons(res.data.data.report[i],this.state.involvedPerson)
-            this.state.inprogress.push(res.data.data.report[i]);
-          } else if (res.data.data.report[i].status == 5) {
-            this.state.completed.push(res.data.data.report[i]);
+        if (res.data.data == undefined) {
+        } else {
+          for (let i = 0; i < res.data.data.report.length; i++) {
+            if (res.data.data.report[i].status == 1) {
+              var rep = filterAndMappingPersons(
+                res.data.data.report[i],
+                this.state.involvedPerson,
+              );
+              this.state.draft.push(res.data.data.report[i]);
+            } else if (res.data.data.report[i].status == 2) {
+              var rep = filterAndMappingPersons(
+                res.data.data.report[i],
+                this.state.involvedPerson,
+              );
+              this.state.submitted.push(res.data.data.report[i]);
+            } else if (res.data.data.report[i].status == 3) {
+              var rep = filterAndMappingPersons(
+                res.data.data.report[i],
+                this.state.involvedPerson,
+              );
+              this.state.exclated.push(res.data.data.report[i]);
+            } else if (res.data.data.report[i].status == 4) {
+              var rep = filterAndMappingPersons(
+                res.data.data.report[i],
+                this.state.involvedPerson,
+              );
+              this.state.inprogress.push(res.data.data.report[i]);
+            } else if (res.data.data.report[i].status == 5) {
+              this.state.completed.push(res.data.data.report[i]);
+            }
           }
         }
-      }
-      
-      this.setState({loading: false});
-    })
-    .catch((err) => console.log(err));
 
-
-
-
-
-
-
-
+        this.setState({loading: false});
+      })
+      .catch((err) => console.log(err));
 
     // this.props.initialList();
     // initialList.addList('sdsd');a
@@ -489,8 +487,16 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                         ? {borderBottomWidth: wp(0)}
                                         : null
                                     }
-                                    user1={d.involved_persons[0].img_url == undefined ? "" : d.involved_persons[0].img_url}
-                                      user2={d.submit_to[0].img_url  == undefined  ?  "" : d.submit_to[0].img_url}
+                                    user1={
+                                      d.involved_persons[0].img_url == undefined
+                                        ? ''
+                                        : d.involved_persons[0].img_url
+                                    }
+                                    user2={
+                                      d.submit_to[0].img_url == undefined
+                                        ? ''
+                                        : d.submit_to[0].img_url
+                                    }
                                     observation={d.details}
                                     username={d.created_by}
                                     iconconf={classifySor.find(
@@ -580,8 +586,17 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           ? {borderBottomWidth: wp(0)}
                                           : null
                                       }
-                                      user1={d.involved_persons[0].img_url == undefined ? "" : d.involved_persons[0].img_url}
-                                      user2={d.submit_to[0].img_url  == undefined  ?  "" : d.submit_to[0].img_url}
+                                      user1={
+                                        d.involved_persons[0].img_url ==
+                                        undefined
+                                          ? ''
+                                          : d.involved_persons[0].img_url
+                                      }
+                                      user2={
+                                        d.submit_to[0].img_url == undefined
+                                          ? ''
+                                          : d.submit_to[0].img_url
+                                      }
                                       observation={d.details}
                                       username={d.created_by}
                                       iconconf={classifySor.find(
@@ -675,9 +690,17 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           ? {borderBottomWidth: wp(0)}
                                           : null
                                       }
-                                      user1={d.involved_persons[0].img_url == undefined ? "" : d.involved_persons[0].img_url}
-                                      user2={d.submit_to[0].img_url  == undefined  ?  "" : d.submit_to[0].img_url}
-
+                                      user1={
+                                        d.involved_persons[0].img_url ==
+                                        undefined
+                                          ? ''
+                                          : d.involved_persons[0].img_url
+                                      }
+                                      user2={
+                                        d.submit_to[0].img_url == undefined
+                                          ? ''
+                                          : d.submit_to[0].img_url
+                                      }
                                       observation={d.details}
                                       username={d.created_by}
                                       iconconf={classifySor.find(
@@ -772,8 +795,17 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           ? {borderBottomWidth: wp(0)}
                                           : null
                                       }
-                                        user1={d.involved_persons[0].img_url == undefined ? "" : d.involved_persons[0].img_url}
-                                      user2={d.submit_to[0].img_url  == undefined  ?  "" : d.submit_to[0].img_url}
+                                      user1={
+                                        d.involved_persons[0].img_url ==
+                                        undefined
+                                          ? ''
+                                          : d.involved_persons[0].img_url
+                                      }
+                                      user2={
+                                        d.submit_to[0].img_url == undefined
+                                          ? ''
+                                          : d.submit_to[0].img_url
+                                      }
                                       observation={d.details}
                                       username={d.created_by}
                                       iconconf={classifySor.find(
@@ -894,8 +926,17 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           ? {borderBottomWidth: wp(0)}
                                           : null
                                       }
-                                      user1={d.involved_persons[0].img_url == undefined ? "" : d.involved_persons[0].img_url}
-                                      user2={d.submit_to[0].img_url  == undefined  ?  "" : d.submit_to[0].img_url}
+                                      user1={
+                                        d.involved_persons[0].img_url ==
+                                        undefined
+                                          ? ''
+                                          : d.involved_persons[0].img_url
+                                      }
+                                      user2={
+                                        d.submit_to[0].img_url == undefined
+                                          ? ''
+                                          : d.submit_to[0].img_url
+                                      }
                                       observation={d.details}
                                       username={d.created_by}
                                       iconconf={classifySor.find(

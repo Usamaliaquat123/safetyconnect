@@ -72,7 +72,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      user : {},
+      user: {},
       time: this.props.route.params.data.occured_at,
       initAnim: new Animated.Value(0),
       imageViewer: false,
@@ -140,20 +140,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
-
-
-
-
-
-
-
-
-  
-
     // console.log(this.props.route.params.data.comments);
-  this.mappingMapping(this.props.route.params.data.risk.severity, this.props.route.params.data.risk.likelihood)
+    this.mappingMapping(
+      this.props.route.params.data.risk.severity,
+      this.props.route.params.data.risk.likelihood,
+    );
     this.getAllComments();
-    console.log(this.props.route.params.data)
+    console.log(this.props.route.params.data);
     // this.props.route.params.data.action_required
     for (
       let i = 0;
@@ -177,13 +170,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           commentsSugg: res.data.data.involved_persons,
         });
 
+        var arr = filterAndMappingPersons(
+          this.props.route.params.data,
+          res.data.data.involved_persons,
+        );
 
+        console.log(arr);
 
-        var arr =  filterAndMappingPersons(this.props.route.params.data, res.data.data.involved_persons)
-
-        console.log(arr)
-
-        
         this.mappingInvolved(
           res.data.data.involved_persons,
           this.props.route.params.data.involved_persons[0],
@@ -200,13 +193,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.props.route.params.data.risk.severity,
       this.props.route.params.data.risk.likelihood,
     );
-
-
-   
-
-
-
-
   };
 
   mappingInvolved = (persons: Array<any>, person: string | undefined) => {
@@ -219,8 +205,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
   };
   onSubmitUpdateSor = async (status?: number) => {
-    this.setState({loading: true}); 
-    console.log(this.props.route.params.data.comments)
+    this.setState({loading: true});
+    console.log(this.props.route.params.data.comments);
 
     var liklihood = this.state.liklihood.filter(
       (d: any) => d.selected == true,
@@ -231,50 +217,46 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
     var update = {
       report: {
-        _id: this.props.route.params.data._id, /** done  */
-        created_by: this.props.route.params.data.created_by, /** done */
-        details: this.state.observation, /** done */
-        createdAt :Date.now(), /** done */
-        occured_at: moment().format('YYYY-MM-DD'),  /** done */
-        involved_persons: this.props.route.params.data.involved_persons,  /** done */
-        risk: {  /** done */
-          severity: severity,
+        _id: this.props.route.params.data._id /** done  */,
+        created_by: this.props.route.params.data.created_by /** done */,
+        details: this.state.observation /** done */,
+        createdAt: Date.now() /** done */,
+        occured_at: moment().format('YYYY-MM-DD') /** done */,
+        involved_persons: this.props.route.params.data
+          .involved_persons /** done */,
+        risk: {
+          /** done */ severity: severity,
           likelihood: liklihood,
         },
-        action_required: this.state.actionsAndRecommendations,  /** done */
-       
-        location: 'pindi boys',  /** done */
-        submit_to: this.state.submitted_to.map((d : any) => d.email),  /** done */
-        esclate_to: this.state.esclate_to.map((d: any) => d.email),  /** done */
-        status: 2,  /** done */
-        attachments: [],  /** done */
-        comments: this.props.route.params.data.comments,  /** done */
-        updatedAt : Date.now()  /** done */
+        action_required: this.state.actionsAndRecommendations /** done */,
 
+        location: 'pindi boys' /** done */,
+        submit_to: this.state.submitted_to.map((d: any) => d.email) /** done */,
+        esclate_to: this.state.esclate_to.map((d: any) => d.email) /** done */,
+        status: 2 /** done */,
+        attachments: [] /** done */,
+        comments: this.props.route.params.data.comments /** done */,
+        updatedAt: Date.now() /** done */,
       },
       project: '607820d5724677561cf67ec5',
     };
 
-
-
-
-
-//     report:
-// action_required: [{…}]
-// attachments: []
-// comments: undefined
-// createdAt: undefined
-// created_by: "asohial.bscs16seecs@seecs.edu.pk"
-// details: "Damaged hammer was being used at  workshop, which can cause hand injury."
-// esclate_to:[]
-// involved_persons: []
-// location: "Boiler Room"
-// occured_at: "2021-03-29T04:16:30.000Z"
-// risk: {severity: 5, likelihood: 5}
-// status: 3
-// submit_to: ["Haider@gmail.com"]
-// updatedAt: "2021-03-29T18:18:54.752Z"
-// _id: "60621984d6398801fdbaa9d1"
+    //     report:
+    // action_required: [{…}]
+    // attachments: []
+    // comments: undefined
+    // createdAt: undefined
+    // created_by: "asohial.bscs16seecs@seecs.edu.pk"
+    // details: "Damaged hammer was being used at  workshop, which can cause hand injury."
+    // esclate_to:[]
+    // involved_persons: []
+    // location: "Boiler Room"
+    // occured_at: "2021-03-29T04:16:30.000Z"
+    // risk: {severity: 5, likelihood: 5}
+    // status: 3
+    // submit_to: ["Haider@gmail.com"]
+    // updatedAt: "2021-03-29T18:18:54.752Z"
+    // _id: "60621984d6398801fdbaa9d1"
 
     console.log(update);
 
@@ -284,8 +266,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .then((res) => {
         console.log(res);
         this.setState({loading: false});
-        if(res.status == 200){
-          this.props.navigation.goBack()
+        if (res.status == 200) {
+          this.props.navigation.goBack();
         }
         // this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
         //   1,
@@ -351,55 +333,43 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   addComment = (comment: string) => {
     this.setState({
       commentText: '',
-     
+
       commentAttachment: [],
     });
-    AsyncStorage.getItem('user').then(user => {
-      console.log(JSON.parse(user))
-  var comments = {
+    AsyncStorage.getItem('user').then((user) => {
+      console.log(JSON.parse(user));
+      var comments = {
+        data: {
+          user: JSON.parse(user)._id,
+          comment: comment,
+          date: moment().format('YYYY-MM-DD'),
+          files: [],
+          is_comment: true,
+        },
+        comment_document_id: this.props.route.params.data.comments,
+      };
+      createApi
+        .createApi()
+        .createComment(comments)
+        .then((res) => {
+          console.log(res);
+          var map = [...this.state.comments];
+          map.push({
+            email: JSON.parse(user).email,
+            name: JSON.parse(user).name,
+            date: res.data.data,
+            img_url:
+              'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
+            comment: this.state.commentText.replace(/\s+/g, ' ').trim(),
+            attachments: this.state.commentAttachment,
+          });
 
-      data: {
-        user: JSON.parse(user)._id,
-        comment: comment,
-        date: moment().format('YYYY-MM-DD'),
-        files: [],
-        is_comment: true,
-      },
-      comment_document_id: this.props.route.params.data.comments,
-    };
-    createApi
-      .createApi()
-      .createComment(comments)
-      .then((res) => {
-        console.log(res)
-        var map = [...this.state.comments];
-     map.push({ 
+          this.setState({comments: map});
+        })
+        .catch((err) => console.log(err));
+    });
 
-
-              email : JSON.parse(user).email,
-                            name: JSON.parse(user).name,
-                            date: res.data.data,
-                            img_url:
-                              'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
-                            comment: this.state.commentText
-                              .replace(/\s+/g, ' ')
-                              .trim(),
-                            attachments: this.state.commentAttachment,
-                          });
-
-
-
-
-        this.setState({ comments: map});
-      })
-      .catch((err) => console.log(err));
-
-
-    })
-
-    console.log(this.state.user)
-
-  
+    console.log(this.state.user);
   };
   // Save aas draft
   saveAsDraft = () => {
@@ -428,7 +398,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           longitude: 66.666,
         },
         location: 'pindi boys',
-        submit_to: this.state.submitted_to.map((d : any) => d.email),  /** done */
+        submit_to: this.state.submitted_to.map((d: any) => d.email) /** done */,
         esclate_to: this.state.esclate_to.map((d: any) => d.email),
         status: 1,
         attachments: [],
@@ -919,7 +889,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             this.setState({actionsAndRecommendations: data});
                           }}
                           onLongPress={() => {
-                            console.log(d)
+                            console.log(d);
                             this.setState({
                               allActionsEdit: d,
                               SuggestionPop: true,
@@ -1017,7 +987,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   style={styles.textaddActionContainer}
                   placeholder={'Add action / recommendation here'}
                 />
-               
+
                 <TouchableOpacity
                   onPress={() => {
                     // this.submitActionsAndRecommendations(
@@ -1439,8 +1409,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           var map = [...this.state.comments];
 
                           this.addComment(this.state.commentText);
-                        
-                         
                         }
                       }}
                       style={{

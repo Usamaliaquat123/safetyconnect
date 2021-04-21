@@ -422,6 +422,21 @@ paddingRight : wp(3), marginBottom : wp(5)},
     fontFamily : fonts.SFuiDisplayMedium,
 
   },
+  involvePsuggCont: {
+    borderColor: colors.textOpa,
+    borderBottomWidth: wp(0.1),
+    paddingTop: wp(3),
+    paddingBottom: wp(3),
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  involveSuggestCont: {
+    borderColor: colors.green,
+    borderRadius: wp(3),
+    padding: wp(3),
+    borderWidth: wp(0.3),
+    marginTop: wp(1),
+  },
   submitsorbtnSb: {
     padding: wp(5),
     width : wp(45),

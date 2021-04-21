@@ -42,7 +42,7 @@ import {RouteProp} from '@react-navigation/native';
 import {classifySorBtn, Isor, involved_persons} from '@typings';
 import Modal from 'react-native-modal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { createApi, submitted } from '@service';
+import {createApi, submitted} from '@service';
 // import * as RNFS from 'react-native-fs';
 // import {Buffer} from 'buffer';
 import {AllSorDTO} from '@dtos';
@@ -108,13 +108,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       severity: riskxSeverityxliklihood.severity,
       // Involved Persons of this project
       involved_persons: [],
-      potientialRisk : 9,
+      potientialRisk: 9,
       errorModal: false,
       user: {},
       errHeadingText: '',
       loading: false,
       errDesText: '',
-      SuggestionPop : false
+      SuggestionPop: false,
     };
   }
 
@@ -278,7 +278,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     // AsyncStorage.getItem('user').then((user: any) => {
     //   this.setState({user: JSON.parse(user)});
     // });
-    this.mappingMapping(1,1)
+    this.mappingMapping(1, 1);
 
     AsyncStorage.getItem('email').then((email: any) => {
       this.setState({email});
@@ -303,30 +303,29 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     // }, 1000);
     // this.AnimatedViews();
 
-
-
-    const form = new FormData();
-    this.setState({actionRecommendationsText: "Damaged hammer was being used at  workshop, which can cause hand injury."});
-    form.append('q', "Damaged hammer was being used at  workshop, which can cause hand injury.");
-    createApi
-      .createApi()
-      .suggestiosns(form)
-      .then((res: any) => {
-        var obj = res.data.results
-        for (let i = 0; i < res.data.results.length; i++) {
-          obj[i]['status'] = 0
-          obj[i]['is_selected'] = false
-          obj[i]['is_complete'] = false
-          obj[i]['date'] =moment().format('YYYY-MM-DD'),
-          obj[i]['assigned_to'] = []
-      }
-        // console.log(res.data.results)
-        this.setState({
-          actionRecommendations: [...obj],
-        });
-      });
+    // const form = new FormData();
+    // this.setState({actionRecommendationsText: "Damaged hammer was being used at  workshop, which can cause hand injury."});
+    // form.append('q', "Damaged hammer was being used at  workshop, which can cause hand injury.");
+    // createApi
+    //   .createApi()
+    //   .suggestiosns(form)
+    //   .then((res: any) => {
+    //     var obj = res.data.results
+    //     for (let i = 0; i < res.data.results.length; i++) {
+    //       obj[i]['status'] = 0
+    //       obj[i]['is_selected'] = false
+    //       obj[i]['is_complete'] = false
+    //       obj[i]['date'] =moment().format('YYYY-MM-DD'),
+    //       obj[i]['assigned_to'] = []
+    //   }
+    //     // console.log(res.data.results)
+    //     this.setState({
+    //       actionRecommendations: [...obj],
+    //     });
+    //   });
   };
-
+  markAsComplete = () => {};
+  preview = () => {};
   mappingMapping = (sev: number, lik: number) => {
     this.state.liklihood.map((d: any, i: number) => {
       if (sev == d.value) {
@@ -778,7 +777,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           {/* content */}
           <Animated.View style={[styles.content]}>
             {/* Select Project  / Select location */}
-            <Selector selectedLocation={'Assembly Line'} selectedProject={"Safety Connect"} navigation={this.props.navigation} />
+            <Selector
+              selectedLocation={'Assembly Line'}
+              selectedProject={'Safety Connect'}
+              navigation={this.props.navigation}
+            />
             {/* Line  */}
             <View style={styles.lineheight} />
             {/* Classify SOR */}
@@ -919,40 +922,52 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   type={'observation'}
                   arr={this.state.suggestions}
                   onPress={(d: any) => {
-
                     const form = new FormData();
                     form.append('q', d.details);
                     createApi
                       .createApi()
                       .suggestiosns(form)
                       .then((res: any) => {
+                        var obj = res.data.results;
+                        for (let i = 0; i < res.data.results.length; i++) {
+                          obj[i]['status'] = 0;
+                          obj[i]['is_selected'] = false;
+                          obj[i]['is_complete'] = false;
+                          (obj[i]['date'] = moment().format('YYYY-MM-DD')),
+                            (obj[i]['assigned_to'] = []);
+                        }
+                        // console.log(res.data.results)
                         this.setState({
-                          actionRecommendations: [...res.data.results],
+                          actionRecommendations: [...obj],
                         });
+
+                        // this.setState({
+                        //     actionRecommendations: [...res.data.results],
+                        //   });
                       });
 
                     // this.setState({selectedInputIndex: 3});
-
-
 
                     this.setState({observationT: d.details, suggestions: []});
                   }}
                 />
               ) : null}
             </View>
-    {/* Line  */}
-    <View style={styles.lineheight} />
+            {/* Line  */}
+            <View style={styles.lineheight} />
             {/* Risk Chart*/}
             {this.state.classifySorbtns[1].selected == false ? (
-              <View  style={styles.riskContainer}>
+              <View style={styles.riskContainer}>
                 {/* Potential Risk */}
                 <View style={styles.potentialRiskContainer}>
-                <View style={{flexDirection: 'row', alignItems : "center"}}>
-                  <Text style={styles.potientialRiskHeading}>Potential Risk</Text>
-                  <Text style={styles.systemDefinedtext}>
-                  (System Defined)
-                  </Text>
-                </View>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={styles.potientialRiskHeading}>
+                      Potential Risk
+                    </Text>
+                    <Text style={styles.systemDefinedtext}>
+                      (System Defined)
+                    </Text>
+                  </View>
                   {/* <View style={[styles.badgePotientialRisk,  this.state.potientialRisk < 7 ? {borderColor : colors.green}: this.state.potientialRisk < 14 ? {borderColor : colors.riskIcons.orrange} :{borderColor : colors.error} ]}>
               <Text style={[styles.potentialRiskBadgeContainerText, this.state.potientialRisk < 7 ? {color : colors.green}: this.state.potientialRisk < 14 ? {color : colors.riskIcons.orrange} :{color : colors.error} ]}>
                 {this.state.potientialRisk} - { this.state.potientialRisk < 7 ? "Low": this.state.potientialRisk < 14 ? "Medium" :"High"}
@@ -961,83 +976,77 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 </View>
                 {/* Actual Risk */}
                 <View>
-                <View style={{flexDirection: 'row', marginTop : wp(1)}}>
-                  <Text style={styles.RiskHeading}>Actual Risk</Text>
-                  <Text style={{fontStyle: 'italic', fontSize: wp(3)}}>
-                    {/* {this.state.liklihood. * this.state.severity} */}
-                  </Text>
-                </View>
+                  <View style={{flexDirection: 'row', marginTop: wp(1)}}>
+                    <Text style={styles.RiskHeading}>Actual Risk</Text>
+                    <Text style={{fontStyle: 'italic', fontSize: wp(3)}}>
+                      {/* {this.state.liklihood. * this.state.severity} */}
+                    </Text>
+                  </View>
 
-                <Chart
-                  liklihood={this.state.liklihood}
-                  severity={this.state.severity}
-                  // style={{marginTop: wp(1)}}
-                  onPress={(v: any) => {
-                    // if (v.liklihood == undefined) {
-                    //   this.setState({severity: v.severity});
-                    // } else {
-                    // }
-                    // if (v.liklihood == undefined) {
-                    //   console.log(
-                    //     this.state.severity.filter((d) => d == v.severity),
-                    //   );
-                    //   this.setState({severity: [v.severity]});
-                    // } else {
-                    //   this.setState({liklihood: [v.liklihood]});
-                    // }
-                  }}
-                />
+                  <Chart
+                    liklihood={this.state.liklihood}
+                    severity={this.state.severity}
+                    // style={{marginTop: wp(1)}}
+                    onPress={(v: any) => {
+                      // if (v.liklihood == undefined) {
+                      //   this.setState({severity: v.severity});
+                      // } else {
+                      // }
+                      // if (v.liklihood == undefined) {
+                      //   console.log(
+                      //     this.state.severity.filter((d) => d == v.severity),
+                      //   );
+                      //   this.setState({severity: [v.severity]});
+                      // } else {
+                      //   this.setState({liklihood: [v.liklihood]});
+                      // }
+                    }}
+                  />
                 </View>
-                
               </View>
             ) : null}
-              {/* Line  */}
-              <View style={styles.lineheight} />
+            {/* Line  */}
+            <View style={styles.lineheight} />
 
-
-  {/* Actions/Recommendation */}
-  {this.state.classifySorbtns[1].selected == false ? (
+            {/* Actions/Recommendation */}
+            {this.state.classifySorbtns[1].selected == false ? (
               <View style={styles.actionContainer}>
                 <Text style={styles.actionsRecHeading}>
                   Actions / Recommendation
                 </Text>
-                
-               
 
-{/* Suggested Actions */}
-                {this.state.actionRecommendations.map((d : any, i: number) => (
-                  <TouchableOpacity onLongPress={() => {
-                    console.log(this.state.allActionsEdit)
-                    this.setState({
-                      allActionsEdit: d,
-                      allActionsEditIndex : i,
-                      SuggestionPop: true,
-                      newActions: false,
-                    });
-
-
-                  }}  key={i} style={styles.suggestedActionsContainer}>
-                  <View style={{ flexDirection : "row",width : wp(84) }}>
-
-                    <Text style={styles.actionType}>{d.category}: <Text style={styles.actionDesc}>{d.content.substring(0,50)}...</Text></Text>
-                  </View>
+                {/* Suggested Actions */}
+                {this.state.actionRecommendations.map((d: any, i: number) => (
+                  <TouchableOpacity
+                    onLongPress={() => {
+                      console.log(this.state.allActionsEdit);
+                      this.setState({
+                        allActionsEdit: d,
+                        allActionsEditIndex: i,
+                        SuggestionPop: true,
+                        newActions: false,
+                      });
+                    }}
+                    key={i}
+                    style={styles.suggestedActionsContainer}>
+                    <View style={{flexDirection: 'row', width: wp(84)}}>
+                      <Text style={styles.actionType}>
+                        {d.category}:{' '}
+                        <Text style={styles.actionDesc}>
+                          {d.content.substring(0, 50)}...
+                        </Text>
+                      </Text>
+                    </View>
                     <Icon
-                  size={wp(6)}
-                  name="more-vertical"
-                  type="feather"
-                  color={"#686868"}
-                />
-                </TouchableOpacity>
+                      size={wp(6)}
+                      name="more-vertical"
+                      type="feather"
+                      color={'#686868'}
+                    />
+                  </TouchableOpacity>
                 ))}
-                
-                <View
-                style={[
-                  styles.addActionAndRecommendation,
-             
-                ]}>
 
-
-
+                <View style={[styles.addActionAndRecommendation]}>
                   {/* <TextInput
                     onFocus={() => {
                     
@@ -1053,56 +1062,47 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     placeholder={'Suggest your recommendation / actions'}
                   /> */}
 
-
-<TextInput
-                  maxLength={500}
-                  onChange={(e) =>
-                    this.setState({
-                      actionsAndRecommendationText: e.nativeEvent.text,
-                    })
-                  }
-                  value={this.state.actionsAndRecommendationText}
-                  multiline={true}
-                  style={styles.textaddActionContainer}
-                  placeholder={'Add action / recommendation here'}
-                />
-
-<TouchableOpacity
-                  onPress={() => {
-                    if (this.state.actionsAndRecommendationText !== '') {
+                  <TextInput
+                    maxLength={500}
+                    onChange={(e) =>
                       this.setState({
-                        allActionsEdit: {
-                          is_complete: false,
-                          is_selected: false,
-                          content: this.state.actionsAndRecommendationText,
-                          assigned_to: [],
-                          date: moment().format('YYYY-MM-DD'),
-                          status: 0,
-                          category: 'Elimination',
-                        },
-
-                        SuggestionPop: true,
-                        newActions: true,
-                      });
+                        actionsAndRecommendationText: e.nativeEvent.text,
+                      })
                     }
-                  }}
-                  style={styles.addActionsAndRecommendationArrow}>
-                  <Icon
-                    size={wp(4)}
-                    name="arrowright"
-                    type="antdesign"
-                    color={colors.primary}
+                    value={this.state.actionsAndRecommendationText}
+                    multiline={true}
+                    style={styles.textaddActionContainer}
+                    placeholder={'Add action / recommendation here'}
                   />
-                </TouchableOpacity>
 
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (this.state.actionsAndRecommendationText !== '') {
+                        this.setState({
+                          allActionsEdit: {
+                            is_complete: false,
+                            is_selected: false,
+                            content: this.state.actionsAndRecommendationText,
+                            assigned_to: [],
+                            date: moment().format('YYYY-MM-DD'),
+                            status: 0,
+                            category: 'Elimination',
+                          },
 
-
+                          SuggestionPop: true,
+                          newActions: true,
+                        });
+                      }
+                    }}
+                    style={styles.addActionsAndRecommendationArrow}>
+                    <Icon
+                      size={wp(4)}
+                      name="arrowright"
+                      type="antdesign"
+                      color={colors.primary}
+                    />
+                  </TouchableOpacity>
                 </View>
-                
-
-
-
-
 
                 {/* Suggestions 
                 {this.state.actionRecommendations.length != 0 ? (
@@ -1146,45 +1146,39 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </View>
             ) : null}
 
-
-  {/* Line  */}
-  <View style={styles.lineheight} />
+            {/* Line  */}
+            <View style={styles.lineheight} />
             {/* Attachment / Upload files */}
             <View style={styles.attachmentContainer}>
-            <View style={styles.attachmentheadingContainer}>
-              <Text style={styles.attachmentsHeading}>
-                Attachments{' '}
-              </Text>
-              <Text style={styles.attachmentOptionalText}>
-                (optional)
-              </Text>
-            </View>
-            <View style={styles.attachmentContentContainer}>
-            <View style={styles.uploadBorder}>
-            <Icon
-                  size={wp(9)}
-                  name="plus"
-                  type="antdesign"
-                  color={colors.primary}
-                />
-            </View>
-            <View style={styles.attachmentsDetailTextContainer} >
-            <Text style={styles.supportedfileFotmatsText}>Supported file formats </Text>
-            <Text style={styles.supportedfileFotmats}>.doc, .pdf, .jpeg, .png, .xlsx</Text>
+              <View style={styles.attachmentheadingContainer}>
+                <Text style={styles.attachmentsHeading}>Attachments </Text>
+                <Text style={styles.attachmentOptionalText}>(optional)</Text>
+              </View>
+              <View style={styles.attachmentContentContainer}>
+                <View style={styles.uploadBorder}>
+                  <Icon
+                    size={wp(9)}
+                    name="plus"
+                    type="antdesign"
+                    color={colors.primary}
+                  />
+                </View>
+                <View style={styles.attachmentsDetailTextContainer}>
+                  <Text style={styles.supportedfileFotmatsText}>
+                    Supported file formats{' '}
+                  </Text>
+                  <Text style={styles.supportedfileFotmats}>
+                    .doc, .pdf, .jpeg, .png, .xlsx
+                  </Text>
 
-<View style={{flexDirection : "row"}}>
-  
-
-            <Text style={styles.supportedfileFotmatsText}>Maximum File Size: </Text>
-            <Text style={styles.fileSizeText}>10 MB</Text>
-</View>
-
-            </View>
-
-            </View>
-           
-
-
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.supportedfileFotmatsText}>
+                      Maximum File Size:{' '}
+                    </Text>
+                    <Text style={styles.fileSizeText}>10 MB</Text>
+                  </View>
+                </View>
+              </View>
 
               {this.state.filename.length != 0 ? (
                 <View>
@@ -1210,11 +1204,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   {/* ))} */}
                 </View>
               ) : null}
-            
-
-
             </View>
-                          {/* Line  */}
+            {/* Line  */}
             <View style={styles.lineheight} />
             {/* Submit To / Esclate To */}
             <View style={styles.optnToggleContainer}>
@@ -1387,36 +1378,48 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </View>
             </View>
 
-                          {/* Line  */}
-                          <View style={styles.lineheight} />
+            {/* Line  */}
+            <View style={styles.lineheight} />
             {/* Draft And Submit Btns */}
-            <View style={{ flexDirection : "row", justifyContent : "center"}}>
-            <TouchableOpacity
-              onPress={() => this.submitDraft()}
-              style={[styles.submitsorbtn,{ marginRight : wp(3)} ]}>
-              <Text style={styles.submitsorbtntxt}>Save as Draft</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              // this.setState({repeatedSorModal: true})
-              onPress={() => this.onCreateSor()}
-              style={[styles.submitsorbtn,{ borderColor : colors.green} ]}>
-              <Text style={[styles.submitsorbtntxt, {color: colors.green}]}>Submit</Text>
-            </TouchableOpacity>
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+              <TouchableOpacity
+                onPress={() => this.submitDraft()}
+                style={[styles.submitsorbtn, {marginRight: wp(3)}]}>
+                <Text style={styles.submitsorbtntxt}>Save as Draft</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                // this.setState({repeatedSorModal: true})
+                onPress={() => this.onCreateSor()}
+                style={[styles.submitsorbtn, {borderColor: colors.green}]}>
+                <Text style={[styles.submitsorbtntxt, {color: colors.green}]}>
+                  Submit
+                </Text>
+              </TouchableOpacity>
             </View>
-                  <View style={{ flexDirection : "row", justifyContent: "center", marginBottom : wp(10)}}>
-                  <TouchableOpacity
-              onPress={() => this.submitDraft()}
-              style={[styles.submitsorbtn, {marginRight : wp(3)}]}>
-              <Text style={styles.submitsorbtntxt}>Preview</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              // this.setState({repeatedSorModal: true})
-              onPress={() => this.onCreateSor()}
-              style={[styles.submitsorbtnSb, { backgroundColor : colors.green}]}>
-              <Text style={[styles.submitsorbtnSbtxt, {color : colors.secondary}]}>Mark as Complete</Text>
-            </TouchableOpacity>
-                  </View>
-         
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginBottom: wp(10),
+              }}>
+              <TouchableOpacity
+                onPress={() => this.preview()}
+                style={[styles.submitsorbtn, {marginRight: wp(3)}]}>
+                <Text style={styles.submitsorbtntxt}>Preview</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                // this.setState({repeatedSorModal: true})
+                onPress={() => this.markAsComplete()}
+                style={[
+                  styles.submitsorbtnSb,
+                  {backgroundColor: colors.green},
+                ]}>
+                <Text
+                  style={[styles.submitsorbtnSbtxt, {color: colors.secondary}]}>
+                  Mark as Complete
+                </Text>
+              </TouchableOpacity>
+            </View>
           </Animated.View>
 
           <Modal
@@ -1482,9 +1485,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               }}
             />
           </Modal>
-         
-         
-         {/* SuggestionPop */}
+
+          {/* SuggestionPop */}
           {this.state.SuggestionPop == true && (
             <SuggestionsPop
               suggestedUsers={this.state.involved_persons}
@@ -1495,7 +1497,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               isOpen={this.state.SuggestionPop}
               suggestions={this.state.allActionsEdit}
               save={(d: any) => {
-                console.log(d)
+                console.log(d);
                 // console.log(this.state.newActions)
                 // console.log(this.state.actionRecommendations)
                 // console.log(this.state.allActionsEditIndex)
@@ -1510,7 +1512,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 this.setState({SuggestionPop: false});
               }}
               discard={() => {
-                console.log('sdsd')
+                console.log('sdsd');
                 // console.log(this.state.actionRecommendations)
                 this.setState({
                   actionRecommendations: this.state.actionRecommendations.filter(

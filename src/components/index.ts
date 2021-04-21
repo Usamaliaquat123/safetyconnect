@@ -19,7 +19,7 @@ export {
   Card,
   Calendars,
   Search,
-  User,
+  User, 
   BottomPop,
   Header,
   ListCard,
