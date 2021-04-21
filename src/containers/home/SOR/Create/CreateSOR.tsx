@@ -492,150 +492,35 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     // });
     // this.upoadFiles()
 
-      
-
     if (this.state.observationT !== '') {
       if (this.state.observation != '') {
         if (sorbtns.length != 0) {
           if (sorbtns[0].title == 'positive') {
             if (
-              this.state.actionRecommendations.filter((d : any) => d.selected == true).length != 0
-
+              this.state.actionRecommendations.filter(
+                (d: any) => d.selected == true,
+              ).length != 0
             ) {
-              if (this.state.submitToTags.length !== 0) {
-                if (this.state.exclateToTags.length !== 0) {
-                  this.setState({loading: true, errorModal: true});
-
-                  var actions  =  this.state.actionRecommendations.filter((d : any) => d.selected == true)
-
-
-         
-
-                  // Repeated observations
-                  // res.data.resultss
-                  var bodyInitial = {
-                    report: {
-                      created_by: this.state.email,
-                      comments: '',
-                      status: 1,
-                    },
-                    project: '607820d5724677561cf67ec5',
-                  };
-                  createApi
-                    .createApi()
-                    .createSorInit(bodyInitial)
-                    .then((ress: any) => {
-                      // Report Id
-                      // res.data.data.report_id
-                      var sor = {
-                        report: {
-                          _id: ress.data.data.report_id,
-                          created_by: this.state.email,
-                          details: this.state.observationT,
-                          occured_at: new Date(),
-                          involved_persons: this.state.involvePersonTags.map(
-                            (d: any) => d._id,
-                          ),
-
-                          sor_type: sorbtns[0].title,
-                          risk: {
-                            severity: 5,
-                            likelihood: 5,
-                          },
-                          action_required: this.state.actionRecommendations,
-
-                          location: this.state.observation,
-                          submit_to: this.state.submitToTags.map(
-                            (d: any) => d.email,
-                          ),
-                          esclate_to: this.state.exclateToTags.map(
-                            (d: any) => d.email,
-                          ),
-                          status: 2,
-                          // attachments: this.state.filename,
-                          comments: ' ',
-                        },
-                        project: '607820d5724677561cf67ec5',
-                      };
-                      console.log(sor);
-                      // this.props.reduxActions.createSor(
-                      //   sor,
-                      //   '604b13d114ba138bd23d7f75',
-                      //   'inconnent12345@outlook.com',
-                      //   this.props.navigation,
-                      // );
-                      createApi
-                        .createApi()
-                        .createSor(sor)
-                        .then((res: any) => {
-                          this.setState({loading: false, errorModal: false});
-
-                          if (res.status == 200) {
-                            this.props.navigation.navigate('ViewAllSOr');
-                          } else {
-                            console.log(res);
-                            // this.setState({
-                            //   errorModal: false,
-                            //   errHeadingText: `CreateSor api returns ${res.data.status}.`,
-                            //   errDesText: res.data.message,
-                            // });
-                          }
-                        })
-                        .catch(() =>
-                          this.setState({loading: false, errorModal: false}),
-                        );
-                    })
-                    .catch(() => {
-                      this.setState({loading: false, errorModal: false});
-                    });
-                } else {
-                  this.setState({
-                    errorModal: true,
-
-                    errHeadingText: 'You didnt esclated anyone.',
-                    errDesText: 'you are not selected esclated users.',
-                  });
-                  // Error on esclated to
-                }
-              } else {
-                this.setState({
-                  errorModal: true,
-
-                  errHeadingText: 'You didnt submitted anyone.',
-                  errDesText: 'you are not selected submitted users.',
-                });
-                // Error on submitted to
-              }
-            } else {
-              this.setState({
-                errorModal: true,
-                errHeadingText: 'You didnt selected any actions.',
-                errDesText: 'you are not selected any recommended actions.',
-              });
-              // Error on actions and recommendations
-            }
-          } else {
-            if (severity.length !== 0) {
               if (
-                this.state.actionRecommendations.filter((d : any) => d.selected == true).length != 0
-
+                this.state.actionRecommendations
+                  .filter((d: any) => d.selected == true)
+                  .filter((d: any) => d.assigned_to.length != 0)
               ) {
                 if (this.state.submitToTags.length !== 0) {
                   if (this.state.exclateToTags.length !== 0) {
                     this.setState({loading: true, errorModal: true});
-                    // for (
-                    //   let i = 0;
-                    //   i < this.state.actionRecommendations.length;
-                    //   i++
-                    // ) {
-                    //   this.state.actionRecommendations[
-                    //     i
-                    //   ].assigned_to = this.state.actionRecommendations[
-                    //     i
-                    //   ].assigned_to[0];
-                    // }
+
+                    var actions = this.state.actionRecommendations.filter(
+                      (d: any) => d.selected == true,
+                    );
+
+                    console.log('$$$$$$$$$$$$$$$$&&&&');
+                    console.log(actions);
+                    console.log('$$$$$$$$$$$$$$$$&&&&');
+                    console.log('$$$$$$$$$$$$$$$$&&&&');
+
                     // Repeated observations
-                    // res.data.results
+                    // res.data.resultss
                     var bodyInitial = {
                       report: {
                         created_by: this.state.email,
@@ -650,7 +535,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       .then((ress: any) => {
                         // Report Id
                         // res.data.data.report_id
-
                         var sor = {
                           report: {
                             _id: ress.data.data.report_id,
@@ -663,8 +547,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                             sor_type: sorbtns[0].title,
                             risk: {
-                              severity: liklihood[0].value,
-                              likelihood: severity[0].value,
+                              severity: 5,
+                              likelihood: 5,
                             },
                             action_required: this.state.actionRecommendations,
 
@@ -676,51 +560,41 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               (d: any) => d.email,
                             ),
                             status: 2,
-                            attachments: [],
+                            // attachments: this.state.filename,
                             comments: ' ',
                           },
                           project: '607820d5724677561cf67ec5',
                         };
-
+                        console.log(sor);
                         // this.props.reduxActions.createSor(
                         //   sor,
                         //   '604b13d114ba138bd23d7f75',
                         //   'inconnent12345@outlook.com',
                         //   this.props.navigation,
                         // );
-                        console.log(sor);
                         createApi
                           .createApi()
                           .createSor(sor)
                           .then((res: any) => {
-                            this.setState({
-                              loading: false,
-                              errorModal: false,
-                            });
+                            this.setState({loading: false, errorModal: false});
 
                             if (res.status == 200) {
                               this.props.navigation.navigate('ViewAllSOr');
                             } else {
                               console.log(res);
                               // this.setState({
-                              //   errorModal: true,
-                              //   errHeadingText: `CreateSor api returns ${res.status}.`,
+                              //   errorModal: false,
+                              //   errHeadingText: `CreateSor api returns ${res.data.status}.`,
                               //   errDesText: res.data.message,
                               // });
                             }
                           })
                           .catch(() =>
-                            this.setState({
-                              loading: false,
-                              errorModal: false,
-                            }),
+                            this.setState({loading: false, errorModal: false}),
                           );
                       })
                       .catch(() => {
-                        this.setState({
-                          loading: false,
-                          errorModal: false,
-                        });
+                        this.setState({loading: false, errorModal: false});
                       });
                   } else {
                     this.setState({
@@ -739,6 +613,169 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     errDesText: 'you are not selected submitted users.',
                   });
                   // Error on submitted to
+                }
+              } else {
+                this.setState({
+                  errorModal: true,
+
+                  errHeadingText: 'You didnt assigned someone ',
+                  errDesText:
+                    'You didnt assigned someone in your selected actions.',
+                });
+              }
+            } else {
+              this.setState({
+                errorModal: true,
+                errHeadingText: 'You didnt selected any actions.',
+                errDesText: 'you are not selected any recommended actions.',
+              });
+              // Error on actions and recommendations
+            }
+          } else {
+            if (severity.length !== 0) {
+              if (
+                this.state.actionRecommendations.filter(
+                  (d: any) => d.selected == true,
+                ).length != 0
+              ) {
+                if (
+                  this.state.actionRecommendations
+                    .filter((d: any) => d.selected == true)
+                    .filter((d: any) => d.assigned_to.length != 0)
+                ) {
+                  if (this.state.submitToTags.length !== 0) {
+                    if (this.state.exclateToTags.length !== 0) {
+                      this.setState({loading: true, errorModal: true});
+                      // for (
+                      //   let i = 0;
+                      //   i < this.state.actionRecommendations.length;
+                      //   i++
+                      // ) {
+                      //   this.state.actionRecommendations[
+                      //     i
+                      //   ].assigned_to = this.state.actionRecommendations[
+                      //     i
+                      //   ].assigned_to[0];
+                      // }
+                      // Repeated observations
+                      // res.data.results
+
+                      this.state.actionRecommendations
+                        .filter((d: any) => d.selected == true)
+                        .filter((d: any) => d.assigned_to.length != 0);
+
+                      var bodyInitial = {
+                        report: {
+                          created_by: this.state.email,
+                          comments: '',
+                          status: 1,
+                        },
+                        project: '607820d5724677561cf67ec5',
+                      };
+                      createApi
+                        .createApi()
+                        .createSorInit(bodyInitial)
+                        .then((ress: any) => {
+                          // Report Id
+                          // res.data.data.report_id
+
+                          var sor = {
+                            report: {
+                              _id: ress.data.data.report_id,
+                              created_by: this.state.email,
+                              details: this.state.observationT,
+                              occured_at: new Date(),
+                              involved_persons: this.state.involvePersonTags.map(
+                                (d: any) => d._id,
+                              ),
+
+                              sor_type: sorbtns[0].title,
+                              risk: {
+                                severity: liklihood[0].value,
+                                likelihood: severity[0].value,
+                              },
+                              action_required: this.state.actionRecommendations,
+
+                              location: this.state.observation,
+                              submit_to: this.state.submitToTags.map(
+                                (d: any) => d.email,
+                              ),
+                              esclate_to: this.state.exclateToTags.map(
+                                (d: any) => d.email,
+                              ),
+                              status: 2,
+                              attachments: [],
+                              comments: ' ',
+                            },
+                            project: '607820d5724677561cf67ec5',
+                          };
+
+                          // this.props.reduxActions.createSor(
+                          //   sor,
+                          //   '604b13d114ba138bd23d7f75',
+                          //   'inconnent12345@outlook.com',
+                          //   this.props.navigation,
+                          // );
+                          console.log(sor);
+                          createApi
+                            .createApi()
+                            .createSor(sor)
+                            .then((res: any) => {
+                              this.setState({
+                                loading: false,
+                                errorModal: false,
+                              });
+
+                              if (res.status == 200) {
+                                this.props.navigation.navigate('ViewAllSOr');
+                              } else {
+                                console.log(res);
+                                // this.setState({
+                                //   errorModal: true,
+                                //   errHeadingText: `CreateSor api returns ${res.status}.`,
+                                //   errDesText: res.data.message,
+                                // });
+                              }
+                            })
+                            .catch(() =>
+                              this.setState({
+                                loading: false,
+                                errorModal: false,
+                              }),
+                            );
+                        })
+                        .catch(() => {
+                          this.setState({
+                            loading: false,
+                            errorModal: false,
+                          });
+                        });
+                    } else {
+                      this.setState({
+                        errorModal: true,
+
+                        errHeadingText: 'You didnt esclated anyone.',
+                        errDesText: 'you are not selected esclated users.',
+                      });
+                      // Error on esclated to
+                    }
+                  } else {
+                    this.setState({
+                      errorModal: true,
+
+                      errHeadingText: 'You didnt submitted anyone.',
+                      errDesText: 'you are not selected submitted users.',
+                    });
+                    // Error on submitted to
+                  }
+                } else {
+                  this.setState({
+                    errorModal: true,
+
+                    errHeadingText: 'You didnt assigned someone ',
+                    errDesText:
+                      'You didnt assigned someone in your selected actions.',
+                  });
                 }
               } else {
                 this.setState({
