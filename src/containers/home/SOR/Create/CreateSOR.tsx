@@ -550,7 +550,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               severity: 5,
                               likelihood: 5,
                             },
-                            action_required: this.state.actionRecommendations,
+                            action_required: this.state.actionRecommendations.filter(
+                              (d: any) => d.selected == true,
+                            ),
 
                             location: this.state.observation,
                             submit_to: this.state.submitToTags.map(
@@ -694,7 +696,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 severity: liklihood[0].value,
                                 likelihood: severity[0].value,
                               },
-                              action_required: this.state.actionRecommendations,
+                              action_required: this.state.actionRecommendations.filter(
+                                (d: any) => d.selected == true,
+                              ),
 
                               location: this.state.observation,
                               submit_to: this.state.submitToTags.map(
