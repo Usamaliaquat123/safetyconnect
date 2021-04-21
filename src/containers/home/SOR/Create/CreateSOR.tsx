@@ -514,14 +514,19 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 if (this.state.submitToTags.length !== 0) {
                   if (this.state.exclateToTags.length !== 0) {
                     this.setState({loading: true, errorModal: true});
-
+                    console.log(
+                      this.state.actionRecommendations.filter(
+                        (d: any) => d.selected == true,
+                      ),
+                    );
                     this.state.actionRecommendations
                       .filter((d: any) => d.selected == true)
                       .map((d: any, i: number) => {
                         delete d['selected'];
                       });
 
-                    this.setState();
+                    // this.setState();
+
                     // Repeated observations
                     // res.data.resultss
                     var bodyInitial = {
@@ -577,26 +582,26 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         //   'inconnent12345@outlook.com',
                         //   this.props.navigation,
                         // );
-                        createApi
-                          .createApi()
-                          .createSor(sor)
-                          .then((res: any) => {
-                            this.setState({loading: false, errorModal: false});
+                        // createApi
+                        //   .createApi()
+                        //   .createSor(sor)
+                        //   .then((res: any) => {
+                        //     this.setState({loading: false, errorModal: false});
 
-                            if (res.status == 200) {
-                              this.props.navigation.navigate('ViewAllSOr');
-                            } else {
-                              console.log(res);
-                              // this.setState({
-                              //   errorModal: false,
-                              //   errHeadingText: `CreateSor api returns ${res.data.status}.`,
-                              //   errDesText: res.data.message,
-                              // });
-                            }
-                          })
-                          .catch(() =>
-                            this.setState({loading: false, errorModal: false}),
-                          );
+                        //     if (res.status == 200) {
+                        //       this.props.navigation.navigate('ViewAllSOr');
+                        //     } else {
+                        //       console.log(res);
+                        //       // this.setState({
+                        //       //   errorModal: false,
+                        //       //   errHeadingText: `CreateSor api returns ${res.data.status}.`,
+                        //       //   errDesText: res.data.message,
+                        //       // });
+                        //     }
+                        //   })
+                        //   .catch(() =>
+                        //     this.setState({loading: false, errorModal: false}),
+                        //   );
                       })
                       .catch(() => {
                         this.setState({loading: false, errorModal: false});
@@ -674,6 +679,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         .map((d: any, i: number) => {
                           delete d['selected'];
                         });
+
+                      console.log(
+                        this.state.actionRecommendations.filter(
+                          (d: any) => d.selected == true,
+                        ),
+                      );
                       var bodyInitial = {
                         report: {
                           created_by: this.state.email,

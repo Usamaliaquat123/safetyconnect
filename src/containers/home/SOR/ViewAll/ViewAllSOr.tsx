@@ -158,7 +158,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       .then((res: any) => {
         //  res.data = Object.assign({}, res.data);
         //  console.log(res.data)
-        console.log(this.state.involved_person);
         if (res.data.data == undefined) {
         } else {
           for (let i = 0; i < res.data.data.report.length; i++) {
