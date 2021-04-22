@@ -7,7 +7,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Auth} from 'aws-amplify';
 import jwtDecode from 'jwt-decode';
-import { createApi } from "@service";
+import {createApi} from '@service';
 // import { resolvePreset } from '@babel/core';
 export const Navigator = (props: any) => {
   const [isAuthenticated, setIsAuthenticated] = useState(Boolean);
@@ -39,20 +39,17 @@ export const Navigator = (props: any) => {
   // checkUser();
   AsyncStorage.getItem('email').then((res: any) => {
     setUser(res);
-    console.log('=============')
-    
-      createApi.createApi().getUser(res).then(res => {
-        console.log(res)
-        AsyncStorage.setItem('user', JSON.stringify(res.data.data))
-      })
-      console.log('=============')
+    console.log('=============');
 
-
+    createApi
+      .createApi()
+      .getUser(res)
+      .then((res) => {
+        console.log(res);
+        AsyncStorage.setItem('user', JSON.stringify(res.data.data));
+      });
+    console.log('=============');
   });
-
-
-
-
 
   console.log(user);
   AsyncStorage.setItem('current_project', '604b13d114ba138bd23d7f75');

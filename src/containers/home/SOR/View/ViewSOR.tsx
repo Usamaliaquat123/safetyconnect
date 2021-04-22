@@ -140,6 +140,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
+    // AsyncStorage.getItem('user').then((user) => {
+    //   console.log(JSON.parse(user));
+    // });
     // console.log(this.props.route.params.data.comments);
     this.mappingMapping(
       this.props.route.params.data.risk.severity,
@@ -298,10 +301,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
   // Get All Comments
   getAllComments = () => {
-    this.props.route.params.data.comments;
+    // this.props.route.params.data.comments;
     console.log('=========');
     console.log(this.props.route.params.data.comments);
-    console.log(this.state.involvedPerson);
+    // console.log(this.state.involvedPerson);
 
     createApi
       .createApi()
@@ -310,6 +313,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         this.props.route.params.data._id,
       )
       .then((res: any) => {
+        console.log(res);
         for (let i = 0; i < res.data.data.all_comments.length; i++) {
           if (res.data.data.all_comments[i].email !== undefined) {
             res.data.data.all_comments[i]['user'] = res.data.data.all_comments[
@@ -324,7 +328,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           // console.log(res.data.data.all_comments[i].email.split('@')[0]);
         }
         this.setState({comments: res.data.data.all_comments});
-        console.log(res.data.data.all_comments);
       })
       .catch((err) => console.log(err));
   };
@@ -337,7 +340,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       commentAttachment: [],
     });
     AsyncStorage.getItem('user').then((user) => {
-      console.log(JSON.parse(user));
       var comments = {
         data: {
           user: JSON.parse(user)._id,
@@ -357,10 +359,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           map.push({
             email: JSON.parse(user).email,
             name: JSON.parse(user).name,
-            date: res.data.data,
+            date: moment().format('YYYY-MM-DD'),
             img_url:
-              'https://media-exp1.licdn.com/dms/image/C4D03AQG7BnPm02BJ7A/profile-displayphoto-shrink_400_400/0/1597134258301?e=1614211200&v=beta&t=afZdYNgBsJ_CI2bCBxkaHESDbTcOq95eUuLVG7lHHEs',
-            comment: this.state.commentText.replace(/\s+/g, ' ').trim(),
+              'https://user-images.githubusercontent.com/33973828/115679334-e690a780-a36b-11eb-9202-3f5fb5413bbf.png',
+            comment: comment,
             attachments: this.state.commentAttachment,
           });
 

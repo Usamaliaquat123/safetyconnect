@@ -497,7 +497,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               ) {
                 if (this.state.submitToTags.length !== 0) {
                   if (this.state.exclateToTags.length !== 0) {
-                    this.setState({loading: true, errorModal: true});
+                    this.setState({loading: true});
 
                     var rec = this.state.actionRecommendations.filter(
                       (d: any) => d.selected == true,
@@ -560,7 +560,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           },
                           project: '607820d5724677561cf67ec5',
                         };
-                        console.log(sor);
                         // this.props.reduxActions.createSor(
                         //   sor,
                         //   '604b13d114ba138bd23d7f75',
@@ -690,9 +689,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         .createApi()
                         .createSorInit(bodyInitial)
                         .then((ress: any) => {
-                          // Report Id
-                          // res.data.data.report_id
-
                           var sor = {
                             report: {
                               _id: ress.data.data.report_id,
@@ -744,11 +740,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 this.props.navigation.navigate('ViewAllSOr');
                               } else {
                                 console.log(res);
-                                // this.setState({
-                                //   errorModal: true,
-                                //   errHeadingText: `CreateSor api returns ${res.status}.`,
-                                //   errDesText: res.data.message,
-                                // });
                               }
                             })
                             .catch(() =>
