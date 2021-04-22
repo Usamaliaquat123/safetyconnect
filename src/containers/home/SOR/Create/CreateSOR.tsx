@@ -451,9 +451,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     var sorbtns = this.state.classifySorbtns.filter(
       (d: any) => d.selected === true,
     );
-    // eslint-disable-next-line eqeqeq
     var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
-    // eslint-disable-next-line eqeqeq
     var severity = this.state.severity.filter((d: any) => d.selected == true);
 
     console.log(
@@ -461,20 +459,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         .filter((d: any) => d.selected == true)
         .filter((d: any) => d.assigned_to.length != 0).length == 0,
     );
-    // for (let i = 0; i < this.state.actionRecommendations.length; i++) {
-    //   if (this.state.actionRecommendations[i].assigned_to.length == 0) {
-    //     this.state.actionRecommendations[i].assigned_to = '';
-    //   } else {
-    //     this.state.actionRecommendations[
-    //       i
-    //     ].assigned_to = this.state.actionRecommendations[i].assigned_to[0];
-    //   }
-    // }
-
-    // var actionRecommendationsText = this.state.actionRecommendationsText;
-    // var submitTo = this.state.submitTo;
-    // var esclateTo = this.state.esclateTo;
-    // Check If the observation text is detected
 
     // for (let i = 0; i < this.state.filename.length; i++) {
     //   this.upoadFiles(
@@ -518,7 +502,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     var rec = this.state.actionRecommendations.filter(
                       (d: any) => d.selected == true,
                     );
-                    // console.log(rec.map((d: any) => delete d['selected']));
 
                     var actions: Array<any> = [];
                     for (let i = 0; i < rec.length; i++) {
