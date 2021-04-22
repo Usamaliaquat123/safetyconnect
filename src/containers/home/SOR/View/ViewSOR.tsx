@@ -313,7 +313,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         this.props.route.params.data._id,
       )
       .then((res: any) => {
-        console.log(res);
         for (let i = 0; i < res.data.data.all_comments.length; i++) {
           if (res.data.data.all_comments[i].email !== undefined) {
             res.data.data.all_comments[i]['user'] = res.data.data.all_comments[
@@ -321,12 +320,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             ].email.split('@')[0];
           }
           res.data.data.all_comments[i]['image'] = '';
-
-          // console.log(res.data.data.all_comments);
-          // res.data.data.all_comments[i]['files'
-
-          // console.log(res.data.data.all_comments[i].email.split('@')[0]);
+          filterAndMappingPersons(
+            res.data.data.report[i].user,
+            this.state.involvedPerson,
+          );
         }
+
+        res.data.data.all_comments.user;
+
         this.setState({comments: res.data.data.all_comments});
       })
       .catch((err) => console.log(err));
