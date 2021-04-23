@@ -288,13 +288,18 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
   // delete comment through commentId
   deleteComment = (comment: any) => {
-    console.log(comment[0]._id);
+    // console.log(comment);
 
     createApi
       .createApi()
-      .delComment(comment[0]._id)
+      .delComment(comment[0]._id, this.props.route.params.data.comments)
       .then((res) => {
-        console.log(res);
+        if (res.status == 200) {
+          console.log(res);
+          this.state.comments.splice(this.state.editDiscardCommentIndex, 1);
+
+          this.setState({editDelComment: false});
+        }
       })
       .catch((err) => console.log(err));
   };

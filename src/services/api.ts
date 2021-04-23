@@ -104,7 +104,7 @@ const createApi = (
     baseapi.get(
       `comment/?comment_document_id=${commentId}&reportId=${reportId}`,
     );
-  const delComment = (data: any) => baseapi.delete(`comment`, data);
+  const delComment = (commentId: any, documentId:  any) => baseapi.delete(`comment`, {} , {data:{comment_id : commentId ,comment_document_id :documentId }});
   const editComment = (data: any) => baseapi.get(`comment`, data);
   const createComment = (data: any) => baseapi.post(`comment`, data);
 
