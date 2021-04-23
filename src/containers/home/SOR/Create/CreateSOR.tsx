@@ -1047,11 +1047,32 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       (System Defined)
                     </Text>
                   </View>
-                  {/* <View style={[styles.badgePotientialRisk,  this.state.potientialRisk < 7 ? {borderColor : colors.green}: this.state.potientialRisk < 14 ? {borderColor : colors.riskIcons.orrange} :{borderColor : colors.error} ]}>
-              <Text style={[styles.potentialRiskBadgeContainerText, this.state.potientialRisk < 7 ? {color : colors.green}: this.state.potientialRisk < 14 ? {color : colors.riskIcons.orrange} :{color : colors.error} ]}>
-                {this.state.potientialRisk} - { this.state.potientialRisk < 7 ? "Low": this.state.potientialRisk < 14 ? "Medium" :"High"}
-              </Text>
-                  </View> */}
+                  <View
+                    style={[
+                      styles.badgePotientialRisk,
+                      this.state.potientialRisk < 7
+                        ? {borderColor: colors.green}
+                        : this.state.potientialRisk < 14
+                        ? {borderColor: colors.riskIcons.orrange}
+                        : {borderColor: colors.error},
+                    ]}>
+                    <Text
+                      style={[
+                        styles.potentialRiskBadgeContainerText,
+                        this.state.potientialRisk < 7
+                          ? {color: colors.green}
+                          : this.state.potientialRisk < 14
+                          ? {color: colors.riskIcons.orrange}
+                          : {color: colors.error},
+                      ]}>
+                      {this.state.potientialRisk} -{' '}
+                      {this.state.potientialRisk < 7
+                        ? 'Low'
+                        : this.state.potientialRisk < 14
+                        ? 'Medium'
+                        : 'High'}
+                    </Text>
+                  </View>
                 </View>
                 {/* Actual Risk */}
                 <View>
