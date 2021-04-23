@@ -320,7 +320,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             // console.log(res.data.data.all_comments);
 
             var involvedPersonss = JSON.parse(involveppl);
-            console.log(involvedPersonss);
             for (let i = 0; i < res.data.data.all_comments.length; i++) {
               for (let j = 0; j < involvedPersonss.length; j++) {
                 if (
@@ -329,7 +328,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 ) {
                   res.data.data.all_comments[i].user = involvedPersonss[i];
                 } else {
-                  res.data.data.all_comments[i].user['img_url'] = '';
                   res.data.data.all_comments[i].user['name'] = JSON.parse(
                     user,
                   ).name;
@@ -339,14 +337,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 }
               }
             }
+
+            this.setState({comments: res.data.data.all_comments});
           });
-
-          console.log('===================');
-          console.log(res.data.data.all_comments);
-          console.log('===================');
-          // res.data.data.all_comments.user;
-
-          // this.setState({comments: res.data.data.all_comments});
         })
         .catch((err) => console.log(err));
     });
@@ -1263,20 +1256,22 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   <View>
                     <TouchableOpacity
                       onLongPress={() => {
-                        if (d.attachments != undefined) {
+                        if (d.is_comment == true) {
+                          if (d.attachments != undefined) {
+                            this.setState({
+                              editAttachedCommentArr: d.attachments,
+                            });
+                          } else {
+                            this.setState({
+                              editAttachedCommentArr: [],
+                            });
+                          }
                           this.setState({
-                            editAttachedCommentArr: d.attachments,
-                          });
-                        } else {
-                          this.setState({
-                            editAttachedCommentArr: [],
+                            editDiscardComment: d.comment,
+                            editDiscardCommentIndex: i,
+                            editDelComment: true,
                           });
                         }
-                        this.setState({
-                          editDiscardComment: d.comment,
-                          editDiscardCommentIndex: i,
-                          editDelComment: true,
-                        });
                       }}
                       style={styles.userComments}>
                       {d.user == '' ? null : (
