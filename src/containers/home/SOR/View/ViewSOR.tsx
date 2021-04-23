@@ -287,16 +287,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
 
   // delete comment through commentId
-  deleteComment = (commentId: any) => {
-    console.log(commentId);
+  deleteComment = (comment: any) => {
+    console.log(comment[0]._id);
 
-    // createApi
-    //   .createApi()
-    //   .delComment(commentId)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => console.log(err));
+    createApi
+      .createApi()
+      .delComment(comment[0]._id)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   // Get All Comments
@@ -305,42 +305,51 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     console.log('=========');
     console.log(this.props.route.params.data.comments);
     // console.log(this.state.involvedPerson);
+    AsyncStorage.getItem('user').then((user: any) => {
+      createApi
+        .createApi()
+        .getAllComents(
+          this.props.route.params.data.comments,
+          this.props.route.params.data._id,
+        )
+        .then((res: any) => {
+          console.log(res.data.data.all_comments);
 
-    createApi
-      .createApi()
-      .getAllComents(
-        this.props.route.params.data.comments,
-        this.props.route.params.data._id,
-      )
-      .then((res: any) => {
-        console.log(res.data.data.all_comments);
+          AsyncStorage.getItem('involved_person').then((involveppl: any) => {
+            // console.log(JSON.parse(involveppl));
+            // console.log(res.data.data.all_comments);
 
-        AsyncStorage.getItem('involved_person').then((involveppl: any) => {
-          // console.log(JSON.parse(involveppl));
-          // console.log(res.data.data.all_comments);
-
-          var involvedPersonss = JSON.parse(involveppl);
-          console.log(involvedPersonss);
-          for (let i = 0; i < res.data.data.all_comments.length; i++) {
-            for (let j = 0; j < involvedPersonss.length; j++) {
-              if (
-                res.data.data.all_comments[i].user.email ==
-                involvedPersonss[j].email
-              ) {
-                res.data.data.all_comments[i].user = involvedPersonss[i];
+            var involvedPersonss = JSON.parse(involveppl);
+            console.log(involvedPersonss);
+            for (let i = 0; i < res.data.data.all_comments.length; i++) {
+              for (let j = 0; j < involvedPersonss.length; j++) {
+                if (
+                  res.data.data.all_comments[i].user.email ==
+                  involvedPersonss[j].email
+                ) {
+                  res.data.data.all_comments[i].user = involvedPersonss[i];
+                } else {
+                  res.data.data.all_comments[i].user['img_url'] = '';
+                  res.data.data.all_comments[i].user['name'] = JSON.parse(
+                    user,
+                  ).name;
+                  res.data.data.all_comments[i].user['email'] = JSON.parse(
+                    user,
+                  ).email;
+                }
               }
             }
-          }
-        });
+          });
 
-        console.log('===================');
-        console.log(res.data.data.all_comments);
-        console.log('===================');
-        res.data.data.all_comments.user;
+          console.log('===================');
+          console.log(res.data.data.all_comments);
+          console.log('===================');
+          // res.data.data.all_comments.user;
 
-        this.setState({comments: res.data.data.all_comments});
-      })
-      .catch((err) => console.log(err));
+          // this.setState({comments: res.data.data.all_comments});
+        })
+        .catch((err) => console.log(err));
+    });
   };
 
   // Add Comment
@@ -1397,7 +1406,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     value={this.state.commentText}
                     onChange={(e) => {
                       // mentionComment
-
                       this.setState({commentText: e.nativeEvent.text});
                     }}
                     placeholder={'Your comment here '}
@@ -2010,9 +2018,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             // this.deleteComment(
             //   this.state.comments.findIndex(this.state.editDiscardCommentIndex),
             // );
-            this.state.comments.splice(this.state.editDiscardCommentIndex, 1);
+            this.deleteComment(
+              e.filter(
+                (d: any, i: number) => i == this.state.editDiscardCommentIndex,
+              ),
+            );
+            // console.log(
+            //   e.filter(
+            //     (d: any, i: number) => i == this.state.editDiscardCommentIndex,
+            //   ),
+            // );
 
-            this.setState({editDelComment: false});
+            console.log(e);
+            // this.state.comments.splice(this.state.editDiscardCommentIndex, 1);
+
+            // this.setState({editDelComment: false});
           }}
           submitComment={(e: any) => {
             this.state.comments[this.state.editDiscardCommentIndex][
