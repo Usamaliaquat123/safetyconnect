@@ -45,10 +45,14 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
           {/* All Questions  */}
 
           {this.state.fivewhy.map((d: any, i: number) => (
-            <View>
-              <Text>{i + 1}st WHY</Text>
-              <Text>Who is responsible for this event</Text>
-              <Text>john doe is responsible for this event</Text>
+            <View style={styles.viewWhyContainer}>
+              <Text style={styles.viewCountWhy}>{i + 1}st WHY</Text>
+              <Text style={styles.viewQuestion}>
+                Who is responsible for this event
+              </Text>
+              <Text style={styles.viewAnswer}>
+                john doe is responsible for this event
+              </Text>
             </View>
           ))}
 

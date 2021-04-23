@@ -6,27 +6,7 @@ import {
 } from 'react-native-responsive-screen';
 const styles = StyleSheet.create({
   fiveWhyContainer: {},
-  keyfindingsText: {
-    fontSize: wp(4),
-    fontFamily: fonts.SFuiDisplaySemiBold,
-  },
-  keyfindingsContiner: {
-    marginTop: wp(4),
-  },
-  keyfindingsInputContiner: {
-    borderWidth: wp(0.2),
-    borderRadius: wp(2),
-    height: wp(25),
-    marginTop: wp(2),
-  },
-  keyfindingsInput: {
-    borderBottomWidth: 0,
 
-    padding: wp(3),
-    fontFamily: fonts.SFuiDisplayMedium,
-
-    fontSize: wp(3.4),
-  },
   conduct5whyanaHeading: {
     fontSize: wp(4),
     fontFamily: fonts.SFuiDisplaySemiBold,
@@ -67,6 +47,48 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.secondary,
     fontSize: wp(3.5),
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+
+  // KeyFindings
+  keyfindingsText: {
+    fontSize: wp(4),
+    fontFamily: fonts.SFuiDisplaySemiBold,
+  },
+  keyfindingsContiner: {
+    marginTop: wp(4),
+  },
+  keyfindingsInputContiner: {
+    borderWidth: wp(0.2),
+    borderRadius: wp(2),
+    height: wp(25),
+    marginTop: wp(2),
+  },
+  keyfindingsInput: {
+    borderBottomWidth: 0,
+
+    padding: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
+
+    fontSize: wp(3.4),
+  },
+
+  //   View Five why
+  viewWhyContainer: {
+    marginTop: wp(2),
+  },
+  viewCountWhy: {
+    opacity: 0.5,
+    fontSize: wp(3.5),
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  viewQuestion: {
+    fontSize: wp(3.7),
+    fontFamily: fonts.SFuiDisplaySemiBold,
+  },
+  viewAnswer: {
+    opacity: 0.5,
+    fontSize: wp(3.3),
     fontFamily: fonts.SFuiDisplayMedium,
   },
 });
