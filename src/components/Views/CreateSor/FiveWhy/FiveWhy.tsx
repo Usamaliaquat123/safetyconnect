@@ -27,7 +27,9 @@ export interface ViewAllProps {
 export default class FiveWhy extends React.Component<ViewAllProps, any> {
   constructor(props: any) {
     super(props);
-    this.state = {};
+    this.state = {
+      fivewhy: [{question: '', answer: ''}],
+    };
   }
   componentDidMount() {}
 
@@ -41,7 +43,14 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
           </Text>
 
           {/* All Questions  */}
-          <View></View>
+
+          {this.state.fivewhy.map((d: any, i: number) => (
+            <View>
+              <Text>{i + 1}st WHY</Text>
+              <Text>Who is responsible for this event</Text>
+              <Text>john doe is responsible for this event</Text>
+            </View>
+          ))}
 
           {/* Five WHY Questionaries Container */}
           <View style={styles.questionandAnswerContainer}>
