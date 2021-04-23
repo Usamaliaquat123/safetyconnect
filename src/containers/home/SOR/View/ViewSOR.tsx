@@ -313,18 +313,22 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         this.props.route.params.data._id,
       )
       .then((res: any) => {
-        for (let i = 0; i < res.data.data.all_comments.length; i++) {
-          if (res.data.data.all_comments[i].email !== undefined) {
-            res.data.data.all_comments[i]['user'] = res.data.data.all_comments[
-              i
-            ].email.split('@')[0];
+        console.log(res.data.data.all_comments);
+
+        AsyncStorage.getItem('involved_person').then((involveppl: any) => {
+          console.log(JSON.parse(involveppl));
+          for (let i = 0; i < res.data.data.all_comments.length; i++) {
+            // if (res.data.data.all_csomments[i].email !== undefined) {
+            //   res.data.data.all_comments[i]['user'] = res.data.data.all_comments[
+            //     i
+            //   ].email.split('@')[0];
+            // }
+            // res.data.data.all_comments[i]['image'] = '';
+            for (let j = 0; j < JSON.parse(involveppl).length; j++) {
+              // if(res.data.data.all_comments[i].user.email == )
+            }
           }
-          res.data.data.all_comments[i]['image'] = '';
-          filterAndMappingPersons(
-            res.data.data.report[i].user,
-            this.state.involvedPerson,
-          );
-        }
+        });
 
         res.data.data.all_comments.user;
 
