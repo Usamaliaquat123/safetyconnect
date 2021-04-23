@@ -350,12 +350,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
       commentAttachment: [],
     });
-    AsyncStorage.getItem('user').then((user : any) => {
+    AsyncStorage.getItem('user').then((user: any) => {
       var comments = {
         data: {
           user: {
             email: JSON.parse(user).email,
-            img_url :  'https://user-images.githubusercontent.com/33973828/115679334-e690a780-a36b-11eb-9202-3f5fb5413bbf.png',            ,
+            img_url:
+              'https://user-images.githubusercontent.com/33973828/115679334-e690a780-a36b-11eb-9202-3f5fb5413bbf.png',
           },
           comment: comment,
           date: moment().format('YYYY-MM-DD'),
