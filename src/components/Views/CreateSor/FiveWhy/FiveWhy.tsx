@@ -34,21 +34,50 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
   render() {
     return (
       <View style={this.props.containerStyle}>
-        <Text style={styles.conduct5whyanaHeading}>
-          Conduct Five WHY analysis
-        </Text>
+        {/* FIVE WHY Questionaries */}
+        <View style={styles.fiveWhyContainer}>
+          <Text style={styles.conduct5whyanaHeading}>
+            Conduct Five WHY analysis
+          </Text>
 
-        {/* Five WHY Questionaries Container */}
-        <View style={styles.questionandAnswerContainer}>
-          {/* Question */}
-          <TextInput style={styles.qInputContainer} placeholder={'Add WHY'} />
-          {/* Answer */}
-          <TextInput
-            style={styles.aInputContainer}
-            multiline={true}
-            placeholder={'Add Answer'}
-          />
+          {/* All Questions  */}
+          <View></View>
+
+          {/* Five WHY Questionaries Container */}
+          <View style={styles.questionandAnswerContainer}>
+            {/* Question */}
+            <TextInput style={styles.qInputContainer} placeholder={'Add WHY'} />
+            {/* Answer */}
+            <View style={styles.aInputContain}>
+              <TextInput
+                underlineColorAndroid="transparent"
+                style={styles.aInputContainer}
+                multiline={true}
+                placeholder={'Add Answer'}
+              />
+            </View>
+          </View>
+          {/* Add Questions Button */}
+          <View style={styles.addQuestionbtn}>
+            <Text style={styles.addQuestionText}>Add Question</Text>
+          </View>
         </View>
+        {/* KEY FINDINGS */}
+        <View style={styles.keyfindingsContiner}>
+          <Text style={styles.keyfindingsText}>Key Findings</Text>
+          <View style={styles.keyfindingsInputContiner}>
+            <TextInput
+              underlineColorAndroid="transparent"
+              style={styles.keyfindingsInput}
+              multiline={true}
+              placeholder={'Add key findings here'}
+            />
+          </View>
+        </View>
+        {/* Root Causes */}
+        <View></View>
+        {/* Contributory Causes */}
+        <View></View>
       </View>
     );
   }

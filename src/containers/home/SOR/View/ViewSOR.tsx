@@ -2070,3 +2070,15 @@ const mapDispatchToProps = (dispatch: any) => ({
   reduxActions: bindActionCreators(reduxActions, dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ViewSOR);
+
+
+
+
+// <View style={styles.keyfindingsContiner}>
+// <TextInput
+//   underlineColorAndroid="transparent"
+//   style={styles.aInputContainer}
+//   multiline={true}
+//   placeholder={'Add Answer'}
+// />
+// </View>
