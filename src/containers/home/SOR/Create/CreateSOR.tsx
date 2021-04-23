@@ -35,6 +35,7 @@ import {
   Tags,
   Calendars,
   Selector,
+  FiveWhy,
 } from '@components';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
@@ -115,6 +116,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       loading: false,
       errDesText: '',
       SuggestionPop: false,
+      fiveWhytoggle: true,
     };
   }
 
@@ -1107,6 +1109,73 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             ) : null}
             {/* Line  */}
             <View style={styles.lineheight} />
+            {/* Five WHY Questions  */}
+            <View style={styles.fiveWhyContainer}>
+              <View style={styles.fiveWhyHeadingContainer}>
+                <Text style={styles.investigationReqtext}>
+                  {' '}
+                  Investigation Required
+                </Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({fiveWhytoggle: !this.state.fiveWhytoggle})
+                  }
+                  style={styles.fivewhyToggleContainer}>
+                  <View
+                    style={[
+                      styles.fivewhyToggeNo,
+                      this.state.fiveWhytoggle == false
+                        ? {
+                            borderColor: colors.error,
+                            backgroundColor: '#F59798',
+                          }
+                        : {
+                            borderColor: colors.text,
+                            borderRightWidth: wp(0),
+                            opacity: 0.5,
+                          },
+                    ]}>
+                    <Text
+                      style={[
+                        styles.fivewhyToggeNoText,
+                        this.state.fiveWhytoggle == false
+                          ? {color: colors.secondary}
+                          : {color: colors.text},
+                      ]}>
+                      No
+                    </Text>
+                  </View>
+                  <View
+                    style={[
+                      styles.fivewhyToggeYes,
+                      this.state.fiveWhytoggle
+                        ? {
+                            borderColor: colors.green,
+                            backgroundColor: colors.lightGreen,
+                          }
+                        : {
+                            borderColor: colors.text,
+                            borderLeftWidth: wp(0),
+                            opacity: 0.5,
+                          },
+                    ]}>
+                    <Text
+                      style={[
+                        styles.fivewhyToggeYesText,
+                        this.state.fiveWhytoggle
+                          ? {color: colors.green}
+                          : {color: colors.text},
+                      ]}>
+                      Yes
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+
+              {this.state.fiveWhytoggle ? (
+                <FiveWhy containerStyle={{marginTop: wp(3)}} />
+              ) : null}
+            </View>
 
             {/* Actions/Recommendation */}
             {this.state.classifySorbtns[1].selected == false ? (

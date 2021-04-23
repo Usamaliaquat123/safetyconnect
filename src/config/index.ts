@@ -4,6 +4,14 @@ import {fromCognitoIdentityPool} from '@aws-sdk/credential-provider-cognito-iden
 import {CognitoIdentityClient} from '@aws-sdk/client-cognito-identity';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
+
+// Load the SDK for JavaScript
+// var AWS = require('aws-sdk');
+// // Set the Region 
+// AWS.config.update({region: 'us-west-2'});
+
+
+
 // configure Sentry
 const configSentry = () => {
   return new Promise((resolve, reject) => {

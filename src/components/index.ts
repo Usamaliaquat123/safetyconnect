@@ -13,13 +13,15 @@ import Calendars from './calendars/Calendars';
 import BottomPop from './BottomTab/BottomTabModal';
 import SuggestionsPop from './ViewSor/Popup/Suggestions/SuggestionsPop';
 import Selector from './Views/CreateSor/SelectProjectLocation/Selector';
+import FiveWhy from './Views/CreateSor/FiveWhy/FiveWhy';
 export {
   Suggestions,
   Chart,
   Card,
+  FiveWhy,
   Calendars,
   Search,
-  User, 
+  User,
   BottomPop,
   Header,
   ListCard,

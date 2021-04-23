@@ -8,13 +8,13 @@ const styles = StyleSheet.create({
   // Header
   header: {
     padding: wp(7),
-    paddingLeft : wp(3),
+    paddingLeft: wp(3),
     paddingTop: wp(5),
     paddingBottom: wp(5),
     backgroundColor: colors.primary,
   },
   title: {
-    marginTop : wp(1),
+    marginTop: wp(1),
     fontFamily: fonts.SFuiDisplayBold,
     fontSize: wp(4),
     marginLeft: wp(3),
@@ -52,30 +52,28 @@ const styles = StyleSheet.create({
     width: wp(22),
   },
 
-  selectProjectLocationContainer : {
-    paddingLeft : wp(3),
-    paddingRight : wp(3),
-    marginBottom : wp(5),
-    marginTop : wp(5),
+  selectProjectLocationContainer: {
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+    marginBottom: wp(5),
+    marginTop: wp(5),
     // justifyContent : "space-evenly",
-    flexDirection : "row",
+    flexDirection: 'row',
   },
-  selectProjectContainer : {
-
-  },
-  selectProjHead : {
-    fontSize :wp(4),
-    opacity : .6,
-    fontFamily  : fonts.SFuiDisplayMedium
+  selectProjectContainer: {},
+  selectProjHead: {
+    fontSize: wp(4),
+    opacity: 0.6,
+    fontFamily: fonts.SFuiDisplayMedium,
   },
   selectlocationHead: {
     fontSize: wp(4),
-    opacity: .6,
-    fontFamily: fonts.SFuiDisplayMedium
+    opacity: 0.6,
+    fontFamily: fonts.SFuiDisplayMedium,
   },
   selectProj: {
     marginTop: wp(2),
-    alignItems: "center",
+    alignItems: 'center',
     paddingLeft: wp(5),
     paddingRight: wp(5),
     borderWidth: wp(0.4),
@@ -83,37 +81,37 @@ const styles = StyleSheet.create({
     paddingBottom: wp(3),
     borderColor: colors.textOpa,
     borderRadius: wp(1),
-    flexDirection: "row",
+    flexDirection: 'row',
   },
-  downIcon : {
-    marginLeft  :wp(7),
+  downIcon: {
+    marginLeft: wp(7),
 
-   opacity : .7
+    opacity: 0.7,
   },
-  projName : {
-    fontSize : wp(3),
-    opacity : .7,
-    fontFamily : fonts.SFuiDisplayMedium
+  projName: {
+    fontSize: wp(3),
+    opacity: 0.7,
+    fontFamily: fonts.SFuiDisplayMedium,
   },
-  locaName  : {
-    fontSize : wp(3),
-    opacity : .7,
-    fontFamily : fonts.SFuiDisplayMedium
+  locaName: {
+    fontSize: wp(3),
+    opacity: 0.7,
+    fontFamily: fonts.SFuiDisplayMedium,
   },
-  selectLocation : {
-    marginTop : wp(2),
-    alignItems : "center",
-    paddingLeft : wp(5),
-    paddingRight : wp(5),
-    borderWidth : wp(0.4),
-    paddingTop : wp(3),
-    paddingBottom : wp(3),
-    borderColor :colors.textOpa,
-    borderRadius : wp(1),
-    flexDirection : "row"
+  selectLocation: {
+    marginTop: wp(2),
+    alignItems: 'center',
+    paddingLeft: wp(5),
+    paddingRight: wp(5),
+    borderWidth: wp(0.4),
+    paddingTop: wp(3),
+    paddingBottom: wp(3),
+    borderColor: colors.textOpa,
+    borderRadius: wp(1),
+    flexDirection: 'row',
   },
-  selectLocationContainer : {
-    marginLeft : wp(6),
+  selectLocationContainer: {
+    marginLeft: wp(6),
   },
   slctContainer: {
     position: 'absolute',
@@ -178,10 +176,10 @@ const styles = StyleSheet.create({
     height: wp(0.5),
     backgroundColor: colors.darkLightGrey,
   },
-  observationDetailsContainer : {
-    paddingLeft : wp(3),
-    paddingRight : wp(3),
-    paddingBottom : wp(5)
+  observationDetailsContainer: {
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+    paddingBottom: wp(5),
   },
   obInput: {borderBottomWidth: 0},
   obInputText: {
@@ -216,9 +214,9 @@ const styles = StyleSheet.create({
   },
   // Classify SOR
   clasSorContainer: {
-  paddingLeft : wp(3),
-  paddingRight : wp(3),
-  paddingBottom : wp(4),
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+    paddingBottom: wp(4),
   },
   clasSorHeading: {
     fontSize: wp(5),
@@ -228,12 +226,12 @@ const styles = StyleSheet.create({
     marginTop: wp(7),
     marginBottom: wp(2),
   },
-    clasSorBtnCont: {
+  clasSorBtnCont: {
     borderRadius: wp(1),
     borderWidth: wp(0.3),
     // padding: wp(),
-    paddingTop : wp(4),
-    paddingBottom : wp(4),
+    paddingTop: wp(4),
+    paddingBottom: wp(4),
     marginTop: wp(3),
     // alignSelf: 'stretch',
     width: wp(42),
@@ -241,13 +239,17 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
   },
   clasSorBtnV: {
-    flexDirection: "row",
+    flexDirection: 'row',
 
     flexWrap: 'wrap',
     alignSelf: 'center',
-    justifyContent:"space-between",
+    justifyContent: 'space-between',
   },
-  clasSorBtnWrap: {flexDirection : "row",justifyContent : "center", alignContent : "center"},
+  clasSorBtnWrap: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
   clasSorBtnTtl: {
     textAlign: 'center',
     fontSize: wp(3),
@@ -255,48 +257,42 @@ const styles = StyleSheet.create({
     marginLeft: wp(1),
   },
   // Involve Person
- 
-
-
-
 
   // Potiential Risk
-  potentialRiskContainer : {
-    flexDirection : "row",
-   justifyContent : "space-between"
+  potentialRiskContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  potientialRiskHeading : {
+  potientialRiskHeading: {
     color: colors.text,
     fontSize: wp(5),
 
-    opacity : .6,
+    opacity: 0.6,
     // marginTop: wp(10),
     marginRight: wp(2),
     fontFamily: fonts.SFuiDisplaySemiBold,
   },
-  riskContainer : {
-    marginTop : wp(5),
-    paddingLeft : wp(3),
-    paddingRight : wp(3)
+  riskContainer: {
+    marginTop: wp(5),
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
   },
-  systemDefinedtext : { 
-    fontSize : wp(3),
+  systemDefinedtext: {
+    fontSize: wp(3),
     fontFamily: fonts.SFuiDisplayMedium,
-    opacity : .6,
-
-  },  
-  potentialRiskBadgeContainerText : {
-    fontSize  :wp(3),
-    fontFamily : fonts.SFuiDisplayMedium,
-    
+    opacity: 0.6,
   },
-  badgePotientialRisk : {
-    borderWidth : wp(0.6),
-    paddingLeft : wp(3),
-    paddingRight : wp(3),
-    paddingTop  :wp(1),
-    borderRadius : wp(10),
-    paddingBottom : wp(1)
+  potentialRiskBadgeContainerText: {
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  badgePotientialRisk: {
+    borderWidth: wp(0.6),
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+    paddingTop: wp(1),
+    borderRadius: wp(10),
+    paddingBottom: wp(1),
   },
 
   RiskHeading: {
@@ -338,12 +334,12 @@ const styles = StyleSheet.create({
   actionsRecHeading: {
     fontSize: wp(5),
     color: colors.text,
-    fontFamily : fonts.SFuiDisplaySemiBold
+    fontFamily: fonts.SFuiDisplaySemiBold,
   },
   actionContainer: {
     marginTop: wp(5),
-    paddingLeft : wp(3),
-    paddingRight : wp(3)
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
   },
   actionInput: {
     marginTop: wp(2),
@@ -356,9 +352,13 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
 
-  sbBtnText: {fontSize: wp(5), fontFamily : fonts.SFuiDisplayMedium, },
-  optnToggleContainer: {marginTop: wp(10), paddingLeft : wp(3),
-paddingRight : wp(3), marginBottom : wp(5)},
+  sbBtnText: {fontSize: wp(5), fontFamily: fonts.SFuiDisplayMedium},
+  optnToggleContainer: {
+    marginTop: wp(10),
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+    marginBottom: wp(5),
+  },
   optnselector: {
     justifyContent: 'space-between',
     flexDirection: 'row',
@@ -407,20 +407,18 @@ paddingRight : wp(3), marginBottom : wp(5)},
     padding: wp(3),
   },
   submitsorbtn: {
-    padding: wp(  5),
+    padding: wp(5),
     marginTop: wp(6),
     alignItems: 'center',
     borderColor: colors.primary,
     borderWidth: wp(0.1),
     borderRadius: wp(3),
     width: wp(45),
-  
   },
   submitsorbtntxt: {
     fontSize: wp(3.5),
     color: colors.primary,
-    fontFamily : fonts.SFuiDisplayMedium,
-
+    fontFamily: fonts.SFuiDisplayMedium,
   },
   involvePsuggCont: {
     borderColor: colors.textOpa,
@@ -439,8 +437,8 @@ paddingRight : wp(3), marginBottom : wp(5)},
   },
   submitsorbtnSb: {
     padding: wp(5),
-    width : wp(45),
-    borderColor : colors.green,
+    width: wp(45),
+    borderColor: colors.green,
     marginTop: wp(6),
     alignItems: 'center',
     backgroundColor: colors.primary,
@@ -450,12 +448,12 @@ paddingRight : wp(3), marginBottom : wp(5)},
   submitsorbtnSbtxt: {
     fontSize: wp(3.5),
     color: colors.secondary,
-    fontFamily  : fonts.SFuiDisplayMedium
+    fontFamily: fonts.SFuiDisplayMedium,
   },
   errHeadPop: {
     fontSize: wp(5),
     textAlign: 'center',
-    fontFamily : fonts.SFuiDisplayMedium,
+    fontFamily: fonts.SFuiDisplayMedium,
     color: colors.error,
   },
   errEmailPassDesc: {
@@ -513,7 +511,7 @@ paddingRight : wp(3), marginBottom : wp(5)},
   },
   addActionAndRecommendation: {
     borderWidth: wp(0.3),
-    marginBottom : wp(5),
+    marginBottom: wp(5),
     borderRadius: wp(3),
     marginTop: wp(3),
     paddingLeft: wp(1),
@@ -565,89 +563,138 @@ paddingRight : wp(3), marginBottom : wp(5)},
     alignItems: 'center',
   },
 
-
-
-
   // Attachments component
-  attachmentsHeading  : {
-    fontSize: wp(5), 
-    fontFamily  :fonts.SFuiDisplaySemiBold
+  attachmentsHeading: {
+    fontSize: wp(5),
+    fontFamily: fonts.SFuiDisplaySemiBold,
   },
-  attachmentOptionalText : {
-    fontFamily : fonts.SFuiDisplayLight, fontStyle : "italic", fontSize: wp(3)
+  attachmentOptionalText: {
+    fontFamily: fonts.SFuiDisplayLight,
+    fontStyle: 'italic',
+    fontSize: wp(3),
   },
-  attachmentheadingContainer :  {
-    flexDirection: 'row', marginTop: wp(5), alignItems : "center"
+  attachmentheadingContainer: {
+    flexDirection: 'row',
+    marginTop: wp(5),
+    alignItems: 'center',
   },
-  attachmentContainer : {
-    paddingLeft : wp(3),
-  marginBottom : wp(5),
-    paddingRight : wp(3),
+  attachmentContainer: {
+    paddingLeft: wp(3),
+    marginBottom: wp(5),
+    paddingRight: wp(3),
   },
   uploadBorder: {
     borderRadius: wp(3),
     padding: wp(3),
-    alignItems  :"center",
-    width : wp(17),
-    borderColor : colors.primary,
+    alignItems: 'center',
+    width: wp(17),
+    borderColor: colors.primary,
     // borderStyle: 'dashed',
     borderWidth: wp(0.3),
   },
-  attachmentContentContainer:  {
-    flexDirection : "row",
+  attachmentContentContainer: {
+    flexDirection: 'row',
   },
-  supportedfileFotmatsText : {
-    opacity: .7,
-    fontSize : wp(3),
-    fontFamily : fonts.SFuiDisplayLight
+  supportedfileFotmatsText: {
+    opacity: 0.7,
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayLight,
   },
-  supportedfileFotmats: { 
-    fontSize : wp(3),
-    fontFamily : fonts.SFuiDisplayLight
+  supportedfileFotmats: {
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayLight,
   },
   attachmentsDetailTextContainer: {
-    marginLeft  :wp(5),
+    marginLeft: wp(5),
   },
-  fileSizeText : {
-    fontSize : wp(3),
-    fontFamily : fonts.SFuiDisplayMedium
+  fileSizeText: {
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
   },
-  
 
+  // Suggested Actions
 
-// Suggested Actions
+  suggestedActionsContainer: {
+    padding: wp(2),
+    marginTop: wp(2),
+    flexDirection: 'row',
+    borderWidth: wp(0.2),
+    height: wp(14),
+    borderColor: '#686868',
+    borderRadius: wp(1),
+  },
+  actionType: {
+    fontSize: wp(4),
+    // opacity :.5,
+    color: '#686868',
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  actionDesc: {
+    color: colors.text,
+    fontSize: wp(4),
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
 
-suggestedActionsContainer : {
-  padding: wp(2),
-  marginTop : wp(2),
-  flexDirection  :"row",
-  borderWidth : wp(0.2),
-  height : wp(14),
-  borderColor : "#686868",
-  borderRadius : wp(1)  
-},
-actionType : {
-  fontSize : wp(4),
-  // opacity :.5,
-  color : "#686868",
-  fontFamily : fonts.SFuiDisplayMedium
-},
-actionDesc : {
-  color : colors.text
-,  fontSize : wp(4),
-  fontFamily : fonts.SFuiDisplayMedium
+  addActionsAndRecommendationArrow: {
+    position: 'absolute',
+    right: wp(3),
+    padding: wp(2),
+    borderRadius: wp(2),
+    top: wp(2.7),
+    backgroundColor: colors.lightGrey,
+  },
 
-},
+  // Five why api
+  investigationReqtext: {
+    fontSize: wp(5),
+    fontFamily: fonts.SFuiDisplaySemiBold,
+  },
+  fiveWhyContainer: {
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+    paddingBottom: wp(4),
+    paddingTop: wp(4),
+  },
+  fiveWhyHeadingContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  fivewhyToggleContainer: {
+    flexDirection: 'row',
 
-addActionsAndRecommendationArrow : {
-  position: 'absolute',
-  right: wp(3),
-  padding: wp(2),
-  borderRadius: wp(2),
-  top: wp(2.7),
-  backgroundColor: colors.lightGrey, 
-}
+    // borderWidth: wp(0.2),
+    // borderRadius: wp(2),
+    justifyContent: 'space-between',
+  },
 
+  fivewhyToggeYesText: {
+    fontSize: wp(3),
+
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  fivewhyToggeYes: {
+    borderWidth: wp(0.3),
+    // borderRadius: wp(2),
+    borderTopRightRadius: wp(2),
+    borderBottomRightRadius: wp(2),
+    padding: wp(2),
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+  },
+  fivewhyToggeNoText: {
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  fivewhyToggeNo: {
+    borderWidth: wp(0.3),
+    // borderRadius: wp(2),
+    borderTopLeftRadius: wp(2),
+    borderBottomLeftRadius: wp(2),
+
+    padding: wp(2),
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+  },
 });
 
 export default styles;
