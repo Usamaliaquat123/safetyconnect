@@ -22,7 +22,7 @@ import {Auth} from 'aws-amplify';
 import {colors, images, GlStyles, animation} from '@theme';
 import Modal from 'react-native-modal';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import {
   widthPercentageToDP as wp,
@@ -150,14 +150,13 @@ class Login extends React.Component<LoginProps, any> {
   // Continue with google
   loginWithGoogle = async () => {
     try {
+      // GoogleSignin.signIn().then(res => {
+      //   console.log(res)
+      // }).catch(err => console.log(err))
 
-      GoogleSignin.signIn().then(res => {
-        console.log(res)
-      }).catch(err => console.log(err))
+      const user = await Auth.federatedSignIn({provider: 'Google'});
 
-      // const user = await Auth.federatedSignIn({provider: 'Google'});
-
-      // this.props.navigation.navigate('Main');
+      this.props.navigation.navigate('Main');
     } catch (e) {}
   };
   render() {

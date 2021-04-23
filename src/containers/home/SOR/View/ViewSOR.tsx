@@ -316,20 +316,26 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         console.log(res.data.data.all_comments);
 
         AsyncStorage.getItem('involved_person').then((involveppl: any) => {
-          console.log(JSON.parse(involveppl));
+          // console.log(JSON.parse(involveppl));
+          // console.log(res.data.data.all_comments);
+
+          var involvedPersonss = JSON.parse(involveppl);
+          console.log(involvedPersonss);
           for (let i = 0; i < res.data.data.all_comments.length; i++) {
-            // if (res.data.data.all_csomments[i].email !== undefined) {
-            //   res.data.data.all_comments[i]['user'] = res.data.data.all_comments[
-            //     i
-            //   ].email.split('@')[0];
-            // }
-            // res.data.data.all_comments[i]['image'] = '';
-            for (let j = 0; j < JSON.parse(involveppl).length; j++) {
-              // if(res.data.data.all_comments[i].user.email == )
+            for (let j = 0; j < involvedPersonss.length; j++) {
+              if (
+                res.data.data.all_comments[i].user.email ==
+                involvedPersonss[j].email
+              ) {
+                res.data.data.all_comments[i].user = involvedPersonss[i];
+              }
             }
           }
         });
 
+        console.log('===================');
+        console.log(res.data.data.all_comments);
+        console.log('===================');
         res.data.data.all_comments.user;
 
         this.setState({comments: res.data.data.all_comments});
@@ -344,10 +350,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
       commentAttachment: [],
     });
-    AsyncStorage.getItem('user').then((user) => {
+    AsyncStorage.getItem('user').then((user : any) => {
       var comments = {
         data: {
-          user: JSON.parse(user)._id,
+          user: {
+            email: JSON.parse(user).email,
+            img_url :  'https://user-images.githubusercontent.com/33973828/115679334-e690a780-a36b-11eb-9202-3f5fb5413bbf.png',            ,
+          },
           comment: comment,
           date: moment().format('YYYY-MM-DD'),
           files: [],
@@ -1258,7 +1267,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         });
                       }}
                       style={styles.userComments}>
-                      {/* {d.user == '' ? null : (
+                      {d.user == '' ? null : (
                         <Avatar
                           // containerStyle={{position: 'absolute', top: wp(0)}}
                           size={wp(6)}
@@ -1270,10 +1279,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 : d.user.img_url,
                           }}
                         />
-                      )} */}
+                      )}
 
                       <View style={styles.commentUser}>
-                        {/* <Text style={styles.userCommentName}>{d.user.email}</Text> */}
+                        <Text style={styles.userCommentName}>
+                          {d.user.name}
+                        </Text>
                         <Text style={styles.usercomment}>{d.comment}</Text>
                       </View>
                       <View style={styles.dateComments}>
