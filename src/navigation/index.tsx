@@ -40,7 +40,6 @@ export const Navigator = (props: any) => {
   AsyncStorage.getItem('email').then((res: any) => {
     setUser(res);
     console.log('=============');
-
     createApi
       .createApi()
       .getUser(res)

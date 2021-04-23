@@ -353,11 +353,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     AsyncStorage.getItem('user').then((user: any) => {
       var comments = {
         data: {
-          user: {
-            email: JSON.parse(user).email,
-            img_url:
-              'https://user-images.githubusercontent.com/33973828/115679334-e690a780-a36b-11eb-9202-3f5fb5413bbf.png',
-          },
+          user: JSON.parse(user)._id,
           comment: comment,
           date: moment().format('YYYY-MM-DD'),
           files: [],
@@ -365,6 +361,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         },
         comment_document_id: this.props.route.params.data.comments,
       };
+
+      // this.state.commentAttachment
       createApi
         .createApi()
         .createComment(comments)
@@ -372,13 +370,17 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           console.log(res);
           var map = [...this.state.comments];
           map.push({
-            email: JSON.parse(user).email,
-            name: JSON.parse(user).name,
             date: moment().format('YYYY-MM-DD'),
-            img_url:
-              'https://user-images.githubusercontent.com/33973828/115679334-e690a780-a36b-11eb-9202-3f5fb5413bbf.png',
             comment: comment,
-            attachments: this.state.commentAttachment,
+            files: [],
+            user: {
+              name: JSON.parse(user).name,
+              email: JSON.parse(user).email,
+              _id: JSON.parse(user)._id,
+              img_url:
+                'https://user-images.githubusercontent.com/33973828/115679334-e690a780-a36b-11eb-9202-3f5fb5413bbf.png',
+            },
+            is_comment: true,
           });
 
           this.setState({comments: map});
