@@ -685,8 +685,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         });
                       }
 
-                      console.log(actions);
-
                       var sor = {
                         report: {
                           _id: '',
@@ -720,29 +718,53 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                       if (this.state.fiveWhytoggle) {
                         sor.report['_id'] = this.state.reportIdInvestigation;
+                        AsyncStorage.getItem('user').then((user: any) => {
+                          var obj = {
+                            justification: {
+                              question: [this.state.fiveWhyQuestion],
+                              answer: [this.state.fiveWhyAnswer],
+                              contributoryCauses: 'haider',
+                              rootCauses: 'ali',
+                            },
+                            report: this.state.reportIdInvestigation,
+                            user: JSON.parse(user)._id,
+                          };
+
+                          createApi
+                            .createApi()
+                            .createFiveWhy(obj)
+                            .then((res) => {
+                              console.log(res);
+                            })
+                            .catch((err: any) => console.log(err));
+                        });
 
                         // _id: ress.data.data.report_id,
                       } else {
-                        var bodyInitial = {
-                          report: {
-                            created_by: this.state.email,
-                            comments: '',
-                            status: 1,
-                          },
-                          project: '607820d5724677561cf67ec5',
-                        };
-                        createApi
-                          .createApi()
-                          .createSorInit(bodyInitial)
-                          .then((res: any) => {
-                            sor.report['_id'] = res.data.data.report_id;
+                        if (this.state.reportIdInvestigation == '') {
+                          var bodyInitial = {
+                            report: {
+                              created_by: this.state.email,
+                              comments: '',
+                              status: 1,
+                            },
+                            project: '607820d5724677561cf67ec5',
+                          };
+                          createApi
+                            .createApi()
+                            .createSorInit(bodyInitial)
+                            .then((res: any) => {
+                              sor.report['_id'] = res.data.data.report_id;
 
-                            this.setState({
-                              loading: false,
-                              errorModal: false,
-                            });
-                          })
-                          .catch((err) => console.log(err));
+                              this.setState({
+                                loading: false,
+                                errorModal: false,
+                              });
+                            })
+                            .catch((err) => console.log(err));
+                        } else {
+                          sor.report['_id'] = this.state.reportIdInvestigation;
+                        }
                       }
 
                       // var bodyInitial = {
