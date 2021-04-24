@@ -280,6 +280,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     // AsyncStorage.getItem('user').then((user: any) => {
     //   this.setState({user: JSON.parse(user)});
     // });
+
+    AsyncStorage.getItem('user').then((user: any) => {
+      this.setState({user: JSON.parse(user)});
+    });
     this.mappingMapping(1, 1);
 
     AsyncStorage.getItem('email').then((email: any) => {
@@ -367,7 +371,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     );
     var bodyInitial = {
       report: {
-        created_by: 'inconnent12345@outlook.com',
+        created_by: this.state.user.email,
         comments: '',
         status: 1,
       },
@@ -1117,9 +1121,31 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   Investigation Required
                 </Text>
                 <TouchableOpacity
-                  onPress={() =>
-                    this.setState({fiveWhytoggle: !this.state.fiveWhytoggle})
-                  }
+                  onPress={() => {
+                    this.setState({fiveWhytoggle: !this.state.fiveWhytoggle});
+
+                    if (this.state.fiveWhytoggle) {
+                      var bodyInitial = {
+                        report: {
+                          created_by: this.state.user.email,
+                          comments: '',
+                          status: 1,
+                        },
+                        project: '607820d5724677561cf67ec5',
+                      };
+                      createApi
+                        .createApi()
+                        .createSorInit(bodyInitial)
+                        .then((res: any) => {
+                          console.log(res);
+                          this.setState({
+                            reportIdInvestigation: res.data.data.report_id,
+                          });
+                        })
+                        .catch((err) => console.log(err));
+                    } else {
+                    }
+                  }}
                   style={styles.fivewhyToggleContainer}>
                   <View
                     style={[
@@ -1173,7 +1199,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </View>
 
               {this.state.fiveWhytoggle ? (
-                <FiveWhy containerStyle={{marginTop: wp(3)}} />
+                <FiveWhy
+                  reportId={this.state.reportIdInvestigation}
+                  userId={this.state.user._id}
+                  containerStyle={{marginTop: wp(3)}}
+                />
               ) : null}
             </View>
 

@@ -22,12 +22,14 @@ import {
   getFiles,
   imageAndVideoObjectMap,
   filterAndMappingPersons,
+  suffixThNd,
   capitalizeFirstLetter,
 } from './utils';
 export {
   classifySor,
   validatePassword,
   getLinkParam,
+  suffixThNd,
   filterAndMappingPersons,
   mainPass,
   filterLocation,

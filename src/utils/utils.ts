@@ -129,23 +129,40 @@ export const capitalizeFirstLetter = (string: string): string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-
 // filtering and mapping involved persons data
-export const filterAndMappingPersons = (report: report, persons : Array<any>) : Object => {
-  report.submit_to?.map
-  report.submit_to?.map((emails: any, i : number) => {
-    report.submit_to = persons.filter((d : any) => d.email == emails)
-  })
-  report.esclate_to?.map((emails: any, i : number) => {
-    report.esclate_to = persons.filter((d : any) => d.email == emails)
-  })
-  report.involved_persons?.map((id: any, i : number) => {
-    report.involved_persons = persons.filter((d : any) => d._id == id)
-  })
+export const filterAndMappingPersons = (
+  report: report,
+  persons: Array<any>,
+): Object => {
+  report.submit_to?.map;
+  report.submit_to?.map((emails: any, i: number) => {
+    report.submit_to = persons.filter((d: any) => d.email == emails);
+  });
+  report.esclate_to?.map((emails: any, i: number) => {
+    report.esclate_to = persons.filter((d: any) => d.email == emails);
+  });
+  report.involved_persons?.map((id: any, i: number) => {
+    report.involved_persons = persons.filter((d: any) => d._id == id);
+  });
 
+  return report;
+};
+// suffix of numbers
+export const suffixThNd = (i: number): string => {
+  var j = i % 10,
+    k = i % 100;
+  if (j == 1 && k != 11) {
+    return i + 'st';
+  }
+  if (j == 2 && k != 12) {
+    return i + 'nd';
+  }
+  if (j == 3 && k != 13) {
+    return i + 'rd';
+  }
+  return i + 'th';
+};
 
-  return report
-}
 export const imageAndVideoObjectMap = (
   attachments: Array<string>,
 ): Array<Object> => {
