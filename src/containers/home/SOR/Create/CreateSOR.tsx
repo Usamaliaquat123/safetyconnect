@@ -251,7 +251,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       .createApi()
       .observationSuggestions(str)
       .then((res: any) => {
-        this.setState({suggestions: res.data.results});
+        console.log(res);
+        // this.setState({suggestions: res.data.results});
       });
   };
 
@@ -524,82 +525,137 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         is_selected: rec[i].is_selected,
                       });
                     }
-                    // Repeated observations
-                    // res.data.resultss
-                    var bodyInitial = {
+
+                    var sor = {
                       report: {
+                        _id: '',
                         created_by: this.state.email,
-                        comments: '',
-                        status: 1,
+                        details: this.state.observationT,
+                        occured_at: new Date(),
+                        involved_persons: this.state.involvePersonTags.map(
+                          (d: any) => d._id,
+                        ),
+
+                        sor_type: sorbtns[0].title,
+                        risk: {
+                          severity: 5,
+                          likelihood: 5,
+                        },
+                        action_required: actions,
+
+                        location: this.state.observation,
+                        submit_to: this.state.submitToTags.map(
+                          (d: any) => d.email,
+                        ),
+                        esclate_to: this.state.exclateToTags.map(
+                          (d: any) => d.email,
+                        ),
+                        status: 2,
+                        // attachments: this.state.filename,
+                        comments: ' ',
                       },
                       project: '607820d5724677561cf67ec5',
                     };
-                    createApi
-                      .createApi()
-                      .createSorInit(bodyInitial)
-                      .then((ress: any) => {
-                        // Report Id
-                        // res.data.data.report_id
-                        var sor = {
+
+                    if (this.state.fiveWhytoggle) {
+                      sor.report['_id'] = this.state.reportIdInvestigation;
+                      AsyncStorage.getItem('user').then((user: any) => {
+                        var obj = {
+                          justification: {
+                            question: [this.state.fiveWhyQuestion],
+                            answer: [this.state.fiveWhyAnswer],
+                            contributoryCauses: 'haider',
+                            rootCauses: 'ali',
+                          },
+                          report: this.state.reportIdInvestigation,
+                          user: JSON.parse(user)._id,
+                        };
+
+                        createApi
+                          .createApi()
+                          .createFiveWhy(obj)
+                          .then((res) => {
+                            console.log(res);
+                          })
+                          .catch((err: any) => console.log(err));
+                      });
+
+                      // _id: ress.data.data.report_id,
+                    } else {
+                      if (this.state.reportIdInvestigation == '') {
+                        var bodyInitial = {
                           report: {
-                            _id: ress.data.data.report_id,
                             created_by: this.state.email,
-                            details: this.state.observationT,
-                            occured_at: new Date(),
-                            involved_persons: this.state.involvePersonTags.map(
-                              (d: any) => d._id,
-                            ),
-
-                            sor_type: sorbtns[0].title,
-                            risk: {
-                              severity: 5,
-                              likelihood: 5,
-                            },
-                            action_required: actions,
-
-                            location: this.state.observation,
-                            submit_to: this.state.submitToTags.map(
-                              (d: any) => d.email,
-                            ),
-                            esclate_to: this.state.exclateToTags.map(
-                              (d: any) => d.email,
-                            ),
-                            status: 2,
-                            // attachments: this.state.filename,
-                            comments: ' ',
+                            comments: '',
+                            status: 1,
                           },
                           project: '607820d5724677561cf67ec5',
                         };
-                        // this.props.reduxActions.createSor(
-                        //   sor,
-                        //   '604b13d114ba138bd23d7f75',
-                        //   'inconnent12345@outlook.com',
-                        //   this.props.navigation,
-                        // );
                         createApi
                           .createApi()
-                          .createSor(sor)
+                          .createSorInit(bodyInitial)
                           .then((res: any) => {
-                            this.setState({loading: false, errorModal: false});
+                            sor.report['_id'] = res.data.data.report_id;
 
-                            if (res.status == 200) {
-                              this.props.navigation.navigate('ViewAllSOr');
-                            } else {
-                              console.log(res);
-                              // this.setState({
-                              //   errorModal: false,
-                              //   errHeadingText: `CreateSor api returns ${res.data.status}.`,
-                              //   errDesText: res.data.message,
-                              // });
-                            }
+                            this.setState({
+                              loading: false,
+                              errorModal: false,
+                            });
                           })
-                          .catch(() =>
-                            this.setState({loading: false, errorModal: false}),
-                          );
-                      })
-                      .catch(() => {
+                          .catch((err) => console.log(err));
+                      } else {
+                        sor.report['_id'] = this.state.reportIdInvestigation;
+                      }
+                    }
+
+                    // Repeated observations
+                    // res.data.resultss
+                    // var bodyInitial = {
+                    //   report: {
+                    //     created_by: this.state.email,
+                    //     comments: '',
+                    //     status: 1,
+                    //   },
+                    //   project: '607820d5724677561cf67ec5',
+                    // };
+                    // createApi
+                    //   .createApi()
+                    //   .createSorInit(bodyInitial)
+                    //   .then((ress: any) => {
+                    // Report Id
+                    // res.data.data.report_id
+
+                    // this.props.reduxActions.createSor(
+                    //   sor,
+                    //   '604b13d114ba138bd23d7f75',
+                    //   'inconnent12345@outlook.com',
+                    //   this.props.navigation,
+                    // );
+
+                    createApi
+                      .createApi()
+                      .createSor(sor)
+                      .then((res: any) => {
                         this.setState({loading: false, errorModal: false});
-                      });
+
+                        if (res.status == 200) {
+                          this.props.navigation.navigate('ViewAllSOr');
+                        } else {
+                          console.log(res);
+                          // this.setState({
+                          //   errorModal: false,
+                          //   errHeadingText: `CreateSor api returns ${res.data.status}.`,
+                          //   errDesText: res.data.message,
+                          // });
+                        }
+                      })
+                      .catch(() =>
+                        this.setState({loading: false, errorModal: false}),
+                      );
+                    // })
+                    // .catch(() => {
+                    //   this.setState({loading: false, errorModal: false});
+                    // });
                   } else {
                     this.setState({
                       errorModal: true,

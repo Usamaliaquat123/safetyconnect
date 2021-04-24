@@ -69,7 +69,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
     //   })
     //   .catch((err) => console.log(err));
     this.state.fivewhy.push({question, answer});
-
+    this.setState({question: '', answer: ''});
     this.props.fiveWhyQuestions(this.state.fivewhy.map((d: any) => d.question));
     this.props.fiveWhyAnswer(this.state.fivewhy.map((d: any) => d.answer));
 
@@ -100,6 +100,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
               <View style={styles.questionandAnswerContainer}>
                 {/* Question */}
                 <TextInput
+                  value={this.state.question}
                   onChangeText={(e) => this.setState({question: e})}
                   style={styles.qInputContainer}
                   placeholder={'Add WHY'}
@@ -107,6 +108,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
                 {/* Answer */}
                 <View style={styles.aInputContain}>
                   <TextInput
+                    value={this.state.answer}
                     onChangeText={(e) => this.setState({answer: e})}
                     underlineColorAndroid="transparent"
                     style={styles.aInputContainer}
