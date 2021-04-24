@@ -121,6 +121,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       fiveWhyQuestion: [],
       SuggestionPop: false,
       fiveWhytoggle: true,
+
+      // Involved person
+      involvedToArr: [],
+      involvedTotags: [],
+      involveToText: '',
     };
   }
 
@@ -1223,6 +1228,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 </View>
               </View>
             ) : null}
+
             {/* Line  */}
             <View style={styles.lineheight} />
             {/* Five WHY Questions  */}
@@ -1325,6 +1331,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               ) : null}
             </View>
 
+            {/* Line  */}
+            <View style={styles.lineheight} />
             {/* Actions/Recommendation */}
             {this.state.classifySorbtns[1].selected == false ? (
               <View style={styles.actionContainer}>
@@ -1481,6 +1489,97 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
             {/* Line  */}
             <View style={styles.lineheight} />
+
+            {/* Involved person */}
+
+            <View
+              style={{
+                paddingTop: wp(4),
+                paddingBottom: wp(5),
+                paddingLeft: wp(3),
+                paddingRight: wp(3),
+              }}>
+              <Text style={styles.sbBtnText}>Involved Person </Text>
+              <View
+                style={[
+                  styles.optnselector,
+                  this.state.selectedInputIndex == 5
+                    ? {borderColor: colors.green}
+                    : null,
+                ]}>
+                <TextInput
+                  onFocus={() => this.setState({selectedInputIndex: 5})}
+                  underlineColorAndroid="transparent"
+                  onChange={(v: any) =>
+                    this.setState({
+                      involvedToArr: searchInSuggestions(
+                        v,
+                        this.state.involved_persons,
+                      ),
+                      involveToText: v,
+                    })
+                  }
+                  placeholder={'Select or Type Name'}
+                  style={styles.optnselectorText}
+                  value={this.state.involveToText}
+                />
+              </View>
+
+              {this.state.involvedToArr.length != 0 ? (
+                <View>
+                  <View style={styles.involveSuggestCont}>
+                    {this.state.involvedToArr.map(
+                      (d: involved_persons, i: number) => (
+                        <TouchableOpacity
+                          key={i}
+                          onPress={() => {
+                            this.setState({esclateTo: '', exclateToArr: []});
+                            if (
+                              this.state.involvedTotags.filter(
+                                (v: involved_persons) => v == d,
+                              ).length == 0
+                            ) {
+                              this.state.involvedTotags.push(d);
+                            } else {
+                              return null;
+                            }
+                          }}
+                          style={[
+                            styles.involvePsuggCont,
+                            this.state.involvedToArr.length == i + 1
+                              ? {borderBottomWidth: wp(0)}
+                              : null,
+                          ]}>
+                          <Avatar
+                            containerStyle={{marginRight: wp(3)}}
+                            rounded
+                            source={{
+                              uri: d.img_url,
+                            }}
+                          />
+                          <Text style={styles.involvePSt}>{d.name}</Text>
+                        </TouchableOpacity>
+                      ),
+                    )}
+                  </View>
+                </View>
+              ) : null}
+              <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                <Tags
+                  onClose={(d: any) => {
+                    this.setState({
+                      exclateToTags: this.state.exclateToTags.filter(
+                        (v: any) => v !== d,
+                      ),
+                    });
+                  }}
+                  tags={this.state.exclateToTags}
+                />
+              </View>
+            </View>
+
+            {/* Line  */}
+            <View style={styles.lineheight} />
             {/* Attachment / Upload files */}
             <View style={styles.attachmentContainer}>
               <View style={styles.attachmentheadingContainer}>
@@ -1630,6 +1729,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   />
                 </View>
               </View>
+
               <View>
                 <Text style={styles.sbBtnText}>Notified only </Text>
                 <View
