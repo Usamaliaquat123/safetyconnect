@@ -54,7 +54,7 @@ const createApi = (
   const suggestiosns = (data: any) => aiBaseAi.post(`act`, data);
   const repeatedsorsugg = (keyword: any) =>
     aiRepBaseApi.post(`repeatedsor`, keyword);
-  const observationSuggestions = (data: any) => obsRepApi.post(`obs?q=${data}`);
+  const observationSuggestions = (data: any) => obsRepApi.get(`obs?q=${data}`);
   // sor api
 
   /*

@@ -110,7 +110,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       severity: riskxSeverityxliklihood.severity,
       // Involved Persons of this project
       involved_persons: [],
-      potientialRisk: 9,
+      potientialRisk: 0,
       errorModal: false,
       user: {},
       errHeadingText: '',
@@ -120,7 +120,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       fiveWhyAnswer: [],
       fiveWhyQuestion: [],
       SuggestionPop: false,
-      fiveWhytoggle: true,
+      fiveWhytoggle: false,
 
       // Involved person
       involvedToArr: [],
@@ -582,6 +582,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           .createApi()
                           .createFiveWhy(obj)
                           .then((res) => {
+                            console.log('five why');
                             console.log(res);
                           })
                           .catch((err: any) => console.log(err));
@@ -638,6 +639,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     //   'inconnent12345@outlook.com',
                     //   this.props.navigation,
                     // );
+                    console.log('sor');
+                    console.log(sor);
 
                     createApi
                       .createApi()
@@ -784,8 +787,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         AsyncStorage.getItem('user').then((user: any) => {
                           var obj = {
                             justification: {
-                              question: [this.state.fiveWhyQuestion],
-                              answer: [this.state.fiveWhyAnswer],
+                              question: this.state.fiveWhyQuestion,
+                              answer: this.state.fiveWhyAnswer,
                               contributoryCauses: 'haider',
                               rootCauses: 'ali',
                             },
@@ -797,6 +800,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             .createApi()
                             .createFiveWhy(obj)
                             .then((res) => {
+                              console.log('five why');
                               console.log(res);
                             })
                             .catch((err: any) => console.log(err));
@@ -829,26 +833,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           sor.report['_id'] = this.state.reportIdInvestigation;
                         }
                       }
-
-                      // var bodyInitial = {
-                      //   report: {
-                      //     created_by: this.state.email,
-                      //     comments: '',
-                      //     status: 1,
-                      //   },
-                      //   project: '607820d5724677561cf67ec5',
-                      // };
-                      // createApi
-                      //   .createApi()
-                      //   .createSorInit(bodyInitial)
-                      //   .then((ress: any) => {
-
-                      // this.props.reduxActions.createSor(
-                      //   sor,
-                      //   '604b13d114ba138bd23d7f75',
-                      //   'inconnent12345@outlook.com',
-                      //   this.props.navigation,
-                      // );
+                      console.log('sor');
                       console.log(sor);
                       createApi
                         .createApi()
@@ -871,13 +856,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             errorModal: false,
                           }),
                         );
-                      // })
-                      // .catch(() => {
-                      //   this.setState({
-                      //     loading: false,
-                      //     errorModal: false,
-                      //   });
-                      // });
                     } else {
                       this.setState({
                         errorModal: true,
@@ -1138,10 +1116,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           (obj[i]['date'] = moment().format('YYYY-MM-DD')),
                             (obj[i]['assigned_to'] = []);
                         }
-                        // console.log(res.data.results)
+                        console.log(d.risk);
                         this.setState({
+                          potientialRisk: d.risk.total_risk,
                           actionRecommendations: [...obj],
                         });
+
+                        console.log(this.state.potientialRisk);
 
                         // this.setState({
                         //     actionRecommendations: [...res.data.results],
@@ -1161,42 +1142,45 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             {this.state.classifySorbtns[1].selected == false ? (
               <View style={styles.riskContainer}>
                 {/* Potential Risk */}
-                <View style={styles.potentialRiskContainer}>
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text style={styles.potientialRiskHeading}>
-                      Potential Risk
-                    </Text>
-                    <Text style={styles.systemDefinedtext}>
-                      (System Defined)
-                    </Text>
-                  </View>
-                  <View
-                    style={[
-                      styles.badgePotientialRisk,
-                      this.state.potientialRisk < 7
-                        ? {borderColor: colors.green}
-                        : this.state.potientialRisk < 14
-                        ? {borderColor: colors.riskIcons.orrange}
-                        : {borderColor: colors.error},
-                    ]}>
-                    <Text
+
+                {this.state.potientialRisk == 0 ? null : (
+                  <View style={styles.potentialRiskContainer}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Text style={styles.potientialRiskHeading}>
+                        Potential Risk
+                      </Text>
+                      <Text style={styles.systemDefinedtext}>
+                        (System Defined)
+                      </Text>
+                    </View>
+                    <View
                       style={[
-                        styles.potentialRiskBadgeContainerText,
+                        styles.badgePotientialRisk,
                         this.state.potientialRisk < 7
-                          ? {color: colors.green}
+                          ? {borderColor: colors.green}
                           : this.state.potientialRisk < 14
-                          ? {color: colors.riskIcons.orrange}
-                          : {color: colors.error},
+                          ? {borderColor: colors.riskIcons.orrange}
+                          : {borderColor: colors.error},
                       ]}>
-                      {this.state.potientialRisk} -{' '}
-                      {this.state.potientialRisk < 7
-                        ? 'Low'
-                        : this.state.potientialRisk < 14
-                        ? 'Medium'
-                        : 'High'}
-                    </Text>
+                      <Text
+                        style={[
+                          styles.potentialRiskBadgeContainerText,
+                          this.state.potientialRisk < 7
+                            ? {color: colors.green}
+                            : this.state.potientialRisk < 14
+                            ? {color: colors.riskIcons.orrange}
+                            : {color: colors.error},
+                        ]}>
+                        {this.state.potientialRisk} -{' '}
+                        {this.state.potientialRisk < 7
+                          ? 'Low'
+                          : this.state.potientialRisk < 14
+                          ? 'Medium'
+                          : 'High'}
+                      </Text>
+                    </View>
                   </View>
-                </View>
+                )}
                 {/* Actual Risk */}
                 <View>
                   <View style={{flexDirection: 'row', marginTop: wp(1)}}>
@@ -1240,9 +1224,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 </Text>
                 <TouchableOpacity
                   onPress={() => {
-                    this.setState({fiveWhytoggle: !this.state.fiveWhytoggle});
-
-                    if (this.state.fiveWhytoggle) {
+                    if (this.state.fiveWhytoggle == true) {
+                      this.setState({fiveWhytoggle: false});
+                    } else {
                       if (this.state.reportIdInvestigation === '') {
                         var bodyInitial = {
                           report: {
@@ -1259,10 +1243,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             this.setState({
                               reportIdInvestigation: res.data.data.report_id,
                             });
+                            this.setState({fiveWhytoggle: true});
                           })
                           .catch((err) => console.log(err));
+                      } else {
+                        this.setState({fiveWhytoggle: true});
                       }
                     }
+                    // this.setState({fiveWhytoggle: !this.state.fiveWhytoggle});
                   }}
                   style={styles.fivewhyToggleContainer}>
                   <View
