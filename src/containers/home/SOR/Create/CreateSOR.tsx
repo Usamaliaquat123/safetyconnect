@@ -251,8 +251,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       .createApi()
       .observationSuggestions(str)
       .then((res: any) => {
-        console.log(res);
-        // this.setState({suggestions: res.data.results});
+        // console.log(res);
+        if (res.status == 200) {
+          this.setState({suggestions: res.data.results});
+        }
       });
   };
 
