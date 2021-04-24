@@ -341,6 +341,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               }
             }
 
+            console.log('server comment ');
+            console.log(res.data.data.all_comments);
             this.setState({comments: res.data.data.all_comments});
           });
         })
@@ -360,19 +362,20 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         data: {
           user: JSON.parse(user)._id,
           comment: comment,
-          date: moment().format('YYYY-MM-DD'),
+          date: Date.now(),
           files: [],
           is_comment: true,
         },
         comment_document_id: this.props.route.params.data.comments,
       };
 
+      console.log('mine comment');
+      console.log(comments);
       // this.state.commentAttachment
       createApi
         .createApi()
         .createComment(comments)
         .then((res) => {
-          console.log(res);
           var map = [...this.state.comments];
           map.push({
             date: moment().format('YYYY-MM-DD'),
