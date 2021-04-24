@@ -70,12 +70,25 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
     //   .catch((err) => console.log(err));
     this.state.fivewhy.push({question, answer});
     this.setState({question: '', answer: ''});
+    console.log(this.state.fivewhy);
     this.props.fiveWhyQuestions(this.state.fivewhy.map((d: any) => d.question));
     this.props.fiveWhyAnswer(this.state.fivewhy.map((d: any) => d.answer));
 
     this.setState({});
   };
 
+  onChangeAnswer = (e: any, i: number) => {
+    this.state.fivewhy[i].answer = e;
+    this.setState({});
+  };
+  onChangeQuestion = (e: any, i: number) => {
+    this.state.fivewhy[i].question = e;
+    this.setState({});
+  };
+  onDeleteFivewhy = (fivewhy: any) => {
+    var fivewhy = this.state.fivewhy.filter((d: any) => d != fivewhy);
+    this.setState({fivewhy});
+  };
   render() {
     return (
       <View style={this.props.containerStyle}>
@@ -88,10 +101,32 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
           {/* All Questions  */}
 
           {this.state.fivewhy.map((d: any, i: number) => (
-            <View style={styles.viewWhyContainer}>
-              <Text style={styles.viewCountWhy}>{suffixThNd(i + 1)} WHY</Text>
-              <Text style={styles.viewQuestion}>{d.question}</Text>
-              <Text style={styles.viewAnswer}>{d.answer}</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <View key={i} style={styles.viewWhyContainer}>
+                <Text style={styles.viewCountWhy}>{suffixThNd(i + 1)} WHY</Text>
+                <TextInput
+                  style={styles.viewQuestion}
+                  value={d.question}
+                  onChangeText={(e) => this.onChangeQuestion(e, i)}></TextInput>
+                <TextInput
+                  style={styles.viewAnswer}
+                  value={d.answer}
+                  onChangeText={(e: any) =>
+                    this.onChangeAnswer(e, i)
+                  }></TextInput>
+              </View>
+              <Icon
+                onPress={() => this.onDeleteFivewhy(d)}
+                size={wp(7)}
+                name="trash"
+                type="evilicon"
+                color={colors.error}
+              />
             </View>
           ))}
           {this.state.fivewhy.length < 5 ? (

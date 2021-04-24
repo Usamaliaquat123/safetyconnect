@@ -1116,13 +1116,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           (obj[i]['date'] = moment().format('YYYY-MM-DD')),
                             (obj[i]['assigned_to'] = []);
                         }
-                        console.log(d.risk);
                         this.setState({
                           potientialRisk: d.risk.total_risk,
                           actionRecommendations: [...obj],
                         });
-
-                        console.log(this.state.potientialRisk);
 
                         // this.setState({
                         //     actionRecommendations: [...res.data.results],
