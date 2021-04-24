@@ -42,6 +42,8 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
 
       question: '',
       answer: '',
+      rootcauses: '',
+      countributoryCauses: '',
     };
   }
   componentDidMount() {
@@ -178,19 +180,23 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
             underlineColorAndroid="transparent"
             style={styles.rootCausesInput}
             multiline={true}
+            value={this.state.rootcauses}
+            onChangeText={(e) => this.setState({rootcauses: e})}
             placeholder={'Add Root Causes'}
           />
           {/* </View> */}
         </View>
         {/* Contributory Causes */}
         <View style={styles.rootCauseContainer}>
-          <Text style={styles.keyfindingsText}>Countributory Causes</Text>
+          <Text style={styles.keyfindingsText}>Contributory Causes</Text>
           {/* <View style={styles.rootCauseInputContainer}> */}
           <TextInput
             underlineColorAndroid="transparent"
             style={styles.rootCausesInput}
             multiline={true}
-            placeholder={'Add countributory causes'}
+            value={this.state.countributoryCauses}
+            onChangeText={(e) => this.setState({countributoryCauses: e})}
+            placeholder={'Add Contributory causes'}
           />
           {/* </View> */}
         </View>
