@@ -25,6 +25,8 @@ export interface ViewAllProps {
   containerStyle?: ViewStyle;
   reportId: string;
   userId: string;
+  fiveWhyQuestions: Function;
+  fiveWhyAnswer: Function;
 }
 
 export default class FiveWhy extends React.Component<ViewAllProps, any> {
@@ -42,27 +44,35 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
       answer: '',
     };
   }
-  componentDidMount() {}
+  componentDidMount() {
+    console.log(this.props.reportId);
+  }
 
   addQuestions = (question: string, answer: string) => {
     // const form = new FormData();
     // form.append('q', str);
-    var obj = {
-      justification: {
-        question: [question],
-        answer: [answer],
-      },
-      report: this.props.reportId,
-      user: this.props.userId,
-    };
-    createApi
-      .createApi()
-      .createFiveWhy(obj)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
+    // var obj = {
+    //   justification: {
+    //     question: [question],
+    //     answer: [answer],
+    //     contributoryCauses: 'haider',
+    //     rootCauses: 'ali',
+    //   },
+    //   report: this.props.reportId,
+    //   user: this.props.userId,
+    // };
+    // createApi
+    //   .createApi()
+    //   .createFiveWhy(obj)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => console.log(err));
     this.state.fivewhy.push({question, answer});
+
+    this.props.fiveWhyQuestions(this.state.fivewhy.map((d: any) => d.question));
+    this.props.fiveWhyAnswer(this.state.fivewhy.map((d: any) => d.answer));
+
     this.setState({});
   };
 

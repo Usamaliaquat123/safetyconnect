@@ -1125,25 +1125,25 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     this.setState({fiveWhytoggle: !this.state.fiveWhytoggle});
 
                     if (this.state.fiveWhytoggle) {
-                      var bodyInitial = {
-                        report: {
-                          created_by: this.state.user.email,
-                          comments: '',
-                          status: 1,
-                        },
-                        project: '607820d5724677561cf67ec5',
-                      };
-                      createApi
-                        .createApi()
-                        .createSorInit(bodyInitial)
-                        .then((res: any) => {
-                          console.log(res);
-                          this.setState({
-                            reportIdInvestigation: res.data.data.report_id,
-                          });
-                        })
-                        .catch((err) => console.log(err));
-                    } else {
+                      if (this.state.reportIdInvestigation === '') {
+                        var bodyInitial = {
+                          report: {
+                            created_by: this.state.user.email,
+                            comments: '',
+                            status: 1,
+                          },
+                          project: '607820d5724677561cf67ec5',
+                        };
+                        createApi
+                          .createApi()
+                          .createSorInit(bodyInitial)
+                          .then((res: any) => {
+                            this.setState({
+                              reportIdInvestigation: res.data.data.report_id,
+                            });
+                          })
+                          .catch((err) => console.log(err));
+                      }
                     }
                   }}
                   style={styles.fivewhyToggleContainer}>
@@ -1200,6 +1200,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
               {this.state.fiveWhytoggle ? (
                 <FiveWhy
+                  fiveWhyQuestions={(e) => console.log(e)}
+                  fiveWhyAnswer={(e) => console.log(e)}
                   reportId={this.state.reportIdInvestigation}
                   userId={this.state.user._id}
                   containerStyle={{marginTop: wp(3)}}
