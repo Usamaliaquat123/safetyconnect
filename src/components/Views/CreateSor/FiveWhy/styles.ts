@@ -49,6 +49,27 @@ const styles = StyleSheet.create({
     fontSize: wp(3.5),
     fontFamily: fonts.SFuiDisplayMedium,
   },
+  // Root causes
+
+  rootCauseContainer: {
+    marginTop: wp(4),
+  },
+  //   rootCauseInputContainer: {
+  //     borderWidth: wp(0.2),
+  //     borderRadius: wp(2),
+  //     height: wp(),
+  //     marginTop: wp(2),
+  //   },
+
+  rootCausesInput: {
+    // borderBottomWidth: 0,
+    paddingLeft: wp(3),
+    borderWidth: wp(0.2),
+    borderRadius: wp(2),
+    paddingTop: wp(2),
+    fontFamily: fonts.SFuiDisplayMedium,
+    fontSize: wp(3.4),
+  },
 
   // KeyFindings
   keyfindingsText: {
@@ -102,6 +123,14 @@ const styles = StyleSheet.create({
     fontSize: wp(3.3),
     fontFamily: fonts.SFuiDisplayMedium,
   },
+
+  whyViewContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  //   Root causes container
 });
 
 export default styles;

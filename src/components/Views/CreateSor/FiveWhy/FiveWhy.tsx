@@ -101,12 +101,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
           {/* All Questions  */}
 
           {this.state.fivewhy.map((d: any, i: number) => (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
+            <View style={styles.whyViewContainer}>
               <View key={i} style={styles.viewWhyContainer}>
                 <Text style={styles.viewCountWhy}>{suffixThNd(i + 1)} WHY</Text>
                 <TextInput
@@ -176,9 +171,29 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
           </View>
         </View>
         {/* Root Causes */}
-        <View></View>
+        <View style={styles.rootCauseContainer}>
+          <Text style={styles.keyfindingsText}>Root Causes</Text>
+          {/* <View style={styles.rootCauseInputContainer}> */}
+          <TextInput
+            underlineColorAndroid="transparent"
+            style={styles.rootCausesInput}
+            multiline={true}
+            placeholder={'Add Root Causes'}
+          />
+          {/* </View> */}
+        </View>
         {/* Contributory Causes */}
-        <View></View>
+        <View style={styles.rootCauseContainer}>
+          <Text style={styles.keyfindingsText}>Countributory Causes</Text>
+          {/* <View style={styles.rootCauseInputContainer}> */}
+          <TextInput
+            underlineColorAndroid="transparent"
+            style={styles.rootCausesInput}
+            multiline={true}
+            placeholder={'Add countributory causes'}
+          />
+          {/* </View> */}
+        </View>
       </View>
     );
   }
