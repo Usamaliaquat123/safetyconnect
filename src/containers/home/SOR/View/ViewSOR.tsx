@@ -139,6 +139,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
       // Potiential Risk
       potientialRisk: 9,
+      // Esclated to
+      exclateToArr: [],
     };
 
     this.animation = React.createRef();
@@ -631,7 +633,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           <Animated.View
             style={[styles.content, {marginTop: this.state.contentAnim}]}>
             {/* Observation Details */}
-
             <View
               style={{
                 // marginTop: wp(3),
@@ -846,7 +847,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             </View>
             {/* Line  */}
             <View style={styles.lineheight} />
-
             <View style={styles.obserContainer}>
               <Text style={styles.observationDate}>
                 On {moment(this.state.time).format('MMM DD, YYYY')} at{' '}
@@ -876,10 +876,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </Text>
               </View>
             </View>
-
             {/* Line  */}
             <View style={styles.lineheight} />
-
             {/* <View style={styles.subContainer}>
               {this.state.submitted_to.length == 0 ? null : (
                 <View style={styles.submittedTo}>
@@ -1015,7 +1013,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               </View>
             </View> */}
             {/* Risk */}
-
             <View style={styles.risk}>
               {/* <Text style={styles.riskText}>
                 Risk{' '}
@@ -1238,10 +1235,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </TouchableOpacity>
               </View>
             </View>
-
             {/* Line  */}
             <View style={styles.lineheight} />
-
             {/* Actions / recommendations */}
             <View style={styles.actionContainer}>
               <Text style={styles.actionText}>Action / Recommendation</Text>
@@ -1455,7 +1450,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             {/* Attachments / Images or docs */}
             {/* Line  */}
             <View style={styles.lineheight} />
-
             <View style={styles.attachmentsContainer}>
               <Text style={styles.attachmentsFont}>Attachments</Text>
               {this.state.attachments.length == 0 ? (
@@ -1640,61 +1634,193 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </TouchableOpacity>
               )}
             </View>
-
             {/* Line  */}
             <View style={styles.lineheight} />
-
             {/* Initialize and Submitted to options */}
-
             <View style={styles.initializeAndSubmittedTo}>
+              {/* initialize by */}
               <View style={{flexDirection: 'row'}}>
-                <Text
-                  style={{
-                    fontSize: wp(4),
-                    fontFamily: fonts.SFuiDisplayMedium,
-                    flex: 1,
-                    flexWrap: 'wrap',
-                    width: '50%',
-                  }}>
+                <Text style={styles.initializeByAndSubmittedToHeading}>
                   Initiated By:
                 </Text>
-                <Text
-                  style={{
-                    fontSize: wp(3.7),
-                    fontFamily: fonts.SFuiDisplayLight,
-                    flex: 1,
-                    flexWrap: 'wrap',
-                    width: '50%',
-                  }}>
+                <Text style={styles.initializeByAndSubmitedToAnswer}>
                   John Doe
                 </Text>
               </View>
+              {/* submitted to */}
               <View style={{flexDirection: 'row', marginTop: wp(2)}}>
-                <Text
-                  style={{
-                    fontSize: wp(4),
-                    fontFamily: fonts.SFuiDisplayMedium,
-                    flex: 1,
-                    flexWrap: 'wrap',
-                    width: '50%',
-                  }}>
+                <Text style={styles.initializeByAndSubmittedToHeading}>
                   Submitted To:
                 </Text>
-                <Text
-                  style={{
-                    fontSize: wp(3.7),
-                    fontFamily: fonts.SFuiDisplayLight,
-                    flex: 1,
-                    flexWrap: 'wrap',
-                    width: '50%',
-                  }}>
+                <Text style={styles.initializeByAndSubmitedToAnswer}>
                   John Doe
                 </Text>
               </View>
-            </View>
-            {/* Line  */}
-            <View style={styles.lineheight} />
+              {/* REASSIGNED to  */}
 
+              <View style={{marginTop: wp(4)}}>
+                <Text style={styles.sbBtnText}>Re-assign to </Text>
+                <View
+                  style={[
+                    styles.optnselector,
+                    this.state.selectedInputIndex == 5
+                      ? {borderColor: colors.green}
+                      : null,
+                  ]}>
+                  <TextInput
+                    onFocus={() => this.setState({selectedInputIndex: 5})}
+                    underlineColorAndroid="transparent"
+                    onChange={(v: any) =>
+                      this.setState({
+                        exclateToArr: searchInSuggestions(
+                          v,
+                          this.state.involvedPerson,
+                        ),
+                        esclateTo: v,
+                      })
+                    }
+                    placeholder={'Select or Type Name'}
+                    style={styles.optnselectorText}
+                    value={this.state.esclateTo}
+                  />
+                </View>
+
+                {this.state.exclateToArr.length != 0 ? (
+                  <View>
+                    <View style={styles.involveSuggestCont}>
+                      {this.state.exclateToArr.map(
+                        (d: involved_persons, i: number) => (
+                          <TouchableOpacity
+                            key={i}
+                            onPress={() => {
+                              this.setState({esclateTo: '', exclateToArr: []});
+                              if (
+                                this.state.exclateToTags.filter(
+                                  (v: involved_persons) => v == d,
+                                ).length == 0
+                              ) {
+                                this.state.exclateToTags.push(d);
+                              } else {
+                                return null;
+                              }
+                            }}
+                            style={[
+                              styles.involvePsuggCont,
+                              this.state.exclateToArr.length == i + 1
+                                ? {borderBottomWidth: wp(0)}
+                                : null,
+                            ]}>
+                            <Avatar
+                              containerStyle={{marginRight: wp(3)}}
+                              rounded
+                              source={{
+                                uri: d.img_url,
+                              }}
+                            />
+                            <Text style={styles.involvePSt}>{d.name}</Text>
+                          </TouchableOpacity>
+                        ),
+                      )}
+                    </View>
+                  </View>
+                ) : null}
+                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                  {/* <Tags
+                    onClose={(d: any) => {
+                      this.setState({
+                        exclateToTags: this.state.exclateToTags.filter(
+                          (v: any) => v !== d,
+                        ),
+                      });
+                    }}
+                    tags={this.state.exclateToTags}
+                  /> */}
+                </View>
+              </View>
+
+              {/* ESCLATED TO  */}
+              <View>
+                <Text style={styles.sbBtnText}>Esclated to </Text>
+                <View
+                  style={[
+                    styles.optnselector,
+                    this.state.selectedInputIndex == 5
+                      ? {borderColor: colors.green}
+                      : null,
+                  ]}>
+                  <TextInput
+                    onFocus={() => this.setState({selectedInputIndex: 5})}
+                    underlineColorAndroid="transparent"
+                    onChange={(v: any) =>
+                      this.setState({
+                        exclateToArr: searchInSuggestions(
+                          v,
+                          this.state.involvedPerson,
+                        ),
+                        esclateTo: v,
+                      })
+                    }
+                    placeholder={'Select or Type Name'}
+                    style={styles.optnselectorText}
+                    value={this.state.esclateTo}
+                  />
+                </View>
+
+                {this.state.exclateToArr.length != 0 ? (
+                  <View>
+                    <View style={styles.involveSuggestCont}>
+                      {this.state.exclateToArr.map(
+                        (d: involved_persons, i: number) => (
+                          <TouchableOpacity
+                            key={i}
+                            onPress={() => {
+                              this.setState({esclateTo: '', exclateToArr: []});
+                              if (
+                                this.state.exclateToTags.filter(
+                                  (v: involved_persons) => v == d,
+                                ).length == 0
+                              ) {
+                                this.state.exclateToTags.push(d);
+                              } else {
+                                return null;
+                              }
+                            }}
+                            style={[
+                              styles.involvePsuggCont,
+                              this.state.exclateToArr.length == i + 1
+                                ? {borderBottomWidth: wp(0)}
+                                : null,
+                            ]}>
+                            <Avatar
+                              containerStyle={{marginRight: wp(3)}}
+                              rounded
+                              source={{
+                                uri: d.img_url,
+                              }}
+                            />
+                            <Text style={styles.involvePSt}>{d.name}</Text>
+                          </TouchableOpacity>
+                        ),
+                      )}
+                    </View>
+                  </View>
+                ) : null}
+                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                  {/* <Tags
+                    onClose={(d: any) => {
+                      this.setState({
+                        exclateToTags: this.state.exclateToTags.filter(
+                          (v: any) => v !== d,
+                        ),
+                      });
+                    }}
+                    tags={this.state.exclateToTags}
+                  /> */}
+                </View>
+              </View>
+            </View>
+            {/* Line
+            <View style={styles.lineheight} /> */}
             {/* Map Integration */}
             {/* <Text
                 style={{
@@ -1705,13 +1831,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 Hall No, 1 first floor, Plot No. 45 Street 10, I-9/2, Islamabad,
                 Federal, Islamabad Capital Territory 44000
               </Text> */}
-            <View style={{width: wp(90), height: wp(50)}}>
+            {/* <View style={{width: wp(90), height: wp(50)}}>
               <Image
                 source={images.map}
                 style={[GlStyles.images, {borderRadius: wp(3)}]}
                 resizeMode={'cover'}
               />
-            </View>
+            </View> */}
             {/* comments sections */}
             <View style={styles.commentsSections}>
               {this.state.comments.map((d: any, i: number) => {

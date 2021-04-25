@@ -610,6 +610,41 @@ const styles = StyleSheet.create({
     paddingLeft: wp(3),
     paddingRight: wp(3),
   },
+  optnselector: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    marginTop: wp(2),
+    marginBottom: wp(3),
+    borderWidth: wp(0.2),
+    borderRadius: wp(2),
+    padding: wp(1),
+    // paddingBottom: wp(0),
+    borderColor: colors.text,
+  },
+  sbBtnText: {fontSize: wp(5), fontFamily: fonts.SFuiDisplayMedium},
+  initializeByAndSubmittedToHeading: {
+    fontSize: wp(4),
+    fontFamily: fonts.SFuiDisplayMedium,
+    flex: 1,
+    flexWrap: 'wrap',
+    width: '50%',
+  },
+
+  optnselectorText: {
+    textAlignVertical: 'center',
+    fontSize: wp(3),
+    padding: wp(1),
+    color: colors.text,
+    width: wp(80),
+  },
+
+  initializeByAndSubmitedToAnswer: {
+    fontSize: wp(3.7),
+    fontFamily: fonts.SFuiDisplayLight,
+    flex: 1,
+    flexWrap: 'wrap',
+    width: '50%',
+  },
 });
 
 export default styles;
