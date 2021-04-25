@@ -69,7 +69,12 @@ const styles = StyleSheet.create({
     paddingLeft: wp(5),
     paddingRight: wp(5),
   },
-  obserContainer: {marginTop: wp(3), paddingLeft: wp(3), paddingRight: wp(3)},
+  obserContainer: {
+    marginTop: wp(3),
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+    marginBottom: wp(3),
+  },
   observationText: {
     fontFamily: fonts.SFuiDisplaySemiBold,
 
@@ -177,6 +182,9 @@ const styles = StyleSheet.create({
   // Risk x Siverty
   risk: {
     marginTop: wp(5),
+    marginBottom: wp(5),
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
   },
   riskText: {
     color: colors.primary,
@@ -202,8 +210,8 @@ const styles = StyleSheet.create({
     fontSize: wp(4),
   },
   // action & recommendation
-  actionContainer: {marginTop: wp(5)},
-  actionText: {fontSize: wp(3.5), fontWeight: 'bold', color: colors.primary},
+  actionContainer: {marginTop: wp(5), paddingLeft: wp(3), paddingRight: wp(3)},
+  actionText: {fontSize: wp(4.5), fontFamily: fonts.SFuiDisplaySemiBold},
   sugForYouText: {
     fontSize: wp(3),
     color: colors.text,
@@ -249,6 +257,8 @@ const styles = StyleSheet.create({
   },
   attachmentsContainer: {
     marginTop: wp(5),
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
     marginBottom: wp(10),
 
     // flexWrap: 'wrap',
@@ -304,7 +314,9 @@ const styles = StyleSheet.create({
     borderWidth: wp(0.3),
     borderRadius: wp(3),
     marginTop: wp(3),
-    paddingLeft: wp(1),
+
+    marginLeft: wp(3),
+    marginRight: wp(3),
     borderColor: colors.lightGrey,
     flexDirection: 'row',
     alignItems: 'center',
@@ -399,8 +411,8 @@ const styles = StyleSheet.create({
     zIndex: wp(1),
   },
   attachmentsFont: {
-    fontSize: wp(3),
-    fontWeight: 'bold',
+    fontSize: wp(4),
+    fontFamily: fonts.SFuiDisplaySemiBold,
   },
   youdonthaveAnyAttachments: {
     fontSize: wp(3),
@@ -497,6 +509,99 @@ const styles = StyleSheet.create({
     padding: wp(2),
     paddingLeft: wp(3),
     paddingRight: wp(3),
+  },
+
+  // Potiential Risk
+  potentialRiskContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  potientialRiskHeading: {
+    color: colors.text,
+    fontSize: wp(5),
+
+    opacity: 0.6,
+    // marginTop: wp(10),
+    marginRight: wp(2),
+    fontFamily: fonts.SFuiDisplaySemiBold,
+  },
+  actualRiskheading: {
+    color: colors.text,
+    fontSize: wp(5),
+
+    // opacity: 0.6,
+    // marginTop: wp(10),
+    marginRight: wp(2),
+    fontFamily: fonts.SFuiDisplaySemiBold,
+  },
+  riskContainer: {
+    marginTop: wp(5),
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+  },
+  systemDefinedtext: {
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
+    opacity: 0.6,
+  },
+  potentialRiskBadgeContainerText: {
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  badgePotientialRisk: {
+    borderWidth: wp(0.6),
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+    paddingTop: wp(1),
+    borderRadius: wp(10),
+    paddingBottom: wp(1),
+  },
+
+  badgeActualRisk: {
+    borderWidth: wp(0.6),
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+    paddingTop: wp(1),
+    borderRadius: wp(10),
+    paddingBottom: wp(1),
+  },
+  RiskHeading: {
+    // fontWeight: 'bold',
+    color: colors.text,
+    fontSize: wp(5),
+    // marginTop: wp(10),
+    marginRight: wp(2),
+    fontFamily: fonts.SFuiDisplayBold,
+  },
+
+  suggestedActionsContainer: {
+    padding: wp(2),
+    marginTop: wp(2),
+    flexDirection: 'row',
+    borderWidth: wp(0.2),
+    height: wp(14),
+    borderColor: '#686868',
+    borderRadius: wp(1),
+  },
+  actionType: {
+    fontSize: wp(4),
+    // opacity :.5,
+    color: '#686868',
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  actionDesc: {
+    color: colors.text,
+    fontSize: wp(4),
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+
+  addActionsAndRecommendationArrow: {
+    position: 'absolute',
+    right: wp(3),
+    padding: wp(2),
+    borderRadius: wp(2),
+    top: wp(2.7),
+    backgroundColor: colors.lightGrey,
   },
 });
 

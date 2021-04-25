@@ -136,6 +136,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       // Five WHY
       fiveWhytoggle: false,
       reportIdInvestigation: '',
+
+      // Potiential Risk
+      potientialRisk: 9,
     };
 
     this.animation = React.createRef();
@@ -869,11 +872,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   Involved Person :
                 </Text>
                 <Text style={{fontSize: wp(3.5)}}>
-                  {/* {this.state.involvedPerson[0].name} */}
+                  {this.state.involvedPerson[0].name}
                 </Text>
               </View>
             </View>
-            <View style={styles.subContainer}>
+
+            {/* Line  */}
+            <View style={styles.lineheight} />
+
+            {/* <View style={styles.subContainer}>
               {this.state.submitted_to.length == 0 ? null : (
                 <View style={styles.submittedTo}>
                   <Text style={styles.subText}>Submitted to : </Text>
@@ -891,10 +898,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </Text>
                 </View>
               )}
-            </View>
-            <View style={styles.involveNortify}>
-              {/* Notified To Section */}
-              <View style={styles.notifiedSec}>
+            </View> */}
+            {/* <View style={styles.involveNortify}> */}
+            {/* Notified To Section */}
+            {/* <View style={styles.notifiedSec}>
                 <Text style={styles.notifyPText}>Esclate to : </Text>
                 {this.state.esclate_to.map((d: involved_persons, i: number) => {
                   var j = 2;
@@ -953,7 +960,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 ) : null}
               </View>
               {/* Involved Person  */}
-              <View style={styles.notifiedSec}>
+            {/* <View style={styles.notifiedSec}>
                 <Text style={styles.invpText}>Involved People</Text>
                 {this.state.involvedPerson.map((d: any, i: number) => {
                   var j = 1;
@@ -1006,13 +1013,56 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </TouchableOpacity>
                 ) : null}
               </View>
-            </View>
+            </View> */}
             {/* Risk */}
+
             <View style={styles.risk}>
-              <Text style={styles.riskText}>
+              {/* <Text style={styles.riskText}>
                 Risk{' '}
                 <Text style={styles.riskttle}>(Severity x Likelihood)</Text>
-              </Text>
+              </Text> */}
+
+              {/* Potiential Risk */}
+              {this.state.potientialRisk == 0 ? null : (
+                <View style={styles.potentialRiskContainer}>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={styles.potientialRiskHeading}>
+                      Potential Risk
+                    </Text>
+                    <Text style={styles.systemDefinedtext}>
+                      (System Defined)
+                    </Text>
+                  </View>
+                  <View
+                    style={[
+                      styles.badgePotientialRisk,
+                      this.state.potientialRisk < 7
+                        ? {borderColor: colors.green}
+                        : this.state.potientialRisk < 14
+                        ? {borderColor: colors.riskIcons.orrange}
+                        : {borderColor: colors.error},
+                    ]}>
+                    <Text
+                      style={[
+                        styles.potentialRiskBadgeContainerText,
+                        this.state.potientialRisk < 7
+                          ? {color: colors.green}
+                          : this.state.potientialRisk < 14
+                          ? {color: colors.riskIcons.orrange}
+                          : {color: colors.error},
+                      ]}>
+                      {this.state.potientialRisk}-{' '}
+                      {this.state.potientialRisk < 7
+                        ? 'Low'
+                        : this.state.potientialRisk < 14
+                        ? 'Medium'
+                        : 'High'}
+                    </Text>
+                  </View>
+                </View>
+              )}
+              {/* Actual Risk */}
+
               {this.state.selectedRisk == false ? (
                 <View>
                   <Chart
@@ -1024,13 +1074,75 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </View>
               ) : (
                 <TouchableOpacity
-                  onPress={() => this.setState({selectedRisk: false})}
-                  style={{flexDirection: 'row'}}>
-                  <View style={styles.riskIcon}>
+                  onPress={() => this.setState({selectedRisk: false})}>
+                  {/* <View style={styles.riskIcon}>
                     <Text style={styles.riskIconText}>
                       {this.props.route.params.data.risk.likelihood *
                         this.props.route.params.data.risk.severity}
                     </Text>
+                  </View> */}
+
+                  <View
+                    style={[styles.potentialRiskContainer, {marginTop: wp(3)}]}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Text
+                        style={[
+                          styles.actualRiskheading,
+                          {fontFamily: fonts.SFuiDisplaySemiBold},
+                        ]}>
+                        Actual Risk
+                      </Text>
+                      <Text style={styles.systemDefinedtext}>(Calculated)</Text>
+                    </View>
+                    <View
+                      style={[
+                        styles.badgeActualRisk,
+                        this.props.route.params.data.risk.likelihood *
+                          this.props.route.params.data.risk.severity <
+                        7
+                          ? {
+                              borderColor: colors.green,
+                              backgroundColor: colors.green,
+                            }
+                          : this.props.route.params.data.risk.likelihood *
+                              this.props.route.params.data.risk.severity <
+                            14
+                          ? {
+                              borderColor: colors.riskIcons.orrange,
+                              backgroundColor: colors.riskIcons.orrange,
+                            }
+                          : {
+                              borderColor: colors.error,
+                              backgroundColor: colors.error,
+                            },
+                      ]}>
+                      <Text
+                        style={[
+                          styles.potentialRiskBadgeContainerText,
+                          this.props.route.params.data.risk.likelihood *
+                            this.props.route.params.data.risk.severity <
+                          7
+                            ? {color: colors.secondary}
+                            : this.props.route.params.data.risk.likelihood *
+                                this.props.route.params.data.risk.severity <
+                              14
+                            ? {color: colors.secondary}
+                            : {color: colors.secondary},
+                        ]}>
+                        {this.props.route.params.data.risk.likelihood *
+                          this.props.route.params.data.risk.severity}
+                        -{' '}
+                        {this.props.route.params.data.risk.likelihood *
+                          this.props.route.params.data.risk.severity <
+                        7
+                          ? 'Low'
+                          : this.props.route.params.data.risk.likelihood *
+                              this.props.route.params.data.risk.severity <
+                            14
+                          ? 'Medium'
+                          : 'High'}
+                      </Text>
+                    </View>
                   </View>
                 </TouchableOpacity>
               )}
@@ -1046,33 +1158,33 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </Text>
                 <TouchableOpacity
                   onPress={() => {
-                    if (this.state.fiveWhytoggle == true) {
-                      this.setState({fiveWhytoggle: false});
-                    } else {
-                      if (this.state.reportIdInvestigation === '') {
-                        var bodyInitial = {
-                          report: {
-                            created_by: this.state.user.email,
-                            comments: '',
-                            status: 1,
-                          },
-                          project: '607820d5724677561cf67ec5',
-                        };
-                        createApi
-                          .createApi()
-                          .createSorInit(bodyInitial)
-                          .then((res: any) => {
-                            this.setState({
-                              reportIdInvestigation: res.data.data.report_id,
-                            });
-                            this.setState({fiveWhytoggle: true});
-                          })
-                          .catch((err) => console.log(err));
-                      } else {
-                        this.setState({fiveWhytoggle: true});
-                      }
-                    }
-                    // this.setState({fiveWhytoggle: !this.state.fiveWhytoggle});
+                    // if (this.state.fiveWhytoggle == true) {
+                    //   this.setState({fiveWhytoggle: false});
+                    // } else {
+                    //   if (this.state.reportIdInvestigation === '') {
+                    //     var bodyInitial = {
+                    //       report: {
+                    //         created_by: this.state.user.email,
+                    //         comments: '',
+                    //         status: 1,
+                    //       },
+                    //       project: '607820d5724677561cf67ec5',
+                    //     };
+                    //     createApi
+                    //       .createApi()
+                    //       .createSorInit(bodyInitial)
+                    //       .then((res: any) => {
+                    //         this.setState({
+                    //           reportIdInvestigation: res.data.data.report_id,
+                    //         });
+                    //         this.setState({fiveWhytoggle: true});
+                    //       })
+                    //       .catch((err) => console.log(err));
+                    //   } else {
+                    //     this.setState({fiveWhytoggle: true});
+                    //   }
+                    // }
+                    this.setState({fiveWhytoggle: !this.state.fiveWhytoggle});
                   }}
                   style={styles.fivewhyToggleContainer}>
                   <View
@@ -1133,14 +1245,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             {/* Actions / recommendations */}
             <View style={styles.actionContainer}>
               <Text style={styles.actionText}>Action / Recommendation</Text>
-              <Text style={styles.sugForYouText}>Suggested for you</Text>
+              {/* <Text style={styles.sugForYouText}>Suggested for you</Text> */}
               {this.props.route.params.data.action_required == undefined ? (
                 <Text style={styles.nosuchActionsAndRecommendations}>
                   No such Actions / Recommendations
                 </Text>
               ) : (
                 <View>
-                  {this.state.actionsAndRecommendations.map(
+                  {/* {this.state.actionsAndRecommendations.map(
                     (d: actions, i: number) => (
                       <TouchableOpacity
                         onPress={() => {
@@ -1225,10 +1337,62 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         </View>
                       </TouchableOpacity>
                     ),
+                  )} */}
+
+                  {this.state.actionsAndRecommendations.map(
+                    (d: any, i: number) => (
+                      <TouchableOpacity
+                        onPress={() => {
+                          var data = [...this.state.actionsAndRecommendations];
+                          if (d.is_complete == true) {
+                            data[i].is_complete = false;
+                          } else {
+                            data[i].is_complete = true;
+                          }
+                          this.setState({actionsAndRecommendations: data});
+                        }}
+                        onLongPress={() => {
+                          this.setState({
+                            allActionsEdit: d,
+                            SuggestionPop: true,
+                            allActionsEditIndex: i,
+                            newActions: false,
+                          });
+                        }}
+                        key={i}
+                        style={[
+                          styles.suggestedActionsContainer,
+                          d.is_complete == true
+                            ? {
+                                backgroundColor: colors.lightBlue,
+                                borderWidth: wp(0),
+                              }
+                            : {
+                                backgroundColor: colors.secondary,
+                                borderWidth: wp(0.2),
+                              },
+                        ]}>
+                        <View style={{flexDirection: 'row', width: wp(84)}}>
+                          <Text style={styles.actionType}>
+                            {d.category}:{' '}
+                            <Text style={styles.actionDesc}>
+                              {d.content.substring(0, 50)}...
+                            </Text>
+                          </Text>
+                        </View>
+                        <Icon
+                          size={wp(6)}
+                          name="more-vertical"
+                          type="feather"
+                          color={'#686868'}
+                        />
+                      </TouchableOpacity>
+                    ),
                   )}
                 </View>
               )}
             </View>
+            {/* submit actions and recommendations  */}
             <View
               style={[
                 styles.addActionAndRecommendation,
@@ -1288,6 +1452,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 />
               </TouchableOpacity>
             </View>
+            {/* Attachments / Images or docs */}
             <View style={styles.attachmentsContainer}>
               <Text style={styles.attachmentsFont}>Attachments</Text>
               {this.state.attachments.length == 0 ? (
