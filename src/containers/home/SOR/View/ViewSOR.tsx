@@ -1453,6 +1453,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               </TouchableOpacity>
             </View>
             {/* Attachments / Images or docs */}
+            {/* Line  */}
+            <View style={styles.lineheight} />
+
             <View style={styles.attachmentsContainer}>
               <Text style={styles.attachmentsFont}>Attachments</Text>
               {this.state.attachments.length == 0 ? (
@@ -1637,6 +1640,61 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </TouchableOpacity>
               )}
             </View>
+
+            {/* Line  */}
+            <View style={styles.lineheight} />
+
+            {/* Initialize and Submitted to options */}
+
+            <View style={styles.initializeAndSubmittedTo}>
+              <View style={{flexDirection: 'row'}}>
+                <Text
+                  style={{
+                    fontSize: wp(4),
+                    fontFamily: fonts.SFuiDisplayMedium,
+                    flex: 1,
+                    flexWrap: 'wrap',
+                    width: '50%',
+                  }}>
+                  Initiated By:
+                </Text>
+                <Text
+                  style={{
+                    fontSize: wp(3.7),
+                    fontFamily: fonts.SFuiDisplayLight,
+                    flex: 1,
+                    flexWrap: 'wrap',
+                    width: '50%',
+                  }}>
+                  John Doe
+                </Text>
+              </View>
+              <View style={{flexDirection: 'row', marginTop: wp(2)}}>
+                <Text
+                  style={{
+                    fontSize: wp(4),
+                    fontFamily: fonts.SFuiDisplayMedium,
+                    flex: 1,
+                    flexWrap: 'wrap',
+                    width: '50%',
+                  }}>
+                  Submitted To:
+                </Text>
+                <Text
+                  style={{
+                    fontSize: wp(3.7),
+                    fontFamily: fonts.SFuiDisplayLight,
+                    flex: 1,
+                    flexWrap: 'wrap',
+                    width: '50%',
+                  }}>
+                  John Doe
+                </Text>
+              </View>
+            </View>
+            {/* Line  */}
+            <View style={styles.lineheight} />
+
             {/* Map Integration */}
             {/* <Text
                 style={{

@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
     borderWidth: wp(0.3),
     borderRadius: wp(3),
     marginTop: wp(3),
-
+    marginBottom: wp(6),
     marginLeft: wp(3),
     marginRight: wp(3),
     borderColor: colors.lightGrey,
@@ -411,8 +411,8 @@ const styles = StyleSheet.create({
     zIndex: wp(1),
   },
   attachmentsFont: {
-    fontSize: wp(4),
-    fontFamily: fonts.SFuiDisplaySemiBold,
+    fontSize: wp(5),
+    fontFamily: fonts.SFuiDisplayMedium,
   },
   youdonthaveAnyAttachments: {
     fontSize: wp(3),
@@ -602,6 +602,13 @@ const styles = StyleSheet.create({
     borderRadius: wp(2),
     top: wp(2.7),
     backgroundColor: colors.lightGrey,
+  },
+
+  initializeAndSubmittedTo: {
+    paddingTop: wp(5),
+    paddingBottom: wp(3),
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
   },
 });
 
