@@ -141,10 +141,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       potientialRisk: 9,
       // Esclated to
       exclateToArr: [],
+      fiveWhyQuestion: [],
+      fiveWhyAnswer: [],
+      fiveWHYdata: [],
     };
 
     this.animation = React.createRef();
     this.photoAnim = React.createRef();
+
     this.fileNotSupported = React.createRef();
   }
 
@@ -153,6 +157,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     //   console.log(JSON.parse(user));
     // });
     // console.log(this.props.route.params.data.comments);
+    this.getFiveWHY();
     this.mappingMapping(
       this.props.route.params.data.risk.severity,
       this.props.route.params.data.risk.likelihood,
@@ -215,6 +220,39 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   //   })
 
   // }
+
+  getFiveWHY = () => {
+    createApi
+      .createApi()
+      .getFiveWhy('6085aaa205ebabf1bbf53268')
+      .then((res: any) => {
+        console.log(res.data.data.justification[0].question);
+        // console.log(this.props.fiveWhyAnswer);
+
+        this.setState({
+          fiveWhyQuestion: res.data.data.justification[0].question,
+        });
+        this.setState({fiveWhyAnswer: res.data.data.justification[0].answer});
+
+        for (
+          let i = 0;
+          i < res.data.data.justification[0].question.length;
+          i++
+        ) {
+          for (
+            let j = 0;
+            j < res.data.data.justification[0].answer.length;
+            j++
+          ) {
+            this.state.fiveWHYdata.push({
+              question: res.data.data.justification[0].question[i],
+              answer: res.data.data.justification[0].answer,
+            });
+          }
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   mappingInvolved = (persons: Array<any>, person: string | undefined) => {
     persons.map((d: any, i: number) => {
@@ -877,7 +915,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   Involved Person :
                 </Text>
                 <Text style={{fontSize: wp(3.5)}}>
-                  {this.state.involvedPerson[0].name}
+                  {/* {this.state.involvedPerson[0].name} */}
                 </Text>
               </View>
             </View>

@@ -118,7 +118,7 @@ const createApi = (
    */
   const createFiveWhy = (data: any) => baseapi.post('justification', data);
   const editFiveWhy = (data: any) => baseapi.put('justification', data);
-  const getFiveWhy = (data: any) => baseapi.put('justification', data);
+  const getFiveWhy = (data: any) => baseapi.get(`justification?id=${data}`);
 
   return {
     createFiveWhy,

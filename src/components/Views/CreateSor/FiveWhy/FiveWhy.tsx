@@ -48,6 +48,13 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
   }
   componentDidMount() {
     console.log(this.props.reportId);
+    // for (let i = 0; i < this.props.fiveWhyQuestions.length; i++) {
+    //     for (let j = 0; j < this.props.fiveWhyAnswer.length; j++) {
+    //         this.state.fivewhy.push({question : i, answer})
+
+    //     }
+
+    // }
   }
 
   addQuestions = (question: string, answer: string) => {
