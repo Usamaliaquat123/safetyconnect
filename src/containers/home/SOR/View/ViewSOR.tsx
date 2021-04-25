@@ -28,7 +28,7 @@ import {
 } from '@service';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Tags, Chart, CommentPop, SuggestionsPop} from '@components';
+import {Tags, Chart, CommentPop, SuggestionsPop, FiveWhy} from '@components';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
@@ -134,7 +134,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       AllUsers: [],
 
       // Five WHY
-      fiveWhytoggle: false,
+      fiveWhytoggle: true,
       reportIdInvestigation: '',
 
       // Potiential Risk
@@ -183,8 +183,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           commentsSugg: res.data.data.involved_persons,
         });
 
-        console.log(res.data.data.involved_persons);
-
         // var arr = filterAndMappingPersons(
         //   this.props.route.params.data,
         //   res.data.data.involved_persons,
@@ -210,6 +208,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.props.route.params.data.risk.likelihood,
     );
   };
+
+  // getInvolvedPersonsUsers = () : Array<involved_persons> {
+  //   createApi.createApi().getProject({projectid: '607820d5724677561cf67ec5'}).then(res => {
+
+  //   })
+
+  // }
 
   mappingInvolved = (persons: Array<any>, person: string | undefined) => {
     persons.map((d: any, i: number) => {
@@ -1234,6 +1239,20 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </View>
                 </TouchableOpacity>
               </View>
+
+              {this.state.fiveWhytoggle == true ? (
+                <FiveWhy
+                  fiveWhyQuestions={(q: Array<string>) =>
+                    this.setState({fiveWhyQuestion: q})
+                  }
+                  fiveWhyAnswer={(a: Array<string>) =>
+                    this.setState({fiveWhyAnswer: a})
+                  }
+                  reportId={this.state.reportIdInvestigation}
+                  userId={this.state.user._id}
+                  containerStyle={{marginTop: wp(3)}}
+                />
+              ) : null}
             </View>
             {/* Line  */}
             <View style={styles.lineheight} />
@@ -1657,7 +1676,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </Text>
               </View>
               {/* REASSIGNED to  */}
-
               <View style={{marginTop: wp(4)}}>
                 <Text style={styles.sbBtnText}>Re-assign to </Text>
                 <View
@@ -1737,7 +1755,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   /> */}
                 </View>
               </View>
-
               {/* ESCLATED TO  */}
               <View>
                 <Text style={styles.sbBtnText}>Esclated to </Text>
