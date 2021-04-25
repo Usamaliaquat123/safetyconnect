@@ -132,6 +132,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       loading: false,
 
       AllUsers: [],
+
+      // Five WHY
+      fiveWhytoggle: false,
+      reportIdInvestigation: '',
     };
 
     this.animation = React.createRef();
@@ -149,7 +153,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.props.route.params.data.risk.likelihood,
     );
     this.getAllComments();
-    console.log(this.props.route.params.data);
     // this.props.route.params.data.action_required
     for (
       let i = 0;
@@ -160,6 +163,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         this.props.route.params.data.action_required[i].date,
       ).format('YYYY-MM-DD');
     }
+
+    console.log(this.props.route.params.data.involved_persons);
 
     this.props.route.params.data.action_required.forEach(
       (v) => delete v.default,
@@ -173,12 +178,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           commentsSugg: res.data.data.involved_persons,
         });
 
-        var arr = filterAndMappingPersons(
-          this.props.route.params.data,
-          res.data.data.involved_persons,
-        );
+        console.log(res.data.data.involved_persons);
 
-        console.log(arr);
+        // var arr = filterAndMappingPersons(
+        //   this.props.route.params.data,
+        //   res.data.data.involved_persons,
+        // );
 
         this.mappingInvolved(
           res.data.data.involved_persons,
@@ -188,6 +193,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           res.data.data.involved_persons[i]['selected'] = false;
         }
       });
+
+    // console.log(this.props.route.params.data.involved_persons);
+    // console.log(this.state.involvedPerson);
 
     this.fileAndImageCapturer(this.props.route.params.data.attachments);
     this.mapViewSorPhoto();
@@ -209,7 +217,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
   onSubmitUpdateSor = async (status?: number) => {
     this.setState({loading: true});
-    console.log(this.props.route.params.data.comments);
 
     var liklihood = this.state.liklihood.filter(
       (d: any) => d.selected == true,
@@ -295,7 +302,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .delComment(comment[0]._id, this.props.route.params.data.comments)
       .then((res) => {
         if (res.status == 200) {
-          console.log(res);
           this.state.comments.splice(this.state.editDiscardCommentIndex, 1);
 
           this.setState({editDelComment: false});
@@ -307,7 +313,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   // Get All Comments
   getAllComments = () => {
     // this.props.route.params.data.comments;
-    // console.log(this.state.involvedPerson);
     AsyncStorage.getItem('user').then((user: any) => {
       createApi
         .createApi()
@@ -316,8 +321,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           this.props.route.params.data._id,
         )
         .then((res: any) => {
-          console.log(res.data.data.all_comments);
-
           AsyncStorage.getItem('involved_person').then((involveppl: any) => {
             // console.log(JSON.parse(involveppl));
             // console.log(res.data.data.all_comments);
@@ -341,8 +344,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               }
             }
 
-            console.log('server comment ');
-            console.log(res.data.data.all_comments);
             this.setState({comments: res.data.data.all_comments});
           });
         })
@@ -369,8 +370,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         comment_document_id: this.props.route.params.data.comments,
       };
 
-      console.log('mine comment');
-      console.log(comments);
       // this.state.commentAttachment
       createApi
         .createApi()
@@ -395,8 +394,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         })
         .catch((err) => console.log(err));
     });
-
-    console.log(this.state.user);
   };
   // Save aas draft
   saveAsDraft = () => {
@@ -624,621 +621,859 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 color={colors.secondary}
               />
               <View>
-                <Text style={styles.title}>SOR Report</Text>
-                <View style={styles.underScrore} />
-              </View>
-              <View style={styles.avatarView}>
-                <Avatar
-                  rounded
-                  source={{
-                    uri: View_sor.user.profile,
-                  }}
-                />
+                <Text style={styles.title}>Observation Summary</Text>
               </View>
             </View>
           </View>
           <Animated.View
             style={[styles.content, {marginTop: this.state.contentAnim}]}>
-            <View style={styles.contentPadding}>
-              <TouchableOpacity style={styles.classittleicon}>
-                {this.state.sor_type != 'lsr' ? (
-                  <View>
-                    {this.state.sor_type != 'near miss' ? (
-                      <Icon
-                        size={wp(6)}
-                        name={
-                          this.state.sor_type == 'lsr'
-                            ? 'aperture'
-                            : this.state.sor_type == 'positive'
-                            ? 'check-circle'
-                            : this.state.sor_type == 'concern'
-                            ? 'warning'
-                            : this.state.sor_type == 'near miss'
-                            ? 'centercode'
-                            : 'frowno'
-                        }
-                        type={
-                          this.state.sor_type == 'lsr'
-                            ? 'ionicon'
-                            : this.state.sor_type == 'positive'
-                            ? 'font-awesome-5'
-                            : this.state.sor_type == 'concern'
-                            ? 'antdesign'
-                            : this.state.sor_type == 'near miss'
-                            ? 'font-awesome-5'
-                            : 'antdesign'
-                        }
-                        color={
-                          this.state.sor_type == 'lsr'
-                            ? colors.classify_sor_btns.lsr
-                            : this.state.sor_type == 'positive'
-                            ? colors.classify_sor_btns.positive
-                            : this.state.sor_type == 'concern'
-                            ? colors.classify_sor_btns.concern
-                            : this.state.sor_type == 'near miss'
-                            ? colors.classify_sor_btns.nearmiss
-                            : 'frowno'
-                        }
-                      />
-                    ) : null}
-                  </View>
-                ) : null}
+            {/* Observation Details */}
 
-                {this.state.sor_type == 'lsr' ? (
-                  <View style={{width: wp(7), height: wp(7)}}>
-                    <Image
-                      source={images.lsr}
-                      style={[GlStyles.images, {tintColor: colors.text}]}
-                    />
-                  </View>
-                ) : null}
-                {this.state.sor_type == 'near miss' ? (
-                  <View style={{width: wp(8), height: wp(8)}}>
-                    <Image source={images.nearMiss} style={GlStyles.images} />
-                  </View>
-                ) : null}
+            <View
+              style={{
+                // marginTop: wp(3),
+                marginBottom: wp(3),
+                paddingLeft: wp(3),
+                paddingRight: wp(3),
+              }}>
+              {/* Observation ID */}
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+
+                  alignItems: 'center',
+                }}>
                 <Text
-                  style={[
-                    styles.clasifyT,
-                    this.state.sor_type == 'lsr'
-                      ? {color: colors.classify_sor_btns.lsr}
-                      : this.state.sor_type == 'positive'
-                      ? {color: colors.classify_sor_btns.positive}
-                      : this.state.sor_type == 'concern'
-                      ? {color: colors.classify_sor_btns.concern}
-                      : this.state.sor_type == 'near miss'
-                      ? {color: colors.classify_sor_btns.nearmiss}
-                      : null,
-                  ]}>
-                  {capitalizeFirstLetter(this.state.sor_type)}
+                  style={{
+                    fontFamily: fonts.SFuiDisplayMedium,
+                    fontSize: wp(4),
+                    width: '50%',
+                  }}>
+                  Observation ID:
                 </Text>
-              </TouchableOpacity>
-              <View style={styles.obserContainer}>
-                <View>
-                  <TextInput
-                    multiline={true}
-                    value={this.state.observation}
-                    onChange={(e) => {
-                      this.setState({observation: e.nativeEvent.text});
-                      this.setState({time: Date.now()});
-                    }}
-                    style={styles.observationText}
-                  />
-                </View>
-                <Text style={styles.observationDate}>
-                  {moment(this.state.time).fromNow()}
+                <Text
+                  style={{
+                    // marginLeft: wp(10),
+                    width: '50%',
+                    fontFamily: fonts.SFuiDisplayLight,
+                    fontSize: wp(3),
+                  }}>
+                  112233
                 </Text>
               </View>
-              <View style={styles.subContainer}>
-                {this.state.submitted_to.length == 0 ? null : (
-                  <View style={styles.submittedTo}>
-                    <Text style={styles.subText}>Submitted to : </Text>
-                    <Text style={styles.obvText}>
-                      {this.state.submitted_to[0].name}
-                    </Text>
-                  </View>
-                )}
+              {/* Observation Type */}
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
 
-                {this.state.esclate_to.length == 0 ? null : (
-                  <View style={styles.observerTo}>
-                    <Text style={styles.obvText}>Observer : </Text>
-                    <Text style={styles.obvText}>
-                      {this.props.route.params.data.created_by.split('@')[0]}
-                    </Text>
-                  </View>
-                )}
-              </View>
-              <View style={styles.involveNortify}>
-                {/* Notified To Section */}
-                <View style={styles.notifiedSec}>
-                  <Text style={styles.notifyPText}>Esclate to : </Text>
-                  {this.state.esclate_to.map(
-                    (d: involved_persons, i: number) => {
-                      var j = 2;
-
-                      return (
-                        <TouchableOpacity
-                          onPress={() => {
-                            this.setState({
-                              editInvolvedAndEsclatedPersons: true,
-                            });
-                          }}>
-                          <Avatar
-                            containerStyle={{
-                              marginLeft: wp(-(j + 1)),
-                              borderColor: colors.secondary,
-                              borderWidth: wp(0.5),
-                            }}
-                            size={wp(8)}
-                            rounded
-                            source={{
-                              uri: d.img_url,
-                            }}
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    width: '50%',
+                    fontFamily: fonts.SFuiDisplayMedium,
+                    fontSize: wp(4),
+                  }}>
+                  Observation Type:
+                </Text>
+                <View
+                  style={{
+                    width: '50%',
+                  }}>
+                  <TouchableOpacity style={styles.classittleicon}>
+                    {this.state.sor_type != 'lsr' ? (
+                      <View>
+                        {this.state.sor_type != 'near miss' ? (
+                          <Icon
+                            size={wp(3)}
+                            name={
+                              this.state.sor_type == 'lsr'
+                                ? 'aperture'
+                                : this.state.sor_type == 'positive'
+                                ? 'check-circle'
+                                : this.state.sor_type == 'concern'
+                                ? 'warning'
+                                : this.state.sor_type == 'near miss'
+                                ? 'centercode'
+                                : 'frowno'
+                            }
+                            type={
+                              this.state.sor_type == 'lsr'
+                                ? 'ionicon'
+                                : this.state.sor_type == 'positive'
+                                ? 'font-awesome-5'
+                                : this.state.sor_type == 'concern'
+                                ? 'antdesign'
+                                : this.state.sor_type == 'near miss'
+                                ? 'font-awesome-5'
+                                : 'antdesign'
+                            }
+                            color={
+                              this.state.sor_type == 'lsr'
+                                ? colors.classify_sor_btns.lsr
+                                : this.state.sor_type == 'positive'
+                                ? colors.classify_sor_btns.positive
+                                : this.state.sor_type == 'concern'
+                                ? colors.classify_sor_btns.concern
+                                : this.state.sor_type == 'near miss'
+                                ? colors.classify_sor_btns.nearmiss
+                                : 'frowno'
+                            }
                           />
-                        </TouchableOpacity>
-                      );
-                    },
-                  )}
-                  {this.state.esclate_to.length < 6 ? (
-                    <TouchableOpacity
-                      onPress={() => {
-                        if (this.state.esclate_to.length < 6) {
-                          this.setState({
-                            notifiedAndInv: 1,
-                            photoArr: this.state.notifiedPerson,
-                            IsaddInvAndNotifiedUser: true,
-                            involvedAndNotifiedUserType: 'Esclate',
-                          });
-                        }
-                      }}
-                      style={[
-                        styles.addCircle,
-                        this.state.notifiedAndInv == 1
-                          ? {backgroundColor: colors.primary}
-                          : {backgroundColor: colors.lightGrey},
-                      ]}>
-                      <Icon
-                        size={wp(3.5)}
-                        name="plus"
-                        type="antdesign"
-                        color={
-                          this.state.notifiedAndInv == 1
-                            ? colors.secondary
-                            : colors.primary
-                        }
-                      />
-                    </TouchableOpacity>
-                  ) : null}
-                </View>
-                {/* Involved Person  */}
-                <View style={styles.notifiedSec}>
-                  <Text style={styles.invpText}>Involved People</Text>
-                  {this.state.involvedPerson.map((d: any, i: number) => {
-                    var j = 1;
-                    return (
-                      <TouchableOpacity
-                        onPress={() =>
-                          this.setState({editInvolvedAndEsclatedPersons: true})
-                        }>
-                        <Avatar
-                          containerStyle={{
-                            marginLeft: wp(-(j + 1)),
-                            borderWidth: wp(0.5),
-                            borderColor: colors.secondary,
-                          }}
-                          size={wp(8)}
-                          rounded
-                          source={{
-                            uri: d.img_url,
-                          }}
+                        ) : null}
+                      </View>
+                    ) : null}
+
+                    {this.state.sor_type == 'lsr' ? (
+                      <View style={{width: wp(7), height: wp(7)}}>
+                        <Image
+                          source={images.lsr}
+                          style={[GlStyles.images, {tintColor: colors.text}]}
                         />
-                      </TouchableOpacity>
-                    );
-                  })}
-                  {this.state.involvedPerson.length < 6 ? (
+                      </View>
+                    ) : null}
+                    {this.state.sor_type == 'near miss' ? (
+                      <View style={{width: wp(8), height: wp(8)}}>
+                        <Image
+                          source={images.nearMiss}
+                          style={GlStyles.images}
+                        />
+                      </View>
+                    ) : null}
+                    <Text
+                      style={[
+                        styles.clasifyT,
+                        this.state.sor_type == 'lsr'
+                          ? {color: colors.classify_sor_btns.lsr}
+                          : this.state.sor_type == 'positive'
+                          ? {color: colors.classify_sor_btns.positive}
+                          : this.state.sor_type == 'concern'
+                          ? {color: colors.classify_sor_btns.concern}
+                          : this.state.sor_type == 'near miss'
+                          ? {color: colors.classify_sor_btns.nearmiss}
+                          : null,
+                      ]}>
+                      {capitalizeFirstLetter(this.state.sor_type)}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              {/* Reported on  */}
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    width: '50%',
+                    fontFamily: fonts.SFuiDisplayMedium,
+                    fontSize: wp(4),
+                  }}>
+                  Reported on:
+                </Text>
+                <Text
+                  style={{
+                    width: '50%',
+                    fontFamily: fonts.SFuiDisplayLight,
+                    fontSize: wp(3),
+                  }}>
+                  {moment(this.state.time).format('MMM DD, YYYY LT')}
+                </Text>
+              </View>
+              {/* Project */}
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    width: '50%',
+                    fontFamily: fonts.SFuiDisplayMedium,
+                    fontSize: wp(4),
+                  }}>
+                  Project:
+                </Text>
+                <Text
+                  style={{
+                    width: '50%',
+                    fontFamily: fonts.SFuiDisplayLight,
+                    fontSize: wp(3),
+                  }}>
+                  112233
+                </Text>
+              </View>
+              {/* Location */}
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    width: '50%',
+                    fontFamily: fonts.SFuiDisplayMedium,
+                    fontSize: wp(4),
+                  }}>
+                  Location:
+                </Text>
+                <Text
+                  style={{
+                    width: '50%',
+                    fontFamily: fonts.SFuiDisplayLight,
+                    fontSize: wp(3),
+                  }}>
+                  112233
+                </Text>
+              </View>
+            </View>
+            {/* Line  */}
+            <View style={styles.lineheight} />
+
+            <View style={styles.obserContainer}>
+              <Text style={styles.observationDate}>
+                On {moment(this.state.time).format('MMM DD, YYYY')} at{' '}
+                {moment(this.state.time).format('LT')}
+              </Text>
+              <View>
+                <TextInput
+                  multiline={true}
+                  value={this.state.observation}
+                  onChange={(e) => {
+                    this.setState({observation: e.nativeEvent.text});
+                    this.setState({time: Date.now()});
+                  }}
+                  style={styles.observationText}
+                />
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <Text
+                  style={{
+                    fontSize: wp(3.5),
+                    fontFamily: fonts.SFuiDisplayLight,
+                  }}>
+                  Involved Person :
+                </Text>
+                <Text style={{fontSize: wp(3.5)}}>
+                  {/* {this.state.involvedPerson[0].name} */}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.subContainer}>
+              {this.state.submitted_to.length == 0 ? null : (
+                <View style={styles.submittedTo}>
+                  <Text style={styles.subText}>Submitted to : </Text>
+                  <Text style={styles.obvText}>
+                    {this.state.submitted_to[0].name}
+                  </Text>
+                </View>
+              )}
+
+              {this.state.esclate_to.length == 0 ? null : (
+                <View style={styles.observerTo}>
+                  <Text style={styles.obvText}>Observer : </Text>
+                  <Text style={styles.obvText}>
+                    {this.props.route.params.data.created_by.split('@')[0]}
+                  </Text>
+                </View>
+              )}
+            </View>
+            <View style={styles.involveNortify}>
+              {/* Notified To Section */}
+              <View style={styles.notifiedSec}>
+                <Text style={styles.notifyPText}>Esclate to : </Text>
+                {this.state.esclate_to.map((d: involved_persons, i: number) => {
+                  var j = 2;
+
+                  return (
                     <TouchableOpacity
                       onPress={() => {
                         this.setState({
-                          notifiedAndInv: 2,
-                          photoArr: this.state.involvedPerson,
-                          IsaddInvAndNotifiedUser: true,
-                          involvedAndNotifiedUserType: 'involved',
+                          editInvolvedAndEsclatedPersons: true,
                         });
-                      }}
-                      style={[
-                        styles.addCircle,
-                        this.state.notifiedAndInv == 2
-                          ? {backgroundColor: colors.primary}
-                          : {backgroundColor: colors.lightGrey},
-                      ]}>
-                      <Icon
-                        size={wp(3.5)}
-                        name="plus"
-                        type="antdesign"
-                        color={
-                          this.state.notifiedAndInv == 2
-                            ? colors.secondary
-                            : colors.primary
-                        }
+                      }}>
+                      <Avatar
+                        containerStyle={{
+                          marginLeft: wp(-(j + 1)),
+                          borderColor: colors.secondary,
+                          borderWidth: wp(0.5),
+                        }}
+                        size={wp(8)}
+                        rounded
+                        source={{
+                          uri: d.img_url,
+                        }}
                       />
                     </TouchableOpacity>
-                  ) : null}
-                </View>
-              </View>
-              <View style={styles.risk}>
-                <Text style={styles.riskText}>
-                  Risk{' '}
-                  <Text style={styles.riskttle}>(Severity x Likelihood)</Text>
-                </Text>
-                {this.state.selectedRisk == false ? (
-                  <View>
-                    <Chart
-                      liklihood={this.state.liklihood}
-                      severity={this.state.severity}
-                      style={{marginTop: wp(3)}}
-                      onPress={(v: object) => {}}
-                    />
-                  </View>
-                ) : (
+                  );
+                })}
+                {this.state.esclate_to.length < 6 ? (
                   <TouchableOpacity
-                    onPress={() => this.setState({selectedRisk: false})}
-                    style={{flexDirection: 'row'}}>
-                    <View style={styles.riskIcon}>
-                      <Text style={styles.riskIconText}>
-                        {this.props.route.params.data.risk.likelihood *
-                          this.props.route.params.data.risk.severity}
-                      </Text>
-                    </View>
+                    onPress={() => {
+                      if (this.state.esclate_to.length < 6) {
+                        this.setState({
+                          notifiedAndInv: 1,
+                          photoArr: this.state.notifiedPerson,
+                          IsaddInvAndNotifiedUser: true,
+                          involvedAndNotifiedUserType: 'Esclate',
+                        });
+                      }
+                    }}
+                    style={[
+                      styles.addCircle,
+                      this.state.notifiedAndInv == 1
+                        ? {backgroundColor: colors.primary}
+                        : {backgroundColor: colors.lightGrey},
+                    ]}>
+                    <Icon
+                      size={wp(3.5)}
+                      name="plus"
+                      type="antdesign"
+                      color={
+                        this.state.notifiedAndInv == 1
+                          ? colors.secondary
+                          : colors.primary
+                      }
+                    />
                   </TouchableOpacity>
-                )}
+                ) : null}
               </View>
-              <View style={styles.actionContainer}>
-                <Text style={styles.actionText}>Action / Recommendation</Text>
-                <Text style={styles.sugForYouText}>Suggested for you</Text>
-                {this.props.route.params.data.action_required == undefined ? (
-                  <Text style={styles.nosuchActionsAndRecommendations}>
-                    No such Actions / Recommendations
-                  </Text>
-                ) : (
-                  <View>
-                    {this.state.actionsAndRecommendations.map(
-                      (d: actions, i: number) => (
-                        <TouchableOpacity
-                          onPress={() => {
-                            var data = [
-                              ...this.state.actionsAndRecommendations,
-                            ];
-                            if (d.is_complete == true) {
-                              data[i].is_complete = false;
-                            } else {
-                              data[i].is_complete = true;
-                            }
-                            this.setState({actionsAndRecommendations: data});
-                          }}
-                          onLongPress={() => {
-                            console.log(d);
-                            this.setState({
-                              allActionsEdit: d,
-                              SuggestionPop: true,
-                              allActionsEditIndex: i,
-                              newActions: false,
-                            });
-                          }}
-                          style={[
-                            styles.actionRecomCon,
-                            d.is_complete == true
-                              ? {
-                                  borderWidth: wp(0.2),
-                                  backgroundColor: colors.lightBlue,
-                                  borderColor: colors.primary,
-                                }
-                              : {
-                                  borderWidth: wp(0.3),
-                                  borderColor: colors.lightGrey,
-                                },
-                          ]}>
-                          <View>
-                            <View
-                              style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                              }}>
-                              <Icon
-                                size={wp(3.5)}
-                                name="checkcircle"
-                                type="antdesign"
-                                color={
-                                  d.is_complete == true
-                                    ? colors.green
-                                    : colors.lightGrey
-                                }
-                              />
-                              <Text style={styles.statusARText}>
-                                {d.is_complete == true ? 'Completed' : 'Status'}
-                              </Text>
-                              <View
-                                style={{position: 'absolute', right: wp(3)}}>
-                                <Text style={[styles.actionTypeElemAsdmin]}>
-                                  {d.category}
-                                </Text>
-                              </View>
-                            </View>
-                            <Text
-                              style={[
-                                styles.obvTextAction,
-                                d.is_complete == true
-                                  ? {color: colors.text, opacity: 0.5}
-                                  : null,
-                              ]}>
-                              {d.content}
-                            </Text>
-                          </View>
-
-                          <View style={styles.subAss}>
-                            <TouchableOpacity>
-                              <Text style={styles.subAssText}>
-                                Assigned to:{' '}
-                                <Text style={styles.subAssuser}>
-                                  {d.assigned_to}
-                                </Text>
-                              </Text>
-                            </TouchableOpacity>
-
-                            <Text style={styles.subAssText}>
-                              {moment(d.date).format('MMM DD YYYY')}
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      ),
-                    )}
+              {/* Involved Person  */}
+              <View style={styles.notifiedSec}>
+                <Text style={styles.invpText}>Involved People</Text>
+                {this.state.involvedPerson.map((d: any, i: number) => {
+                  var j = 1;
+                  return (
+                    <TouchableOpacity
+                      onPress={() =>
+                        this.setState({editInvolvedAndEsclatedPersons: true})
+                      }>
+                      <Avatar
+                        containerStyle={{
+                          marginLeft: wp(-(j + 1)),
+                          borderWidth: wp(0.5),
+                          borderColor: colors.secondary,
+                        }}
+                        size={wp(8)}
+                        rounded
+                        source={{
+                          uri: d.img_url,
+                        }}
+                      />
+                    </TouchableOpacity>
+                  );
+                })}
+                {this.state.involvedPerson.length < 6 ? (
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({
+                        notifiedAndInv: 2,
+                        photoArr: this.state.involvedPerson,
+                        IsaddInvAndNotifiedUser: true,
+                        involvedAndNotifiedUserType: 'involved',
+                      });
+                    }}
+                    style={[
+                      styles.addCircle,
+                      this.state.notifiedAndInv == 2
+                        ? {backgroundColor: colors.primary}
+                        : {backgroundColor: colors.lightGrey},
+                    ]}>
+                    <Icon
+                      size={wp(3.5)}
+                      name="plus"
+                      type="antdesign"
+                      color={
+                        this.state.notifiedAndInv == 2
+                          ? colors.secondary
+                          : colors.primary
+                      }
+                    />
+                  </TouchableOpacity>
+                ) : null}
+              </View>
+            </View>
+            {/* Risk */}
+            <View style={styles.risk}>
+              <Text style={styles.riskText}>
+                Risk{' '}
+                <Text style={styles.riskttle}>(Severity x Likelihood)</Text>
+              </Text>
+              {this.state.selectedRisk == false ? (
+                <View>
+                  <Chart
+                    liklihood={this.state.liklihood}
+                    severity={this.state.severity}
+                    style={{marginTop: wp(3)}}
+                    onPress={(v: object) => {}}
+                  />
+                </View>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => this.setState({selectedRisk: false})}
+                  style={{flexDirection: 'row'}}>
+                  <View style={styles.riskIcon}>
+                    <Text style={styles.riskIconText}>
+                      {this.props.route.params.data.risk.likelihood *
+                        this.props.route.params.data.risk.severity}
+                    </Text>
                   </View>
-                )}
-              </View>
-              <View
-                style={[
-                  styles.addActionAndRecommendation,
-                  this.state.notifiedAndInv == 3
-                    ? {borderColor: colors.green}
-                    : {borderColor: colors.lightGrey},
-                ]}>
-                <TextInput
-                  onFocus={() => this.setState({notifiedAndInv: 3})}
-                  maxLength={500}
-                  onChange={(e) =>
-                    this.setState({
-                      actionsAndRecommendationText: e.nativeEvent.text,
-                    })
-                  }
-                  value={this.state.actionsAndRecommendationText}
-                  multiline={true}
-                  style={styles.textaddActionContainer}
-                  placeholder={'Add action / recommendation here'}
-                />
-
+                </TouchableOpacity>
+              )}
+            </View>
+            {/* five WHY Questionaries */}
+            {/* Line  */}
+            <View style={styles.lineheight} />
+            <View style={styles.fiveWhyContainer}>
+              <View style={styles.fiveWhyHeadingContainer}>
+                <Text style={styles.investigationReqtext}>
+                  {' '}
+                  Investigation Required
+                </Text>
                 <TouchableOpacity
                   onPress={() => {
-                    // this.submitActionsAndRecommendations(
-                    //   this.state.actionsAndRecommendationText,
-                    // );
-                    if (this.state.actionsAndRecommendationText !== '') {
-                      this.setState({
-                        allActionsEdit: {
-                          is_complete: false,
-                          is_selected: false,
-                          content: this.state.actionsAndRecommendationText,
-                          assigned_to: [],
-                          date: moment().format('YYYY-MM-DD'),
-                          status: 0,
-                          category: 'Elimination',
-                        },
+                    if (this.state.fiveWhytoggle == true) {
+                      this.setState({fiveWhytoggle: false});
+                    } else {
+                      if (this.state.reportIdInvestigation === '') {
+                        var bodyInitial = {
+                          report: {
+                            created_by: this.state.user.email,
+                            comments: '',
+                            status: 1,
+                          },
+                          project: '607820d5724677561cf67ec5',
+                        };
+                        createApi
+                          .createApi()
+                          .createSorInit(bodyInitial)
+                          .then((res: any) => {
+                            this.setState({
+                              reportIdInvestigation: res.data.data.report_id,
+                            });
+                            this.setState({fiveWhytoggle: true});
+                          })
+                          .catch((err) => console.log(err));
+                      } else {
+                        this.setState({fiveWhytoggle: true});
+                      }
+                    }
+                    // this.setState({fiveWhytoggle: !this.state.fiveWhytoggle});
+                  }}
+                  style={styles.fivewhyToggleContainer}>
+                  <View
+                    style={[
+                      styles.fivewhyToggeNo,
+                      this.state.fiveWhytoggle == false
+                        ? {
+                            borderColor: colors.error,
+                            backgroundColor: '#F59798',
+                          }
+                        : {
+                            borderColor: colors.text,
+                            borderRightWidth: wp(0),
+                            opacity: 0.5,
+                          },
+                    ]}>
+                    <Text
+                      style={[
+                        styles.fivewhyToggeNoText,
+                        this.state.fiveWhytoggle == false
+                          ? {color: colors.secondary}
+                          : {color: colors.text},
+                      ]}>
+                      No
+                    </Text>
+                  </View>
+                  <View
+                    style={[
+                      styles.fivewhyToggeYes,
+                      this.state.fiveWhytoggle
+                        ? {
+                            borderColor: colors.green,
+                            backgroundColor: colors.lightGreen,
+                          }
+                        : {
+                            borderColor: colors.text,
+                            borderLeftWidth: wp(0),
+                            opacity: 0.5,
+                          },
+                    ]}>
+                    <Text
+                      style={[
+                        styles.fivewhyToggeYesText,
+                        this.state.fiveWhytoggle
+                          ? {color: colors.green}
+                          : {color: colors.text},
+                      ]}>
+                      Yes
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
 
-                        SuggestionPop: true,
-                        newActions: true,
-                      });
+            {/* Line  */}
+            <View style={styles.lineheight} />
+
+            {/* Actions / recommendations */}
+            <View style={styles.actionContainer}>
+              <Text style={styles.actionText}>Action / Recommendation</Text>
+              <Text style={styles.sugForYouText}>Suggested for you</Text>
+              {this.props.route.params.data.action_required == undefined ? (
+                <Text style={styles.nosuchActionsAndRecommendations}>
+                  No such Actions / Recommendations
+                </Text>
+              ) : (
+                <View>
+                  {this.state.actionsAndRecommendations.map(
+                    (d: actions, i: number) => (
+                      <TouchableOpacity
+                        onPress={() => {
+                          var data = [...this.state.actionsAndRecommendations];
+                          if (d.is_complete == true) {
+                            data[i].is_complete = false;
+                          } else {
+                            data[i].is_complete = true;
+                          }
+                          this.setState({actionsAndRecommendations: data});
+                        }}
+                        onLongPress={() => {
+                          this.setState({
+                            allActionsEdit: d,
+                            SuggestionPop: true,
+                            allActionsEditIndex: i,
+                            newActions: false,
+                          });
+                        }}
+                        style={[
+                          styles.actionRecomCon,
+                          d.is_complete == true
+                            ? {
+                                borderWidth: wp(0.2),
+                                backgroundColor: colors.lightBlue,
+                                borderColor: colors.primary,
+                              }
+                            : {
+                                borderWidth: wp(0.3),
+                                borderColor: colors.lightGrey,
+                              },
+                        ]}>
+                        <View>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                            }}>
+                            <Icon
+                              size={wp(3.5)}
+                              name="checkcircle"
+                              type="antdesign"
+                              color={
+                                d.is_complete == true
+                                  ? colors.green
+                                  : colors.lightGrey
+                              }
+                            />
+                            <Text style={styles.statusARText}>
+                              {d.is_complete == true ? 'Completed' : 'Status'}
+                            </Text>
+                            <View style={{position: 'absolute', right: wp(3)}}>
+                              <Text style={[styles.actionTypeElemAsdmin]}>
+                                {d.category}
+                              </Text>
+                            </View>
+                          </View>
+                          <Text
+                            style={[
+                              styles.obvTextAction,
+                              d.is_complete == true
+                                ? {color: colors.text, opacity: 0.5}
+                                : null,
+                            ]}>
+                            {d.content}
+                          </Text>
+                        </View>
+
+                        <View style={styles.subAss}>
+                          <TouchableOpacity>
+                            <Text style={styles.subAssText}>
+                              Assigned to:{' '}
+                              <Text style={styles.subAssuser}>
+                                {d.assigned_to}
+                              </Text>
+                            </Text>
+                          </TouchableOpacity>
+
+                          <Text style={styles.subAssText}>
+                            {moment(d.date).format('MMM DD YYYY')}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    ),
+                  )}
+                </View>
+              )}
+            </View>
+            <View
+              style={[
+                styles.addActionAndRecommendation,
+                this.state.notifiedAndInv == 3
+                  ? {borderColor: colors.green}
+                  : {borderColor: colors.lightGrey},
+              ]}>
+              <TextInput
+                onFocus={() => this.setState({notifiedAndInv: 3})}
+                maxLength={500}
+                onChange={(e) =>
+                  this.setState({
+                    actionsAndRecommendationText: e.nativeEvent.text,
+                  })
+                }
+                value={this.state.actionsAndRecommendationText}
+                multiline={true}
+                style={styles.textaddActionContainer}
+                placeholder={'Add action / recommendation here'}
+              />
+
+              <TouchableOpacity
+                onPress={() => {
+                  // this.submitActionsAndRecommendations(
+                  //   this.state.actionsAndRecommendationText,
+                  // );
+                  if (this.state.actionsAndRecommendationText !== '') {
+                    this.setState({
+                      allActionsEdit: {
+                        is_complete: false,
+                        is_selected: false,
+                        content: this.state.actionsAndRecommendationText,
+                        assigned_to: [],
+                        date: moment().format('YYYY-MM-DD'),
+                        status: 0,
+                        category: 'Elimination',
+                      },
+
+                      SuggestionPop: true,
+                      newActions: true,
+                    });
+                  }
+                }}
+                style={{
+                  position: 'absolute',
+                  right: wp(3),
+                  padding: wp(2),
+                  borderRadius: wp(2),
+                  top: wp(2.7),
+                  backgroundColor: colors.lightGrey,
+                }}>
+                <Icon
+                  size={wp(4)}
+                  name="arrowright"
+                  type="antdesign"
+                  color={colors.primary}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.attachmentsContainer}>
+              <Text style={styles.attachmentsFont}>Attachments</Text>
+              {this.state.attachments.length == 0 ? (
+                <Text style={styles.youdonthaveAnyAttachments}>
+                  You don't have any attachments
+                </Text>
+              ) : (
+                <View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                      alignSelf: 'center',
+                    }}>
+                    {this.state.attachments.map((d: any, i: number) => {
+                      if (d.type == 'photo') {
+                        return (
+                          <TouchableOpacity
+                            onPress={() => this.setState({imageViewer: true})}
+                            style={styles.AttchimageContainer}>
+                            <Image
+                              source={{
+                                uri: d.url,
+                              }}
+                              style={[GlStyles.images, {borderRadius: wp(3)}]}
+                              resizeMode={'cover'}
+                            />
+                            <TouchableOpacity
+                              onPress={() => {
+                                if (d.upload != 'self') {
+                                  this.photoAnim.play();
+                                  downloadFile(d.url, d.type)
+                                    .then((res: any) => {})
+                                    .catch((err) => {});
+                                }
+                              }}
+                              style={styles.lottieDownloadContainer}>
+                              <LottieView
+                                ref={(animation) => {
+                                  this.photoAnim = animation;
+                                }}
+                                style={{width: wp(11)}}
+                                source={animation.download}
+                                loop={false}
+                              />
+
+                              {d.upload == 'self' ? (
+                                <TouchableOpacity
+                                  style={{marginRight: wp(3)}}
+                                  onPress={() => {
+                                    var arr = [
+                                      ...this.state.attachments,
+                                    ].filter((b) => b != d);
+                                    this.setState({attachments: arr});
+                                  }}>
+                                  <Icon
+                                    containerStyle={{
+                                      marginRight: wp(2),
+                                      marginTop: wp(2),
+                                      opacity: 0.5,
+                                    }}
+                                    name="circle-with-cross"
+                                    size={wp(5)}
+                                    type="entypo"
+                                    color={colors.text}
+                                  />
+                                </TouchableOpacity>
+                              ) : null}
+                            </TouchableOpacity>
+                          </TouchableOpacity>
+                        );
+                      }
+                    })}
+                  </View>
+                </View>
+              )}
+
+              {this.state.attachments.map((d: any, i: number) => (
+                <View>
+                  {d.type != 'photo' ? (
+                    <View style={styles.attachFileContainer}>
+                      <View>
+                        <Image
+                          source={
+                            d.type == 'pdf'
+                              ? images.pdf
+                              : d.type == 'doc'
+                              ? images.doc
+                              : d.type == 'text'
+                              ? images.text
+                              : d.type == 'doc'
+                              ? images.doc
+                              : // : d.type == 'excel'
+                                // ? images.excel
+                                // : d.type == 'powerpoint'
+                                // ? images.powerpoint
+                                null
+                          }
+                          style={{width: wp(7), height: wp(7)}}
+                        />
+                      </View>
+                      <Text style={styles.attchFileText}>
+                        {d.name.substring(0, 10)}.../.{d.type}
+                      </Text>
+                      <View
+                        style={{
+                          position: 'absolute',
+                          right: wp(1),
+                          top: wp(1.5),
+                          alignItems: 'center',
+                          flexDirection: 'row',
+                        }}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            if (d.upload != 'self') {
+                              this.photoAnim.play();
+                              downloadFile(d.url, d.type)
+                                .then((res: any) => {})
+                                .catch((err) => {});
+                            }
+                          }}>
+                          <LottieView
+                            ref={(animation) => {
+                              this.animation = animation;
+                            }}
+                            style={{width: wp(15)}}
+                            source={animation.download}
+                            loop={false}
+                          />
+                        </TouchableOpacity>
+
+                        {d.upload == 'self' ? (
+                          <TouchableOpacity
+                            onPress={() => {
+                              var arr = [...this.state.attachments].filter(
+                                (b) => b != d,
+                              );
+                              this.setState({attachments: arr});
+                            }}>
+                            <Icon
+                              containerStyle={{
+                                marginRight: wp(2),
+                                marginTop: wp(2),
+                                opacity: 0.5,
+                              }}
+                              name="circle-with-cross"
+                              size={wp(5)}
+                              type="entypo"
+                              color={colors.text}
+                            />
+                          </TouchableOpacity>
+                        ) : null}
+                      </View>
+                    </View>
+                  ) : null}
+                </View>
+              ))}
+              {this.state.attachments.length < 6 && (
+                <TouchableOpacity
+                  onPress={() => {
+                    if (this.state.attachments.length < 6) {
+                      this.openDoc(this.state.attachments);
                     }
                   }}
-                  style={{
-                    position: 'absolute',
-                    right: wp(3),
-                    padding: wp(2),
-                    borderRadius: wp(2),
-                    top: wp(2.7),
-                    backgroundColor: colors.lightGrey,
-                  }}>
+                  style={{marginTop: wp(3), flexDirection: 'row'}}>
                   <Icon
+                    containerStyle={{marginRight: wp(3)}}
+                    name="plus"
                     size={wp(4)}
-                    name="arrowright"
                     type="antdesign"
                     color={colors.primary}
                   />
-                </TouchableOpacity>
-              </View>
-              <View style={styles.attachmentsContainer}>
-                <Text style={styles.attachmentsFont}>Attachments</Text>
-                {this.state.attachments.length == 0 ? (
-                  <Text style={styles.youdonthaveAnyAttachments}>
-                    You don't have any attachments
+                  <Text
+                    style={{
+                      fontSize: wp(3),
+                      fontWeight: 'bold',
+                      opacity: 0.5,
+                      color: colors.primary,
+                    }}>
+                    Add New Attachments
                   </Text>
-                ) : (
-                  <View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        flexWrap: 'wrap',
-                        alignSelf: 'center',
-                      }}>
-                      {this.state.attachments.map((d: any, i: number) => {
-                        if (d.type == 'photo') {
-                          return (
-                            <TouchableOpacity
-                              onPress={() => this.setState({imageViewer: true})}
-                              style={styles.AttchimageContainer}>
-                              <Image
-                                source={{
-                                  uri: d.url,
-                                }}
-                                style={[GlStyles.images, {borderRadius: wp(3)}]}
-                                resizeMode={'cover'}
-                              />
-                              <TouchableOpacity
-                                onPress={() => {
-                                  if (d.upload != 'self') {
-                                    this.photoAnim.play();
-                                    downloadFile(d.url, d.type)
-                                      .then((res: any) => {})
-                                      .catch((err) => {});
-                                  }
-                                }}
-                                style={styles.lottieDownloadContainer}>
-                                <LottieView
-                                  ref={(animation) => {
-                                    this.photoAnim = animation;
-                                  }}
-                                  style={{width: wp(11)}}
-                                  source={animation.download}
-                                  loop={false}
-                                />
-
-                                {d.upload == 'self' ? (
-                                  <TouchableOpacity
-                                    style={{marginRight: wp(3)}}
-                                    onPress={() => {
-                                      var arr = [
-                                        ...this.state.attachments,
-                                      ].filter((b) => b != d);
-                                      this.setState({attachments: arr});
-                                    }}>
-                                    <Icon
-                                      containerStyle={{
-                                        marginRight: wp(2),
-                                        marginTop: wp(2),
-                                        opacity: 0.5,
-                                      }}
-                                      name="circle-with-cross"
-                                      size={wp(5)}
-                                      type="entypo"
-                                      color={colors.text}
-                                    />
-                                  </TouchableOpacity>
-                                ) : null}
-                              </TouchableOpacity>
-                            </TouchableOpacity>
-                          );
-                        }
-                      })}
-                    </View>
-                  </View>
-                )}
-
-                {this.state.attachments.map((d: any, i: number) => (
-                  <View>
-                    {d.type != 'photo' ? (
-                      <View style={styles.attachFileContainer}>
-                        <View>
-                          <Image
-                            source={
-                              d.type == 'pdf'
-                                ? images.pdf
-                                : d.type == 'doc'
-                                ? images.doc
-                                : d.type == 'text'
-                                ? images.text
-                                : d.type == 'doc'
-                                ? images.doc
-                                : // : d.type == 'excel'
-                                  // ? images.excel
-                                  // : d.type == 'powerpoint'
-                                  // ? images.powerpoint
-                                  null
-                            }
-                            style={{width: wp(7), height: wp(7)}}
-                          />
-                        </View>
-                        <Text style={styles.attchFileText}>
-                          {d.name.substring(0, 10)}.../.{d.type}
-                        </Text>
-                        <View
-                          style={{
-                            position: 'absolute',
-                            right: wp(1),
-                            top: wp(1.5),
-                            alignItems: 'center',
-                            flexDirection: 'row',
-                          }}>
-                          <TouchableOpacity
-                            onPress={() => {
-                              if (d.upload != 'self') {
-                                this.photoAnim.play();
-                                downloadFile(d.url, d.type)
-                                  .then((res: any) => {})
-                                  .catch((err) => {});
-                              }
-                            }}>
-                            <LottieView
-                              ref={(animation) => {
-                                this.animation = animation;
-                              }}
-                              style={{width: wp(15)}}
-                              source={animation.download}
-                              loop={false}
-                            />
-                          </TouchableOpacity>
-
-                          {d.upload == 'self' ? (
-                            <TouchableOpacity
-                              onPress={() => {
-                                var arr = [...this.state.attachments].filter(
-                                  (b) => b != d,
-                                );
-                                this.setState({attachments: arr});
-                              }}>
-                              <Icon
-                                containerStyle={{
-                                  marginRight: wp(2),
-                                  marginTop: wp(2),
-                                  opacity: 0.5,
-                                }}
-                                name="circle-with-cross"
-                                size={wp(5)}
-                                type="entypo"
-                                color={colors.text}
-                              />
-                            </TouchableOpacity>
-                          ) : null}
-                        </View>
-                      </View>
-                    ) : null}
-                  </View>
-                ))}
-                {this.state.attachments.length < 6 && (
-                  <TouchableOpacity
-                    onPress={() => {
-                      if (this.state.attachments.length < 6) {
-                        this.openDoc(this.state.attachments);
-                      }
-                    }}
-                    style={{marginTop: wp(3), flexDirection: 'row'}}>
-                    <Icon
-                      containerStyle={{marginRight: wp(3)}}
-                      name="plus"
-                      size={wp(4)}
-                      type="antdesign"
-                      color={colors.primary}
-                    />
-                    <Text
-                      style={{
-                        fontSize: wp(3),
-                        fontWeight: 'bold',
-                        opacity: 0.5,
-                        color: colors.primary,
-                      }}>
-                      Add New Attachments
-                    </Text>
-                  </TouchableOpacity>
-                )}
-              </View>
-              {/* Map Integration */}
-              {/* <Text
+                </TouchableOpacity>
+              )}
+            </View>
+            {/* Map Integration */}
+            {/* <Text
                 style={{
                   fontSize: wp(3),
                   color: colors.text,
@@ -1247,15 +1482,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 Hall No, 1 first floor, Plot No. 45 Street 10, I-9/2, Islamabad,
                 Federal, Islamabad Capital Territory 44000
               </Text> */}
-              <View style={{width: wp(90), height: wp(50)}}>
-                <Image
-                  source={images.map}
-                  style={[GlStyles.images, {borderRadius: wp(3)}]}
-                  resizeMode={'cover'}
-                />
-              </View>
-              {/* comments sections */}
+            <View style={{width: wp(90), height: wp(50)}}>
+              <Image
+                source={images.map}
+                style={[GlStyles.images, {borderRadius: wp(3)}]}
+                resizeMode={'cover'}
+              />
             </View>
+            {/* comments sections */}
             <View style={styles.commentsSections}>
               {this.state.comments.map((d: any, i: number) => {
                 return (
@@ -2030,7 +2264,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             //   ),
             // );
 
-            console.log(e);
             // this.state.comments.splice(this.state.editDiscardCommentIndex, 1);
 
             // this.setState({editDelComment: false});

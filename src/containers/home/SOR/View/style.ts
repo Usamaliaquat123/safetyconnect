@@ -12,16 +12,18 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: wp(5),
+    // paddingTop: wp(7),
     paddingRight: wp(7),
-    paddingLeft: wp(7),
+    paddingLeft: wp(3),
     flex: 1,
     backgroundColor: colors.primary,
   },
   title: {
-    fontSize: wp(4),
-    marginLeft: wp(5),
+    fontSize: wp(5),
+
+    marginLeft: wp(2),
     color: colors.secondary,
-    fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplaySemiBold,
   },
   underScrore: {
     backgroundColor: colors.green,
@@ -37,45 +39,51 @@ const styles = StyleSheet.create({
 
   headertle: {flexDirection: 'row'},
   content: {
-    flex: 1,
+    // flex: 1,
     // flex: 3,
     // marginTop: wp(80),
 
     backgroundColor: colors.secondary,
-    borderTopLeftRadius: wp(6),
-    borderTopRightRadius: wp(6),
+    // borderTopLeftRadius: wp(6),
+    // borderTopRightRadius: wp(6),
     // padding: wp(8),
     // paddingLeft: wp(5),
     // paddingRight: wp(5),
-    paddingTop: wp(8),
+    paddingTop: wp(4),
     paddingBottom: wp(8),
     // height: wp(150),
   },
   clasifyT: {
-    fontSize: wp(3.5),
+    fontSize: wp(3),
     marginTop: wp(1),
     marginLeft: wp(2),
     color: colors.text,
+
+    fontFamily: fonts.SFuiDisplayLight,
   },
   classittleicon: {
+    alignItems: 'center',
     flexDirection: 'row',
   },
   contentPadding: {
     paddingLeft: wp(5),
     paddingRight: wp(5),
   },
-  obserContainer: {marginTop: wp(3)},
+  obserContainer: {marginTop: wp(3), paddingLeft: wp(3), paddingRight: wp(3)},
   observationText: {
-    fontWeight: '800',
-    color: colors.primary,
+    fontFamily: fonts.SFuiDisplaySemiBold,
 
-    fontSize: wp(3.5),
+    textAlignVertical: 'top',
+    padding: 0,
+    color: colors.text,
+
+    fontSize: wp(3.7),
   },
   observationDate: {
     fontSize: wp(2.7),
-    fontWeight: '500',
     color: colors.text,
-    opacity: 0.5,
+    // opacity: 0.5,
+    fontFamily: fonts.SFuiDisplayMedium,
     marginTop: wp(1),
   },
   subContainer: {
@@ -432,6 +440,63 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: wp(4),
     alignItems: 'center',
+  },
+
+  lineheight: {
+    height: wp(0.5),
+    backgroundColor: colors.darkLightGrey,
+  },
+
+  // Five why api
+  investigationReqtext: {
+    fontSize: wp(5),
+    fontFamily: fonts.SFuiDisplaySemiBold,
+  },
+  fiveWhyContainer: {
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+    paddingBottom: wp(4),
+    paddingTop: wp(4),
+  },
+  fiveWhyHeadingContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  fivewhyToggleContainer: {
+    flexDirection: 'row',
+
+    // borderWidth: wp(0.2),
+    // borderRadius: wp(2),
+    justifyContent: 'space-between',
+  },
+
+  fivewhyToggeYesText: {
+    fontSize: wp(3),
+
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  fivewhyToggeYes: {
+    borderWidth: wp(0.3),
+    // borderRadius: wp(2),
+    borderTopRightRadius: wp(2),
+    borderBottomRightRadius: wp(2),
+    padding: wp(2),
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+  },
+  fivewhyToggeNoText: {
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  fivewhyToggeNo: {
+    borderWidth: wp(0.3),
+    // borderRadius: wp(2),
+    borderTopLeftRadius: wp(2),
+    borderBottomLeftRadius: wp(2),
+
+    padding: wp(2),
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
   },
 });
 

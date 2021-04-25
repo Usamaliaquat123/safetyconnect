@@ -203,6 +203,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   };
   _onRefresh = () => {
     this.setState({
+      involvedPerson: [],
       draft: [],
       submitted: [],
       exclated: [],
