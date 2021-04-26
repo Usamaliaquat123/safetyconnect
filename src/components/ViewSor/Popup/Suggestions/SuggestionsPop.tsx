@@ -50,6 +50,7 @@ export default class SuggestionsPop extends React.Component<
           : props.suggestions.assigned_to,
       actionsText: '',
       selectedInput: 0,
+      justificationT: '',
       addjustificationPop: false,
     };
   }
@@ -254,7 +255,9 @@ export default class SuggestionsPop extends React.Component<
                   </Text>
                   <View style={styles.commentTextInput}>
                     <TextInput
+                      onChangeText={(e) => this.setState({justificationT: e})}
                       multiline={true}
+                      value={this.state.justificationT}
                       style={styles.textInputPopup}
                       placeholder={'Add your justification'}
                     />
