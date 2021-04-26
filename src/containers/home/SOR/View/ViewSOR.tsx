@@ -176,7 +176,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       ).format('YYYY-MM-DD');
     }
 
-    console.log(this.props.route.params.data.involved_persons);
+    console.log(this.props.route.params.data);
 
     this.props.route.params.data.action_required.forEach(
       (v) => delete v.default,
@@ -1710,7 +1710,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   Initiated By:
                 </Text>
                 <Text style={styles.initializeByAndSubmitedToAnswer}>
-                  John Doe
+                  {this.props.route.params.data.created_by}
                 </Text>
               </View>
               {/* submitted to */}
@@ -1719,7 +1719,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   Submitted To:
                 </Text>
                 <Text style={styles.initializeByAndSubmitedToAnswer}>
-                  John Doe
+                  {this.props.route.params.data.submit_to[0].name}
                 </Text>
               </View>
               {/* REASSIGNED to  */}

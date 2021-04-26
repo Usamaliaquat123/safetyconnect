@@ -35,13 +35,13 @@ export default class Menu extends React.Component<MenuProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      user: [],
+      user: {},
     };
   }
 
   componentDidMount() {
     AsyncStorage.getItem('user').then((user: any) => {
-      console.log(JSON.parse(user));
+      this.setState({user: JSON.parse(user)});
     });
   }
 
@@ -68,8 +68,10 @@ export default class Menu extends React.Component<MenuProps, any> {
                 }}
               />
               <View style={{marginTop: wp(2)}}>
-                <Text style={styles.username}>John Doe</Text>
-                <Text style={styles.organizations}>Safety Connect</Text>
+                <Text style={styles.username}>{this.state.user.name}</Text>
+                <Text style={styles.organizations}>
+                  {this.state.user.email}
+                </Text>
               </View>
               <View style={{position: 'absolute', right: wp(0)}}>
                 <Image style={styles.itemIcon} source={images.menuIcons.edit} />

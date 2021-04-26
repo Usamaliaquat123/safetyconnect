@@ -77,14 +77,15 @@ export default class TabBar extends React.Component<TabBarProps, any> {
     ].options;
     if (focusedOptions.tabBarVisible === false) {
       return null;
+      ``;
     }
 
     this.props.state.routes.map((d: any, i: number) => {
       if (d.name == 'home') {
-        d['icon'] = images.bottomTab.home;
-      } else if (d.name == 'sors') {
         d['icon'] = images.bottomTab.sors;
-      } else if (d.name == 'inbox') {
+      } else if (d.name == 'create') {
+        d['icon'] = images.bottomTab.folder;
+      } else if (d.name == 'sor') {
         d['icon'] = images.bottomTab.message;
       } else if (d.name == 'more') {
         d['icon'] = images.bottomTab.menu;

@@ -39,15 +39,12 @@ export const Navigator = (props: any) => {
   // checkUser();
   AsyncStorage.getItem('email').then((res: any) => {
     setUser(res);
-    console.log('=============');
     createApi
       .createApi()
       .getUser(res)
-      .then((res) => {
-        console.log(res);
+      .then((res: any) => {
         AsyncStorage.setItem('user', JSON.stringify(res.data.data));
       });
-    console.log('=============');
   });
 
   console.log(user);
