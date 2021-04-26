@@ -19,6 +19,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Auth} from 'aws-amplify';
+import {createApi} from '@service';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type MenuNavigationProp = StackNavigationProp<StackNavigatorProps, 'Menu'>;
 type MenuRouteProp = RouteProp<StackNavigatorProps, 'Menu'>;
@@ -32,7 +34,15 @@ export interface MenuProps {
 export default class Menu extends React.Component<MenuProps, any> {
   constructor(props: any) {
     super(props);
-    this.state = {};
+    this.state = {
+      user: [],
+    };
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem('user').then((user: any) => {
+      console.log(JSON.parse(user));
+    });
   }
 
   render() {
