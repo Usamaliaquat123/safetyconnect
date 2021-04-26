@@ -41,7 +41,6 @@ export default class Menu extends React.Component<MenuProps, any> {
 
   componentDidMount() {
     AsyncStorage.getItem('user').then((user: any) => {
-      console.log(JSON.parse(user));
       this.setState({user: JSON.parse(user)});
     });
   }

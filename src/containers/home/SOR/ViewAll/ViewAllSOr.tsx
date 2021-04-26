@@ -422,6 +422,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             style={{flexDirection: 'row'}}>
                             <Icon
                               size={wp(3.5)}
+                              color={colors.primary}
                               name={this.state.isDraft == true ? 'down' : 'up'}
                               type="antdesign"
                             />
@@ -440,19 +441,13 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               flexDirection: 'row',
                             }}>
                             <Icon
+                              color={colors.primary}
                               containerStyle={{marginTop: wp(-0.6)}}
                               size={wp(5)}
                               name="filter"
                               type="ionicon"
                             />
-                            <Text
-                              style={{
-                                paddingLeft: wp(1),
-                                fontSize: wp(3),
-                                fontFamily: 'SFuiDisplayBold',
-                              }}>
-                              Filter
-                            </Text>
+                            <Text style={styles.filterText}>Filter</Text>
                           </TouchableOpacity>
                         </View>
 
@@ -539,13 +534,19 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                     : 'up'
                                 }
                                 type="antdesign"
+                                color={colors.primary}
                               />
                               <Text style={styles.listDraftText}>
                                 In Progress
                               </Text>
                             </TouchableOpacity>
                             <View style={styles.filterHeader}>
-                              <Icon size={wp(5)} name="filter" type="ionicon" />
+                              <Icon
+                                color={colors.primary}
+                                size={wp(5)}
+                                name="filter"
+                                type="ionicon"
+                              />
                               <Text style={styles.filterText}>Filter</Text>
                             </View>
                           </View>
@@ -615,6 +616,124 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         </View>
                       </View>
                       {/* )} */}
+
+                      {/* {this.state.submitted.length == 0 ? null : ( */}
+                      <View>
+                        <View style={styles.lineheight}></View>
+                        <View
+                          style={[
+                            {
+                              paddingBottom: wp(3),
+                            },
+                            styles.closedTop,
+                          ]}>
+                          <View style={styles.listHeader}>
+                            <TouchableOpacity
+                              onPress={() => {
+                                this.setState({
+                                  isSubmited: !this.state.isSubmited,
+                                });
+                                if (!this.state.isSubmited) {
+                                  this.setState({bottomWidth: wp(40)});
+                                } else {
+                                  this.setState({bottomWidth: wp(100)});
+                                }
+                              }}
+                              style={{flexDirection: 'row'}}>
+                              <Icon
+                                size={wp(3.5)}
+                                name={
+                                  this.state.isSubmited == true ? 'down' : 'up'
+                                }
+                                color={colors.primary}
+                                type="antdesign"
+                              />
+                              <Text style={styles.listDraftText}>
+                                Request for More Information
+                              </Text>
+                            </TouchableOpacity>
+                            <View
+                              style={{
+                                position: 'absolute',
+                                right: wp(4),
+                                flexDirection: 'row',
+                                marginTop: wp(-1),
+                              }}>
+                              <Icon
+                                color={colors.primary}
+                                size={wp(5)}
+                                name="filter"
+                                type="ionicon"
+                              />
+
+                              <Text style={styles.filterText}>Filter</Text>
+                            </View>
+                          </View>
+                          {this.state.isSubmited == true ? (
+                            <View style={styles.listViewContent}>
+                              {this.state.submitted
+                                .slice(0, 3)
+                                .map((d: Isor, i: number) => (
+                                  <ListCard
+                                    classify={d.sor_type}
+                                    styles={
+                                      this.state.submitted.slice(0, 3).length ==
+                                      i + 1
+                                        ? {borderBottomWidth: wp(0)}
+                                        : null
+                                    }
+                                    user1={
+                                      d.involved_persons.length == 0
+                                        ? ''
+                                        : d.involved_persons[0].img_url
+                                    }
+                                    user2={
+                                      d.submit_to.length == 0
+                                        ? ''
+                                        : d.submit_to[0].img_url
+                                    }
+                                    observation={d.details}
+                                    username={d.created_by}
+                                    iconconf={classifySor.find(
+                                      (e: any) => e.title == d.sor_type,
+                                    )}
+                                    onPress={() =>
+                                      this.props.navigation.navigate(
+                                        'ViewSOR',
+                                        {
+                                          data: d,
+                                        },
+                                      )
+                                    }
+                                    date={d.occured_at}
+                                  />
+                                ))}
+                              {this.state.submitted.length > 3 && (
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    this.props.navigation.navigate('ViewAll', {
+                                      data: 2,
+                                      title: 'Request for More Information',
+                                    });
+                                  }}
+                                  style={{
+                                    marginLeft: wp(4),
+                                    marginTop: wp(3),
+                                  }}>
+                                  <Text
+                                    style={{
+                                      fontSize: wp(3),
+                                      color: colors.primary,
+                                    }}>
+                                    See More
+                                  </Text>
+                                </TouchableOpacity>
+                              )}
+                            </View>
+                          ) : null}
+                        </View>
+                      </View>
+                      {/* )} */}
                       {/* {this.state.exclated.length == 0 ? null : ( */}
                       <View>
                         <View style={styles.lineheight}></View>
@@ -632,12 +751,20 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 name={
                                   this.state.isNotified == true ? 'down' : 'up'
                                 }
+                                color={colors.primary}
                                 type="antdesign"
                               />
-                              <Text style={styles.listDraftText}>Exclated</Text>
+                              <Text style={styles.listDraftText}>
+                                Pending Closure
+                              </Text>
                             </TouchableOpacity>
                             <View style={styles.filterHeader}>
-                              <Icon size={wp(5)} name="filter" type="ionicon" />
+                              <Icon
+                                color={colors.primary}
+                                size={wp(5)}
+                                name="filter"
+                                type="ionicon"
+                              />
                               <Text style={styles.filterText}>Filter</Text>
                             </View>
                           </View>
@@ -685,7 +812,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                   onPress={() => {
                                     this.props.navigation.navigate('ViewAll', {
                                       data: 3,
-                                      title: 'Exclated',
+                                      title: 'Pending Closure',
                                     });
                                   }}
                                   style={{
@@ -721,17 +848,21 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               style={{flexDirection: 'row'}}>
                               <Icon
                                 size={wp(3.5)}
+                                color={colors.primary}
                                 name={
                                   this.state.isCompleted == true ? 'down' : 'up'
                                 }
                                 type="antdesign"
                               />
-                              <Text style={styles.listDraftText}>
-                                Completed
-                              </Text>
+                              <Text style={styles.listDraftText}>Closed</Text>
                             </TouchableOpacity>
                             <View style={styles.filterHeader}>
-                              <Icon size={wp(5)} name="filter" type="ionicon" />
+                              <Icon
+                                color={colors.primary}
+                                size={wp(5)}
+                                name="filter"
+                                type="ionicon"
+                              />
                               <Text style={styles.filterText}>Filter</Text>
                             </View>
                           </View>
@@ -779,127 +910,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                   onPress={() => {
                                     this.props.navigation.navigate('ViewAll', {
                                       data: 5,
-                                      title: 'Completed',
-                                    });
-                                  }}
-                                  style={{
-                                    marginLeft: wp(4),
-                                    marginTop: wp(3),
-                                  }}>
-                                  <Text
-                                    style={{
-                                      fontSize: wp(3),
-                                      color: colors.primary,
-                                    }}>
-                                    See More
-                                  </Text>
-                                </TouchableOpacity>
-                              )}
-                            </View>
-                          ) : null}
-                        </View>
-                      </View>
-                      {/* )} */}
-                      {/* {this.state.submitted.length == 0 ? null : ( */}
-                      <View>
-                        <View style={styles.lineheight}></View>
-                        <View
-                          style={[
-                            {
-                              paddingBottom: wp(3),
-                            },
-                            styles.closedTop,
-                          ]}>
-                          <View style={styles.listHeader}>
-                            <TouchableOpacity
-                              onPress={() => {
-                                this.setState({
-                                  isSubmited: !this.state.isSubmited,
-                                });
-                                if (!this.state.isSubmited) {
-                                  this.setState({bottomWidth: wp(40)});
-                                } else {
-                                  this.setState({bottomWidth: wp(100)});
-                                }
-                              }}
-                              style={{flexDirection: 'row'}}>
-                              <Icon
-                                size={wp(3.5)}
-                                name={
-                                  this.state.isSubmited == true ? 'down' : 'up'
-                                }
-                                type="antdesign"
-                              />
-                              <Text style={styles.listDraftText}>
-                                Submitted
-                              </Text>
-                            </TouchableOpacity>
-                            <View
-                              style={{
-                                position: 'absolute',
-                                right: wp(4),
-                                flexDirection: 'row',
-                                marginTop: wp(-1),
-                              }}>
-                              <Icon size={wp(5)} name="filter" type="ionicon" />
-
-                              <Text
-                                style={{
-                                  paddingLeft: wp(1),
-                                  fontSize: wp(3),
-                                  marginTop: wp(0.6),
-                                  // fontWeight: 'bold',
-                                  fontFamily: 'SFuiDisplayBold',
-                                }}>
-                                Filter
-                              </Text>
-                            </View>
-                          </View>
-                          {this.state.isSubmited == true ? (
-                            <View style={styles.listViewContent}>
-                              {this.state.submitted
-                                .slice(0, 3)
-                                .map((d: Isor, i: number) => (
-                                  <ListCard
-                                    classify={d.sor_type}
-                                    styles={
-                                      this.state.submitted.slice(0, 3).length ==
-                                      i + 1
-                                        ? {borderBottomWidth: wp(0)}
-                                        : null
-                                    }
-                                    user1={
-                                      d.involved_persons.length == 0
-                                        ? ''
-                                        : d.involved_persons[0].img_url
-                                    }
-                                    user2={
-                                      d.submit_to.length == 0
-                                        ? ''
-                                        : d.submit_to[0].img_url
-                                    }
-                                    observation={d.details}
-                                    username={d.created_by}
-                                    iconconf={classifySor.find(
-                                      (e: any) => e.title == d.sor_type,
-                                    )}
-                                    onPress={() =>
-                                      this.props.navigation.navigate(
-                                        'ViewSOR',
-                                        {
-                                          data: d,
-                                        },
-                                      )
-                                    }
-                                    date={d.occured_at}
-                                  />
-                                ))}
-                              {this.state.submitted.length > 3 && (
-                                <TouchableOpacity
-                                  onPress={() => {
-                                    this.props.navigation.navigate('ViewAll', {
-                                      data: 2,
-                                      title: 'Submitted',
+                                      title: 'Closed',
                                     });
                                   }}
                                   style={{

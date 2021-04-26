@@ -1358,49 +1358,51 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                 {/* Suggested Actions */}
                 {this.state.actionRecommendations.map((d: any, i: number) => (
-                  <TouchableOpacity
-                    onPress={() => {
-                      var arr = this.state.actionRecommendations;
-                      arr[i].selected = !arr[i].selected;
-                      this.setState({actionRecommendations: arr});
-                    }}
-                    onLongPress={() => {
-                      console.log(this.state.allActionsEdit);
-                      this.setState({
-                        allActionsEdit: d,
-                        allActionsEditIndex: i,
-                        SuggestionPop: true,
-                        newActions: false,
-                      });
-                    }}
-                    key={i}
-                    style={[
-                      styles.suggestedActionsContainer,
-                      d.selected == true
-                        ? {
-                            backgroundColor: colors.lightBlue,
-                            borderWidth: wp(0),
-                          }
-                        : {
-                            backgroundColor: colors.secondary,
-                            borderWidth: wp(0.2),
-                          },
-                    ]}>
-                    <View style={{flexDirection: 'row', width: wp(84)}}>
-                      <Text style={styles.actionType}>
-                        {d.category}:{' '}
-                        <Text style={styles.actionDesc}>
-                          {d.content.substring(0, 50)}...
+                  <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        var arr = this.state.actionRecommendations;
+                        arr[i].selected = !arr[i].selected;
+                        this.setState({actionRecommendations: arr});
+                      }}
+                      onLongPress={() => {
+                        console.log(this.state.allActionsEdit);
+                        this.setState({
+                          allActionsEdit: d,
+                          allActionsEditIndex: i,
+                          SuggestionPop: true,
+                          newActions: false,
+                        });
+                      }}
+                      key={i}
+                      style={[
+                        styles.suggestedActionsContainer,
+                        d.selected == true
+                          ? {
+                              backgroundColor: colors.lightBlue,
+                              borderWidth: wp(0),
+                            }
+                          : {
+                              backgroundColor: colors.secondary,
+                              borderWidth: wp(0.2),
+                            },
+                      ]}>
+                      <View style={{flexDirection: 'row', width: wp(84)}}>
+                        <Text style={styles.actionType}>
+                          {d.category}:{' '}
+                          <Text style={styles.actionDesc}>
+                            {d.content.substring(0, 50)}...
+                          </Text>
                         </Text>
-                      </Text>
-                    </View>
-                    <Icon
-                      size={wp(6)}
-                      name="more-vertical"
-                      type="feather"
-                      color={'#686868'}
-                    />
-                  </TouchableOpacity>
+                      </View>
+                      <Icon
+                        size={wp(6)}
+                        name="more-vertical"
+                        type="feather"
+                        color={'#686868'}
+                      />
+                    </TouchableOpacity>
+                  </View>
                 ))}
 
                 <View style={[styles.addActionAndRecommendation]}>

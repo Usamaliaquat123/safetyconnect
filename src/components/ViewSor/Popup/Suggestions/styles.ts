@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -155,6 +155,26 @@ const styles = StyleSheet.create({
   sveBtnText: {
     fontSize: wp(3),
     color: colors.secondary,
+  },
+
+  justificationContainer: {},
+  justificationtext: {
+    fontSize: wp(3),
+
+    color: colors.primary,
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  justificationHeadingText: {
+    marginBottom: wp(2),
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  justificationtextOptional: {
+    fontStyle: 'italic',
+    fontSize: wp(3),
+
+    fontFamily: fonts.SFuiDisplayUltraLight,
+    opacity: 0.3,
   },
 });
 

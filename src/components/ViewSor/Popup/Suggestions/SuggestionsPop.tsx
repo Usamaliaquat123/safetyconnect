@@ -50,6 +50,7 @@ export default class SuggestionsPop extends React.Component<
           : props.suggestions.assigned_to,
       actionsText: '',
       selectedInput: 0,
+      addjustificationPop: false,
     };
   }
 
@@ -230,6 +231,36 @@ export default class SuggestionsPop extends React.Component<
                   />
                 ) : null}
               </View>
+              {/* Add Justification */}
+              {this.state.addjustificationPop == true ? (
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({
+                      addjustificationPop: !this.state.addjustificationPop,
+                    })
+                  }
+                  style={styles.justificationContainer}>
+                  <Text style={styles.justificationtext}>
+                    Add Justification
+                  </Text>
+                </TouchableOpacity>
+              ) : (
+                <View>
+                  <Text style={styles.justificationHeadingText}>
+                    Justification:{'    '}
+                    <Text style={styles.justificationtextOptional}>
+                      (Optional)
+                    </Text>
+                  </Text>
+                  <View style={styles.commentTextInput}>
+                    <TextInput
+                      multiline={true}
+                      style={styles.textInputPopup}
+                      placeholder={'Add your justification'}
+                    />
+                  </View>
+                </View>
+              )}
               {/* Elimination / Administrative */}
               <Text style={styles.selectYourElemination}>
                 Select your elimination / Administrative

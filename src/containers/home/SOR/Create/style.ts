@@ -377,6 +377,11 @@ const styles = StyleSheet.create({
     color: colors.text,
     width: wp(80),
   },
+  viewJustificationText: {
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
+    color: colors.primary,
+  },
   slctSEContainer: {
     // position: 'absolute',
     // top: wp(20),

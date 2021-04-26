@@ -183,10 +183,10 @@ const styles = StyleSheet.create({
     paddingLeft: wp(3),
   },
   listDraftText: {
-    fontSize: wp(3.4),
+    fontSize: wp(4),
     // fontWeight: 'bold',
-    color: colors.text,
-    fontFamily: 'SFuiDisplayBold',
+    color: colors.primary,
+    fontFamily: fonts.SFuiDisplayBold,
     marginTop: wp(-1),
     marginLeft: wp(5),
   },
@@ -204,8 +204,9 @@ const styles = StyleSheet.create({
     paddingLeft: wp(1),
     fontSize: wp(3),
     marginTop: wp(0.6),
+    color: colors.primary,
     // fontWeight: 'bold',
-    fontFamily: 'SFuiDisplayBold',
+    fontFamily: fonts.SFuiDisplayBold,
   },
   inProgressTop: {
     paddingBottom: wp(5),
@@ -219,6 +220,7 @@ const styles = StyleSheet.create({
 
     paddingRight: wp(3),
   },
+
   lineheight: {
     height: wp(0.7),
     backgroundColor: colors.darkLightGrey,

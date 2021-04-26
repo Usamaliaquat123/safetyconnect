@@ -60,10 +60,14 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       data: this.props.route.params.title,
       searchValue: '',
       refreshing: false,
+      user: {},
       bottomWidth: wp(100),
     };
   }
   componentDidMount() {
+    AsyncStorage.getItem('user').then((user) => {
+      this.setState({user: JSON.parse(user)});
+    });
     // var d = [];
     // for (let i = 0; i < this.props.reduxState.allSors.length; i++) {
     //   if (
@@ -163,7 +167,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                 <Avatar
                   rounded
                   source={{
-                    uri: View_sor.user.profile,
+                    uri: this.state.user.img_url,
                   }}
                 />
               </View>
