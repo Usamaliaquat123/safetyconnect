@@ -42,8 +42,11 @@ export default class Menu extends React.Component<MenuProps, any> {
   componentDidMount() {
     AsyncStorage.getItem('user').then((user: any) => {
       this.setState({user: JSON.parse(user)});
+      console.log(this.state.user);
     });
   }
+
+  manageOrganizations = (organizations: Array) => {};
 
   render() {
     return (

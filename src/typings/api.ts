@@ -37,16 +37,23 @@ export interface orgnaization {
   created_by?: string;
   name?: string;
   details?: string;
-  members?: Array<any>;
-  projects?: Array<any>;
+  createdAt?: string;
+  updatedAt: string;
+  members?: Array<string>;
+  pending_members?: Array<any>;
+  projects?: Array<project>;
   username?: string;
   organization?: string;
+  _id?: string;
+  __v?: number;
 }
 /*
  * Project
  */
 export interface project {
+  _id?: string;
   email?: string;
+  project_id?: string;
   created_by?: string;
   project_name?: string;
   locations?: Array<string>;

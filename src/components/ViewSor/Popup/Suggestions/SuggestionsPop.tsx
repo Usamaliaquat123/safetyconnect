@@ -51,7 +51,7 @@ export default class SuggestionsPop extends React.Component<
       actionsText: '',
       selectedInput: 0,
       justificationT: '',
-      addjustificationPop: false,
+      addjustificationPop: true,
     };
   }
 
@@ -94,7 +94,6 @@ export default class SuggestionsPop extends React.Component<
                 : {borderColor: colors.lightGrey},
             ]}>
             <TextInput
-              // maxLength={20}
               onFocus={() => this.setState({selectedInput: 1})}
               style={styles.textInputPopup}
               multiline={true}
