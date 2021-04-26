@@ -437,6 +437,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 // attachments: this.state.filename,
                 comments: ' ',
               },
+              organization: '',
               project: '607820d5724677561cf67ec5',
             };
 
