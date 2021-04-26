@@ -144,6 +144,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       fiveWhyQuestion: [],
       fiveWhyAnswer: [],
       fiveWHYdata: [],
+      countributoryCauses: '',
+      rootCauses: '',
     };
 
     this.animation = React.createRef();
@@ -226,30 +228,29 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .createApi()
       .getFiveWhy('6085aaa205ebabf1bbf53268')
       .then((res: any) => {
-        console.log(res.data.data.justification[0].question);
+        console.log(res);
+        // console.log(res.data.data.justification[0].question);
         // console.log(this.props.fiveWhyAnswer);
+
+        res.data.data.justification[0].question.map((d, i) => {
+          this.state.fiveWHYdata.push({question: d});
+        });
+
+        res.data.data.justification[0].answer.map((d, i) => {
+          this.state.fiveWHYdata[i]['answer'] = d;
+        });
+
+        this.setState({
+          countributoryCauses: res.data.data.contributoryCauses,
+          rootCauses: res.data.data.rootCauses,
+        });
 
         this.setState({
           fiveWhyQuestion: res.data.data.justification[0].question,
         });
         this.setState({fiveWhyAnswer: res.data.data.justification[0].answer});
 
-        for (
-          let i = 0;
-          i < res.data.data.justification[0].question.length;
-          i++
-        ) {
-          for (
-            let j = 0;
-            j < res.data.data.justification[0].answer.length;
-            j++
-          ) {
-            this.state.fiveWHYdata.push({
-              question: res.data.data.justification[0].question[i],
-              answer: res.data.data.justification[0].answer,
-            });
-          }
-        }
+        console.log(this.state.fiveWHYdata);
       })
       .catch((err) => console.log(err));
   };
@@ -1277,9 +1278,17 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </View>
                 </TouchableOpacity>
               </View>
-
+              {/* countributoryCauses : "",
+      rootCauses : "" */}
               {this.state.fiveWhytoggle == true ? (
                 <FiveWhy
+                  onChangeCountributory={(e: any) =>
+                    this.setState({countributoryCauses: e})
+                  }
+                  onChangeRiskCause={(e: any) => this.setState({rootCauses: e})}
+                  contributoryCauses={this.state.countributoryCauses}
+                  rootCauses={this.state.rootCauses}
+                  data={this.state.fiveWHYdata}
                   fiveWhyQuestions={(q: Array<string>) =>
                     this.setState({fiveWhyQuestion: q})
                   }

@@ -22,28 +22,28 @@ import {
 } from 'react-native-responsive-screen';
 
 export interface ViewAllProps {
+  contributoryCauses?: '';
+  rootCauses?: '';
   containerStyle?: ViewStyle;
   reportId: string;
   userId: string;
+  data: any;
   fiveWhyQuestions: Function;
   fiveWhyAnswer: Function;
+  onChangeCountributory: Function;
+  onChangeRiskCause: Function;
 }
 
 export default class FiveWhy extends React.Component<ViewAllProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      fivewhy: [
-        {
-          question: 'Who is responsible for this event',
-          answer: 'john doe is responsible for this event',
-        },
-      ],
+      fivewhy: this.props.data,
 
       question: '',
       answer: '',
-      rootcauses: '',
-      countributoryCauses: '',
+      rootcauses: this.props.rootCauses,
+      countributoryCauses: this.props.contributoryCauses,
     };
   }
   componentDidMount() {
@@ -88,15 +88,21 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
 
   onChangeAnswer = (e: any, i: number) => {
     this.state.fivewhy[i].answer = e;
+    this.props.fiveWhyQuestions(this.state.fivewhy.map((d: any) => d.question));
+    this.props.fiveWhyAnswer(this.state.fivewhy.map((d: any) => d.answer));
     this.setState({});
   };
   onChangeQuestion = (e: any, i: number) => {
     this.state.fivewhy[i].question = e;
+    this.props.fiveWhyQuestions(this.state.fivewhy.map((d: any) => d.question));
+    this.props.fiveWhyAnswer(this.state.fivewhy.map((d: any) => d.answer));
     this.setState({});
   };
   onDeleteFivewhy = (fivewhy: any) => {
     var fivewhy = this.state.fivewhy.filter((d: any) => d != fivewhy);
     this.setState({fivewhy});
+    this.props.fiveWhyQuestions(this.state.fivewhy.map((d: any) => d.question));
+    this.props.fiveWhyAnswer(this.state.fivewhy.map((d: any) => d.answer));
   };
   render() {
     return (
@@ -188,7 +194,10 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
             style={styles.rootCausesInput}
             multiline={true}
             value={this.state.rootcauses}
-            onChangeText={(e) => this.setState({rootcauses: e})}
+            onChangeText={(e) => {
+              this.props.onChangeRiskCause(e);
+              this.setState({rootcauses: e});
+            }}
             placeholder={'Add Root Causes'}
           />
           {/* </View> */}
@@ -202,7 +211,10 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
             style={styles.rootCausesInput}
             multiline={true}
             value={this.state.countributoryCauses}
-            onChangeText={(e) => this.setState({countributoryCauses: e})}
+            onChangeText={(e) => {
+              this.props.onChangeCountributory(e);
+              this.setState({countributoryCauses: e});
+            }}
             placeholder={'Add Contributory causes'}
           />
           {/* </View> */}

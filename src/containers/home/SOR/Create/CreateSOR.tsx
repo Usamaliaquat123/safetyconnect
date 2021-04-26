@@ -121,7 +121,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       fiveWhyQuestion: [],
       SuggestionPop: false,
       fiveWhytoggle: false,
-
+      countributoryCauses: '',
+      rootCauses: '',
+      fiveWHYdata: [],
       // Involved person
       involvedToArr: [],
       involvedTotags: [],
@@ -393,6 +395,21 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     this.setState({loading: true, errorModal: true});
     if (this.state.observationT !== '') {
       if (this.state.observation !== '') {
+        var rec = this.state.actionRecommendations.filter(
+          (d: any) => d.selected == true,
+        );
+
+        var actions: Array<any> = [];
+        for (let i = 0; i < rec.length; i++) {
+          actions.push({
+            assigned_to: rec[i].assigned_to,
+            category: rec[i].category,
+            content: rec[i].content,
+            date: rec[i].date,
+            is_complete: rec[i].is_complete,
+            is_selected: rec[i].is_selected,
+          });
+        }
         createApi
           .createApi()
           .createSorInit(bodyInitial)
@@ -403,14 +420,15 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 created_by: this.state.email,
                 details: this.state.observationT,
                 occured_at: new Date(),
-                involved_persons: this.state.involvePersonTags,
-
+                involved_persons: this.state.involvePersonTags.map(
+                  (d: any) => d._id,
+                ),
                 sor_type: sorbtns[0].title,
                 risk: {
                   severity: 5,
                   likelihood: 5,
                 },
-                action_required: this.state.actionRecommendations,
+                action_required: actions,
 
                 location: this.state.observation,
                 submit_to: this.state.submitToTags.map((d: any) => d.email),
@@ -571,8 +589,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           justification: {
                             question: [this.state.fiveWhyQuestion],
                             answer: [this.state.fiveWhyAnswer],
-                            contributoryCauses: 'haider',
-                            rootCauses: 'ali',
+                            contributoryCauses: this.state.countributoryCauses,
+                            rootCauses: this.state.rootCauses,
                           },
                           report: this.state.reportIdInvestigation,
                           user: JSON.parse(user)._id,
@@ -786,11 +804,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         sor.report['_id'] = this.state.reportIdInvestigation;
                         AsyncStorage.getItem('user').then((user: any) => {
                           var obj = {
+                            //    countributoryCauses: '',
+                            // rootCauses: '',
                             justification: {
                               question: this.state.fiveWhyQuestion,
                               answer: this.state.fiveWhyAnswer,
-                              contributoryCauses: 'haider',
-                              rootCauses: 'ali',
+                              contributoryCauses: this.state
+                                .countributoryCauses,
+                              rootCauses: this.state.rootCauses,
                             },
                             report: this.state.reportIdInvestigation,
                             user: JSON.parse(user)._id,
@@ -1303,6 +1324,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
               {this.state.fiveWhytoggle ? (
                 <FiveWhy
+                  onChangeCountributory={(e: any) =>
+                    this.setState({countributoryCauses: e})
+                  }
+                  onChangeRiskCause={(e: any) => this.setState({rootCauses: e})}
+                  contributoryCauses={this.state.countributoryCauses}
+                  rootCauses={this.state.rootCauses}
+                  data={this.state.fiveWHYdata}
                   fiveWhyQuestions={(q: Array<string>) =>
                     this.setState({fiveWhyQuestion: q})
                   }
@@ -1714,7 +1742,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   />
                 </View>
               </View>
-
+              {/* notified only */}
               <View>
                 <Text style={styles.sbBtnText}>Notified only </Text>
                 <View
