@@ -41,6 +41,7 @@ export default class Menu extends React.Component<MenuProps, any> {
 
   componentDidMount() {
     AsyncStorage.getItem('user').then((user: any) => {
+      console.log(JSON.parse(user));
       this.setState({user: JSON.parse(user)});
     });
   }
@@ -63,8 +64,7 @@ export default class Menu extends React.Component<MenuProps, any> {
                 size={'medium'}
                 rounded
                 source={{
-                  uri:
-                    'https://media-exp1.licdn.com/dms/image/C5603AQHGeQB42B1CcA/profile-displayphoto-shrink_200_200/0/1588740771758?e=1618444800&v=beta&t=CtMgG7KLgfGZO-pYkX6tdvwbCGnuU-g4G2TiocMI1gc',
+                  uri: this.state.user.img_url,
                 }}
               />
               <View style={{marginTop: wp(2)}}>

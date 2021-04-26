@@ -1714,14 +1714,18 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </Text>
               </View>
               {/* submitted to */}
-              <View style={{flexDirection: 'row', marginTop: wp(2)}}>
+              <TouchableOpacity
+                onPress={() => {
+                  this.setState({IsaddInvAndNotifiedUser: ''});
+                }}
+                style={{flexDirection: 'row', marginTop: wp(2)}}>
                 <Text style={styles.initializeByAndSubmittedToHeading}>
                   Submitted To:
                 </Text>
                 <Text style={styles.initializeByAndSubmitedToAnswer}>
-                  {this.props.route.params.data.submit_to[0].name}
+                  {this.state.submitted_to[0].name}
                 </Text>
-              </View>
+              </TouchableOpacity>
               {/* REASSIGNED to  */}
               <View style={{marginTop: wp(4)}}>
                 <Text style={styles.sbBtnText}>Re-assign to </Text>
@@ -2381,7 +2385,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             </View>
           </View>
         </Model>
-        {/* Add Involved Users  */}
+        {/* Add Involved and Submitted to Users  */}
+
         <Model
           animationIn={'bounceInUp'}
           animationOut={'bounceOutDown'}
@@ -2401,60 +2406,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               paddingBottom: wp(5),
             }}>
             <View style={{alignSelf: 'center'}}>
-              {/* <TouchableOpacity
-                onPress={() => {
-                  imagePicker()
-                    .then((res: any) => {
-                      this.setState({
-                        invPhoto: res.uri == undefined ? '' : res.uri,
-                      });
-                    })
-                    .catch((err) => this.setState({invPhoto: ''}));
-                }}>
-                {this.state.invPhoto === '' ? (
-                  <View
-                    style={{
-                      borderWidth: wp(0.2),
-                      borderRadius: wp(10),
-                      width: wp(20),
-                      height: wp(20),
-                      alignItems: 'center',
-                      alignSelf: 'center',
-                      justifyContent: 'center',
-                      padding: wp(3),
-                    }}>
-                    <Icon
-                      size={wp(5)}
-                      containerStyle={{
-                        // opacity: 0.5,
-                        position: 'absolute',
-                        top: wp(7.5),
-                        right: wp(-1.9),
-                      }}
-                      name="pluscircle"
-                      type="antdesign"
-                      color={colors.green}
-                    />
-                    <Icon
-                      size={wp(10)}
-                      containerStyle={{opacity: 0.5, position: 'absolute'}}
-                      name="camera"
-                      type="evilicon"
-                      color={colors.text}
-                    />
-                  </View>
-                ) : (
-                  <Avatar
-                    containerStyle={{alignSelf: 'center'}}
-                    rounded
-                    size={wp(20)}
-                    source={{
-                      uri: this.state.invPhoto,
-                    }}
-                  />
-                )}
-              </TouchableOpacity> */}
-
               <Text
                 style={{
                   fontSize: wp(3),
