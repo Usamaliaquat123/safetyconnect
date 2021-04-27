@@ -1551,7 +1551,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         <TouchableOpacity
                           key={i}
                           onPress={() => {
-                            this.setState({esclateTo: '', exclateToArr: []});
+                            this.setState({
+                              involveToText: '',
+                              involvedToArr: [],
+                            });
                             if (
                               this.state.involvedTotags.filter(
                                 (v: involved_persons) => v == d,
@@ -1582,16 +1585,17 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   </View>
                 </View>
               ) : null}
+
               <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
                 <Tags
                   onClose={(d: any) => {
                     this.setState({
-                      exclateToTags: this.state.exclateToTags.filter(
+                      involvedTotags: this.state.involvedTotags.filter(
                         (v: any) => v !== d,
                       ),
                     });
                   }}
-                  tags={this.state.exclateToTags}
+                  tags={this.state.involvedTotags}
                 />
               </View>
             </View>
