@@ -386,6 +386,10 @@ export default class SuggestionsPop extends React.Component<
                         is_complete: this.state.is_complete,
                         is_selected: this.state.is_selected,
                         category: this.state.type,
+                        justification: {
+                          content: this.state.justificationT,
+                          attachments: [],
+                        },
                       };
                       this.props.save(sugg);
                     }

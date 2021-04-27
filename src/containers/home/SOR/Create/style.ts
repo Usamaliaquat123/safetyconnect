@@ -377,11 +377,7 @@ const styles = StyleSheet.create({
     color: colors.text,
     width: wp(80),
   },
-  viewJustificationText: {
-    fontSize: wp(3),
-    fontFamily: fonts.SFuiDisplayMedium,
-    color: colors.primary,
-  },
+
   slctSEContainer: {
     // position: 'absolute',
     // top: wp(20),
@@ -432,6 +428,9 @@ const styles = StyleSheet.create({
     paddingBottom: wp(3),
     alignItems: 'center',
     flexDirection: 'row',
+  },
+  involvePSt: {
+    fontSize: wp(3),
   },
   involveSuggestCont: {
     borderColor: colors.green,
