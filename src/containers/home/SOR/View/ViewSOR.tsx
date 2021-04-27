@@ -146,6 +146,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       fiveWHYdata: [],
       countributoryCauses: '',
       rootCauses: '',
+      // Reassign to
+      reAssignToArr: [],
+      reAssignToArrTags: [],
     };
 
     this.animation = React.createRef();
@@ -1714,18 +1717,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </Text>
               </View>
               {/* submitted to */}
-              <TouchableOpacity
-                onPress={() => {
-                  this.setState({IsaddInvAndNotifiedUser: ''});
-                }}
-                style={{flexDirection: 'row', marginTop: wp(2)}}>
+              <View style={{flexDirection: 'row', marginTop: wp(2)}}>
                 <Text style={styles.initializeByAndSubmittedToHeading}>
                   Submitted To:
                 </Text>
                 <Text style={styles.initializeByAndSubmitedToAnswer}>
                   {this.state.submitted_to[0].name}
                 </Text>
-              </TouchableOpacity>
+              </View>
               {/* REASSIGNED to  */}
               <View style={{marginTop: wp(4)}}>
                 <Text style={styles.sbBtnText}>Re-assign to </Text>
@@ -1741,41 +1740,50 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     underlineColorAndroid="transparent"
                     onChange={(v: any) =>
                       this.setState({
-                        exclateToArr: searchInSuggestions(
+                        reAssignToArr: searchInSuggestions(
                           v,
                           this.state.involvedPerson,
                         ),
-                        esclateTo: v,
+                        reassignToText: v,
                       })
                     }
                     placeholder={'Select or Type Name'}
                     style={styles.optnselectorText}
-                    value={this.state.esclateTo}
+                    value={this.state.reassignToText}
                   />
                 </View>
 
-                {this.state.exclateToArr.length != 0 ? (
+                {this.state.reAssignToArr.length != 0 ? (
                   <View>
                     <View style={styles.involveSuggestCont}>
-                      {this.state.exclateToArr.map(
+                      {this.state.reAssignToArr.map(
                         (d: involved_persons, i: number) => (
                           <TouchableOpacity
                             key={i}
                             onPress={() => {
-                              this.setState({esclateTo: '', exclateToArr: []});
+                              // console.log(
+                              //   this.state.reAssignToArr.filter(
+                              //     (v: involved_persons) => v == d,
+                              //   ),
+                              // );
+                              this.setState({
+                                reassignToText: '',
+                                reAssignToArr: [],
+                              });
+
                               if (
-                                this.state.exclateToTags.filter(
+                                this.state.reAssignToArr.filter(
                                   (v: involved_persons) => v == d,
-                                ).length == 0
+                                ).length != 0
                               ) {
-                                this.state.exclateToTags.push(d);
+                                this.state.reAssignToArrTags.push(d);
                               } else {
                                 return null;
                               }
                             }}
                             style={[
                               styles.involvePsuggCont,
-                              this.state.exclateToArr.length == i + 1
+                              this.state.reAssignToArr.length == i + 1
                                 ? {borderBottomWidth: wp(0)}
                                 : null,
                             ]}>
@@ -1794,16 +1802,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </View>
                 ) : null}
                 <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                  {/* <Tags
+                  <Tags
                     onClose={(d: any) => {
                       this.setState({
-                        exclateToTags: this.state.exclateToTags.filter(
+                        reAssignToArrTags: this.state.reAssignToArrTags.filter(
                           (v: any) => v !== d,
                         ),
                       });
                     }}
-                    tags={this.state.exclateToTags}
-                  /> */}
+                    tags={this.state.reAssignToArrTags}
+                  />
                 </View>
               </View>
               {/* ESCLATED TO  */}
@@ -1846,7 +1854,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               if (
                                 this.state.exclateToTags.filter(
                                   (v: involved_persons) => v == d,
-                                ).length == 0
+                                ).length != 0
                               ) {
                                 this.state.exclateToTags.push(d);
                               } else {

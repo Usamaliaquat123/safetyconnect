@@ -552,6 +552,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       });
                     }
 
+                    console.log('actions=========');
+                    console.log(actions);
+                    console.log('actions=========');
+
                     var sor = {
                       report: {
                         _id: '',
