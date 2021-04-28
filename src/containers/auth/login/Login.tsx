@@ -135,8 +135,8 @@ class Login extends React.Component<LoginProps, any> {
           );
           this.setState({errorModal: false, loading: false});
 
-          this.props.navigation.navigate('Main');
           AsyncStorage.setItem('email', this.state.username);
+          this.props.navigation.navigate('Main');
         } catch (err) {
           this.setState({errorModal: true, loading: false});
         }

@@ -408,38 +408,101 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             date: rec[i].date,
             is_complete: rec[i].is_complete,
             is_selected: rec[i].is_selected,
+            justification: rec[i].justification
           });
         }
+
+
+
+        var sor = {
+          report: {
+            _id: "",
+            created_by: this.state.email,
+            details: this.state.observationT,
+            occured_at: new Date(),
+            involved_persons: this.state.involvePersonTags.map(
+              (d: any) => d._id,
+            ),
+            sor_type: sorbtns[0].title,
+            risk: {
+              severity: 5,
+              likelihood: 5,
+            },
+            action_required: actions,
+
+            location: this.state.observation,
+            submit_to: this.state.submitToTags.map((d: any) => d.email),
+            esclate_to: this.state.exclateToTags.map((d: any) => d.email),
+            status: 1,
+            // attachments: this.state.filename,
+            comments: ' ',
+          },
+          organization: '60867e596281167f26ce4aab',
+          project: '60867ed86281162915ce4aac',
+        };
+
+        if (this.state.fiveWhytoggle) {
+          sor.report['_id'] = this.state.reportIdInvestigation;
+          AsyncStorage.getItem('user').then((user: any) => {
+            var obj = {
+              justification: {
+                question: [this.state.fiveWhyQuestion],
+                answer: [this.state.fiveWhyAnswer],
+                contributoryCauses: this.state.countributoryCauses,
+                rootCauses: this.state.rootCauses,
+              },
+              project: '60867ed86281162915ce4aac',
+              report: this.state.reportIdInvestigation,
+              user: JSON.parse(user)._id,
+            };
+
+            createApi
+              .createApi()
+              .createFiveWhy(obj)
+              .then((res) => {
+          
+                console.log(res);
+              })
+              .catch((err: any) => console.log(err));
+          });
+
+          // _id: ress.data.data.report_id,
+        } else {
+          if (this.state.reportIdInvestigation == '') {
+            var bodyInitial = {
+              report: {
+                created_by: this.state.email,
+                comments: '',
+                status: 1,
+              },
+              project: '60867ed86281162915ce4aac',
+            };
+            createApi
+              .createApi()
+              .createSorInit(bodyInitial)
+              .then((res: any) => {
+                sor.report['_id'] = res.data.data.report_id;
+                this.setState({
+                  loading: false,
+                  errorModal: false,
+                });
+              })
+              .catch((err) => console.log(err));
+          } else {
+            sor.report['_id'] = this.state.reportIdInvestigation;
+          }
+        }
+
+
+
+
+
+
         createApi
           .createApi()
           .createSorInit(bodyInitial)
           .then((res: any) => {
-            var sor = {
-              report: {
-                _id: res.data.data.report_id,
-                created_by: this.state.email,
-                details: this.state.observationT,
-                occured_at: new Date(),
-                involved_persons: this.state.involvePersonTags.map(
-                  (d: any) => d._id,
-                ),
-                sor_type: sorbtns[0].title,
-                risk: {
-                  severity: 5,
-                  likelihood: 5,
-                },
-                action_required: actions,
-
-                location: this.state.observation,
-                submit_to: this.state.submitToTags.map((d: any) => d.email),
-                esclate_to: this.state.exclateToTags.map((d: any) => d.email),
-                status: 1,
-                // attachments: this.state.filename,
-                comments: ' ',
-              },
-              organization: '60867e596281167f26ce4aab',
-              project: '60867ed86281162915ce4aac',
-            };
+           
 
             createApi
               .createApi()
@@ -549,6 +612,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         date: rec[i].date,
                         is_complete: rec[i].is_complete,
                         is_selected: rec[i].is_selected,
+                        justification: rec[i].justification,
                       });
                     }
 
@@ -598,9 +662,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             contributoryCauses: this.state.countributoryCauses,
                             rootCauses: this.state.rootCauses,
                           },
+                          project: '60867ed86281162915ce4aac',
                           report: this.state.reportIdInvestigation,
                           user: JSON.parse(user)._id,
                         };
+
+                        console.log(obj);
 
                         createApi
                           .createApi()
@@ -628,7 +695,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           .createSorInit(bodyInitial)
                           .then((res: any) => {
                             sor.report['_id'] = res.data.data.report_id;
-
                             this.setState({
                               loading: false,
                               errorModal: false,
@@ -663,29 +729,30 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     //   'inconnent12345@outlook.com',
                     //   this.props.navigation,
                     // );
-                    console.log('sor');
-                    console.log(sor);
 
-                    createApi
-                      .createApi()
-                      .createSor(sor)
-                      .then((res: any) => {
-                        this.setState({loading: false, errorModal: false});
+                    setTimeout(() => {
+                      createApi
+                        .createApi()
+                        .createSor(sor)
+                        .then((res: any) => {
+                          this.setState({loading: false, errorModal: false});
 
-                        if (res.status == 200) {
-                          this.props.navigation.navigate('ViewAllSOr');
-                        } else {
-                          console.log(res);
-                          // this.setState({
-                          //   errorModal: false,
-                          //   errHeadingText: `CreateSor api returns ${res.data.status}.`,
-                          //   errDesText: res.data.message,
-                          // });
-                        }
-                      })
-                      .catch(() =>
-                        this.setState({loading: false, errorModal: false}),
-                      );
+                          if (res.status == 200) {
+                            this.props.navigation.navigate('ViewAllSOr');
+                          } else {
+                            console.log(res);
+                            // this.setState({
+                            //   errorModal: false,
+                            //   errHeadingText: `CreateSor api returns ${res.data.status}.`,
+                            //   errDesText: res.data.message,
+                            // });
+                          }
+                        })
+                        .catch(() =>
+                          this.setState({loading: false, errorModal: false}),
+                        );
+                    }, 3000);
+
                     // })
                     // .catch(() => {
                     //   this.setState({loading: false, errorModal: false});
@@ -761,7 +828,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       var rec = this.state.actionRecommendations.filter(
                         (d: any) => d.selected == true,
                       );
-                      console.log(res)
+                      console.log(rec);
                       // console.log(rec.map((d: any) => delete d['selected']));
 
                       var actions: Array<any> = [];
@@ -773,7 +840,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           date: rec[i].date,
                           is_complete: rec[i].is_complete,
                           is_selected: rec[i].is_selected,
-                          
+                          justification: rec[i].justification,
                         });
                       }
 
@@ -822,10 +889,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 .countributoryCauses,
                               rootCauses: this.state.rootCauses,
                             },
+                            project: '60867ed86281162915ce4aac',
                             report: this.state.reportIdInvestigation,
                             user: JSON.parse(user)._id,
                           };
 
+                          console.log(obj);
                           createApi
                             .createApi()
                             .createFiveWhy(obj)
@@ -876,7 +945,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                             if (res.status == 200) {
                               console.log('sdsd');
-                              this.props.navigation.navigate('ViewAllSOr');
+                              this.props.navigation.goBack();
                             } else {
                               console.log(res);
                             }

@@ -55,7 +55,16 @@ export default class SuggestionsPop extends React.Component<
     };
   }
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    console.log(this.props.suggestions);
+
+    if (this.props.suggestions.justification.content != undefined) {
+      this.setState({
+        addjustificationPop: false,
+        justificationT: this.props.suggestions.justification.content,
+      });
+    }
+  };
 
   render() {
     return (
