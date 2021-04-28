@@ -580,7 +580,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         esclate_to: this.state.exclateToTags.map(
                           (d: any) => d.email,
                         ),
-                        status: 1,
+                        status: 2,
                         // attachments: this.state.filename,
                         comments: ' ',
                       },
@@ -761,6 +761,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       var rec = this.state.actionRecommendations.filter(
                         (d: any) => d.selected == true,
                       );
+                      console.log(res)
                       // console.log(rec.map((d: any) => delete d['selected']));
 
                       var actions: Array<any> = [];
@@ -772,6 +773,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           date: rec[i].date,
                           is_complete: rec[i].is_complete,
                           is_selected: rec[i].is_selected,
+                          
                         });
                       }
 
@@ -799,7 +801,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           esclate_to: this.state.exclateToTags.map(
                             (d: any) => d.email,
                           ),
-                          status: 1,
+                          status: 2,
                           attachments: [],
                           comments: ' ',
                         },
@@ -849,7 +851,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             .createApi()
                             .createSorInit(bodyInitial)
                             .then((res: any) => {
-                              sor.report['_id'] = res.data.data.report_id;
+                              sors.report['_id'] = res.data.data.report_id;
 
                               this.setState({
                                 loading: false,
@@ -861,29 +863,31 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           sors.report['_id'] = this.state.reportIdInvestigation;
                         }
                       }
-                      console.log('sor');
-                      console.log(sors);
-                      createApi
-                        .createApi()
-                        .createSor(sors)
-                        .then((res: any) => {
-                          this.setState({
-                            loading: false,
-                            errorModal: false,
-                          });
 
-                          if (res.status == 200) {
-                            this.props.navigation.navigate('ViewAllSOr');
-                          } else {
-                            console.log(res);
-                          }
-                        })
-                        .catch(() =>
-                          this.setState({
-                            loading: false,
-                            errorModal: false,
-                          }),
-                        );
+                      setTimeout(() => {
+                        createApi
+                          .createApi()
+                          .createSor(sors)
+                          .then((res: any) => {
+                            this.setState({
+                              loading: false,
+                              errorModal: false,
+                            });
+
+                            if (res.status == 200) {
+                              console.log('sdsd');
+                              this.props.navigation.navigate('ViewAllSOr');
+                            } else {
+                              console.log(res);
+                            }
+                          })
+                          .catch(() =>
+                            this.setState({
+                              loading: false,
+                              errorModal: false,
+                            }),
+                          );
+                      }, 3000);
                     } else {
                       this.setState({
                         errorModal: true,

@@ -305,7 +305,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       project: '60867ed86281162915ce4aac',
     };
 
-
     console.log(update);
 
     createApi
