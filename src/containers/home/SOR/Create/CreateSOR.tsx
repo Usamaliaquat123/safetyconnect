@@ -580,7 +580,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         esclate_to: this.state.exclateToTags.map(
                           (d: any) => d.email,
                         ),
-                        status: 2,
+                        status: 1,
                         // attachments: this.state.filename,
                         comments: ' ',
                       },
@@ -775,7 +775,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         });
                       }
 
-                      var sor = {
+                      var sors = {
                         report: {
                           _id: '',
                           created_by: this.state.email,
@@ -799,7 +799,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           esclate_to: this.state.exclateToTags.map(
                             (d: any) => d.email,
                           ),
-                          status: 2,
+                          status: 1,
                           attachments: [],
                           comments: ' ',
                         },
@@ -808,7 +808,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       };
 
                       if (this.state.fiveWhytoggle) {
-                        sor.report['_id'] = this.state.reportIdInvestigation;
+                        sors.report['_id'] = this.state.reportIdInvestigation;
                         AsyncStorage.getItem('user').then((user: any) => {
                           var obj = {
                             //    countributoryCauses: '',
@@ -858,14 +858,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             })
                             .catch((err) => console.log(err));
                         } else {
-                          sor.report['_id'] = this.state.reportIdInvestigation;
+                          sors.report['_id'] = this.state.reportIdInvestigation;
                         }
                       }
                       console.log('sor');
-                      console.log(sor);
+                      console.log(sors);
                       createApi
                         .createApi()
-                        .createSor(sor)
+                        .createSor(sors)
                         .then((res: any) => {
                           this.setState({
                             loading: false,
@@ -1560,11 +1560,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               involvedToArr: [],
                             });
                             if (
-                              this.state.involvedTotags.filter(
+                              this.state.involvePersonTags.filter(
                                 (v: involved_persons) => v == d,
                               ).length == 0
                             ) {
-                              this.state.involvedTotags.push(d);
+                              this.state.involvePersonTags.push(d);
                             } else {
                               return null;
                             }
@@ -1594,12 +1594,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 <Tags
                   onClose={(d: any) => {
                     this.setState({
-                      involvedTotags: this.state.involvedTotags.filter(
+                      involvePersonTags: this.state.involvePersonTags.filter(
                         (v: any) => v !== d,
                       ),
                     });
                   }}
-                  tags={this.state.involvedTotags}
+                  tags={this.state.involvePersonTags}
                 />
               </View>
             </View>
