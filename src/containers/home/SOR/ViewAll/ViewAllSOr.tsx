@@ -115,7 +115,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
     createApi
       .createApi()
-      .getProject({projectid: '607820d5724677561cf67ec5'})
+      .getProject({projectid: '60867ed86281162915ce4aac'})
       .then((involvedPerson: any) => {
         var j = {};
         var arr = [];
@@ -145,7 +145,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       });
 
     var data = {
-      project: '607820d5724677561cf67ec5',
+      project: '60867ed86281162915ce4aac',
       limit: 10000,
       page: 0,
       query: {status: [1, 2, 3, 4, 5]},

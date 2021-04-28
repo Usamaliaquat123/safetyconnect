@@ -89,13 +89,15 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                   this.state.password,
                 ).then((res) => {
                   this.setState({loading: false, errorModal: false});
-
+                  console.log(res);
                   api
                     .createApi()
                     .createUser({
                       name: this.state.name,
                       email: this.props.route.params.email,
                       organization: [],
+                      img_url:
+                        'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
                     })
                     .then((res) => {
                       console.log(res);
@@ -107,7 +109,6 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                             role: '',
                             department: '',
                             industry: '',
-                            img_url: '',
                           })
                           .then((res) => {
                             if ((res.status = 200)) {
@@ -119,13 +120,8 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                                 'email',
                                 this.props.route.params.email,
                               );
-                              AsyncStorage.setItem(
-                                'photo',
-                                this.state.uploadedImage === ''
-                                  ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
-                                  : this.state.uploadedImage,
-                              );
-                              this.props.navigation.navigate('CreateOrg');
+
+                              this.props.navigation.navigate('Main');
                             }
                           });
                       } else {

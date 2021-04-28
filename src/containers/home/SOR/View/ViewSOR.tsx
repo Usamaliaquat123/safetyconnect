@@ -148,6 +148,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       rootCauses: '',
       // Reassign to
       reAssignToArr: [],
+      exclateToTags: [],
       reAssignToArrTags: [],
     };
 
@@ -186,7 +187,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     );
     createApi
       .createApi()
-      .getProject({projectid: '607820d5724677561cf67ec5'})
+      .getProject({projectid: '60867ed86281162915ce4aac'})
       .then((res: any) => {
         this.setState({
           // involvedPerson: res.data.data.involved_persons,
@@ -300,25 +301,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         comments: this.props.route.params.data.comments /** done */,
         updatedAt: Date.now() /** done */,
       },
-      project: '607820d5724677561cf67ec5',
+
+      project: '60867ed86281162915ce4aac',
     };
 
-    //     report:
-    // action_required: [{…}]
-    // attachments: []
-    // comments: undefined
-    // createdAt: undefined
-    // created_by: "asohial.bscs16seecs@seecs.edu.pk"
-    // details: "Damaged hammer was being used at  workshop, which can cause hand injury."
-    // esclate_to:[]
-    // involved_persons: []
-    // location: "Boiler Room"
-    // occured_at: "2021-03-29T04:16:30.000Z"
-    // risk: {severity: 5, likelihood: 5}
-    // status: 3
-    // submit_to: ["Haider@gmail.com"]
-    // updatedAt: "2021-03-29T18:18:54.752Z"
-    // _id: "60621984d6398801fdbaa9d1"
 
     console.log(update);
 
@@ -480,7 +466,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         attachments: [],
         comments: [],
       },
-      project: '607820d5724677561cf67ec5',
+      project: '60867ed86281162915ce4aac',
     };
 
     createApi
@@ -530,29 +516,29 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     var mapped = imageAndVideoObjectMap(attachments);
   };
 
-  imgCap = (str: string, arr: Array<Object>) => {
-    if (str == 'upload') {
-      imagePicker()
-        .then((res: any) => {
-          arr.push({id: 24, name: 'John Doe', photo: res.uri});
+  // imgCap = (str: string, arr: Array<Object>) => {
+  //   if (str == 'upload') {
+  //     imagePicker()
+  //       .then((res: any) => {
+  //         arr.push({id: 24, name: 'John Doe', photo: res.uri});
 
-          this.setState({photoModal: false});
-        })
-        .catch((err) => {
-          this.setState({photoModal: false});
-        });
-    } else {
-      cameraCapture()
-        .then((res: any) => {
-          arr.push({id: 24, name: 'John Doe', photo: res.uri});
+  //         this.setState({photoModal: false});
+  //       })
+  //       .catch((err) => {
+  //         this.setState({photoModal: false});
+  //       });
+  //   } else {
+  //     cameraCapture()
+  //       .then((res: any) => {
+  //         arr.push({id: 24, name: 'John Doe', photo: res.uri});
 
-          this.setState({photoModal: false});
-        })
-        .catch((err) => {
-          this.setState({photoModal: false});
-        });
-    }
-  };
+  //         this.setState({photoModal: false});
+  //       })
+  //       .catch((err) => {
+  //         this.setState({photoModal: false});
+  //       });
+  //   }
+  // };
   // Document Attachments
   openDoc = async (attach: Array<Object>) => {
     try {
@@ -1731,12 +1717,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 <View
                   style={[
                     styles.optnselector,
-                    this.state.selectedInputIndex == 5
-                      ? {borderColor: colors.green}
-                      : null,
+                    // this.state.selectedInputIndex == 5
+                    //   ? {borderColor: colors.green}
+                    //   : null,
                   ]}>
                   <TextInput
-                    onFocus={() => this.setState({selectedInputIndex: 5})}
+                    // onFocus={() => this.setState({selectedInputIndex: 5})}
                     underlineColorAndroid="transparent"
                     onChange={(v: any) =>
                       this.setState({
@@ -1850,9 +1836,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           <TouchableOpacity
                             key={i}
                             onPress={() => {
+                              // console.log(
+                              //   this.state.exclateToArr.filter(
+                              //     (v: involved_persons) => v == d,
+                              //   ),
+                              // );
                               this.setState({esclateTo: '', exclateToArr: []});
                               if (
-                                this.state.exclateToTags.filter(
+                                this.state.exclateToArr.filter(
                                   (v: involved_persons) => v == d,
                                 ).length != 0
                               ) {
@@ -1882,7 +1873,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </View>
                 ) : null}
                 <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                  {/* <Tags
+                  <Tags
                     onClose={(d: any) => {
                       this.setState({
                         exclateToTags: this.state.exclateToTags.filter(
@@ -1891,7 +1882,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       });
                     }}
                     tags={this.state.exclateToTags}
-                  /> */}
+                  />
                 </View>
               </View>
             </View>
