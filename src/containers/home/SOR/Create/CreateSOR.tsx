@@ -295,6 +295,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     //   this.setState({user: JSON.parse(user)});
     // });
 
+    console.log(moment().format('DD-MM-YYYY'));
+
     AsyncStorage.getItem('user').then((user: any) => {
       this.setState({user: JSON.parse(user)});
     });
@@ -452,7 +454,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               project: '60867ed86281162915ce4aac',
               report: this.state.reportIdInvestigation,
               user: JSON.parse(user)._id,
-              date: moment().format('DD-MM-YYYY'),
+              date: moment().format('MM-DD-YYYY'),
             };
 
             createApi
@@ -652,7 +654,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           project: '60867ed86281162915ce4aac',
                           report: this.state.reportIdInvestigation,
                           user: JSON.parse(user)._id,
-                          date: moment().format('DD-MM-YYYY'),
+                          date: moment().format('MM-DD-YYYY'),
                         };
 
                         console.log(obj);
@@ -880,7 +882,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             project: '60867ed86281162915ce4aac',
                             report: this.state.reportIdInvestigation,
                             user: JSON.parse(user)._id,
-                            date: moment().format('DD-MM-YYYY'),
+                            date: moment().format('MM-DD-YYYY'),
                           };
 
                           console.log(obj);
