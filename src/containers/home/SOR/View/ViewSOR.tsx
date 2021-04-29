@@ -86,7 +86,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       observation: this.props.route.params.data.details,
       date: this.props.route.params.data.occured_at,
       comments: [],
-      suggestedUsers : [],
+      suggestedUsers: [],
       involvedPerson: this.props.route.params.data.involved_persons,
       notifiedPerson: this.props.route.params.data.involved_persons,
 
@@ -229,35 +229,65 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   // }
 
   getFiveWHY = () => {
-    createApi
-      .createApi()
-      .getFiveWhy('6085aaa205ebabf1bbf53268')
-      .then((res: any) => {
-        console.log(res);
-        // console.log(res.data.data.justification[0].question);
-        // console.log(this.props.fiveWhyAnswer);
-
-        res.data.data.justification[0].question.map((d, i) => {
+    if (this.props.route.params.data.justifications.length != 0) {
+      this.props.route.params.data.justifications[0].justification[0].question.map(
+        (d, i) => {
           this.state.fiveWHYdata.push({question: d});
-        });
+        },
+      );
 
-        res.data.data.justification[0].answer.map((d, i) => {
+      this.props.route.params.data.justifications[0].justification[0].answer.map(
+        (d, i) => {
           this.state.fiveWHYdata[i]['answer'] = d;
-        });
+        },
+      );
 
+      if (this.props.route.params.data.justifications[0].contributoryCauses) {
         this.setState({
-          countributoryCauses: res.data.data.contributoryCauses,
-          rootCauses: res.data.data.rootCauses,
+          countributoryCauses: this.props.route.params.data.justifications[0]
+            .contributoryCauses,
+          rootCauses: this.props.route.params.data.justifications[0].rootCauses,
         });
+      }
 
-        this.setState({
-          fiveWhyQuestion: res.data.data.justification[0].question,
-        });
-        this.setState({fiveWhyAnswer: res.data.data.justification[0].answer});
+      this.setState({
+        fiveWhyQuestion: this.props.route.params.data.justifications[0]
+          .justification[0].question,
+      });
+      this.setState({
+        fiveWhyAnswer: this.props.route.params.data.justifications[0]
+          .justification[0].answer,
+      });
+    }
+    // createApi
+    //   .createApi()
+    //   .getFiveWhy('6085aaa205ebabf1bbf53268')
+    //   .then((res: any) => {
+    //     console.log(res);
+    //     // console.log(res.data.data.justification[0].question);
+    //     // console.log(this.props.fiveWhyAnswer);
 
-        console.log(this.state.fiveWHYdata);
-      })
-      .catch((err) => console.log(err));
+    //     res.data.data.justification[0].question.map((d, i) => {
+    //       this.state.fiveWHYdata.push({question: d});
+    //     });
+
+    //     res.data.data.justification[0].answer.map((d, i) => {
+    //       this.state.fiveWHYdata[i]['answer'] = d;
+    //     });
+
+    //     this.setState({
+    //       countributoryCauses: res.data.data.contributoryCauses,
+    //       rootCauses: res.data.data.rootCauses,
+    //     });
+
+    //     this.setState({
+    //       fiveWhyQuestion: res.data.data.justification[0].question,
+    //     });
+    //     this.setState({fiveWhyAnswer: res.data.data.justification[0].answer});
+
+    //     console.log(this.state.fiveWHYdata);
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   mappingInvolved = (persons: Array<any>, person: string | undefined) => {
