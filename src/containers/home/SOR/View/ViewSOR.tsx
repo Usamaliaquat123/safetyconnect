@@ -151,6 +151,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       reAssignToArr: [],
       exclateToTags: [],
       reAssignToArrTags: [],
+      projectName: ""
     };
 
     this.animation = React.createRef();
@@ -160,7 +161,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
-    console.log(this.props.route.params.data.location);
     // AsyncStorage.getItem('user').then((user) => {
     //   console.log(JSON.parse(user));
     // });
@@ -192,9 +192,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .getProject({projectid: '60867ed86281162915ce4aac'})
       .then((res: any) => {
         this.setState({
+          projectName : res.data.data.project_name,
           // involvedPerson: res.data.data.involved_persons,
           commentsSugg: res.data.data.involved_persons,
         });
+
+
+
 
         // var arr = filterAndMappingPersons(
         //   this.props.route.params.data,
@@ -845,7 +849,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     fontFamily: fonts.SFuiDisplayLight,
                     fontSize: wp(3),
                   }}>
-                  112233
+                  {this.state.projectName}
                 </Text>
               </View>
               {/* Location */}
