@@ -13,7 +13,7 @@ import {connect} from 'react-redux';
 import {Create_sor, riskxSeverityxliklihood} from '@service/mock';
 import styles from './style';
 import moment from 'moment';
-import {Bars} from 'react-native-loader';
+
 
 import {
   searchInSuggestions,
@@ -1778,8 +1778,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               // this.props.r
             }}>
             {this.props.reduxState.loading == true ? (
-              <Bars size={10} color={colors.primary} />
-            ) : (
+
+<ActivityIndicator color={colors.primary} size={'large'} />
+) : (
               <View style={styles.modelContainer}>
                 <View>
                   <Text style={styles.errHeadPop}>
