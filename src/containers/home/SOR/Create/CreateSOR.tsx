@@ -536,7 +536,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     //   })
     //   .catch((err) => {});
   };
-  onCreateSor = () => {
+  onCreateSor = (draft: boolean) => {
     var sorbtns = this.state.classifySorbtns.filter(
       (d: any) => d.selected === true,
     );
@@ -633,7 +633,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         esclate_to: this.state.exclateToTags.map(
                           (d: any) => d.email,
                         ),
-                        status: 2,
+                        status: draft == true ? 1 : 2,
                         // attachments: this.state.filename,
                         comments: ' ',
                       },
@@ -858,7 +858,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           esclate_to: this.state.exclateToTags.map(
                             (d: any) => d.email,
                           ),
-                          status: 2,
+                          status: draft == true ? 1 : 2,
                           attachments: [],
                           comments: ' ',
                         },
@@ -1906,13 +1906,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             {/* Draft And Submit Btns */}
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
               <TouchableOpacity
-                onPress={() => this.submitDraft()}
+                onPress={() => this.onCreateSor(true)}
                 style={[styles.submitsorbtn, {marginRight: wp(3)}]}>
                 <Text style={styles.submitsorbtntxt}>Save as Draft</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 // this.setState({repeatedSorModal: true})
-                onPress={() => this.onCreateSor()}
+                onPress={() => this.onCreateSor(false)}
                 style={[styles.submitsorbtn, {borderColor: colors.green}]}>
                 <Text style={[styles.submitsorbtntxt, {color: colors.green}]}>
                   Submit
