@@ -229,19 +229,20 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   // }
 
   getFiveWHY = () => {
+    // Question map and them push
     if (this.props.route.params.data.justifications.length != 0) {
       this.props.route.params.data.justifications[0].justification[0].question.map(
         (d, i) => {
           this.state.fiveWHYdata.push({question: d});
         },
       );
-
+      // Answer map and then push
       this.props.route.params.data.justifications[0].justification[0].answer.map(
         (d, i) => {
           this.state.fiveWHYdata[i]['answer'] = d;
         },
       );
-
+      // If contributoryCauses exists
       if (this.props.route.params.data.justifications[0].contributoryCauses) {
         this.setState({
           countributoryCauses: this.props.route.params.data.justifications[0]
@@ -249,7 +250,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           rootCauses: this.props.route.params.data.justifications[0].rootCauses,
         });
       }
-
+      // Set the state of 5 whys Questions /Answers
       this.setState({
         fiveWhyQuestion: this.props.route.params.data.justifications[0]
           .justification[0].question,
@@ -259,35 +260,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           .justification[0].answer,
       });
     }
-    // createApi
-    //   .createApi()
-    //   .getFiveWhy('6085aaa205ebabf1bbf53268')
-    //   .then((res: any) => {
-    //     console.log(res);
-    //     // console.log(res.data.data.justification[0].question);
-    //     // console.log(this.props.fiveWhyAnswer);
-
-    //     res.data.data.justification[0].question.map((d, i) => {
-    //       this.state.fiveWHYdata.push({question: d});
-    //     });
-
-    //     res.data.data.justification[0].answer.map((d, i) => {
-    //       this.state.fiveWHYdata[i]['answer'] = d;
-    //     });
-
-    //     this.setState({
-    //       countributoryCauses: res.data.data.contributoryCauses,
-    //       rootCauses: res.data.data.rootCauses,
-    //     });
-
-    //     this.setState({
-    //       fiveWhyQuestion: res.data.data.justification[0].question,
-    //     });
-    //     this.setState({fiveWhyAnswer: res.data.data.justification[0].answer});
-
-    //     console.log(this.state.fiveWHYdata);
-    //   })
-    //   .catch((err) => console.log(err));
   };
 
   mappingInvolved = (persons: Array<any>, person: string | undefined) => {

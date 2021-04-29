@@ -1808,7 +1808,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             <RepeatedSor
               repeatedSor={this.state.repeatedSorData}
               onViewSor={(d: Isor) => {
-                this.setState({repeatedSorModal: false});
+                this.setState({repeatedSorModald: false});
                 this.props.navigation.navigate('ViewSOR', {data: d});
               }}
               onSkip={() => {
