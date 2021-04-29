@@ -14,7 +14,6 @@ import {Create_sor, riskxSeverityxliklihood} from '@service/mock';
 import styles from './style';
 import moment from 'moment';
 
-
 import {
   searchInSuggestions,
   filterLocation,
@@ -1774,13 +1773,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             isVisible={this.state.errorModal}
             onBackdropPress={() => {
               this.setState({errorModal: false, loading: false});
-
-              // this.props.r
             }}>
-            {this.props.reduxState.loading == true ? (
-
-<ActivityIndicator color={colors.primary} size={'large'} />
-) : (
+            {this.state.loading == true ? (
+              <ActivityIndicator color={colors.primary} size={'large'} />
+            ) : (
               <View style={styles.modelContainer}>
                 <View>
                   <Text style={styles.errHeadPop}>
