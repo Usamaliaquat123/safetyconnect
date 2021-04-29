@@ -160,6 +160,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
+    console.log(this.props.route.params.data.location);
     // AsyncStorage.getItem('user').then((user) => {
     //   console.log(JSON.parse(user));
     // });
@@ -290,7 +291,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         },
         action_required: this.state.actionsAndRecommendations /** done */,
 
-        location: 'pindi boys' /** done */,
+        location: this.props.route.params.data.location /** done */,
         submit_to: this.state.submitted_to.map((d: any) => d.email) /** done */,
         esclate_to: this.state.esclate_to.map((d: any) => d.email) /** done */,
         status: 2 /** done */,
@@ -455,7 +456,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           latitude: 66.666,
           longitude: 66.666,
         },
-        location: 'pindi boys',
+        location: this.props.route.params.data.location,
         submit_to: this.state.submitted_to.map((d: any) => d.email) /** done */,
         esclate_to: this.state.esclate_to.map((d: any) => d.email),
         status: 1,
@@ -870,7 +871,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     fontFamily: fonts.SFuiDisplayLight,
                     fontSize: wp(3),
                   }}>
-                  112233
+                  {this.props.route.params.data.location}
                 </Text>
               </View>
             </View>
