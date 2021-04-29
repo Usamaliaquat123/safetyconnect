@@ -86,6 +86,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       observation: this.props.route.params.data.details,
       date: this.props.route.params.data.occured_at,
       comments: [],
+      suggestedUsers : [],
       involvedPerson: this.props.route.params.data.involved_persons,
       notifiedPerson: this.props.route.params.data.involved_persons,
 

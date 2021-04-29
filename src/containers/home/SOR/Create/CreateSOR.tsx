@@ -454,13 +454,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               project: '60867ed86281162915ce4aac',
               report: this.state.reportIdInvestigation,
               user: JSON.parse(user)._id,
+              date: moment().format('DD-MM-YYYY')
             };
 
             createApi
               .createApi()
               .createFiveWhy(obj)
               .then((res) => {
-          
+                console.log('five why');
                 console.log(res);
               })
               .catch((err: any) => console.log(err));
@@ -497,12 +498,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
 
 
+        
 
-        createApi
-          .createApi()
-          .createSorInit(bodyInitial)
-          .then((res: any) => {
-           
+
+
+
+
+
+  
 
             createApi
               .createApi()
@@ -521,7 +524,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               });
 
             // this.props.reduxActions.createSor(draftSor, this.props.navigation);
-          });
       } else {
         this.setState({
           errorModal: true,
@@ -665,6 +667,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           project: '60867ed86281162915ce4aac',
                           report: this.state.reportIdInvestigation,
                           user: JSON.parse(user)._id,
+                          date: moment().format('DD-MM-YYYY')
                         };
 
                         console.log(obj);
@@ -892,6 +895,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             project: '60867ed86281162915ce4aac',
                             report: this.state.reportIdInvestigation,
                             user: JSON.parse(user)._id,
+                            date: moment().format('DD-MM-YYYY')
                           };
 
                           console.log(obj);
