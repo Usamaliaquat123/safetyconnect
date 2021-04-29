@@ -13,6 +13,8 @@ import {connect} from 'react-redux';
 import {Create_sor, riskxSeverityxliklihood} from '@service/mock';
 import styles from './style';
 import moment from 'moment';
+import { Bars } from 'react-native-loader';
+
 import {
   searchInSuggestions,
   filterLocation,
