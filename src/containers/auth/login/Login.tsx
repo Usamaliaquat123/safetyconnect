@@ -15,7 +15,7 @@ import {connect} from 'react-redux';
 import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
-import {Create_sor} from '@service';
+import {Create_sor, createApi} from '@service';
 import {RouteProp} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import {Auth} from 'aws-amplify';
@@ -135,7 +135,15 @@ class Login extends React.Component<LoginProps, any> {
           );
           this.setState({errorModal: false, loading: false});
 
+          createApi
+            .createApi()
+            .getUser(this.state.username)
+            .then((user: any) => {
+              AsyncStorage.setItem('user', JSON.stringify(user));
+            });
+
           AsyncStorage.setItem('email', this.state.username);
+
           this.props.navigation.navigate('Main');
         } catch (err) {
           this.setState({errorModal: true, loading: false});

@@ -408,15 +408,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             date: rec[i].date,
             is_complete: rec[i].is_complete,
             is_selected: rec[i].is_selected,
-            justification: rec[i].justification
+            justification: rec[i].justification,
           });
         }
 
-
-
         var sor = {
           report: {
-            _id: "",
+            _id: '',
             created_by: this.state.email,
             details: this.state.observationT,
             occured_at: new Date(),
@@ -454,7 +452,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               project: '60867ed86281162915ce4aac',
               report: this.state.reportIdInvestigation,
               user: JSON.parse(user)._id,
-              date: moment().format('DD-MM-YYYY')
+              date: moment().format('DD-MM-YYYY'),
             };
 
             createApi
@@ -494,36 +492,23 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           }
         }
 
-
-
-
-
-        
-
-
-
-
-
-
-  
-
-            createApi
-              .createApi()
-              .createSor(sor)
-              .then((res: any) => {
-                this.setState({loading: false, errorModal: false});
-                if (res.status == 200) {
-                  this.props.navigation.navigate('ViewAllSOr');
-                } else {
-                  this.setState({
-                    errorModal: true,
-                    errHeadingText: `CreateSor api returns ${res.status}.`,
-                    errDesText: res.data.message,
-                  });
-                }
+        createApi
+          .createApi()
+          .createSor(sor)
+          .then((res: any) => {
+            this.setState({loading: false, errorModal: false});
+            if (res.status == 200) {
+              this.props.navigation.navigate('ViewAllSOr');
+            } else {
+              this.setState({
+                errorModal: true,
+                errHeadingText: `CreateSor api returns ${res.status}.`,
+                errDesText: res.data.message,
               });
+            }
+          });
 
-            // this.props.reduxActions.createSor(draftSor, this.props.navigation);
+        // this.props.reduxActions.createSor(draftSor, this.props.navigation);
       } else {
         this.setState({
           errorModal: true,
@@ -667,7 +652,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           project: '60867ed86281162915ce4aac',
                           report: this.state.reportIdInvestigation,
                           user: JSON.parse(user)._id,
-                          date: moment().format('DD-MM-YYYY')
+                          date: moment().format('DD-MM-YYYY'),
                         };
 
                         console.log(obj);
@@ -895,7 +880,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             project: '60867ed86281162915ce4aac',
                             report: this.state.reportIdInvestigation,
                             user: JSON.parse(user)._id,
-                            date: moment().format('DD-MM-YYYY')
+                            date: moment().format('DD-MM-YYYY'),
                           };
 
                           console.log(obj);
