@@ -13,7 +13,7 @@ import {connect} from 'react-redux';
 import {Create_sor, riskxSeverityxliklihood} from '@service/mock';
 import styles from './style';
 import moment from 'moment';
-import { Bars } from 'react-native-loader';
+import {Bars} from 'react-native-loader';
 
 import {
   searchInSuggestions,
@@ -403,7 +403,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               ) {
                 if (this.state.submitToTags.length !== 0) {
                   if (this.state.exclateToTags.length !== 0) {
-                    this.setState({loading: true});
+                    this.setState({loading: true, errorModal: true});
 
                     var rec = this.state.actionRecommendations.filter(
                       (d: any) => d.selected == true,
@@ -498,10 +498,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           .createSorInit(bodyInitial)
                           .then((res: any) => {
                             sor.report['_id'] = res.data.data.report_id;
-                            this.setState({
-                              loading: false,
-                              errorModal: false,
-                            });
                           })
                           .catch((err) => console.log(err));
                       } else {
@@ -728,11 +724,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             .createSorInit(bodyInitial)
                             .then((res: any) => {
                               sors.report['_id'] = res.data.data.report_id;
-
-                              this.setState({
-                                loading: false,
-                                errorModal: false,
-                              });
                             })
                             .catch((err) => console.log(err));
                         } else {
@@ -762,7 +753,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           .catch(() =>
                             this.setState({
                               loading: false,
-                              errorModal: false,
+                              errorModal: true,
+                              errHeadingText: 'Error on create sor',
+                              errDesText: 'Please refresh the app state.',
                             }),
                           );
                       }, 3000);
@@ -1761,13 +1754,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 </Text>
               </TouchableOpacity>
             </View>
-         
-         
-
-             
-
-                
-         
           </Animated.View>
 
           <Modal
@@ -1792,8 +1778,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               // this.props.r
             }}>
             {this.props.reduxState.loading == true ? (
-
-         <Bars size={10} color={colors.primary} />
+              <Bars size={10} color={colors.primary} />
             ) : (
               <View style={styles.modelContainer}>
                 <View>
