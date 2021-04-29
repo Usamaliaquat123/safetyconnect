@@ -295,8 +295,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     //   this.setState({user: JSON.parse(user)});
     // });
 
-    console.log(moment().format('DD-MM-YYYY'));
-
     AsyncStorage.getItem('user').then((user: any) => {
       this.setState({user: JSON.parse(user)});
     });
@@ -509,6 +507,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       }
                     }
 
+                    // console.log(sor)
                     // Repeated observations
                     // res.data.resultss
                     // var bodyInitial = {
@@ -539,6 +538,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         .createSor(sor)
                         .then((res: any) => {
                           this.setState({loading: false, errorModal: false});
+
+                          console.log(res);
 
                           if (res.status == 200) {
                             this.props.navigation.navigate('ViewAllSOr');
@@ -737,11 +738,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         }
                       }
 
+                      console.log(sors);
                       setTimeout(() => {
                         createApi
                           .createApi()
                           .createSor(sors)
                           .then((res: any) => {
+                            console.log(res);
                             this.setState({
                               loading: false,
                               errorModal: false,

@@ -221,13 +221,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     );
   };
 
-  // getInvolvedPersonsUsers = () : Array<involved_persons> {
-  //   createApi.createApi().getProject({projectid: '607820d5724677561cf67ec5'}).then(res => {
-
-  //   })
-
-  // }
-
+  // FIVE WHY
   getFiveWHY = () => {
     // Question map and them push
     if (this.props.route.params.data.justifications.length != 0) {

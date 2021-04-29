@@ -83,8 +83,8 @@ class ViewAll extends React.Component<ViewAllProps, any> {
 
     AsyncStorage.getItem('involved_person').then((involvedPersons: any) => {
       var data = {
-        project: '607820d5724677561cf67ec5',
-        limit: 10000,
+        project: '60867ed86281162915ce4aac',
+        limit: 100000,
         page: 0,
         query: {status: [this.props.route.params.data]},
       };
