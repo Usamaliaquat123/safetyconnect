@@ -1761,6 +1761,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 </Text>
               </TouchableOpacity>
             </View>
+         
+         
+
+             
+
+                
+         
           </Animated.View>
 
           <Modal
@@ -1785,9 +1792,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               // this.props.r
             }}>
             {this.props.reduxState.loading == true ? (
-              <View>
-                <ActivityIndicator color={colors.primary} size={'large'} />
-              </View>
+
+         <Bars size={10} color={colors.primary} />
             ) : (
               <View style={styles.modelContainer}>
                 <View>
