@@ -936,7 +936,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                             if (res.status == 200) {
                               console.log('sdsd');
-                              this.props.navigation.goBack();
+                              this.props.navigation.navigate('ViewAllSOr');
                             } else {
                               console.log(res);
                             }
@@ -1034,7 +1034,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
-                onPress={() => this.props.navigation.goBack()}
+                onPress={() => this.props.navigation.navigate('ViewAllSOr')}
                 size={25}
                 name="arrow-back-outline"
                 type="ionicon"
@@ -1131,7 +1131,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     at about {this.state.curTime}
                   </Text>
                 </View>
-                <Text style={styles.obserttle}> it was observed that</Text>
+                <Text style={styles.obserttle}>it was observed that</Text>
                 <TextInput
                   multiline={true}
                   onFocus={() => this.setState({selectedInputIndex: 1})}
