@@ -418,7 +418,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       comment_id: comment._id,
       comment_document_id: this.props.route.params.data.comments,
     };
-    console.log(data)
+    console.log(data);
     createApi
       .createApi()
       .editComment(data)

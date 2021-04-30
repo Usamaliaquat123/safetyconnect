@@ -48,11 +48,16 @@ export default class CommentPop extends React.Component<CommentPopProps, any> {
         onBackdropPress={() => this.props.onClose()}>
         <View style={styles.containerPopup}>
           <View style={styles.containerText}>
-            <Text style={styles.containerTextString}>Edit / Discard</Text>
+            <Text style={styles.containerTextString}>
+              Want to delete your comment
+            </Text>
           </View>
-          <View style={styles.commentTextInput}>
+          <Text style={styles.textInputPopup}>
+            {this.props.editDiscardComment}
+          </Text>
+          {/* <View style={styles.commentTextInput}>
             <TextInput
-              style={styles.textInputPopup}
+           
               multiline={true}
               value={this.props.editDiscardComment}
               onChange={(e) => {
@@ -60,6 +65,8 @@ export default class CommentPop extends React.Component<CommentPopProps, any> {
               }}
               placeholder={'Your comment here '}
             />
+          
+
             <View style={styles.pickerIcon}>
               <TouchableOpacity
                 onPress={() => this.props.openDoc(this.props.attachments)}
@@ -72,7 +79,7 @@ export default class CommentPop extends React.Component<CommentPopProps, any> {
                 />
               </TouchableOpacity>
             </View>
-          </View>
+          </View> */}
           {this.props.attachments.length != 0 && (
             <View style={styles.attachmentsContainer}>
               <View style={styles.attachmentContainerContent}>
@@ -166,11 +173,11 @@ export default class CommentPop extends React.Component<CommentPopProps, any> {
               style={styles.discardContainer}>
               <Text style={styles.discardText}>Delete</Text>
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => this.props.submitComment()}
               style={styles.saveContainer}>
               <Text style={styles.saveContainerText}>Save</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </Model>
