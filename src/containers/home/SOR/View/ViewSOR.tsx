@@ -302,7 +302,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         .createApi()
         .editFiveWhy(updatefiveWhy)
         .then((res) => {
-          console.log(res)
+          console.log(res);
         })
         .catch((err) => console.log(err));
     }
@@ -323,7 +323,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         action_required: this.state.actionsAndRecommendations /** done */,
         location: this.props.route.params.data.location /** done */,
         submit_to: this.state.submitted_to.map((d: any) => d.email) /** done */,
-        esclate_to: this.state.esclate_to.map((d: any) => d.email) /** done */,
+        esclate_to:
+          this.state.reAssignToArrTags.length == 0
+            ? this.state.esclate_to.map((d: any) => d.email)
+            : this.state.reAssignToArrTags.map((d: any) => d.email) /** done */,
         status: 2 /** done */,
         attachments: [] /** done */,
         comments: this.props.route.params.data.comments /** done */,
