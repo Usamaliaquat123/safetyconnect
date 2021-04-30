@@ -47,6 +47,7 @@ import {
   imageAndVideoObjectMap,
   filterAndMappingPersons,
   downloadFile,
+  filterLocation,
 } from '@utils';
 import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -153,6 +154,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       exclateToTags: [],
       reAssignToArrTags: [],
       projectName: '',
+      commentMentionReplace: '',
     };
 
     this.animation = React.createRef();
@@ -196,7 +198,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         this.setState({
           projectName: res.data.data.project_name,
           // involvedPerson: res.data.data.involved_persons,
-          commentsSugg: res.data.data.involved_persons,
+          // commentsSugg: res.data.data.involved_persons,
           involvedPerson: res.data.data.involved_persons,
         });
 
@@ -2163,6 +2165,23 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     value={this.state.commentText}
                     onChange={(e) => {
                       // mentionComment
+
+                      if (filterLocation(e.nativeEvent.text) != null) {
+                        console.log(
+                          filterLocation(e.nativeEvent.text)[0].split('@')[1],
+                        );
+
+                        this.setState({
+                          commentsSugg: searchInSuggestions(
+                            filterLocation(e.nativeEvent.text)[0].split('@')[1],
+                            this.state.involvedPerson,
+                          ),
+                          commentMentionReplace: filterLocation(
+                            e.nativeEvent.text,
+                          )[0],
+                        });
+                      }
+
                       this.setState({commentText: e.nativeEvent.text});
                     }}
                     placeholder={'Your comment here '}
@@ -2219,8 +2238,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       <View key={i}>
                         <TouchableOpacity
                           onPress={() => {
+                            // this.setState({
+                            //   commentText: this.state.commentText.concat(
+                            //     d.name,
+                            //   ),
+                            // });
                             this.setState({
-                              commentText: this.state.commentText.concat(
+                              commentText: this.state.commentText.replace(
+                                this.state.commentMentionReplace,
                                 d.name,
                               ),
                             });
