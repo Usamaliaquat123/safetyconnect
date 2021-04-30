@@ -405,6 +405,29 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .catch((err) => console.log(err));
   };
 
+  // Add edit comment
+  editComment = (comment: any) => {
+    var data = {
+      data: {
+        email: comment.user.email,
+        comment: comment.comment,
+        date: moment().format('YYYY-MM-DD'),
+        files: comment.attachments,
+        is_comment: true,
+      },
+      comment_id: comment._id,
+      comment_document_id: this.props.route.params.data.comments,
+    };
+    console.log(data)
+    createApi
+      .createApi()
+      .editComment(data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
+
   // Get All Comments
   getAllComments = () => {
     // this.props.route.params.data.comments;
@@ -431,9 +454,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 ) {
                   res.data.data.all_comments[i].user = involvedPersonss[i];
                 } else {
-                  console.log('user');
-                  console.log(JSON.parse(user));
-                  res.data.data.all_comments[i].user['img_url'] = JSON.parse(user).img_url
+                  res.data.data.all_comments[i].user['img_url'] = JSON.parse(
+                    user,
+                  ).img_url;
                   res.data.data.all_comments[i].user['name'] = JSON.parse(
                     user,
                   ).name;
@@ -444,6 +467,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               }
             }
             this.setState({comments: res.data.data.all_comments});
+            console.log(this.state.comments);
           });
         })
         .catch((err) => console.log(err));
@@ -2710,6 +2734,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               'attachments'
             ] = this.state.editAttachedCommentArr;
 
+            this.editComment(
+              this.state.comments[this.state.editDiscardCommentIndex],
+            );
             this.setState({editDelComment: false});
           }}
         />

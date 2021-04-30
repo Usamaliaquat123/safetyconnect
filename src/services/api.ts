@@ -110,7 +110,7 @@ const createApi = (
       {},
       {data: {comment_id: commentId, comment_document_id: documentId}},
     );
-  const editComment = (data: any) => baseapi.get(`comment`, data);
+  const editComment = (data: any) => baseapi.put(`comment`, data);
   const createComment = (data: any) => baseapi.post(`comment`, data);
 
   /*
