@@ -88,7 +88,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       comments: [],
       suggestedUsers: [],
       involvedPerson: [],
-      involved_person : this.props.route.params.data.involved_persons,
+      involved_person: this.props.route.params.data.involved_persons,
       notifiedPerson: this.props.route.params.data.involved_persons,
 
       commentsSugg: [],
@@ -197,7 +197,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           projectName: res.data.data.project_name,
           // involvedPerson: res.data.data.involved_persons,
           commentsSugg: res.data.data.involved_persons,
-          involvedPerson : res.data.data.involved_persons,
+          involvedPerson: res.data.data.involved_persons,
         });
 
         // var arr = filterAndMappingPersons(
@@ -254,9 +254,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.setState({
         fiveWhyQuestion: this.props.route.params.data.justifications[0]
           .justification[0].question,
-        fiveWhytoggle: true,
         fiveWhyAnswer: this.props.route.params.data.justifications[0]
           .justification[0].answer,
+        fiveWhytoggle: true,
       });
     } else {
       this.setState({fiveWhytoggle: false});
@@ -282,6 +282,31 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
       .value;
 
+    //   fiveWhyQuestion:
+    // fiveWhyAnswer:
+    if (this.state.fiveWhytoggle == true) {
+      var updatefiveWhy = {
+        id: this.props.route.params.data.justification,
+        justification: {
+          question: this.state.fiveWhyQuestion,
+          answer: this.state.fiveWhyAnswer,
+        },
+        contributoryCauses: this.state.countributoryCauses,
+        rootCauses: this.state.rootCauses,
+      };
+
+      //   fiveWhyQuestion:
+      // fiveWhyAnswer:
+
+      createApi
+        .createApi()
+        .editFiveWhy(updatefiveWhy)
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => console.log(err));
+    }
+
     var update = {
       report: {
         _id: this.props.route.params.data._id /** done  */,
@@ -296,7 +321,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           likelihood: liklihood,
         },
         action_required: this.state.actionsAndRecommendations /** done */,
-
         location: this.props.route.params.data.location /** done */,
         submit_to: this.state.submitted_to.map((d: any) => d.email) /** done */,
         esclate_to: this.state.esclate_to.map((d: any) => d.email) /** done */,
@@ -305,7 +329,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         comments: this.props.route.params.data.comments /** done */,
         updatedAt: Date.now() /** done */,
       },
-
       project: '60867ed86281162915ce4aac',
     };
 
