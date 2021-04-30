@@ -87,7 +87,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       date: this.props.route.params.data.occured_at,
       comments: [],
       suggestedUsers: [],
-      involvedPerson: this.props.route.params.data.involved_persons,
+      involvedPerson: [],
+      involved_person : this.props.route.params.data.involved_persons,
       notifiedPerson: this.props.route.params.data.involved_persons,
 
       commentsSugg: [],
@@ -151,7 +152,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       reAssignToArr: [],
       exclateToTags: [],
       reAssignToArrTags: [],
-      projectName: ""
+      projectName: '',
     };
 
     this.animation = React.createRef();
@@ -165,6 +166,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     //   console.log(JSON.parse(user));
     // });
     // console.log(this.props.route.params.data.comments);
+    console.log(this.state.involvedPerson);
     this.getFiveWHY();
     this.mappingMapping(
       this.props.route.params.data.risk.severity,
@@ -192,13 +194,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .getProject({projectid: '60867ed86281162915ce4aac'})
       .then((res: any) => {
         this.setState({
-          projectName : res.data.data.project_name,
+          projectName: res.data.data.project_name,
           // involvedPerson: res.data.data.involved_persons,
           commentsSugg: res.data.data.involved_persons,
+          involvedPerson : res.data.data.involved_persons,
         });
-
-
-
 
         // var arr = filterAndMappingPersons(
         //   this.props.route.params.data,
@@ -229,6 +229,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   // FIVE WHY
   getFiveWHY = () => {
     // Question map and them push
+
     if (this.props.route.params.data.justifications.length != 0) {
       this.props.route.params.data.justifications[0].justification[0].question.map(
         (d, i) => {
@@ -253,11 +254,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.setState({
         fiveWhyQuestion: this.props.route.params.data.justifications[0]
           .justification[0].question,
-      });
-      this.setState({
+        fiveWhytoggle: true,
         fiveWhyAnswer: this.props.route.params.data.justifications[0]
           .justification[0].answer,
       });
+    } else {
+      this.setState({fiveWhytoggle: false});
     }
   };
 
@@ -903,10 +905,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     fontSize: wp(3.5),
                     fontFamily: fonts.SFuiDisplayLight,
                   }}>
-                  Involved Person :
+                  Involved Person:{' '}
                 </Text>
                 <Text style={{fontSize: wp(3.5)}}>
-                  {/* {this.state.involvedPerson[0].name} */}
+                  {this.state.involved_person[0].name}
                 </Text>
               </View>
             </View>
