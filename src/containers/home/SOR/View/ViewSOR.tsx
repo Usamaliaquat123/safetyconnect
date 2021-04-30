@@ -301,6 +301,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             user: JSON.parse(user)._id,
             date: moment().format('MM-DD-YYYY'),
           };
+
+          createApi
+            .createApi()
+            .createFiveWhy(obj)
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
         } else {
           // create justification
           var updatefiveWhy = {
