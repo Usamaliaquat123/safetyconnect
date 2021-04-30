@@ -1743,78 +1743,82 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               {/* REASSIGNED to  */}
               <View style={{marginTop: wp(4)}}>
                 <Text style={styles.sbBtnText}>Re-assign to </Text>
-                <View
-                  style={[
-                    styles.optnselector,
-                    // this.state.selectedInputIndex == 5
-                    //   ? {borderColor: colors.green}
-                    //   : null,
-                  ]}>
-                  <TextInput
-                    // onFocus={() => this.setState({selectedInputIndex: 5})}
-                    underlineColorAndroid="transparent"
-                    onChange={(v: any) =>
-                      this.setState({
-                        reAssignToArr: searchInSuggestions(
-                          v,
-                          this.state.involvedPerson,
-                        ),
-                        reassignToText: v,
-                      })
-                    }
-                    placeholder={'Select or Type Name'}
-                    style={styles.optnselectorText}
-                    value={this.state.reassignToText}
-                  />
-                </View>
-
-                {this.state.reAssignToArr.length != 0 ? (
-                  <View>
-                    <View style={styles.involveSuggestCont}>
-                      {this.state.reAssignToArr.map(
-                        (d: involved_persons, i: number) => (
-                          <TouchableOpacity
-                            key={i}
-                            onPress={() => {
-                              // console.log(
-                              //   this.state.reAssignToArr.filter(
-                              //     (v: involved_persons) => v == d,
-                              //   ),
-                              // );
-                              this.setState({
-                                reassignToText: '',
-                                reAssignToArr: [],
-                              });
-
-                              if (
-                                this.state.reAssignToArr.filter(
-                                  (v: involved_persons) => v == d,
-                                ).length != 0
-                              ) {
-                                this.state.reAssignToArrTags.push(d);
-                              } else {
-                                return null;
-                              }
-                            }}
-                            style={[
-                              styles.involvePsuggCont,
-                              this.state.reAssignToArr.length == i + 1
-                                ? {borderBottomWidth: wp(0)}
-                                : null,
-                            ]}>
-                            <Avatar
-                              containerStyle={{marginRight: wp(3)}}
-                              rounded
-                              source={{
-                                uri: d.img_url,
-                              }}
-                            />
-                            <Text style={styles.involvePSt}>{d.name}</Text>
-                          </TouchableOpacity>
-                        ),
-                      )}
+                {this.state.reAssignToArrTags.length < 1 ? (
+                  <>
+                    <View
+                      style={[
+                        styles.optnselector,
+                        // this.state.selectedInputIndex == 5
+                        //   ? {borderColor: colors.green}
+                        //   : null,
+                      ]}>
+                      <TextInput
+                        // onFocus={() => this.setState({selectedInputIndex: 5})}
+                        underlineColorAndroid="transparent"
+                        onChange={(v: any) =>
+                          this.setState({
+                            reAssignToArr: searchInSuggestions(
+                              v,
+                              this.state.involvedPerson,
+                            ),
+                            reassignToText: v,
+                          })
+                        }
+                        placeholder={'Select or Type Name'}
+                        style={styles.optnselectorText}
+                        value={this.state.reassignToText}
+                      />
                     </View>
-                  </View>
+
+                    {this.state.reAssignToArr.length != 0 ? (
+                      <View>
+                        <View style={styles.involveSuggestCont}>
+                          {this.state.reAssignToArr.map(
+                            (d: involved_persons, i: number) => (
+                              <TouchableOpacity
+                                key={i}
+                                onPress={() => {
+                                  // console.log(
+                                  //   this.state.reAssignToArr.filter(
+                                  //     (v: involved_persons) => v == d,
+                                  //   ),
+                                  // );
+                                  this.setState({
+                                    reassignToText: '',
+                                    reAssignToArr: [],
+                                  });
+
+                                  if (
+                                    this.state.reAssignToArr.filter(
+                                      (v: involved_persons) => v == d,
+                                    ).length != 0
+                                  ) {
+                                    this.state.reAssignToArrTags.push(d);
+                                  } else {
+                                    return null;
+                                  }
+                                }}
+                                style={[
+                                  styles.involvePsuggCont,
+                                  this.state.reAssignToArr.length == i + 1
+                                    ? {borderBottomWidth: wp(0)}
+                                    : null,
+                                ]}>
+                                <Avatar
+                                  containerStyle={{marginRight: wp(3)}}
+                                  rounded
+                                  source={{
+                                    uri: d.img_url,
+                                  }}
+                                />
+                                <Text style={styles.involvePSt}>{d.name}</Text>
+                              </TouchableOpacity>
+                            ),
+                          )}
+                        </View>
+                      </View>
+                    ) : null}
+                  </>
                 ) : null}
                 <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
                   <Tags
@@ -1829,6 +1833,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   />
                 </View>
               </View>
+
               {/* ESCLATED TO  */}
               <View>
                 <Text style={styles.sbBtnText}>Esclated to </Text>
