@@ -398,7 +398,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .then((res) => {
         if (res.status == 200) {
           this.state.comments.splice(this.state.editDiscardCommentIndex, 1);
-
           this.setState({editDelComment: false});
         }
       })
@@ -497,12 +496,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       createApi
         .createApi()
         .createComment(comments)
-        .then((res) => {
+        .then((res: any) => {
+          console.log(res);
           var map = [...this.state.comments];
           map.push({
             date: moment().format('YYYY-MM-DD'),
             comment: comment,
             files: [],
+            _id: res.data.data,
             user: {
               name: JSON.parse(user).name,
               email: JSON.parse(user).email,
