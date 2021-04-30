@@ -153,7 +153,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       exclateToTags: [],
       reAssignToArrTags: [],
       projectName: '',
-      user: {},
     };
 
     this.animation = React.createRef();
@@ -163,7 +162,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
-    AsyncStorage.getItem('user').then((user) => {
+    AsyncStorage.getItem('user').then((user: any) => {
       this.setState({user: JSON.parse(user)});
     });
     // console.log(this.props.route.params.data.comments);
@@ -465,7 +464,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 }
               }
             }
-            this.setState({comments: res.data.data.all_comments});
+            const sortedActivities = res.data.data.all_comments.sort(
+              (a, b) => new Date(a.date) - new Date(b.date),
+            );
+
+            // res.data.data.all_comments.sort(function(a,b){
+            //     // Turn your strings into dates, and then subtract them
+            //     // to get a value that is either negative, positive, or zero.
+            //     return new Date(a.date) - new Date(b.date);
+            //   });
+
+            // console.log(data)
+            this.setState({comments: sortedActivities});
+
+            // this.state..sort(function(a, b){return a-b});
+
             console.log(this.state.comments);
           });
         })
