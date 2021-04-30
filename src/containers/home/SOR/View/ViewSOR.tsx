@@ -284,28 +284,49 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
     //   fiveWhyQuestion:
     // fiveWhyAnswer:
-    if (this.state.fiveWhytoggle == true) {
-      var updatefiveWhy = {
-        id: this.props.route.params.data.justification,
-        justification: {
-          question: this.state.fiveWhyQuestion,
-          answer: this.state.fiveWhyAnswer,
-        },
-        contributoryCauses: this.state.countributoryCauses,
-        rootCauses: this.state.rootCauses,
-      };
 
-      //   fiveWhyQuestion:
-      // fiveWhyAnswer:
+    AsyncStorage.getItem('user').then((user: any) => {
+      if (this.state.fiveWhytoggle == true) {
+        if (this.props.route.params.data.justification == undefined) {
+          // create five why
+          var obj = {
+            justification: {
+              question: this.state.fiveWhyQuestion,
+              answer: this.state.fiveWhyAnswer,
+              contributoryCauses: this.state.countributoryCauses,
+              rootCauses: this.state.rootCauses,
+            },
+            project: '60867ed86281162915ce4aac',
+            report: this.props.route.params.data._id,
+            user: JSON.parse(user)._id,
+            date: moment().format('MM-DD-YYYY'),
+          };
+        } else {
+          // create justification
+          var updatefiveWhy = {
+            id: this.props.route.params.data.justification,
+            justification: {
+              question: this.state.fiveWhyQuestion,
+              answer: this.state.fiveWhyAnswer,
+            },
+            contributoryCauses: this.state.countributoryCauses,
+            rootCauses: this.state.rootCauses,
+          };
 
-      createApi
-        .createApi()
-        .editFiveWhy(updatefiveWhy)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => console.log(err));
-    }
+          console.log(updatefiveWhy);
+          createApi
+            .createApi()
+            .editFiveWhy(updatefiveWhy)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => console.log(err));
+        }
+
+        //   fiveWhyQuestion:
+        // fiveWhyAnswer:
+      }
+    });
 
     var update = {
       report: {
@@ -1881,7 +1902,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                   (v: involved_persons) => v == d,
                                 ).length != 0
                               ) {
-                                this.state.exclateToTags.push(d);
+                                this.state.esclate_to.push(d);
                               } else {
                                 return null;
                               }
@@ -1910,12 +1931,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   <Tags
                     onClose={(d: any) => {
                       this.setState({
-                        exclateToTags: this.state.exclateToTags.filter(
+                        esclate_to: this.state.esclate_to.filter(
                           (v: any) => v !== d,
                         ),
                       });
                     }}
-                    tags={this.state.exclateToTags}
+                    tags={this.state.esclate_to}
                   />
                 </View>
               </View>
