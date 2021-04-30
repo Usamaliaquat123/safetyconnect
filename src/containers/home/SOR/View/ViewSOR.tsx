@@ -2721,7 +2721,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
             // this.state.comments.splice(this.state.editDiscardCommentIndex, 1);
 
-            // this.setState({editDelComment: false});
+            this.setState({editDelComment: false});
           }}
           submitComment={(e: any) => {
             this.state.comments[this.state.editDiscardCommentIndex][
