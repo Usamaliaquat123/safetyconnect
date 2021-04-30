@@ -417,8 +417,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         date: rec[i].date,
                         is_complete: rec[i].is_complete,
                         is_selected: rec[i].is_selected,
-                        justification: rec[i].justification,
+                        // justification: rec[i].justification,
                       });
+                      if (rec[i].justification !== '') {
+                        actions['justification'] = rec[i].justification;
+                      }
                     }
 
                     var sor = {
@@ -641,8 +644,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           date: rec[i].date,
                           is_complete: rec[i].is_complete,
                           is_selected: rec[i].is_selected,
-                          justification: rec[i].justification,
                         });
+                        if (rec[i].justification !== '') {
+                          actions['justification'] = rec[i].justification;
+                        }
                       }
 
                       var sors = {
