@@ -139,7 +139,7 @@ class Login extends React.Component<LoginProps, any> {
             .createApi()
             .getUser(this.state.username)
             .then((user: any) => {
-              AsyncStorage.setItem('user', JSON.stringify(user));
+              AsyncStorage.setItem('user', JSON.stringify(user.data.data));
             });
 
           AsyncStorage.setItem('email', this.state.username);

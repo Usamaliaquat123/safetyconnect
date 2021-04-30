@@ -153,6 +153,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       exclateToTags: [],
       reAssignToArrTags: [],
       projectName: '',
+      user: {},
     };
 
     this.animation = React.createRef();
@@ -162,9 +163,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
-    // AsyncStorage.getItem('user').then((user) => {
-    //   console.log(JSON.parse(user));
-    // });
+    AsyncStorage.getItem('user').then((user) => {
+      this.setState({user: JSON.parse(user)});
+    });
     // console.log(this.props.route.params.data.comments);
     console.log(this.state.involvedPerson);
     this.getFiveWHY();
@@ -408,6 +409,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   getAllComments = () => {
     // this.props.route.params.data.comments;
     AsyncStorage.getItem('user').then((user: any) => {
+      console.log(this.props.route.params.data.comments);
+      console.log(this.props.route.params.data._id);
       createApi
         .createApi()
         .getAllComents(
@@ -428,6 +431,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 ) {
                   res.data.data.all_comments[i].user = involvedPersonss[i];
                 } else {
+                  console.log('user');
+                  console.log(JSON.parse(user));
+                  res.data.data.all_comments[i].user['img_url'] = JSON.parse(user).img_url
                   res.data.data.all_comments[i].user['name'] = JSON.parse(
                     user,
                   ).name;
@@ -437,7 +443,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 }
               }
             }
-
             this.setState({comments: res.data.data.all_comments});
           });
         })
@@ -2007,7 +2012,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
                       <View style={styles.commentUser}>
                         <Text style={styles.userCommentName}>
-                          {d.user.name}
+                          {d.user.name == undefined
+                            ? this.state.user.name
+                            : d.user.name}
                         </Text>
                         <Text style={styles.usercomment}>{d.comment}</Text>
                       </View>
