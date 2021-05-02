@@ -49,6 +49,7 @@ type ViewAllSOrNavigationProp = StackNavigationProp<
 >;
 type ViewAllSOrRouteProp = RouteProp<StackNavigatorProps, 'ViewAllSOr'>;
 
+const PROJECT_ID: string = '60867ed86281162915ce4aac';
 export interface ViewAllProps {
   route: ViewAllSOrRouteProp;
   navigation: ViewAllSOrNavigationProp;
@@ -115,7 +116,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
     createApi
       .createApi()
-      .getProject({projectid: '60867ed86281162915ce4aac'})
+      .getProject({projectid: PROJECT_ID})
       .then((involvedPerson: any) => {
         var j = {};
         var arr = [];
@@ -145,7 +146,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       });
 
     var data = {
-      project: '60867ed86281162915ce4aac',
+      project: PROJECT_ID,
       limit: 1000000,
       page: 0,
       query: {status: [1, 2, 3, 4, 5]},
@@ -338,12 +339,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
             </View>
             <View style={styles.lineheight}></View>
             {this.state.loading == true ? (
-              <View
-                style={{
-                  alignSelf: 'center',
-                  marginTop: wp(40),
-                  marginBottom: wp(40),
-                }}>
+              <View style={styles.lottiefilesLoading}>
                 <LottieView
                   // ref={(animation) => {
                   //   this.photoAnim = animation;
@@ -353,25 +349,14 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   source={animation.loading}
                   loop={true}
                 />
-                <Text
-                  style={{
-                    fontSize: wp(3),
-                    opacity: 0.5,
-                    textAlign: 'center',
-                    marginTop: wp(-5),
-                  }}>
-                  loading...
-                </Text>
+                <Text style={styles.loadingtext}>loading...</Text>
               </View>
             ) : (
               <>
                 {this.state.project == 'List View' ? (
                   <View>
                     <ScrollView
-                      style={{
-                        marginTop: wp(5),
-                        paddingTop: wp(3),
-                      }}
+                      style={styles.scrollViewContainerList}
                       showsVerticalScrollIndicator={false}>
                       {/* when you have 0 reports */}
                       {this.state.draft.length == 0 &&
@@ -935,11 +920,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   </View>
                 ) : (
                   <ScrollView
-                    style={{
-                      marginTop: wp(4),
-                      marginBottom: wp(5),
-                      // height: Dimensions.get('screen').height,
-                    }}
+                    style={styles.scrollViewBoardContainer}
                     showsHorizontalScrollIndicator={false}
                     snapToInterval={wp(83)}
                     decelerationRate="fast"
@@ -972,25 +953,10 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     ) : null}
                     {/* {this.state.draft.length == 0 ? null : ( */}
                     <View>
-                      <View style={styles.draftTextContainer}>
-                        <Text style={styles.draftText}>Drafts</Text>
-                        {/* <View style={{flexDirection: 'row'}}>
-                            <Icon
-                              size={wp(5)}
-                              name="filter"
-                              type="ionicon"
-                              color={colors.text}
-                            />
-                            <Text
-                              style={{
-                                fontSize: wp(3),
-                                marginLeft: wp(3),
-                                fontWeight: 'bold',
-                                color: colors.text,
-                              }}>
-                              Filter
-                            </Text>
-                          </View> */}
+                      <View>
+                        <View style={styles.draftTextContainer}>
+                          <Text style={styles.draftText}>Drafts</Text>
+                        </View>
                       </View>
 
                       {this.state.draft
@@ -1025,10 +991,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       {this.state.draft.length > 3 && (
                         <TouchableOpacity
                           onPress={() => {
-                            this.props.reduxActions.getAllSors(
-                              '6038cf8472762b29b1bed1f3',
-                              [this.props.route.params.data],
-                            );
                             this.props.navigation.navigate('ViewAll', {
                               data: 1,
                               title: 'Draft',
@@ -1089,10 +1051,10 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       {this.state.inprogress.length > 3 && (
                         <TouchableOpacity
                           onPress={() => {
-                            this.props.reduxActions.getAllSors(
-                              '6038cf8472762b29b1bed1f3',
-                              [this.props.route.params.data],
-                            );
+                            // this.props.reduxActions.getAllSors(
+                            //   '6038cf8472762b29b1bed1f3',
+                            //   [this.props.route.params.data],
+                            // );
                             this.props.navigation.navigate('ViewAll', {
                               data: this.state.inprogress,
                               title: 'In Progress',
@@ -1151,7 +1113,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       {this.state.exclated.length > 3 && (
                         <TouchableOpacity
                           onPress={() => {
-                            this.props.reduxActions.clearAllSor();
+                            // this.props.reduxActions.clearAllSor();
                             this.props.navigation.navigate('ViewAll', {
                               data: this.state.exclated,
                               title: 'Exclated',
@@ -1210,7 +1172,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       {this.state.completed.length > 3 && (
                         <TouchableOpacity
                           onPress={() => {
-                            this.props.reduxActions.clearAllSor();
+                            // this.props.reduxActions.clearAllSor();
                             this.props.navigation.navigate('ViewAll', {
                               data: this.state.completed,
                               title: 'Completed',
@@ -1269,7 +1231,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       {this.state.submitted.length > 3 && (
                         <TouchableOpacity
                           onPress={() => {
-                            this.props.reduxActions.clearAllSor();
+                            // this.props.reduxActions.clearAllSor();
                             this.props.navigation.navigate('ViewAll', {
                               data: this.state.submitted,
                               title: 'Submitted',

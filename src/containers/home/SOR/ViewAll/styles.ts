@@ -290,6 +290,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: wp(-5),
   },
+  /* Scrollview List / board view container */
+  // scrollview list container
+  scrollViewContainerList: {
+    marginTop: wp(5),
+    paddingTop: wp(3),
+  },
+  // scrollview board container
+  scrollViewBoardContainer: {
+    marginTop: wp(4),
+    marginBottom: wp(5),
+  },
 });
 
 export default styles;
