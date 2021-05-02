@@ -276,6 +276,20 @@ const styles = StyleSheet.create({
     borderRadius: wp(1),
     borderColor: colors.darkLightGrey,
   },
+
+  // Lottie files loading container
+  lottiefilesLoading: {
+    alignSelf: 'center',
+    marginTop: wp(40),
+    marginBottom: wp(40),
+  },
+  // loading text
+  loadingtext: {
+    fontSize: wp(3),
+    opacity: 0.5,
+    textAlign: 'center',
+    marginTop: wp(-5),
+  },
 });
 
 export default styles;
