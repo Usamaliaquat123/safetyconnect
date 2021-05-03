@@ -1412,15 +1412,19 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 <TextInput
                   onFocus={() => this.setState({selectedInputIndex: 5})}
                   underlineColorAndroid="transparent"
-                  onChange={(v: any) =>
-                    this.setState({
-                      involvedToArr: searchInSuggestions(
-                        v,
-                        this.state.involved_persons,
-                      ),
-                      involveToText: v,
-                    })
-                  }
+                  onChangeText={(v: any) => {
+                    if (v === '') {
+                      this.setState({involvedToArr: [], involveToText: v});
+                    } else {
+                      this.setState({
+                        involvedToArr: searchInSuggestions(
+                          v.toLowerCase(),
+                          this.state.involved_persons,
+                        ),
+                        involveToText: v,
+                      });
+                    }
+                  }}
                   placeholder={'Select or Type Name'}
                   style={styles.optnselectorText}
                   value={this.state.involveToText}
@@ -1568,14 +1572,18 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     style={styles.optnselectorText}
                     placeholder={'Select or Type Name'}
                     underlineColorAndroid="transparent"
-                    onChange={(v: any) => {
-                      this.setState({
-                        submitToArr: searchInSuggestions(
-                          v,
-                          this.state.involved_persons,
-                        ),
-                        submitTo: v,
-                      });
+                    onChangeText={(v: any) => {
+                      if (v === '') {
+                        this.setState({submitToArr: [], submitTo: v});
+                      } else {
+                        this.setState({
+                          submitToArr: searchInSuggestions(
+                            v.toLowerCase(),
+                            this.state.involved_persons,
+                          ),
+                          submitTo: v,
+                        });
+                      }
                     }}
                     value={this.state.submitTo}
                   />
@@ -1648,15 +1656,19 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   <TextInput
                     onFocus={() => this.setState({selectedInputIndex: 5})}
                     underlineColorAndroid="transparent"
-                    onChange={(v: any) =>
-                      this.setState({
-                        exclateToArr: searchInSuggestions(
-                          v,
-                          this.state.involved_persons,
-                        ),
-                        esclateTo: v,
-                      })
-                    }
+                    onChange={(v: any) => {
+                      if (v === '') {
+                        this.setState({exclateToArr: [], esclateTo: v});
+                      } else {
+                        this.setState({
+                          exclateToArr: searchInSuggestions(
+                            v.toLowerCase(),
+                            this.state.involved_persons,
+                          ),
+                          esclateTo: v,
+                        });
+                      }
+                    }}
                     placeholder={'Select or Type Name'}
                     style={styles.optnselectorText}
                     value={this.state.esclateTo}

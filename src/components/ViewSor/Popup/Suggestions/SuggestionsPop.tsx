@@ -13,7 +13,6 @@ import {Tags, Suggestions} from '@components';
 import {colors, fonts} from '@theme';
 import {Avatar} from 'react-native-elements';
 import {Create_sor} from '@service';
-import {searchInSuggestions} from '@utils';
 import {involved_persons} from '@typings';
 import moment from 'moment';
 
@@ -27,6 +26,19 @@ export interface SuggestionsPopProps {
   suggestedUsers: Array<involved_persons>;
   allSuggestions: Array<any>;
 }
+
+export const searchInSuggestions = (
+  str: string,
+  strArray: Array<involved_persons>,
+): Array<Object> => {
+  var strArr = [];
+  for (var j = 0; j < strArray.length; j++) {
+    if (strArray[j].email.toLowerCase().match(str.toLowerCase())) {
+      strArr.push(strArray[j]);
+    }
+  }
+  return strArr;
+};
 
 export default class SuggestionsPop extends React.Component<
   SuggestionsPopProps,
@@ -152,14 +164,21 @@ export default class SuggestionsPop extends React.Component<
                       style={styles.textInputPopup}
                       multiline={true}
                       value={this.state.actionsText}
-                      onChange={(e) => {
-                        this.setState({
-                          suggestions: searchInSuggestions(
-                            e.nativeEvent.text,
-                            this.state.suggestedUsers,
-                          ),
-                        });
-                        this.setState({actionsText: e.nativeEvent.text});
+                      onChangeText={(e) => {
+                        if (e === '') {
+                          this.setState({suggestions: [], actionsText: e});
+                        } else {
+                          this.setState({
+                            suggestions: searchInSuggestions(
+                              e,
+                              this.state.suggestedUsers,
+                            ),
+                          });
+
+                          console.log(this.state.suggestions);
+                          console.log(this.state.suggestedUsers);
+                          this.setState({actionsText: e});
+                        }
                       }}
                       placeholder={'Type assigner email address'}
                     />
@@ -179,7 +198,7 @@ export default class SuggestionsPop extends React.Component<
                     </TouchableOpacity>
                   </View>
                   {/* Suggestions  */}
-                  {this.state.suggestions.length != 0 ? (
+                  {this.state.suggestions.length == 0 ? null : (
                     // <Suggestions
                     //   styles={{}}
                     //   arr={this.state.suggestions}
@@ -220,9 +239,7 @@ export default class SuggestionsPop extends React.Component<
                         ),
                       )}
                     </View>
-                  ) : // ) : null}
-
-                  null}
+                  )}
                 </View>
               )}
               <View style={styles.tagsContainer}>
