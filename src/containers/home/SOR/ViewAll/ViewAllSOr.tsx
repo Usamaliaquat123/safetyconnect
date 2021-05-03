@@ -914,7 +914,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       </View>
                     ) : null}
                     {/* {this.state.draft.length == 0 ? null : ( */}
-                    <View>
+                    <View style={styles.boardContainer}>
                       <View>
                         <View style={styles.draftTextContainer}>
                           <Text style={styles.draftText}>Drafts</Text>
@@ -966,7 +966,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
                     {/* )} */}
                     {/* {this.state.inprogress.length == 0 ? null : ( */}
-                    <View>
+                    <View style={styles.boardContainer}>
                       <View style={styles.draftTextContainer}>
                         <Text style={styles.draftText}>In Progress</Text>
                       </View>
@@ -1021,7 +1021,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     </View>
 
                     {/* {this.state.submitted.length == 0 ? null : ( */}
-                    <View>
+                    <View style={styles.boardContainer}>
                       <View style={styles.submitTextContaienr}>
                         <Text style={styles.submitText}>
                           {' '}
@@ -1085,7 +1085,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
                     {/* )} */}
                     {/* {this.state.exclated.length == 0 ? null : ( */}
-                    <View>
+                    <View style={styles.boardContainer}>
                       <View style={styles.draftTextContainer}>
                         <Text style={styles.draftText}> Pending Closure</Text>
                       </View>
@@ -1144,7 +1144,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     </View>
                     {/* )} */}
                     {/* {this.state.completed.length == 0 ? null : ( */}
-                    <View>
+                    <View style={styles.boardContainer}>
                       <View style={styles.draftTextContainer}>
                         <Text style={styles.draftText}>Closed</Text>
                       </View>

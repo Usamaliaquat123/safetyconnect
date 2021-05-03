@@ -5,7 +5,25 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
+const IS_IOS = Platform.OS === 'ios';
+const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
+
+function dp(percentage: any) {
+  const value = (percentage * viewportWidth) / 100;
+  return Math.round(value);
+}
+
+const slideHeight = viewportHeight * 0.25;
+const slideWidth = dp(80);
+const itemHorizontalMargin = dp(2);
+
+export const sliderWidth = viewportWidth;
+export const itemWidth = slideWidth + itemHorizontalMargin * 2;
+
 const styles = StyleSheet.create({
+  boardContainer: {
+    width: itemWidth,
+  },
   header: {
     padding: wp(5),
     paddingRight: wp(7),
