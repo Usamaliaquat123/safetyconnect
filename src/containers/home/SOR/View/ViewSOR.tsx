@@ -2248,7 +2248,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 this.state.commentMentionReplace,
                                 d.name,
                               ),
-                              commentsSugg: []
+                              commentsSugg: [],
                             });
                             // this.state.involvePersonTags.push(d);
                           }}

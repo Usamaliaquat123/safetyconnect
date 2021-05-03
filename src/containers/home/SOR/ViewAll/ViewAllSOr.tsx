@@ -161,6 +161,10 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         //  console.log(res.data)
         if (res.data.data == undefined) {
         } else {
+          console.log(res.data.data.report);
+          res.data.data.report.sort(
+            (a: any, b: any) => new Date(a.createdAt) - new Date(b.createdAt),
+          );
           for (let i = 0; i < res.data.data.report.length; i++) {
             if (res.data.data.report[i].status == 1) {
               var rep = filterAndMappingPersons(
@@ -168,6 +172,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 this.state.involvedPerson,
               );
 
+              // res.data.data.all_comments.sort(
+              //   (a, b) => new Date(a.date) - new Date(b.date),
+              // );
               this.state.draft.push(rep);
             } else if (res.data.data.report[i].status == 2) {
               var rep = filterAndMappingPersons(
