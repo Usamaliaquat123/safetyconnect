@@ -237,12 +237,10 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
               <View>
                 <Text style={styles.title}>Observations and Feedback</Text>
               </View>
-         
             </View>
             <View style={styles.headerSelect}>
               {/* Project selector */}
               <View style={styles.leftSelector}>
-          
                 <TouchableOpacity
                   onPress={() => this.setState({project: 'List View'})}
                   style={{width: wp(5), height: wp(5)}}>
@@ -269,7 +267,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     ]}
                   />
                 </TouchableOpacity>
-
               </View>
             </View>
           </View>
@@ -962,13 +959,11 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             });
                           }}
                           style={styles.draftSeeMorecontainer}>
-                          <Text
-                            style={styles.seeMoretextDraft}>
-                            See More
-                          </Text>
+                          <Text style={styles.seeMoretextDraft}>See More</Text>
                         </TouchableOpacity>
                       )}
                     </View>
+
                     {/* )} */}
                     {/* {this.state.inprogress.length == 0 ? null : ( */}
                     <View>
@@ -1024,11 +1019,75 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         </TouchableOpacity>
                       )}
                     </View>
+
+                    {/* {this.state.submitted.length == 0 ? null : ( */}
+                    <View>
+                      <View style={styles.submitTextContaienr}>
+                        <Text style={styles.submitText}>
+                          {' '}
+                          Request for More Information
+                        </Text>
+                      </View>
+                      {this.state.submitted
+                        .slice(0, 3)
+                        .map((d: Isor, i: number) => (
+                          <Card
+                            type={'all'}
+                            data={d}
+                            name={d.created_by}
+                            onPress={(d: Isor) =>
+                              this.props.navigation.navigate('ViewSOR', {
+                                data: d,
+                              })
+                            }
+                            date={d.occured_at}
+                            risk={d.risk.severity * d.risk.likelihood}
+                            viewPortWidth={80}
+                            user1={d.user1}
+                            user2={d.user2}
+                            observation={d.details}
+                            classify={d.sor_type}
+                            iconConf={classifySor.find(
+                              (e: any) => e.title == d.sor_type,
+                            )}
+                            location={d.location}
+                            style={[styles.submitCardContainer]}
+                          />
+                        ))}
+                      {this.state.submitted.length > 3 && (
+                        <TouchableOpacity
+                          onPress={() => {
+                            // this.props.reduxActions.clearAllSor();
+                            this.props.navigation.navigate('ViewAll', {
+                              data: this.state.submitted,
+                              title: 'Submitted',
+                            });
+                          }}
+                          style={{
+                            alignSelf: 'center',
+                            padding: wp(3),
+                            paddingLeft: wp(10),
+                            paddingRight: wp(10),
+                            borderRadius: wp(3),
+                            backgroundColor: colors.primary,
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: wp(3),
+                              color: colors.secondary,
+                            }}>
+                            See More
+                          </Text>
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                    {/* )} */}
+
                     {/* )} */}
                     {/* {this.state.exclated.length == 0 ? null : ( */}
                     <View>
                       <View style={styles.draftTextContainer}>
-                        <Text style={styles.draftText}>Esclated</Text>
+                        <Text style={styles.draftText}> Pending Closure</Text>
                       </View>
                       {this.state.exclated
                         .slice(0, 3)
@@ -1087,7 +1146,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     {/* {this.state.completed.length == 0 ? null : ( */}
                     <View>
                       <View style={styles.draftTextContainer}>
-                        <Text style={styles.draftText}>Completed</Text>
+                        <Text style={styles.draftText}>Closed</Text>
                       </View>
                       {this.state.completed
                         .slice(0, 3)
@@ -1122,65 +1181,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             this.props.navigation.navigate('ViewAll', {
                               data: this.state.completed,
                               title: 'Completed',
-                            });
-                          }}
-                          style={{
-                            alignSelf: 'center',
-                            padding: wp(3),
-                            paddingLeft: wp(10),
-                            paddingRight: wp(10),
-                            borderRadius: wp(3),
-                            backgroundColor: colors.primary,
-                          }}>
-                          <Text
-                            style={{
-                              fontSize: wp(3),
-                              color: colors.secondary,
-                            }}>
-                            See More
-                          </Text>
-                        </TouchableOpacity>
-                      )}
-                    </View>
-                    {/* )} */}
-                    {/* {this.state.submitted.length == 0 ? null : ( */}
-                    <View>
-                      <View style={styles.submitTextContaienr}>
-                        <Text style={styles.submitText}>Submitted</Text>
-                      </View>
-                      {this.state.submitted
-                        .slice(0, 3)
-                        .map((d: Isor, i: number) => (
-                          <Card
-                            type={'all'}
-                            data={d}
-                            name={d.created_by}
-                            onPress={(d: Isor) =>
-                              this.props.navigation.navigate('ViewSOR', {
-                                data: d,
-                              })
-                            }
-                            date={d.occured_at}
-                            risk={d.risk.severity * d.risk.likelihood}
-                            viewPortWidth={80}
-                            user1={d.user1}
-                            user2={d.user2}
-                            observation={d.details}
-                            classify={d.sor_type}
-                            iconConf={classifySor.find(
-                              (e: any) => e.title == d.sor_type,
-                            )}
-                            location={d.location}
-                            style={[styles.submitCardContainer]}
-                          />
-                        ))}
-                      {this.state.submitted.length > 3 && (
-                        <TouchableOpacity
-                          onPress={() => {
-                            // this.props.reduxActions.clearAllSor();
-                            this.props.navigation.navigate('ViewAll', {
-                              data: this.state.submitted,
-                              title: 'Submitted',
                             });
                           }}
                           style={{
@@ -1266,7 +1266,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     );
   }
 }
-
 
 const mapStateToProps = (state: AllSorDTO) => ({
   reduxState: state.allSors,

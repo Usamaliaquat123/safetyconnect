@@ -62,7 +62,8 @@ export interface CreateSORProps {
   reduxActions: any;
   reduxState: any;
 }
-
+// Project Id
+const PROJECT_ID: string = '60867ed86281162915ce4aac';
 class CreateSOR extends React.Component<CreateSORProps, any> {
   constructor(props: any) {
     super(props);
@@ -307,7 +308,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     createApi
       .createApi()
       .getProject({
-        projectid: '60867ed86281162915ce4aac',
+        projectid: PROJECT_ID,
       })
       .then((res: any) => {
         this.setState({involved_persons: res.data.data.involved_persons});
@@ -453,7 +454,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         comments: ' ',
                       },
                       organization: '60867e596281167f26ce4aab',
-                      project: '60867ed86281162915ce4aac',
+                      project: PROJECT_ID,
                     };
 
                     if (this.state.fiveWhytoggle) {
@@ -466,7 +467,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             contributoryCauses: this.state.countributoryCauses,
                             rootCauses: this.state.rootCauses,
                           },
-                          project: '60867ed86281162915ce4aac',
+                          project: PROJECT_ID,
                           report: this.state.reportIdInvestigation,
                           user: JSON.parse(user)._id,
                           date: moment().format('MM-DD-YYYY'),
@@ -493,7 +494,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             comments: '',
                             status: 1,
                           },
-                          project: '60867ed86281162915ce4aac',
+                          project: PROJECT_ID,
                         };
                         createApi
                           .createApi()
@@ -679,7 +680,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           comments: ' ',
                         },
                         organization: '60867e596281167f26ce4aab',
-                        project: '60867ed86281162915ce4aac',
+                        project: PROJECT_ID,
                       };
 
                       if (this.state.fiveWhytoggle) {
@@ -695,7 +696,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 .countributoryCauses,
                               rootCauses: this.state.rootCauses,
                             },
-                            project: '60867ed86281162915ce4aac',
+                            project: PROJECT_ID,
                             report: this.state.reportIdInvestigation,
                             user: JSON.parse(user)._id,
                             date: moment().format('MM-DD-YYYY'),
@@ -721,7 +722,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               comments: '',
                               status: 1,
                             },
-                            project: '60867ed86281162915ce4aac',
+                            project: PROJECT_ID,
                           };
                           createApi
                             .createApi()
