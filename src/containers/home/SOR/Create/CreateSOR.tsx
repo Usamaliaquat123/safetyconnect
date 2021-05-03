@@ -63,7 +63,7 @@ export interface CreateSORProps {
   reduxState: any;
 }
 // Project Id
-const PROJECT_ID: string = '60867ed86281162915ce4aac';
+const PROJECT_ID: string = '608fcd465509dad0d436cdd0';
 class CreateSOR extends React.Component<CreateSORProps, any> {
   constructor(props: any) {
     super(props);
@@ -1139,7 +1139,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             comments: '',
                             status: 1,
                           },
-                          project: '60867ed86281162915ce4aac',
+                          project: PROJECT_ID,
                         };
                         createApi
                           .createApi()

@@ -51,6 +51,7 @@ export interface ViewAllProps {
   reduxState: AllSorDTO;
 }
 
+const PROJECT_ID: string = '608fcd465509dad0d436cdd0';
 class ViewAll extends React.Component<ViewAllProps, any> {
   constructor(props: any) {
     super(props);
@@ -83,7 +84,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
 
     AsyncStorage.getItem('involved_person').then((involvedPersons: any) => {
       var data = {
-        project: '60867ed86281162915ce4aac',
+        project: PROJECT_ID,
         limit: 100000,
         page: 0,
         query: {status: [this.props.route.params.data]},

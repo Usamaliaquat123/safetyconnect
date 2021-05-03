@@ -65,7 +65,7 @@ export interface ViewSORProps {
   reduxActions: any;
   reduxState: any;
 }
-
+const PROJECT_ID: string = '608fcd465509dad0d436cdd0';
 class ViewSOR extends React.Component<ViewSORProps, any> {
   public animation: any;
   public photoAnim: any;
@@ -193,7 +193,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     );
     createApi
       .createApi()
-      .getProject({projectid: '60867ed86281162915ce4aac'})
+      .getProject({projectid: PROJECT_ID})
       .then((res: any) => {
         this.setState({
           projectName: res.data.data.project_name,
@@ -298,7 +298,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               contributoryCauses: this.state.countributoryCauses,
               rootCauses: this.state.rootCauses,
             },
-            project: '60867ed86281162915ce4aac',
+            project: PROJECT_ID,
             report: this.props.route.params.data._id,
             user: JSON.parse(user)._id,
             date: moment().format('MM-DD-YYYY'),
@@ -361,7 +361,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         comments: this.props.route.params.data.comments /** done */,
         updatedAt: Date.now() /** done */,
       },
-      project: '60867ed86281162915ce4aac',
+      project: PROJECT_ID,
     };
 
     console.log(update);
@@ -567,7 +567,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         attachments: [],
         comments: [],
       },
-      project: '60867ed86281162915ce4aac',
+      project: PROJECT_ID,
     };
 
     createApi
