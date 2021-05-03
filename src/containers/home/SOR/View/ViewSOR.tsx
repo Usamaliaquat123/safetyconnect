@@ -2709,6 +2709,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 this.state.actionsAndRecommendations[
                   this.state.allActionsEditIndex
                 ] = d;
+              
               }
               // this.state.actionsAndRecommendations.push(d)
               this.setState({SuggestionPop: false});

@@ -1855,6 +1855,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   this.state.actionRecommendations[
                     this.state.allActionsEditIndex
                   ] = d;
+                  this.state.actionRecommendations[
+                    this.state.allActionsEditIndex
+                  ].is_complete = true;
                 }
                 // this.state.actionsAndRecommendations.push(d)
                 this.setState({SuggestionPop: false});
