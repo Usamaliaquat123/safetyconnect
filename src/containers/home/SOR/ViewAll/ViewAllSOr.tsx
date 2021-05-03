@@ -236,32 +236,13 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
               />
               <View>
                 <Text style={styles.title}>Observations and Feedback</Text>
-                {/* <View style={styles.underScrore} /> */}
               </View>
-              {/* <View style={styles.avatarView}>
-                <Avatar
-                  rounded
-                  source={{
-                    uri: Create_sor.user.profile,
-                  }}
-                />
-              </View> */}
+         
             </View>
             <View style={styles.headerSelect}>
               {/* Project selector */}
               <View style={styles.leftSelector}>
-                {/* <TouchableOpacity
-                  style={styles.selector}
-                  onPress={() => { 
-                    this.setState({
-                      project:
-                        this.state.project == 'Board View'
-                          ? 'List View'
-                          : 'Board View',
-                    });
-                  }}>
-                  <Text style={styles.selectorBox}>{this.state.project}</Text>
-                </TouchableOpacity> */}
+          
                 <TouchableOpacity
                   onPress={() => this.setState({project: 'List View'})}
                   style={{width: wp(5), height: wp(5)}}>
@@ -289,22 +270,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   />
                 </TouchableOpacity>
 
-                {/* {this.state.selectP == true ? (
-                  <View style={styles.slctContainer}>
-                    <TouchableOpacity
-                      onPress={() =>
-                        this.setState({project: 'Board View', selectP: false})
-                      }>
-                      <Text style={styles.itemH}>Board View</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() =>
-                        this.setState({project: 'List View', selectP: false})
-                      }>
-                      <Text style={styles.itemH}>List View</Text>
-                    </TouchableOpacity>
-                  </View>
-                ) : null} */}
               </View>
             </View>
           </View>
@@ -996,21 +961,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               title: 'Draft',
                             });
                           }}
-                          style={{
-                            // marginBottom: wp(),
-                            alignSelf: 'center',
-                            padding: wp(3),
-
-                            paddingLeft: wp(10),
-                            paddingRight: wp(10),
-                            borderRadius: wp(3),
-                            backgroundColor: colors.primary,
-                          }}>
+                          style={styles.draftSeeMorecontainer}>
                           <Text
-                            style={{
-                              fontSize: wp(3),
-                              color: colors.secondary,
-                            }}>
+                            style={styles.seeMoretextDraft}>
                             See More
                           </Text>
                         </TouchableOpacity>
@@ -1060,14 +1013,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               title: 'In Progress',
                             });
                           }}
-                          style={{
-                            alignSelf: 'center',
-                            padding: wp(3),
-                            paddingLeft: wp(10),
-                            paddingRight: wp(10),
-                            borderRadius: wp(3),
-                            backgroundColor: colors.primary,
-                          }}>
+                          style={styles.seeMoreContainerInProgress}>
                           <Text
                             style={{
                               fontSize: wp(3),
@@ -1321,16 +1267,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   }
 }
 
-// const mapStateToProps = (state: RootState) => ({
-//   initial: state.list,
-//   loading: state.init,
-// });V
-
-// const mapDispatchToProps = (dispatch: unknown) => {
-//   return {
-//     addList: dispatch,
-//   };
-// };
 
 const mapStateToProps = (state: AllSorDTO) => ({
   reduxState: state.allSors,

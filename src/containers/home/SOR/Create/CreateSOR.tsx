@@ -379,7 +379,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       useNativeDriver: false,
     }).start();
   };
-  onCreateSor = (draft: boolean) => {
+  onCreateSor = (status: number) => {
     var sorbtns = this.state.classifySorbtns.filter(
       (d: any) => d.selected === true,
     );
@@ -448,7 +448,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         esclate_to: this.state.exclateToTags.map(
                           (d: any) => d.email,
                         ),
-                        status: draft == true ? 1 : 2,
+                        status: status,
                         // attachments: this.state.filename,
                         comments: ' ',
                       },
@@ -674,7 +674,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           esclate_to: this.state.exclateToTags.map(
                             (d: any) => d.email,
                           ),
-                          status: draft == true ? 1 : 2,
+                          status: status,
                           attachments: [],
                           comments: ' ',
                         },
@@ -1721,13 +1721,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             {/* Draft And Submit Btns */}
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
               <TouchableOpacity
-                onPress={() => this.onCreateSor(true)}
+                onPress={() => this.onCreateSor(1)}
                 style={[styles.submitsorbtn, {marginRight: wp(3)}]}>
                 <Text style={styles.submitsorbtntxt}>Save as Draft</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 // this.setState({repeatedSorModal: true})
-                onPress={() => this.onCreateSor(false)}
+                onPress={() => this.onCreateSor(2)}
                 style={[styles.submitsorbtn, {borderColor: colors.green}]}>
                 <Text style={[styles.submitsorbtntxt, {color: colors.green}]}>
                   Submit
@@ -1747,7 +1747,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </TouchableOpacity>
               <TouchableOpacity
                 // this.setState({repeatedSorModal: true})
-                onPress={() => this.markAsComplete()}
+                onPress={() => this.onCreateSor(4)}
                 style={[
                   styles.submitsorbtnSb,
                   {backgroundColor: colors.green},

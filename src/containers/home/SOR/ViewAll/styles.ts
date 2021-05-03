@@ -277,6 +277,33 @@ const styles = StyleSheet.create({
     borderColor: colors.darkLightGrey,
   },
 
+  // See more container | In-progress
+  seeMoreContainerInProgress: {
+    alignSelf: 'center',
+    padding: wp(3),
+    paddingLeft: wp(10),
+    paddingRight: wp(10),
+    borderRadius: wp(3),
+    backgroundColor: colors.primary,
+  },
+
+  // See more text
+  seeMoretextDraft: {
+    fontSize: wp(3),
+    color: colors.secondary,
+  },
+  // See more container | Draft
+  draftSeeMorecontainer: {
+    // marginBottom: wp(),
+    alignSelf: 'center',
+    padding: wp(3),
+
+    paddingLeft: wp(10),
+    paddingRight: wp(10),
+    borderRadius: wp(3),
+    backgroundColor: colors.primary,
+  },
+
   // Lottie files loading container
   lottiefilesLoading: {
     alignSelf: 'center',
