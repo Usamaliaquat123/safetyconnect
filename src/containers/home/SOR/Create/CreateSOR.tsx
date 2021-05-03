@@ -64,6 +64,7 @@ export interface CreateSORProps {
 }
 // Project Id
 const PROJECT_ID: string = '608fcd465509dad0d436cdd0';
+
 class CreateSOR extends React.Component<CreateSORProps, any> {
   constructor(props: any) {
     super(props);
@@ -543,7 +544,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           console.log(res);
 
                           if (res.status == 200) {
-                            this.props.navigation.navigate('ViewAllSOr');
+                            this.props.navigation.goBack();
                           } else {
                             console.log(res);
                             // this.setState({
@@ -750,7 +751,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                             if (res.status == 200) {
                               console.log('sdsd');
-                              this.props.navigation.navigate('ViewAllSOr');
+                              this.props.navigation.goBack();
                             } else {
                               console.log(res);
                             }
@@ -850,7 +851,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
-                onPress={() => this.props.navigation.navigate('ViewAllSOr')}
+                onPress={() => this.props.navigation.goBack()}
                 size={25}
                 name="arrow-back-outline"
                 type="ionicon"
@@ -1656,7 +1657,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   <TextInput
                     onFocus={() => this.setState({selectedInputIndex: 5})}
                     underlineColorAndroid="transparent"
-                    onChange={(v: any) => {
+                    onChangeText={(v: any) => {
                       if (v === '') {
                         this.setState({exclateToArr: [], esclateTo: v});
                       } else {

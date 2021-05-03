@@ -65,6 +65,7 @@ export interface ViewSORProps {
   reduxActions: any;
   reduxState: any;
 }
+// Project Id
 const PROJECT_ID: string = '608fcd465509dad0d436cdd0';
 class ViewSOR extends React.Component<ViewSORProps, any> {
   public animation: any;
