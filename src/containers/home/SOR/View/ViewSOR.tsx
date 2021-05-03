@@ -521,11 +521,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             files: [],
             _id: res.data.data,
             user: {
-              name: JSON.parse(user).name,
-              email: JSON.parse(user).email,
-              _id: JSON.parse(user)._id,
-              img_url:
-                'https://user-images.githubusercontent.com/33973828/115679334-e690a780-a36b-11eb-9202-3f5fb5413bbf.png',
+              name: this.state.user.name,
+              email: this.state.user.email,
+              _id: this.state.user.img_url._id,
+              img_url: this.state.user.img_url,
             },
             is_comment: true,
           });
@@ -1828,15 +1827,22 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       <TextInput
                         // onFocus={() => this.setState({selectedInputIndex: 5})}
                         underlineColorAndroid="transparent"
-                        onChange={(v: any) =>
-                          this.setState({
-                            reAssignToArr: searchInSuggestions(
-                              v,
-                              this.state.involvedPerson,
-                            ),
-                            reassignToText: v,
-                          })
-                        }
+                        onChangeText={(v: any) => {
+                          if (v === '') {
+                            this.setState({
+                              reAssignToArr: [],
+                              reassignToText: v,
+                            });
+                          } else {
+                            this.setState({
+                              reAssignToArr: searchInSuggestions(
+                                v.toLowerCase(),
+                                this.state.involvedPerson,
+                              ),
+                              reassignToText: v,
+                            });
+                          }
+                        }}
                         placeholder={'Select or Type Name'}
                         style={styles.optnselectorText}
                         value={this.state.reassignToText}
@@ -1920,15 +1926,19 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   <TextInput
                     onFocus={() => this.setState({selectedInputIndex: 5})}
                     underlineColorAndroid="transparent"
-                    onChange={(v: any) =>
-                      this.setState({
-                        exclateToArr: searchInSuggestions(
-                          v,
-                          this.state.involvedPerson,
-                        ),
-                        esclateTo: v,
-                      })
-                    }
+                    onChangeText={(v: any) => {
+                      if (v === '') {
+                        this.setState({esclateTo: v, exclateToArr: []});
+                      } else {
+                        this.setState({
+                          exclateToArr: searchInSuggestions(
+                            v.toLowerCase(),
+                            this.state.involvedPerson,
+                          ),
+                          esclateTo: v,
+                        });
+                      }
+                    }}
                     placeholder={'Select or Type Name'}
                     style={styles.optnselectorText}
                     value={this.state.esclateTo}
@@ -2147,8 +2157,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   size={wp(6)}
                   rounded
                   source={{
-                    uri:
-                      'https://media-exp1.licdn.com/dms/image/C5603AQHGeQB42B1CcA/profile-displayphoto-shrink_200_200/0/1588740771758?e=1618444800&v=beta&t=CtMgG7KLgfGZO-pYkX6tdvwbCGnuU-g4G2TiocMI1gc',
+                    uri: this.state.user.img_url,
                   }}
                 />
 
@@ -2709,7 +2718,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 this.state.actionsAndRecommendations[
                   this.state.allActionsEditIndex
                 ] = d;
-              
               }
               // this.state.actionsAndRecommendations.push(d)
               this.setState({SuggestionPop: false});
