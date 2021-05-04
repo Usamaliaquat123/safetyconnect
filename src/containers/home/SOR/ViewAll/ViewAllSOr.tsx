@@ -416,6 +416,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               .slice(0, 3)
                               .map((d: Isor, i: number) => (
                                 <ListCard
+                                  key={i}
                                   classify={d.sor_type}
                                   styles={
                                     this.state.draft.slice(0, 3).length == i + 1
@@ -515,6 +516,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 .slice(0, 3)
                                 .map((d: Isor, i: number) => (
                                   <ListCard
+                                    key={i}
                                     classify={d.sor_type}
                                     styles={
                                       this.state.inprogress.slice(0, 3)
@@ -634,6 +636,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 .slice(0, 3)
                                 .map((d: Isor, i: number) => (
                                   <ListCard
+                                    key={i}
                                     classify={d.sor_type}
                                     styles={
                                       this.state.submitted.slice(0, 3).length ==
@@ -701,7 +704,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             <TouchableOpacity
                               onPress={() => {
                                 this.setState({
-                                  isExclated: !this.state.isExclated,
+                                  isNotified: !this.state.isNotified,
                                 });
                               }}
                               style={{flexDirection: 'row'}}>
@@ -727,12 +730,13 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               <Text style={styles.filterText}>Filter</Text>
                             </View>
                           </View>
-                          {this.state.isExclated == true ? (
+                          {this.state.isNotified == true ? (
                             <View style={styles.listViewContent}>
                               {this.state.exclated
                                 .slice(0, 3)
                                 .map((d: Isor, i: number) => (
                                   <ListCard
+                                    key={i}
                                     classify={d.sor_type}
                                     styles={
                                       this.state.exclated.slice(0, 3).length ==
@@ -831,6 +835,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 .slice(0, 3)
                                 .map((d: Isor, i: number) => (
                                   <ListCard
+                                    key={i}
                                     classify={d.sor_type}
                                     styles={
                                       this.state.completed.slice(0, 3).length ==
@@ -937,6 +942,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         .slice(0, 3)
                         .map((d: Isor, i: number) => (
                           <Card
+                            key={i}
                             type={'all'}
                             data={d}
                             onPress={(d: Isor) =>
@@ -986,6 +992,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         .slice(0, 3)
                         .map((d: Isor, i: number) => (
                           <Card
+                            key={i}
                             type={'all'}
                             name={d.created_by}
                             data={d}
@@ -1044,6 +1051,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         .slice(0, 3)
                         .map((d: Isor, i: number) => (
                           <Card
+                            key={i}
                             type={'all'}
                             data={d}
                             name={d.created_by}
@@ -1105,6 +1113,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         .slice(0, 3)
                         .map((d: Isor, i: number) => (
                           <Card
+                            key={i}
                             type={'all'}
                             name={d.created_by}
                             data={d}
@@ -1164,6 +1173,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         .slice(0, 3)
                         .map((d: Isor, i: number) => (
                           <Card
+                            key={i}
                             type={'all'}
                             data={d}
                             name={d.created_by}
