@@ -413,7 +413,7 @@ export default class SuggestionsPop extends React.Component<
                         category: this.state.type,
                       };
 
-                      if (this.state.addjustificationPop == true) {
+                      if (this.state.addjustificationPop == false) {
                         sugg['justification'] = {
                           content: this.state.justificationT,
                           attachments: [],
