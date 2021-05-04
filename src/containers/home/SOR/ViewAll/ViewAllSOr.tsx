@@ -171,7 +171,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 res.data.data.report[i],
                 this.state.involvedPerson,
               );
-              console.log();
               if (res.data.data.report[i].details != undefined) {
                 this.state.draft.push(rep);
               }
@@ -183,26 +182,33 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 res.data.data.report[i],
                 this.state.involvedPerson,
               );
-
-              this.state.submitted.push(rep);
+              if (res.data.data.report[i].details != undefined) {
+                this.state.submitted.push(rep);
+              }
             } else if (res.data.data.report[i].status == 3) {
               var rep = filterAndMappingPersons(
                 res.data.data.report[i],
                 this.state.involvedPerson,
               );
-              this.state.exclated.push(rep);
+              if (res.data.data.report[i].details != undefined) {
+                this.state.exclated.push(rep);
+              }
             } else if (res.data.data.report[i].status == 4) {
               var rep = filterAndMappingPersons(
                 res.data.data.report[i],
                 this.state.involvedPerson,
               );
-              this.state.inprogress.push(rep);
+              if (res.data.data.report[i].details != undefined) {
+                this.state.inprogress.push(rep);
+              }
             } else if (res.data.data.report[i].status == 5) {
               var rep = filterAndMappingPersons(
                 res.data.data.report[i],
                 this.state.involvedPerson,
               );
-              this.state.completed.push(rep);
+              if (res.data.data.report[i].details != undefined) {
+                this.state.completed.push(rep);
+              }
             }
           }
         }
