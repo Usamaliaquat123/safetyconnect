@@ -521,10 +521,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             files: [],
             _id: res.data.data,
             user: {
-              name: this.state.user.name,
-              email: this.state.user.email,
-              _id: this.state.user.img_url._id,
-              img_url: this.state.user.img_url,
+              name: JSON.parse(user).name,
+              email: JSON.parse(user).email,
+              _id: JSON.parse(user)._id,
+              img_url:
+                'https://user-images.githubusercontent.com/33973828/115679334-e690a780-a36b-11eb-9202-3f5fb5413bbf.png',
             },
             is_comment: true,
           });
