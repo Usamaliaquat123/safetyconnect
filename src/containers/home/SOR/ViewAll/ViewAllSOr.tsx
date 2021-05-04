@@ -171,12 +171,13 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 res.data.data.report[i],
                 this.state.involvedPerson,
               );
-              // console.log(res.data.data.report[i]);
-
+              console.log();
+              if (res.data.data.report[i].details != undefined) {
+                this.state.draft.push(rep);
+              }
               // res.data.data.all_comments.sort(
               //   (a, b) => new Date(a.date) - new Date(b.date),
               // );
-              this.state.draft.push(rep);
             } else if (res.data.data.report[i].status == 2) {
               var rep = filterAndMappingPersons(
                 res.data.data.report[i],
