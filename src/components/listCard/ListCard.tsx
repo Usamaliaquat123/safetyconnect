@@ -96,7 +96,9 @@ export default class ListCard extends React.Component<ListCardProps, any> {
         <View style={styles.listBottomView}>
           <Text style={styles.listUserTimeDate}>{this.props.username}</Text>
           <Text style={styles.listMomentLT}>
-            {moment(this.props.date).format('LT Do MMM, YYYY')}
+            {this.props.date === undefined
+              ? ''
+              : moment(this.props.date).format('LT Do MMM, YYYY')}
           </Text>
         </View>
       </TouchableOpacity>

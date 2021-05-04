@@ -171,6 +171,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 res.data.data.report[i],
                 this.state.involvedPerson,
               );
+              // console.log(res.data.data.report[i]);
 
               // res.data.data.all_comments.sort(
               //   (a, b) => new Date(a.date) - new Date(b.date),
