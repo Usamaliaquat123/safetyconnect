@@ -80,7 +80,9 @@ export default class Card extends React.Component<CardProps, any> {
                   <View style={styles.cardHeader}>
                     <Text style={styles.cardtime}>
                       Reported at{' '}
-                      {moment(this.props.date).format('LT, DD MMM YYYY')}
+                      {this.props.date == undefined
+                        ? ''
+                        : moment(this.props.date).format('LT, DD MMM YYYY')}
                     </Text>
                     {this.props.isclassify == true ? (
                       <TouchableOpacity
@@ -226,7 +228,9 @@ export default class Card extends React.Component<CardProps, any> {
                   ) : null}
 
                   <Text style={styles.cardDate}>
-                    {moment(this.props.date).format('DD/MM/YYYY')}
+                    {this.props.date == undefined
+                      ? ' '
+                      : moment(this.props.date).format('DD/MM/YYYY')}
                   </Text>
                 </View>
                 <View>
