@@ -163,7 +163,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         } else {
           console.log(res.data.data.report);
           res.data.data.report.sort(
-            (a: any, b: any) => new Date(b.createdAt) - new Date(a.createdAt),
+            (a: any, b: any) =>  new Date(b.createdAt) -  new Date(a.createdAt),
           );
           for (let i = 0; i < res.data.data.report.length; i++) {
             if (res.data.data.report[i].status == 1) {
