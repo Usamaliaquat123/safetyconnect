@@ -163,7 +163,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         } else {
           console.log(res.data.data.report);
           res.data.data.report.sort(
-            (a: any, b: any) => new Date(a.createdAt) - new Date(b.createdAt),
+            (a: any, b: any) => new Date(b.createdAt) - new Date(a.createdAt),
           );
           for (let i = 0; i < res.data.data.report.length; i++) {
             if (res.data.data.report[i].status == 1) {
@@ -174,9 +174,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
               if (res.data.data.report[i].details != undefined) {
                 this.state.draft.push(rep);
               }
-              // res.data.data.all_comments.sort(
-              //   (a, b) => new Date(a.date) - new Date(b.date),
-              // );
             } else if (res.data.data.report[i].status == 2) {
               var rep = filterAndMappingPersons(
                 res.data.data.report[i],
