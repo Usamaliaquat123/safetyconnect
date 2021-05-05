@@ -6,6 +6,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {Icon, Avatar} from 'react-native-elements';
 import {RouteProp} from '@react-navigation/native';
+import {createApi} from '@service';
 import {colors} from '@theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -29,6 +30,8 @@ class Notifications extends React.Component<NotificationsProps, any> {
     super(props);
     this.state = {
       user: {},
+      newNotify: [],
+      oldNotify: [],
     };
   }
 
@@ -38,12 +41,25 @@ class Notifications extends React.Component<NotificationsProps, any> {
     });
   }
 
+  //   All Notificatiosn
+  getAllNotifications = async () => {
+    createApi
+      .createApi()
+      .getAllNotifications(this.state.user.email)
+      .then((notifications: any) => {
+        // console.log(notifications.filter((n: any) => n.status == 0));
+        console.log(notifications);
+        // this.setState({oldNotify : });
+      });
+  };
+
   //   Refreshing Scrollview
   _onRefresh = () => {
     this.componentDidMount();
   };
 
   render() {
+    this.getAllNotifications();
     return (
       <View style={styles.container}>
         <ScrollView
@@ -58,7 +74,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
             <View style={styles.headertle}>
               <View style={styles.arrowTtleContainer}>
                 <Icon
-                  size={25}
+                  size={wp(7)}
                   name="arrow-back-outline"
                   type="ionicon"
                   color={colors.secondary}
@@ -69,26 +85,8 @@ class Notifications extends React.Component<NotificationsProps, any> {
               </View>
               <View style={styles.notificationIconAvatar}>
                 <View style={{marginRight: wp(3)}}>
-                  <View
-                    style={{
-                      borderRadius: wp(10),
-                      alignItems: 'center',
-                      width: wp(2),
-                      position: 'absolute',
-                      top: wp(-2),
-                      right: wp(1),
-                      padding: wp(2),
-                      justifyContent: 'center',
-                      backgroundColor: colors.error,
-                    }}>
-                    <Text
-                      style={{
-                        position: 'absolute',
-                        fontSize: wp(2),
-                        color: colors.secondary,
-                      }}>
-                      2
-                    </Text>
+                  <View style={styles.badge}>
+                    <Text style={styles.badgeText}>2</Text>
                   </View>
                   <Icon
                     containerStyle={{marginRight: wp(3)}}

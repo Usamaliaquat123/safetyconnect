@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
   },
   headertle: {flexDirection: 'row', justifyContent: 'space-between'},
   arrowTtleContainer: {
+    alignItems: 'center',
     flexDirection: 'row',
   },
   notificationIconAvatar: {
@@ -35,6 +36,23 @@ const styles = StyleSheet.create({
   },
   // contant
   content: {},
+  //   Notification badge
+  badge: {
+    borderRadius: wp(10),
+    alignItems: 'center',
+    width: wp(2),
+    position: 'absolute',
+    top: wp(-2),
+    right: wp(1),
+    padding: wp(2),
+    justifyContent: 'center',
+    backgroundColor: colors.error,
+  },
+  badgeText: {
+    position: 'absolute',
+    fontSize: wp(2),
+    color: colors.secondary,
+  },
 });
 
 export default styles;

@@ -124,7 +124,7 @@ const createApi = (
    * @Notifications
    */
   const getAllNotifications = (email: string) =>
-    baseapi.get(`notification/?email${email}`);
+    baseapi.get(`notification/?email=${email}`);
 
   return {
     createFiveWhy,
