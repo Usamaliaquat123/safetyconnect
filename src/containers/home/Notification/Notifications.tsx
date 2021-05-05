@@ -51,7 +51,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
 
   //   All Notificatiosn
   getAllNotifications = async () => {
-    createApi
+    await createApi
       .createApi()
       .getAllNotifications(this.state.user.email)
       .then((res: any) => {
@@ -70,6 +70,17 @@ class Notifications extends React.Component<NotificationsProps, any> {
   _onRefresh = () => {
     this.componentDidMount();
     this.setState({refreshing: false});
+  };
+
+  // redirecting to view sor
+  onViewSor = async (projectId: string, reportId: string) => {
+    await createApi
+      .createApi()
+      .getSors(projectId, reportId)
+      .then((res: any) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   render() {
@@ -161,7 +172,8 @@ class Notifications extends React.Component<NotificationsProps, any> {
                     All Notifications
                   </Text>
                   {this.state.oldNotify.map((d: any, i: any) => (
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => this.onViewSor(d.project_id, d.sor_id)}>
                       <View style={styles.lineheight} />
                       <View style={styles.notificationContainer}>
                         <Avatar
