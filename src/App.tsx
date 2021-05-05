@@ -2,15 +2,9 @@ import * as React from 'react';
 import {View, StyleSheet, Text, Alert} from 'react-native';
 import {Provider} from 'react-redux';
 import Store from './store/store';
-import {
-  MainStackNavigator,
-  BottomTabNavigator,
-  AuthStackNavigator,
-  route,
-  Navigator,
-} from '@nav';
+import {MainStackNavigator, BottomTabNavigator, route, Navigator} from '@nav';
 import {getLinkParam} from '@utils';
-import {configSentry, AmlifyConfigure} from '@config';
+import {configSentry, AmlifyConfigure, oneSignalConfig} from '@config';
 import {NetworkProvider} from 'react-native-offline';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createApi} from '@service';
@@ -32,6 +26,7 @@ export default class App extends React.Component<AppProps, any> {
   }
 
   componentDidMount = async () => {
+    oneSignalConfig();
     configSentry().catch(
       (err) => new Error(`Error when configure sentry ${err}`),
     );

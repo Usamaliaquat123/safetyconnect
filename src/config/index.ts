@@ -3,14 +3,74 @@ import Amplify from 'aws-amplify';
 import {fromCognitoIdentityPool} from '@aws-sdk/credential-provider-cognito-identity';
 import {CognitoIdentityClient} from '@aws-sdk/client-cognito-identity';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-
+import OneSignal from 'react-native-onesignal';
 
 // Load the SDK for JavaScript
 // var AWS = require('aws-sdk');
-// // Set the Region 
+// // Set the Region
 // AWS.config.update({region: 'us-west-2'});
 
+// OneSignal Configuration
+const oneSignalConfig = () => {
+  /* O N E S I G N A L   S E T U P */
+  OneSignal.setAppId('df570e2e-881b-406d-b974-885ff8f31be3');
+  OneSignal.setLogLevel(OneSignal.LOG_LEVEL.DEBUG, OneSignal.LOG_LEVEL.DEBUG);
+  OneSignal.setRequiresUserPrivacyConsent(false);
+  OneSignal.promptForPushNotificationsWithUserResponse((response) => {
+    // this.OSLog("Prompt response:", response);
+    console.log(response);
+  });
 
+  /* O N E S I G N A L  H A N D L E R S */
+  OneSignal.setNotificationWillShowInForegroundHandler((notifReceivedEvent) => {
+    console.log(
+      'OneSignal: notification will show in foreground:',
+      notifReceivedEvent,
+    );
+    let notif = notifReceivedEvent.getNotification();
+
+    const button1 = {
+      text: 'Cancel',
+      onPress: () => {
+        notifReceivedEvent.complete();
+      },
+      style: 'cancel',
+    };
+
+    const button2 = {
+      text: 'Complete',
+      onPress: () => {
+        notifReceivedEvent.complete(notif);
+      },
+    };
+
+    // Alert.alert('Complete notification?', 'Test', [button1, button2], {
+    //   cancelable: true,
+    // });
+  });
+  OneSignal.setNotificationOpenedHandler((notification) => {
+    console.log('OneSignal: notification opened:', notification);
+  });
+  OneSignal.setInAppMessageClickHandler((event) => {
+    console.log('OneSignal IAM clicked:', event);
+  });
+  OneSignal.addEmailSubscriptionObserver((event) => {
+    console.log('OneSignal: email subscription changed: ', event);
+  });
+  OneSignal.addSubscriptionObserver((event) => {
+    console.log('OneSignal: subscription changed:', event);
+    // this.setState({isSubscribed: event.to.isSubscribed});
+  });
+  OneSignal.addPermissionObserver((event) => {
+    console.log('OneSignal: permission changed:', event);
+  });
+
+  // const deviceState = await OneSignal.getDeviceState();
+
+  // this.setState({
+  //   isSubscribed: deviceState.isSubscribed,
+  // });
+};
 
 // configure Sentry
 const configSentry = () => {
@@ -52,9 +112,7 @@ const AmlifyConfigure = () => {
 
           responseType: 'code', // or 'token', note that REFRESH token will only be generated when the responseType is code
         },
-        GoogleSignin : {
-
-        },
+        GoogleSignin: {},
         Storage: {
           AWSS3: {
             mandatorySignIn: false,
@@ -87,4 +145,4 @@ const AmlifyConfigure = () => {
 // })
 //  }
 
-export {configSentry, AmlifyConfigure};
+export {configSentry, AmlifyConfigure, oneSignalConfig};
