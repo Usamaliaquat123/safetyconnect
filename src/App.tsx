@@ -26,7 +26,6 @@ export default class App extends React.Component<AppProps, any> {
   }
 
   componentDidMount = async () => {
-    oneSignalConfig();
     configSentry().catch(
       (err) => new Error(`Error when configure sentry ${err}`),
     );
@@ -35,6 +34,7 @@ export default class App extends React.Component<AppProps, any> {
       .then((res) => {})
       .catch((err) => {});
 
+    oneSignalConfig();
     // dynamicLinks().onLink(this.handleDynamicLink);
   };
 

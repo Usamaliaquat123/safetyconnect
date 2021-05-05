@@ -14,7 +14,7 @@ import OneSignal from 'react-native-onesignal';
 const oneSignalConfig = () => {
   /* O N E S I G N A L   S E T U P */
   OneSignal.setAppId('df570e2e-881b-406d-b974-885ff8f31be3');
-  OneSignal.setLogLevel(OneSignal.LOG_LEVEL.DEBUG, OneSignal.LOG_LEVEL.DEBUG);
+  OneSignal.setLogLevel(6, 0);
   OneSignal.setRequiresUserPrivacyConsent(false);
   OneSignal.promptForPushNotificationsWithUserResponse((response) => {
     // this.OSLog("Prompt response:", response);

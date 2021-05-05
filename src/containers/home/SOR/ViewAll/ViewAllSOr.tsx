@@ -25,6 +25,7 @@ import {Auth} from 'aws-amplify';
 import LottieView from 'lottie-react-native';
 import Modal from 'react-native-modal';
 import {bindActionCreators} from 'redux';
+import OneSignal from 'react-native-onesignal';
 import * as reduxActions from '../../../../store/actions/listSorActions';
 // import * as initialApp from '@store';
 // import { Create_sor, viewas, notified, submitted, draft, profileSetupSelections } from '@service';
@@ -114,6 +115,10 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     // this.updateAllSors();
     // this.forceUpdate();
 
+    OneSignal.promptForPushNotificationsWithUserResponse((response) => {
+      // this.OSLog("Prompt response:", response);
+      console.log(response);
+    });
     createApi
       .createApi()
       .getProject({projectid: PROJECT_ID})
