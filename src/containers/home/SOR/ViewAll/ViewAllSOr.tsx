@@ -615,7 +615,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 type="antdesign"
                               />
                               <Text style={styles.listDraftText}>
-                                Request for More Information
+                                Notified to
                               </Text>
                             </TouchableOpacity>
                             <View
@@ -680,7 +680,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                   onPress={() => {
                                     this.props.navigation.navigate('ViewAll', {
                                       data: 2,
-                                      title: 'Request for More Information',
+                                      title: 'Notified To',
                                     });
                                   }}
                                   style={{
