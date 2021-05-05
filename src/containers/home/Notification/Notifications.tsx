@@ -78,7 +78,11 @@ class Notifications extends React.Component<NotificationsProps, any> {
       .createApi()
       .getSors(projectId, reportId)
       .then((res: any) => {
-        console.log(res);
+        if (res.status == 200) {
+          this.props.navigation.navigate('ViewSOR', {
+            data: res.data.data.report[0],
+          });
+        }
       })
       .catch((err) => console.log(err));
   };
