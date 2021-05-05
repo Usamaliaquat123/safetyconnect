@@ -1047,10 +1047,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     {/* {this.state.submitted.length == 0 ? null : ( */}
                     <View style={styles.boardContainer}>
                       <View style={styles.submitTextContaienr}>
-                        <Text style={styles.submitText}>
-                          {' '}
-                          Request for More Information
-                        </Text>
+                        <Text style={styles.submitText}> Notified To</Text>
                       </View>
                       {this.state.submitted
                         .slice(0, 3)
@@ -1085,7 +1082,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             // this.props.reduxActions.clearAllSor();
                             this.props.navigation.navigate('ViewAll', {
                               data: this.state.submitted,
-                              title: 'Submitted',
+                              title: 'Notified To',
                             });
                           }}
                           style={{
