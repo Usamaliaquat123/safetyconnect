@@ -39,7 +39,7 @@ export const BottomTabNavigator = () => {
         <Tab.Screen name="home" component={ViewAllSOr} options={{}} />
         <Tab.Screen name="create" component={CreateSOR} options={{}} />
         <Tab.Screen name="addNew" component={BottomPop} />
-        <Tab.Screen name="sor" component={Notification} options={{}} />
+        <Tab.Screen name="Notification" component={Notification} options={{}} />
         <Tab.Screen name="more" component={Menu} options={{}} />
       </Tab.Navigator>
       {/* </NavigationContainer> */}
@@ -86,7 +86,7 @@ export default class TabBar extends React.Component<TabBarProps, any> {
         d['icon'] = images.bottomTab.sors;
       } else if (d.name == 'create') {
         d['icon'] = images.bottomTab.folder;
-      } else if (d.name == 'sor') {
+      } else if (d.name == 'Notification') {
         d['icon'] = images.bottomTab.message;
       } else if (d.name == 'more') {
         d['icon'] = images.bottomTab.menu;

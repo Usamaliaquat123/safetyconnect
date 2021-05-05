@@ -40,6 +40,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
       newNotify: [],
       oldNotify: [],
       refreshing: false,
+      count: 0,
     };
   }
 
@@ -56,6 +57,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
       .getAllNotifications(this.state.user.email)
       .then((res: any) => {
         this.setState({
+          count: res.data.data.notifications.length,
           newNotify: res.data.data.notifications.filter(
             (n: any) => n.status == 1,
           ),
@@ -115,7 +117,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
               <View style={styles.notificationIconAvatar}>
                 <View style={{marginRight: wp(3)}}>
                   <View style={styles.badge}>
-                    <Text style={styles.badgeText}>2</Text>
+                    <Text style={styles.badgeText}>{this.state.count}</Text>
                   </View>
                   <Icon
                     containerStyle={{marginRight: wp(3)}}
