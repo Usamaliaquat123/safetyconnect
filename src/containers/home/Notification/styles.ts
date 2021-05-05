@@ -53,6 +53,38 @@ const styles = StyleSheet.create({
     fontSize: wp(2),
     color: colors.secondary,
   },
+
+  lineheight: {
+    height: wp(0.7),
+    backgroundColor: colors.darkLightGrey,
+  },
+  notificationContainer: {
+    paddingTop: wp(3),
+    paddingBottom: wp(3),
+    paddingLeft: wp(5),
+    paddingRight: wp(5),
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  notificationContent: {
+    paddingLeft: wp(3),
+  },
+  notificationDes: {
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  notifyDate: {
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplaySemiBold,
+    opacity: 0.5,
+  },
+  allNotificationsText: {
+    paddingLeft: wp(4),
+    fontSize: wp(4),
+    marginBottom: wp(3),
+    marginTop: wp(3),
+    fontFamily: fonts.SFuiDisplayBold,
+  },
 });
 
 export default styles;

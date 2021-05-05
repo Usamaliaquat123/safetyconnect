@@ -1,5 +1,12 @@
 import * as React from 'react';
-import {View, StyleSheet, Text, ScrollView, RefreshControl} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  ScrollView,
+  RefreshControl,
+  TouchableOpacity,
+} from 'react-native';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -9,7 +16,7 @@ import {RouteProp} from '@react-navigation/native';
 import {createApi} from '@service';
 import {colors} from '@theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import moment from 'moment';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 export interface NotificationsProps {
   route: MyTasksRouteProp;
@@ -32,6 +39,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
       user: {},
       newNotify: [],
       oldNotify: [],
+      refreshing: false,
     };
   }
 
@@ -46,16 +54,22 @@ class Notifications extends React.Component<NotificationsProps, any> {
     createApi
       .createApi()
       .getAllNotifications(this.state.user.email)
-      .then((notifications: any) => {
-        // console.log(notifications.filter((n: any) => n.status == 0));
-        console.log(notifications);
-        // this.setState({oldNotify : });
+      .then((res: any) => {
+        this.setState({
+          newNotify: res.data.data.notifications.filter(
+            (n: any) => n.status == 1,
+          ),
+          oldNotify: res.data.data.notifications.filter(
+            (n: any) => n.status == 0,
+          ),
+        });
       });
   };
 
   //   Refreshing Scrollview
   _onRefresh = () => {
     this.componentDidMount();
+    this.setState({refreshing: false});
   };
 
   render() {
@@ -108,7 +122,73 @@ class Notifications extends React.Component<NotificationsProps, any> {
             </View>
           </View>
           {/* Content */}
-          <View style={styles.content}></View>
+          <View style={styles.content}>
+            {/* New Notifications */}
+
+            {this.state.newNotify.length == 0 ? null : (
+              <>
+                <Text style={styles.allNotificationsText}>New </Text>
+                {this.state.newNotify.map((d: any, i: any) => (
+                  <TouchableOpacity>
+                    <View style={styles.lineheight} />
+                    <View style={styles.notificationContainer}>
+                      <Avatar
+                        size={wp(7)}
+                        rounded
+                        source={{
+                          uri: 'https://via.placeholder.com/150',
+                        }}
+                      />
+                      {/* Content */}
+                      <View style={styles.notificationContent}>
+                        {/* description */}
+                        <Text style={styles.notificationDes}>{d.message}</Text>
+                        {/* Date */}
+                        <Text style={styles.notifyDate}>
+                          {moment(d.date).format('dddd,  DD MMM ')}
+                        </Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </>
+            )}
+            {/* Old Notifications */}
+            <View>
+              {this.state.oldNotify.length == 0 ? null : (
+                <>
+                  <Text style={styles.allNotificationsText}>
+                    All Notifications
+                  </Text>
+                  {this.state.oldNotify.map((d: any, i: any) => (
+                    <TouchableOpacity>
+                      <View style={styles.lineheight} />
+                      <View style={styles.notificationContainer}>
+                        <Avatar
+                          size={wp(7)}
+                          rounded
+                          source={{
+                            uri: 'https://via.placeholder.com/150',
+                          }}
+                        />
+                        {/* Content */}
+                        <View style={styles.notificationContent}>
+                          {/* description */}
+                          <Text style={styles.notificationDes}>
+                            {d.message}
+                          </Text>
+                          {/* Date */}
+                          <Text style={styles.notifyDate}>
+                            {moment(d.date).format('dddd,  DD MMM ')}
+                          </Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  ))}
+                </>
+              )}
+            </View>
+          </View>
         </ScrollView>
       </View>
     );
