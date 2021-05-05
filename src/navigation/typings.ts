@@ -24,6 +24,7 @@ export type StackNavigatorProps = {
   NothingFound: undefined;
   NoInternet: undefined;
   Main: undefined;
+  Notification: undefined;
 };
 export type BottomTabNavigatorProp = {
   home: {user?: any};
@@ -31,7 +32,7 @@ export type BottomTabNavigatorProp = {
   addNew: {user?: any};
   create: {user?: any};
   more: {user?: any};
-}; 
+};
 export type route =
   | 'Signup'
   | 'Login'
@@ -56,5 +57,6 @@ export type route =
   | 'CreateOrganization'
   | 'ViewAll'
   | 'Menu'
+  | 'Notification'
   | 'NoInternet'
   | undefined;

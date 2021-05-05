@@ -22,7 +22,9 @@ import NoInternet from './home/NoInternet/NoInternet';
 import ViewAllSOr from './home/SOR/ViewAll/ViewAllSOr';
 import ForgotEmailSend from './auth/forgotEmailSend/ForgotEmailSend';
 import MeetBefore from './auth/MeetBefore/MeetBefore';
+import Notification from './home/Notification/Notifications';
 export {
+  Notification,
   Chat,
   Login,
   TellAboutYou,

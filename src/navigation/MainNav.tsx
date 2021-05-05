@@ -20,6 +20,7 @@ import {
   ViewAll,
   ViewSOR,
   CreateSOR,
+  Notification,
   ViewAllSOr,
 } from '@containers';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -33,6 +34,13 @@ export const MainStackNavigator = (screen: route) => {
   return (
     <SafeAreaProvider>
       <Stack.Navigator initialRouteName={screen.screen}>
+        <Stack.Screen
+          name="Notification"
+          component={Notification}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="MeetBefore"
           component={MeetBefore}

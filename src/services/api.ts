@@ -120,10 +120,17 @@ const createApi = (
   const editFiveWhy = (data: any) => baseapi.put('justification', data);
   const getFiveWhy = (data: any) => baseapi.get(`justification?id=${data}`);
 
+  /*
+   * @Notifications
+   */
+  const getAllNotifications = (email: string) =>
+    baseapi.get(`notification/?email${email}`);
+
   return {
     createFiveWhy,
     editFiveWhy,
     getFiveWhy,
+    getAllNotifications,
     getAllComents,
     createComment,
     delComment,
