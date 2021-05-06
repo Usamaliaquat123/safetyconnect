@@ -9,8 +9,9 @@ import {
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import {PermissionsAndroid} from 'react-native';
 import {resolvePlugin} from '@babel/core';
-import {involved_persons, report} from '@typings';
+import {involved_persons, report, orgnaization} from '@typings';
 import Amplify, {Storage} from 'aws-amplify';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export const mainPass: string = 'Safety_Connect1';
 export const classifySor: Array<Object> = [
   {
@@ -127,6 +128,19 @@ export const createAction = (actionType: string) => (payload?: any) => ({
 
 export const capitalizeFirstLetter = (string: string): string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+// Mapping projects and organization and save in local
+export const mappProjectOrg = (organizations: string, project: string) => {
+  AsyncStorage.getItem('user').then((res: any) => {
+    var user = JSON.parse(res);
+    mapAllOrganizations(user.organizations, organizations);
+    mapAllProjects(
+      user.organizations.filter((d: any) => d.selected == true)[0].projects,
+      project,
+    );
+    AsyncStorage.setItem('user', JSON.stringify(user));
+  });
 };
 
 //  Manageing Projects
