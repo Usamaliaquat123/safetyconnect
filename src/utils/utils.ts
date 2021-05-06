@@ -129,7 +129,7 @@ export const capitalizeFirstLetter = (string: string): string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-//  Get All Projects
+//  Manageing Projects
 export const mapAllProjects = (
   projects: Array<any>,
   currentProject: string,
@@ -142,7 +142,19 @@ export const mapAllProjects = (
     }
   });
 };
-
+// Managing Organizations
+export const mapAllOrganizations = (
+  organizations: Array<any>,
+  selectedOrganizations: string,
+): Array<any> => {
+  return organizations.map((d: any) => {
+    if (d._id == selectedOrganizations) {
+      d['selected'] = true;
+    } else {
+      d['selected'] = false;
+    }
+  });
+};
 // filtering and mapping involved persons data
 export const filterAndMappingPersons = (
   report: report,

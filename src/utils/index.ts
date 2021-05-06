@@ -24,6 +24,7 @@ import {
   filterAndMappingPersons,
   suffixThNd,
   mapAllProjects,
+  mapAllOrganizations,
   capitalizeFirstLetter,
 } from './utils';
 export {
@@ -37,6 +38,7 @@ export {
   getFiles,
   imageVideoDetector,
   mapAllProjects,
+  mapAllOrganizations,
   searchInInVolvedPersons,
   capitalizeFirstLetter,
   suggestInActionsRecommendations,

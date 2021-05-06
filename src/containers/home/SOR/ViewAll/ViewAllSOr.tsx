@@ -112,6 +112,19 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   }
 
   componentDidMount = () => {
+
+// Managing Organizations
+    
+
+
+
+    // Managing Projects
+
+
+
+
+
+    
     // mapAllProjects();
     // this.updateAllSors();
     // this.forceUpdate();
