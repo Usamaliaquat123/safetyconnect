@@ -144,9 +144,9 @@ export const mapAllProjects = (
 };
 // Managing Organizations
 export const mapAllOrganizations = (
-  organizations: Array<any>,
+  organizations: any,
   selectedOrganizations: string,
-): Array<any> => {
+) => {
   return organizations.map((d: any) => {
     if (d._id == selectedOrganizations) {
       d['selected'] = true;

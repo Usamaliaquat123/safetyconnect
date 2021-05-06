@@ -32,7 +32,12 @@ import * as reduxActions from '../../../../store/actions/listSorActions';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
-import {classifySor, filterAndMappingPersons, mapAllProjects} from '@utils';
+import {
+  classifySor,
+  filterAndMappingPersons,
+  mapAllProjects,
+  mapAllOrganizations,
+} from '@utils';
 import {Card, ListCard} from '@components';
 import {
   widthPercentageToDP as wp,
@@ -42,7 +47,7 @@ import {
 // import {Storage} from 'aws-amplify';
 
 // import jwtDecode from 'jwt-decode';
-import {Isor, involved_persons} from '@typings';
+import {Isor, involved_persons, orgnaization} from '@typings';
 // import {  } from "";
 type ViewAllSOrNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -112,9 +117,17 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   }
 
   componentDidMount = () => {
-    // Managing Organizations
+    console.log('========================');
+    AsyncStorage.getItem('user').then((res: any) => {
+      // console.log(JSON.parse(user.organizations));
 
-    // Managing Projects
+      var user = JSON.parse(res);
+
+      mapAllOrganizations(user.organizations, '60867e596281167f26ce4aab');
+
+      // console.log(user.organizations);
+    });
+    console.log('========================');
 
     // mapAllProjects();
     // this.updateAllSors();
@@ -122,7 +135,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
     OneSignal.promptForPushNotificationsWithUserResponse((response) => {
       // this.OSLog("Prompt response:", response);
-      console.log(response);
+      // console.log(response);
     });
     createApi
       .createApi()
@@ -171,7 +184,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         //  console.log(res.data)
         if (res.data.data == undefined) {
         } else {
-          console.log(res.data.data.report);
+          // console.log(res.data.data.report);
           res.data.data.report.sort(
             (a: any, b: any) => new Date(b.createdAt) - new Date(a.createdAt),
           );
@@ -238,6 +251,17 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   filterDecending = (sors: Array<any>, name: string) => {};
 
   render() {
+    // Managing Organizations
+
+    // var org = mapAllOrganizations(
+    //   this.state.user.organizations,
+    //   '60867e596281167f26ce4aab',
+    // );
+
+    // console.log(org);
+
+    // Managing Projects
+
     return (
       <View style={{backgroundColor: colors.secondary, flex: 1}}>
         <ScrollView
