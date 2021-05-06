@@ -112,19 +112,10 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   }
 
   componentDidMount = () => {
-
-// Managing Organizations
-    
-
-
+    // Managing Organizations
 
     // Managing Projects
 
-
-
-
-
-    
     // mapAllProjects();
     // this.updateAllSors();
     // this.forceUpdate();
@@ -408,10 +399,23 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           </TouchableOpacity>
                           <TouchableOpacity
                             onPress={() => {
-                              const filtered = this.state.draft.sort(
-                                (a: any, b: any) => b - a,
-                              );
-                              this.setState({draft: filtered});
+                              if (this.state.draftSorted == true) {
+                                this.state.draft.sort(
+                                  (a: any, b: any) =>
+                                    new Date(a.createdAt) -
+                                    new Date(b.createdAt),
+                                );
+                                this.setState({draftSorted: false});
+                              } else {
+                                this.state.draft.sort(
+                                  (a: any, b: any) =>
+                                    new Date(b.createdAt) -
+                                    new Date(a.createdAt),
+                                );
+                                this.setState({draftSorted: true});
+                              }
+
+                              // this.setState({});
                             }}
                             style={{
                               position: 'absolute',
@@ -519,7 +523,25 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 In Progress
                               </Text>
                             </TouchableOpacity>
-                            <View style={styles.filterHeader}>
+                            <TouchableOpacity
+                              onPress={() => {
+                                if (this.state.inProgressSorted == true) {
+                                  this.state.inprogress.sort(
+                                    (a: any, b: any) =>
+                                      new Date(a.createdAt) -
+                                      new Date(b.createdAt),
+                                  );
+                                  this.setState({inProgressSorted: false});
+                                } else {
+                                  this.state.inprogress.sort(
+                                    (a: any, b: any) =>
+                                      new Date(b.createdAt) -
+                                      new Date(a.createdAt),
+                                  );
+                                  this.setState({inProgressSorted: true});
+                                }
+                              }}
+                              style={styles.filterHeader}>
                               <Icon
                                 color={colors.primary}
                                 size={wp(5)}
@@ -527,7 +549,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 type="ionicon"
                               />
                               <Text style={styles.filterText}>Filter</Text>
-                            </View>
+                            </TouchableOpacity>
                           </View>
                           {this.state.isInProgress == true ? (
                             <View style={styles.listViewContent}>
@@ -632,7 +654,24 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 Notified to
                               </Text>
                             </TouchableOpacity>
-                            <View
+                            <TouchableOpacity
+                              onPress={() => {
+                                if (this.state.notifiedToSorted == true) {
+                                  this.state.submitted.sort(
+                                    (a: any, b: any) =>
+                                      new Date(a.createdAt) -
+                                      new Date(b.createdAt),
+                                  );
+                                  this.setState({notifiedToSorted: false});
+                                } else {
+                                  this.state.submitted.sort(
+                                    (a: any, b: any) =>
+                                      new Date(b.createdAt) -
+                                      new Date(a.createdAt),
+                                  );
+                                  this.setState({notifiedToSorted: true});
+                                }
+                              }}
                               style={{
                                 position: 'absolute',
                                 right: wp(4),
@@ -647,7 +686,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               />
 
                               <Text style={styles.filterText}>Filter</Text>
-                            </View>
+                            </TouchableOpacity>
                           </View>
                           {this.state.isSubmited == true ? (
                             <View style={styles.listViewContent}>
@@ -739,7 +778,25 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 Pending Closure
                               </Text>
                             </TouchableOpacity>
-                            <View style={styles.filterHeader}>
+                            <TouchableOpacity
+                              onPress={() => {
+                                if (this.state.pendingClosureSorted == true) {
+                                  this.state.exclated.sort(
+                                    (a: any, b: any) =>
+                                      new Date(a.createdAt) -
+                                      new Date(b.createdAt),
+                                  );
+                                  this.setState({pendingClosureSorted: false});
+                                } else {
+                                  this.state.exclated.sort(
+                                    (a: any, b: any) =>
+                                      new Date(b.createdAt) -
+                                      new Date(a.createdAt),
+                                  );
+                                  this.setState({pendingClosureSorted: true});
+                                }
+                              }}
+                              style={styles.filterHeader}>
                               <Icon
                                 color={colors.primary}
                                 size={wp(5)}
@@ -747,7 +804,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 type="ionicon"
                               />
                               <Text style={styles.filterText}>Filter</Text>
-                            </View>
+                            </TouchableOpacity>
                           </View>
                           {this.state.isNotified == true ? (
                             <View style={styles.listViewContent}>
