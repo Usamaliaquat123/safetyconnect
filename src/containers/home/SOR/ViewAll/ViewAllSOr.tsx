@@ -895,7 +895,25 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               />
                               <Text style={styles.listDraftText}>Closed</Text>
                             </TouchableOpacity>
-                            <View style={styles.filterHeader}>
+                            <TouchableOpacity
+                              onPress={() => {
+                                if (this.state.closedSorted == true) {
+                                  this.state.completed.sort(
+                                    (a: any, b: any) =>
+                                      new Date(a.createdAt) -
+                                      new Date(b.createdAt),
+                                  );
+                                  this.setState({closedSorted: false});
+                                } else {
+                                  this.state.completed.sort(
+                                    (a: any, b: any) =>
+                                      new Date(b.createdAt) -
+                                      new Date(a.createdAt),
+                                  );
+                                  this.setState({closedSorted: true});
+                                }
+                              }}
+                              style={styles.filterHeader}>
                               <Icon
                                 color={colors.primary}
                                 size={wp(5)}
@@ -903,7 +921,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 type="ionicon"
                               />
                               <Text style={styles.filterText}>Filter</Text>
-                            </View>
+                            </TouchableOpacity>
                           </View>
                           {this.state.isCompleted == true ? (
                             <View style={styles.listViewContent}>
