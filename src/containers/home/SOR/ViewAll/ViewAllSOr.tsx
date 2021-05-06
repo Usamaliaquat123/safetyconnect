@@ -117,22 +117,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   }
 
   componentDidMount = () => {
-    console.log('========================');
-    AsyncStorage.getItem('user').then((res: any) => {
-      var user = JSON.parse(res);
-      mapAllOrganizations(user.organizations, '60867e596281167f26ce4aab');
-      mapAllProjects(
-        user.organizations.filter((d: any) => d.selected == true)[0].projects,
-        '608fcd465509da5a5636cdd1',
-      );
-      AsyncStorage.setItem('organizations', JSON.stringify(user.orgnaization));
-    });
-    // console.log('========================');
-
-    // mapAllProjects();
-    // this.updateAllSors();
-    // this.forceUpdate();
-
     OneSignal.promptForPushNotificationsWithUserResponse((response) => {
       // this.OSLog("Prompt response:", response);
       // console.log(response);
@@ -251,17 +235,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   filterDecending = (sors: Array<any>, name: string) => {};
 
   render() {
-    // Managing Organizations
-
-    // var org = mapAllOrganizations(
-    //   this.state.user.organizations,
-    //   '60867e596281167f26ce4aab',
-    // );
-
-    // console.log(org);
-
-    // Managing Projects
-
     return (
       <View style={{backgroundColor: colors.secondary, flex: 1}}>
         <ScrollView
