@@ -119,13 +119,13 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   componentDidMount = () => {
     console.log('========================');
     AsyncStorage.getItem('user').then((res: any) => {
-      // console.log(JSON.parse(user.organizations));
-
       var user = JSON.parse(res);
-
       mapAllOrganizations(user.organizations, '60867e596281167f26ce4aab');
-
-      console.log(user.organizations);
+      mapAllProjects(
+        user.organizations.filter((d: any) => d.selected == true)[0].projects,
+        '608fcd465509da5a5636cdd1',
+      );
+      AsyncStorage.setItem('organizations', JSON.stringify(user.orgnaization));
     });
     // console.log('========================');
 
