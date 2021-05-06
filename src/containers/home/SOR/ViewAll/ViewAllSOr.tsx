@@ -125,9 +125,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
       mapAllOrganizations(user.organizations, '60867e596281167f26ce4aab');
 
-      // console.log(user.organizations);
+      console.log(user.organizations);
     });
-    console.log('========================');
+    // console.log('========================');
 
     // mapAllProjects();
     // this.updateAllSors();
