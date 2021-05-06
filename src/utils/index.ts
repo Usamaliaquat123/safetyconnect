@@ -23,6 +23,7 @@ import {
   imageAndVideoObjectMap,
   filterAndMappingPersons,
   suffixThNd,
+  mapAllProjects,
   capitalizeFirstLetter,
 } from './utils';
 export {
@@ -35,6 +36,7 @@ export {
   filterLocation,
   getFiles,
   imageVideoDetector,
+  mapAllProjects,
   searchInInVolvedPersons,
   capitalizeFirstLetter,
   suggestInActionsRecommendations,

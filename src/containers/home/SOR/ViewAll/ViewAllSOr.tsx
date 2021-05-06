@@ -32,7 +32,7 @@ import * as reduxActions from '../../../../store/actions/listSorActions';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
-import {classifySor, filterAndMappingPersons} from '@utils';
+import {classifySor, filterAndMappingPersons, mapAllProjects} from '@utils';
 import {Card, ListCard} from '@components';
 import {
   widthPercentageToDP as wp,
@@ -112,6 +112,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   }
 
   componentDidMount = () => {
+    // mapAllProjects();
     // this.updateAllSors();
     // this.forceUpdate();
 
