@@ -16,6 +16,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {connect} from 'react-redux';
+import {Auth} from 'aws-amplify';
+
 import {RouteProp} from '@react-navigation/native';
 import styles from './styles';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
@@ -60,7 +62,14 @@ class Verify extends React.Component<VerifyProps, any> {
       }
     }
   };
-
+  // resend verification email
+  handleResendVerificationEmail = async () => {
+    await Auth.forgotPassword(this.props.route.params.email).catch(
+      (error: any) => {
+        console.log(error);
+      },
+    );
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -132,7 +141,7 @@ class Verify extends React.Component<VerifyProps, any> {
           {/* Don't have a Acctouny */}
           <Text style={styles.dontHaveAccount}>Didn't received email ? </Text>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Login')}
+            onPress={() => this.handleResendVerificationEmail()}
             style={styles.createnewaccountContainer}>
             <Text style={styles.createNewAccount}>
               Resend Verification Email
