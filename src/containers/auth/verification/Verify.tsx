@@ -6,6 +6,7 @@ import {
   ScrollView,
   Text,
   Image,
+  Linking,
   TextInput,
   TouchableOpacity,
 } from 'react-native';
@@ -83,14 +84,18 @@ class Verify extends React.Component<VerifyProps, any> {
             <View style={styles.line} />
           </View> */}
           {/* Open Gmail */}
-          <TouchableOpacity style={styles.siginwithGoogle}>
+          <TouchableOpacity
+            onPress={() => Linking.openURL('https://mail.google.com/mail/u/0/')}
+            style={styles.siginwithGoogle}>
             <View style={{width: wp(7), height: wp(7), marginRight: wp(3)}}>
               <Image source={images.socialIcon.gmail} style={GlStyles.images} />
             </View>
             <Text style={styles.signinTextGoogle}>Open Gmail </Text>
           </TouchableOpacity>
           {/* Open Outlook */}
-          <TouchableOpacity style={styles.siginwithGoogle}>
+          <TouchableOpacity
+            onPress={() => Linking.openURL('https://outlook.com/')}
+            style={styles.siginwithGoogle}>
             <View style={{width: wp(7), height: wp(7), marginRight: wp(3)}}>
               <Image
                 source={images.socialIcon.outlook}
@@ -100,7 +105,9 @@ class Verify extends React.Component<VerifyProps, any> {
             <Text style={styles.signinTextGoogle}>Open Outlook </Text>
           </TouchableOpacity>
           {/* Open Yahoo */}
-          <TouchableOpacity style={styles.siginwithGoogle}>
+          <TouchableOpacity
+            onPress={() => Linking.openURL('https://mail.yahoo.com')}
+            style={styles.siginwithGoogle}>
             <View style={{width: wp(7), height: wp(7), marginRight: wp(3)}}>
               <Image source={images.socialIcon.yahoo} style={GlStyles.images} />
             </View>
