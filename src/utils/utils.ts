@@ -370,9 +370,12 @@ export const cameraCapture = () => {
 
 // Google Authentications
 export const GOOGLE_AUTH = async (navigator: any, page: string) => {
-  const user = await Auth.federatedSignIn({provider: 'Google'});
-
+  await Auth.federatedSignIn({provider: 'Google'});
   navigator.navigate(page);
+};
+
+export const APPLE_AUTH = async (navigator: any, page: string) => {
+  return null;
 };
 
 // Doc Type picker
