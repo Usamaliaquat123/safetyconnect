@@ -12,8 +12,9 @@ import {Avatar} from 'react-native-elements';
 import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
-import {RouteProp} from '@react-navigation/native';
+import {RouteProp, CommonActions} from '@react-navigation/native';
 import {colors, images} from '@theme';
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -164,6 +165,19 @@ export default class Menu extends React.Component<MenuProps, any> {
               <TouchableOpacity
                 onPress={() => {
                   Auth.signOut();
+
+                  AsyncStorage.removeItem('user');
+                  AsyncStorage.removeItem('email');
+                  this.props.navigation.dispatch(
+                    CommonActions.reset({
+                      index: 1,
+                      routes: [
+                        {
+                          name: 'Login',
+                        },
+                      ],
+                    }),
+                  );
                 }}
                 style={{flexDirection: 'row'}}>
                 <View>

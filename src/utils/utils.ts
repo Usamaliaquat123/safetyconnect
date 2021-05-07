@@ -369,9 +369,16 @@ export const cameraCapture = () => {
 };
 
 // Google Authentications
-export const GOOGLE_AUTH = async (navigator: any, page: string) => {
-  await Auth.federatedSignIn({provider: 'Google'});
-  navigator.navigate(page);
+export const GOOGLE_AUTH = () => {
+  return new Promise((resolve, reject) => {
+    try {
+      var data = Auth.federatedSignIn({provider: 'Google'});
+
+      resolve(data);
+    } catch (error) {
+      reject(error);
+    }
+  });
 };
 
 export const APPLE_AUTH = async (navigator: any, page: string) => {
