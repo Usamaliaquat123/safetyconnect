@@ -128,6 +128,7 @@ class Login extends React.Component<LoginProps, any> {
           /*
            * @Default email : asohial.bscs16seecs@seecs.edu.pk || password: Weird.password02
            */
+
           this.setState({loading: true, errorModal: true});
           const user = await Auth.signIn(
             this.state.username,

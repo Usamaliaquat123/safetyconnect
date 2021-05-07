@@ -7,7 +7,6 @@ import {
   observationsSug,
   country,
 } from '@typings';
-import {string} from 'prop-types';
 // our "constructor"
 const base_uri = `https://dev.safetyconnect.ai`;
 const createApi = (

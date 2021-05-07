@@ -119,16 +119,16 @@ class MeetBefore extends React.Component<MeetBeforeProps, any> {
 
               <TouchableOpacity
                 onPress={() => {
-                  this.props.navigation.dispatch(
-                    CommonActions.reset({
-                      index: 1,
-                      routes: [
-                        {
-                          name: 'Login',
-                        },
-                      ],
-                    }),
-                  );
+                  // this.props.navigation.dispatch(
+                  //   CommonActions.reset({
+                  //     index: 1,
+                  //     routes: [
+                  //       {
+                  //         name: 'Login',
+                  //       },
+                  //     ],
+                  //   }),
+                  // );
                 }}
                 style={styles.siginwithGoogle}>
                 <View style={{width: wp(5), height: wp(5), marginRight: wp(3)}}>

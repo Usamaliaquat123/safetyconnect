@@ -1,5 +1,6 @@
 import {colors} from '@theme/colors';
 import * as ImagePicker from 'react-native-image-picker/src';
+import {Auth} from 'aws-amplify';
 
 import RNFetchBlob from 'rn-fetch-blob';
 import {
@@ -365,6 +366,13 @@ export const cameraCapture = () => {
       reject(error);
     }
   });
+};
+
+// Google Authentications
+export const GOOGLE_AUTH = async (navigator: any, page: string) => {
+  const user = await Auth.federatedSignIn({provider: 'Google'});
+
+  navigator.navigate(page);
 };
 
 // Doc Type picker
