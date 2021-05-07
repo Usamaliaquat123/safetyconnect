@@ -19,7 +19,6 @@ import {
   allDraft,
   allRecentActivity,
   allNotified,
-  getAllNotifications,
   allSubmitted,
 } from './ViewAllSors';
 import {messages} from './messaging_mock';
@@ -30,7 +29,6 @@ export {
   allDraft,
   allRecentActivity,
   recentActivity,
-  getAllNotifications,
   View_sor,
   allNotified,
   draft,

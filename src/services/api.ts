@@ -128,10 +128,17 @@ const createApi = (
    */
   const getAllNotifications = (email: string) =>
     baseapi.get(`notification/?email=${email}`);
+  /*
+   * @Invite Users
+   */
+  const inviteBulk = (data: any) => {
+    baseapi.post(`admin/bulk`, data);
+  };
 
   return {
     createFiveWhy,
     editFiveWhy,
+    inviteBulk,
     getFiveWhy,
     getAllNotifications,
     getAllComents,
