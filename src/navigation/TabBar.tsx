@@ -222,15 +222,17 @@ export default class TabBar extends React.Component<TabBarProps, any> {
 
               <Model
                 isVisible={this.state.createModal}
-                onBackdropPress={
-                  () => {
-                    this.setState({createModal: false, loading: false});
-                  }
-                  // this.setState({createModal: false, loading: false})
-                }>
+                onBackdropPress={() => {
+                  this.setState({createModal: false, loading: false});
+                }}>
                 <View style={styles.createNewpopcontaienr}>
                   {/* Create New sor */}
-                  <View style={styles.containerOfIcon}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({createModal: false});
+                      this.props.navigation.navigate('CreateSOR');
+                    }}
+                    style={styles.containerOfIcon}>
                     <View style={styles.newsorContainer}>
                       <Image
                         source={images.bottomTab.note}
@@ -239,9 +241,14 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                     </View>
 
                     <Text style={styles.createNewText}>New SOR</Text>
-                  </View>
+                  </TouchableOpacity>
                   {/* Audit and Inspection */}
-                  <View style={styles.containerOfIcon}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({createModal: false});
+                      this.props.navigation.navigate('CreateOrganization');
+                    }}
+                    style={styles.containerOfIcon}>
                     <View style={styles.auditAndReportContainer}>
                       <Image
                         source={images.homeIcon.auditAndReporting}
@@ -249,21 +256,24 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                       />
                     </View>
                     <Text style={styles.auditReportText}>
-                      Audit and Inspection Report
+                      Create Organization
                     </Text>
-                  </View>
+                  </TouchableOpacity>
                   {/* Incident and Accident Report */}
-                  <View style={styles.containerOfIcon}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({createModal: false});
+                      this.props.navigation.navigate('createProject');
+                    }}
+                    style={styles.containerOfIcon}>
                     <View style={styles.incidentContaineR}>
                       <Image
                         source={images.homeIcon.incidentreporting}
                         style={GlStyles.images}
                       />
                     </View>
-                    <Text style={styles.auditReportText}>
-                      Incident & Accident Report
-                    </Text>
-                  </View>
+                    <Text style={styles.auditReportText}>Create Project</Text>
+                  </TouchableOpacity>
                 </View>
               </Model>
             </View>

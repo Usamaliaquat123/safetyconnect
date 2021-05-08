@@ -139,7 +139,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                 color={colors.secondary}
               />
               <View>
-                <Text style={styles.title}>Create organization</Text>
+                <Text style={styles.title}>Create Project</Text>
                 <View style={styles.underScrore} />
               </View>
             </View>
