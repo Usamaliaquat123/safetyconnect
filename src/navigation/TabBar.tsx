@@ -150,9 +150,10 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                 testID={options.tabBarTestID}
                 onPress={() => {
                   if (route.name == 'addNew') {
-                    return this.setState({
-                      createModal: !this.state.createModal,
-                    });
+                    console.log('if match');
+                    // return this.setState({
+                    //   createModal: !this.state.createModal,
+                    // });
                   } else {
                     return onPress();
                   }
@@ -186,7 +187,9 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                 )}
                 {route.name == 'addNew' ? (
                   <View>
-                    <TouchableOpacity style={styles.addNewContainer}>
+                    <TouchableOpacity
+                      onPress={() => console.log('tab press')}
+                      style={styles.addNewContainer}>
                       <Icon
                         size={30}
                         name="pluscircleo"
