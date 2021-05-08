@@ -86,12 +86,6 @@ class Verify extends React.Component<VerifyProps, any> {
             <Text style={styles.headingContainer}>signing in.</Text>
           </View>
 
-          {/* Or */}
-          {/* <View style={styles.orContainer}>
-            <View style={styles.line} />
-            <Text style={styles.orText}>OR</Text>
-            <View style={styles.line} />
-          </View> */}
           {/* Open Gmail */}
           <TouchableOpacity
             onPress={() => Linking.openURL('https://mail.google.com/mail/u/0/')}
