@@ -59,7 +59,7 @@ export default class TabBar extends React.Component<TabBarProps, any> {
     super(props);
 
     this.state = {
-      createModal: true,
+      createModal: false,
       icons: [],
     };
   }
@@ -188,7 +188,7 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                 {route.name == 'addNew' ? (
                   <View>
                     <TouchableOpacity
-                      onPress={() => console.log('tab press')}
+                      onPress={() => this.setState({createModal: true})}
                       style={styles.addNewContainer}>
                       <Icon
                         size={30}
@@ -228,48 +228,21 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                   }
                   // this.setState({createModal: false, loading: false})
                 }>
-                <View
-                  style={{
-                    backgroundColor: colors.secondary,
-                    borderRadius: wp(3),
-                    padding: wp(5),
-                  }}>
+                <View style={styles.createNewpopcontaienr}>
                   {/* Create New sor */}
                   <View style={styles.containerOfIcon}>
-                    <View
-                      style={{
-                        padding: wp(3),
-                        backgroundColor: colors.lightGreen,
-                        width: wp(12),
-                        height: wp(12),
-                        borderRadius: wp(3),
-                      }}>
+                    <View style={styles.newsorContainer}>
                       <Image
                         source={images.bottomTab.note}
                         style={GlStyles.images}
                       />
                     </View>
 
-                    <Text
-                      style={{
-                        paddingLeft: wp(2),
-                        fontSize: wp(3),
-                        fontWeight: 'bold',
-                        textAlign: 'center',
-                      }}>
-                      New SOR
-                    </Text>
+                    <Text style={styles.createNewText}>New SOR</Text>
                   </View>
                   {/* Audit and Inspection */}
                   <View style={styles.containerOfIcon}>
-                    <View
-                      style={{
-                        padding: wp(3),
-                        backgroundColor: colors.lightGreen,
-                        width: wp(12),
-                        height: wp(12),
-                        borderRadius: wp(3),
-                      }}>
+                    <View style={styles.auditAndReportContainer}>
                       <Image
                         source={images.homeIcon.auditAndReporting}
                         style={GlStyles.images}
@@ -281,14 +254,7 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                   </View>
                   {/* Incident and Accident Report */}
                   <View style={styles.containerOfIcon}>
-                    <View
-                      style={{
-                        padding: wp(3),
-                        backgroundColor: colors.lightGreen,
-                        width: wp(12),
-                        height: wp(12),
-                        borderRadius: wp(3),
-                      }}>
+                    <View style={styles.incidentContaineR}>
                       <Image
                         source={images.homeIcon.incidentreporting}
                         style={GlStyles.images}

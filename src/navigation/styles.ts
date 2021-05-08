@@ -30,6 +30,39 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+
+  createNewpopcontaienr: {
+    backgroundColor: colors.secondary,
+    borderRadius: wp(3),
+    padding: wp(5),
+  },
+  createNewText: {
+    paddingLeft: wp(2),
+    fontSize: wp(3),
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  newsorContainer: {
+    padding: wp(3),
+    backgroundColor: colors.lightGreen,
+    width: wp(12),
+    height: wp(12),
+    borderRadius: wp(3),
+  },
+  incidentContaineR: {
+    padding: wp(3),
+    backgroundColor: colors.lightGreen,
+    width: wp(12),
+    height: wp(12),
+    borderRadius: wp(3),
+  },
+  auditAndReportContainer: {
+    padding: wp(3),
+    backgroundColor: colors.lightGreen,
+    width: wp(12),
+    height: wp(12),
+    borderRadius: wp(3),
+  },
 });
 
 export default styles;
