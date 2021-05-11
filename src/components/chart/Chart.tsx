@@ -12,7 +12,7 @@ import {Icon} from 'react-native-elements';
 interface Props {
   severity: Array<Object>;
   liklihood: Array<Object>;
-  style: Object;
+  style?: Object;
   onPress: Function;
 }
 
@@ -22,7 +22,7 @@ const Chart = (props: Props) => {
   const [total, setTotal] = useState();
 
   // console.log(props.liklihood.filter((i: any) => i.selected == true)[0].value);
-  var ttl ;
+  var ttl;
   // console.log(props.liklihood.filter((i: any) => i.selected == true).);
   if (props.liklihood.filter((i: any) => i.selected == true).length == 0) {
     props.liklihood[0].selected = true;
@@ -39,7 +39,7 @@ const Chart = (props: Props) => {
   // var ttl = 9;
   return (
     <View style={props.style}>
-      <View style={{ paddingBottom: wp(3)}}>
+      <View style={{paddingBottom: wp(3)}}>
         {/* Liklihood */}
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text
