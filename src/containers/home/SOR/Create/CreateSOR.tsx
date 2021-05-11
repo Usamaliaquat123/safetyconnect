@@ -7,6 +7,7 @@ import {
   TextInput,
   Animated,
   Easing,
+  Image,
   ActivityIndicator,
 } from 'react-native';
 import {connect} from 'react-redux';
@@ -24,7 +25,7 @@ import {bindActionCreators} from 'redux';
 import * as reduxActions from '../../../../store/actions/listSorActions';
 
 import {Icon, Avatar} from 'react-native-elements';
-import {colors} from '@theme';
+import {colors, images, GlStyles} from '@theme';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import DocumentPicker from 'react-native-document-picker';
@@ -76,6 +77,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       email: '',
       // dropdownAnim: new Animated.Value(1),
       // *****
+
       selectL: false,
       projectSuggest: [],
       exclateToArr: [],
@@ -146,7 +148,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         uri: res.uri,
         type: res.type,
       });
-      // this.setState({});
+      this.setState({});
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User cancelled the picker, exit any dialogs or menus and move on
@@ -1498,8 +1500,120 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 <Text style={styles.attachmentsHeading}>Attachments </Text>
                 <Text style={styles.attachmentOptionalText}>(optional)</Text>
               </View>
+              <View>
+                {/* Attachments photos */}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    alignSelf: 'center',
+                  }}>
+                  {this.state.attachments.map((d: any, i: number) => {
+                    if (d.type == 'photo') {
+                      return (
+                        <TouchableOpacity
+                          onPress={() => this.setState({imageViewer: true})}
+                          style={styles.AttchimageContainer}>
+                          <Image
+                            source={{
+                              uri: d.url,
+                            }}
+                            style={[GlStyles.images, {borderRadius: wp(3)}]}
+                            resizeMode={'cover'}
+                          />
+                        </TouchableOpacity>
+                      );
+                    }
+                  })}
+                </View>
+              </View>
+
+              {/* attachments filenams */}
+              {this.state.filename.map((d: any, i: number) => (
+                <View>
+                  {d.type != 'photo' ? (
+                    <View style={styles.attachFileContainer}>
+                      <View>
+                        <Image
+                          source={
+                            d.type == 'pdf'
+                              ? images.pdf
+                              : d.type == 'doc'
+                              ? images.doc
+                              : d.type == 'text'
+                              ? images.text
+                              : d.type == 'doc'
+                              ? images.doc
+                              : // : d.type == 'excel'
+                                // ? images.excel
+                                // : d.type == 'powerpoint'
+                                // ? images.powerpoint
+                                null
+                          }
+                          style={{width: wp(7), height: wp(7)}}
+                        />
+                      </View>
+                      <Text style={styles.attchFileText}>
+                        {d.name.substring(0, 10)}.../.{d.type}
+                      </Text>
+                      <View
+                        style={{
+                          position: 'absolute',
+                          right: wp(1),
+                          top: wp(1.5),
+                          alignItems: 'center',
+                          flexDirection: 'row',
+                        }}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            if (d.upload != 'self') {
+                              // this.photoAnim.play();
+                              // downloadFile(d.url, d.type)
+                              //   .then((res: any) => {})
+                              //   .catch((err) => {});
+                            }
+                          }}>
+                          {/* <LottieView
+                            ref={(animation) => {
+                              this.animation = animation;
+                            }}
+                            style={{width: wp(15)}}
+                            source={animation.download}
+                            loop={false}
+                          /> */}
+                        </TouchableOpacity>
+
+                        {d.upload == 'self' ? (
+                          <TouchableOpacity
+                            onPress={() => {
+                              var arr = [...this.state.filename].filter(
+                                (b) => b != d,
+                              );
+                              this.setState({filename: arr});
+                            }}>
+                            <Icon
+                              containerStyle={{
+                                marginRight: wp(2),
+                                marginTop: wp(2),
+                                opacity: 0.5,
+                              }}
+                              name="circle-with-cross"
+                              size={wp(5)}
+                              type="entypo"
+                              color={colors.text}
+                            />
+                          </TouchableOpacity>
+                        ) : null}
+                      </View>
+                    </View>
+                  ) : null}
+                </View>
+              ))}
+
               <View style={styles.attachmentContentContainer}>
-                <TouchableOpacity onPress={() => this.pickupDoc()} style={styles.uploadBorder}>
+                <TouchableOpacity
+                  onPress={() => this.pickupDoc()}
+                  style={styles.uploadBorder}>
                   <Icon
                     size={wp(9)}
                     name="plus"

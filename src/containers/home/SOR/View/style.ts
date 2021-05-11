@@ -271,6 +271,12 @@ const styles = StyleSheet.create({
     borderRadius: wp(3),
     margin: wp(1),
   },
+  AttchimageContainer: {
+    width: wp(43),
+    height: wp(30),
+    borderRadius: wp(3),
+    margin: wp(1),
+  },
   attachFileContainer: {
     padding: wp(5),
     borderRadius: wp(3),

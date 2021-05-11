@@ -421,6 +421,12 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontFamily: fonts.SFuiDisplayMedium,
   },
+  AttchimageContainer: {
+    width: wp(43),
+    height: wp(30),
+    borderRadius: wp(3),
+    margin: wp(1),
+  },
   involvePsuggCont: {
     borderColor: colors.textOpa,
     borderBottomWidth: wp(0.1),
