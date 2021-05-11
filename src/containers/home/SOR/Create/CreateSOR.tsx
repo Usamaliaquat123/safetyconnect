@@ -1508,7 +1508,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     flexWrap: 'wrap',
                     alignSelf: 'center',
                   }}>
-                  {this.state.attachments.map((d: any, i: number) => {
+                  {this.state.filename.map((d: any, i: number) => {
                     if (d.type == 'photo') {
                       return (
                         <TouchableOpacity
