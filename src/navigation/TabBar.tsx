@@ -16,7 +16,6 @@ import {
 
 import {bindActionCreators} from 'redux';
 import {Icon} from 'react-native-elements';
-import {BottomPop} from '@components';
 import {colors, images, GlStyles, fonts} from '@theme';
 import {AllSorDTO} from '@dtos';
 import * as reduxActions from '../store/actions/listSorActions';
@@ -38,7 +37,7 @@ export const BottomTabNavigator = () => {
         initialRouteName={'home'}>
         <Tab.Screen name="home" component={ViewAllSOr} options={{}} />
         <Tab.Screen name="create" component={CreateSOR} options={{}} />
-        <Tab.Screen name="addNew" component={BottomPop} />
+        <Tab.Screen name="addNew" component={ViewAllSOr} />
         <Tab.Screen name="Notification" component={Notification} options={{}} />
         <Tab.Screen name="more" component={Menu} options={{}} />
       </Tab.Navigator>

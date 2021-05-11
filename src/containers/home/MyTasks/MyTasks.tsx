@@ -1,13 +1,5 @@
 import * as React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  Image,
-  TextInput,
-  Animated,
-} from 'react-native';
+import {View, Text, ScrollView, TextInput} from 'react-native';
 import {colors, GlStyles, images, fonts} from '@theme';
 import {connect} from 'react-redux';
 import {StackNavigationProp} from '@react-navigation/stack';

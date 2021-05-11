@@ -162,6 +162,10 @@ class Login extends React.Component<LoginProps, any> {
       // GoogleSignin.signIn().then(res => {
       //   console.log(res)
       // }).catch(err => console.log(err))
+
+      const user = await Auth.federatedSignIn({provider: 'Google'});
+
+      this.props.navigation.navigate('Main');
     } catch (e) {}
   };
   render() {

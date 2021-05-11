@@ -1499,14 +1499,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 <Text style={styles.attachmentOptionalText}>(optional)</Text>
               </View>
               <View style={styles.attachmentContentContainer}>
-                <View style={styles.uploadBorder}>
+                <TouchableOpacity onPress={() => this.pickupDoc()} style={styles.uploadBorder}>
                   <Icon
                     size={wp(9)}
                     name="plus"
                     type="antdesign"
                     color={colors.primary}
                   />
-                </View>
+                </TouchableOpacity>
                 <View style={styles.attachmentsDetailTextContainer}>
                   <Text style={styles.supportedfileFotmatsText}>
                     Supported file formats{' '}

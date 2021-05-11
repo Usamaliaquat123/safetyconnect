@@ -10,7 +10,6 @@ import RepeatedSor from './RepeatedSorModal/RepeatedSor';
 import ListCard from './listCard/ListCard';
 import CommentPop from './ViewSor/Popup/Comments/CommentPop';
 import Calendars from './calendars/Calendars';
-import BottomPop from './BottomTab/BottomTabModal';
 import SuggestionsPop from './ViewSor/Popup/Suggestions/SuggestionsPop';
 import Selector from './Views/CreateSor/SelectProjectLocation/Selector';
 import FiveWhy from './Views/CreateSor/FiveWhy/FiveWhy';
@@ -22,7 +21,6 @@ export {
   Calendars,
   Search,
   User,
-  BottomPop,
   Header,
   ListCard,
   RepeatedSor,
