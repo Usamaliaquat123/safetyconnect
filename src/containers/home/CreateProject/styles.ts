@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
     marginTop: wp(4),
   },
   emailTextContainer: {
-    marginTop: wp(3),
+    // marginTop: wp(3),
+    marginRight: wp(1),
     fontSize: wp(3.5),
     fontFamily: fonts.SFuiDisplayBold,
     color: colors.text,

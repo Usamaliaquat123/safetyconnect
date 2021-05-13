@@ -14,7 +14,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {Tags, SuggestionsAvatar} from '@components';
@@ -174,10 +174,15 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                 {/* inputs container */}
                 <View style={styles.inputsContainer}>
                   {/* Email Container */}
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <Text style={styles.emailTextContainer}>Project Name</Text>
-                    <Text style={{color: colors.error, marginTop: wp(2)}}>
-                      *
+                    <Text
+                      style={{
+                        fontFamily: fonts.SFuiDisplayLight,
+                        opacity: 0.5,
+                        fontSize: wp(3.4),
+                      }}>
+                      ( Mandatory )
                     </Text>
                   </View>
 
@@ -198,7 +203,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                   )}
 
                   {/* Asssign Leaders */}
-                  <Text style={styles.emailTextContainer}>
+                  <Text style={[styles.emailTextContainer, {marginTop: wp(3)}]}>
                     {' '}
                     Project Leaders
                   </Text>
@@ -258,7 +263,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                   {/* Assign Locations */}
 
                   {/* Asssign Supervisor */}
-                  <Text style={styles.emailTextContainer}>
+                  <Text style={[styles.emailTextContainer, {marginTop: wp(2)}]}>
                     {' '}
                     Secondary Project leaders
                   </Text>
@@ -318,7 +323,10 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     />
                   </View>
 
-                  <Text style={styles.emailTextContainer}> Locations</Text>
+                  <Text style={[styles.emailTextContainer, {marginTop: wp(2)}]}>
+                    {' '}
+                    Locations
+                  </Text>
                   {this.state.assignLocations.length < 1 ? (
                     <View style={[styles.inputContainer]}>
                       <TextInput
