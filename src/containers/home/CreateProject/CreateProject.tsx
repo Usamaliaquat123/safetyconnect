@@ -252,7 +252,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                   {/* Asssign Supervisor */}
                   <Text style={styles.emailTextContainer}>
                     {' '}
-                    Assign Suppervisors
+                    Secondary Project leaders
                   </Text>
                   {this.state.assignSuppervisor.length < 15 ? (
                     <View style={[styles.inputContainer]}>
@@ -299,7 +299,10 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     />
                   </View>
                   {/* Asssign Leaders */}
-                  <Text style={styles.emailTextContainer}> Assign Leaders</Text>
+                  <Text style={styles.emailTextContainer}>
+                    {' '}
+                    Project Leaders
+                  </Text>
                   <View style={[styles.inputContainer]}>
                     {this.state.assignLeaderss.length < 15 ? (
                       <TextInput
@@ -346,10 +349,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     />
                   </View>
                   {/* Assign Locations */}
-                  <Text style={styles.emailTextContainer}>
-                    {' '}
-                    Assign Locations
-                  </Text>
+                  <Text style={styles.emailTextContainer}> Locations</Text>
                   {this.state.assignLocations.length < 1 ? (
                     <View style={[styles.inputContainer]}>
                       <TextInput
