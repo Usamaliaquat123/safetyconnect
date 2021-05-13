@@ -26,6 +26,7 @@ import LottieView from 'lottie-react-native';
 
 import {orgnaization} from '@typings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {validateEmail} from '@utils';
 type CreateProjectNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'CreateProj'
@@ -49,6 +50,8 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       assignSuppervisorText: '',
       assignLeaderss: [],
       assignLeaderssText: '',
+      assignSuppervisorT: '',
+      assignLeaderssT: '',
       assignLocations: [],
       assignLocationsText: '',
       projectName: '',
@@ -166,7 +169,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               </View>
             ) : (
               <View>
-                <Text style={styles.headingContainer}>Create Project</Text>
+                <Text style={styles.headingContainer}>Add New Project</Text>
 
                 {/* inputs container */}
                 <View style={styles.inputsContainer}>
@@ -193,111 +196,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       Enter your project name{' '}
                     </Text>
                   )}
-                  {/* Add Team Members */}
-                  <Text style={styles.emailTextContainer}>
-                    Add Team Members
-                  </Text>
-                  <View style={[styles.inputContainer]}>
-                    {this.state.teamMembers.length < 15 ? (
-                      <TextInput
-                        style={styles.authInputs}
-                        value={this.state.teamMembersText}
-                        placeholder={'Add Team Members'}
-                        onChange={(e) => {
-                          {
-                            this.setState({
-                              teamMembersText: e.nativeEvent.text,
-                            });
-                          }
-                        }}
-                      />
-                    ) : null}
-                  </View>
-                  {this.state.errorTeamMem && (
-                    <Text style={{fontSize: wp(3), color: colors.error}}>
-                      Add atleast 2 members{' '}
-                    </Text>
-                  )}
-                  {/* Add Team Suggestions */}
-                  {this.state.teamMembersText != '' ? (
-                    <SuggestionsAvatar
-                      onSelect={(d: string) => {
-                        this.state.teamMembers.push(d);
-                        this.setState({
-                          teamMembersText: '',
-                        });
-                      }}
-                      text={this.state.teamMembersText}
-                    />
-                  ) : null}
-                  <View
-                    style={{
-                      flexWrap: 'wrap',
-                      flexDirection: 'row',
-                      marginTop: wp(2),
-                    }}>
-                    <Tags
-                      type={'addTeamMem'}
-                      onClose={(d: any) => {
-                        this.setState({
-                          teamMembers: this.state.teamMembers.filter(
-                            (v: any) => v !== d,
-                          ),
-                        });
-                      }}
-                      tags={this.state.teamMembers}
-                    />
-                  </View>
 
-                  {/* Asssign Supervisor */}
-                  <Text style={styles.emailTextContainer}>
-                    {' '}
-                    Secondary Project leaders
-                  </Text>
-                  {this.state.assignSuppervisor.length < 15 ? (
-                    <View style={[styles.inputContainer]}>
-                      <TextInput
-                        style={styles.authInputs}
-                        placeholder={'Add Suppervisors'}
-                        value={this.state.assignSuppervisorText}
-                        onChange={(e) => {
-                          this.setState({
-                            assignSuppervisorText: e.nativeEvent.text,
-                          });
-                        }}
-                      />
-                    </View>
-                  ) : null}
-
-                  {this.state.assignSuppervisorText != '' ? (
-                    <SuggestionsAvatar
-                      onSelect={(d: string) => {
-                        this.state.assignSuppervisor.push(d);
-                        this.setState({
-                          assignSuppervisorText: '',
-                        });
-                      }}
-                      text={this.state.assignSuppervisorText}
-                    />
-                  ) : null}
-                  <View
-                    style={{
-                      flexWrap: 'wrap',
-                      flexDirection: 'row',
-                      marginTop: wp(2),
-                    }}>
-                    <Tags
-                      type={'addTeamMem'}
-                      onClose={(d: any) => {
-                        this.setState({
-                          assignSuppervisor: this.state.assignSuppervisor.filter(
-                            (v: any) => v !== d,
-                          ),
-                        });
-                      }}
-                      tags={this.state.assignSuppervisor}
-                    />
-                  </View>
                   {/* Asssign Leaders */}
                   <Text style={styles.emailTextContainer}>
                     {' '}
@@ -306,13 +205,21 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                   <View style={[styles.inputContainer]}>
                     {this.state.assignLeaderss.length < 15 ? (
                       <TextInput
-                        placeholder={'Add Leaders'}
+                        placeholder={'Add Leaders and invite by @ email'}
                         style={styles.authInputs}
-                        value={this.state.assignLeaderssText}
-                        onChange={(e) => {
-                          this.setState({
-                            assignLeaderssText: e.nativeEvent.text,
-                          });
+                        value={this.state.assignLeaderssT}
+                        onChangeText={(e) => {
+                          if (validateEmail(e)) {
+                            this.setState({
+                              assignLeaderssText: e,
+                              assignLeaderssT: e,
+                            });
+                          } else {
+                            this.setState({
+                              assignLeaderssText: '',
+                              assignLeaderssT: e,
+                            });
+                          }
                         }}
                       />
                     ) : null}
@@ -349,6 +256,68 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     />
                   </View>
                   {/* Assign Locations */}
+
+                  {/* Asssign Supervisor */}
+                  <Text style={styles.emailTextContainer}>
+                    {' '}
+                    Secondary Project leaders
+                  </Text>
+                  {this.state.assignSuppervisor.length < 15 ? (
+                    <View style={[styles.inputContainer]}>
+                      <TextInput
+                        style={styles.authInputs}
+                        placeholder={
+                          'Add secondary leaders or invite by @ email'
+                        }
+                        value={this.state.assignSuppervisorT}
+                        onChangeText={(e) => {
+                          if (validateEmail(e)) {
+                            this.setState({
+                              assignSuppervisorText: e,
+                              assignSuppervisorT: e,
+                            });
+                          } else {
+                            this.setState({
+                              assignSuppervisorText: '',
+
+                              assignSuppervisorT: e,
+                            });
+                          }
+                        }}
+                      />
+                    </View>
+                  ) : null}
+
+                  {this.state.assignSuppervisorText != '' ? (
+                    <SuggestionsAvatar
+                      onSelect={(d: string) => {
+                        this.state.assignSuppervisor.push(d);
+                        this.setState({
+                          assignSuppervisorText: '',
+                        });
+                      }}
+                      text={this.state.assignSuppervisorText}
+                    />
+                  ) : null}
+                  <View
+                    style={{
+                      flexWrap: 'wrap',
+                      flexDirection: 'row',
+                      marginTop: wp(2),
+                    }}>
+                    <Tags
+                      type={'addTeamMem'}
+                      onClose={(d: any) => {
+                        this.setState({
+                          assignSuppervisor: this.state.assignSuppervisor.filter(
+                            (v: any) => v !== d,
+                          ),
+                        });
+                      }}
+                      tags={this.state.assignSuppervisor}
+                    />
+                  </View>
+
                   <Text style={styles.emailTextContainer}> Locations</Text>
                   {this.state.assignLocations.length < 1 ? (
                     <View style={[styles.inputContainer]}>
@@ -400,7 +369,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                 <TouchableOpacity
                   onPress={() => this.createProject()}
                   style={styles.siginBtnContainer}>
-                  <Text style={styles.signinText}>Create Project</Text>
+                  <Text style={styles.signinText}>Add Project</Text>
                 </TouchableOpacity>
               </View>
             )}
@@ -420,3 +389,62 @@ const mapDispatchToProps = (dispatch: any) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateProject);
+
+// <View>
+// {/* Add Team Members */}
+// <Text style={styles.emailTextContainer}>
+//   Add Team Members
+// </Text>
+// <View style={[styles.inputContainer]}>
+//   {this.state.teamMembers.length < 15 ? (
+//     <TextInput
+//       style={styles.authInputs}
+//       value={this.state.teamMembersText}
+//       placeholder={'Add Team Members'}
+//       onChange={(e) => {
+//         {
+//           this.setState({
+//             teamMembersText: e.nativeEvent.text,
+//           });
+//         }
+//       }}
+//     />
+//   ) : null}
+// </View>
+// {this.state.errorTeamMem && (
+//   <Text style={{fontSize: wp(3), color: colors.error}}>
+//     Add atleast 2 members{' '}
+//   </Text>
+// )}
+
+// {/* Add Team Suggestions */}
+// {this.state.teamMembersText != '' ? (
+//   <SuggestionsAvatar
+//     onSelect={(d: string) => {
+//       this.state.teamMembers.push(d);
+//       this.setState({
+//         teamMembersText: '',
+//       });
+//     }}
+//     text={this.state.teamMembersText}
+//   />
+// ) : null}
+// <View
+//   style={{
+//     flexWrap: 'wrap',
+//     flexDirection: 'row',
+//     marginTop: wp(2),
+//   }}>
+//   <Tags
+//     type={'addTeamMem'}
+//     onClose={(d: any) => {
+//       this.setState({
+//         teamMembers: this.state.teamMembers.filter(
+//           (v: any) => v !== d,
+//         ),
+//       });
+//     }}
+//     tags={this.state.teamMembers}
+//   />
+// </View>
+// </View>

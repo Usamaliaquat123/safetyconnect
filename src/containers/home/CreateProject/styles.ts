@@ -3,7 +3,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -39,17 +39,17 @@ const styles = StyleSheet.create({
     borderTopRightRadius: wp(4),
   },
   headingContainer: {
-    fontSize: wp(3.5),
+    fontSize: wp(5),
     color: colors.primary,
-    fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayBold,
   },
   inputsContainer: {
-    marginTop: wp(7),
+    marginTop: wp(4),
   },
   emailTextContainer: {
     marginTop: wp(3),
-    fontSize: wp(3),
-    fontWeight: 'bold',
+    fontSize: wp(3.5),
+    fontFamily: fonts.SFuiDisplayBold,
     color: colors.text,
   },
   inputContainer: {
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
   signinText: {
     fontSize: wp(4),
-    fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplaySemiBold,
     color: colors.secondary,
   },
   signinTextGoogle: {
@@ -86,10 +86,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    // width: wp(70),
+    width: wp(90),
     padding: wp(4),
-    paddingLeft: wp(10),
-    paddingRight: wp(10),
+    // paddingLeft: wp(20),
+    // paddingRight: wp(20),
     borderRadius: wp(3),
   },
   siginwithGoogle: {
