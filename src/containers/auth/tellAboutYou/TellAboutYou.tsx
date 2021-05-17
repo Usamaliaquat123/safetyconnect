@@ -30,9 +30,9 @@ import {animation} from '@theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 type TellAboutYouNavigationProp = StackNavigationProp<
   StackNavigatorProps,
-  'tellAboutYou'
+  'TellAboutYou'
 >;
-type TellAboutYouRouteProp = RouteProp<StackNavigatorProps, 'tellAboutYou'>;
+type TellAboutYouRouteProp = RouteProp<StackNavigatorProps, 'TellAboutYou'>;
 
 export interface TellAboutYouProps {
   navigation: TellAboutYouNavigationProp;
@@ -64,7 +64,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
       nameError: false,
       laoding: false,
 
-      password: '',
+      IndustryRole: '',
     };
   }
 
@@ -100,54 +100,35 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
 
   updateProfile = () => {
     if (this.state.name !== '') {
-      if (this.state.role !== '') {
-        this.setState({loading: true, errorModal: true});
-
-        api
-          .createApi()
-          .createUser({
-            name: this.state.name,
-            email: this.props.route.params.username,
-            organization: [],
-          })
-          .then((res) => {
-            if (res.status == 200) {
-              api
-                .createApi()
-                .setUserInfo({
-                  email: this.props.route.params.username,
-                  role: this.state.role,
-                  department: this.state.DesignAndArchitectureText,
-                  industry: this.state.IndustrySelectionText,
-                  img_url:
-                    this.state.uploadedImage === ''
-                      ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
-                      : this.state.uploadedImage,
-                })
-                .then((res) => {
-                  this.setState({loading: false, errorModal: false});
-                  AsyncStorage.setItem(
-                    'email',
-                    this.props.route.params.username,
-                  );
-                  AsyncStorage.setItem(
-                    'photo',
-                    this.state.uploadedImage === ''
-                      ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
-                      : this.state.uploadedImage,
-                  );
-                  this.setState({loading: true});
-                  if ((res.status = 200)) {
-                    this.props.navigation.navigate('CreateOrg');
-                  }
+      if (this.state.DesignAndArchitectureText !== '') {
+        if (this.state.IndustryRole !== '') {
+          this.setState({loading: true, errorModal: true});
+          api
+            .createApi()
+            .setUserInfo({
+              email: this.props.route.params.username, // dynal=mic link
+              role: this.state.DesignAndArchitectureText,
+              department: this.state.IndustryRole,
+              industry: this.state.name,
+            })
+            .then((res) => {
+              console.log('with in set user info');
+              console.log(res);
+              console.log('with in set user info');
+              if ((res.status = 200)) {
+                this.setState({
+                  loading: false,
+                  errorModal: false,
                 });
-            } else {
-              this.setState({loading: false, errorModal: false});
-            }
-          })
-          .catch((err) => {
-            this.setState({loading: false, errorModal: false});
-          });
+                AsyncStorage.setItem(
+                  'email',
+                  this.props.route.params.username, // dynal=mic link
+                );
+              }
+            });
+        } else {
+          this.setState({roleError: true, nameError: false});
+        }
       } else {
         this.setState({roleError: true, nameError: false});
       }
@@ -183,7 +164,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   Tell us more about yourself
                 </Text>
                 <Text style={styles.headingPara}>
-                  Upload your Profile Picture
+                  Tell more about you
                   <Text style={styles.headingParaEmail}>
                     {/* {' '} */}
                     {/* {this.props.route.params.username} */}
@@ -235,14 +216,15 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     <TextInput
                       secureTextEntry={this.state.isEye}
                       style={styles.authInputs}
-                      value={this.state.password}
+                      value={this.state.IndustryRole}
                       onChange={(e) => {
                         // if (validatePassword(this.state.password)) {
                         //   this.setState({error: false});
                         // } else {
+
                         //   this.setState({error: true});
                         // }
-                        this.setState({password: e.nativeEvent.text});
+                        this.setState({IndustryRole: e.nativeEvent.text});
                       }}
                       placeholder={'Top Management'}
                     />

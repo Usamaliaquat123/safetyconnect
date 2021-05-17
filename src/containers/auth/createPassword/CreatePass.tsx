@@ -118,33 +118,10 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                       console.log(res);
                       console.log('with in create user function');
                       if (res.status == 200) {
-                        api
-                          .createApi()
-                          .setUserInfo({
-                            email: this.props.route.params.email, // dynal=mic link
-                            role: '',
-                            department: '',
-                            industry: '',
-                          })
-                          .then((res) => {
-                            console.log('with in set user info');
-                            console.log(res);
-                            console.log('with in set user info');
-                            if ((res.status = 200)) {
-                              this.setState({
-                                loading: false,
-                                errorModal: false,
-                              });
-                              AsyncStorage.setItem(
-                                'email',
-                                this.props.route.params.email, // dynal=mic link
-                              );
-
-                              this.props.navigation.navigate('tellAboutYou', {
-                                username: this.props.route.params.email,
-                              });
-                            }
-                          });
+                        this.props.navigation.navigate('TellAboutYou', {
+                          username: this.props.route.params.email,
+                        });
+                        this.setState({loading: false, errorModal: false});
                       } else {
                         this.setState({loading: false, errorModal: false});
                       }
