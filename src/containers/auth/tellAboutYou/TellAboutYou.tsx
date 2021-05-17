@@ -120,6 +120,12 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   loading: false,
                   errorModal: false,
                 });
+                api
+                  .createApi()
+                  .getUser(this.props.route.params.username)
+                  .then((res: any) => {
+                    AsyncStorage.setItem('user', JSON.stringify(res.data.data));
+                  });
                 AsyncStorage.setItem('email', this.props.route.params.username);
               }
             });
