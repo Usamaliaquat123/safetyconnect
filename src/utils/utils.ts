@@ -369,6 +369,7 @@ export const cameraCapture = () => {
 };
 
 export const redirectDynamiclink = (link: any, navigation: any) => {
+  console.log(link);
   // console.log(link);
   if (link != null) {
     if (link.url.split('/')[3].split('?')[0] == 'user-info') {
@@ -381,17 +382,15 @@ export const redirectDynamiclink = (link: any, navigation: any) => {
         code: link.url.split('/')[3].split('?')[1].split('&')[1].split('=')[1],
         type: 'verify',
       });
-    } else {
-      // consoel.l;
-      navigation.navigate('CreatePass', {
+    } else if (link.url.split('/')[3].split('?')[0] == 'change-password') {
+      console.log(link);
+      navigation.navigate('ChangePassword', {
         email: link.url
           .split('/')[3]
           .split('?')[1]
           .split('email=')[1]
           .split('&')[0],
         code: link.url.split('/')[3].split('?')[1].split('&')[1].split('=')[1],
-
-        type: 'forgot',
       });
     }
   }

@@ -25,7 +25,7 @@ export type StackNavigatorProps = {
   NoInternet: undefined;
   Main: undefined;
   Notification: undefined;
-  ChangePassword: {data: any};
+  ChangePassword: {email: string; code: any};
 };
 export type BottomTabNavigatorProp = {
   home: {user?: any};

@@ -28,9 +28,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type ChangePasswordsNavigationProp = StackNavigationProp<
   StackNavigatorProps,
-  'CreatePass'
+  'ChangePassword'
 >;
-type ChangePasswordRouteProp = RouteProp<StackNavigatorProps, 'CreatePass'>;
+type ChangePasswordRouteProp = RouteProp<StackNavigatorProps, 'ChangePassword'>;
 
 export interface ChangePasswordProps {
   navigation: ChangePasswordsNavigationProp;
@@ -71,113 +71,43 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
     console.log(this.state.password);
     console.log(this.state.code);
     console.log(this.state.email);
-    if (this.state.name !== ' ') {
-      if (validatePassword(this.state.password)) {
-        if (this.state.password == this.state.passMatchText) {
-          try {
-            this.setState({
-              passMachErr: false,
-              error: false,
-              loading: true,
-              errorModal: true,
-            });
+    if (validatePassword(this.state.password)) {
+      if (this.state.password == this.state.passMatchText) {
+        try {
+          this.setState({
+            passMachErr: false,
+            error: false,
+            loading: true,
+            errorModal: true,
+          });
 
-            await Auth.forgotPasswordSubmit(
-              this.props.route.params.email, // dynal=mic link
-              this.props.route.params.code, // dynamic link
-              this.state.password, //password new
-            )
-              .then((res) => {
-                console.log(res);
-                Auth.signIn(
-                  this.props.route.params.email, // dynal=mic link
-                  this.state.password,
-                ).then((res) => {
-                  this.setState({loading: false, errorModal: false});
-                  console.log('with in signin functions');
-                  console.log(res);
-                  console.log('with in signin functions');
-                  api
-                    .createApi()
-                    .createUser({
-                      name: this.state.name,
-                      email: this.props.route.params.email, // dynal=mic link
-                      organization: [],
-                      img_url:
-                        'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
-                    })
-                    .then((res) => {
-                      console.log('with in create user function');
-                      console.log(res);
-                      console.log('with in create user function');
-                      if (res.status == 200) {
-                        api
-                          .createApi()
-                          .setUserInfo({
-                            email: this.props.route.params.email, // dynal=mic link
-                            role: '',
-                            department: '',
-                            industry: '',
-                          })
-                          .then((res) => {
-                            console.log('with in set user info');
-                            console.log(res);
-                            console.log('with in set user info');
-                            if ((res.status = 200)) {
-                              this.setState({
-                                loading: false,
-                                errorModal: false,
-                              });
-                              AsyncStorage.setItem(
-                                'email',
-                                this.props.route.params.email, // dynal=mic link
-                              );
+          await Auth.forgotPasswordSubmit(
+            this.props.route.params.email, // dynal=mic link
+            this.props.route.params.code, // dynamic link
+            this.state.password, //password new
+          )
+            .then((res) => {
+              this.props.navigation.navigate('Main');
+            })
+            .catch((err) => {
+              console.log('error on forgot password submit ');
+              console.log(err);
 
-                              this.props.navigation.navigate('tellAboutYou', {
-                                username: this.props.route.params.email,
-                              });
-                            }
-                          });
-                      } else {
-                        this.setState({loading: false, errorModal: false});
-                      }
-                    })
-
-                    .catch((err) => {
-                      console.log('with in create user apo');
-                      console.log(err);
-                      console.log('with in create user apo');
-                    });
-
-                  // console.log(res);
-                  // if (this.props.route.params.type == 'forgot') {
-                  //   this.setState({loading: false, errorModal: false});
-                  //   this.props.navigation.navigate('Login');
-                  // } else if (this.props.route.params.type == 'verify') {
-                  //   this.setState({loading: false, errorModal: false});
-                  //   this.props.navigation.navigate('tellAboutYou', {
-                  //     username: this.props.route.params.email,
-                  //   });
-                  // }
-                });
-              })
-              .catch((err) => {
-                console.log('error on forgot password submit ');
-                console.log(err);
-                this.setState({loading: false, errorModal: false});
+              this.setState({
+                loading: false,
+                errorModal: true,
+                contentPopup: 'Your session is expired',
               });
-          } catch (err) {
-            console.log(err);
-            this.setState({loading: false, errorModal: false});
-          }
-        } else {
-          this.setState({passMachErr: true, error: false});
+            });
+        } catch (err) {
+          console.log(err);
+          this.setState({loading: false, errorModal: false});
         }
       } else {
-        this.setState({error: true});
+        this.setState({passMachErr: true, error: false});
       }
     } else {
-      this.setState({error: true, loading: false});
+      this.setState({error: true});
     }
   };
   render() {
@@ -211,18 +141,16 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
             {/* ) : ( */}
             <View style={{marginTop: wp(5)}}>
               <View style={{marginBottom: wp(10)}}>
-                <Text style={styles.headingContainer}>
-                  Welcome to SafetyConnect
-                </Text>
+                <Text style={styles.headingContainer}>Change Password</Text>
                 <Text style={styles.headingPra}>
-                  You are signing up as{' '}
+                  You are changing password of{' '}
                   <Text style={styles.headingParaEmail}>
                     {this.props.route.params.email}
                   </Text>
                 </Text>
               </View>
 
-              {/* inputs container */}
+              {/* inputs container
               <Text style={styles.passTextContainer}>
                 What is your First Name ?
               </Text>
@@ -240,7 +168,7 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
                   }}
                   placeholder={'Your First Name'}
                 />
-              </View>
+              </View> */}
               <View style={styles.inputsContainer}>
                 <Text style={styles.passTextContainer}>
                   Enter your password
@@ -306,7 +234,7 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
               </View>
               {/* )} */}
 
-              <View style={styles.inputsContainer}>
+              <View style={[styles.inputsContainer, {marginTop: wp(3)}]}>
                 <Text style={styles.passTextContainer}>
                   Confirm your password
                 </Text>
@@ -389,7 +317,11 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
           )}
           {this.state.contentPopup !== '' && (
             <View
-              style={{backgroundColor: colors.secondary, borderRadius: wp(4)}}>
+              style={{
+                backgroundColor: colors.secondary,
+                borderRadius: wp(4),
+                justifyContent: 'center',
+              }}>
               <Text>{this.state.contentPopup}</Text>
             </View>
           )}
