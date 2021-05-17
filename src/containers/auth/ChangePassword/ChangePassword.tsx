@@ -22,27 +22,25 @@ import {validatePassword} from '@utils';
 import {colors, images, GlStyles} from '@theme';
 import {RouteProp, ThemeProvider} from '@react-navigation/native';
 import styles from './styles';
-import LottieView from 'lottie-react-native';
 import {createApi as api} from '@service';
-import {animation} from '@theme';
 import Modal from 'react-native-modal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-type CreatePassNavigationProp = StackNavigationProp<
+type ChangePasswordsNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'CreatePass'
 >;
-type CreatePassRouteProp = RouteProp<StackNavigatorProps, 'CreatePass'>;
+type ChangePasswordRouteProp = RouteProp<StackNavigatorProps, 'CreatePass'>;
 
-export interface CreatePassProps {
-  navigation: CreatePassNavigationProp;
-  route: CreatePassRouteProp;
+export interface ChangePasswordProps {
+  navigation: ChangePasswordsNavigationProp;
+  route: ChangePasswordRouteProp;
   reduxActions: any;
   reduxState: any;
   // username: string;
 }
 
-class CreatePass extends React.Component<CreatePassProps, any> {
+class ChangePassword extends React.Component<ChangePasswordProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -60,11 +58,6 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       email: 'defaje7099@troikos.com',
       code: '3D449672',
     };
-  }
-  componentDidMount() {
-    console.log(this.props.route.params.code);
-    console.log(this.props.route.params.email);
-    console.log(this.props.route.params.type);
   }
 
   componentWillUnmount = () => {
@@ -414,72 +407,4 @@ const mapDispatchToProps = (dispatch: any) => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreatePass);
-
-// const handleSubmit = async (event) => {
-//   event.preventDefault();
-//   if (!shouldSubmit) {
-//     toast((t) => <Toast type="error" message="Invalid Email" toastRef={t} />);
-//     return;
-//   }
-//   // try to signup user with email and default password
-//   try {
-//     const signUpResponse = await Auth.signUp({
-//       username: email,
-//       password,
-//       attributes: {
-//         profile: 'NotConfirmed',
-//       },
-//     });
-//     // check if user profile is confirmed or not.
-//     if (signUpResponse.userConfirmed) {
-//       // check if limit is not reached else send email for forgot password
-//       const sendEmail = await Auth.forgotPassword(email).catch((error) => {
-//         if (error.message.includes('limit')) {
-//           toast((t) => (
-//             <Toast
-//               type="error"
-//               message="Attempt limit reached. Try again later."
-//               toastRef={t}
-//             />
-//           ));
-//         }
-//       });
-//       if (sendEmail) navigate('/verify-email', { state: { email } });
-//     }
-//     // navigate('/verify-email', navigate('/verify-email', {state: { email }}));
-//   } catch (e) {
-//     if (e.message.includes('google')) {
-//       navigate('/already-met');
-//     }
-//     Auth.signIn(email, process.env.REACT_APP_DEFAULT_PASSWORD)
-//       .then()
-//       .catch(async (err) => {
-//         if (err.message.includes('Incorrect')) {
-//           toast((t) => (
-//             <Toast
-//               type="error"
-//               message="Account already exists."
-//               toastRef={t}
-//             />
-//           ));
-//         }
-//         if (err.message.includes('NotConfirmed')) {
-//           const sendEmail = await Auth.forgotPassword(email).catch(
-//             (error) => {
-//               if (error.message.includes('limit')) {
-//                 toast((t) => (
-//                   <Toast
-//                     type="error"
-//                     message="Attempt limit reached. Try again later."
-//                     toastRef={t}
-//                   />
-//                 ));
-//               }
-//             }
-//           );
-//           if (sendEmail) navigate('/verify-email', { state: { email } });
-//         }
-//       });
-//   }
-// };
+export default connect(mapStateToProps, mapDispatchToProps)(ChangePassword);

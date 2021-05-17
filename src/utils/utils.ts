@@ -368,6 +368,35 @@ export const cameraCapture = () => {
   });
 };
 
+export const redirectDynamiclink = (link: any, navigation: any) => {
+  // console.log(link);
+  if (link != null) {
+    if (link.url.split('/')[3].split('?')[0] == 'user-info') {
+      navigation.navigate('CreatePass', {
+        email: link.url
+          .split('/')[3]
+          .split('?')[1]
+          .split('email=')[1]
+          .split('&')[0],
+        code: link.url.split('/')[3].split('?')[1].split('&')[1].split('=')[1],
+        type: 'verify',
+      });
+    } else {
+      // consoel.l;
+      navigation.navigate('CreatePass', {
+        email: link.url
+          .split('/')[3]
+          .split('?')[1]
+          .split('email=')[1]
+          .split('&')[0],
+        code: link.url.split('/')[3].split('?')[1].split('&')[1].split('=')[1],
+
+        type: 'forgot',
+      });
+    }
+  }
+};
+
 // Google Authentications
 export const GOOGLE_AUTH = () => {
   return new Promise((resolve, reject) => {

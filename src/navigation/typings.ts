@@ -25,6 +25,7 @@ export type StackNavigatorProps = {
   NoInternet: undefined;
   Main: undefined;
   Notification: undefined;
+  ChangePassword: {data: any};
 };
 export type BottomTabNavigatorProp = {
   home: {user?: any};
@@ -41,6 +42,7 @@ export type route =
   | 'tellAboutYou'
   | 'CreateProj'
   | 'Main'
+  | 'ChangePassword'
   | 'Verify'
   | 'Forgot'
   | 'MeetBefore'

@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Linking,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {
@@ -27,6 +28,7 @@ import {validatePassword, mainPass} from '@utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
 import {Auth} from 'aws-amplify';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 
 type SignupNavigationProp = StackNavigationProp<StackNavigatorProps, 'Signup'>;
 type SignupRouteProp = RouteProp<StackNavigatorProps, 'Signup'>;
@@ -50,6 +52,12 @@ class Signup extends React.Component<SignupProps, any> {
     };
   }
 
+  componentDidMount = () => {
+    Linking.addEventListener('sd', (e) => {});
+    dynamicLinks().onLink((l) => {
+      // this.handleDynamicLink(l);
+    });
+  };
   async signup() {
     if (this.state.username !== '') {
       if (validateEmail(this.state.username)) {

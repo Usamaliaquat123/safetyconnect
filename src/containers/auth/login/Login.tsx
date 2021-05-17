@@ -28,7 +28,12 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {validateEmail, validatePassword, GOOGLE_AUTH} from '@utils';
+import {
+  validateEmail,
+  validatePassword,
+  GOOGLE_AUTH,
+  redirectDynamiclink,
+} from '@utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 type LoginNavigationProp = StackNavigationProp<StackNavigatorProps, 'Login'>;
 type LoginRouteProp = RouteProp<StackNavigatorProps, 'Login'>;
@@ -75,46 +80,11 @@ class Login extends React.Component<LoginProps, any> {
     //   .getInitialLink()
     //   .then((link) => this.handleDynamicLink(link));
     dynamicLinks().onLink((l) => {
-      this.handleDynamicLink(l);
+      redirectDynamiclink(l, this.props.navigation);
+      // this.handleDynamicLink(l);
     });
   }
 
-  handleDynamicLink = (link: any) => {
-    // console.log(link);
-    if (link != null) {
-      if (link.url.split('/')[3].split('?')[0] == 'user-info') {
-        this.props.navigation.navigate('CreatePass', {
-          email: link.url
-            .split('/')[3]
-            .split('?')[1]
-            .split('email=')[1]
-            .split('&')[0],
-          code: link.url
-            .split('/')[3]
-            .split('?')[1]
-            .split('&')[1]
-            .split('=')[1],
-          type: 'verify',
-        });
-      } else {
-        // consoel.l;
-        this.props.navigation.navigate('CreatePass', {
-          email: link.url
-            .split('/')[3]
-            .split('?')[1]
-            .split('email=')[1]
-            .split('&')[0],
-          code: link.url
-            .split('/')[3]
-            .split('?')[1]
-            .split('&')[1]
-            .split('=')[1],
-
-          type: 'forgot',
-        });
-      }
-    }
-  };
 
   submitSignin = async () => {
     if (

@@ -22,6 +22,7 @@ import {
   CreateSOR,
   Notification,
   ViewAllSOr,
+  ChangePassword,
 } from '@containers';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -34,6 +35,13 @@ export const MainStackNavigator = (screen: route) => {
   return (
     <SafeAreaProvider>
       <Stack.Navigator initialRouteName={screen.screen}>
+        <Stack.Screen
+          name="ChangePassword"
+          component={ChangePassword}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="Notification"
           component={Notification}
