@@ -106,7 +106,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
         api
           .createApi()
           .createUser({
-            name: this.state.name,  
+            name: this.state.name,
             email: this.props.route.params.username,
             organization: [],
           })
@@ -180,18 +180,18 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
             ) : (
               <View style={{marginTop: wp(10)}}>
                 <Text style={styles.headingContainer}>
-                  Welcome to SafetyConnect
+                  Tell us more about yourself
                 </Text>
                 <Text style={styles.headingPara}>
-                  You are signed up as
+                  Upload your Profile Picture
                   <Text style={styles.headingParaEmail}>
-                    {' '}
-                    {this.props.route.params.username}
+                    {/* {' '} */}
+                    {/* {this.props.route.params.username} */}
                   </Text>
                 </Text>
                 <View style={styles.inputsContainer}>
                   <Text style={[styles.emailTextContainer, {marginTop: wp(2)}]}>
-                    What is your Full Name ?
+                    Your Industry*
                   </Text>
                   <View
                     style={[
@@ -211,18 +211,16 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       onChange={(e) =>
                         this.setState({name: e.nativeEvent.text})
                       }
-                      placeholder={'Your Full Name'}
+                      placeholder={'Oil and Gas'}
                     />
                   </View>
                   {this.state.nameError && (
                     <Text style={{color: colors.error, fontSize: wp(3)}}>
-                      * Enter your name
+                      * Enter your Industry Name
                     </Text>
                   )}
                   {/*Industry selectionv   */}
-                  <Text style={styles.emailTextContainer}>
-                    Enter your new Password
-                  </Text>
+                  <Text style={styles.emailTextContainer}>Type of Role</Text>
 
                   <View
                     style={[
@@ -246,17 +244,15 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                         // }
                         this.setState({password: e.nativeEvent.text});
                       }}
-                      placeholder={'******'}
+                      placeholder={'Top Management'}
                     />
                   </View>
-                  <Text style={styles.passwordWarning}>
+                  {/* <Text style={styles.passwordWarning}>
                     Password must contain at least 8 characters and must include
                     numbers and special character.
-                  </Text>
+                  </Text> */}
                   {/*Deraprtment selectionv   */}
-                  <Text style={styles.emailTextContainer}>
-                    Confirm Your Password
-                  </Text>
+                  <Text style={styles.emailTextContainer}>Your Role</Text>
 
                   <View
                     style={[
@@ -278,7 +274,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                           DesignAndArchitectureText: e.nativeEvent.text,
                         })
                       }
-                      placeholder={'department'}
+                      placeholder={'General Management'}
                     />
                   </View>
                 </View>

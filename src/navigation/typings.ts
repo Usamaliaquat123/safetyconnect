@@ -2,7 +2,7 @@ import {Isor, Imessage} from '@typings';
 export type StackNavigatorProps = {
   Login: undefined;
   Signup: undefined;
-  tellAboutYou: {username: string};
+  TellAboutYou: {username: string};
   CreatePass: {email: string; code: any; type?: string};
   CreateOrg: undefined;
   Forgot: undefined;

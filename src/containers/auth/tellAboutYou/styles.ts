@@ -63,10 +63,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   selectText: {
-    opacity: 0.5,
+    // opacity: 0.5,
     fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
     // textAlignVertical: 'top',
-    fontWeight: 'bold',
     width: wp(80),
   },
   passTextContainer: {
@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   authInputs: {
-    fontSize: wp(4),
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
   },
   signinText: {
     fontSize: wp(4),

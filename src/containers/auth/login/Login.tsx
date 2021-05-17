@@ -85,7 +85,6 @@ class Login extends React.Component<LoginProps, any> {
     });
   }
 
-
   submitSignin = async () => {
     if (
       this.state.username != '' &&

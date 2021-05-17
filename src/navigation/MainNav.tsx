@@ -92,7 +92,7 @@ export const MainStackNavigator = (screen: route) => {
           }}
         />
         <Stack.Screen
-          name="tellAboutYou"
+          name="TellAboutYou"
           component={TellAboutYou}
           options={{
             headerShown: false,
