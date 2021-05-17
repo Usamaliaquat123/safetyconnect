@@ -61,7 +61,11 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       code: '3D449672',
     };
   }
-  componentDidMount() {}
+  componentDidMount() {
+    console.log(this.props.route.params.code);
+    console.log(this.props.route.params.email);
+    console.log(this.props.route.params.type);
+  }
 
   componentWillUnmount = () => {
     this.setState({
@@ -85,15 +89,88 @@ class CreatePass extends React.Component<CreatePassProps, any> {
               errorModal: true,
             });
 
-            try {
-              await Auth.forgotPasswordSubmit(
-                this.state.email, // dynal=mic link
-                this.state.code, // dynamic link
-                this.state.password, //password new
-              );
-            } catch (error) {
-              console.log(error);
-            }
+            await Auth.forgotPasswordSubmit(
+              this.props.route.params.email, // dynal=mic link
+              this.props.route.params.code, // dynamic link
+              this.state.password, //password new
+            )
+              .then((res) => {
+                console.log(res);
+                Auth.signIn(
+                  this.props.route.params.email, // dynal=mic link
+                  this.state.password,
+                ).then((res) => {
+                  this.setState({loading: false, errorModal: false});
+                  console.log('with in signin functions');
+                  console.log(res);
+                  console.log('with in signin functions');
+                  api
+                    .createApi()
+                    .createUser({
+                      name: this.state.name,
+                      email: this.props.route.params.email, // dynal=mic link
+                      organization: [],
+                      img_url:
+                        'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+                    })
+                    .then((res) => {
+                      console.log('with in create user function');
+                      console.log(res);
+                      console.log('with in create user function');
+                      if (res.status == 200) {
+                        api
+                          .createApi()
+                          .setUserInfo({
+                            email: this.props.route.params.email, // dynal=mic link
+                            role: '',
+                            department: '',
+                            industry: '',
+                          })
+                          .then((res) => {
+                            console.log('with in set user info');
+                            console.log(res);
+                            console.log('with in set user info');
+                            if ((res.status = 200)) {
+                              this.setState({
+                                loading: false,
+                                errorModal: false,
+                              });
+                              AsyncStorage.setItem(
+                                'email',
+                                this.state.email, // dynal=mic link
+                              );
+
+                              this.props.navigation.navigate('Main');
+                            }
+                          });
+                      } else {
+                        this.setState({loading: false, errorModal: false});
+                      }
+                    })
+
+                    .catch((err) => {
+                      console.log('with in create user apo');
+                      console.log(err);
+                      console.log('with in create user apo');
+                    });
+
+                  // console.log(res);
+                  // if (this.props.route.params.type == 'forgot') {
+                  //   this.setState({loading: false, errorModal: false});
+                  //   this.props.navigation.navigate('Login');
+                  // } else if (this.props.route.params.type == 'verify') {
+                  //   this.setState({loading: false, errorModal: false});
+                  //   this.props.navigation.navigate('tellAboutYou', {
+                  //     username: this.props.route.params.email,
+                  //   });
+                  // }
+                });
+              })
+              .catch((err) => {
+                console.log('error on forgot password submit ');
+                console.log(err);
+                this.setState({loading: false, errorModal: false});
+              });
           } catch (err) {
             console.log(err);
             this.setState({loading: false, errorModal: false});
@@ -145,7 +222,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                 <Text style={styles.headingPra}>
                   You are signing up as{' '}
                   <Text style={styles.headingParaEmail}>
-                    {/* {this.props.route.params.email} */}
+                    {this.props.route.params.email}
                   </Text>
                 </Text>
               </View>
@@ -404,86 +481,3 @@ export default connect(mapStateToProps, mapDispatchToProps)(CreatePass);
 //       });
 //   }
 // };
-
-// await Auth.forgotPasswordSubmit(
-//   this.state.email, // dynal=mic link
-//   this.state.code, // dynamic link
-//   this.state.password, //password new
-// )
-//   .then((res) => {
-//     console.log(res);
-//     Auth.signIn(
-//       this.state.email, // dynal=mic link
-//       this.state.password,
-//     ).then((res) => {
-//       this.setState({loading: false, errorModal: false});
-//       console.log('with in signin functions');
-//       console.log(res);
-//       console.log('with in signin functions');
-//       api
-//         .createApi()
-//         .createUser({
-//           name: this.state.name,
-//           email: this.state.email, // dynal=mic link
-//           organization: [],
-//           img_url:
-//             'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
-//         })
-//         .then((res) => {
-//           console.log('with in create user function');
-//           console.log(res);
-//           console.log('with in create user function');
-//           if (res.status == 200) {
-//             api
-//               .createApi()
-//               .setUserInfo({
-//                 email: this.state.email, // dynal=mic link
-//                 role: '',
-//                 department: '',
-//                 industry: '',
-//               })
-//               .then((res) => {
-//                 console.log('with in set user info');
-//                 console.log(res);
-//                 console.log('with in set user info');
-//                 if ((res.status = 200)) {
-//                   this.setState({
-//                     loading: false,
-//                     errorModal: false,
-//                   });
-//                   AsyncStorage.setItem(
-//                     'email',
-//                     this.state.email, // dynal=mic link
-//                   );
-
-//                   this.props.navigation.navigate('Main');
-//                 }
-//               });
-//           } else {
-//             this.setState({loading: false, errorModal: false});
-//           }
-//         })
-
-//         .catch((err) => {
-//           console.log('with in create user apo');
-//           console.log(err);
-//           console.log('with in create user apo');
-//         });
-
-//       // console.log(res);
-//       // if (this.props.route.params.type == 'forgot') {
-//       //   this.setState({loading: false, errorModal: false});
-//       //   this.props.navigation.navigate('Login');
-//       // } else if (this.props.route.params.type == 'verify') {
-//       //   this.setState({loading: false, errorModal: false});
-//       //   this.props.navigation.navigate('tellAboutYou', {
-//       //     username: this.props.route.params.email,
-//       //   });
-//       // }
-//     });
-//   })
-//   .catch((err) => {
-//     console.log('error on forgot password submit ');
-//     console.log(err);
-//     this.setState({loading: false, errorModal: false});
-//   });

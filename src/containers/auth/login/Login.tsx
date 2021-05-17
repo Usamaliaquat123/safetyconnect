@@ -71,13 +71,16 @@ class Login extends React.Component<LoginProps, any> {
   componentDidMount() {
     Linking.addEventListener('sd', (e) => {});
     // dynamicLinks().app.;
-    dynamicLinks()
-      .getInitialLink()
-      .then((link) => this.handleDynamicLink(link));
-    dynamicLinks().onLink((l) => {});
+    // dynamicLinks()
+    //   .getInitialLink()
+    //   .then((link) => this.handleDynamicLink(link));
+    dynamicLinks().onLink((l) => {
+      this.handleDynamicLink(l);
+    });
   }
 
   handleDynamicLink = (link: any) => {
+    // console.log(link);
     if (link != null) {
       if (link.url.split('/')[3].split('?')[0] == 'user-info') {
         this.props.navigation.navigate('CreatePass', {
