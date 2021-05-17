@@ -106,7 +106,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
           api
             .createApi()
             .setUserInfo({
-              email: this.props.route.params.username, // dynal=mic link
+              email: this.props.route.params.username,
               role: this.state.DesignAndArchitectureText,
               department: this.state.IndustryRole,
               industry: this.state.name,
@@ -120,10 +120,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   loading: false,
                   errorModal: false,
                 });
-                AsyncStorage.setItem(
-                  'email',
-                  this.props.route.params.username, // dynal=mic link
-                );
+                AsyncStorage.setItem('email', this.props.route.params.username);
               }
             });
         } else {
