@@ -55,6 +55,10 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       passMatchText: '',
       loading: true,
       name: '',
+
+      // for testing
+      email: 'jajoc65062@threepp.com',
+      code: '3D444447',
     };
   }
   componentDidMount() {}
@@ -68,6 +72,8 @@ class CreatePass extends React.Component<CreatePassProps, any> {
 
   setupPass = () => {
     console.log(this.state.password);
+    console.log(this.state.code);
+    console.log(this.state.email);
     if (this.state.name !== ' ') {
       if (validatePassword(this.state.password)) {
         if (this.state.password == this.state.passMatchText) {
@@ -79,38 +85,45 @@ class CreatePass extends React.Component<CreatePassProps, any> {
               errorModal: true,
             });
             Auth.forgotPasswordSubmit(
-              this.props.route.params.email,
-              this.props.route.params.code,
-              this.state.password,
+              this.state.email, // dynal=mic link
+              this.state.code, // dynamic link
+              this.state.password, //password new
             )
               .then((res) => {
                 Auth.signIn(
-                  this.props.route.params.email,
+                  this.state.email, // dynal=mic link
                   this.state.password,
                 ).then((res) => {
                   this.setState({loading: false, errorModal: false});
+                  console.log('with in signin functions');
                   console.log(res);
+                  console.log('with in signin functions');
                   api
                     .createApi()
                     .createUser({
                       name: this.state.name,
-                      email: this.props.route.params.email,
+                      email: this.state.email, // dynal=mic link
                       organization: [],
                       img_url:
                         'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
                     })
                     .then((res) => {
+                      console.log('with in create user function');
                       console.log(res);
+                      console.log('with in create user function');
                       if (res.status == 200) {
                         api
                           .createApi()
                           .setUserInfo({
-                            email: this.props.route.params.email,
+                            email: this.state.email, // dynal=mic link
                             role: '',
                             department: '',
                             industry: '',
                           })
                           .then((res) => {
+                            console.log('with in set user info');
+                            console.log(res);
+                            console.log('with in set user info');
                             if ((res.status = 200)) {
                               this.setState({
                                 loading: false,
@@ -118,7 +131,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                               });
                               AsyncStorage.setItem(
                                 'email',
-                                this.props.route.params.email,
+                                this.state.email, // dynal=mic link
                               );
 
                               this.props.navigation.navigate('Main');
@@ -128,8 +141,11 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                         this.setState({loading: false, errorModal: false});
                       }
                     })
+
                     .catch((err) => {
+                      console.log('with in create user apo');
                       console.log(err);
+                      console.log('with in create user apo');
                     });
 
                   // console.log(res);
@@ -145,10 +161,12 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                 });
               })
               .catch((err) => {
+                console.log('error on forgot password submit ');
                 console.log(err);
                 this.setState({loading: false, errorModal: false});
               })
               .catch((err) => {
+                console.log('error on ');
                 console.log(err);
                 this.setState({loading: false, errorModal: false});
               });
@@ -203,7 +221,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                 <Text style={styles.headingPra}>
                   You are signing up as{' '}
                   <Text style={styles.headingParaEmail}>
-                    {this.props.route.params.email}
+                    {/* {this.props.route.params.email} */}
                   </Text>
                 </Text>
               </View>
