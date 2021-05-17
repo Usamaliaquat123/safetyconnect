@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:360928388770:android:f909083c6e96684c4919fb",
         "android_client_info": {
-          "package_name": "com.safetyconnect.ai"
+          "package_name": "com.safetyconnect"
         }
       },
       "oauth_client": [
@@ -34,7 +34,7 @@
               "client_id": "360928388770-7ms317pinkp1gao481eicugfdka1mpu0.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.safetyconnect.ai",
+                "bundle_id": "com.safetyconnect",
                 "app_store_id": "123456778"
               }
             }

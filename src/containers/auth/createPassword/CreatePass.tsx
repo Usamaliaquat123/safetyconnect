@@ -57,8 +57,8 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       name: '',
 
       // for testing
-      email: 'jajoc65062@threepp.com',
-      code: '3D444447',
+      email: 'defaje7099@troikos.com',
+      code: '3D449672',
     };
   }
   componentDidMount() {}
@@ -70,7 +70,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
     });
   };
 
-  setupPass = () => {
+  setupPass = async () => {
     console.log(this.state.password);
     console.log(this.state.code);
     console.log(this.state.email);
@@ -84,92 +84,16 @@ class CreatePass extends React.Component<CreatePassProps, any> {
               loading: true,
               errorModal: true,
             });
-            Auth.forgotPasswordSubmit(
-              this.state.email, // dynal=mic link
-              this.state.code, // dynamic link
-              this.state.password, //password new
-            )
-              .then((res) => {
-                Auth.signIn(
-                  this.state.email, // dynal=mic link
-                  this.state.password,
-                ).then((res) => {
-                  this.setState({loading: false, errorModal: false});
-                  console.log('with in signin functions');
-                  console.log(res);
-                  console.log('with in signin functions');
-                  api
-                    .createApi()
-                    .createUser({
-                      name: this.state.name,
-                      email: this.state.email, // dynal=mic link
-                      organization: [],
-                      img_url:
-                        'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
-                    })
-                    .then((res) => {
-                      console.log('with in create user function');
-                      console.log(res);
-                      console.log('with in create user function');
-                      if (res.status == 200) {
-                        api
-                          .createApi()
-                          .setUserInfo({
-                            email: this.state.email, // dynal=mic link
-                            role: '',
-                            department: '',
-                            industry: '',
-                          })
-                          .then((res) => {
-                            console.log('with in set user info');
-                            console.log(res);
-                            console.log('with in set user info');
-                            if ((res.status = 200)) {
-                              this.setState({
-                                loading: false,
-                                errorModal: false,
-                              });
-                              AsyncStorage.setItem(
-                                'email',
-                                this.state.email, // dynal=mic link
-                              );
 
-                              this.props.navigation.navigate('Main');
-                            }
-                          });
-                      } else {
-                        this.setState({loading: false, errorModal: false});
-                      }
-                    })
-
-                    .catch((err) => {
-                      console.log('with in create user apo');
-                      console.log(err);
-                      console.log('with in create user apo');
-                    });
-
-                  // console.log(res);
-                  // if (this.props.route.params.type == 'forgot') {
-                  //   this.setState({loading: false, errorModal: false});
-                  //   this.props.navigation.navigate('Login');
-                  // } else if (this.props.route.params.type == 'verify') {
-                  //   this.setState({loading: false, errorModal: false});
-                  //   this.props.navigation.navigate('tellAboutYou', {
-                  //     username: this.props.route.params.email,
-                  //   });
-                  // }
-                });
-              })
-              .catch((err) => {
-                console.log('error on forgot password submit ');
-                console.log(err);
-                this.setState({loading: false, errorModal: false});
-              })
-              .catch((err) => {
-                console.log('error on ');
-                console.log(err);
-                this.setState({loading: false, errorModal: false});
-              });
+            try {
+              await Auth.forgotPasswordSubmit(
+                this.state.email, // dynal=mic link
+                this.state.code, // dynamic link
+                this.state.password, //password new
+              );
+            } catch (error) {
+              console.log(error);
+            }
           } catch (err) {
             console.log(err);
             this.setState({loading: false, errorModal: false});
@@ -480,3 +404,86 @@ export default connect(mapStateToProps, mapDispatchToProps)(CreatePass);
 //       });
 //   }
 // };
+
+// await Auth.forgotPasswordSubmit(
+//   this.state.email, // dynal=mic link
+//   this.state.code, // dynamic link
+//   this.state.password, //password new
+// )
+//   .then((res) => {
+//     console.log(res);
+//     Auth.signIn(
+//       this.state.email, // dynal=mic link
+//       this.state.password,
+//     ).then((res) => {
+//       this.setState({loading: false, errorModal: false});
+//       console.log('with in signin functions');
+//       console.log(res);
+//       console.log('with in signin functions');
+//       api
+//         .createApi()
+//         .createUser({
+//           name: this.state.name,
+//           email: this.state.email, // dynal=mic link
+//           organization: [],
+//           img_url:
+//             'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+//         })
+//         .then((res) => {
+//           console.log('with in create user function');
+//           console.log(res);
+//           console.log('with in create user function');
+//           if (res.status == 200) {
+//             api
+//               .createApi()
+//               .setUserInfo({
+//                 email: this.state.email, // dynal=mic link
+//                 role: '',
+//                 department: '',
+//                 industry: '',
+//               })
+//               .then((res) => {
+//                 console.log('with in set user info');
+//                 console.log(res);
+//                 console.log('with in set user info');
+//                 if ((res.status = 200)) {
+//                   this.setState({
+//                     loading: false,
+//                     errorModal: false,
+//                   });
+//                   AsyncStorage.setItem(
+//                     'email',
+//                     this.state.email, // dynal=mic link
+//                   );
+
+//                   this.props.navigation.navigate('Main');
+//                 }
+//               });
+//           } else {
+//             this.setState({loading: false, errorModal: false});
+//           }
+//         })
+
+//         .catch((err) => {
+//           console.log('with in create user apo');
+//           console.log(err);
+//           console.log('with in create user apo');
+//         });
+
+//       // console.log(res);
+//       // if (this.props.route.params.type == 'forgot') {
+//       //   this.setState({loading: false, errorModal: false});
+//       //   this.props.navigation.navigate('Login');
+//       // } else if (this.props.route.params.type == 'verify') {
+//       //   this.setState({loading: false, errorModal: false});
+//       //   this.props.navigation.navigate('tellAboutYou', {
+//       //     username: this.props.route.params.email,
+//       //   });
+//       // }
+//     });
+//   })
+//   .catch((err) => {
+//     console.log('error on forgot password submit ');
+//     console.log(err);
+//     this.setState({loading: false, errorModal: false});
+//   });
