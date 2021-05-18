@@ -8,14 +8,14 @@ const styles = StyleSheet.create({
   addNewContainer: {
     position: 'absolute',
     zIndex: wp(2),
-    top: wp(-7),
+    top: wp(-9),
     backgroundColor: colors.primary,
     borderRadius: wp(10),
     padding: wp(4),
   },
   addNewText: {
-    marginLeft: wp(2.2),
-    marginTop: wp(10),
+    marginLeft: wp(2.1),
+    marginTop: wp(8),
     fontSize: wp(3),
   },
   containerOfIcon: {

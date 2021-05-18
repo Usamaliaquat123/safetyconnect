@@ -33,6 +33,7 @@ export type BottomTabNavigatorProp = {
   sor: {user?: any};
   addNew: {user?: any};
   create: {user?: any};
+  Inbox: {user?: any};
   MyTasks: {user?: any};
   more: {user?: any};
   Notification: {user?: any};
