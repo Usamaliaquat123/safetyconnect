@@ -40,14 +40,15 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: wp(3.6),
+    fontFamily: fonts.SFuiDisplayMedium,
     marginLeft: wp(3),
     color: colors.secondary,
   },
   orgTitle: {
     fontSize: wp(5),
     marginLeft: wp(3),
+    fontFamily: fonts.SFuiDisplaySemiBold,
     color: colors.secondary,
-    fontWeight: 'bold',
   },
 
   content: {
@@ -88,6 +89,22 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     marginTop: wp(1.4),
     width: wp(20),
+  },
+  badge: {
+    borderRadius: wp(10),
+    alignItems: 'center',
+    width: wp(2),
+    position: 'absolute',
+    top: wp(-2),
+    right: wp(1),
+    padding: wp(2),
+    justifyContent: 'center',
+    backgroundColor: colors.error,
+  },
+  badgeText: {
+    position: 'absolute',
+    fontSize: wp(2),
+    color: colors.secondary,
   },
   recentActivity: {
     marginTop: wp(2),

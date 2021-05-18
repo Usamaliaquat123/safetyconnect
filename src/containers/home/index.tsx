@@ -53,6 +53,8 @@ class Home extends React.Component<HomeProps, any> {
       user: '',
       orgName: '',
       newsorModal: false,
+      totalObservations: 0,
+      count: 0,
     };
   }
 
@@ -125,17 +127,33 @@ class Home extends React.Component<HomeProps, any> {
                 />
               </View>
               <View style={{alignSelf: 'center'}}>
-                <Text style={styles.title}>
-                  Welcome {this.state.user.name}!
-                </Text>
-                <Text style={styles.orgTitle}>{this.state.orgName}</Text>
+                <Text style={styles.title}>Welcome</Text>
+                <Text style={styles.orgTitle}>{this.state.user.name}</Text>
               </View>
               <View
                 style={{
                   position: 'absolute',
                   right: wp(0),
                   alignSelf: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'row',
                 }}>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('Notification')}
+                  style={{marginRight: wp(1)}}>
+                  {this.state.count != 0 && (
+                    <View style={styles.badge}>
+                      <Text style={styles.badgeText}>{this.state.count}</Text>
+                    </View>
+                  )}
+                  <Icon
+                    containerStyle={{marginRight: wp(3)}}
+                    size={wp(6)}
+                    name="notifications-outline"
+                    type="ionicon"
+                    color={colors.secondary}
+                  />
+                </TouchableOpacity>
                 <Avatar
                   rounded
                   source={{
@@ -389,8 +407,10 @@ class Home extends React.Component<HomeProps, any> {
                   <View
                     style={{justifyContent: 'center', alignItems: 'center'}}>
                     <Text style={styles.chartContent}>Total</Text>
-                    <Text style={styles.chartContent}>Observation</Text>
-                    <Text style={styles.chartContent}>103</Text>
+                    <Text style={styles.chartContent}>Observations</Text>
+                    <Text style={styles.chartContent}>
+                      {this.state.totalObservations}
+                    </Text>
                   </View>
                 </PieChart>
               </Animated.View>

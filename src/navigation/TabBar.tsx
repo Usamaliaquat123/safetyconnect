@@ -38,7 +38,7 @@ export const BottomTabNavigator = () => {
         <Tab.Screen name="home" component={Home} options={{}} />
         <Tab.Screen name="My Tasks" component={ViewAllSOr} options={{}} />
         <Tab.Screen name="addNew" component={ViewAllSOr} />
-        <Tab.Screen name="Inbox" component={Notification} options={{}} />
+        <Tab.Screen name="Inbox" component={Messaging} options={{}} />
         <Tab.Screen name="more" component={Menu} options={{}} />
       </Tab.Navigator>
       {/* </NavigationContainer> */}
