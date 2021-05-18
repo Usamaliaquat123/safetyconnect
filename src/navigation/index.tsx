@@ -53,9 +53,7 @@ export const Navigator = (props: any) => {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <MainStackNavigator
-          screen={user === null ? 'TellAboutYou' : 'TellAboutYou'}
-        />
+        <MainStackNavigator screen={user === null ? 'Login' : 'Main'} />
       </NavigationContainer>
     </SafeAreaProvider>
   );

@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   iconImages: {
-    width: wp(7),
-    height: wp(7),
+    width: wp(12),
+    height: wp(12),
   },
   orgLogo: {
     backgroundColor: colors.secondary,
@@ -76,11 +76,14 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: '#F0F7ED',
     borderRadius: wp(5),
-    padding: wp(9),
+    padding: wp(7),
+    justifyContent: 'center',
+    alignItems: 'center',
     width: wp(25),
   },
   itemText: {
-    fontSize: wp(3.4),
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
     textAlign: 'center',
     flexWrap: 'wrap',
     marginTop: wp(1.4),

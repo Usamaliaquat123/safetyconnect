@@ -36,7 +36,7 @@ type HomeScreenNavigationProp = StackNavigationProp<
   'Home'
 >;
 type HomeRouteProp = RouteProp<StackNavigatorProps, 'Home'>;
-const PROJECT_ID: string = '608fcd465509dad0d436cdd0';
+const PROJECT_ID: string = '';
 export interface HomeProps {
   route: HomeRouteProp;
   navigation: HomeScreenNavigationProp;
@@ -50,7 +50,7 @@ class Home extends React.Component<HomeProps, any> {
     this.state = {
       selectedStats: 1,
       recentActivity: [],
-      username: 'Usama',
+      user: '',
       orgName: '',
       newsorModal: false,
     };
@@ -75,7 +75,11 @@ class Home extends React.Component<HomeProps, any> {
 
     AsyncStorage.getItem('user').then((res: any) => {
       const arr = JSON.parse(res);
-      this.setState({username: arr.name, orgName: arr.organizations[0].name});
+      console.log(arr);
+      this.setState({user: arr});
+      if (arr.orgnaization.length != 0) {
+        this.setState({orgName: arr.organizations[0].name});
+      }
     });
   }
 
@@ -105,6 +109,7 @@ class Home extends React.Component<HomeProps, any> {
     return (
       <View style={{flex: 1, backgroundColor: colors.primary}}>
         <ScrollView
+          showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl
               refreshing={this.state.loading}
@@ -120,7 +125,9 @@ class Home extends React.Component<HomeProps, any> {
                 />
               </View>
               <View style={{alignSelf: 'center'}}>
-                <Text style={styles.title}>Welcome {this.state.username}!</Text>
+                <Text style={styles.title}>
+                  Welcome {this.state.user.name}!
+                </Text>
                 <Text style={styles.orgTitle}>{this.state.orgName}</Text>
               </View>
               <View
@@ -132,7 +139,7 @@ class Home extends React.Component<HomeProps, any> {
                 <Avatar
                   rounded
                   source={{
-                    uri: View_sor.user.profile,
+                    uri: this.state.user.img_url,
                   }}
                 />
               </View>
@@ -157,7 +164,13 @@ class Home extends React.Component<HomeProps, any> {
                   />
                 </View>
                 <Text style={styles.itemText}>Incident</Text>
-                <Text style={{fontSize: wp(3)}}>Report</Text>
+                <Text
+                  style={{
+                    fontSize: wp(3),
+                    fontFamily: fonts.SFuiDisplayMedium,
+                  }}>
+                  Report
+                </Text>
               </View>
               <View style={{alignItems: 'center'}}>
                 <View style={styles.item}>

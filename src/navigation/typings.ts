@@ -24,6 +24,7 @@ export type StackNavigatorProps = {
   NothingFound: undefined;
   NoInternet: undefined;
   Main: undefined;
+
   Notification: undefined;
   ChangePassword: {email: string; code: any};
 };
@@ -32,6 +33,7 @@ export type BottomTabNavigatorProp = {
   sor: {user?: any};
   addNew: {user?: any};
   create: {user?: any};
+  MyTasks: {user?: any};
   more: {user?: any};
   Notification: {user?: any};
 };

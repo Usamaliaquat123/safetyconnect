@@ -232,7 +232,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     });
     this.componentDidMount();
   };
-  filterDecending = (sors: Array<any>, name: string) => {};
 
   render() {
     return (

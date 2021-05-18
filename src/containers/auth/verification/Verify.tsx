@@ -39,7 +39,7 @@ class Verify extends React.Component<VerifyProps, any> {
   }
 
   componentDidMount() {
-    this.props.navigation.navigate('CreatePass');
+    // this.props.navigation.navigate('CreatePass');
     dynamicLinks()
       .getInitialLink()
       .then((link) => this.handleDynamicLink(link));
