@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   involveSuggestCont: {
-    borderColor: colors.green,
+    borderColor: colors.primary,
     borderRadius: wp(3),
     padding: wp(3),
     borderWidth: wp(0.3),

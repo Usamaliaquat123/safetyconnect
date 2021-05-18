@@ -113,8 +113,13 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
   updateProfile = () => {
     if (this.state.name !== '') {
       if (this.state.DesignAndArchitectureText !== '') {
+        this.setState({DesignAndArchitectureTextError: false});
         if (this.state.IndustryRole !== '') {
-          this.setState({loading: true, errorModal: true});
+          this.setState({
+            loading: true,
+            errorModal: true,
+            IndustryRoleError: false,
+          });
           api
             .createApi()
             .setUserInfo({
@@ -142,10 +147,10 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
               }
             });
         } else {
-          this.setState({roleError: true, nameError: false});
+          this.setState({IndustryRoleError: true, nameError: false});
         }
       } else {
-        this.setState({roleError: true, nameError: false});
+        this.setState({DesignAndArchitectureTextError: true, nameError: false});
       }
 
       // api.
@@ -258,7 +263,11 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       placeholder={'Top Management'}
                     />
                   </View>
-
+                  {this.state.IndustryRoleError && (
+                    <Text style={{color: colors.error, fontSize: wp(3)}}>
+                      * Enter your Industry Role
+                    </Text>
+                  )}
                   {this.state.arrayOfRole.length != 0 ? (
                     <View style={styles.involveSuggestCont}>
                       {this.state.arrayOfRole.map((d: string, i: number) => (
@@ -312,6 +321,11 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       placeholder={'General Management'}
                     />
                   </View>
+                  {this.state.DesignAndArchitectureTextError && (
+                    <Text style={{color: colors.error, fontSize: wp(3)}}>
+                      * Enter your Role
+                    </Text>
+                  )}
                 </View>
 
                 <TouchableOpacity
