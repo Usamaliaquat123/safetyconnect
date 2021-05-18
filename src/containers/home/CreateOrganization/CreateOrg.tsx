@@ -57,6 +57,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
       org: '',
       orgDetails: '',
       projectLeader: '',
+      peoplesText: '',
       peoples: [], // must be array of id's
       projects: [],
     };
@@ -161,7 +162,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                     <TextInput
                       value={this.state.org}
                       style={styles.authInputs}
-                      onChange={(e) => this.setState({org: e.nativeEvent.text})}
+                      onChangeText={(e) => this.setState({org: e})}
                       placeholder={'Enter Organization Name'}
                     />
                   </View>
@@ -188,9 +189,9 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                   </View>
                   <View style={[styles.inputContainer]}>
                     <TextInput
-                      value={this.state.org}
+                      value={this.state.orgDetails}
                       style={styles.authInputs}
-                      onChange={(e) => this.setState({org: e.nativeEvent.text})}
+                      onChangeText={(e) => this.setState({orgDetails: e})}
                       placeholder={'Enter Organization description here'}
                     />
                   </View>
@@ -266,9 +267,9 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                   </View>
                   <View style={[styles.inputContainer]}>
                     <TextInput
-                      value={this.state.org}
+                      value={this.state.peoplesText}
                       style={styles.authInputs}
-                      onChange={(e) => this.setState({org: e.nativeEvent.text})}
+                      onChangeText={(e) => this.setState({peoplesText: e})}
                       placeholder={'Enter name'}
                     />
                   </View>
