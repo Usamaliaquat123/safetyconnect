@@ -50,7 +50,7 @@ class Home extends React.Component<HomeProps, any> {
     this.state = {
       selectedStats: 1,
       recentActivity: [],
-      user: '',
+      user: {},
       orgName: '',
       newsorModal: false,
       totalObservations: 0,
@@ -64,22 +64,22 @@ class Home extends React.Component<HomeProps, any> {
       if (JSON.parse(res).orgnaization.length != 0) {
         this.setState({orgName: JSON.parse(res).organizations[0].name});
       }
-      createApi
-        .createApi()
-        .filterSors({
-          project: PROJECT_ID,
-          limit: 10,
-          page: 0,
-          query: {status: [1, 2, 3, 4, 5]},
-        })
-        .then((res: any) => {
-          if (res.data.data.report.length > 3) {
-            this.setState({recentActivity: res.data.data.report.slice(0, 3)});
-          } else {
-            this.setState({recentActivity: res.data.data.report});
-          }
-        });
     });
+    createApi
+      .createApi()
+      .filterSors({
+        project: PROJECT_ID,
+        limit: 10,
+        page: 0,
+        query: {status: [1, 2, 3, 4, 5]},
+      })
+      .then((res: any) => {
+        if (res.data.data.report.length > 3) {
+          this.setState({recentActivity: res.data.data.report.slice(0, 3)});
+        } else {
+          this.setState({recentActivity: res.data.data.report});
+        }
+      });
   }
 
   _onRefresh = () => {
