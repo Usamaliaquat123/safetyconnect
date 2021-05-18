@@ -21,7 +21,11 @@ import {StackNavigatorProps, route} from '@nav';
 import {Avatar, Icon} from 'react-native-elements';
 import {colors, images, GlStyles} from '@theme';
 import {RouteProp} from '@react-navigation/native';
-import {imagePicker, cameraCapture} from '@utils';
+import {
+  imagePicker,
+  cameraCapture,
+  suggestInActionsRecommendations,
+} from '@utils';
 import {Storage} from 'aws-amplify';
 import Modal from 'react-native-modal';
 import LottieView from 'lottie-react-native';
@@ -33,7 +37,15 @@ type TellAboutYouNavigationProp = StackNavigationProp<
   'TellAboutYou'
 >;
 type TellAboutYouRouteProp = RouteProp<StackNavigatorProps, 'TellAboutYou'>;
-
+const industries = [
+  'Oil & Gas',
+  'Mining and Quarrying',
+  'Petrochemicals & Polymers',
+  'Construction',
+  'Power Generation & Distribution',
+  'Transportation & Logistics',
+  'Health Care & Pharmaceuticals',
+];
 export interface TellAboutYouProps {
   navigation: TellAboutYouNavigationProp;
   route: TellAboutYouRouteProp;
@@ -63,7 +75,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
       errorModal: false,
       nameError: false,
       laoding: false,
-
+      arrayOfRole: [],
       IndustryRole: '',
     };
   }
@@ -217,21 +229,59 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                           },
                     ]}>
                     <TextInput
-                      secureTextEntry={this.state.isEye}
+                      // secureTextEntry={this.state.isEye}
                       style={styles.authInputs}
                       value={this.state.IndustryRole}
-                      onChange={(e) => {
+                      onChangeText={(e) => {
                         // if (validatePassword(this.state.password)) {
                         //   this.setState({error: false});
                         // } else {
 
                         //   this.setState({error: true});
                         // }
-                        this.setState({IndustryRole: e.nativeEvent.text});
+
+                        if (e !== '') {
+                          this.setState({
+                            arrayOfRole: suggestInActionsRecommendations(
+                              e,
+                              industries,
+                            ),
+                          });
+                        } else {
+                          this.setState({arrayOfRole: []});
+                        }
+
+                        console.log();
+
+                        this.setState({IndustryRole: e});
                       }}
                       placeholder={'Top Management'}
                     />
                   </View>
+
+                  {this.state.arrayOfRole.length != 0 ? (
+                    <View style={styles.involveSuggestCont}>
+                      {this.state.arrayOfRole.map((d: string, i: number) => (
+                        <TouchableOpacity
+                          key={i}
+                          onPress={() => {
+                            this.setState({
+                              IndustryRole: d,
+                              arrayOfRole: [],
+                            });
+                          }}
+                          style={[
+                            styles.involvePsuggCont,
+                            this.state.arrayOfRole.length == i + 1
+                              ? {borderBottomWidth: wp(0)}
+                              : null,
+                          ]}>
+                          <Text style={styles.involvePSt}>{d}</Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  ) : null}
+
                   {/* <Text style={styles.passwordWarning}>
                     Password must contain at least 8 characters and must include
                     numbers and special character.
