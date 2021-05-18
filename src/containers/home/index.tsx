@@ -36,7 +36,7 @@ type HomeScreenNavigationProp = StackNavigationProp<
   'Home'
 >;
 type HomeRouteProp = RouteProp<StackNavigatorProps, 'Home'>;
-
+const PROJECT_ID: string = '608fcd465509dad0d436cdd0';
 export interface HomeProps {
   route: HomeRouteProp;
   navigation: HomeScreenNavigationProp;
@@ -60,7 +60,7 @@ class Home extends React.Component<HomeProps, any> {
     createApi
       .createApi()
       .filterSors({
-        project: '6038cf8472762b29b1bed1f3',
+        project: PROJECT_ID,
         limit: 10,
         page: 0,
         query: {status: [1, 2, 3, 4, 5]},

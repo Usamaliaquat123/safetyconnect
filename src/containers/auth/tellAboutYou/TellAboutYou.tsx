@@ -144,6 +144,8 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     AsyncStorage.setItem('user', JSON.stringify(res.data.data));
                   });
                 AsyncStorage.setItem('email', this.props.route.params.username);
+
+                this.props.navigation.navigate('Home');
               }
             });
         } else {
