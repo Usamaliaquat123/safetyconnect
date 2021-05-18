@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     marginLeft: wp(3),
     fontFamily: fonts.SFuiDisplaySemiBold,
     color: colors.secondary,
+    fontWeight: 'bold',
   },
 
   content: {

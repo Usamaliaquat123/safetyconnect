@@ -47,8 +47,6 @@ export default class Menu extends React.Component<MenuProps, any> {
     });
   }
 
-  manageOrganizations = (organizations: Array) => {};
-
   render() {
     return (
       <View style={{flex: 1, backgroundColor: colors.primary}}>
