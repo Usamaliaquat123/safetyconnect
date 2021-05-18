@@ -36,10 +36,10 @@ const styles = StyleSheet.create({
   headertle: {flexDirection: 'row'},
   //  content
   content: {
-    height: hp(100),
+    // height: hp(100),
     padding: wp(5),
 
-    paddingBottom: hp(20),
+    paddingBottom: hp(5),
     backgroundColor: colors.secondary,
     borderRadius: wp(3),
   },
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   signinText: {
     fontSize: wp(4),
-    fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplaySemiBold,
     color: colors.secondary,
   },
   signinTextGoogle: {
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     color: colors.primary,
   },
   siginBtnContainer: {
-    marginTop: wp(10),
+    marginTop: wp(5),
     alignSelf: 'center',
     backgroundColor: colors.primary,
     justifyContent: 'center',
