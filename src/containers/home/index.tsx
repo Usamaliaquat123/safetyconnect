@@ -59,29 +59,26 @@ class Home extends React.Component<HomeProps, any> {
   }
 
   componentDidMount() {
-    createApi
-      .createApi()
-      .filterSors({
-        project: PROJECT_ID,
-        limit: 10,
-        page: 0,
-        query: {status: [1, 2, 3, 4, 5]},
-      })
-      .then((res: any) => {
-        if (res.data.data.report.length > 3) {
-          this.setState({recentActivity: res.data.data.report.slice(0, 3)});
-        } else {
-          this.setState({recentActivity: res.data.data.report});
-        }
-      });
-
     AsyncStorage.getItem('user').then((res: any) => {
-      const arr = JSON.parse(res);
-      console.log(arr);
-      this.setState({user: arr});
-      if (arr.orgnaization.length != 0) {
-        this.setState({orgName: arr.organizations[0].name});
+      this.setState({user: JSON.parse(res)});
+      if (JSON.parse(res).orgnaization.length != 0) {
+        this.setState({orgName: JSON.parse(res).organizations[0].name});
       }
+      createApi
+        .createApi()
+        .filterSors({
+          project: PROJECT_ID,
+          limit: 10,
+          page: 0,
+          query: {status: [1, 2, 3, 4, 5]},
+        })
+        .then((res: any) => {
+          if (res.data.data.report.length > 3) {
+            this.setState({recentActivity: res.data.data.report.slice(0, 3)});
+          } else {
+            this.setState({recentActivity: res.data.data.report});
+          }
+        });
     });
   }
 

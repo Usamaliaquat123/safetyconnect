@@ -25,8 +25,10 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import styles from './styles';
 import {BottomTabNavigatorProp} from './typings';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Tab = createBottomTabNavigator<BottomTabNavigatorProp>();
+
 export const BottomTabNavigator = () => {
   return (
     <SafeAreaProvider>
@@ -35,7 +37,12 @@ export const BottomTabNavigator = () => {
         tabBar={(props) => <TabBar {...props} />}
         sceneContainerStyle={{backgroundColor: colors.error}}
         initialRouteName={'home'}>
-        <Tab.Screen name="home" component={Home} options={{}} />
+        <Tab.Screen
+          name="home"
+          // initialParams={}
+          component={Home}
+          options={{}}
+        />
         <Tab.Screen name="My Tasks" component={ViewAllSOr} options={{}} />
         <Tab.Screen name="addNew" component={ViewAllSOr} />
         <Tab.Screen name="Inbox" component={Messaging} options={{}} />
