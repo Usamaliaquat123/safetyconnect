@@ -26,6 +26,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import styles from './styles';
 import {BottomTabNavigatorProp} from './typings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {TabRouter} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator<BottomTabNavigatorProp>();
 
@@ -65,7 +66,7 @@ export default class TabBar extends React.Component<TabBarProps, any> {
     super(props);
 
     this.state = {
-      createModal: false,
+      createModal: true,
       icons: [],
     };
   }
@@ -199,7 +200,9 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                 {route.name == 'addNew' ? (
                   <View>
                     <TouchableOpacity
-                      onPress={() => this.setState({createModal: true})}
+                      onPress={() =>
+                        this.setState({createModal: !this.state.createModal})
+                      }
                       style={styles.addNewContainer}>
                       <Icon
                         size={30}
@@ -218,6 +221,81 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                       ]}>
                       Add New
                     </Text>
+
+                    {this.state.createModal == true ? (
+                      <View
+                        style={{
+                          position: 'absolute',
+                          // zIndex: wp(2),
+                          top: wp(-50),
+                          left: wp(-42.8),
+                          borderColor: colors.text,
+                          borderTopWidth: wp(0.2),
+                          borderLeftWidth: wp(0.2),
+                          borderBottomColor: colors.secondary,
+                          borderRightWidth: wp(0.2),
+                          width: wp(100),
+                          backgroundColor: colors.secondary,
+                          // borderRadius: wp(10),
+                          padding: wp(5),
+                          borderRadius: wp(8),
+                        }}>
+                        {/* Create New sor */}
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.setState({createModal: false});
+                            this.props.navigation.navigate('CreateSOR');
+                          }}
+                          style={styles.containerOfIcon}>
+                          <View style={styles.newsorContainer}>
+                            <Image
+                              source={images.bottomTab.note}
+                              style={GlStyles.images}
+                            />
+                          </View>
+
+                          <Text style={styles.createNewText}>New SOR</Text>
+                        </TouchableOpacity>
+                        {/* Audit and Inspection */}
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.setState({createModal: false});
+                            this.props.navigation.navigate(
+                              'CreateOrganization',
+                            );
+                          }}
+                          style={styles.containerOfIcon}>
+                          <View style={styles.auditAndReportContainer}>
+                            <Image
+                              source={images.homeIcon.auditAndReporting}
+                              style={GlStyles.images}
+                            />
+                          </View>
+                          <Text style={styles.auditReportText}>
+                            Create Organization
+                          </Text>
+                        </TouchableOpacity>
+                        {/* Incident and Accident Report */}
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.setState({createModal: false});
+                            this.props.navigation.navigate('createProject');
+                          }}
+                          style={styles.containerOfIcon}>
+                          <View style={styles.incidentContaineR}>
+                            <Image
+                              source={images.homeIcon.incidentreporting}
+                              style={GlStyles.images}
+                            />
+                          </View>
+                          <Text style={styles.auditReportText}>
+                            Create Project
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    ) : (
+                      <View></View>
+                    )}
                   </View>
                 ) : (
                   <Text
@@ -230,63 +308,6 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                 )}
               </TouchableOpacity>
               {/* Create Modal  */}
-
-              <Model
-                isVisible={this.state.createModal}
-                onBackdropPress={() => {
-                  this.setState({createModal: false, loading: false});
-                }}>
-                <View style={styles.createNewpopcontaienr}>
-                  {/* Create New sor */}
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.setState({createModal: false});
-                      this.props.navigation.navigate('CreateSOR');
-                    }}
-                    style={styles.containerOfIcon}>
-                    <View style={styles.newsorContainer}>
-                      <Image
-                        source={images.bottomTab.note}
-                        style={GlStyles.images}
-                      />
-                    </View>
-
-                    <Text style={styles.createNewText}>New SOR</Text>
-                  </TouchableOpacity>
-                  {/* Audit and Inspection */}
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.setState({createModal: false});
-                      this.props.navigation.navigate('CreateOrganization');
-                    }}
-                    style={styles.containerOfIcon}>
-                    <View style={styles.auditAndReportContainer}>
-                      <Image
-                        source={images.homeIcon.auditAndReporting}
-                        style={GlStyles.images}
-                      />
-                    </View>
-                    <Text style={styles.auditReportText}>
-                      Create Organization
-                    </Text>
-                  </TouchableOpacity>
-                  {/* Incident and Accident Report */}
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.setState({createModal: false});
-                      this.props.navigation.navigate('createProject');
-                    }}
-                    style={styles.containerOfIcon}>
-                    <View style={styles.incidentContaineR}>
-                      <Image
-                        source={images.homeIcon.incidentreporting}
-                        style={GlStyles.images}
-                      />
-                    </View>
-                    <Text style={styles.auditReportText}>Create Project</Text>
-                  </TouchableOpacity>
-                </View>
-              </Model>
             </View>
           );
         })}
@@ -303,3 +324,11 @@ export default class TabBar extends React.Component<TabBarProps, any> {
 //   reduxActions: bindActionCreators(reduxActions, dispatch),
 // });
 // export default connect(mapStateToProps, mapDispatchToProps)(TabBar);
+
+// <Model
+// isVisible={this.state.createModal}
+// onBackdropPress={() => {
+//   this.setState({createModal: false, loading: false});
+// }}>
+
+// </Model>
