@@ -43,8 +43,33 @@ export const BottomTabNavigator = () => {
           component={Home}
           options={{}}
         />
-        <Tab.Screen name="My Tasks" component={ViewAllSOr} options={{}} />
-        <Tab.Screen name="addNew" component={ViewAllSOr} />
+        <Tab.Screen name="My Tasks" component={ViewAllSOr} />
+        <Tab.Screen
+          name="addNew"
+          component={ViewAllSOr}
+          options={{
+            animationEnabled: true,
+            cardStyle: {backgroundColor: 'rgba(0, 0, 0, 0.15)'},
+            cardOverlayEnabled: true,
+            cardStyleInterpolator: ({current: {progress}}) => {
+              return {
+                cardStyle: {
+                  opacity: progress.interpolate({
+                    inputRange: [0, 0.5, 0.9, 1],
+                    outputRange: [0, 0.25, 0.7, 1],
+                  }),
+                },
+                overlayStyle: {
+                  opacity: progress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0, 0.5],
+                    extrapolate: 'clamp',
+                  }),
+                },
+              };
+            },
+          }}
+        />
         <Tab.Screen name="Inbox" component={Messaging} options={{}} />
         <Tab.Screen name="more" component={Menu} options={{}} />
       </Tab.Navigator>

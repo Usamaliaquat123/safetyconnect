@@ -2,12 +2,17 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: colors.primary,
+    // flex: 1,
+    backgroundColor: 'transparent',
+    marginLeft: wp(7),
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginTop: wp(7),
+    marginRight: wp(7),
   },
   header: {
     padding: wp(7),
@@ -33,29 +38,29 @@ const styles = StyleSheet.create({
   content: {
     height: hp(100),
     padding: wp(5),
+
     paddingBottom: hp(20),
     backgroundColor: colors.secondary,
-    borderTopLeftRadius: wp(3),
-    borderTopRightRadius: wp(3),
+    borderRadius: wp(3),
   },
   headingContainer: {
     fontSize: wp(4),
-    color: colors.primary,
-    fontWeight: 'bold',
+    color: colors.text,
+    fontFamily: fonts.SFuiDisplayBold,
   },
   inputsContainer: {
     marginTop: wp(7),
   },
   emailTextContainer: {
-    fontSize: wp(3),
-    fontWeight: 'bold',
+    fontSize: wp(3.5),
+    fontFamily: fonts.SFuiDisplaySemiBold,
   },
   inputContainer: {
     marginTop: wp(2),
-    borderColor: colors.green,
+    borderColor: colors.textOpa,
     borderWidth: wp(0.3),
     paddingLeft: wp(3),
-    borderRadius: wp(3),
+    borderRadius: wp(2),
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -84,7 +89,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    width: wp(70),
+    width: wp(60),
     padding: wp(4),
     borderRadius: wp(3),
   },
@@ -133,6 +138,13 @@ const styles = StyleSheet.create({
   },
   createnewaccountContainer: {
     marginTop: wp(3),
+  },
+
+  inviteppleText: {
+    marginLeft: wp(3),
+    fontSize: wp(3.5),
+    color: colors.primary,
+    fontFamily: fonts.SFuiDisplayMedium,
   },
 });
 

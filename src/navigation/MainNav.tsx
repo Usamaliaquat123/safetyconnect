@@ -196,8 +196,30 @@ export const MainStackNavigator = (screen: route) => {
           name="CreateOrganization"
           component={CreateOrg}
           options={{
+            animationEnabled: true,
+            cardStyle: {backgroundColor: 'rgba(0, 0, 0, 0.15)'},
+            cardOverlayEnabled: true,
+            cardStyleInterpolator: ({current: {progress}}) => {
+              return {
+                cardStyle: {
+                  opacity: progress.interpolate({
+                    inputRange: [0, 0.5, 0.9, 1],
+                    outputRange: [0, 0.25, 0.7, 1],
+                  }),
+                },
+                overlayStyle: {
+                  opacity: progress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0, 0.5],
+                    extrapolate: 'clamp',
+                  }),
+                },
+              };
+            },
             headerShown: false,
           }}
+          // options={{
+          // }}
         />
 
         <Stack.Screen

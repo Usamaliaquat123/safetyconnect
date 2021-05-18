@@ -110,14 +110,14 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
     return (
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.header}>
+          {/* <View style={styles.header}>
             <View style={styles.headertle}>
               <View>
                 <Text style={styles.title}>Create organization</Text>
                 <View style={styles.underScrore} />
               </View>
             </View>
-          </View>
+          </View> */}
           {/* content */}
           <View style={styles.content}>
             {/* {this.state.loading ? (
@@ -137,11 +137,22 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
               </View>
             ) : ( */}
             <View>
-              <Text style={styles.headingContainer}>Create Organization</Text>
+              <Text style={styles.headingContainer}>Add New Organization </Text>
               {/* inputs container */}
               <View style={styles.inputsContainer}>
                 {/* Email Container */}
-                <Text style={styles.emailTextContainer}>Organization Name</Text>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={styles.emailTextContainer}>
+                    Organization Name
+                  </Text>
+                  <Text
+                    style={[
+                      styles.emailTextContainer,
+                      {opacity: 0.5, marginLeft: wp(3)},
+                    ]}>
+                    (Mandatory)
+                  </Text>
+                </View>
                 <View style={[styles.inputContainer]}>
                   <TextInput
                     value={this.state.org}
@@ -155,6 +166,118 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                     Type your organization name
                   </Text>
                 )}
+
+                {/* Organization Description */}
+                <View style={{flexDirection: 'row', marginTop: wp(3)}}>
+                  <Text style={styles.emailTextContainer}>
+                    Organization Description
+                  </Text>
+                  <Text
+                    style={[
+                      styles.emailTextContainer,
+                      {opacity: 0.5, marginLeft: wp(3)},
+                    ]}>
+                    (Mandatory)
+                  </Text>
+                </View>
+                <View style={[styles.inputContainer]}>
+                  <TextInput
+                    value={this.state.org}
+                    style={styles.authInputs}
+                    onChange={(e) => this.setState({org: e.nativeEvent.text})}
+                    placeholder={'Enter Organization description here'}
+                  />
+                </View>
+                {this.state.orgError && (
+                  <Text style={{fontSize: wp(3), color: colors.error}}>
+                    Type your organization description
+                  </Text>
+                )}
+
+                {/* Add Projects */}
+                <View style={{flexDirection: 'row', marginTop: wp(3)}}>
+                  <Text style={styles.emailTextContainer}>Projects</Text>
+                </View>
+                <View
+                  style={{
+                    marginTop: wp(3),
+                    justifyContent: 'center',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <Icon
+                    name={'plus'}
+                    type={'antdesign'}
+                    size={wp(4)}
+                    color={colors.primary}
+                  />
+                  <Text style={styles.inviteppleText}>Add Project</Text>
+                </View>
+
+                {/* Project leader */}
+                <View style={{flexDirection: 'row', marginTop: wp(3)}}>
+                  <Text style={styles.emailTextContainer}>Project Leader</Text>
+                  <Icon
+                    containerStyle={{marginTop: wp(1), marginLeft: wp(2)}}
+                    name={'info'}
+                    type={'feather'}
+                    size={wp(3)}
+                    iconStyle={{opacity: 0.5}}
+                  />
+                </View>
+                <View style={[styles.inputContainer]}>
+                  <TextInput
+                    value={this.state.org}
+                    style={styles.authInputs}
+                    onChange={(e) => this.setState({org: e.nativeEvent.text})}
+                    placeholder={'Enter name'}
+                  />
+                </View>
+                {this.state.orgError && (
+                  <Text style={{fontSize: wp(3), color: colors.error}}>
+                    Add your Project
+                  </Text>
+                )}
+
+                {/* People */}
+                <View style={{flexDirection: 'row', marginTop: wp(3)}}>
+                  <Text style={styles.emailTextContainer}>People</Text>
+                  <Icon
+                    containerStyle={{marginTop: wp(1), marginLeft: wp(2)}}
+                    name={'info'}
+                    type={'feather'}
+                    size={wp(3)}
+                    iconStyle={{opacity: 0.5}}
+                  />
+                </View>
+                <View style={[styles.inputContainer]}>
+                  <TextInput
+                    value={this.state.org}
+                    style={styles.authInputs}
+                    onChange={(e) => this.setState({org: e.nativeEvent.text})}
+                    placeholder={'Enter name'}
+                  />
+                </View>
+                {this.state.orgError && (
+                  <Text style={{fontSize: wp(3), color: colors.error}}>
+                    Add people to the organization
+                  </Text>
+                )}
+                <View
+                  style={{
+                    marginTop: wp(3),
+                    justifyContent: 'center',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <Icon
+                    name={'plus'}
+                    type={'antdesign'}
+                    size={wp(4)}
+                    color={colors.primary}
+                  />
+                  <Text style={styles.inviteppleText}>Invite People</Text>
+                </View>
               </View>
               {/* view all projects */}
               {/* <TouchableOpacity
