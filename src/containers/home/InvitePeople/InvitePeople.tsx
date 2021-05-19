@@ -33,6 +33,7 @@ import {bindActionCreators} from 'redux';
 import {AllSorDTO} from '@dtos';
 import {getActiveChildNavigationOptions} from 'react-navigation';
 import {searchInSuggestions} from '@utils/utils';
+import {Tags} from '@components';
 // import {validateEmail} from '@utils/';
 type InvitePeopleNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -61,16 +62,29 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
       peoplesText: '',
       peoples: [], // must be array of id's
       projects: [],
-      users: [{email: 'inconnent12345@outlook.com', name: 'Usama'}],
-      usersTags: [],
+      users: [
+        {email: 'inconnent12345@outlook.com', name: 'Usama'},
+        {email: 'inconnent1234s5@outlook.com', name: 'Daniyal'},
+        {email: 'inconnent123ws5@outlook.com', name: 'Khadija'},
+        {email: 'inconnent12q45@outlook.com', name: 'Mama'},
+      ],
+      usersTags: [
+        {email: 'inconnent12345@outlook.com', name: 'Usama'},
+        {email: 'inconnent1234s5@outlook.com', name: 'Daniyal'},
+        {email: 'inconnent123ws5@outlook.com', name: 'Khadija'},
+        {email: 'inconnent12q45@outlook.com', name: 'Mama'},
+      ],
+      usersSuggestions: [],
     };
   }
 
   searchUsersAndEmail = async (e: string) => {
     if (e !== '') {
       var tags = searchInSuggestions(e, this.state.users);
-      this.setState({usersTags: tags});
+
+      this.setState({usersSuggestions: tags});
     } else {
+      this.setState({usersSuggestions: []});
     }
     this.setState({org: e});
   };
@@ -123,6 +137,13 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                     </Text>
                   </View>
                   <View style={[styles.inputContainer]}>
+                    {this.state.usersTags.length != 0 && (
+                      <Tags
+                        style={{height: wp(10)}}
+                        tags={this.state.usersTags}
+                        onClose={() => console.log('s')}
+                      />
+                    )}
                     <TextInput
                       value={this.state.org}
                       multiline={true}
@@ -139,27 +160,26 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                 </View>
 
                 {/* Suggestions of invited users */}
-                {this.state.usersTags.length != 0 ? (
+                {this.state.usersSuggestions.length != 0 ? (
                   <View>
                     <View style={styles.involveSuggestCont}>
-                      {this.state.usersTags.map((d: any, i: number) => (
+                      {this.state.usersSuggestions.map((d: any, i: number) => (
                         <TouchableOpacity
                           key={i}
                           onPress={() => {
-                            this.setState({org: '', usersTags: []});
+                            this.setState({org: '', usersSuggestions: []});
                             if (
-                              this.state.exclateToTags.filter(
-                                (v: any) => v == d,
-                              ).length == 0
+                              this.state.usersTags.filter((v: any) => v == d)
+                                .length == 0
                             ) {
-                              this.state.exclateToTags.push(d);
+                              this.state.usersTags.push(d);
                             } else {
                               return null;
                             }
                           }}
                           style={[
                             styles.involvePsuggCont,
-                            this.state.usersTags.length == i + 1
+                            this.state.usersSuggestions.length == i + 1
                               ? {borderBottomWidth: wp(0)}
                               : null,
                           ]}>
@@ -172,13 +192,55 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                           />
                           <View>
                             <Text style={styles.involvePSt}>{d.name}</Text>
-                            <Text style={{fontSize: wp(2), opacity: .5}}>{d.email}</Text>
+                            <Text style={{fontSize: wp(2), opacity: 0.5}}>
+                              {d.email}
+                            </Text>
                           </View>
                         </TouchableOpacity>
                       ))}
                     </View>
                   </View>
-                ) : null}
+                ) : (
+                  <View style={styles.involveSuggestCont}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        // this.setState({org: '', usersSuggestions: []});
+                        // if (
+                        //   this.state.usersTags.filter((v: any) => v == d)
+                        //     .length == 0
+                        // ) {
+                        this.state.usersTags.push({
+                          email: this.state.org,
+                          name: this.state.org,
+                        });
+                        // } else {
+                        //   return null;
+                        // }
+                      }}
+                      style={[
+                        styles.involvePsuggCont,
+                        {borderBottomWidth: 0},
+                        // this.state.usersSuggestions.length == i + 1
+                        //   ? {borderBottomWidth: wp(0)}
+                        //   : null,
+                      ]}>
+                      <Icon
+                        name={'pluscircleo'}
+                        type={'antdesign'}
+                        size={wp(5)}
+                        containerStyle={{opacity: 0.5}}
+                      />
+                      <View>
+                        <Text style={styles.involvePSt}>
+                          Invite {this.state.org}
+                        </Text>
+                        <Text style={{fontSize: wp(2), opacity: 0.5}}>
+                          {/* {d.email} */}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                )}
 
                 {/* People */}
                 <View>

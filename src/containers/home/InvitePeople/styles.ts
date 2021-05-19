@@ -57,12 +57,13 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginTop: wp(2),
+    flexWrap: 'wrap',
     borderColor: colors.textOpa,
     borderWidth: wp(0.3),
     paddingLeft: wp(3),
     borderRadius: wp(2),
     flexDirection: 'row',
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   passTextContainer: {
     marginTop: wp(4),
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     height: wp(30),
     fontSize: wp(3),
     textAlignVertical: 'top',
-    width: wp(80),
+    // width: wp(80),
     paddingTop: wp(3),
   },
   signinText: {
