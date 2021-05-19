@@ -18,6 +18,7 @@ import {
   MyTasks,
   Chat,
   ViewAll,
+  InvitePeople,
   ViewSOR,
   CreateSOR,
   Notification,
@@ -35,6 +36,34 @@ export const MainStackNavigator = (screen: route) => {
   return (
     <SafeAreaProvider>
       <Stack.Navigator initialRouteName={screen.screen}>
+        <Stack.Screen
+          name="InvitePeople"
+          component={InvitePeople}
+          options={{
+            animationEnabled: true,
+            cardStyle: {backgroundColor: 'rgba(0, 0, 0, 0.15)'},
+            cardOverlayEnabled: true,
+
+            cardStyleInterpolator: ({current: {progress}}) => {
+              return {
+                cardStyle: {
+                  opacity: progress.interpolate({
+                    inputRange: [0, 0.5, 0.9, 1],
+                    outputRange: [0, 0.25, 0.7, 1],
+                  }),
+                },
+                overlayStyle: {
+                  opacity: progress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0, 0.5],
+                    extrapolate: 'clamp',
+                  }),
+                },
+              };
+            },
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="ChangePassword"
           component={ChangePassword}
@@ -199,6 +228,7 @@ export const MainStackNavigator = (screen: route) => {
             animationEnabled: true,
             cardStyle: {backgroundColor: 'rgba(0, 0, 0, 0.15)'},
             cardOverlayEnabled: true,
+
             cardStyleInterpolator: ({current: {progress}}) => {
               return {
                 cardStyle: {
@@ -218,8 +248,6 @@ export const MainStackNavigator = (screen: route) => {
             },
             headerShown: false,
           }}
-          // options={{
-          // }}
         />
 
         <Stack.Screen

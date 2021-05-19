@@ -278,7 +278,10 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                       Add people to the organization
                     </Text>
                   )}
-                  <View
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('InvitePeople')
+                    }
                     style={{
                       marginTop: wp(3),
                       justifyContent: 'center',
@@ -292,7 +295,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                       color={colors.primary}
                     />
                     <Text style={styles.inviteppleText}>Invite People</Text>
-                  </View>
+                  </TouchableOpacity>
                 </View>
               </View>
               {/* view all projects */}

@@ -24,9 +24,11 @@ import ForgotEmailSend from './auth/forgotEmailSend/ForgotEmailSend';
 import MeetBefore from './auth/MeetBefore/MeetBefore';
 import Notification from './home/Notification/Notifications';
 import ChangePassword from './auth/ChangePassword/ChangePassword';
+import InvitePeople from './home/InvitePeople/InvitePeople';
 export {
   Notification,
   Chat,
+  InvitePeople,
   Login,
   ChangePassword,
   TellAboutYou,
