@@ -81,7 +81,8 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
   searchUsersAndEmail = async (e: string) => {
     if (e !== '') {
       var tags = searchInSuggestions(e, this.state.users);
-
+      if (tags.length != 0) {
+      }
       this.setState({usersSuggestions: tags});
     } else {
       this.setState({usersSuggestions: []});
@@ -201,45 +202,38 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                     </View>
                   </View>
                 ) : (
-                  <View style={styles.involveSuggestCont}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        // this.setState({org: '', usersSuggestions: []});
-                        // if (
-                        //   this.state.usersTags.filter((v: any) => v == d)
-                        //     .length == 0
-                        // ) {
-                        this.state.usersTags.push({
-                          email: this.state.org,
-                          name: this.state.org,
-                        });
-                        // } else {
-                        //   return null;
-                        // }
-                      }}
-                      style={[
-                        styles.involvePsuggCont,
-                        {borderBottomWidth: 0},
-                        // this.state.usersSuggestions.length == i + 1
-                        //   ? {borderBottomWidth: wp(0)}
-                        //   : null,
-                      ]}>
-                      <Icon
-                        name={'pluscircleo'}
-                        type={'antdesign'}
-                        size={wp(5)}
-                        containerStyle={{opacity: 0.5}}
-                      />
-                      <View>
-                        <Text style={styles.involvePSt}>
-                          Invite {this.state.org}
-                        </Text>
-                        <Text style={{fontSize: wp(2), opacity: 0.5}}>
-                          {/* {d.email} */}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  </View>
+                  <>
+                    <View style={styles.involveSuggestCont}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.state.usersTags.push({
+                            email: this.state.org,
+                            name: this.state.org,
+                          });
+                        }}
+                        style={[
+                          styles.involvePsuggCont,
+                          {borderBottomWidth: 0},
+                        ]}>
+                        <Icon
+                          name={'pluscircle'}
+                          type={'antdesign'}
+                          size={wp(5)}
+                          containerStyle={{opacity: 0.5}}
+                        />
+                        <View style={{alignItems: 'center'}}>
+                          <Text
+                            style={{
+                              opacity: 0.5,
+                              fontSize: wp(3),
+                              marginLeft: wp(4),
+                            }}>
+                            Invite {this.state.org}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  </>
                 )}
 
                 {/* People */}
