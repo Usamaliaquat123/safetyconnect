@@ -32,7 +32,7 @@ import {bindActionCreators} from 'redux';
 
 import {AllSorDTO} from '@dtos';
 import {getActiveChildNavigationOptions} from 'react-navigation';
-import {searchInSuggestions} from '@utils/utils';
+import {searchInSuggestions, validateEmail} from '@utils/utils';
 import {Tags} from '@components';
 // import {validateEmail} from '@utils/';
 type InvitePeopleNavigationProp = StackNavigationProp<
@@ -62,6 +62,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
       peoplesText: '',
       peoples: [], // must be array of id's
       projects: [],
+      matchedEmailSuggestions: '',
       users: [
         {email: 'inconnent12345@outlook.com', name: 'Usama'},
         {email: 'inconnent1234s5@outlook.com', name: 'Daniyal'},
@@ -81,7 +82,11 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
   searchUsersAndEmail = async (e: string) => {
     if (e !== '') {
       var tags = searchInSuggestions(e, this.state.users);
-      if (tags.length != 0) {
+      if (tags.length == 0) {
+        if (validateEmail(e)) {
+          console.log('tags');
+          this.setState({matchedEmailSuggestions: e});
+        }
       }
       this.setState({usersSuggestions: tags});
     } else {
@@ -203,36 +208,42 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                   </View>
                 ) : (
                   <>
-                    <View style={styles.involveSuggestCont}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          this.state.usersTags.push({
-                            email: this.state.org,
-                            name: this.state.org,
-                          });
-                        }}
-                        style={[
-                          styles.involvePsuggCont,
-                          {borderBottomWidth: 0},
-                        ]}>
-                        <Icon
-                          name={'pluscircle'}
-                          type={'antdesign'}
-                          size={wp(5)}
-                          containerStyle={{opacity: 0.5}}
-                        />
-                        <View style={{alignItems: 'center'}}>
-                          <Text
-                            style={{
-                              opacity: 0.5,
-                              fontSize: wp(3),
-                              marginLeft: wp(4),
-                            }}>
-                            Invite {this.state.org}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                    </View>
+                    {this.state.matchedEmailSuggestions === '' ? null : (
+                      <View style={styles.involveSuggestCont}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.state.usersTags.push({
+                              email: this.state.org,
+                              name: this.state.org,
+                            });
+                            this.setState({
+                              org: '',
+                              matchedEmailSuggestions: '',
+                            });
+                          }}
+                          style={[
+                            styles.involvePsuggCont,
+                            {borderBottomWidth: 0},
+                          ]}>
+                          <Icon
+                            name={'pluscircle'}
+                            type={'antdesign'}
+                            size={wp(5)}
+                            containerStyle={{opacity: 0.5}}
+                          />
+                          <View style={{alignItems: 'center'}}>
+                            <Text
+                              style={{
+                                opacity: 0.5,
+                                fontSize: wp(3),
+                                marginLeft: wp(4),
+                              }}>
+                              Invite {this.state.org}
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    )}
                   </>
                 )}
 
