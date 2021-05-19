@@ -17,7 +17,7 @@ import {
 } from 'react-native-responsive-screen';
 import * as reduxActions from '../../../store/actions/listSorActions';
 
-import {Icon} from 'react-native-elements';
+import {Icon, Avatar} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 
@@ -32,6 +32,7 @@ import {bindActionCreators} from 'redux';
 
 import {AllSorDTO} from '@dtos';
 import {getActiveChildNavigationOptions} from 'react-navigation';
+import {searchInSuggestions} from '@utils/utils';
 // import {validateEmail} from '@utils/';
 type InvitePeopleNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -60,9 +61,19 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
       peoplesText: '',
       peoples: [], // must be array of id's
       projects: [],
+      users: [{email: 'inconnent12345@outlook.com', name: 'Usama'}],
+      usersTags: [],
     };
   }
 
+  searchUsersAndEmail = async (e: string) => {
+    if (e !== '') {
+      var tags = searchInSuggestions(e, this.state.users);
+      this.setState({usersTags: tags});
+    } else {
+    }
+    this.setState({org: e});
+  };
   invitePeople = () => {};
   render() {
     return (
@@ -116,8 +127,8 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                       value={this.state.org}
                       multiline={true}
                       style={styles.authInputs}
-                      onChangeText={(e) => this.setState({org: e})}
-                      placeholder={'Enter Organization Name'}
+                      onChangeText={(e) => this.searchUsersAndEmail(e)}
+                      placeholder={'Enter Name'}
                     />
                   </View>
                   {this.state.orgError && (
@@ -126,6 +137,48 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                     </Text>
                   )}
                 </View>
+
+                {/* Suggestions of invited users */}
+                {this.state.usersTags.length != 0 ? (
+                  <View>
+                    <View style={styles.involveSuggestCont}>
+                      {this.state.usersTags.map((d: any, i: number) => (
+                        <TouchableOpacity
+                          key={i}
+                          onPress={() => {
+                            this.setState({org: '', usersTags: []});
+                            if (
+                              this.state.exclateToTags.filter(
+                                (v: any) => v == d,
+                              ).length == 0
+                            ) {
+                              this.state.exclateToTags.push(d);
+                            } else {
+                              return null;
+                            }
+                          }}
+                          style={[
+                            styles.involvePsuggCont,
+                            this.state.usersTags.length == i + 1
+                              ? {borderBottomWidth: wp(0)}
+                              : null,
+                          ]}>
+                          <Avatar
+                            containerStyle={{marginRight: wp(3)}}
+                            rounded
+                            source={{
+                              uri: d.img_url,
+                            }}
+                          />
+                          <View>
+                            <Text style={styles.involvePSt}>{d.name}</Text>
+                            <Text style={{fontSize: wp(2), opacity: .5}}>{d.email}</Text>
+                          </View>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  </View>
+                ) : null}
 
                 {/* People */}
                 <View>
@@ -176,7 +229,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
               </View>
 
               <TouchableOpacity
-                onPress={() => this.createOrg()}
+                onPress={() => this.invitePeople()}
                 style={styles.siginBtnContainer}>
                 <Text style={styles.signinText}>Create Organization</Text>
               </TouchableOpacity>
