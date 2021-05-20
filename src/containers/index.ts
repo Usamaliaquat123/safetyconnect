@@ -15,6 +15,7 @@ import Chat from './home/Messaging/chat/Chat';
 import TellAboutYou from './auth/tellAboutYou/TellAboutYou';
 import CreateOrg from './home/CreateOrganization/CreateOrg';
 import CreateProject from './home/CreateProject/CreateProject';
+import More from './home/More/More';
 import Menu from './home/Menu/Menu';
 import MyTasks from './home/MyTasks/MyTasks';
 import NothingFound from './home/NothingFound/NothingFound';
@@ -54,4 +55,5 @@ export {
   ViewAll,
   ViewSOR,
   Menu,
+  More,
 };

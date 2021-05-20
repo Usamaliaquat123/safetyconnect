@@ -8,6 +8,7 @@ import {
   ViewSOR,
   CreateSOR,
   Login,
+  More,
   Signup,
   Menu,
   ViewAllSOr,
@@ -46,7 +47,7 @@ export const BottomTabNavigator = () => {
         <Tab.Screen name="My Tasks" component={ViewAllSOr} />
         <Tab.Screen name="addNew" component={ViewAllSOr} />
         <Tab.Screen name="Inbox" component={Messaging} options={{}} />
-        <Tab.Screen name="more" component={Menu} options={{}} />
+        <Tab.Screen name="More" component={More} options={{}} />
       </Tab.Navigator>
       {/* </NavigationContainer> */}
     </SafeAreaProvider>
@@ -94,7 +95,7 @@ export default class TabBar extends React.Component<TabBarProps, any> {
         d['icon'] = images.bottomTab.sors;
       } else if (d.name == 'Inbox') {
         d['icon'] = images.bottomTab.message;
-      } else if (d.name == 'more') {
+      } else if (d.name == 'More') {
         d['icon'] = images.bottomTab.menu;
       }
     });
@@ -155,14 +156,14 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                 accessibilityLabel={options.tabBarAccessibilityLabel}
                 testID={options.tabBarTestID}
                 onPress={() => {
-                  if (route.name == 'addNew') {
-                    console.log('if match');
-                    // return this.setState({
-                    //   createModal: !this.state.createModal,
-                    // });
-                  } else {
-                    return onPress();
-                  }
+                  // if (route.name == 'addNew') {
+                  //   console.log('if match');
+                  //   // return this.setState({
+                  //   //   createModal: !this.state.createModal,
+                  //   // });
+                  // } else {
+                  //   return onPress();
+                  // }
                 }}
                 onLongPress={onLongPress}
                 style={[
@@ -198,8 +199,8 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                 )}
                 {route.name == 'addNew' ? (
                   <View>
-                    <TouchableOpacity
-                      onPress={() => this.setState({createModal: true})}
+                    <View
+                      // onPress={() => this.setState({createModal: true})}
                       style={styles.addNewContainer}>
                       <Icon
                         size={30}
@@ -207,7 +208,7 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                         type="antdesign"
                         color={colors.secondary}
                       />
-                    </TouchableOpacity>
+                    </View>
 
                     <Text
                       style={[
@@ -235,58 +236,7 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                 isVisible={this.state.createModal}
                 onBackdropPress={() => {
                   this.setState({createModal: false, loading: false});
-                }}>
-                <View style={styles.createNewpopcontaienr}>
-                  {/* Create New sor */}
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.setState({createModal: false});
-                      this.props.navigation.navigate('CreateSOR');
-                    }}
-                    style={styles.containerOfIcon}>
-                    <View style={styles.newsorContainer}>
-                      <Image
-                        source={images.bottomTab.note}
-                        style={GlStyles.images}
-                      />
-                    </View>
-
-                    <Text style={styles.createNewText}>New SOR</Text>
-                  </TouchableOpacity>
-                  {/* Audit and Inspection */}
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.setState({createModal: false});
-                      this.props.navigation.navigate('CreateOrganization');
-                    }}
-                    style={styles.containerOfIcon}>
-                    <View style={styles.auditAndReportContainer}>
-                      <Image
-                        source={images.homeIcon.auditAndReporting}
-                        style={GlStyles.images}
-                      />
-                    </View>
-                    <Text style={styles.auditReportText}>
-                      Create Organization
-                    </Text>
-                  </TouchableOpacity>
-                  {/* Incident and Accident Report */}
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.setState({createModal: false});
-                      this.props.navigation.navigate('createProject');
-                    }}
-                    style={styles.containerOfIcon}>
-                    <View style={styles.incidentContaineR}>
-                      <Image
-                        source={images.homeIcon.incidentreporting}
-                        style={GlStyles.images}
-                      />
-                    </View>
-                    <Text style={styles.auditReportText}>Create Project</Text>
-                  </TouchableOpacity>
-                </View>
-              </Model>
+                }}></Model>
             </View>
           );
         })}

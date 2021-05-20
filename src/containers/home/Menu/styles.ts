@@ -1,67 +1,53 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '@theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {colors} from '@theme';
 const styles = StyleSheet.create({
-  avatarView: {
-    // position: 'absolute',
-    // right: 0,
+  containerOfIcon: {
+    marginTop: wp(1),
+    // justifyContent: 'center',
     flexDirection: 'row',
+    alignItems: 'center',
   },
-
-  headertle: {flexDirection: 'row'},
-  underScrore: {
-    backgroundColor: colors.green,
-    width: wp(6),
-    marginLeft: wp(3),
-    padding: wp(0.5),
-    borderRadius: 10,
-  },
-  header: {
-    padding: wp(7),
-    paddingTop: wp(7),
-    paddingBottom: wp(7),
-    backgroundColor: colors.primary,
-  },
-  title: {
-    fontSize: wp(5),
-    marginLeft: wp(3),
-    color: colors.secondary,
+  auditReportText: {
+    paddingLeft: wp(2),
+    fontSize: wp(3),
     fontWeight: 'bold',
+    textAlign: 'center',
   },
-
-  content: {
-    padding: wp(5),
+  createNewpopcontaienr: {
     backgroundColor: colors.secondary,
-
-    // flex: 2,
-    // marginTop: wp(80),
-    // borderTopLeftRadius: wp(8),
-    // borderTopRightRadius: wp(8),
+    borderRadius: wp(3),
+    padding: wp(5),
   },
-
-  username: {
-    marginLeft: wp(3),
-    fontSize: wp(4),
-
+  newsorContainer: {
+    padding: wp(3),
+    backgroundColor: colors.lightGreen,
+    width: wp(12),
+    height: wp(12),
+    borderRadius: wp(3),
+  },
+  createNewText: {
+    paddingLeft: wp(2),
+    fontSize: wp(3),
     fontWeight: 'bold',
+    textAlign: 'center',
   },
-  organizations: {fontSize: wp(3), marginLeft: wp(3), opacity: 0.5},
-
-  itemIcon: {
-    width: wp(9),
-    height: wp(9),
+  incidentContaineR: {
+    padding: wp(3),
+    backgroundColor: colors.lightGreen,
+    width: wp(12),
+    height: wp(12),
+    borderRadius: wp(3),
   },
-  itemText: {
-    alignSelf: 'center',
-    fontSize: wp(3.6),
-    opacity: 0.5,
-    marginLeft: wp(2),
-  },
-  containerOfItem: {
-    marginTop: wp(4),
+  auditAndReportContainer: {
+    padding: wp(3),
+    backgroundColor: colors.lightGreen,
+    width: wp(12),
+    height: wp(12),
+    borderRadius: wp(3),
   },
 });
 

@@ -9,6 +9,7 @@ import {
   Forgot,
   CreateProject,
   Menu,
+  More,
   ForgotEmailSend,
   MeetBefore,
   Home,

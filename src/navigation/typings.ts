@@ -36,7 +36,7 @@ export type BottomTabNavigatorProp = {
   create: {user?: any};
   Inbox: {user?: any};
   MyTasks: {user?: any};
-  more: {user?: any};
+  More: {user?: any};
   Notification: {user?: any};
 };
 export type route =
