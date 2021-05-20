@@ -21,6 +21,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     borderRadius: wp(3),
     padding: wp(5),
+    width: wp(90),
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    // marginLeft: wp(7),
+    justifyContent: 'center',
+    alignSelf: 'center',
+    // marginTop: wp(7),
+    // marginRight: wp(7),
   },
   newsorContainer: {
     padding: wp(3),
@@ -33,7 +43,7 @@ const styles = StyleSheet.create({
     paddingLeft: wp(2),
     fontSize: wp(3),
     fontWeight: 'bold',
-    textAlign: 'center',
+    // textAlign: 'center',
   },
   incidentContaineR: {
     padding: wp(3),

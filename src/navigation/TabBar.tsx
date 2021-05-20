@@ -36,7 +36,7 @@ export const BottomTabNavigator = () => {
       {/* <NavigationContainer> */}
       <Tab.Navigator
         tabBar={(props) => <TabBar {...props} />}
-        sceneContainerStyle={{backgroundColor: colors.error}}
+        sceneContainerStyle={{backgroundColor: 'transparent'}}
         initialRouteName={'home'}>
         <Tab.Screen
           name="home"
@@ -45,7 +45,7 @@ export const BottomTabNavigator = () => {
           options={{}}
         />
         <Tab.Screen name="My Tasks" component={ViewAllSOr} />
-        <Tab.Screen name="addNew" component={ViewAllSOr} />
+        <Tab.Screen name="addNew" component={Menu} />
         <Tab.Screen name="Inbox" component={Messaging} options={{}} />
         <Tab.Screen name="More" component={More} options={{}} />
       </Tab.Navigator>
@@ -164,6 +164,8 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                   // } else {
                   //   return onPress();
                   // }
+
+                  onPress();
                 }}
                 onLongPress={onLongPress}
                 style={[
