@@ -52,6 +52,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
+      orgOrProj: '',
       loading: false,
       // Error State
       errorModal: false,
@@ -79,6 +80,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
 
       errHeading: '',
       errDesc: '',
+
       projectText: {},
       noOrg: false,
     };
@@ -96,7 +98,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
     AsyncStorage.getItem('user').then((user: any) => {
       var usr = JSON.parse(user);
 
-      if (usr.data.organizations.length == 0) {
+      if (usr.organizations.length == 0) {
         this.setState({noOrg: true});
       } else {
         this.setState({noOrg: false});
@@ -104,7 +106,14 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
     });
   }
 
-  createProject = async () => {};
+  createProject = async () => {
+    if (this.state.noOrg) {
+      this.props.navigation.navigate('createProject');
+    } else {
+      this.props.navigation.navigate('CreateOrganization');
+    }
+  };
+
   searchUsersAndEmail = async (e: string) => {
     if (e !== '') {
       var tags = searchInSuggestions(e.toLowerCase(), this.state.users);
@@ -306,7 +315,12 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                   </View>
                   <View style={[styles.inputContainer]}>
                     <TextInput
-                      value={this.state.projectText.name}
+                      editable={this.state.noOrg}
+                      value={
+                        this.state.noOrg == true
+                          ? this.state.projectText.name
+                          : "You don't have any organizations yet"
+                      }
                       style={{
                         fontSize: wp(3),
                         width: wp(80),
@@ -384,7 +398,11 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                       size={wp(4)}
                       color={colors.primary}
                     />
-                    <Text style={styles.inviteppleText}>Add Project</Text>
+                    <Text style={styles.inviteppleText}>
+                      {this.state.noOrg == true
+                        ? 'Add Project'
+                        : 'Add Organization'}
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>
