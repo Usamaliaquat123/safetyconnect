@@ -77,6 +77,8 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
         {name: '10 pearls', selected: false},
       ],
 
+      errHeading: '',
+      errDesc: '',
       projectText: {},
     };
   }
@@ -89,6 +91,11 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
     console.log(this.state.projects.filter((d) => d.selected == true));
   }
 
+  createProject = async () => {
+    AsyncStorage.getItem('user').then((user) => {
+      var usr = JSON.parse(user);
+    });
+  };
   searchUsersAndEmail = async (e: string) => {
     if (e !== '') {
       var tags = searchInSuggestions(e.toLowerCase(), this.state.users);
@@ -355,7 +362,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                   ) : null}
 
                   <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('CreateProj')}
+                    onPress={() => this.createProject()}
                     style={{
                       marginTop: wp(3),
                       justifyContent: 'center',
@@ -389,9 +396,24 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
           onBackdropPress={() =>
             this.setState({errorModal: false, loading: false})
           }>
-          {this.state.loading == true && (
+          {this.state.loading == true ? (
             <View>
               <ActivityIndicator color={colors.primary} size={'large'} />
+            </View>
+          ) : (
+            <View style={styles.modelContainer}>
+              <View>
+                <Text style={styles.errHeadPop}>{this.state.errHeading}</Text>
+                <Text style={styles.errEmailPassDesc}>
+                  {this.state.errDesc}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('CreateOrg')}>
+                  <Text style={styles.plzTryAgain}>
+                    Create your organization
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           )}
         </Modal>
