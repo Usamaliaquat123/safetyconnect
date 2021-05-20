@@ -155,9 +155,23 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
           {/* content */}
           <View style={styles.content}>
             <View>
-              <Text style={styles.headingContainer}>
-                Invite People to Project{' '}
-              </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <Text style={styles.headingContainer}>
+                  Invite People to Project{' '}
+                </Text>
+                <Icon
+                  onPress={() => this.props.navigation.goBack()}
+                  containerStyle={{marginLeft: wp(2)}}
+                  name={'cross'}
+                  type={'entypo'}
+                  size={wp(4.6)}
+                  iconStyle={{opacity: 0.5}}
+                />
+              </View>
               <Text style={styles.subheading}>
                 Safetyconnect will send an email invitation to the invited
                 users.
