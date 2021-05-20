@@ -80,22 +80,31 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
       errHeading: '',
       errDesc: '',
       projectText: {},
+      noOrg: false,
     };
   }
 
   componentDidMount() {
     // get all projects
     this.setState({
-      projectText: this.state.projects.filter((d) => d.selected == true)[0],
+      projectText: this.state.projects.filter(
+        (d: any) => d.selected == true,
+      )[0],
     });
-    console.log(this.state.projects.filter((d) => d.selected == true));
+    console.log(this.state.projects.filter((d: any) => d.selected == true));
+
+    AsyncStorage.getItem('user').then((user: any) => {
+      var usr = JSON.parse(user);
+
+      if (usr.data.organizations.length == 0) {
+        this.setState({noOrg: true});
+      } else {
+        this.setState({noOrg: false});
+      }
+    });
   }
 
-  createProject = async () => {
-    AsyncStorage.getItem('user').then((user) => {
-      var usr = JSON.parse(user);
-    });
-  };
+  createProject = async () => {};
   searchUsersAndEmail = async (e: string) => {
     if (e !== '') {
       var tags = searchInSuggestions(e.toLowerCase(), this.state.users);
