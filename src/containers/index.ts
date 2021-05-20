@@ -27,10 +27,12 @@ import Notification from './home/Notification/Notifications';
 import ChangePassword from './auth/ChangePassword/ChangePassword';
 import InvitePeople from './home/InvitePeople/InvitePeople';
 import AddLocation from './home/AddLocation/AddLocation';
+import WelcomeHome from './home/WelcomeHome/WelcomeHome';
 export {
   Notification,
   AddLocation,
   Chat,
+  WelcomeHome,
   InvitePeople,
   Login,
   ChangePassword,

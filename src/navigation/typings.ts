@@ -26,6 +26,7 @@ export type StackNavigatorProps = {
   Main: undefined;
   InvitePeople: undefined;
   Notification: undefined;
+  WelcomeHome: undefined;
   AddLocation: undefined;
   ChangePassword: {email: string; code: any};
 };
