@@ -155,8 +155,21 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               </View>
             ) : (
               <View>
-                <Text style={styles.headingContainer}>Add New Project</Text>
-
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text style={styles.headingContainer}>Add New Project</Text>
+                  <Icon
+                    onPress={() => this.props.navigation.goBack()}
+                    containerStyle={{marginLeft: wp(2)}}
+                    name={'cross'}
+                    type={'entypo'}
+                    size={wp(4.6)}
+                    iconStyle={{opacity: 0.5}}
+                  />
+                </View>
                 {/* inputs container */}
                 <View style={styles.inputsContainer}>
                   {/* Email Container */}

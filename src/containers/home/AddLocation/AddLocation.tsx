@@ -63,7 +63,7 @@ class AddLocation extends React.Component<AddLocationProps, any> {
     };
   }
 
-  createOrg = () => {};
+  addLocation = () => {};
   render() {
     return (
       <View style={styles.container}>
@@ -71,7 +71,18 @@ class AddLocation extends React.Component<AddLocationProps, any> {
           {/* content */}
           <View style={styles.content}>
             <View>
-              <Text style={styles.headingContainer}>Add New Location</Text>
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Text style={styles.headingContainer}>Add New Location</Text>
+                <Icon
+                  onPress={() => this.props.navigation.goBack()}
+                  containerStyle={{marginLeft: wp(2)}}
+                  name={'cross'}
+                  type={'entypo'}
+                  size={wp(4.6)}
+                  iconStyle={{opacity: 0.5}}
+                />
+              </View>
               {/* inputs container */}
               <View style={styles.inputsContainer}>
                 {/* Email Container */}
@@ -103,16 +114,21 @@ class AddLocation extends React.Component<AddLocationProps, any> {
 
                 {/* Location Supervisor */}
                 <View>
-                  <View style={{flexDirection: 'row', marginTop: wp(3)}}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginTop: wp(3),
+                      alignItems: 'center',
+                    }}>
                     <Text style={styles.emailTextContainer}>
                       Location Supervisor
                     </Text>
-
                     <Icon
+                      containerStyle={{marginLeft: wp(2)}}
                       name={'info'}
                       type={'feather'}
-                      size={wp(3.5)}
-                      color={colors.textOpa}
+                      size={wp(3)}
+                      iconStyle={{opacity: 0.5}}
                     />
                   </View>
                   <View style={[styles.inputContainer]}>
@@ -156,7 +172,7 @@ class AddLocation extends React.Component<AddLocationProps, any> {
               </View>
 
               <TouchableOpacity
-                onPress={() => this.createOrg()}
+                onPress={() => this.addLocation()}
                 style={styles.siginBtnContainer}>
                 <Text style={styles.signinText}>Add Location</Text>
               </TouchableOpacity>

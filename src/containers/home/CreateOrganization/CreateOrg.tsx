@@ -141,7 +141,23 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
               </View>
             ) : ( */}
             <View>
-              <Text style={styles.headingContainer}>Add New Organization </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <Text style={styles.headingContainer}>
+                  Add New Organization
+                </Text>
+                <Icon
+                  onPress={() => this.props.navigation.goBack()}
+                  containerStyle={{marginLeft: wp(2)}}
+                  name={'cross'}
+                  type={'entypo'}
+                  size={wp(4.6)}
+                  iconStyle={{opacity: 0.5}}
+                />
+              </View>
               {/* inputs container */}
               <View style={styles.inputsContainer}>
                 {/* Email Container */}
