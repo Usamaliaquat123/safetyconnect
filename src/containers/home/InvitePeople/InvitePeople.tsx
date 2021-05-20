@@ -59,7 +59,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
       org: '',
       orgDetails: '',
       projectLeader: '',
-      peoplesText: '',
+
       peoples: [], // must be array of id's
       // projects: [],
       matchedEmailSuggestions: '',
@@ -76,12 +76,16 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
         {name: 'saftey connect', selected: true},
         {name: 'saftey connect', selected: false},
       ],
+
+      projectText: {},
     };
   }
 
   componentDidMount() {
     // get all projects
-
+    this.setState({
+      projectText: this.state.projects.filter((d) => d.selected == true)[0],
+    });
     console.log(this.state.projects.filter((d) => d.selected == true));
   }
 
@@ -110,7 +114,13 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
         }
       }
     }
-    this.setState({peoplesText: e, projectsSugg: matchedsugg});
+
+    console.log(matchedsugg);
+
+    if (matchedsugg != undefined) {
+      this.setState({prprojectsSugg: matchedsugg});
+    }
+    this.setState({projectText: e});
   };
   invitePeople = () => {};
   render() {
@@ -130,7 +140,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
             {/* {this.state.loading ? (
               <View>
                 <View
-                  style={{
+                  style={{ p
                     alignSelf: 'center',
                     marginTop: wp(40),
                   }}>
@@ -264,7 +274,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                   </>
                 )}
 
-                {/* People */}
+                {/* Project */}
                 <View>
                   <View style={{flexDirection: 'row', marginTop: wp(3)}}>
                     <Text style={styles.emailTextContainer}>
@@ -280,10 +290,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                   </View>
                   <View style={[styles.inputContainer]}>
                     <TextInput
-                      value={
-                        this.state.projects.filter((d) => d.selected == true)[0]
-                          .name
-                      }
+                      value={this.state.projectText.name}
                       style={{
                         fontSize: wp(3),
                         width: wp(80),
@@ -312,6 +319,42 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                     />
                     <Text style={styles.inviteppleText}>Add Project</Text>
                   </View>
+
+                  {/* Suggestions of invited users */}
+                  {this.state.projectsSugg.length != 0 ? (
+                    <View>
+                      <View style={styles.involveSuggestCont}>
+                        {this.state.projectsSugg.map((d: any, i: number) => (
+                          <TouchableOpacity
+                            key={i}
+                            onPress={() => {
+                              this.setState({projectText: d, projectsSugg: []});
+                              if (
+                                this.state.usersTags.filter((v: any) => v == d)
+                                  .length == 0
+                              ) {
+                                this.state.usersTags.push(d);
+                              } else {
+                                return null;
+                              }
+                            }}
+                            style={[
+                              styles.involvePsuggCont,
+                              this.state.usersSuggestions.length == i + 1
+                                ? {borderBottomWidth: wp(0)}
+                                : null,
+                            ]}>
+                            <View>
+                              <Text style={styles.involvePSt}>{d.name}</Text>
+                              <Text style={{fontSize: wp(2), opacity: 0.5}}>
+                                {d.email}
+                              </Text>
+                            </View>
+                          </TouchableOpacity>
+                        ))}
+                      </View>
+                    </View>
+                  ) : null}
                 </View>
               </View>
 
