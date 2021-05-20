@@ -25,8 +25,10 @@ import MeetBefore from './auth/MeetBefore/MeetBefore';
 import Notification from './home/Notification/Notifications';
 import ChangePassword from './auth/ChangePassword/ChangePassword';
 import InvitePeople from './home/InvitePeople/InvitePeople';
+import AddLocation from './home/AddLocation/AddLocation';
 export {
   Notification,
+  AddLocation,
   Chat,
   InvitePeople,
   Login,

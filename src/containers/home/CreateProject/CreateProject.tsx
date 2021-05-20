@@ -279,7 +279,10 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     </View>
 
                     {/* add new location */}
-                    <View
+                    <TouchableOpacity
+                      onPress={() =>
+                        this.props.navigation.navigate('AddLocation')
+                      }
                       style={{
                         flexDirection: 'row',
                         justifyContent: 'center',
@@ -300,7 +303,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         }}>
                         Add New Location
                       </Text>
-                    </View>
+                    </TouchableOpacity>
                   </View>
 
                   {/* Asssign Leaders */}
@@ -381,7 +384,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       style={{
                         flexDirection: 'row',
                         alignItems: 'center',
-                        marginTop: wp(2),
                       }}>
                       <Text style={[styles.emailTextContainer]}>
                         {' '}
