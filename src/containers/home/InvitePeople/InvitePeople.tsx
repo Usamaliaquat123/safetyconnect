@@ -152,32 +152,8 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
     return (
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {/* <View style={styles.header}>
-            <View style={styles.headertle}>
-              <View>
-                <Text style={styles.title}>Create organization</Text>
-                <View style={styles.underScrore} />
-              </View>
-            </View>
-          </View> */}
           {/* content */}
           <View style={styles.content}>
-            {/* {this.state.loading ? (
-              <View>
-                <View
-                  style={{ p
-                    alignSelf: 'center',
-                    marginTop: wp(40),
-                  }}>
-                  <LottieView
-                    autoPlay={true}
-                    style={{width: wp(90)}}
-                    source={animation.loading}
-                    loop={true}
-                  />
-                </View>
-              </View>
-            ) : ( */}
             <View>
               <Text style={styles.headingContainer}>
                 Invite People to Project{' '}
@@ -343,18 +319,10 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                           <TouchableOpacity
                             key={i}
                             onPress={() => {
-                              if (
-                                this.state.projectsSugg.filter(
-                                  (v: any) => v == d,
-                                ).length == 0
-                              ) {
-                                this.setState({
-                                  projectText: d,
-                                  projectsSugg: [],
-                                });
-                              } else {
-                                return null;
-                              }
+                              this.setState({
+                                projectText: d,
+                                projectsSugg: [],
+                              });
                             }}
                             style={[
                               styles.involvePsuggCont,

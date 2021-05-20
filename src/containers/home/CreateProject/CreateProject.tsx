@@ -61,6 +61,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       // errors popup
       errorProjectName: false,
       errorTeamMem: false,
+      projectDescription: '',
     };
   }
   // Filter All countries
@@ -132,21 +133,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     return (
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.header}>
-            <View style={styles.headertle}>
-              <Icon
-                onPress={() => this.props.navigation.goBack()}
-                size={wp(5.5)}
-                name="arrow-back-outline"
-                type="ionicon"
-                color={colors.secondary}
-              />
-              <View>
-                <Text style={styles.title}>Create Project</Text>
-                <View style={styles.underScrore} />
-              </View>
-            </View>
-          </View>
           {/* content */}
           <View
             style={[
@@ -201,12 +187,140 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       Enter your project name{' '}
                     </Text>
                   )}
+                  {/* Descriptions */}
+                  <View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginTop: wp(2),
+                      }}>
+                      <Text style={[styles.emailTextContainer]}>
+                        {' '}
+                        Project Description
+                      </Text>
+                      <Text
+                        style={{
+                          fontFamily: fonts.SFuiDisplayLight,
+                          opacity: 0.5,
+
+                          fontSize: wp(3.4),
+                        }}>
+                        ( Mandatory )
+                      </Text>
+                    </View>
+                    <View>
+                      <View style={[styles.inputContainer]}>
+                        <TextInput
+                          placeholder={'Enter project description here'}
+                          style={styles.authInputs}
+                          value={this.state.projectDescription}
+                          onChangeText={(e) =>
+                            this.setState({projectDescription: e})
+                          }
+                        />
+                      </View>
+                    </View>
+                  </View>
+
+                  {/* Assign Locations */}
+
+                  {/* Locations */}
+                  <View>
+                    <Text
+                      style={[styles.emailTextContainer, {marginTop: wp(2)}]}>
+                      {' '}
+                      Locations
+                    </Text>
+                    {this.state.assignLocations.length < 1 ? (
+                      <View style={[styles.inputContainer]}>
+                        <TextInput
+                          placeholder={'Add Locations'}
+                          style={styles.authInputs}
+                          value={this.state.assignLocationsText}
+                          onChange={(e) => {
+                            this.filterContries(e.nativeEvent.text);
+                          }}
+                        />
+                      </View>
+                    ) : null}
+                    {/* Assign Locations suggestions */}
+                    {this.state.assignLocationsText != '' ? (
+                      <SuggestionsAvatar
+                        // type={'location'}
+                        locations={this.state.locations}
+                        onSelect={(d: string) => {
+                          this.state.assignLocations.push(d);
+                          this.setState({
+                            assignLocationsText: '',
+                          });
+                        }}
+                        text={this.state.assignLocationsText}
+                      />
+                    ) : null}
+
+                    <View
+                      style={{
+                        flexWrap: 'wrap',
+                        flexDirection: 'row',
+                        marginTop: wp(2),
+                      }}>
+                      <Tags
+                        type={'location'}
+                        onClose={(d: any) => {
+                          this.setState({
+                            assignLocations: this.state.assignLocations.filter(
+                              (v: any) => v !== d,
+                            ),
+                          });
+                        }}
+                        tags={this.state.assignLocations}
+                      />
+                    </View>
+
+                    {/* add new location */}
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Icon
+                        containerStyle={{marginRight: wp(3)}}
+                        name={'plus'}
+                        type={'antdesign'}
+                        size={wp(4)}
+                        color={colors.primary}
+                      />
+                      <Text
+                        style={{
+                          fontSize: wp(3.4),
+                          color: colors.primary,
+                          fontFamily: fonts.SFuiDisplayMedium,
+                        }}>
+                        Add New Location
+                      </Text>
+                    </View>
+                  </View>
 
                   {/* Asssign Leaders */}
-                  <Text style={[styles.emailTextContainer, {marginTop: wp(3)}]}>
-                    {' '}
-                    Project Leaders
-                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginTop: wp(3),
+                    }}>
+                    <Text style={[styles.emailTextContainer]}>
+                      {' '}
+                      Project Leaders
+                    </Text>
+                    <Icon
+                      name={'info'}
+                      type={'feather'}
+                      size={wp(3.5)}
+                      color={colors.textOpa}
+                    />
+                  </View>
                   <View style={[styles.inputContainer]}>
                     {this.state.assignLeaderss.length < 15 ? (
                       <TextInput
@@ -260,120 +374,73 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       tags={this.state.assignLeaderss}
                     />
                   </View>
-                  {/* Assign Locations */}
 
                   {/* Asssign Supervisor */}
-                  <Text style={[styles.emailTextContainer, {marginTop: wp(2)}]}>
-                    {' '}
-                    Secondary Project leaders
-                  </Text>
-                  {this.state.assignSuppervisor.length < 15 ? (
-                    <View style={[styles.inputContainer]}>
-                      <TextInput
-                        style={styles.authInputs}
-                        placeholder={
-                          'Add secondary leaders or invite by @ email'
-                        }
-                        value={this.state.assignSuppervisorT}
-                        onChangeText={(e) => {
-                          if (validateEmail(e)) {
-                            this.setState({
-                              assignSuppervisorText: e,
-                              assignSuppervisorT: e,
-                            });
-                          } else {
+                  <View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginTop: wp(2),
+                      }}>
+                      <Text style={[styles.emailTextContainer]}>
+                        {' '}
+                        Secondary Project leaders
+                      </Text>
+                      <Icon
+                        name={'info'}
+                        type={'feather'}
+                        size={wp(3.5)}
+                        color={colors.textOpa}
+                      />
+                    </View>
+                    {this.state.assignSuppervisor.length < 15 ? (
+                      <View style={[styles.inputContainer]}>
+                        <TextInput
+                          style={styles.authInputs}
+                          placeholder={'Enter name'}
+                          value={this.state.assignSuppervisorT}
+                          onChangeText={(e) => {
                             this.setState({
                               assignSuppervisorText: '',
-
                               assignSuppervisorT: e,
                             });
-                          }
+                          }}
+                        />
+                      </View>
+                    ) : null}
+
+                    {this.state.assignSuppervisorText != '' ? (
+                      <SuggestionsAvatar
+                        onSelect={(d: string) => {
+                          this.state.assignSuppervisor.push(d);
+                          this.setState({
+                            assignSuppervisorText: '',
+                          });
                         }}
+                        text={this.state.assignSuppervisorText}
+                      />
+                    ) : null}
+                    <View
+                      style={{
+                        flexWrap: 'wrap',
+                        flexDirection: 'row',
+                        marginTop: wp(2),
+                      }}>
+                      <Tags
+                        type={'addTeamMem'}
+                        onClose={(d: any) => {
+                          this.setState({
+                            assignSuppervisor: this.state.assignSuppervisor.filter(
+                              (v: any) => v !== d,
+                            ),
+                          });
+                        }}
+                        tags={this.state.assignSuppervisor}
                       />
                     </View>
-                  ) : null}
-
-                  {this.state.assignSuppervisorText != '' ? (
-                    <SuggestionsAvatar
-                      onSelect={(d: string) => {
-                        this.state.assignSuppervisor.push(d);
-                        this.setState({
-                          assignSuppervisorText: '',
-                        });
-                      }}
-                      text={this.state.assignSuppervisorText}
-                    />
-                  ) : null}
-                  <View
-                    style={{
-                      flexWrap: 'wrap',
-                      flexDirection: 'row',
-                      marginTop: wp(2),
-                    }}>
-                    <Tags
-                      type={'addTeamMem'}
-                      onClose={(d: any) => {
-                        this.setState({
-                          assignSuppervisor: this.state.assignSuppervisor.filter(
-                            (v: any) => v !== d,
-                          ),
-                        });
-                      }}
-                      tags={this.state.assignSuppervisor}
-                    />
-                  </View>
-
-                  <Text style={[styles.emailTextContainer, {marginTop: wp(2)}]}>
-                    {' '}
-                    Locations
-                  </Text>
-                  {this.state.assignLocations.length < 1 ? (
-                    <View style={[styles.inputContainer]}>
-                      <TextInput
-                        placeholder={'Add Locations'}
-                        style={styles.authInputs}
-                        value={this.state.assignLocationsText}
-                        onChange={(e) => {
-                          this.filterContries(e.nativeEvent.text);
-                        }}
-                      />
-                    </View>
-                  ) : null}
-                  {/* Assign Locations suggestions */}
-                  {this.state.assignLocationsText != '' ? (
-                    <SuggestionsAvatar
-                      // type={'location'}
-                      locations={this.state.locations}
-                      onSelect={(d: string) => {
-                        this.state.assignLocations.push(d);
-                        this.setState({
-                          assignLocationsText: '',
-                        });
-                      }}
-                      text={this.state.assignLocationsText}
-                    />
-                  ) : null}
-
-                  <View
-                    style={{
-                      flexWrap: 'wrap',
-                      flexDirection: 'row',
-                      marginTop: wp(2),
-                    }}>
-                    <Tags
-                      type={'location'}
-                      onClose={(d: any) => {
-                        this.setState({
-                          assignLocations: this.state.assignLocations.filter(
-                            (v: any) => v !== d,
-                          ),
-                        });
-                      }}
-                      tags={this.state.assignLocations}
-                    />
                   </View>
                 </View>
-
                 <TouchableOpacity
                   onPress={() => this.createProject()}
                   style={styles.siginBtnContainer}>

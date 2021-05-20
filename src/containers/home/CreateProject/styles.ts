@@ -7,7 +7,7 @@ import {colors, fonts} from '@theme';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
+    backgroundColor: 'transparent',
   },
   header: {
     padding: wp(7),
@@ -33,10 +33,12 @@ const styles = StyleSheet.create({
   content: {
     // height:hp(100),
     padding: wp(5),
-    paddingBottom: hp(20),
+    marginRight: wp(7),
+    marginLeft: wp(7),
+    marginTop: wp(7),
+    // paddingBottom: hp(20),
     backgroundColor: colors.secondary,
-    borderTopLeftRadius: wp(4),
-    borderTopRightRadius: wp(4),
+    borderRadius: wp(4),
   },
   headingContainer: {
     fontSize: wp(5),
@@ -55,10 +57,11 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginTop: wp(2),
-    borderColor: colors.green,
+    borderColor: colors.textOpa,
+
     borderWidth: wp(0.3),
     paddingLeft: wp(3),
-    borderRadius: wp(3),
+    borderRadius: wp(2),
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -87,7 +90,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    width: wp(90),
+    width: wp(60),
     padding: wp(4),
     // paddingLeft: wp(20),
     // paddingRight: wp(20),
