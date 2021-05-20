@@ -354,7 +354,8 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                     </View>
                   ) : null}
 
-                  <View
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('CreateProj')}
                     style={{
                       marginTop: wp(3),
                       justifyContent: 'center',
@@ -368,7 +369,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                       color={colors.primary}
                     />
                     <Text style={styles.inviteppleText}>Add Project</Text>
-                  </View>
+                  </TouchableOpacity>
                 </View>
               </View>
 
