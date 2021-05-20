@@ -135,11 +135,14 @@ export const capitalizeFirstLetter = (string: string): string => {
 export const mappProjectOrg = (organizations: string, project: string) => {
   AsyncStorage.getItem('user').then((res: any) => {
     var user = JSON.parse(res);
-    mapAllOrganizations(user.organizations, organizations);
-    mapAllProjects(
-      user.organizations.filter((d: any) => d.selected == true)[0].projects,
-      project,
-    );
+    if (organizations !== '') {
+      mapAllOrganizations(user.organizations, organizations);
+    } else if (project !== '') {
+      mapAllProjects(
+        user.organizations.filter((d: any) => d.selected == true)[0].projects,
+        project,
+      );
+    }
     AsyncStorage.setItem('user', JSON.stringify(user));
   });
 };

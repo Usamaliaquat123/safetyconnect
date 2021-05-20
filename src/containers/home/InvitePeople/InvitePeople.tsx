@@ -61,7 +61,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
       projectLeader: '',
       peoplesText: '',
       peoples: [], // must be array of id's
-      projects: [],
+      // projects: [],
       matchedEmailSuggestions: '',
       users: [
         {email: 'inconnent12345@outlook.com', name: 'Usama'},
@@ -69,19 +69,25 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
         {email: 'inconnent123ws5@outlook.com', name: 'Khadija'},
         {email: 'inconnent12q45@outlook.com', name: 'Mama'},
       ],
-      usersTags: [
-        {email: 'inconnent12345@outlook.com', name: 'Usama'},
-        {email: 'inconnent1234s5@outlook.com', name: 'Daniyal'},
-        {email: 'inconnent123ws5@outlook.com', name: 'Khadija'},
-        {email: 'inconnent12q45@outlook.com', name: 'Mama'},
-      ],
+      usersTags: [],
       usersSuggestions: [],
+      projectsSugg: [],
+      projects: [
+        {name: 'saftey connect', selected: true},
+        {name: 'saftey connect', selected: false},
+      ],
     };
+  }
+
+  componentDidMount() {
+    // get all projects
+
+    console.log(this.state.projects.filter((d) => d.selected == true));
   }
 
   searchUsersAndEmail = async (e: string) => {
     if (e !== '') {
-      var tags = searchInSuggestions(e, this.state.users);
+      var tags = searchInSuggestions(e.toLowerCase(), this.state.users);
       if (tags.length == 0) {
         if (validateEmail(e)) {
           console.log('tags');
@@ -93,6 +99,18 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
       this.setState({usersSuggestions: []});
     }
     this.setState({org: e});
+  };
+
+  chnageProjectName = async (e: string) => {
+    if (e !== '') {
+      var matchedsugg = [];
+      for (let i = 0; i < this.state.projects.length; i++) {
+        if (this.state.projects[i].name.toLowerCase().match(e.toLowerCase())) {
+          matchedsugg.push(this.state.projects[i]);
+        }
+      }
+    }
+    this.setState({peoplesText: e, projectsSugg: matchedsugg});
   };
   invitePeople = () => {};
   render() {
@@ -147,7 +165,13 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                       <Tags
                         style={{height: wp(10)}}
                         tags={this.state.usersTags}
-                        onClose={() => console.log('s')}
+                        onClose={(d: any) =>
+                          this.setState({
+                            usersTags: this.state.usersTags.filter(
+                              (v: any) => v !== d,
+                            ),
+                          })
+                        }
                       />
                     )}
                     <TextInput
@@ -189,13 +213,6 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                               ? {borderBottomWidth: wp(0)}
                               : null,
                           ]}>
-                          <Avatar
-                            containerStyle={{marginRight: wp(3)}}
-                            rounded
-                            source={{
-                              uri: d.img_url,
-                            }}
-                          />
                           <View>
                             <Text style={styles.involvePSt}>{d.name}</Text>
                             <Text style={{fontSize: wp(2), opacity: 0.5}}>
@@ -263,12 +280,15 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                   </View>
                   <View style={[styles.inputContainer]}>
                     <TextInput
-                      value={this.state.peoplesText}
+                      value={
+                        this.state.projects.filter((d) => d.selected == true)[0]
+                          .name
+                      }
                       style={{
                         fontSize: wp(3),
                         width: wp(80),
                       }}
-                      onChangeText={(e) => this.setState({peoplesText: e})}
+                      onChangeText={(e) => this.chnageProjectName(e)}
                       placeholder={'Enter name'}
                     />
                   </View>
@@ -298,7 +318,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
               <TouchableOpacity
                 onPress={() => this.invitePeople()}
                 style={styles.siginBtnContainer}>
-                <Text style={styles.signinText}>Create Organization</Text>
+                <Text style={styles.signinText}>Send Invite</Text>
               </TouchableOpacity>
             </View>
             {/* )} */}
