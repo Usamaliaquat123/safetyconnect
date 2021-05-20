@@ -174,6 +174,13 @@ const styles = StyleSheet.create({
     borderWidth: wp(0.3),
     marginTop: wp(1),
   },
+  projSuggCount: {
+    borderColor: colors.textOpa,
+    borderRadius: wp(2),
+    // padding: wp(1),
+    borderWidth: wp(0.3),
+    marginTop: wp(1),
+  },
 });
 
 export default styles;

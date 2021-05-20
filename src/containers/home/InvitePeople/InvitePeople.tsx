@@ -74,7 +74,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
       projectsSugg: [],
       projects: [
         {name: 'saftey connect', selected: true},
-        {name: 'saftey connect', selected: false},
+        {name: '10 pearls', selected: false},
       ],
 
       projectText: {},
@@ -118,7 +118,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
     console.log(matchedsugg);
 
     if (matchedsugg != undefined) {
-      this.setState({prprojectsSugg: matchedsugg});
+      this.setState({projectsSugg: matchedsugg});
     }
     this.setState({projectText: e});
   };
@@ -304,6 +304,56 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                       Add people to the organization
                     </Text>
                   )}
+
+                  {/* Suggestions of invited users */}
+                  {this.state.projectsSugg.length != 0 ? (
+                    <View>
+                      <View style={styles.involveSuggestCont}>
+                        {this.state.projectsSugg.map((d: any, i: number) => (
+                          <TouchableOpacity
+                            key={i}
+                            onPress={() => {
+                              if (
+                                this.state.projectsSugg.filter(
+                                  (v: any) => v == d,
+                                ).length == 0
+                              ) {
+                                this.setState({
+                                  projectText: d,
+                                  projectsSugg: [],
+                                });
+                              } else {
+                                return null;
+                              }
+                            }}
+                            style={[
+                              styles.involvePsuggCont,
+                              this.state.projectsSugg.length == i + 1
+                                ? {borderBottomWidth: wp(0)}
+                                : null,
+                            ]}>
+                            <Icon
+                              name={'stats-chart'}
+                              type={'ionicon'}
+                              iconStyle={{opacity: 0.5}}
+                              size={wp(3)}
+                              containerStyle={{marginRight: wp(3)}}
+                            />
+                            <View style={{alignItems: 'center'}}>
+                              <Text
+                                style={[
+                                  styles.involvePSt,
+                                  {fontSize: wp(3), opacity: 0.5},
+                                ]}>
+                                {d.name}
+                              </Text>
+                            </View>
+                          </TouchableOpacity>
+                        ))}
+                      </View>
+                    </View>
+                  ) : null}
+
                   <View
                     style={{
                       marginTop: wp(3),
@@ -319,42 +369,6 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                     />
                     <Text style={styles.inviteppleText}>Add Project</Text>
                   </View>
-
-                  {/* Suggestions of invited users */}
-                  {this.state.projectsSugg.length != 0 ? (
-                    <View>
-                      <View style={styles.involveSuggestCont}>
-                        {this.state.projectsSugg.map((d: any, i: number) => (
-                          <TouchableOpacity
-                            key={i}
-                            onPress={() => {
-                              this.setState({projectText: d, projectsSugg: []});
-                              if (
-                                this.state.usersTags.filter((v: any) => v == d)
-                                  .length == 0
-                              ) {
-                                this.state.usersTags.push(d);
-                              } else {
-                                return null;
-                              }
-                            }}
-                            style={[
-                              styles.involvePsuggCont,
-                              this.state.usersSuggestions.length == i + 1
-                                ? {borderBottomWidth: wp(0)}
-                                : null,
-                            ]}>
-                            <View>
-                              <Text style={styles.involvePSt}>{d.name}</Text>
-                              <Text style={{fontSize: wp(2), opacity: 0.5}}>
-                                {d.email}
-                              </Text>
-                            </View>
-                          </TouchableOpacity>
-                        ))}
-                      </View>
-                    </View>
-                  ) : null}
                 </View>
               </View>
 
