@@ -76,7 +76,9 @@ class WelcomeHome extends React.Component<WelcomeHomeProps, any> {
         </View>
 
         {/* craete your first observation  */}
-        <View style={{marginTop: wp(5)}}>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('CreateSOR')}
+          style={{marginTop: wp(5)}}>
           <View
             style={{
               backgroundColor: colors.primary,
@@ -130,10 +132,12 @@ class WelcomeHome extends React.Component<WelcomeHomeProps, any> {
               </Text>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
 
         {/* Invite your team members */}
-        <View style={{marginTop: wp(5)}}>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('InvitePeople')}
+          style={{marginTop: wp(5)}}>
           <View
             style={{
               backgroundColor: colors.primary,
@@ -183,20 +187,21 @@ class WelcomeHome extends React.Component<WelcomeHomeProps, any> {
               </Text>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
 
-        <Text
-          style={{
-            fontSize: wp(4),
-            fontFamily: fonts.SFuiDisplayMedium,
-            color: colors.primary,
-            textAlign: 'center',
-            position: 'absolute',
-            alignSelf: 'center',
-            bottom: wp(20),
-          }}>
-          SKIP
-        </Text>
+        <TouchableOpacity
+          style={{position: 'absolute', alignSelf: 'center', bottom: wp(20)}}
+          onPress={() => this.props.navigation.navigate('Main')}>
+          <Text
+            style={{
+              fontSize: wp(4),
+              fontFamily: fonts.SFuiDisplayMedium,
+              color: colors.primary,
+              textAlign: 'center',
+            }}>
+            SKIP
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
