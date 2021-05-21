@@ -7,6 +7,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Auth} from 'aws-amplify';
 import jwtDecode from 'jwt-decode';
+import {WelcomeHome} from '@containers';
 import {createApi} from '@service';
 // import { resolvePreset } from '@babel/core';
 export const Navigator = (props: any) => {
@@ -53,7 +54,8 @@ export const Navigator = (props: any) => {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <MainStackNavigator screen={user === null ? 'Login' : 'WelcomeHome'} />
+        <WelcomeHome />
+        {/* <MainStackNavigator screen={user === null ? 'Login' : 'WelcomeHome'} /> */}
       </NavigationContainer>
     </SafeAreaProvider>
   );

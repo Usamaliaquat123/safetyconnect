@@ -17,6 +17,7 @@ import {
   NothingFound,
   Messaging,
   MyTasks,
+  WelcomeHome,
   Chat,
   ViewAll,
   InvitePeople,
@@ -213,11 +214,18 @@ export const MainStackNavigator = (screen: route) => {
           }}
         />
         <Stack.Screen
+          name="WelcomeHome"
+          component={WelcomeHome}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
           name="Menu"
           component={Menu}
           options={{
             animationEnabled: true,
-            cardStyle: {backgroundColor: 'transparent'},
+            cardStyle: {backgroundColor: 'rgba(0, 0, 0, 0.15)'},
             cardOverlayEnabled: true,
 
             cardStyleInterpolator: ({current: {progress}}) => {
