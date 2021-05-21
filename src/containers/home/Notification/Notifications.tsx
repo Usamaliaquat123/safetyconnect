@@ -45,6 +45,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
   }
 
   componentDidMount() {
+    // this.props.route.params
     AsyncStorage.getItem('user').then((user: any) => {
       this.setState({user: JSON.parse(user)});
     });

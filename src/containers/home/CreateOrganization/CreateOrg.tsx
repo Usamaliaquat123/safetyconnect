@@ -54,6 +54,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
       // Error State
       errorModal: false,
       orgError: false,
+      orgDescError: false,
       org: '',
       orgDetails: '',
       projectLeader: '',
@@ -211,63 +212,12 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                       placeholder={'Enter Organization description here'}
                     />
                   </View>
-                  {this.state.orgError && (
+                  {this.state.orgDescError && (
                     <Text style={{fontSize: wp(3), color: colors.error}}>
                       Type your organization description
                     </Text>
                   )}
                 </View>
-
-                {/* Add Projects
-                <View>
-                  <View style={{flexDirection: 'row', marginTop: wp(3)}}>
-                    <Text style={styles.emailTextContainer}>Projects</Text>
-                  </View>
-                  <View
-                    style={{
-                      marginTop: wp(3),
-                      justifyContent: 'center',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}>
-                    <Icon
-                      name={'plus'}
-                      type={'antdesign'}
-                      size={wp(4)}
-                      color={colors.primary}
-                    />
-                    <Text style={styles.inviteppleText}>Add Project</Text>
-                  </View>
-                </View> */}
-
-                {/* Project leader
-                <View>
-                  <View style={{flexDirection: 'row', marginTop: wp(3)}}>
-                    <Text style={styles.emailTextContainer}>
-                      Project Leader
-                    </Text>
-                    <Icon
-                      containerStyle={{marginTop: wp(1), marginLeft: wp(2)}}
-                      name={'info'}
-                      type={'feather'}
-                      size={wp(3)}
-                      iconStyle={{opacity: 0.5}}
-                    />
-                  </View>
-                  <View style={[styles.inputContainer]}>
-                    <TextInput
-                      value={this.state.org}
-                      style={styles.authInputs}
-                      onChange={(e) => this.setState({org: e.nativeEvent.text})}
-                      placeholder={'Enter name'}
-                    />
-                  </View>
-                  {this.state.orgError && (
-                    <Text style={{fontSize: wp(3), color: colors.error}}>
-                      Add your Project
-                    </Text>
-                  )}
-                </View> */}
 
                 {/* People */}
                 <View>
@@ -286,7 +236,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                       value={this.state.peoplesText}
                       style={styles.authInputs}
                       onChangeText={(e) => this.setState({peoplesText: e})}
-                      placeholder={'Enter name'}
+                      placeholder={'Enter name or add email'}
                     />
                   </View>
                   {this.state.orgError && (
@@ -294,45 +244,9 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                       Add people to the organization
                     </Text>
                   )}
-                  <TouchableOpacity
-                    onPress={() =>
-                      this.props.navigation.navigate('InvitePeople')
-                    }
-                    style={{
-                      marginTop: wp(3),
-                      justifyContent: 'center',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}>
-                    <Icon
-                      name={'plus'}
-                      type={'antdesign'}
-                      size={wp(4)}
-                      color={colors.primary}
-                    />
-                    <Text style={styles.inviteppleText}>Invite People</Text>
-                  </TouchableOpacity>
                 </View>
               </View>
-              {/* view all projects */}
-              {/* <TouchableOpacity
-                  onPress={() =>
-                    this.props.navigation.navigate('CreateProj', {
-                      data: this.state.projects,
-                      onGoBack: this.onGoBack,
-                    })
-                  }
-                  style={{flexDirection: 'row'}}>
-                  <Icon
-                    containerStyle={{marginTop: wp(3), marginRight: wp(3)}}
-                    onPress={() => this.props.navigation.goBack()}
-                    size={15}
-                    name="plus"
-                    type="antdesign"
-                    color={colors.primary}
-                  />
-                  <Text style={styles.dontHaveAccount}>Add Project</Text>
-                </TouchableOpacity> */}
+
               <TouchableOpacity
                 onPress={() => this.createOrg()}
                 style={styles.siginBtnContainer}>
