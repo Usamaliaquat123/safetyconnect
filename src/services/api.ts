@@ -4,6 +4,7 @@ import {
   user,
   orgnaization,
   sor,
+  invite,
   observationsSug,
   country,
 } from '@typings';
@@ -130,12 +131,17 @@ const createApi = (
   /*
    * @Invite Users
    */
-  const inviteBulk = (data: any) => {
+  const inviteBulk = (data: invite) => {
     baseapi.post(`admin/bulk`, data);
   };
+  const logs = (reportId : string) => {
+    baseapi.get(`admin/logs?reportId=${reportId}`);
+    
+  }
 
   return {
     createFiveWhy,
+    logs,
     editFiveWhy,
     inviteBulk,
     getFiveWhy,

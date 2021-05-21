@@ -119,3 +119,9 @@ export interface comments {
   files?: string;
   is_comment?: boolean;
 }
+export interface invite {
+  emails: Array<string>;
+  organization: string;
+  invitedBy: string;
+  organizationName: string;
+}
