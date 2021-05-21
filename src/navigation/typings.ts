@@ -18,7 +18,7 @@ export type StackNavigatorProps = {
   Chat: {data: Imessage};
   MyTasks: undefined;
   ViewAll: {data: number; title: string};
-  createProject: undefined;
+  createProject: {organization: string};
   CreateOrganization: undefined;
   Menu: undefined;
   NothingFound: undefined;

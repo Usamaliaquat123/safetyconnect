@@ -131,13 +131,9 @@ const createApi = (
   /*
    * @Invite Users
    */
-  const inviteBulk = (data: invite) => {
-    baseapi.post(`admin/bulk`, data);
-  };
-  const logs = (reportId : string) => {
+  const inviteBulk = (data: invite) => baseapi.post(`admin/bulk`, data);
+  const logs = (reportId: string) =>
     baseapi.get(`admin/logs?reportId=${reportId}`);
-    
-  }
 
   return {
     createFiveWhy,

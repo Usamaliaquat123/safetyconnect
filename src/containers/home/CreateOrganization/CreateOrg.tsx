@@ -16,7 +16,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import * as reduxActions from '../../../store/actions/listSorActions';
-
+import {Tags} from '@components';
 import {Icon} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
@@ -32,6 +32,7 @@ import {bindActionCreators} from 'redux';
 
 import {AllSorDTO} from '@dtos';
 import {getActiveChildNavigationOptions} from 'react-navigation';
+import {validateEmail} from '@utils/utils';
 // import {validateEmail} from '@utils/';
 type CreateOrgNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -59,10 +60,31 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
       orgDetails: '',
       peoplesText: '',
       peoples: [], // must be array of id's
+      suggestedPps: ['asdhj@jasd.com'],
+      suggestedEmail: false,
+      selectedEmails: [],
+
       projects: [],
     };
   }
+  componentDidMount() {
+    // AsyncStorage.getItem('inviteEmails').then((emails) => {
+    //   if (emails != null) {
+    //     if (JSON.parse(emails) != null) {
+    //     } else {
+    //       this.setState({suggestedPps: JSON.parse(emails)});
+    //     }
+    //   }
+    // });
+  }
 
+  searchForUsers = (e: string) => {
+    if (validateEmail(e)) {
+      this.setState({suggestedEmail: true});
+    } else {
+    }
+    this.setState({peoplesText: e});
+  };
   createOrg = () => {
     if (this.state.org !== '') {
       if (this.state.orgDetails !== '') {
@@ -81,11 +103,31 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
               .createApi()
               .organization(data)
               .then((res: any) => {
+                console.log(res);
                 if (res.status == 200) {
-                  this.setState({loading: false, errorModal: false});
-                  this.props.navigation.navigate('CreateProj', {
-                    organization: res.data.data.organization_id,
-                  });
+                  if (this.state.selectedEmails.length != 0) {
+                    var inviteData = {
+                      emails: this.state.selectedEmails,
+                      organization: res.data.data.organization_id,
+                      invitedBy: email,
+                      organizationName: this.state.org,
+                    };
+                    api
+                      .createApi()
+                      .inviteBulk(inviteData)
+                      .then((invited) => {
+                        console.log(invited);
+                        this.setState({loading: false, errorModal: false});
+                        this.props.navigation.navigate('createProject', {
+                          organization: res.data.data.organization_id,
+                        });
+                      });
+                  } else {
+                    this.setState({loading: false, errorModal: false});
+                    this.props.navigation.navigate('createProject', {
+                      organization: res.data.data.organization_id,
+                    });
+                  }
                 } else {
                   this.setState({loading: false, errorModal: false});
                 }
@@ -205,7 +247,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                     <TextInput
                       value={this.state.peoplesText}
                       style={styles.authInputs}
-                      onChangeText={(e) => this.setState({peoplesText: e})}
+                      onChangeText={(e) => this.searchForUsers(e)}
                       placeholder={'Enter name or add email'}
                     />
                   </View>
@@ -213,6 +255,59 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                     <Text style={{fontSize: wp(3), color: colors.error}}>
                       Add people to the organization
                     </Text>
+                  )}
+                </View>
+                <View>
+                  {this.state.suggestedEmail == false ? null : (
+                    <View style={styles.involveSuggestCont}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.state.selectedEmails.push(
+                            this.state.peoplesText,
+                          );
+                          this.setState({
+                            peoplesText: '',
+                            suggestedEmail: false,
+                          });
+                        }}
+                        style={[
+                          styles.involvePsuggCont,
+                          {borderBottomWidth: 0},
+                        ]}>
+                        <Icon
+                          name={'send'}
+                          type={'feather'}
+                          size={wp(5)}
+                          containerStyle={{opacity: 0.5}}
+                        />
+                        <View style={{alignItems: 'center'}}>
+                          <Text
+                            style={{
+                              opacity: 0.5,
+                              fontSize: wp(3),
+                              marginLeft: wp(4),
+                            }}>
+                            Invite {this.state.peoplesText}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                  {this.state.selectedEmails.length != 0 && (
+                    <Tags
+                      type={'organizationPeoplesSuggestioms'}
+                      style={{height: wp(10)}}
+                      tags={this.state.selectedEmails}
+                      onClose={(d: any) =>
+                        this.setState({
+                          selectedEmails: this.state.selectedEmails.filter(
+                            (v: any) => v !== d,
+                          ),
+                        })
+                      }
+                    />
                   )}
                 </View>
               </View>
