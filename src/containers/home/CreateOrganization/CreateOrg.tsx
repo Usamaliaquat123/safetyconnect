@@ -117,6 +117,24 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                       .inviteBulk(inviteData)
                       .then((invited) => {
                         console.log(invited);
+                        var invitedPP = {
+                          users: this.state.selectedEmails,
+                          orgnaizationId: res.data.data.organization_id,
+                          organizationName: this.state.org,
+                        };
+                        AsyncStorage.getItem('invitedUsersEmails').then(
+                          (invitedEmails: any) => {
+                            var emails = JSON.parse(invitedEmails);
+                            if (emails != null) {
+                              AsyncStorage.setItem(
+                                'invitedUsersEmails',
+                                JSON.stringify([invitedPP]),
+                              );
+                            } else {
+                              emails.push(invitedPP);
+                            }
+                          },
+                        );
                         this.setState({loading: false, errorModal: false});
                         this.props.navigation.navigate('createProject', {
                           organization: res.data.data.organization_id,
