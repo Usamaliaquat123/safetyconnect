@@ -45,6 +45,27 @@ export const classifySor: Array<Object> = [
   },
 ];
 
+// export const filterEmailsAndSave = (str: Array<any>): Array<any> => {
+//   for (let i = 0; i < str.length; i++) {
+
+//     if (validateEmail(str.name)) {
+//       AsyncStorage.getItem('invitedEmails').then((emails) => {
+//         if (emails == null) {
+//           AsyncStorage.setItem('invitedEmails', JSON.stringify([str]));
+//         } else {
+//           var emil = [...emails];
+//           emil.push(str);
+//           AsyncStorage.setItem('invitedEmails', JSON.stringify(emil));
+//         }
+//       });
+//       return [];
+//     } else {
+//       return [];
+//     }
+
+//   }
+
+// };
 export const filterLocation = (str: any) => {
   return str.match(/@\S+/);
 };

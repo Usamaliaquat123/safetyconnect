@@ -57,7 +57,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
       orgDescError: false,
       org: '',
       orgDetails: '',
-      projectLeader: '',
       peoplesText: '',
       peoples: [], // must be array of id's
       projects: [],
@@ -66,46 +65,42 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
 
   createOrg = () => {
     if (this.state.org !== '') {
-      this.setState({loading: true, errorModal: true});
+      if (this.state.orgDetails !== '') {
+        this.setState({loading: true, errorModal: true});
 
-      AsyncStorage.getItem('email')
-        .then((email: any) => {
-          // this.props.navigation.navigate('CreateProj', {}
-          // var org = {
-          //   created_by: email,
-          //   name: this.state.org,
-          //   details: 'details of the organizations',
-          //   members: [],
-          //   projects: [],
-          // };
-          // this.props.reduxActions.createOrganization(org);
-
-          api
-            .createApi()
-            .organization({
+        AsyncStorage.getItem('email')
+          .then((email: any) => {
+            var data = {
               created_by: email,
               name: this.state.org,
-              details: 'ad',
+              details: this.state.orgDetails,
               members: [],
               projects: [],
-            })
-            .then((res: any) => {
-              if (res.status == 200) {
+            };
+            api
+              .createApi()
+              .organization(data)
+              .then((res: any) => {
+                if (res.status == 200) {
+                  this.setState({loading: false, errorModal: false});
+                  this.props.navigation.navigate('CreateProj', {
+                    organization: res.data.data.organization_id,
+                  });
+                } else {
+                  this.setState({loading: false, errorModal: false});
+                }
+              })
+              .catch((err) => {
                 this.setState({loading: false, errorModal: false});
-                this.props.navigation.navigate('CreateProj', {
-                  organization: res.data.data.organization_id,
-                });
-              } else {
-                this.setState({loading: false, errorModal: false});
-              }
-            })
-            .catch((err) => {
-              this.setState({loading: false, errorModal: false});
-            });
-        })
-        .catch((err) => {
-          this.setState({loading: true, errorModal: true});
-        });
+              });
+          })
+          .catch((err) => {
+            this.setState({loading: true, errorModal: true});
+          });
+      } else {
+        this.setState({loading: false});
+        this.setState({orgDescError: true});
+      }
     } else {
       this.setState({loading: false});
       this.setState({orgError: true});
@@ -115,32 +110,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
     return (
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {/* <View style={styles.header}>
-            <View style={styles.headertle}>
-              <View>
-                <Text style={styles.title}>Create organization</Text>
-                <View style={styles.underScrore} />
-              </View>
-            </View>
-          </View> */}
-          {/* content */}
           <View style={styles.content}>
-            {/* {this.state.loading ? (
-              <View>
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    marginTop: wp(40),
-                  }}>
-                  <LottieView
-                    autoPlay={true}
-                    style={{width: wp(90)}}
-                    source={animation.loading}
-                    loop={true}
-                  />
-                </View>
-              </View>
-            ) : ( */}
             <View>
               <View
                 style={{

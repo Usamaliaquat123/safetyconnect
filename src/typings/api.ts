@@ -38,10 +38,10 @@ export interface orgnaization {
   name?: string;
   details?: string;
   createdAt?: string;
-  updatedAt: string;
+  updatedAt?: string;
   members?: Array<string>;
   pending_members?: Array<any>;
-  projects?: Array<project>;
+  projects?: Array<any>;
   username?: string;
   organization?: string;
   _id?: string;
