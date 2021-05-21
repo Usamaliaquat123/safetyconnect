@@ -116,7 +116,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                       .createApi()
                       .inviteBulk(inviteData)
                       .then((invited) => {
-                        console.log(invited);
                         var invitedPP = {
                           users: this.state.selectedEmails,
                           orgnaizationId: res.data.data.organization_id,
@@ -132,6 +131,10 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                               );
                             } else {
                               emails.push(invitedPP);
+                              AsyncStorage.setItem(
+                                'invitedUsersEmails',
+                                JSON.stringify(emails),
+                              );
                             }
                           },
                         );
