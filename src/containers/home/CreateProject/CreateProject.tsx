@@ -60,12 +60,23 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       email: 'inconnent12345@outlook.com',
       // errors popup
       errorProjectName: false,
+      locations: [
+        {name: 'Kitchen'},
+        {name: 'offce'},
+        {name: 'washroom'},
+        {name: 'berlin'},
+        {name: 'germany '},
+        {name: 'house'},
+      ],
       errorTeamMem: false,
       projectDescription: '',
+      // suggestions
+      locationSugg: [],
     };
   }
   // Filter All countries
   filterContries = (contries: string) => {
+    // if()
     this.setState({assignLocationsText: contries});
   };
 
@@ -129,6 +140,15 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       this.setState({errorProjectName: true});
     }
   };
+
+  componentDidMount() {
+    AsyncStorage.getItem('locations').then((locations: any) => {
+      var location = JSON.parse(locations);
+      if (location != null) {
+        this.setState({locationSugg: location});
+      }
+    });
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -251,8 +271,8 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                           placeholder={'Add Locations'}
                           style={styles.authInputs}
                           value={this.state.assignLocationsText}
-                          onChange={(e) => {
-                            this.filterContries(e.nativeEvent.text);
+                          onChangeText={(e) => {
+                            this.filterContries(e);
                           }}
                         />
                       </View>
@@ -260,7 +280,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     {/* Assign Locations suggestions */}
                     {this.state.assignLocationsText != '' ? (
                       <SuggestionsAvatar
-                        // type={'location'}
+                        type={'location'}
                         locations={this.state.locations}
                         onSelect={(d: string) => {
                           this.state.assignLocations.push(d);
