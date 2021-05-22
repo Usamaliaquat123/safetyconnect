@@ -76,7 +76,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   }
   // Filter All countries
   filterContries = (contries: string) => {
-    // if()
     this.setState({assignLocationsText: contries});
   };
 
