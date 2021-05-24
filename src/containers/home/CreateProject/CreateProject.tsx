@@ -72,6 +72,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       projectDescription: '',
       // suggestions
       locationSugg: [],
+      involvedPersons: [],
     };
   }
   // Filter All countries
@@ -141,6 +142,17 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   };
 
   componentDidMount() {
+    // Organization id
+    this.props.route.params.organization;
+    // get project members
+    api
+      .createApi()
+      .getOrganization(this.props.route.params.organization)
+      .then((organization: any) => {
+        // Members
+        // organization.data.data.members;
+      });
+    // Get locations from local storage
     AsyncStorage.getItem('locations').then((locations: any) => {
       var location = JSON.parse(locations);
       if (location != null) {
