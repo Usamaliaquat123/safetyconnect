@@ -152,7 +152,8 @@ const createApi = (
   /*
    * @File Uploading
    */
-  const getFilesUrl = (data: any) => getFilesUri.get(`default/getPresingedUrl`);
+  const getFilesUrl = (data: any) =>
+    getFilesUri.post(`default/getPresingedUrl`, data);
   const uploadFile = (file: any) => uploadFiles.put('', file);
 
   return {

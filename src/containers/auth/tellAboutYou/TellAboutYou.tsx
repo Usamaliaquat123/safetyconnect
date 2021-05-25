@@ -63,6 +63,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
       selected: 0,
       photo: '',
       photofileType: '',
+      fileType: '',
       role: '',
       name: '',
       selectedIndustry: false,
@@ -78,6 +79,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
       nameError: false,
       laoding: false,
       arrayOfRole: [],
+
       IndustryRole: '',
     };
   }
@@ -91,12 +93,13 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
           if (res.didCancel == true) {
             this.setState({photoModal: false, uploadedImage: ''});
           } else {
-            console.log(res);
+            console.log();
             this.setState({});
             this.setState({
               photoModal: false,
               uploadedImage: res.uri,
               photofileType: res.type,
+              fileType: res.type.split('/')[1],
             });
           }
         })
@@ -113,6 +116,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
               photoModal: false,
               uploadedImage: res.uri,
               photofileType: res.type,
+              fileType: res.type.split('/')[1],
             });
           }
         })
@@ -124,23 +128,25 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
 
   updateProfile = () => {
     if (this.state.uploadedImage !== '') {
-      var data = {
-        bucket: 'hns-codist',
-        report: 'profile',
-        fileType: [this.state.photofileType],
-        ext: ['pdf'],
-      };
-
-      createApi
-        .createApi()
-        .getFilesUrl(data)
-        .then((geturi: any) => {
-          console.log(geturi);
-        });
       if (this.state.name !== '') {
         if (this.state.DesignAndArchitectureText !== '') {
           this.setState({DesignAndArchitectureTextError: false});
           if (this.state.IndustryRole !== '') {
+            var data = {
+              bucket: 'hns-codist',
+              report: 'profile',
+              fileType: [this.state.photofileType],
+              ext: [this.state.fileType],
+            };
+
+            console.log(data);
+            createApi
+              .createApi()
+              .getFilesUrl(data)
+              .then((geturi: any) => {
+                console.log(geturi.data[0].url);
+              });
+
             this.setState({
               loading: true,
               errorModal: true,
@@ -221,13 +227,6 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
               <View style={{marginTop: wp(10)}}>
                 <Text style={styles.headingContainer}>
                   Tell us more about yourself
-                </Text>
-                <Text style={styles.headingPara}>
-                  Tell more about you
-                  <Text style={styles.headingParaEmail}>
-                    {/* {' '} */}
-                    {/* {this.props.route.params.username} */}
-                  </Text>
                 </Text>
 
                 {/* Upload profile photo */}
