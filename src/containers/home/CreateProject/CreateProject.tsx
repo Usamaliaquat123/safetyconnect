@@ -26,11 +26,7 @@ import LottieView from 'lottie-react-native';
 
 import {orgnaization} from '@typings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {
-  validateEmail,
-  savedCurrentProjectAndOrganizations,
-  getCurrentProjectAndOrganization,
-} from '@utils';
+import {validateEmail, getCurrentProject, getCurrentOrganization} from '@utils';
 type CreateProjectNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'CreateProj'
@@ -140,6 +136,9 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   };
 
   componentDidMount() {
+    getCurrentOrganization().then((org) => {
+      console.log(org);
+    });
     // console.log(this.props.route.params.organization);
     // if (this.props.route.params.organization == undefined) {
     //   console.log('sdsds');
