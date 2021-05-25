@@ -13,7 +13,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {View_sor, profileSetupSelections} from '@service';
+import {View_sor, profileSetupSelections, createApi} from '@service';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -62,6 +62,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
       photoModal: false,
       selected: 0,
       photo: '',
+      photofileType: '',
       role: '',
       name: '',
       selectedIndustry: false,
@@ -90,7 +91,13 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
           if (res.didCancel == true) {
             this.setState({photoModal: false, uploadedImage: ''});
           } else {
-            this.setState({photoModal: false, uploadedImage: res.uri});
+            console.log(res);
+            this.setState({});
+            this.setState({
+              photoModal: false,
+              uploadedImage: res.uri,
+              photofileType: res.type,
+            });
           }
         })
         .catch((err) => {
@@ -102,7 +109,11 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
           if (res.didCancel == true) {
             this.setState({photoModal: false, uploadedImage: ''});
           } else {
-            this.setState({photoModal: false, uploadedImage: res.uri});
+            this.setState({
+              photoModal: false,
+              uploadedImage: res.uri,
+              photofileType: res.type,
+            });
           }
         })
         .catch((err) => {
@@ -112,53 +123,73 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
   };
 
   updateProfile = () => {
-    if (this.state.name !== '') {
-      if (this.state.DesignAndArchitectureText !== '') {
-        this.setState({DesignAndArchitectureTextError: false});
-        if (this.state.IndustryRole !== '') {
-          this.setState({
-            loading: true,
-            errorModal: true,
-            IndustryRoleError: false,
-          });
-          api
-            .createApi()
-            .setUserInfo({
-              email: this.props.route.params.username,
-              role: this.state.DesignAndArchitectureText,
-              department: this.state.IndustryRole,
-              industry: this.state.name,
-            })
-            .then((res) => {
-              console.log('with in set user info');
-              console.log(res);
-              console.log('with in set user info');
-              if ((res.status = 200)) {
-                this.setState({
-                  loading: false,
-                  errorModal: false,
-                });
-                api
-                  .createApi()
-                  .getUser(this.props.route.params.username)
-                  .then((res: any) => {
-                    AsyncStorage.setItem('user', JSON.stringify(res.data.data));
-                  });
-                AsyncStorage.setItem('email', this.props.route.params.username);
+    if (this.state.uploadedImage !== '') {
+      var data = {
+        bucket: 'hns-codist',
+        report: 'profile',
+        fileType: [this.state.photofileType],
+        ext: ['pdf'],
+      };
 
-                this.props.navigation.navigate('CreateOrganization');
-              }
+      createApi.createApi().getFilesUrl();
+      if (this.state.name !== '') {
+        if (this.state.DesignAndArchitectureText !== '') {
+          this.setState({DesignAndArchitectureTextError: false});
+          if (this.state.IndustryRole !== '') {
+            this.setState({
+              loading: true,
+              errorModal: true,
+              IndustryRoleError: false,
             });
-        } else {
-          this.setState({IndustryRoleError: true, nameError: false});
-        }
-      } else {
-        this.setState({DesignAndArchitectureTextError: true, nameError: false});
-      }
+            api
+              .createApi()
+              .setUserInfo({
+                email: this.props.route.params.username,
+                role: this.state.DesignAndArchitectureText,
+                department: this.state.IndustryRole,
+                industry: this.state.name,
+              })
+              .then((res) => {
+                console.log('with in set user info');
+                console.log(res);
+                console.log('with in set user info');
+                if ((res.status = 200)) {
+                  this.setState({
+                    loading: false,
+                    errorModal: false,
+                  });
+                  api
+                    .createApi()
+                    .getUser(this.props.route.params.username)
+                    .then((res: any) => {
+                      AsyncStorage.setItem(
+                        'user',
+                        JSON.stringify(res.data.data),
+                      );
+                    });
+                  AsyncStorage.setItem(
+                    'email',
+                    this.props.route.params.username,
+                  );
 
-      // api.
+                  this.props.navigation.navigate('CreateOrganization');
+                }
+              });
+          } else {
+            this.setState({IndustryRoleError: true, nameError: false});
+          }
+        } else {
+          this.setState({
+            DesignAndArchitectureTextError: true,
+            nameError: false,
+          });
+        }
+
+        // api.
+      } else {
+        this.setState({nameError: true});
+      }
     } else {
-      this.setState({nameError: true});
     }
   };
 

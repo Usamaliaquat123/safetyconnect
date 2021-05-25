@@ -159,6 +159,7 @@ const createApi = (
     createFiveWhy,
     logs,
     getFilesUrl,
+    uploadFile,
     editFiveWhy,
     inviteBulk,
     getFiveWhy,
