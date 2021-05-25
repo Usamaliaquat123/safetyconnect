@@ -217,7 +217,10 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                         rounded
                         size={'large'}
                         source={{
-                          uri: 'https://via.placeholder.com/150',
+                          uri:
+                            this.state.uploadedImage !== ''
+                              ? this.state.uploadedImage
+                              : 'https://via.placeholder.com/150',
                         }}
                       />
                     </View>
