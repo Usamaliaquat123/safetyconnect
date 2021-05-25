@@ -53,7 +53,11 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       teamMembersText: '',
       assignSuppervisor: [],
       assignSuppervisorText: [],
-      allAssignSuppervisorText: [],
+      allAssignSuppervisorText: [
+        'inconnent12345@outlook.com',
+        'mdaniyal2016@outlok.com',
+        'kk@kk.com',
+      ],
 
       assignLeaderss: [],
       assignLeaderssText: [],
