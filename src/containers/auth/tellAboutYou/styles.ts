@@ -186,7 +186,9 @@ const styles = StyleSheet.create({
   },
   avatarPencil: {},
   involvePSt: {
-    fontSize: wp(3),
+    fontSize: wp(2.7),
+    opacity: 0.5,
+    fontFamily: fonts.SFuiDisplayLight,
   },
   involvePsuggCont: {
     borderColor: colors.textOpa,
