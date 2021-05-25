@@ -9,7 +9,7 @@ import {
   Keyboard,
 } from 'react-native';
 import {connect} from 'react-redux';
-import {Icon, ThemeConsumer} from 'react-native-elements';
+import {Icon, Avatar} from 'react-native-elements';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -380,17 +380,10 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         style={styles.authInputs}
                         value={this.state.assignLeaderssT}
                         onChangeText={(e) => {
-                          if (validateEmail(e)) {
-                            this.setState({
-                              assignLeaderssText: e,
-                              assignLeaderssT: e,
-                            });
-                          } else {
-                            this.setState({
-                              assignLeaderssText: '',
-                              assignLeaderssT: e,
-                            });
-                          }
+                          this.setState({
+                            assignLeaderssText: e,
+                            assignLeaderssT: e,
+                          });
                         }}
                       />
                     ) : null}
@@ -408,6 +401,47 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       text={this.state.assignLeaderssText}
                     />
                   ) : null}
+
+                  {/* Suggestions of emails  */}
+                  {this.state.submitToArr.length != 0 ? (
+                    <View style={styles.involveSuggestCont}>
+                      {this.state.submitToArr.map((d: any, i: number) => (
+                        <TouchableOpacity
+                          key={i}
+                          onPress={() => {
+                            this.setState({
+                              submitTo: '',
+                              submitToArr: [],
+                            });
+
+                            if (
+                              this.state.submitToTags.filter((v: any) => v == d)
+                                .length == 0
+                            ) {
+                              this.state.submitToTags.push(d);
+                            } else {
+                              return null;
+                            }
+                          }}
+                          style={[
+                            styles.involvePsuggCont,
+                            this.state.submitToArr.length == i + 1
+                              ? {borderBottomWidth: wp(0)}
+                              : null,
+                          ]}>
+                          <Avatar
+                            containerStyle={{marginRight: wp(3)}}
+                            rounded
+                            source={{
+                              uri: d.img_url,
+                            }}
+                          />
+                          <Text style={styles.involvePSt}>{d.name}</Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  ) : null}
+
                   <View
                     style={{
                       flexWrap: 'wrap',

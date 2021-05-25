@@ -84,6 +84,24 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: colors.primary,
   },
+  involvePSt: {
+    fontSize: wp(3),
+  },
+  involveSuggestCont: {
+    borderColor: colors.green,
+    borderRadius: wp(3),
+    padding: wp(3),
+    borderWidth: wp(0.3),
+    marginTop: wp(1),
+  },
+  involvePsuggCont: {
+    borderColor: colors.textOpa,
+    borderBottomWidth: wp(0.1),
+    paddingTop: wp(3),
+    paddingBottom: wp(3),
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
   siginBtnContainer: {
     marginTop: wp(5),
     alignSelf: 'center',

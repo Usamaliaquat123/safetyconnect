@@ -1704,7 +1704,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     value={this.state.submitTo}
                   />
                 </View>
-
+{/* suggestions of emails  */}
                 {this.state.submitToArr.length != 0 ? (
                   <View style={styles.involveSuggestCont}>
                     {this.state.submitToArr.map(
@@ -1746,6 +1746,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     )}
                   </View>
                 ) : null}
+
+
+
                 <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
                   <Tags
                     onClose={(d: any) => {
