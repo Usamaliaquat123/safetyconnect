@@ -52,15 +52,17 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       teamMembers: [],
       teamMembersText: '',
       assignSuppervisor: [],
-      assignSuppervisorText: '',
+      assignSuppervisorText: [],
+      allAssignSuppervisorText: [],
+
       assignLeaderss: [],
       assignLeaderssText: [],
-      assignLeaderssT: '',
       allAssignLeaders: [
         'inconnent12345@outlook.com',
         'mdaniyal2016@outlok.com',
         'kk@kk.com',
       ],
+      assignLeaderssT: '',
       assignSuppervisorT: '',
       assignLocations: [],
       assignLocationsText: '',
@@ -475,7 +477,10 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                           value={this.state.assignSuppervisorT}
                           onChangeText={(e) => {
                             this.setState({
-                              assignSuppervisorText: '',
+                              assignSuppervisorText: suggestInActionsRecommendations(
+                                e,
+                                this.state.allAssignLeaders,
+                              ),
                               assignSuppervisorT: e,
                             });
                           }}
@@ -483,7 +488,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       </View>
                     ) : null}
 
-                    {this.state.assignSuppervisorText != '' ? (
+                    {/* {this.state.assignSuppervisorText != '' ? (
                       <SuggestionsAvatar
                         onSelect={(d: string) => {
                           this.state.assignSuppervisor.push(d);
@@ -493,7 +498,36 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         }}
                         text={this.state.assignSuppervisorText}
                       />
+                    ) : null} */}
+
+                    {/* Suggestions of emails  */}
+                    {this.state.assignSuppervisorText.length != 0 ? (
+                      <View style={styles.involveSuggestCont}>
+                        {this.state.assignSuppervisorText.map(
+                          (d: any, i: number) => (
+                            <TouchableOpacity
+                              key={i}
+                              onPress={() => {
+                                this.setState({
+                                  assignSuppervisorT: '',
+                                  assignSuppervisorText: [],
+                                });
+
+                                this.state.assignSuppervisor.push(d);
+                              }}
+                              style={[
+                                styles.involvePsuggCont,
+                                this.state.assignSuppervisorText.length == i + 1
+                                  ? {borderBottomWidth: wp(0)}
+                                  : null,
+                              ]}>
+                              <Text style={styles.involvePSt}>{d}</Text>
+                            </TouchableOpacity>
+                          ),
+                        )}
+                      </View>
                     ) : null}
+
                     <View
                       style={{
                         flexWrap: 'wrap',
