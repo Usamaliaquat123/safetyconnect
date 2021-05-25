@@ -82,8 +82,8 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
 
   // Saved current project id with current organization id
   savedCurrentStatus = async (pid: string, orgId: string) => {
-    await AsyncStorage.setItem('pid', pid);
-    await AsyncStorage.setItem('orgId', orgId);
+    await AsyncStorage.setItem('projectId', pid);
+    await AsyncStorage.setItem('organizationId', orgId);
   };
 
   createProject = async () => {

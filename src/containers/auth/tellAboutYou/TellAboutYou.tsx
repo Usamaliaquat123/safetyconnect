@@ -19,7 +19,7 @@ import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps, route} from '@nav';
 import {Avatar, Icon} from 'react-native-elements';
-import {colors, images, GlStyles} from '@theme';
+import {colors, images, GlStyles, fonts} from '@theme';
 import {RouteProp} from '@react-navigation/native';
 import {
   imagePicker,
@@ -32,6 +32,7 @@ import LottieView from 'lottie-react-native';
 import {createApi as api} from '@service';
 import {animation} from '@theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {FadeOutToBottomAndroidSpec} from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionSpecs';
 type TellAboutYouNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'TellAboutYou'
@@ -192,6 +193,58 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     {/* {this.props.route.params.username} */}
                   </Text>
                 </Text>
+
+                {/* Upload profile photo */}
+                <View style={{marginTop: wp(5)}}>
+                  <Text
+                    style={{
+                      fontSize: wp(3),
+                      opacity: 0.5,
+                      fontFamily: fonts.SFuiDisplayMedium,
+                    }}>
+                    Upload your Profile Picture
+                  </Text>
+                  <View
+                    style={{
+                      padding: wp(3),
+                      flexDirection: 'row',
+                      width: wp(50),
+                      justifyContent: 'space-between',
+                    }}>
+                    <View>
+                      <Text
+                        style={{
+                          fontFamily: fonts.SFuiDisplayMedium,
+                          opacity: 0.5,
+                          fontSize: wp(3),
+                          marginBottom: wp(4),
+                        }}>
+                        Upload picture from your phone gallery
+                      </Text>
+                      {/* Button to upload profile picture */}
+                      <TouchableOpacity
+                        style={{
+                          borderWidth: wp(0.3),
+                          alignItems: 'center',
+                          padding: wp(3),
+                          // width: wp(30),
+                          borderRadius: wp(3),
+
+                          borderColor: colors.primary,
+                        }}>
+                        <Text
+                          style={{
+                            fontSize: wp(3),
+                            fontFamily: fonts.SFuiDisplayMedium,
+                            color: colors.primary,
+                          }}>
+                          Upload Picture
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+
                 <View style={styles.inputsContainer}>
                   <Text style={[styles.emailTextContainer, {marginTop: wp(2)}]}>
                     Your Industry*
