@@ -51,6 +51,8 @@ class Home extends React.Component<HomeProps, any> {
       selectedStats: 1,
       recentActivity: [],
       user: {},
+      name: '',
+      image: '',
       orgName: '',
       newsorModal: false,
       totalObservations: 0,
@@ -58,14 +60,27 @@ class Home extends React.Component<HomeProps, any> {
     };
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
+    this.setState({name: 'sds'});
     AsyncStorage.getItem('user').then((res: any) => {
-      console.log(JSON.parse(res));
+      // console.log(JSON.parse(res));
+
+      this.setState({name: JSON.parse(res).name});
+      this.setState({image: JSON.parse(res).user.img_url});
       this.setState({user: JSON.parse(res)});
       if (JSON.parse(res).orgnaization.length != 0) {
         this.setState({orgName: JSON.parse(res).organizations[0].name});
       }
     });
+  };
+
+  _onRefresh = () => {
+    this.setState({
+      recentActivity: [],
+    });
+    // this.componentDidMount();
+  };
+  render() {
     createApi
       .createApi()
       .filterSors({
@@ -81,15 +96,7 @@ class Home extends React.Component<HomeProps, any> {
           this.setState({recentActivity: res.data.data.report});
         }
       });
-  }
 
-  _onRefresh = () => {
-    this.setState({
-      recentActivity: [],
-    });
-    this.componentDidMount();
-  };
-  render() {
     const data = [
       {val: 40, color: '#8DCF7F'},
       {val: 20, color: '#FED888'},
@@ -110,12 +117,13 @@ class Home extends React.Component<HomeProps, any> {
       <View style={{flex: 1, backgroundColor: colors.primary}}>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.loading}
-              onRefresh={this._onRefresh}
-            />
-          }>
+          // refreshControl={
+          //   <RefreshControl
+          //     refreshing={this.state.loading}
+          //     onRefresh={this._onRefresh}
+          //   />
+          // }
+        >
           <View style={styles.header}>
             <View style={styles.headertle}>
               <View style={styles.orgLogo}>
@@ -126,7 +134,7 @@ class Home extends React.Component<HomeProps, any> {
               </View>
               <View style={{alignSelf: 'center'}}>
                 <Text style={styles.title}>Welcome</Text>
-                <Text style={styles.orgTitle}>{this.state.user.name}</Text>
+                <Text style={styles.orgTitle}>{this.state.name}</Text>
               </View>
               <View
                 style={{
@@ -155,7 +163,10 @@ class Home extends React.Component<HomeProps, any> {
                 <Avatar
                   rounded
                   source={{
-                    uri: this.state.user.img_url,
+                    uri:
+                      this.state.image !== ''
+                        ? this.state.image
+                        : 'https://via.placeholder.com/150',
                   }}
                 />
               </View>

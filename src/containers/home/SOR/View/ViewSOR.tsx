@@ -433,8 +433,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   getAllComments = () => {
     // this.props.route.params.data.comments;
     AsyncStorage.getItem('user').then((user: any) => {
-      console.log(this.props.route.params.data.comments);
-      console.log(this.props.route.params.data._id);
       createApi
         .createApi()
         .getAllComents(
