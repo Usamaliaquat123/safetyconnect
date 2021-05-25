@@ -81,7 +81,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   };
 
   // Saved current project id with current organization id
-  savedCurrentStatus = async (pid: string, orgId: string) => {
+  savedCurrentProjectAndOrganizations = async (pid: string, orgId: string) => {
     await AsyncStorage.setItem('projectId', pid);
     await AsyncStorage.setItem('organizationId', orgId);
   };
@@ -115,7 +115,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         this.props.route.params.organization,
                       );
 
-                      this.savedCurrentStatus(
+                      this.savedCurrentProjectAndOrganizations(
                         this.props.route.params.organization,
                         res.data.data.project_id,
                       );

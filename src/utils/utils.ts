@@ -81,6 +81,27 @@ export const validatePassword = (password: string): boolean => {
   return re.test(String(password));
 };
 
+// Saved current project id with current organization id
+export const savedCurrentProjectAndOrganizations = async (
+  pid: string,
+  orgId: string,
+) => {
+  await AsyncStorage.setItem('projectId', pid);
+  await AsyncStorage.setItem('organizationId', orgId);
+};
+// Get current project id with current organization id
+export const getCurrentProjectAndOrganization = () => {
+  return new Promise((resolve, reject) => {
+    try {
+      var projId = AsyncStorage.getItem('projectId');
+      var orgId = AsyncStorage.getItem('organizationId');
+
+      resolve({projId, orgId});
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 // Suggest in Actions an recommendations
 export const suggestInActionsRecommendations = (
   str: string,
