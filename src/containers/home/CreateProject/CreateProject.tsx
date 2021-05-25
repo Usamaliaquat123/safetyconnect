@@ -49,7 +49,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       assignSuppervisor: [],
       assignSuppervisorText: '',
       assignLeaderss: [],
-      assignLeaderssText: '',
+      assignLeaderssText: [],
       assignSuppervisorT: '',
       assignLeaderssT: '',
       assignLocations: [],
@@ -403,42 +403,37 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                   ) : null}
 
                   {/* Suggestions of emails  */}
-                  {this.state.submitToArr.length != 0 ? (
+                  {this.state.assignLeaderssText.length != 0 ? (
                     <View style={styles.involveSuggestCont}>
-                      {this.state.submitToArr.map((d: any, i: number) => (
-                        <TouchableOpacity
-                          key={i}
-                          onPress={() => {
-                            this.setState({
-                              submitTo: '',
-                              submitToArr: [],
-                            });
+                      {this.state.assignLeaderssText.map(
+                        (d: any, i: number) => (
+                          <TouchableOpacity
+                            key={i}
+                            onPress={() => {
+                              this.setState({
+                                assignLeaderssT: '',
+                                assignLeaderssText: [],
+                              });
 
-                            if (
-                              this.state.submitToTags.filter((v: any) => v == d)
-                                .length == 0
-                            ) {
-                              this.state.submitToTags.push(d);
-                            } else {
-                              return null;
-                            }
-                          }}
-                          style={[
-                            styles.involvePsuggCont,
-                            this.state.submitToArr.length == i + 1
-                              ? {borderBottomWidth: wp(0)}
-                              : null,
-                          ]}>
-                          <Avatar
-                            containerStyle={{marginRight: wp(3)}}
-                            rounded
-                            source={{
-                              uri: d.img_url,
+                              this.state.assignLeaderss.push(d);
                             }}
-                          />
-                          <Text style={styles.involvePSt}>{d.name}</Text>
-                        </TouchableOpacity>
-                      ))}
+                            style={[
+                              styles.involvePsuggCont,
+                              this.state.assignLeaderssText.length == i + 1
+                                ? {borderBottomWidth: wp(0)}
+                                : null,
+                            ]}>
+                            {/* <Avatar
+                              containerStyle={{marginRight: wp(3)}}
+                              rounded
+                              source={{
+                                uri: d.img_url,
+                              }}
+                            /> */}
+                            <Text style={styles.involvePSt}>{d.name}</Text>
+                          </TouchableOpacity>
+                        ),
+                      )}
                     </View>
                   ) : null}
 
