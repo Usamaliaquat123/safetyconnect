@@ -44,6 +44,7 @@ export const Navigator = (props: any) => {
       .createApi()
       .getUser(res)
       .then((res: any) => {
+        console.log(res);
         AsyncStorage.setItem('user', JSON.stringify(res.data.data));
       });
   });
