@@ -17,6 +17,9 @@ const createApi = (
   baseAi: string = `${base_uri}:5004/`,
   // External Countries api
   countries: string = `https://restcountries.eu/rest/v2/`,
+  // upload files
+  getFileUri: string = `https://64g95tsm4b.execute-api.us-west-1.amazonaws.com/`,
+  uploadFilesUri?: string,
 ) => {
   const baseapi = apisauce.create({
     baseURL,
@@ -43,6 +46,17 @@ const createApi = (
     baseURL: countries,
     timeout: 10000,
   });
+
+  const getFilesUri = apisauce.create({
+    baseURL: getFileUri,
+    timeout: 10000,
+  });
+
+  const uploadFiles = apisauce.create({
+    baseURL: uploadFilesUri,
+    timeout: 10000,
+  });
+
   /*
    *  @apis
    */
@@ -135,9 +149,16 @@ const createApi = (
   const logs = (reportId: string) =>
     baseapi.get(`admin/logs?reportId=${reportId}`);
 
+  /*
+   * @File Uploading
+   */
+  const getFilesUrl = (data: any) => getFilesUri.get(`default/getPresingedUrl`);
+  const uploadFile = (file: any) => uploadFiles.put('', file);
+
   return {
     createFiveWhy,
     logs,
+    getFilesUrl,
     editFiveWhy,
     inviteBulk,
     getFiveWhy,

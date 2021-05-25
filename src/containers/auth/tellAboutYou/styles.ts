@@ -199,10 +199,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   involveSuggestCont: {
-    borderColor: colors.primary,
+    borderColor: colors.text,
     borderRadius: wp(3),
     padding: wp(3),
-    borderWidth: wp(0.3),
+    borderWidth: wp(0.2),
     marginTop: wp(1),
   },
 });

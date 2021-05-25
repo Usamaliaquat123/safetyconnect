@@ -305,6 +305,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     <TextInput
                       // secureTextEntry={this.state.isEye}
                       style={styles.authInputs}
+                      onFocus={() => this.setState({selected: 2})}
                       value={this.state.IndustryRole}
                       onChangeText={(e) => {
                         // if (validatePassword(this.state.password)) {
