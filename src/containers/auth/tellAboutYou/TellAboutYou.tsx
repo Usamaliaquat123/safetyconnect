@@ -90,6 +90,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
     if (str == 'upload') {
       imagePicker()
         .then((res: any) => {
+          console.log(res);
           if (res.didCancel == true) {
             this.setState({photoModal: false, uploadedImage: ''});
           } else {
@@ -101,6 +102,27 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
               photofileType: res.type,
               fileType: res.type.split('/')[1],
             });
+
+            var data = {
+              bucket: 'hns-codist',
+              report: 'profile',
+              fileType: [this.state.photofileType],
+              ext: [this.state.fileType],
+            };
+            console.log(data);
+            createApi
+              .createApi()
+              .getFilesUrl(data)
+              .then((geturi: any) => {
+                console.log(geturi);
+                createApi
+                  .createApi('', '', '', '', '', '', geturi.data[0].url)
+                  .uploadFile(this.state.uploadedImage)
+                  .then((res) => {
+                    console.log(res);
+                  });
+                console.log(geturi.data[0].url);
+              });
           }
         })
         .catch((err) => {
@@ -132,21 +154,6 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
         if (this.state.DesignAndArchitectureText !== '') {
           this.setState({DesignAndArchitectureTextError: false});
           if (this.state.IndustryRole !== '') {
-            var data = {
-              bucket: 'hns-codist',
-              report: 'profile',
-              fileType: [this.state.photofileType],
-              ext: [this.state.fileType],
-            };
-
-            console.log(data);
-            createApi
-              .createApi()
-              .getFilesUrl(data)
-              .then((geturi: any) => {
-                console.log(geturi.data[0].url);
-              });
-
             this.setState({
               loading: true,
               errorModal: true,

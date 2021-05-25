@@ -16,8 +16,8 @@ const createApi = (
   repBaseAi: string = `${base_uri}:5002/`,
   baseAi: string = `${base_uri}:5004/`,
   // External Countries api
-  countries: string = `https://restcountries.eu/rest/v2/`,
   // upload files
+  getFile: string = `https://1w2qv98cv8.execute-api.us-west-1.amazonaws.com/`,
   getFileUri: string = `https://64g95tsm4b.execute-api.us-west-1.amazonaws.com/`,
   uploadFilesUri?: string,
 ) => {
@@ -41,9 +41,8 @@ const createApi = (
     // headers,
     timeout: 10000,
   });
-
-  const contries = apisauce.create({
-    baseURL: countries,
+  const getfiles = apisauce.create({
+    baseURL: getFile,
     timeout: 10000,
   });
 
@@ -60,10 +59,6 @@ const createApi = (
   /*
    *  @apis
    */
-
-  // Exteral apis
-
-  const contriesAll = (data: country) => contries.get(`name/${data.name}`);
 
   const suggestiosns = (data: any) => aiBaseAi.post(`act`, data);
   const repeatedsorsugg = (keyword: any) =>
@@ -154,11 +149,15 @@ const createApi = (
    */
   const getFilesUrl = (data: any) =>
     getFilesUri.post(`default/getPresingedUrl`, data);
-  const uploadFile = (file: any) => uploadFiles.put('', file);
+  const uploadFile = (file: any) =>
+    uploadFiles.put('', file, {headers: {'Content-Type': 'image/jpeg'}});
+
+  const getFileApi = (data: any) => getfiles.post('default/getFiles', data);
 
   return {
     createFiveWhy,
     logs,
+    getFileApi,
     getFilesUrl,
     uploadFile,
     editFiveWhy,
@@ -182,7 +181,6 @@ const createApi = (
     createSorInit,
     updateOrganization,
     getOrganization,
-    contriesAll,
     organization,
     setUserInfo,
     createUser,
