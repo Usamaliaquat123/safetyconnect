@@ -26,7 +26,12 @@ import LottieView from 'lottie-react-native';
 
 import {orgnaization} from '@typings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {validateEmail, getCurrentProject, getCurrentOrganization} from '@utils';
+import {
+  validateEmail,
+  getCurrentProject,
+  getCurrentOrganization,
+  suggestInActionsRecommendations,
+} from '@utils';
 type CreateProjectNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'CreateProj'
@@ -50,8 +55,13 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       assignSuppervisorText: '',
       assignLeaderss: [],
       assignLeaderssText: [],
-      assignSuppervisorT: '',
       assignLeaderssT: '',
+      allAssignLeaders: [
+        'inconnent12345@outlook.com',
+        'mdaniyal2016@outlok.com',
+        'kk@kk.com',
+      ],
+      assignSuppervisorT: '',
       assignLocations: [],
       assignLocationsText: '',
       projectName: '',
@@ -381,26 +391,16 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         value={this.state.assignLeaderssT}
                         onChangeText={(e) => {
                           this.setState({
-                            assignLeaderssText: e,
+                            assignLeaderssText: suggestInActionsRecommendations(
+                              e,
+                              this.state.allAssignLeaders,
+                            ),
                             assignLeaderssT: e,
                           });
                         }}
                       />
                     ) : null}
                   </View>
-
-                  {/* Assign Leaders suggestions
-                  {this.state.assignLeaderssText != '' ? (
-                    <SuggestionsAvatar
-                      onSelect={(d: string) => {
-                        this.state.assignLeaderss.push(d);
-                        this.setState({
-                          assignLeaderssText: '',
-                        });
-                      }}
-                      text={this.state.assignLeaderssText}
-                    />
-                  ) : null} */}
 
                   {/* Suggestions of emails  */}
                   {this.state.assignLeaderssText.length != 0 ? (
