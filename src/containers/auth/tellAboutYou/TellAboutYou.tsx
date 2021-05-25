@@ -154,7 +154,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   .createApi('', '', '', '', '', '', geturi.data[0].url)
                   .uploadFile(this.state.uploadedImage)
                   .then((res) => {
-                    console.log(res.status);
+                    console.log(geturi.status);
                     if (res.status == 200) {
                       api
                         .createApi()
@@ -163,7 +163,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                           role: this.state.DesignAndArchitectureText,
                           department: this.state.IndustryRole,
                           industry: this.state.name,
-                          img_url: '',
+                          img_url: geturi.data[0].url,
                         })
                         .then((res) => {
                           console.log('with in set user info');
@@ -192,7 +192,8 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                               'CreateOrganization',
                             );
                           }
-                        });
+                        })
+                        .catch((err) => console.log(err));
                     }
                   });
                 console.log(geturi.data[0].url);

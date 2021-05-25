@@ -142,16 +142,22 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   };
 
   componentDidMount() {
+    // console.log(this.props.route.params.organization);
+    // if (this.props.route.params.organization == undefined) {
+    //   console.log('sdsds');
+    // }
     // Organization id
-    this.props.route.params.organization;
+    // this.props.route.params.organization;
     // get project members
-    api
-      .createApi()
-      .getOrganization(this.props.route.params.organization)
-      .then((organization: any) => {
-        // Members
-        // organization.data.data.members;
-      });
+
+    // if (this.props.route.params.organization)
+    // api
+    //   .createApi()
+    //   .getOrganization(this.props.route.params.organization)
+    //   .then((organization: any) => {
+    //     // Members
+    //     // organization.data.data.members;
+    //   });
     // Get locations from local storage
     AsyncStorage.getItem('locations').then((locations: any) => {
       var location = JSON.parse(locations);
