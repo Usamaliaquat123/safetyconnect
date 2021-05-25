@@ -204,6 +204,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     }}>
                     Upload your Profile Picture
                   </Text>
+
                   <View
                     style={{
                       padding: wp(3),
@@ -211,6 +212,15 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       width: wp(50),
                       justifyContent: 'space-between',
                     }}>
+                    <View style={{paddingRight: wp(10)}}>
+                      <Avatar
+                        rounded
+                        size={'large'}
+                        source={{
+                          uri: 'https://via.placeholder.com/150',
+                        }}
+                      />
+                    </View>
                     <View>
                       <Text
                         style={{
@@ -223,6 +233,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       </Text>
                       {/* Button to upload profile picture */}
                       <TouchableOpacity
+                        onPress={() => this.imgCap('upload')}
                         style={{
                           borderWidth: wp(0.3),
                           alignItems: 'center',
