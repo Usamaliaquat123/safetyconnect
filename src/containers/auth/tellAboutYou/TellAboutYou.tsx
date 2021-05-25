@@ -131,7 +131,12 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
         ext: ['pdf'],
       };
 
-      createApi.createApi().getFilesUrl();
+      createApi
+        .createApi()
+        .getFilesUrl(data)
+        .then((geturi: any) => {
+          console.log(geturi);
+        });
       if (this.state.name !== '') {
         if (this.state.DesignAndArchitectureText !== '') {
           this.setState({DesignAndArchitectureTextError: false});
