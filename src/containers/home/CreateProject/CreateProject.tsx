@@ -26,7 +26,11 @@ import LottieView from 'lottie-react-native';
 
 import {orgnaization} from '@typings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {validateEmail} from '@utils';
+import {
+  validateEmail,
+  savedCurrentProjectAndOrganizations,
+  getCurrentProjectAndOrganization,
+} from '@utils';
 type CreateProjectNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'CreateProj'
@@ -78,12 +82,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   // Filter All countries
   filterContries = (contries: string) => {
     this.setState({assignLocationsText: contries});
-  };
-
-  // Saved current project id with current organization id
-  savedCurrentProjectAndOrganizations = async (pid: string, orgId: string) => {
-    await AsyncStorage.setItem('projectId', pid);
-    await AsyncStorage.setItem('organizationId', orgId);
   };
 
   createProject = async () => {
@@ -159,6 +157,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     //     // organization.data.data.members;
     //   });
     // Get locations from local storage
+
     AsyncStorage.getItem('locations').then((locations: any) => {
       var location = JSON.parse(locations);
       if (location != null) {
@@ -166,6 +165,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       }
     });
   }
+
   render() {
     return (
       <View style={styles.container}>

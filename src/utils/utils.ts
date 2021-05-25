@@ -89,19 +89,29 @@ export const savedCurrentProjectAndOrganizations = async (
   await AsyncStorage.setItem('projectId', pid);
   await AsyncStorage.setItem('organizationId', orgId);
 };
-// Get current project id with current organization id
-export const getCurrentProjectAndOrganization = () => {
+// Get current project 
+export const getCurrentProject = () => {
   return new Promise((resolve, reject) => {
     try {
       var projId = AsyncStorage.getItem('projectId');
-      var orgId = AsyncStorage.getItem('organizationId');
-
-      resolve({projId, orgId});
+      resolve(projId);
     } catch (e) {
       reject(e);
     }
   });
 };
+// Get current organization
+export const getCurrentOrganization = () => {
+  return new Promise((resolve, reject) => {
+    try {
+      var orgId = AsyncStorage.getItem('organizationId');
+      resolve(orgId);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 // Suggest in Actions an recommendations
 export const suggestInActionsRecommendations = (
   str: string,
