@@ -389,7 +389,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     ) : null}
                   </View>
 
-                  {/* Assign Leaders suggestions */}
+                  {/* Assign Leaders suggestions
                   {this.state.assignLeaderssText != '' ? (
                     <SuggestionsAvatar
                       onSelect={(d: string) => {
@@ -400,7 +400,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       }}
                       text={this.state.assignLeaderssText}
                     />
-                  ) : null}
+                  ) : null} */}
 
                   {/* Suggestions of emails  */}
                   {this.state.assignLeaderssText.length != 0 ? (
@@ -423,14 +423,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                                 ? {borderBottomWidth: wp(0)}
                                 : null,
                             ]}>
-                            {/* <Avatar
-                              containerStyle={{marginRight: wp(3)}}
-                              rounded
-                              source={{
-                                uri: d.img_url,
-                              }}
-                            /> */}
-                            <Text style={styles.involvePSt}>{d.name}</Text>
+                            <Text style={styles.involvePSt}>{d}</Text>
                           </TouchableOpacity>
                         ),
                       )}
