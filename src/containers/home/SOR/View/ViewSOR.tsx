@@ -516,7 +516,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           console.log(res);
           var map = [...this.state.comments];
           map.push({
-            date: moment().format('YYYY-MM-DD'),
+            date: Date.now(),
             comment: comment,
             files: [],
             _id: res.data.data,
