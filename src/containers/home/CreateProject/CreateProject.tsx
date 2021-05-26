@@ -110,13 +110,17 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
           .then((email: any) => {
             this.setState({errorTeamMem: false});
             // this.props.route.params.suggestedUsers?.map((d  :any) => )
-
+            var members = this.state.assignLeaderss.concat(
+              this.state.assignSuppervisor,
+            );
+            console.log(members.map((d: any) => d._id));
             api
               .createApi()
               .Postproject({
                 created_by: email,
                 project_name: this.state.projectName,
-                involved_persons: [],
+                involved_persons: members.map((d: any) => d._id),
+                locations: this.state.assignLocations,
                 organization: this.props.route.params.organization,
               })
 
@@ -410,11 +414,12 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         value={this.state.assignLeaderssT}
                         onChangeText={(e) => {
                           if (e !== '') {
+                            var arr = searchInSuggestions(
+                              e,
+                              this.state.allAssignLeaders,
+                            );
                             this.setState({
-                              assignLeaderssText: searchInSuggestions(
-                                e,
-                                this.state.allAssignLeaders,
-                              ),
+                              assignLeaderssText: arr,
                               assignLeaderssT: e,
                             });
                           } else {
@@ -449,7 +454,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                                 ? {borderBottomWidth: wp(0)}
                                 : null,
                             ]}>
-                            <Text style={styles.involvePSt}>{d}</Text>
+                            <Text style={styles.involvePSt}>{d.email}</Text>
                           </TouchableOpacity>
                         ),
                       )}
@@ -552,7 +557,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                                   ? {borderBottomWidth: wp(0)}
                                   : null,
                               ]}>
-                              <Text style={styles.involvePSt}>{d}</Text>
+                              <Text style={styles.involvePSt}>{d.email}</Text>
                             </TouchableOpacity>
                           ),
                         )}

@@ -44,7 +44,7 @@ class Tags extends React.Component<TagsProps, any> {
     } else if (this.props.type == 'addTeamMem') {
       return this.props.tags.map((d: any, i: number) => (
         <View key={i} style={[styles.container, this.props.style]}>
-          <Text style={styles.tagsText}>{d}</Text>
+          <Text style={styles.tagsText}>{d.email}</Text>
           <TouchableOpacity
             onPress={() => this.props.onClose(d)}
             style={styles.containerIcon}>
