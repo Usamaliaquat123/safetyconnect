@@ -101,6 +101,11 @@ export const getCurrentProject = () => {
     }
   });
 };
+
+// Get All Projects
+export const getAllProjects = (organization: any) => {
+  return organization.projects;
+};
 // Get current organization
 export const getCurrentOrganization = () => {
   return new Promise((resolve, reject) => {

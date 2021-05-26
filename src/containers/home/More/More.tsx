@@ -47,7 +47,7 @@ export default class More extends React.Component<MoreProps, any> {
     AsyncStorage.getItem('user').then((user: any) => {
       var usr = JSON.parse(user);
       console.log(usr);
-      this.setState({name: user.name, email: usr.email, url: user.img_url});
+      this.setState({name: usr.name, email: usr.email, url: usr.img_url});
     });
   }
 

@@ -33,10 +33,12 @@ import {
   mapAllProjects,
   mapAllOrganizations,
   capitalizeFirstLetter,
+  getAllProjects,
 } from './utils';
 export {
   classifySor,
   validatePassword,
+  getAllProjects,
   getLinkParam,
   redirectDynamiclink,
   getCurrentOrganization,
