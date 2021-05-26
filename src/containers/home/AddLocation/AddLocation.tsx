@@ -65,7 +65,22 @@ class AddLocation extends React.Component<AddLocationProps, any> {
 
   addLocation = async () => {
     if (this.state.locationName !== '') {
+      await AsyncStorage.getItem('locations').then((location: any) => {
+        var loca = JSON.parse(location);
+        if (loca != null) {
+          AsyncStorage.setItem(
+            'locations',
+            JSON.stringify([this.state.locationName]),
+          );
+
+          this.props.navigation.goBack();
+        } else {
+          loca.push(this.state.locationName);
+          this.props.navigation.goBack();
+        }
+      });
       await AsyncStorage.setItem('locations', this.state.locationName);
+      this.props.navigation.goBack();
     }
   };
   render() {

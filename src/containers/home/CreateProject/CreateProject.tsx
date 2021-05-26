@@ -157,6 +157,9 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       console.log(org);
     });
 
+    AsyncStorage.getItem('locations').then((locations) => {
+      console.log(locations);
+    });
     AsyncStorage.getItem('invitedUsersEmails').then((invitedUsers: any) => {
       console.log(invitedUsers);
       this.setState({allAssignSuppervisorText: JSON.parse(invitedUsers)});
