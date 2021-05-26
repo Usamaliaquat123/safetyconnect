@@ -122,57 +122,73 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                           organizationName: this.state.org,
                         };
 
-                        AsyncStorage.getItem('invitedUsersEmails').then(
-                          (invitedEmails: any) => {
-                            console.log(this.state.selectedEmails);
-                            var emails = JSON.parse(invitedEmails);
-                            if (emails == null) {
-                              AsyncStorage.setItem(
-                                'invitedUsersEmails',
-                                JSON.stringify(this.state.selectedEmails),
-                              );
-                            } else {
-                              // for (
-                              //   let k = 0;
-                              //   k < this.state.selectedEmails.length;
-                              //   k++
-                              // ) {
-                              //   for (let l = 0; l < emails.length; l++) {
-                              //     if (
-                              //       emails[l] == this.state.selectedEmails[k]
-                              //     ) {
-                              //       // emails.push(this.state.selectedEmails[k]);
-                              //     } else {
-                              //       emails.push(this.state.selectedEmails[k]);
-                              //     }
-                              //   }
-                              // }
+                        api
+                          .createApi()
+                          .getUser(email)
+                          .then((checkingMem: any) => {
+                            console.log('new organi');
+                            console.log(checkingMem);
+                            console.log(res.data.data.organization_id);
 
-                              for (let l = 0; l < emails.length; l++) {
-                                for (
-                                  let k = 0;
-                                  k < this.state.selectedEmails.length;
-                                  k++
-                                ) {
-                                  if (
-                                    emails[l] == this.state.selectedEmails[k]
-                                  ) {
-                                    // emails.push(this.state.selectedEmails[k]);
-                                  } else {
-                                    emails.push(this.state.selectedEmails[k]);
-                                  }
-                                }
+                            var memeberId = checkingMem.data.data.organizations.filter(
+                              (d: any) =>
+                                d._id == res.data.data.organization_id,
+                            )[0].members;
+
+                            var members = [];
+                            for (
+                              let j = 0;
+                              j < this.state.selectedEmails.length;
+                              j++
+                            ) {
+                              // const element = this.state.selectedEmails[j];
+                              for (let i = 0; i < memeberId.length; i++) {
+                                members.push({
+                                  _id: memeberId[i],
+                                  email: this.state.selectedEmails[j],
+                                });
                               }
-
-                              console.log('saved');
-
-                              AsyncStorage.setItem(
-                                'invitedUsersEmails',
-                                JSON.stringify(emails),
-                              );
                             }
-                          },
-                        );
+                            console.log(members);
+                          });
+
+                        // AsyncStorage.getItem('invitedUsersEmails').then(
+                        //   (invitedEmails: any) => {
+                        //     console.log(this.state.selectedEmails);
+                        //     var emails = JSON.parse(invitedEmails);
+                        //     if (emails == null) {
+                        //       AsyncStorage.setItem(
+                        //         'invitedUsersEmails',
+                        //         JSON.stringify(this.state.selectedEmails),
+                        //       );
+                        //     } else {
+                        //       for (let l = 0; l < emails.length; l++) {
+                        //         for (
+                        //           let k = 0;
+                        //           k < this.state.selectedEmails.length;
+                        //           k++
+                        //         ) {
+                        //           if (
+                        //             emails[l] ==
+                        //             this.state.selectedEmails[k].email
+                        //           ) {
+                        //             // emails.push(this.state.selectedEmails[k]);
+                        //           } else {
+                        //             emails.push(this.state.selectedEmails[k]);
+                        //           }
+                        //         }
+                        //       }
+
+                        //       console.log('saved');
+
+                        //       AsyncStorage.setItem(
+                        //         'invitedUsersEmails',
+                        //         JSON.stringify(emails),
+                        //       );
+                        //     }
+                        //   },
+                        // );
+
                         this.setState({loading: false, errorModal: false});
                         this.props.navigation.navigate('createProject', {
                           organization: res.data.data.organization_id,
