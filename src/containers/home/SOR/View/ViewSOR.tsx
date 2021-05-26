@@ -433,6 +433,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   getAllComments = () => {
     // this.props.route.params.data.comments;
     AsyncStorage.getItem('user').then((user: any) => {
+      console.log(this.props.route.params.data.comments);
+      console.log(this.props.route.params.data._id);
       createApi
         .createApi()
         .getAllComents(
@@ -440,29 +442,27 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           this.props.route.params.data._id,
         )
         .then((res: any) => {
+          console.log(res.data.data);
           AsyncStorage.getItem('involved_person').then((involveppl: any) => {
+            console.log(involveppl);
             // console.log(JSON.parse(involveppl));
             // console.log(res.data.data.all_comments);
 
             var involvedPersonss = JSON.parse(involveppl);
+
             for (let i = 0; i < res.data.data.all_comments.length; i++) {
               for (let j = 0; j < involvedPersonss.length; j++) {
-                if (
-                  res.data.data.all_comments[i].user.email ==
-                  involvedPersonss[j].email
-                ) {
-                  res.data.data.all_comments[i].user = involvedPersonss[i];
-                } else {
-                  res.data.data.all_comments[i].user['img_url'] = JSON.parse(
-                    user,
-                  ).img_url;
-                  res.data.data.all_comments[i].user['name'] = JSON.parse(
-                    user,
-                  ).name;
-                  res.data.data.all_comments[i].user['email'] = JSON.parse(
-                    user,
-                  ).email;
-                }
+                console.log(res.data.data.all_comments[i]);
+                // if (res.data.data.all_comments[i].user != null) {
+                //   if (
+                //     res.data.data.all_comments[i].user.email ==
+                //     involvedPersonss[j].email
+                //   ) {
+                //     console.log('dtra');
+                //     console.log(involvedPersonss[i]);
+                //     res.data.data.all_comments[i].user = involvedPersonss[j];
+                //   }
+                // }
               }
             }
             const sortedActivities = res.data.data.all_comments.sort(
@@ -475,7 +475,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             //     return new Date(a.date) - new Date(b.date);
             //   });
 
-            // console.log(data)
+            console.log('================');
+            console.log(res.data.data.all_comments);
+            console.log('================');
             this.setState({comments: sortedActivities});
 
             // this.state..sort(function(a, b){return a-b});

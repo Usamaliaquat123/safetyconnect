@@ -121,6 +121,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                           orgnaizationId: res.data.data.organization_id,
                           organizationName: this.state.org,
                         };
+
                         AsyncStorage.getItem('invitedUsersEmails').then(
                           (invitedEmails: any) => {
                             var emails = JSON.parse(invitedEmails);
@@ -131,6 +132,8 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                               );
                             } else {
                               emails.push(invitedPP);
+                              console.log('saved');
+
                               AsyncStorage.setItem(
                                 'invitedUsersEmails',
                                 JSON.stringify(emails),

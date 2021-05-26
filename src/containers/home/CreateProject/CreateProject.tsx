@@ -156,6 +156,10 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     getCurrentOrganization().then((org) => {
       console.log(org);
     });
+
+    AsyncStorage.getItem('invitedUsersEmails').then((invitedUsers: any) => {
+      console.log(JSON.parse(invitedUsers));
+    });
     // console.log(this.props.route.params.organization);
     // if (this.props.route.params.organization == undefined) {
     //   console.log('sdsds');
