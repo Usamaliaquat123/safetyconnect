@@ -1135,115 +1135,120 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             {/* Line  */}
             <View style={styles.lineheight} />
             {/* Five WHY Questions  */}
-            <View style={styles.fiveWhyContainer}>
-              <View style={styles.fiveWhyHeadingContainer}>
-                <Text style={styles.investigationReqtext}>
-                  {' '}
-                  Investigation Required
-                </Text>
-                <TouchableOpacity
-                  onPress={() => {
-                    if (this.state.fiveWhytoggle == true) {
-                      this.setState({fiveWhytoggle: false});
-                    } else {
-                      if (this.state.reportIdInvestigation === '') {
-                        var bodyInitial = {
-                          report: {
-                            created_by: this.state.user.email,
-                            comments: '',
-                            status: 1,
-                          },
-                          project: this.state.projectId,
-                        };
-                        createApi
-                          .createApi()
-                          .createSorInit(bodyInitial)
-                          .then((res: any) => {
-                            this.setState({
-                              reportIdInvestigation: res.data.data.report_id,
-                            });
-                            this.setState({fiveWhytoggle: true});
-                          })
-                          .catch((err) => console.log(err));
-                      } else {
-                        this.setState({fiveWhytoggle: true});
-                      }
-                    }
-                    // this.setState({fiveWhytoggle: !this.state.fiveWhytoggle});
-                  }}
-                  style={styles.fivewhyToggleContainer}>
-                  <View
-                    style={[
-                      styles.fivewhyToggeNo,
-                      this.state.fiveWhytoggle == false
-                        ? {
-                            borderColor: colors.error,
-                            backgroundColor: '#F59798',
-                          }
-                        : {
-                            borderColor: colors.text,
-                            borderRightWidth: wp(0),
-                            opacity: 0.5,
-                          },
-                    ]}>
-                    <Text
-                      style={[
-                        styles.fivewhyToggeNoText,
-                        this.state.fiveWhytoggle == false
-                          ? {color: colors.secondary}
-                          : {color: colors.text},
-                      ]}>
-                      No
-                    </Text>
-                  </View>
-                  <View
-                    style={[
-                      styles.fivewhyToggeYes,
-                      this.state.fiveWhytoggle
-                        ? {
-                            borderColor: colors.green,
-                            backgroundColor: colors.lightGreen,
-                          }
-                        : {
-                            borderColor: colors.text,
-                            borderLeftWidth: wp(0),
-                            opacity: 0.5,
-                          },
-                    ]}>
-                    <Text
-                      style={[
-                        styles.fivewhyToggeYesText,
-                        this.state.fiveWhytoggle
-                          ? {color: colors.green}
-                          : {color: colors.text},
-                      ]}>
-                      Yes
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
 
-              {this.state.fiveWhytoggle ? (
-                <FiveWhy
-                  onChangeCountributory={(e: any) =>
-                    this.setState({countributoryCauses: e})
-                  }
-                  onChangeRiskCause={(e: any) => this.setState({rootCauses: e})}
-                  contributoryCauses={this.state.countributoryCauses}
-                  rootCauses={this.state.rootCauses}
-                  data={this.state.fiveWHYdata}
-                  fiveWhyQuestions={(q: Array<string>) =>
-                    this.setState({fiveWhyQuestion: q})
-                  }
-                  fiveWhyAnswer={(a: Array<string>) =>
-                    this.setState({fiveWhyAnswer: a})
-                  }
-                  reportId={this.state.reportIdInvestigation}
-                  userId={this.state.user._id}
-                  containerStyle={{marginTop: wp(3)}}
-                />
-              ) : null}
-            </View>
+            {this.state.classifySorbtns[3].selected == true && (
+              <View style={styles.fiveWhyContainer}>
+                <View style={styles.fiveWhyHeadingContainer}>
+                  <Text style={styles.investigationReqtext}>
+                    {' '}
+                    Investigation Required
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (this.state.fiveWhytoggle == true) {
+                        this.setState({fiveWhytoggle: false});
+                      } else {
+                        if (this.state.reportIdInvestigation === '') {
+                          var bodyInitial = {
+                            report: {
+                              created_by: this.state.user.email,
+                              comments: '',
+                              status: 1,
+                            },
+                            project: this.state.projectId,
+                          };
+                          createApi
+                            .createApi()
+                            .createSorInit(bodyInitial)
+                            .then((res: any) => {
+                              this.setState({
+                                reportIdInvestigation: res.data.data.report_id,
+                              });
+                              this.setState({fiveWhytoggle: true});
+                            })
+                            .catch((err) => console.log(err));
+                        } else {
+                          this.setState({fiveWhytoggle: true});
+                        }
+                      }
+                      // this.setState({fiveWhytoggle: !this.state.fiveWhytoggle});
+                    }}
+                    style={styles.fivewhyToggleContainer}>
+                    <View
+                      style={[
+                        styles.fivewhyToggeNo,
+                        this.state.fiveWhytoggle == false
+                          ? {
+                              borderColor: colors.error,
+                              backgroundColor: '#F59798',
+                            }
+                          : {
+                              borderColor: colors.text,
+                              borderRightWidth: wp(0),
+                              opacity: 0.5,
+                            },
+                      ]}>
+                      <Text
+                        style={[
+                          styles.fivewhyToggeNoText,
+                          this.state.fiveWhytoggle == false
+                            ? {color: colors.secondary}
+                            : {color: colors.text},
+                        ]}>
+                        No
+                      </Text>
+                    </View>
+                    <View
+                      style={[
+                        styles.fivewhyToggeYes,
+                        this.state.fiveWhytoggle
+                          ? {
+                              borderColor: colors.green,
+                              backgroundColor: colors.lightGreen,
+                            }
+                          : {
+                              borderColor: colors.text,
+                              borderLeftWidth: wp(0),
+                              opacity: 0.5,
+                            },
+                      ]}>
+                      <Text
+                        style={[
+                          styles.fivewhyToggeYesText,
+                          this.state.fiveWhytoggle
+                            ? {color: colors.green}
+                            : {color: colors.text},
+                        ]}>
+                        Yes
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+
+                {this.state.fiveWhytoggle ? (
+                  <FiveWhy
+                    onChangeCountributory={(e: any) =>
+                      this.setState({countributoryCauses: e})
+                    }
+                    onChangeRiskCause={(e: any) =>
+                      this.setState({rootCauses: e})
+                    }
+                    contributoryCauses={this.state.countributoryCauses}
+                    rootCauses={this.state.rootCauses}
+                    data={this.state.fiveWHYdata}
+                    fiveWhyQuestions={(q: Array<string>) =>
+                      this.setState({fiveWhyQuestion: q})
+                    }
+                    fiveWhyAnswer={(a: Array<string>) =>
+                      this.setState({fiveWhyAnswer: a})
+                    }
+                    reportId={this.state.reportIdInvestigation}
+                    userId={this.state.user._id}
+                    containerStyle={{marginTop: wp(3)}}
+                  />
+                ) : null}
+              </View>
+            )}
 
             {/* Line  */}
             <View style={styles.lineheight} />
