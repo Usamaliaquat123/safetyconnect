@@ -149,7 +149,10 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                                 });
                               }
                             }
-                            console.log(members);
+                            AsyncStorage.setItem(
+                              'invitedUsersEmails',
+                              JSON.stringify(members),
+                            );
                           });
 
                         // AsyncStorage.getItem('invitedUsersEmails').then(
