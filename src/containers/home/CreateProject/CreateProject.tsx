@@ -397,13 +397,20 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         style={styles.authInputs}
                         value={this.state.assignLeaderssT}
                         onChangeText={(e) => {
-                          this.setState({
-                            assignLeaderssText: suggestInActionsRecommendations(
-                              e,
-                              this.state.allAssignLeaders,
-                            ),
-                            assignLeaderssT: e,
-                          });
+                          if (e !== '') {
+                            this.setState({
+                              assignLeaderssText: suggestInActionsRecommendations(
+                                e,
+                                this.state.allAssignLeaders,
+                              ),
+                              assignLeaderssT: e,
+                            });
+                          } else {
+                            this.setState({
+                              assignLeaderssText: [],
+                              assignLeaderssT: e,
+                            });
+                          }
                         }}
                       />
                     ) : null}
@@ -481,13 +488,20 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                           placeholder={'Enter name'}
                           value={this.state.assignSuppervisorT}
                           onChangeText={(e) => {
-                            this.setState({
-                              assignSuppervisorText: suggestInActionsRecommendations(
-                                e,
-                                this.state.allAssignLeaders,
-                              ),
-                              assignSuppervisorT: e,
-                            });
+                            if (e !== '') {
+                              this.setState({
+                                assignSuppervisorText: suggestInActionsRecommendations(
+                                  e,
+                                  this.state.allAssignLeaders,
+                                ),
+                                assignSuppervisorT: e,
+                              });
+                            } else {
+                              this.setState({
+                                assignSuppervisorText: [],
+                                assignSuppervisorT: e,
+                              });
+                            }
                           }}
                         />
                       </View>

@@ -3,11 +3,12 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {fonts} from '@theme';
 import {colors} from '@theme';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.secondary,
   },
   header: {
     padding: wp(7),
@@ -31,12 +32,9 @@ const styles = StyleSheet.create({
   headertle: {flexDirection: 'row'},
   //  content
   content: {
-    height: hp(100),
     padding: wp(5),
     paddingBottom: hp(20),
     backgroundColor: colors.secondary,
-    borderTopLeftRadius: wp(3),
-    borderTopRightRadius: wp(3),
   },
   orContainer: {
     marginTop: wp(5),
@@ -83,10 +81,10 @@ const styles = StyleSheet.create({
     borderRadius: wp(3),
   },
   headingContainer: {
-    fontSize: wp(3.5),
-    textAlign: 'center',
+    fontSize: wp(5),
+    marginTop: wp(3),
     color: colors.primary,
-    fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplaySemiBold,
   },
   dontHaveAccount: {
     textAlign: 'center',
