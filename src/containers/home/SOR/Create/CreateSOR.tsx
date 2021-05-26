@@ -21,6 +21,7 @@ import {
   getCurrentProject,
   classifySor,
   suggestInActionsRecommendations,
+  getCurrentOrganization,
 } from '@utils';
 import {bindActionCreators} from 'redux';
 import * as reduxActions from '../../../../store/actions/listSorActions';
@@ -135,6 +136,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       involvedTotags: [],
       involveToText: '',
       projectid: '',
+      currentOrg: '',
     };
   }
 
@@ -293,6 +295,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   componentDidMount = () => {
     getCurrentProject().then((currentProj: any) =>
       this.setState({projectid: currentProj}),
+    );
+    getCurrentOrganization().then((currentOrg: any) =>
+      this.setState({currentOrg}),
     );
     // {key: "test.txt"} .catch(err => conso.le.log(err)});
     // const result = Storage.put('test.txt', 'Hello');
@@ -462,7 +467,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         // attachments: this.state.filename,
                         comments: ' ',
                       },
-                      organization: '60867e596281167f26ce4aab',
+                      organization: this.state.currentOrg,
                       project: this.state.projectId,
                     };
 
@@ -688,7 +693,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           attachments: [],
                           comments: ' ',
                         },
-                        organization: '60867e596281167f26ce4aab',
+                        organization: this.state.currentOrg,
                         project: this.state.projectId,
                       };
 
