@@ -44,7 +44,7 @@ export const Navigator = (props: any) => {
       .createApi()
       .getUser(res)
       .then((res: any) => {
-        console.log(res);
+        // console.log(res);
         AsyncStorage.setItem('user', JSON.stringify(res.data.data));
       });
   });
@@ -56,9 +56,7 @@ export const Navigator = (props: any) => {
     <SafeAreaProvider>
       <NavigationContainer>
         {/* <WelcomeHome /> */}
-        <MainStackNavigator
-          screen={user === null ? 'MeetBefore' : 'MeetBefore'}
-        />
+        <MainStackNavigator screen={user === null ? 'Login' : 'Main'} />
       </NavigationContainer>
     </SafeAreaProvider>
   );

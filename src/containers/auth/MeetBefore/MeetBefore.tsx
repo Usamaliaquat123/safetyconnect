@@ -5,6 +5,7 @@ import {
   Text,
   ScrollView,
   TextInput,
+  ActivityIndicator,
   TouchableOpacity,
   Image,
 } from 'react-native';
@@ -19,6 +20,7 @@ import {Icon} from 'react-native-elements';
 import {Auth} from 'aws-amplify';
 import {Create_sor, createApi} from '@service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Modal from 'react-native-modal';
 
 import {
   widthPercentageToDP as wp,
@@ -41,9 +43,11 @@ class MeetBefore extends React.Component<MeetBeforeProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      email: 'inconnent12345@outlook.com', //this.props.route.params.email
+      email: this.props.route.params.email, //this.props.route.params.email
       password: '',
       passError: false,
+      isEye: false,
+      loading: false,
     };
   }
 
@@ -264,6 +268,33 @@ class MeetBefore extends React.Component<MeetBeforeProps, any> {
                   Continue with Apple ID{' '}
                 </Text>
               </TouchableOpacity>
+
+              {/* loading modal */}
+              <Modal
+                isVisible={this.state.errorModal}
+                onBackdropPress={() =>
+                  this.setState({errorModal: false, loading: false})
+                }>
+                {this.state.loading == true ? (
+                  <View>
+                    <ActivityIndicator color={colors.primary} size={'large'} />
+                  </View>
+                ) : (
+                  <View style={styles.modelContainer}>
+                    <View>
+                      <Text style={styles.errHeadPop}>
+                        Incorrect Email / Password !
+                      </Text>
+                      <Text style={styles.errEmailPassDesc}>
+                        We don't recognize that email and password.
+                      </Text>
+                      <Text style={styles.plzTryAgain}>
+                        Please try again later.
+                      </Text>
+                    </View>
+                  </View>
+                )}
+              </Modal>
 
               {/* <TouchableOpacity
                 onPress={() => {
