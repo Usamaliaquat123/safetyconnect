@@ -137,9 +137,16 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                                 k < this.state.selectedEmails.length;
                                 k++
                               ) {
-                                emails.push(this.state.selectedEmails[k]);
+                                for (let l = 0; l < emails.length; l++) {
+                                  if (
+                                    emails[l] == this.state.selectedEmails[k]
+                                  ) {
+                                    // emails.push(this.state.selectedEmails[k]);
+                                  } else {
+                                    emails.push(this.state.selectedEmails[k]);
+                                  }
+                                }
                               }
-                              emails.push(this.state.selectedEmails);
                               console.log('saved');
 
                               AsyncStorage.setItem(
