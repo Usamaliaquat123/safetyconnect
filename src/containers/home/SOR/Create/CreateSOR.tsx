@@ -18,6 +18,7 @@ import moment from 'moment';
 import {
   searchInSuggestions,
   filterLocation,
+  getCurrentProject,
   classifySor,
   suggestInActionsRecommendations,
 } from '@utils';
@@ -64,7 +65,7 @@ export interface CreateSORProps {
   reduxState: any;
 }
 // Project Id
-const PROJECT_ID: string = '608fcd465509dad0d436cdd0';
+const PROJECT_ID: string = '';
 
 class CreateSOR extends React.Component<CreateSORProps, any> {
   constructor(props: any) {
@@ -133,6 +134,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       involvedToArr: [],
       involvedTotags: [],
       involveToText: '',
+      projectid: '',
     };
   }
 
@@ -289,6 +291,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   }
 
   componentDidMount = () => {
+    getCurrentProject().then((currentProj: any) =>
+      this.setState({projectid: currentProj}),
+    );
     // {key: "test.txt"} .catch(err => conso.le.log(err)});
     // const result = Storage.put('test.txt', 'Hello');
     // this.upoadFiles('602b81d95878d33f1081800e');
@@ -312,7 +317,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     createApi
       .createApi()
       .getProject({
-        projectid: PROJECT_ID,
+        projectid: this.state.projectid,
       })
       .then((res: any) => {
         this.setState({involved_persons: res.data.data.involved_persons});
@@ -458,7 +463,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         comments: ' ',
                       },
                       organization: '60867e596281167f26ce4aab',
-                      project: PROJECT_ID,
+                      project: this.state.projectId,
                     };
 
                     if (this.state.fiveWhytoggle) {
@@ -471,7 +476,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             contributoryCauses: this.state.countributoryCauses,
                             rootCauses: this.state.rootCauses,
                           },
-                          project: PROJECT_ID,
+                          project: this.state.projectId,
                           report: this.state.reportIdInvestigation,
                           user: JSON.parse(user)._id,
                           date: moment().format('MM-DD-YYYY'),
@@ -498,7 +503,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             comments: '',
                             status: 1,
                           },
-                          project: PROJECT_ID,
+                          project: this.state.projectId,
                         };
                         createApi
                           .createApi()
@@ -684,7 +689,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           comments: ' ',
                         },
                         organization: '60867e596281167f26ce4aab',
-                        project: PROJECT_ID,
+                        project: this.state.projectId,
                       };
 
                       if (this.state.fiveWhytoggle) {
@@ -700,7 +705,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 .countributoryCauses,
                               rootCauses: this.state.rootCauses,
                             },
-                            project: PROJECT_ID,
+                            project: this.state.projectId,
                             report: this.state.reportIdInvestigation,
                             user: JSON.parse(user)._id,
                             date: moment().format('MM-DD-YYYY'),
@@ -726,7 +731,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               comments: '',
                               status: 1,
                             },
-                            project: PROJECT_ID,
+                            project: this.state.projectId,
                           };
                           createApi
                             .createApi()
@@ -1143,7 +1148,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             comments: '',
                             status: 1,
                           },
-                          project: PROJECT_ID,
+                          project: this.state.projectId,
                         };
                         createApi
                           .createApi()

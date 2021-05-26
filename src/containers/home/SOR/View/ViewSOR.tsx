@@ -48,6 +48,7 @@ import {
   filterAndMappingPersons,
   downloadFile,
   filterLocation,
+  getCurrentProject,
 } from '@utils';
 import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -156,6 +157,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       reAssignToArrTags: [],
       projectName: '',
       commentMentionReplace: '',
+      projectId: '',
     };
 
     this.animation = React.createRef();
@@ -165,6 +167,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
+    getCurrentProject().then((currentProj: any) =>
+      this.setState({projectId: currentProj}),
+    );
     AsyncStorage.getItem('user').then((user: any) => {
       this.setState({user: JSON.parse(user)});
     });
@@ -194,7 +199,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     );
     createApi
       .createApi()
-      .getProject({projectid: PROJECT_ID})
+      .getProject({projectid: this.state.projectId})
       .then((res: any) => {
         this.setState({
           projectName: res.data.data.project_name,
@@ -299,7 +304,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               contributoryCauses: this.state.countributoryCauses,
               rootCauses: this.state.rootCauses,
             },
-            project: PROJECT_ID,
+            project: this.state.projectId,
             report: this.props.route.params.data._id,
             user: JSON.parse(user)._id,
             date: moment().format('MM-DD-YYYY'),
@@ -362,7 +367,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         comments: this.props.route.params.data.comments /** done */,
         updatedAt: Date.now() /** done */,
       },
-      project: PROJECT_ID,
+      project: this.state.projectId,
     };
 
     console.log(update);
@@ -568,7 +573,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         attachments: [],
         comments: [],
       },
-      project: PROJECT_ID,
+      project: this.state.projectId,
     };
 
     createApi

@@ -104,7 +104,11 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   createProject = async () => {
     if (this.state.projectName !== '') {
       this.setState({errorProjectName: false});
-      if (this.state.teamMembers.length > 2) {
+
+      if (
+        this.state.assignLeaderss.concat(this.state.assignSuppervisor).length !=
+        0
+      ) {
         this.setState({loading: true});
         await AsyncStorage.getItem('email')
           .then((email: any) => {
@@ -128,8 +132,8 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                 if (res.status == 200) {
                   api
                     .createApi()
-                    .getUser({email: email})
-                    .then((res: any) => {
+                    .getUser(email)
+                    .then((userdata: any) => {
                       AsyncStorage.setItem(
                         'organization',
                         this.props.route.params.organization,

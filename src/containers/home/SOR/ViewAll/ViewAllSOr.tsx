@@ -37,6 +37,7 @@ import {
   filterAndMappingPersons,
   mapAllProjects,
   mapAllOrganizations,
+  getCurrentProject,
 } from '@utils';
 import {Card, ListCard} from '@components';
 import {
@@ -113,17 +114,21 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       refreshing: false,
       involvedPerson: [],
       loading: false,
+      projectId: '',
     };
   }
 
   componentDidMount = () => {
+    getCurrentProject().then((currentProj: any) =>
+      this.setState({projectId: currentProj}),
+    );
     OneSignal.promptForPushNotificationsWithUserResponse((response) => {
       // this.OSLog("Prompt response:", response);
       // console.log(response);
     });
     createApi
       .createApi()
-      .getProject({projectid: PROJECT_ID})
+      .getProject({projectid: this.state.projectId})
       .then((involvedPerson: any) => {
         var j = {};
         var arr = [];
@@ -153,7 +158,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       });
 
     var data = {
-      project: PROJECT_ID,
+      project: this.state.projectId,
       limit: 1000000,
       page: 0,
       query: {status: [1, 2, 3, 4, 5]},

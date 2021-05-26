@@ -18,7 +18,7 @@ import * as reduxActions from '../../../store/actions/listSorActions';
 
 import styles from './styles';
 import {allRecentActivity, createApi} from '@service';
-import {classifySor, filterAndMappingPersons} from '@utils';
+import {classifySor, filterAndMappingPersons, getCurrentProject} from '@utils';
 import {Avatar, Icon} from 'react-native-elements';
 import {bindActionCreators} from 'redux';
 import {View_sor, myTasks, recentActivity} from '@service';
@@ -62,6 +62,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       searchValue: '',
       refreshing: false,
       user: {},
+      projectId: '',
       bottomWidth: wp(100),
     };
   }
@@ -69,6 +70,10 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     AsyncStorage.getItem('user').then((user: any) => {
       this.setState({user: JSON.parse(user)});
     });
+
+    getCurrentProject().then((currentProj) =>
+      this.setState({projectId: currentProj}),
+    );
     // var d = [];
     // for (let i = 0; i < this.props.reduxState.allSors.length; i++) {
     //   if (
@@ -84,7 +89,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
 
     AsyncStorage.getItem('involved_person').then((involvedPersons: any) => {
       var data = {
-        project: PROJECT_ID,
+        project: this.state.projectId,
         limit: 100000,
         page: 0,
         query: {status: [this.props.route.params.data]},

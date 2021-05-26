@@ -14,7 +14,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import styles from './styles';
-import {classifySor} from '@utils';
+import {classifySor, getCurrentProject} from '@utils';
 import {Avatar, Icon} from 'react-native-elements';
 import {View_sor, recentActivity} from '@service';
 import {ListCard} from '@components';
@@ -57,10 +57,14 @@ class Home extends React.Component<HomeProps, any> {
       newsorModal: false,
       totalObservations: 0,
       count: 0,
+      projectId: '',
     };
   }
 
   componentDidMount = () => {
+    getCurrentProject().then((currentProj: any) =>
+      this.setState({projectId: currentProj}),
+    );
     // this.setState({name: 'sds'});
     AsyncStorage.getItem('user').then((res: any) => {
       // console.log(JSON.parse(res));
@@ -84,7 +88,7 @@ class Home extends React.Component<HomeProps, any> {
     createApi
       .createApi()
       .filterSors({
-        project: PROJECT_ID,
+        project: this.state.projectId,
         limit: 10,
         page: 0,
         query: {status: [1, 2, 3, 4, 5]},
