@@ -406,7 +406,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                   <View style={[styles.inputContainer]}>
                     {this.state.assignLeaderss.length < 15 ? (
                       <TextInput
-                        placeholder={'Add Leaders and invite by @ email'}
+                        placeholder={'Add Leaders that you allready invited'}
                         style={styles.authInputs}
                         value={this.state.assignLeaderssT}
                         onChangeText={(e) => {
