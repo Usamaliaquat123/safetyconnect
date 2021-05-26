@@ -35,6 +35,7 @@ import {
   savedCurrentProjectAndOrganizations,
   suggestInActionsRecommendations,
 } from '@utils';
+import {loadingSceneName} from 'aws-amplify';
 type CreateProjectNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'createProject'
@@ -155,27 +156,15 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   };
   addLocation = async () => {
     if (this.state.locationName !== '') {
-      await AsyncStorage.getItem('locations').then((location: any) => {
-        // var loca = JSON.parse(location);
-
-        console.log(location);
-        // if (loca != null) {
-
-        //   AsyncStorage.setItem(
-        //     'locations',
-        //     JSON.stringify([this.state.locationName]),
-        //   );
-        //   this.setState({locations: [this.state.locationName]});
-        //   this.setState({createModal: false});
-        //   // this.props.navigation.goBack();
-        // } else {
-        //   loca.push(this.state.locationName);
-        //   this.state.locations.push(this.state.locationName);
-        //   this.setState({createModal: false});
-        //   // this.props.navigation.goBack();
-        // }
+      // var loca = JSON.parse(location);
+      this.state.locations.push(this.state.locationName);
+      this.setState({createModal: false});
+      this.setState({
+        locationName: '',
+        locationSupervisor: '',
+        additionalSuppervisors: '',
       });
-
+      this.state.assignLocations.push(this.state.locationName);
       // await AsyncStorage.setItem('locations', this.state.locationName);
       // this.props.navigation.goBack();
     } else {
@@ -321,7 +310,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       {' '}
                       Locations
                     </Text>
-                    {this.state.assignLocations.length < 1 ? (
+                    {/* {this.state.assignLocations.length < 1 ? (
                       <View style={[styles.inputContainer]}>
                         <TextInput
                           placeholder={'Add Locations'}
@@ -332,9 +321,9 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                           }}
                         />
                       </View>
-                    ) : null}
+                    ) : null} */}
                     {/* Assign Locations suggestions */}
-                    {this.state.assignLocationsText != '' ? (
+                    {/* {this.state.assignLocationsText != '' ? (
                       <SuggestionsAvatar
                         type={'location'}
                         locations={this.state.locations}
@@ -346,11 +335,12 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         }}
                         text={this.state.assignLocationsText}
                       />
-                    ) : null}
+                    ) : null} */}
 
                     <View
                       style={{
                         flexWrap: 'wrap',
+                        alignContent: 'center',
                         flexDirection: 'row',
                         marginTop: wp(2),
                       }}>
@@ -368,29 +358,31 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     </View>
 
                     {/* add new location */}
-                    <TouchableOpacity
-                      onPress={() => this.setState({createModal: true})}
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      <Icon
-                        containerStyle={{marginRight: wp(3)}}
-                        name={'plus'}
-                        type={'antdesign'}
-                        size={wp(4)}
-                        color={colors.primary}
-                      />
-                      <Text
+                    {this.state.assignLocations.length < 3 && (
+                      <TouchableOpacity
+                        onPress={() => this.setState({createModal: true})}
                         style={{
-                          fontSize: wp(3.4),
-                          color: colors.primary,
-                          fontFamily: fonts.SFuiDisplayMedium,
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                          alignItems: 'center',
                         }}>
-                        Add New Location
-                      </Text>
-                    </TouchableOpacity>
+                        <Icon
+                          containerStyle={{marginRight: wp(3)}}
+                          name={'plus'}
+                          type={'antdesign'}
+                          size={wp(4)}
+                          color={colors.primary}
+                        />
+                        <Text
+                          style={{
+                            fontSize: wp(3.4),
+                            color: colors.primary,
+                            fontFamily: fonts.SFuiDisplayMedium,
+                          }}>
+                          Add New Location
+                        </Text>
+                      </TouchableOpacity>
+                    )}
                   </View>
 
                   {/* Asssign Leaders */}
