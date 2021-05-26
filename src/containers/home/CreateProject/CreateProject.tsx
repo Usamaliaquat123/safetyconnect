@@ -77,7 +77,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       // suggestions
       locationSugg: [],
       involvedPersons: [],
-      createModal: true,
+      createModal: false,
 
       // location
       locationName: '',
