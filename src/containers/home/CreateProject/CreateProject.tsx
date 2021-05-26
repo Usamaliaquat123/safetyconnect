@@ -130,7 +130,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         res.data.data.project_id,
                       );
                       this.setState({loading: false});
-                      AsyncStorage.setItem('email', this.state.email);
+                      AsyncStorage.setItem('email', email);
                       this.props.navigation.navigate('Main');
                       //  AsyncStorage.setItem('token', res.)
                     });
@@ -164,9 +164,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
         (d: any) => d.email,
       ),
     });
-    // AsyncStorage.getItem('locations').then((locations) => {
-    //   console.log(locations);
-    // });
 
     // console.log(this.props.route.params.organization);
     // if (this.props.route.params.organization == undefined) {
@@ -187,6 +184,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     // Get locations from local storage
 
     AsyncStorage.getItem('locations').then((locations: any) => {
+      console.log(locations);
       var location = JSON.parse(locations);
       if (location != null) {
         this.setState({locationSugg: location});
