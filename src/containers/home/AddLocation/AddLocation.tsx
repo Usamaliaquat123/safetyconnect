@@ -54,16 +54,20 @@ class AddLocation extends React.Component<AddLocationProps, any> {
       // Error State
       errorModal: false,
       orgError: false,
-      org: '',
-      orgDetails: '',
-      projectLeader: '',
-      peoplesText: '',
       peoples: [], // must be array of id's
       projects: [],
+
+      locationName: '',
+      locationSupervisor: '',
+      additionalSuppervisors: '',
     };
   }
 
-  addLocation = () => {};
+  addLocation = async () => {
+    if (this.state.locationName !== '') {
+      await AsyncStorage.setItem('locations', this.state.locationName);
+    }
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -99,9 +103,9 @@ class AddLocation extends React.Component<AddLocationProps, any> {
                   </View>
                   <View style={[styles.inputContainer]}>
                     <TextInput
-                      value={this.state.org}
+                      value={this.state.locationName}
                       style={styles.authInputs}
-                      onChangeText={(e) => this.setState({org: e})}
+                      onChangeText={(e) => this.setState({locationName: e})}
                       placeholder={'Enter your new location'}
                     />
                   </View>
@@ -133,9 +137,11 @@ class AddLocation extends React.Component<AddLocationProps, any> {
                   </View>
                   <View style={[styles.inputContainer]}>
                     <TextInput
-                      value={this.state.orgDetails}
+                      value={this.state.locationSupervisor}
                       style={styles.authInputs}
-                      onChangeText={(e) => this.setState({orgDetails: e})}
+                      onChangeText={(e) =>
+                        this.setState({locationSupervisor: e})
+                      }
                       placeholder={'Enter Name'}
                     />
                   </View>
@@ -162,9 +168,11 @@ class AddLocation extends React.Component<AddLocationProps, any> {
                   </View>
                   <View style={[styles.inputContainer]}>
                     <TextInput
-                      value={this.state.peoplesText}
+                      value={this.state.additionalSuppervisors}
                       style={styles.authInputs}
-                      onChangeText={(e) => this.setState({peoplesText: e})}
+                      onChangeText={(e) =>
+                        this.setState({additionalSuppervisors: e})
+                      }
                       placeholder={'Enter name'}
                     />
                   </View>
