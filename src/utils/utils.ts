@@ -128,7 +128,7 @@ export const suggestInActionsRecommendations = (
 // Search in Involved Persons
 export const searchInSuggestions = (
   str: string,
-  strArray: Array<involved_persons>,
+  strArray: Array<any>,
 ): Array<Object> => {
   var strArr = [];
   for (var j = 0; j < strArray.length; j++) {

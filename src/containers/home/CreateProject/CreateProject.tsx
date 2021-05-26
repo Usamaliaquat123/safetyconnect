@@ -183,6 +183,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       allAssignLeaders: this.props.route.params.suggestedUsers,
     });
 
+    console.log(this.state.allAssignLeaders);
     AsyncStorage.getItem('locations').then((locations: any) => {
       console.log(locations);
       var location = JSON.parse(locations);
