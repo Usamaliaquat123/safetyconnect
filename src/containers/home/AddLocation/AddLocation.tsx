@@ -202,6 +202,10 @@ class AddLocation extends React.Component<AddLocationProps, any> {
             </View>
             {/* )} */}
           </View>
+      
+      
+      
+      
         </ScrollView>
         {/* validations error */}
         {/* Modal Container */}

@@ -156,24 +156,28 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   addLocation = async () => {
     if (this.state.locationName !== '') {
       await AsyncStorage.getItem('locations').then((location: any) => {
-        var loca = JSON.parse(location);
-        if (loca != null) {
-          AsyncStorage.setItem(
-            'locations',
-            JSON.stringify([this.state.locationName]),
-          );
-          this.setState({locations: [this.state.locationName]});
-          this.setState({createModal: false});
-          // this.props.navigation.goBack();
-        } else {
-          loca.push(this.state.locationName);
-          this.state.locations.push(this.state.locationName);
-          this.setState({createModal: false});
-          // this.props.navigation.goBack();
-        }
+        // var loca = JSON.parse(location);
+
+        console.log(location);
+        // if (loca != null) {
+
+        //   AsyncStorage.setItem(
+        //     'locations',
+        //     JSON.stringify([this.state.locationName]),
+        //   );
+        //   this.setState({locations: [this.state.locationName]});
+        //   this.setState({createModal: false});
+        //   // this.props.navigation.goBack();
+        // } else {
+        //   loca.push(this.state.locationName);
+        //   this.state.locations.push(this.state.locationName);
+        //   this.setState({createModal: false});
+        //   // this.props.navigation.goBack();
+        // }
       });
-      await AsyncStorage.setItem('locations', this.state.locationName);
-      this.props.navigation.goBack();
+
+      // await AsyncStorage.setItem('locations', this.state.locationName);
+      // this.props.navigation.goBack();
     } else {
       this.setState({locationNameErr: true});
     }
@@ -611,7 +615,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
           }}>
           <View>
             {/* content */}
-            <View style={styles.content}>
+            <View style={styles.contentLocations}>
               <View>
                 <View
                   style={{

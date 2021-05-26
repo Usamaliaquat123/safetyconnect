@@ -40,6 +40,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     borderRadius: wp(4),
   },
+  contentLocations: {
+    // height:hp(100),
+    padding: wp(5),
+    marginRight: wp(3),
+    marginLeft: wp(3),
+    marginTop: wp(7),
+    // paddingBottom: hp(20),
+    backgroundColor: colors.secondary,
+    borderRadius: wp(4),
+  },
   headingContainer: {
     fontSize: wp(5),
     color: colors.primary,
