@@ -126,7 +126,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         this.props.route.params.organization,
                       );
 
-                      this.savedCurrentProjectAndOrganizations(
+                      savedCurrentProjectAndOrganizations(
                         this.props.route.params.organization,
                         res.data.data.project_id,
                       );
