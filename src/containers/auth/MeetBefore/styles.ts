@@ -93,6 +93,31 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     marginTop: wp(1),
   },
+  authInputs: {
+    fontSize: wp(3),
+    width: wp(70),
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  eyeIconContainer: {
+    position: 'absolute',
+    right: wp(3),
+  },
+  passwordError: {
+    fontSize: wp(3),
+    color: colors.text,
+    opacity: 0.7,
+    marginTop: wp(1),
+  },
+  inputContainer: {
+    marginTop: wp(2),
+    borderColor: colors.text,
+    borderWidth: wp(0.4),
+    paddingLeft: wp(3),
+
+    borderRadius: wp(1),
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   dtHaveContainer: {
     marginTop: wp(8),
   },
@@ -100,6 +125,13 @@ const styles = StyleSheet.create({
     fontSize: wp(4.5),
     fontWeight: 'bold',
     color: colors.secondary,
+  },
+
+  passTextContainer: {
+    marginTop: wp(4),
+    fontSize: wp(3),
+    // fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayMedium,
   },
 });
 
