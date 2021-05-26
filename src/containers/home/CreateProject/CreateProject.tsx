@@ -26,6 +26,8 @@ import LottieView from 'lottie-react-native';
 
 import {orgnaization} from '@typings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {default as Model} from 'react-native-modal';
+
 import {
   validateEmail,
   getCurrentProject,
@@ -82,6 +84,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       // suggestions
       locationSugg: [],
       involvedPersons: [],
+      createModal: true,
     };
   }
   // Filter All countries
@@ -164,24 +167,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
         (d: any) => d.email,
       ),
     });
-
-    // console.log(this.props.route.params.organization);
-    // if (this.props.route.params.organization == undefined) {
-    //   console.log('sdsds');
-    // }
-    // Organization id
-    // this.props.route.params.organization;
-    // get project members
-
-    // if (this.props.route.params.organization)
-    // api
-    //   .createApi()
-    //   .getOrganization(this.props.route.params.organization)
-    //   .then((organization: any) => {
-    //     // Members
-    //     // organization.data.data.members;
-    //   });
-    // Get locations from local storage
 
     AsyncStorage.getItem('locations').then((locations: any) => {
       console.log(locations);
@@ -586,6 +571,146 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
             )}
           </View>
         </ScrollView>
+
+
+        {/* //////////// */}
+        {/* //////////// */}
+        {/* //////////// */}
+        {/* //////////// */}
+        {/* //////////// */}
+        {/* @location */}
+        {/* //////////// */}
+        {/* //////////// */}
+        {/* //////////// */}
+        {/* //////////// */}
+        <Model
+          isVisible={this.state.createModal}
+          onBackdropPress={() => {
+            this.setState({createModal: false, loading: false});
+          }}>
+          <View>
+            {/* content */}
+            <View style={styles.content}>
+              <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text style={styles.headingContainer}>Add New Location</Text>
+                  <Icon
+                    onPress={() => this.setState({createModal: false})}
+                    containerStyle={{marginLeft: wp(2)}}
+                    name={'cross'}
+                    type={'entypo'}
+                    size={wp(4.6)}
+                    iconStyle={{opacity: 0.5}}
+                  />
+                </View>
+                {/* inputs container */}
+                <View style={styles.inputsContainer}>
+                  {/* Email Container */}
+                  <View>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={styles.emailTextContainer}>
+                        Location Name
+                      </Text>
+                      <Text
+                        style={[
+                          styles.emailTextContainer,
+                          {opacity: 0.5, marginLeft: wp(3)},
+                        ]}>
+                        (Mandatory)
+                      </Text>
+                    </View>
+                    <View style={[styles.inputContainer]}>
+                      <TextInput
+                        value={this.state.locationName}
+                        style={styles.authInputs}
+                        onChangeText={(e) => this.setState({locationName: e})}
+                        placeholder={'Enter your new location'}
+                      />
+                    </View>
+                    {this.state.orgError && (
+                      <Text style={{fontSize: wp(3), color: colors.error}}>
+                        Type your location name
+                      </Text>
+                    )}
+                  </View>
+
+                  {/* Location Supervisor */}
+                  <View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        marginTop: wp(3),
+                        alignItems: 'center',
+                      }}>
+                      <Text style={styles.emailTextContainer}>
+                        Location Supervisor
+                      </Text>
+                      <Icon
+                        containerStyle={{marginLeft: wp(2)}}
+                        name={'info'}
+                        type={'feather'}
+                        size={wp(3)}
+                        iconStyle={{opacity: 0.5}}
+                      />
+                    </View>
+                    <View style={[styles.inputContainer]}>
+                      <TextInput
+                        value={this.state.locationSupervisor}
+                        style={styles.authInputs}
+                        onChangeText={(e) =>
+                          this.setState({locationSupervisor: e})
+                        }
+                        placeholder={'Enter Name'}
+                      />
+                    </View>
+                    {this.state.orgError && (
+                      <Text style={{fontSize: wp(3), color: colors.error}}>
+                        Assign your location supervisor
+                      </Text>
+                    )}
+                  </View>
+
+                  {/* Additional Suppervisors */}
+                  <View>
+                    <View style={{flexDirection: 'row', marginTop: wp(3)}}>
+                      <Text style={styles.emailTextContainer}>
+                        Additional Suppervisors
+                      </Text>
+                      <Icon
+                        containerStyle={{marginTop: wp(1), marginLeft: wp(2)}}
+                        name={'info'}
+                        type={'feather'}
+                        size={wp(3)}
+                        iconStyle={{opacity: 0.5}}
+                      />
+                    </View>
+                    <View style={[styles.inputContainer]}>
+                      <TextInput
+                        value={this.state.additionalSuppervisors}
+                        style={styles.authInputs}
+                        onChangeText={(e) =>
+                          this.setState({additionalSuppervisors: e})
+                        }
+                        placeholder={'Enter name'}
+                      />
+                    </View>
+                  </View>
+                </View>
+
+                <TouchableOpacity
+                  onPress={() => this.addLocation()}
+                  style={styles.siginBtnContainer}>
+                  <Text style={styles.signinText}>Add Location</Text>
+                </TouchableOpacity>
+              </View>
+              {/* )} */}
+            </View>
+          </View>
+        </Model>
       </View>
     );
   }
