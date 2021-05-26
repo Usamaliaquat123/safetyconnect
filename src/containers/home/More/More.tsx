@@ -46,7 +46,7 @@ export default class More extends React.Component<MoreProps, any> {
   componentDidMount() {
     AsyncStorage.getItem('user').then((user: any) => {
       var usr = JSON.parse(user);
-
+      console.log(usr);
       this.setState({name: user.name, email: usr.email, url: user.img_url});
     });
   }
@@ -69,14 +69,12 @@ export default class More extends React.Component<MoreProps, any> {
                 size={'medium'}
                 rounded
                 source={{
-                  uri: this.state.user.img_url,
+                  uri: this.state.url,
                 }}
               />
               <View style={{marginTop: wp(2)}}>
-                <Text style={styles.username}>{this.state.user.name}</Text>
-                <Text style={styles.organizations}>
-                  {this.state.user.email}
-                </Text>
+                <Text style={styles.username}>{this.state.name}</Text>
+                <Text style={styles.organizations}>{this.state.email}</Text>
               </View>
               <View style={{position: 'absolute', right: wp(0)}}>
                 <Image style={styles.itemIcon} source={images.menuIcons.edit} />

@@ -61,7 +61,7 @@ class Home extends React.Component<HomeProps, any> {
   }
 
   componentDidMount = () => {
-    this.setState({name: 'sds'});
+    // this.setState({name: 'sds'});
     AsyncStorage.getItem('user').then((res: any) => {
       // console.log(JSON.parse(res));
 
