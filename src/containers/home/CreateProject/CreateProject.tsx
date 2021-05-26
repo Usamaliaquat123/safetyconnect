@@ -161,13 +161,16 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     //   console.log(locations);
     // });
     AsyncStorage.getItem('invitedUsersEmails').then((invitedUsers: any) => {
-      console.log(invitedUsers);
+      console.log(JSON.parse(invitedUsers));
+      console.log(JSON.parse(invitedUsers).map((d: any) => d.email));
       this.setState({
-        allAssignSuppervisorText: JSON.parse(invitedUsers).filter(
+        allAssignSuppervisorText: JSON.parse(invitedUsers).map(
           (d: any) => d.email,
         ),
       });
-      this.setState({allAssignLeaders: JSON.parse(invitedUsers)});
+      this.setState({
+        allAssignLeaders: JSON.parse(invitedUsers).map((d: any) => d.email),
+      });
     });
     // console.log(this.props.route.params.organization);
     // if (this.props.route.params.organization == undefined) {
