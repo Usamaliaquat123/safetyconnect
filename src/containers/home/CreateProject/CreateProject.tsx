@@ -71,20 +71,20 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       email: 'inconnent12345@outlook.com',
       // errors popup
       errorProjectName: false,
-      locations: [
-        {name: 'Kitchen'},
-        {name: 'offce'},
-        {name: 'washroom'},
-        {name: 'berlin'},
-        {name: 'germany '},
-        {name: 'house'},
-      ],
+      locations: [],
       errorTeamMem: false,
       projectDescription: '',
       // suggestions
       locationSugg: [],
       involvedPersons: [],
       createModal: true,
+
+      // location
+      locationName: '',
+      locationNameErr: false,
+      locationSupervisor: '',
+      locationSupervisorErr: false,
+      additionalSuppervisors: '',
     };
   }
   // Filter All countries
@@ -153,7 +153,31 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       this.setState({errorProjectName: true});
     }
   };
-
+  addLocation = async () => {
+    if (this.state.locationName !== '') {
+      await AsyncStorage.getItem('locations').then((location: any) => {
+        var loca = JSON.parse(location);
+        if (loca != null) {
+          AsyncStorage.setItem(
+            'locations',
+            JSON.stringify([this.state.locationName]),
+          );
+          this.setState({locations: [this.state.locationName]});
+          this.setState({createModal: false});
+          // this.props.navigation.goBack();
+        } else {
+          loca.push(this.state.locationName);
+          this.state.locations.push(this.state.locationName);
+          this.setState({createModal: false});
+          // this.props.navigation.goBack();
+        }
+      });
+      await AsyncStorage.setItem('locations', this.state.locationName);
+      this.props.navigation.goBack();
+    } else {
+      this.setState({locationNameErr: true});
+    }
+  };
   componentDidMount = async () => {
     getCurrentOrganization().then((org) => {
       console.log(org);
@@ -341,9 +365,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
 
                     {/* add new location */}
                     <TouchableOpacity
-                      onPress={() =>
-                        this.props.navigation.navigate('AddLocation')
-                      }
+                      onPress={() => this.setState({createModal: true})}
                       style={{
                         flexDirection: 'row',
                         justifyContent: 'center',
@@ -572,7 +594,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
           </View>
         </ScrollView>
 
-
         {/* //////////// */}
         {/* //////////// */}
         {/* //////////// */}
@@ -631,7 +652,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         placeholder={'Enter your new location'}
                       />
                     </View>
-                    {this.state.orgError && (
+                    {this.state.locationNameErr && (
                       <Text style={{fontSize: wp(3), color: colors.error}}>
                         Type your location name
                       </Text>
@@ -667,7 +688,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         placeholder={'Enter Name'}
                       />
                     </View>
-                    {this.state.orgError && (
+                    {this.state.locationSupervisorErr && (
                       <Text style={{fontSize: wp(3), color: colors.error}}>
                         Assign your location supervisor
                       </Text>
