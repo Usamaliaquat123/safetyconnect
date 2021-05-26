@@ -32,6 +32,7 @@ import {
   validateEmail,
   getCurrentProject,
   getCurrentOrganization,
+  searchInSuggestions,
   savedCurrentProjectAndOrganizations,
   suggestInActionsRecommendations,
 } from '@utils';
@@ -108,6 +109,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
         await AsyncStorage.getItem('email')
           .then((email: any) => {
             this.setState({errorTeamMem: false});
+            // this.props.route.params.suggestedUsers?.map((d  :any) => )
 
             api
               .createApi()
@@ -177,12 +179,8 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     });
 
     this.setState({
-      allAssignSuppervisorText: this.props.route.params.suggestedUsers?.map(
-        (d: any) => d.email,
-      ),
-      allAssignLeaders: this.props.route.params.suggestedUsers?.map(
-        (d: any) => d.email,
-      ),
+      allAssignSuppervisorText: this.props.route.params.suggestedUsers,
+      allAssignLeaders: this.props.route.params.suggestedUsers,
     });
 
     AsyncStorage.getItem('locations').then((locations: any) => {
@@ -406,13 +404,13 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                   <View style={[styles.inputContainer]}>
                     {this.state.assignLeaderss.length < 15 ? (
                       <TextInput
-                        placeholder={'Add Leaders that you allready invited'}
+                        placeholder={'Add Leaders that you already invited'}
                         style={styles.authInputs}
                         value={this.state.assignLeaderssT}
                         onChangeText={(e) => {
                           if (e !== '') {
                             this.setState({
-                              assignLeaderssText: suggestInActionsRecommendations(
+                              assignLeaderssText: searchInSuggestions(
                                 e,
                                 this.state.allAssignLeaders,
                               ),
@@ -503,7 +501,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                           onChangeText={(e) => {
                             if (e !== '') {
                               this.setState({
-                                assignSuppervisorText: suggestInActionsRecommendations(
+                                assignSuppervisorText: searchInSuggestions(
                                   e,
                                   this.state.allAssignLeaders,
                                 ),
