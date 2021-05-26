@@ -63,7 +63,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
       suggestedPps: ['asdhj@jasd.com'],
       suggestedEmail: false,
       selectedEmails: [],
-
+      members: [],
       projects: [],
     };
   }
@@ -135,6 +135,8 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                                 d._id == res.data.data.organization_id,
                             )[0].members;
 
+                            console.log(memeberId);
+
                             var members = [];
                             for (
                               let j = 0;
@@ -149,10 +151,19 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                                 });
                               }
                             }
+
+                            console.log(members);
                             AsyncStorage.setItem(
                               'invitedUsersEmails',
                               JSON.stringify(members),
                             );
+                            this.setState({members});
+
+                            this.setState({loading: false, errorModal: false});
+                            this.props.navigation.navigate('createProject', {
+                              organization: res.data.data.organization_id,
+                              suggestedUsers: members,
+                            });
                           });
 
                         // AsyncStorage.getItem('invitedUsersEmails').then(
@@ -191,11 +202,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                         //     }
                         //   },
                         // );
-
-                        this.setState({loading: false, errorModal: false});
-                        this.props.navigation.navigate('createProject', {
-                          organization: res.data.data.organization_id,
-                        });
                       });
                   } else {
                     this.setState({loading: false, errorModal: false});

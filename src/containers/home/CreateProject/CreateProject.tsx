@@ -35,9 +35,9 @@ import {
 } from '@utils';
 type CreateProjectNavigationProp = StackNavigationProp<
   StackNavigatorProps,
-  'CreateProj'
+  'createProject'
 >;
-type CreateProjectRouteProp = RouteProp<StackNavigatorProps, 'CreateProj'>;
+type CreateProjectRouteProp = RouteProp<StackNavigatorProps, 'createProject'>;
 
 export interface CreateProjectProps {
   navigation: CreateProjectNavigationProp;
@@ -54,19 +54,11 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       teamMembersText: '',
       assignSuppervisor: [],
       assignSuppervisorText: [],
-      allAssignSuppervisorText: [
-        'inconnent12345@outlook.com',
-        'mdaniyal2016@outlok.com',
-        'kk@kk.com',
-      ],
+      allAssignSuppervisorText: [],
 
       assignLeaderss: [],
       assignLeaderssText: [],
-      allAssignLeaders: [
-        'inconnent12345@outlook.com',
-        'mdaniyal2016@outlok.com',
-        'kk@kk.com',
-      ],
+      allAssignLeaders: [],
       assignLeaderssT: '',
       assignSuppervisorT: '',
       assignLocations: [],
@@ -96,6 +88,13 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   filterContries = (contries: string) => {
     this.setState({assignLocationsText: contries});
   };
+  componentWillUnmount() {
+    this.setState({
+      allAssignSuppervisorText: [],
+
+      allAssignLeaders: [],
+    });
+  }
 
   createProject = async () => {
     if (this.state.projectName !== '') {
@@ -152,26 +151,23 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     }
   };
 
-  componentDidMount() {
+  componentDidMount = async () => {
     getCurrentOrganization().then((org) => {
       console.log(org);
     });
 
+    this.setState({
+      allAssignSuppervisorText: this.props.route.params.suggestedUsers?.map(
+        (d: any) => d.email,
+      ),
+      allAssignLeaders: this.props.route.params.suggestedUsers?.map(
+        (d: any) => d.email,
+      ),
+    });
     // AsyncStorage.getItem('locations').then((locations) => {
     //   console.log(locations);
     // });
-    AsyncStorage.getItem('invitedUsersEmails').then((invitedUsers: any) => {
-      console.log(JSON.parse(invitedUsers));
-      console.log(JSON.parse(invitedUsers).map((d: any) => d.email));
-      this.setState({
-        allAssignSuppervisorText: JSON.parse(invitedUsers).map(
-          (d: any) => d.email,
-        ),
-      });
-      this.setState({
-        allAssignLeaders: JSON.parse(invitedUsers).map((d: any) => d.email),
-      });
-    });
+
     // console.log(this.props.route.params.organization);
     // if (this.props.route.params.organization == undefined) {
     //   console.log('sdsds');
@@ -196,7 +192,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
         this.setState({locationSugg: location});
       }
     });
-  }
+  };
 
   render() {
     return (
