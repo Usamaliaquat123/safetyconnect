@@ -11,7 +11,7 @@ import {
 import {Avatar} from 'react-native-elements';
 import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {StackNavigatorProps} from '@nav';
+import {BottomTabNavigatorProp} from '@nav';
 import {RouteProp, CommonActions} from '@react-navigation/native';
 import {colors, images} from '@theme';
 
@@ -23,8 +23,8 @@ import {Auth} from 'aws-amplify';
 import {createApi} from '@service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-type MoreNavigationProp = StackNavigationProp<StackNavigatorProps, 'More'>;
-type MoreRouteProp = RouteProp<StackNavigatorProps, 'More'>;
+type MoreNavigationProp = StackNavigationProp<BottomTabNavigatorProp, 'More'>;
+type MoreRouteProp = RouteProp<BottomTabNavigatorProp, 'More'>;
 
 export interface MoreProps {
   route: MoreRouteProp;
@@ -37,13 +37,17 @@ export default class More extends React.Component<MoreProps, any> {
     super(props);
     this.state = {
       user: {},
+      name: '',
+      email: '',
+      url: '',
     };
   }
 
   componentDidMount() {
     AsyncStorage.getItem('user').then((user: any) => {
-      this.setState({user: JSON.parse(user)});
-      console.log(this.state.user);
+      var usr = JSON.parse(user);
+
+      this.setState({name: user.name, email: usr.email, url: user.img_url});
     });
   }
 
