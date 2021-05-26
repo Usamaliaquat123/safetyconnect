@@ -33,6 +33,8 @@ import {
   mapAllProjects,
   mapAllOrganizations,
   capitalizeFirstLetter,
+  savedCurrentProject,
+  savedCurrentOrganization,
   getAllProjects,
 } from './utils';
 export {
@@ -40,7 +42,9 @@ export {
   validatePassword,
   getAllProjects,
   getLinkParam,
+  savedCurrentOrganization,
   redirectDynamiclink,
+  savedCurrentProject,
   getCurrentOrganization,
   savedCurrentProjectAndOrganizations,
   getCurrentProject,

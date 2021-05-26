@@ -14,7 +14,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import styles from './styles';
-import {classifySor, getCurrentProject} from '@utils';
+import {classifySor, getCurrentOrganization, getCurrentProject} from '@utils';
 import {Avatar, Icon} from 'react-native-elements';
 import {View_sor, recentActivity} from '@service';
 import {ListCard} from '@components';
@@ -62,15 +62,18 @@ class Home extends React.Component<HomeProps, any> {
   }
 
   componentDidMount = () => {
-    getCurrentProject().then((currentProj: any) =>
-      this.setState({projectId: currentProj}),
-    );
+    getCurrentProject().then((currentProj: any) => {
+      console.log(currentProj);
+      this.setState({projectId: currentProj});
+    });
+
+    getCurrentOrganization().then((currentorg) => {
+      console.log(currentorg);
+    });
     // this.setState({name: 'sds'});
     AsyncStorage.getItem('user').then((res: any) => {
-      // console.log(JSON.parse(res));
-
       this.setState({name: JSON.parse(res).name});
-      this.setState({image: JSON.parse(res).user.img_url});
+      this.setState({image: JSON.parse(res).img_url});
       this.setState({user: JSON.parse(res)});
       if (JSON.parse(res).orgnaization.length != 0) {
         this.setState({orgName: JSON.parse(res).organizations[0].name});
@@ -85,21 +88,24 @@ class Home extends React.Component<HomeProps, any> {
     // this.componentDidMount();
   };
   render() {
-    createApi
-      .createApi()
-      .filterSors({
-        project: this.state.projectId,
-        limit: 10,
-        page: 0,
-        query: {status: [1, 2, 3, 4, 5]},
-      })
-      .then((res: any) => {
-        if (res.data.data.report.length > 3) {
-          this.setState({recentActivity: res.data.data.report.slice(0, 3)});
-        } else {
-          this.setState({recentActivity: res.data.data.report});
-        }
-      });
+    if (this.state.projectId == ' ') {
+    } else {
+      createApi
+        .createApi()
+        .filterSors({
+          project: this.state.projectId,
+          limit: 10,
+          page: 0,
+          query: {status: [1, 2, 3, 4, 5]},
+        })
+        .then((res: any) => {
+          if (res.data.data.report.length > 3) {
+            this.setState({recentActivity: res.data.data.report.slice(0, 3)});
+          } else {
+            this.setState({recentActivity: res.data.data.report});
+          }
+        });
+    }
 
     const data = [
       {val: 40, color: '#8DCF7F'},

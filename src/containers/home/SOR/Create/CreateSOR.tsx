@@ -312,7 +312,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     // });
 
     AsyncStorage.getItem('user').then((user: any) => {
+      var dta = JSON.parse(user);
       this.setState({user: JSON.parse(user)});
+      console.log(dta);
+      console.log(this.state.currentOrg);
+      console.log(
+        dta.organizations.filter((d: any) => d._id == this.state.currentOrg),
+      );
     });
     this.mappingMapping(1, 1);
 

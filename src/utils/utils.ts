@@ -89,6 +89,12 @@ export const savedCurrentProjectAndOrganizations = async (
   await AsyncStorage.setItem('projectId', pid);
   await AsyncStorage.setItem('organizationId', orgId);
 };
+export const savedCurrentOrganization = async (orgId: string) => {
+  await AsyncStorage.setItem('organizationId', orgId);
+};
+export const savedCurrentProject = async (pid: string) => {
+  await AsyncStorage.setItem('projectId', pid);
+};
 
 // Get current project
 export const getCurrentProject = () => {

@@ -32,7 +32,10 @@ import {
   validateEmail,
   validatePassword,
   GOOGLE_AUTH,
+  savedCurrentOrganization,
+  savedCurrentProjectAndOrganizations,
   redirectDynamiclink,
+  savedCurrentProject,
 } from '@utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 type LoginNavigationProp = StackNavigationProp<StackNavigatorProps, 'Login'>;
@@ -88,7 +91,7 @@ class Login extends React.Component<LoginProps, any> {
   submitSignin = async () => {
     if (
       this.state.username != '' &&
-      validateEmail(this.state.uWsername) == true
+      validateEmail(this.state.username) == true
     ) {
       this.setState({emailError: false});
       if (
@@ -113,8 +116,15 @@ class Login extends React.Component<LoginProps, any> {
             .getUser(this.state.username)
             .then((user: any) => {
               AsyncStorage.setItem('user', JSON.stringify(user.data.data));
+              if (user.data.data.orgnaizations.length != 0) {
+                savedCurrentOrganization(user.data.data.orgnaizations[0]);
+                if (user.data.data.orgnaizations[0].projects.length != 0) {
+                  savedCurrentProject(
+                    user.data.data.orgnaizations[0].projects[0].project_id,
+                  );
+                }
+              }
             });
-
           AsyncStorage.setItem('email', this.state.username);
 
           this.props.navigation.navigate('Main');
