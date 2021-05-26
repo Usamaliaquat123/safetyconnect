@@ -88,7 +88,7 @@ class Login extends React.Component<LoginProps, any> {
   submitSignin = async () => {
     if (
       this.state.username != '' &&
-      validateEmail(this.state.username) == true
+      validateEmail(this.state.uWsername) == true
     ) {
       this.setState({emailError: false});
       if (
