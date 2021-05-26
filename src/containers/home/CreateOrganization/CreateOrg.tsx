@@ -132,12 +132,28 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                                 JSON.stringify(this.state.selectedEmails),
                               );
                             } else {
-                              for (
-                                let k = 0;
-                                k < this.state.selectedEmails.length;
-                                k++
-                              ) {
-                                for (let l = 0; l < emails.length; l++) {
+                              // for (
+                              //   let k = 0;
+                              //   k < this.state.selectedEmails.length;
+                              //   k++
+                              // ) {
+                              //   for (let l = 0; l < emails.length; l++) {
+                              //     if (
+                              //       emails[l] == this.state.selectedEmails[k]
+                              //     ) {
+                              //       // emails.push(this.state.selectedEmails[k]);
+                              //     } else {
+                              //       emails.push(this.state.selectedEmails[k]);
+                              //     }
+                              //   }
+                              // }
+
+                              for (let l = 0; l < emails.length; l++) {
+                                for (
+                                  let k = 0;
+                                  k < this.state.selectedEmails.length;
+                                  k++
+                                ) {
                                   if (
                                     emails[l] == this.state.selectedEmails[k]
                                   ) {
@@ -147,6 +163,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                                   }
                                 }
                               }
+
                               console.log('saved');
 
                               AsyncStorage.setItem(
