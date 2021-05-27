@@ -88,7 +88,7 @@ class Home extends React.Component<HomeProps, any> {
     // this.componentDidMount();
   };
   render() {
-    if (this.state.projectId == ' ') {
+    if (this.state.projectId == '') {
     } else {
       createApi
         .createApi()

@@ -4,7 +4,7 @@ import {colors, fonts} from '@theme';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: colors.primary},
+  container: {flex: 1, position: 'relative', backgroundColor: colors.primary},
   // Header
   header: {
     padding: wp(7),

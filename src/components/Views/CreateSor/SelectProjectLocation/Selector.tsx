@@ -1,23 +1,31 @@
 import * as React from 'react';
 import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
-import {colors, fonts} from '@theme';
+import {colors, fonts, colros} from '@theme';
 import {Icon} from 'react-native-elements';
 import styles from './styles';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Props {
   navigation: any;
   selectedProject: string;
   selectedLocation: string;
-  projects?: Array<any>;
+  projects?: string;
+  orgnaization?: string;
 }
 
 const Selector = (props: Props) => {
+  const [allProjects, setallProjects] = React.useState([]);
+  const [allOrg, setallOrg] = React.useState([]);
+  AsyncStorage.getItem('user').then((user: any) => {
+    var usr = JSON.parse(user);
+    setallOrg(usr.organizations);
+  });
   return (
     <View style={styles.selectProjectLocationContainer}>
       {/* Select Project */}
       <View style={styles.selectProjectContainer}>
-        <Text style={styles.selectProjHead}>Select Project :</Text>
+        <Text style={styles.selectProjHead}>Select Organization :</Text>
         <TouchableOpacity style={styles.selectProj}>
           <Text style={styles.projName}>{props.selectedProject}</Text>
           <Icon
@@ -29,21 +37,21 @@ const Selector = (props: Props) => {
             // color={colo}
           />
         </TouchableOpacity>
-        <View
+
+        <ScrollView
           style={{
-            // padding: wp(3),
             top: wp(20),
-            zIndex: 1,
-            // height: wp(100),
-            width: wp(42),
             borderRadius: wp(1),
-            position: 'absolute',
-            backgroundColor: colors.secondary,
-            borderWidth: wp(0.2),
-            // height: wp(70),
             borderColor: colors.textOpa,
+            width: wp(42),
+            borderWidth: wp(0.2),
+            position: 'absolute',
+            // paddingTop: 60,
+            // marginTop: 0,
+            backgroundColor: colors.secondary,
+            maxHeight: wp(40),
           }}>
-          <ScrollView>
+          {allOrg.map((d: any) => (
             <TouchableOpacity
               style={{
                 flexDirection: 'row',
@@ -58,17 +66,20 @@ const Selector = (props: Props) => {
                 containerStyle={{marginRight: wp(3)}}
               />
               <Text
-                style={{fontSize: wp(3), fontFamily: fonts.SFuiDisplayMedium}}>
-                asdsd
+                style={{
+                  fontSize: wp(3),
+                  fontFamily: fonts.SFuiDisplayMedium,
+                }}>
+                {d.name}
               </Text>
             </TouchableOpacity>
-          </ScrollView>
-        </View>
+          ))}
+        </ScrollView>
       </View>
 
       {/* Select location */}
       <View style={styles.selectLocationContainer}>
-        <Text style={styles.selectlocationHead}>Select Location :</Text>
+        <Text style={styles.selectlocationHead}>Select Project :</Text>
         <TouchableOpacity style={styles.selectLocation}>
           <Text style={styles.locaName}>{props.selectedLocation}</Text>
           <Icon
