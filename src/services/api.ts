@@ -70,7 +70,7 @@ const createApi = (
    * @user
    */
   const createUser = (data: user) => baseapi.post('users', data);
-  const getUser = (data: user) => baseapi.get(`users/?email=${data}`);
+  const getUser = (data: string) => baseapi.get(`users/?email=${data}`);
   const setUserInfo = (data: user) => baseapi.put('users', data);
 
   /*
