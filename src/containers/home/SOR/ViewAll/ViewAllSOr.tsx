@@ -368,628 +368,665 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             </Text>
                           </View>
                         </View>
-                      ) : null}
-
-                      {/* List View */}
-                      {/* {this.state.draft.length == 0 ? null : ( */}
-                      <View
-                        style={{
-                          paddingBottom: wp(5),
-                          paddingLeft: wp(3),
-                          paddingRight: wp(3),
-                        }}>
-                        <View style={styles.listHeader}>
-                          <TouchableOpacity
-                            onPress={() => {
-                              if (this.state.isDraft == true) {
-                                this.setState({isDraft: false});
-                                // this.closeDropDown(this.state.isDraft);
-                              } else {
-                                this.setState({isDraft: true});
-                                // this.dropdownAnimated(this.state.isDraft);
-                              }
-                            }}
-                            style={{flexDirection: 'row'}}>
-                            <Icon
-                              size={wp(3.5)}
-                              color={colors.primary}
-                              name={this.state.isDraft == true ? 'down' : 'up'}
-                              type="antdesign"
-                            />
-                            <Text style={styles.listDraftText}>Drafts</Text>
-                          </TouchableOpacity>
-                          <TouchableOpacity
-                            onPress={() => {
-                              if (this.state.draftSorted == true) {
-                                this.state.draft.sort(
-                                  (a: any, b: any) =>
-                                    new Date(a.createdAt) -
-                                    new Date(b.createdAt),
-                                );
-                                this.setState({draftSorted: false});
-                              } else {
-                                this.state.draft.sort(
-                                  (a: any, b: any) =>
-                                    new Date(b.createdAt) -
-                                    new Date(a.createdAt),
-                                );
-                                this.setState({draftSorted: true});
-                              }
-
-                              // this.setState({});
-                            }}
+                      ) : (
+                        <>
+                          {/* List View */}
+                          {/* {this.state.draft.length == 0 ? null : ( */}
+                          <View
                             style={{
-                              position: 'absolute',
-                              right: wp(4),
-                              flexDirection: 'row',
+                              paddingBottom: wp(5),
+                              paddingLeft: wp(3),
+                              paddingRight: wp(3),
                             }}>
-                            <Icon
-                              color={colors.primary}
-                              containerStyle={{marginTop: wp(-0.6)}}
-                              size={wp(5)}
-                              name="filter"
-                              type="ionicon"
-                            />
-                            <Text style={styles.filterText}>Filter</Text>
-                          </TouchableOpacity>
-                        </View>
-
-                        {this.state.isDraft == true ? (
-                          <View style={[styles.listViewContent]}>
-                            {this.state.draft
-                              .slice(0, 3)
-                              .map((d: Isor, i: number) => (
-                                <ListCard
-                                  key={i}
-                                  classify={d.sor_type}
-                                  styles={
-                                    this.state.draft.slice(0, 3).length == i + 1
-                                      ? {borderBottomWidth: wp(0)}
-                                      : null
-                                  }
-                                  user1={
-                                    d.involved_persons.length == 0
-                                      ? ''
-                                      : d.involved_persons[0].img_url
-                                  }
-                                  user2={
-                                    d.submit_to.length == 0
-                                      ? ''
-                                      : d.submit_to[0].img_url
-                                  }
-                                  observation={d.details}
-                                  username={d.created_by}
-                                  iconconf={classifySor.find(
-                                    (e: any) =>
-                                      e.title == d.sor_type.toString(),
-                                  )}
-                                  onPress={
-                                    () =>
-                                      this.props.navigation.navigate(
-                                        'ViewSOR',
-                                        {
-                                          data: d,
-                                        },
-                                      )
-                                    // this.props.navigation.navigate('home')
-                                  }
-                                  date={d.occured_at}
-                                />
-                              ))}
-                            {this.state.draft.length > 3 && (
+                            <View style={styles.listHeader}>
                               <TouchableOpacity
                                 onPress={() => {
-                                  this.props.navigation.navigate('ViewAll', {
-                                    data: 1,
-                                    title: 'Draft',
-                                  });
+                                  if (this.state.isDraft == true) {
+                                    this.setState({isDraft: false});
+                                    // this.closeDropDown(this.state.isDraft);
+                                  } else {
+                                    this.setState({isDraft: true});
+                                    // this.dropdownAnimated(this.state.isDraft);
+                                  }
                                 }}
-                                style={{marginLeft: wp(4)}}>
-                                <Text
-                                  style={{
-                                    fontSize: wp(3),
-                                    color: colors.primary,
-                                  }}>
-                                  See More
-                                </Text>
+                                style={{flexDirection: 'row'}}>
+                                <Icon
+                                  size={wp(3.5)}
+                                  color={colors.primary}
+                                  name={
+                                    this.state.isDraft == true ? 'down' : 'up'
+                                  }
+                                  type="antdesign"
+                                />
+                                <Text style={styles.listDraftText}>Drafts</Text>
                               </TouchableOpacity>
-                            )}
-                          </View>
-                        ) : null}
-                      </View>
-                      {/* )} */}
-                      {/* {this.state.inprogress.length == 0 ? null : ( */}
-                      <View>
-                        <View style={styles.lineheight}></View>
-                        <View style={styles.inProgressTop}>
-                          <View style={styles.listHeader}>
-                            <TouchableOpacity
-                              onPress={() => {
-                                this.setState({
-                                  isInProgress: !this.state.isInProgress,
-                                });
-                              }}
-                              style={{flexDirection: 'row'}}>
-                              <Icon
-                                size={wp(3.5)}
-                                name={
-                                  this.state.isInProgress == true
-                                    ? 'down'
-                                    : 'up'
-                                }
-                                type="antdesign"
-                                color={colors.primary}
-                              />
-                              <Text style={styles.listDraftText}>
-                                In Progress
-                              </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                              onPress={() => {
-                                if (this.state.inProgressSorted == true) {
-                                  this.state.inprogress.sort(
-                                    (a: any, b: any) =>
-                                      new Date(a.createdAt) -
-                                      new Date(b.createdAt),
-                                  );
-                                  this.setState({inProgressSorted: false});
-                                } else {
-                                  this.state.inprogress.sort(
-                                    (a: any, b: any) =>
-                                      new Date(b.createdAt) -
-                                      new Date(a.createdAt),
-                                  );
-                                  this.setState({inProgressSorted: true});
-                                }
-                              }}
-                              style={styles.filterHeader}>
-                              <Icon
-                                color={colors.primary}
-                                size={wp(5)}
-                                name="filter"
-                                type="ionicon"
-                              />
-                              <Text style={styles.filterText}>Filter</Text>
-                            </TouchableOpacity>
-                          </View>
-                          {this.state.isInProgress == true ? (
-                            <View style={styles.listViewContent}>
-                              {this.state.inprogress
-                                .slice(0, 3)
-                                .map((d: Isor, i: number) => (
-                                  <ListCard
-                                    key={i}
-                                    classify={d.sor_type}
-                                    styles={
-                                      this.state.inprogress.slice(0, 3)
-                                        .length ==
-                                      i + 1
-                                        ? {borderBottomWidth: wp(0)}
-                                        : null
-                                    }
-                                    user1={
-                                      d.involved_persons.length == 0
-                                        ? ''
-                                        : d.involved_persons[0].img_url
-                                    }
-                                    user2={
-                                      d.submit_to.length == 0
-                                        ? ''
-                                        : d.submit_to[0].img_url
-                                    }
-                                    observation={d.details}
-                                    username={d.created_by}
-                                    iconconf={classifySor.find(
-                                      (e: any) => e.title == d.sor_type,
-                                    )}
-                                    onPress={() =>
-                                      this.props.navigation.navigate(
-                                        'ViewSOR',
-                                        {
-                                          data: d,
-                                        },
-                                      )
-                                    }
-                                    date={d.occured_at}
-                                  />
-                                ))}
-                              {this.state.inprogress.length > 3 && (
-                                <TouchableOpacity
-                                  onPress={() => {
-                                    this.props.navigation.navigate('ViewAll', {
-                                      data: 4,
-                                      title: 'In Progress',
-                                    });
-                                  }}
-                                  style={{
-                                    marginLeft: wp(4),
-                                    marginTop: wp(3),
-                                  }}>
-                                  <Text
-                                    style={{
-                                      fontSize: wp(3),
-                                      color: colors.primary,
-                                    }}>
-                                    See More
-                                  </Text>
-                                </TouchableOpacity>
-                              )}
-                            </View>
-                          ) : null}
-                        </View>
-                      </View>
-                      {/* )} */}
+                              <TouchableOpacity
+                                onPress={() => {
+                                  if (this.state.draftSorted == true) {
+                                    this.state.draft.sort(
+                                      (a: any, b: any) =>
+                                        new Date(a.createdAt) -
+                                        new Date(b.createdAt),
+                                    );
+                                    this.setState({draftSorted: false});
+                                  } else {
+                                    this.state.draft.sort(
+                                      (a: any, b: any) =>
+                                        new Date(b.createdAt) -
+                                        new Date(a.createdAt),
+                                    );
+                                    this.setState({draftSorted: true});
+                                  }
 
-                      {/* {this.state.submitted.length == 0 ? null : ( */}
-                      <View>
-                        <View style={styles.lineheight}></View>
-                        <View
-                          style={[
-                            {
-                              paddingBottom: wp(3),
-                            },
-                            styles.closedTop,
-                          ]}>
-                          <View style={styles.listHeader}>
-                            <TouchableOpacity
-                              onPress={() => {
-                                this.setState({
-                                  isSubmited: !this.state.isSubmited,
-                                });
-                                if (!this.state.isSubmited) {
-                                  this.setState({bottomWidth: wp(40)});
-                                } else {
-                                  this.setState({bottomWidth: wp(100)});
-                                }
-                              }}
-                              style={{flexDirection: 'row'}}>
-                              <Icon
-                                size={wp(3.5)}
-                                name={
-                                  this.state.isSubmited == true ? 'down' : 'up'
-                                }
-                                color={colors.primary}
-                                type="antdesign"
-                              />
-                              <Text style={styles.listDraftText}>
-                                Notified to
-                              </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                              onPress={() => {
-                                if (this.state.notifiedToSorted == true) {
-                                  this.state.submitted.sort(
-                                    (a: any, b: any) =>
-                                      new Date(a.createdAt) -
-                                      new Date(b.createdAt),
-                                  );
-                                  this.setState({notifiedToSorted: false});
-                                } else {
-                                  this.state.submitted.sort(
-                                    (a: any, b: any) =>
-                                      new Date(b.createdAt) -
-                                      new Date(a.createdAt),
-                                  );
-                                  this.setState({notifiedToSorted: true});
-                                }
-                              }}
-                              style={{
-                                position: 'absolute',
-                                right: wp(4),
-                                flexDirection: 'row',
-                                marginTop: wp(-1),
-                              }}>
-                              <Icon
-                                color={colors.primary}
-                                size={wp(5)}
-                                name="filter"
-                                type="ionicon"
-                              />
-
-                              <Text style={styles.filterText}>Filter</Text>
-                            </TouchableOpacity>
-                          </View>
-                          {this.state.isSubmited == true ? (
-                            <View style={styles.listViewContent}>
-                              {this.state.submitted
-                                .slice(0, 3)
-                                .map((d: Isor, i: number) => (
-                                  <ListCard
-                                    key={i}
-                                    classify={d.sor_type}
-                                    styles={
-                                      this.state.submitted.slice(0, 3).length ==
-                                      i + 1
-                                        ? {borderBottomWidth: wp(0)}
-                                        : null
-                                    }
-                                    user1={
-                                      d.involved_persons.length == 0
-                                        ? ''
-                                        : d.involved_persons[0].img_url
-                                    }
-                                    user2={
-                                      d.submit_to.length == 0
-                                        ? ''
-                                        : d.submit_to[0].img_url
-                                    }
-                                    observation={d.details}
-                                    username={d.created_by}
-                                    iconconf={classifySor.find(
-                                      (e: any) => e.title == d.sor_type,
-                                    )}
-                                    onPress={() =>
-                                      this.props.navigation.navigate(
-                                        'ViewSOR',
-                                        {
-                                          data: d,
-                                        },
-                                      )
-                                    }
-                                    date={d.occured_at}
-                                  />
-                                ))}
-                              {this.state.submitted.length > 3 && (
-                                <TouchableOpacity
-                                  onPress={() => {
-                                    this.props.navigation.navigate('ViewAll', {
-                                      data: 2,
-                                      title: 'Notified To',
-                                    });
-                                  }}
-                                  style={{
-                                    marginLeft: wp(4),
-                                    marginTop: wp(3),
-                                  }}>
-                                  <Text
-                                    style={{
-                                      fontSize: wp(3),
-                                      color: colors.primary,
-                                    }}>
-                                    See More
-                                  </Text>
-                                </TouchableOpacity>
-                              )}
+                                  // this.setState({});
+                                }}
+                                style={{
+                                  position: 'absolute',
+                                  right: wp(4),
+                                  flexDirection: 'row',
+                                }}>
+                                <Icon
+                                  color={colors.primary}
+                                  containerStyle={{marginTop: wp(-0.6)}}
+                                  size={wp(5)}
+                                  name="filter"
+                                  type="ionicon"
+                                />
+                                <Text style={styles.filterText}>Filter</Text>
+                              </TouchableOpacity>
                             </View>
-                          ) : null}
-                        </View>
-                      </View>
-                      {/* )} */}
-                      {/* {this.state.exclated.length == 0 ? null : ( */}
-                      <View>
-                        <View style={styles.lineheight}></View>
-                        <View style={styles.inProgressTop}>
-                          <View style={styles.listHeader}>
-                            <TouchableOpacity
-                              onPress={() => {
-                                this.setState({
-                                  isNotified: !this.state.isNotified,
-                                });
-                              }}
-                              style={{flexDirection: 'row'}}>
-                              <Icon
-                                size={wp(3.5)}
-                                name={
-                                  this.state.isNotified == true ? 'down' : 'up'
-                                }
-                                color={colors.primary}
-                                type="antdesign"
-                              />
-                              <Text style={styles.listDraftText}>
-                                Pending Closure
-                              </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                              onPress={() => {
-                                if (this.state.pendingClosureSorted == true) {
-                                  this.state.exclated.sort(
-                                    (a: any, b: any) =>
-                                      new Date(a.createdAt) -
-                                      new Date(b.createdAt),
-                                  );
-                                  this.setState({pendingClosureSorted: false});
-                                } else {
-                                  this.state.exclated.sort(
-                                    (a: any, b: any) =>
-                                      new Date(b.createdAt) -
-                                      new Date(a.createdAt),
-                                  );
-                                  this.setState({pendingClosureSorted: true});
-                                }
-                              }}
-                              style={styles.filterHeader}>
-                              <Icon
-                                color={colors.primary}
-                                size={wp(5)}
-                                name="filter"
-                                type="ionicon"
-                              />
-                              <Text style={styles.filterText}>Filter</Text>
-                            </TouchableOpacity>
-                          </View>
-                          {this.state.isNotified == true ? (
-                            <View style={styles.listViewContent}>
-                              {this.state.exclated
-                                .slice(0, 3)
-                                .map((d: Isor, i: number) => (
-                                  <ListCard
-                                    key={i}
-                                    classify={d.sor_type}
-                                    styles={
-                                      this.state.exclated.slice(0, 3).length ==
-                                      i + 1
-                                        ? {borderBottomWidth: wp(0)}
-                                        : null
-                                    }
-                                    user1={
-                                      d.involved_persons.length == 0
-                                        ? ''
-                                        : d.involved_persons[0].img_url
-                                    }
-                                    user2={
-                                      d.submit_to.length == 0
-                                        ? ''
-                                        : d.submit_to[0].img_url
-                                    }
-                                    observation={d.details}
-                                    username={d.created_by}
-                                    iconconf={classifySor.find(
-                                      (e: any) => e.title == d.sor_type,
-                                    )}
-                                    onPress={() =>
-                                      this.props.navigation.navigate(
-                                        'ViewSOR',
-                                        {
-                                          data: d,
-                                        },
-                                      )
-                                    }
-                                    date={d.occured_at}
-                                  />
-                                ))}
-                              {this.state.exclated.length > 3 && (
-                                <TouchableOpacity
-                                  onPress={() => {
-                                    this.props.navigation.navigate('ViewAll', {
-                                      data: 3,
-                                      title: 'Pending Closure',
-                                    });
-                                  }}
-                                  style={{
-                                    marginLeft: wp(4),
-                                    marginTop: wp(3),
-                                  }}>
-                                  <Text
-                                    style={{
-                                      fontSize: wp(3),
-                                      color: colors.primary,
-                                    }}>
-                                    See More
-                                  </Text>
-                                </TouchableOpacity>
-                              )}
-                            </View>
-                          ) : null}
-                        </View>
-                      </View>
-                      {/* )} */}
 
-                      {/* {this.state.completed.length == 0 ? null : ( */}
-                      <View>
-                        <View style={styles.lineheight}></View>
-                        <View style={styles.inProgressTop}>
-                          <View style={styles.listHeader}>
-                            <TouchableOpacity
-                              onPress={() => {
-                                this.setState({
-                                  isCompleted: !this.state.isCompleted,
-                                });
-                              }}
-                              style={{flexDirection: 'row'}}>
-                              <Icon
-                                size={wp(3.5)}
-                                color={colors.primary}
-                                name={
-                                  this.state.isCompleted == true ? 'down' : 'up'
-                                }
-                                type="antdesign"
-                              />
-                              <Text style={styles.listDraftText}>Closed</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                              onPress={() => {
-                                if (this.state.closedSorted == true) {
-                                  this.state.completed.sort(
-                                    (a: any, b: any) =>
-                                      new Date(a.createdAt) -
-                                      new Date(b.createdAt),
-                                  );
-                                  this.setState({closedSorted: false});
-                                } else {
-                                  this.state.completed.sort(
-                                    (a: any, b: any) =>
-                                      new Date(b.createdAt) -
-                                      new Date(a.createdAt),
-                                  );
-                                  this.setState({closedSorted: true});
-                                }
-                              }}
-                              style={styles.filterHeader}>
-                              <Icon
-                                color={colors.primary}
-                                size={wp(5)}
-                                name="filter"
-                                type="ionicon"
-                              />
-                              <Text style={styles.filterText}>Filter</Text>
-                            </TouchableOpacity>
-                          </View>
-                          {this.state.isCompleted == true ? (
-                            <View style={styles.listViewContent}>
-                              {this.state.completed
-                                .slice(0, 3)
-                                .map((d: Isor, i: number) => (
-                                  <ListCard
-                                    key={i}
-                                    classify={d.sor_type}
-                                    styles={
-                                      this.state.completed.slice(0, 3).length ==
-                                      i + 1
-                                        ? {borderBottomWidth: wp(0)}
-                                        : null
-                                    }
-                                    user1={
-                                      d.involved_persons.length == 0
-                                        ? ''
-                                        : d.involved_persons[0].img_url
-                                    }
-                                    user2={
-                                      d.submit_to.length == 0
-                                        ? ''
-                                        : d.submit_to[0].img_url
-                                    }
-                                    observation={d.details}
-                                    username={d.created_by}
-                                    iconconf={classifySor.find(
-                                      (e: any) => e.title == d.sor_type,
-                                    )}
+                            {this.state.isDraft == true ? (
+                              <View style={[styles.listViewContent]}>
+                                {this.state.draft
+                                  .slice(0, 3)
+                                  .map((d: Isor, i: number) => (
+                                    <ListCard
+                                      key={i}
+                                      classify={d.sor_type}
+                                      styles={
+                                        this.state.draft.slice(0, 3).length ==
+                                        i + 1
+                                          ? {borderBottomWidth: wp(0)}
+                                          : null
+                                      }
+                                      user1={
+                                        d.involved_persons.length == 0
+                                          ? ''
+                                          : d.involved_persons[0].img_url
+                                      }
+                                      user2={
+                                        d.submit_to.length == 0
+                                          ? ''
+                                          : d.submit_to[0].img_url
+                                      }
+                                      observation={d.details}
+                                      username={d.created_by}
+                                      iconconf={classifySor.find(
+                                        (e: any) =>
+                                          e.title == d.sor_type.toString(),
+                                      )}
+                                      onPress={
+                                        () =>
+                                          this.props.navigation.navigate(
+                                            'ViewSOR',
+                                            {
+                                              data: d,
+                                            },
+                                          )
+                                        // this.props.navigation.navigate('home')
+                                      }
+                                      date={d.occured_at}
+                                    />
+                                  ))}
+                                {this.state.draft.length > 3 && (
+                                  <TouchableOpacity
                                     onPress={() => {
                                       this.props.navigation.navigate(
-                                        'ViewSOR',
+                                        'ViewAll',
                                         {
-                                          data: d,
+                                          data: 1,
+                                          title: 'Draft',
                                         },
                                       );
                                     }}
-                                    date={d.occured_at}
-                                  />
-                                ))}
-                              {this.state.completed.length > 5 && (
+                                    style={{marginLeft: wp(4)}}>
+                                    <Text
+                                      style={{
+                                        fontSize: wp(3),
+                                        color: colors.primary,
+                                      }}>
+                                      See More
+                                    </Text>
+                                  </TouchableOpacity>
+                                )}
+                              </View>
+                            ) : null}
+                          </View>
+                          {/* )} */}
+                          {/* {this.state.inprogress.length == 0 ? null : ( */}
+                          <View>
+                            <View style={styles.lineheight}></View>
+                            <View style={styles.inProgressTop}>
+                              <View style={styles.listHeader}>
                                 <TouchableOpacity
                                   onPress={() => {
-                                    this.props.navigation.navigate('ViewAll', {
-                                      data: 5,
-                                      title: 'Closed',
+                                    this.setState({
+                                      isInProgress: !this.state.isInProgress,
                                     });
                                   }}
-                                  style={{
-                                    marginLeft: wp(4),
-                                    marginTop: wp(3),
-                                  }}>
-                                  <Text
-                                    style={{
-                                      fontSize: wp(3),
-                                      color: colors.primary,
-                                    }}>
-                                    See More
+                                  style={{flexDirection: 'row'}}>
+                                  <Icon
+                                    size={wp(3.5)}
+                                    name={
+                                      this.state.isInProgress == true
+                                        ? 'down'
+                                        : 'up'
+                                    }
+                                    type="antdesign"
+                                    color={colors.primary}
+                                  />
+                                  <Text style={styles.listDraftText}>
+                                    In Progress
                                   </Text>
                                 </TouchableOpacity>
-                              )}
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    if (this.state.inProgressSorted == true) {
+                                      this.state.inprogress.sort(
+                                        (a: any, b: any) =>
+                                          new Date(a.createdAt) -
+                                          new Date(b.createdAt),
+                                      );
+                                      this.setState({inProgressSorted: false});
+                                    } else {
+                                      this.state.inprogress.sort(
+                                        (a: any, b: any) =>
+                                          new Date(b.createdAt) -
+                                          new Date(a.createdAt),
+                                      );
+                                      this.setState({inProgressSorted: true});
+                                    }
+                                  }}
+                                  style={styles.filterHeader}>
+                                  <Icon
+                                    color={colors.primary}
+                                    size={wp(5)}
+                                    name="filter"
+                                    type="ionicon"
+                                  />
+                                  <Text style={styles.filterText}>Filter</Text>
+                                </TouchableOpacity>
+                              </View>
+                              {this.state.isInProgress == true ? (
+                                <View style={styles.listViewContent}>
+                                  {this.state.inprogress
+                                    .slice(0, 3)
+                                    .map((d: Isor, i: number) => (
+                                      <ListCard
+                                        key={i}
+                                        classify={d.sor_type}
+                                        styles={
+                                          this.state.inprogress.slice(0, 3)
+                                            .length ==
+                                          i + 1
+                                            ? {borderBottomWidth: wp(0)}
+                                            : null
+                                        }
+                                        user1={
+                                          d.involved_persons.length == 0
+                                            ? ''
+                                            : d.involved_persons[0].img_url
+                                        }
+                                        user2={
+                                          d.submit_to.length == 0
+                                            ? ''
+                                            : d.submit_to[0].img_url
+                                        }
+                                        observation={d.details}
+                                        username={d.created_by}
+                                        iconconf={classifySor.find(
+                                          (e: any) => e.title == d.sor_type,
+                                        )}
+                                        onPress={() =>
+                                          this.props.navigation.navigate(
+                                            'ViewSOR',
+                                            {
+                                              data: d,
+                                            },
+                                          )
+                                        }
+                                        date={d.occured_at}
+                                      />
+                                    ))}
+                                  {this.state.inprogress.length > 3 && (
+                                    <TouchableOpacity
+                                      onPress={() => {
+                                        this.props.navigation.navigate(
+                                          'ViewAll',
+                                          {
+                                            data: 4,
+                                            title: 'In Progress',
+                                          },
+                                        );
+                                      }}
+                                      style={{
+                                        marginLeft: wp(4),
+                                        marginTop: wp(3),
+                                      }}>
+                                      <Text
+                                        style={{
+                                          fontSize: wp(3),
+                                          color: colors.primary,
+                                        }}>
+                                        See More
+                                      </Text>
+                                    </TouchableOpacity>
+                                  )}
+                                </View>
+                              ) : null}
                             </View>
-                          ) : null}
-                        </View>
-                      </View>
-                      {/* )} */}
+                          </View>
+                          {/* )} */}
+
+                          {/* {this.state.submitted.length == 0 ? null : ( */}
+                          <View>
+                            <View style={styles.lineheight}></View>
+                            <View
+                              style={[
+                                {
+                                  paddingBottom: wp(3),
+                                },
+                                styles.closedTop,
+                              ]}>
+                              <View style={styles.listHeader}>
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    this.setState({
+                                      isSubmited: !this.state.isSubmited,
+                                    });
+                                    if (!this.state.isSubmited) {
+                                      this.setState({bottomWidth: wp(40)});
+                                    } else {
+                                      this.setState({bottomWidth: wp(100)});
+                                    }
+                                  }}
+                                  style={{flexDirection: 'row'}}>
+                                  <Icon
+                                    size={wp(3.5)}
+                                    name={
+                                      this.state.isSubmited == true
+                                        ? 'down'
+                                        : 'up'
+                                    }
+                                    color={colors.primary}
+                                    type="antdesign"
+                                  />
+                                  <Text style={styles.listDraftText}>
+                                    Notified to
+                                  </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    if (this.state.notifiedToSorted == true) {
+                                      this.state.submitted.sort(
+                                        (a: any, b: any) =>
+                                          new Date(a.createdAt) -
+                                          new Date(b.createdAt),
+                                      );
+                                      this.setState({notifiedToSorted: false});
+                                    } else {
+                                      this.state.submitted.sort(
+                                        (a: any, b: any) =>
+                                          new Date(b.createdAt) -
+                                          new Date(a.createdAt),
+                                      );
+                                      this.setState({notifiedToSorted: true});
+                                    }
+                                  }}
+                                  style={{
+                                    position: 'absolute',
+                                    right: wp(4),
+                                    flexDirection: 'row',
+                                    marginTop: wp(-1),
+                                  }}>
+                                  <Icon
+                                    color={colors.primary}
+                                    size={wp(5)}
+                                    name="filter"
+                                    type="ionicon"
+                                  />
+
+                                  <Text style={styles.filterText}>Filter</Text>
+                                </TouchableOpacity>
+                              </View>
+                              {this.state.isSubmited == true ? (
+                                <View style={styles.listViewContent}>
+                                  {this.state.submitted
+                                    .slice(0, 3)
+                                    .map((d: Isor, i: number) => (
+                                      <ListCard
+                                        key={i}
+                                        classify={d.sor_type}
+                                        styles={
+                                          this.state.submitted.slice(0, 3)
+                                            .length ==
+                                          i + 1
+                                            ? {borderBottomWidth: wp(0)}
+                                            : null
+                                        }
+                                        user1={
+                                          d.involved_persons.length == 0
+                                            ? ''
+                                            : d.involved_persons[0].img_url
+                                        }
+                                        user2={
+                                          d.submit_to.length == 0
+                                            ? ''
+                                            : d.submit_to[0].img_url
+                                        }
+                                        observation={d.details}
+                                        username={d.created_by}
+                                        iconconf={classifySor.find(
+                                          (e: any) => e.title == d.sor_type,
+                                        )}
+                                        onPress={() =>
+                                          this.props.navigation.navigate(
+                                            'ViewSOR',
+                                            {
+                                              data: d,
+                                            },
+                                          )
+                                        }
+                                        date={d.occured_at}
+                                      />
+                                    ))}
+                                  {this.state.submitted.length > 3 && (
+                                    <TouchableOpacity
+                                      onPress={() => {
+                                        this.props.navigation.navigate(
+                                          'ViewAll',
+                                          {
+                                            data: 2,
+                                            title: 'Notified To',
+                                          },
+                                        );
+                                      }}
+                                      style={{
+                                        marginLeft: wp(4),
+                                        marginTop: wp(3),
+                                      }}>
+                                      <Text
+                                        style={{
+                                          fontSize: wp(3),
+                                          color: colors.primary,
+                                        }}>
+                                        See More
+                                      </Text>
+                                    </TouchableOpacity>
+                                  )}
+                                </View>
+                              ) : null}
+                            </View>
+                          </View>
+                          {/* )} */}
+                          {/* {this.state.exclated.length == 0 ? null : ( */}
+                          <View>
+                            <View style={styles.lineheight}></View>
+                            <View style={styles.inProgressTop}>
+                              <View style={styles.listHeader}>
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    this.setState({
+                                      isNotified: !this.state.isNotified,
+                                    });
+                                  }}
+                                  style={{flexDirection: 'row'}}>
+                                  <Icon
+                                    size={wp(3.5)}
+                                    name={
+                                      this.state.isNotified == true
+                                        ? 'down'
+                                        : 'up'
+                                    }
+                                    color={colors.primary}
+                                    type="antdesign"
+                                  />
+                                  <Text style={styles.listDraftText}>
+                                    Pending Closure
+                                  </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    if (
+                                      this.state.pendingClosureSorted == true
+                                    ) {
+                                      this.state.exclated.sort(
+                                        (a: any, b: any) =>
+                                          new Date(a.createdAt) -
+                                          new Date(b.createdAt),
+                                      );
+                                      this.setState({
+                                        pendingClosureSorted: false,
+                                      });
+                                    } else {
+                                      this.state.exclated.sort(
+                                        (a: any, b: any) =>
+                                          new Date(b.createdAt) -
+                                          new Date(a.createdAt),
+                                      );
+                                      this.setState({
+                                        pendingClosureSorted: true,
+                                      });
+                                    }
+                                  }}
+                                  style={styles.filterHeader}>
+                                  <Icon
+                                    color={colors.primary}
+                                    size={wp(5)}
+                                    name="filter"
+                                    type="ionicon"
+                                  />
+                                  <Text style={styles.filterText}>Filter</Text>
+                                </TouchableOpacity>
+                              </View>
+                              {this.state.isNotified == true ? (
+                                <View style={styles.listViewContent}>
+                                  {this.state.exclated
+                                    .slice(0, 3)
+                                    .map((d: Isor, i: number) => (
+                                      <ListCard
+                                        key={i}
+                                        classify={d.sor_type}
+                                        styles={
+                                          this.state.exclated.slice(0, 3)
+                                            .length ==
+                                          i + 1
+                                            ? {borderBottomWidth: wp(0)}
+                                            : null
+                                        }
+                                        user1={
+                                          d.involved_persons.length == 0
+                                            ? ''
+                                            : d.involved_persons[0].img_url
+                                        }
+                                        user2={
+                                          d.submit_to.length == 0
+                                            ? ''
+                                            : d.submit_to[0].img_url
+                                        }
+                                        observation={d.details}
+                                        username={d.created_by}
+                                        iconconf={classifySor.find(
+                                          (e: any) => e.title == d.sor_type,
+                                        )}
+                                        onPress={() =>
+                                          this.props.navigation.navigate(
+                                            'ViewSOR',
+                                            {
+                                              data: d,
+                                            },
+                                          )
+                                        }
+                                        date={d.occured_at}
+                                      />
+                                    ))}
+                                  {this.state.exclated.length > 3 && (
+                                    <TouchableOpacity
+                                      onPress={() => {
+                                        this.props.navigation.navigate(
+                                          'ViewAll',
+                                          {
+                                            data: 3,
+                                            title: 'Pending Closure',
+                                          },
+                                        );
+                                      }}
+                                      style={{
+                                        marginLeft: wp(4),
+                                        marginTop: wp(3),
+                                      }}>
+                                      <Text
+                                        style={{
+                                          fontSize: wp(3),
+                                          color: colors.primary,
+                                        }}>
+                                        See More
+                                      </Text>
+                                    </TouchableOpacity>
+                                  )}
+                                </View>
+                              ) : null}
+                            </View>
+                          </View>
+                          {/* )} */}
+
+                          {/* {this.state.completed.length == 0 ? null : ( */}
+                          <View>
+                            <View style={styles.lineheight}></View>
+                            <View style={styles.inProgressTop}>
+                              <View style={styles.listHeader}>
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    this.setState({
+                                      isCompleted: !this.state.isCompleted,
+                                    });
+                                  }}
+                                  style={{flexDirection: 'row'}}>
+                                  <Icon
+                                    size={wp(3.5)}
+                                    color={colors.primary}
+                                    name={
+                                      this.state.isCompleted == true
+                                        ? 'down'
+                                        : 'up'
+                                    }
+                                    type="antdesign"
+                                  />
+                                  <Text style={styles.listDraftText}>
+                                    Closed
+                                  </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    if (this.state.closedSorted == true) {
+                                      this.state.completed.sort(
+                                        (a: any, b: any) =>
+                                          new Date(a.createdAt) -
+                                          new Date(b.createdAt),
+                                      );
+                                      this.setState({closedSorted: false});
+                                    } else {
+                                      this.state.completed.sort(
+                                        (a: any, b: any) =>
+                                          new Date(b.createdAt) -
+                                          new Date(a.createdAt),
+                                      );
+                                      this.setState({closedSorted: true});
+                                    }
+                                  }}
+                                  style={styles.filterHeader}>
+                                  <Icon
+                                    color={colors.primary}
+                                    size={wp(5)}
+                                    name="filter"
+                                    type="ionicon"
+                                  />
+                                  <Text style={styles.filterText}>Filter</Text>
+                                </TouchableOpacity>
+                              </View>
+                              {this.state.isCompleted == true ? (
+                                <View style={styles.listViewContent}>
+                                  {this.state.completed
+                                    .slice(0, 3)
+                                    .map((d: Isor, i: number) => (
+                                      <ListCard
+                                        key={i}
+                                        classify={d.sor_type}
+                                        styles={
+                                          this.state.completed.slice(0, 3)
+                                            .length ==
+                                          i + 1
+                                            ? {borderBottomWidth: wp(0)}
+                                            : null
+                                        }
+                                        user1={
+                                          d.involved_persons.length == 0
+                                            ? ''
+                                            : d.involved_persons[0].img_url
+                                        }
+                                        user2={
+                                          d.submit_to.length == 0
+                                            ? ''
+                                            : d.submit_to[0].img_url
+                                        }
+                                        observation={d.details}
+                                        username={d.created_by}
+                                        iconconf={classifySor.find(
+                                          (e: any) => e.title == d.sor_type,
+                                        )}
+                                        onPress={() => {
+                                          this.props.navigation.navigate(
+                                            'ViewSOR',
+                                            {
+                                              data: d,
+                                            },
+                                          );
+                                        }}
+                                        date={d.occured_at}
+                                      />
+                                    ))}
+                                  {this.state.completed.length > 5 && (
+                                    <TouchableOpacity
+                                      onPress={() => {
+                                        this.props.navigation.navigate(
+                                          'ViewAll',
+                                          {
+                                            data: 5,
+                                            title: 'Closed',
+                                          },
+                                        );
+                                      }}
+                                      style={{
+                                        marginLeft: wp(4),
+                                        marginTop: wp(3),
+                                      }}>
+                                      <Text
+                                        style={{
+                                          fontSize: wp(3),
+                                          color: colors.primary,
+                                        }}>
+                                        See More
+                                      </Text>
+                                    </TouchableOpacity>
+                                  )}
+                                </View>
+                              ) : null}
+                            </View>
+                          </View>
+                          {/* )} */}
+                        </>
+                      )}
                     </ScrollView>
                   </View>
                 ) : (
