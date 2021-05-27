@@ -1,10 +1,11 @@
 import * as React from 'react';
 import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
-import {colors, fonts, colros} from '@theme';
+import {colors, fonts} from '@theme';
 import {Icon} from 'react-native-elements';
 import styles from './styles';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {createApi, submitted} from '@service';
 
 interface Props {
   navigation: any;
@@ -15,21 +16,39 @@ interface Props {
 }
 
 const Selector = (props: Props) => {
-  const [allProjects, setallProjects] = React.useState([]);
+  const [selectionProj, setselectionProj] = React.useState(false);
+  const [selectionOrg, setselectionOrg] = React.useState(false);
+  // all projects and organizations
+  const [selectedProj, setselectedProj] = React.useState([]);
   const [allOrg, setallOrg] = React.useState([]);
-  AsyncStorage.getItem('user').then((user: any) => {
-    var usr = JSON.parse(user);
-    setallOrg(usr.organizations);
+  AsyncStorage.getItem('email').then((email: any) => {
+    createApi
+      .createApi()
+      .getUser(email)
+      .then((user: any) => {
+        console.log('selected organization');
+        console.log();
+        setselectedProj(
+          user.data.data.organizations.filter(
+            (d: any) => d._id == props.orgnaization,
+          )[0].projects,
+        );
+      });
+
+    // var usr = JSON.parse(user);
+    // setallOrg(usr.organizations);
   });
   return (
     <View style={styles.selectProjectLocationContainer}>
       {/* Select Project */}
       <View style={styles.selectProjectContainer}>
-        <Text style={styles.selectProjHead}>Select Organization :</Text>
-        <TouchableOpacity style={styles.selectProj}>
+        <Text style={styles.selectProjHead}>Select Project :</Text>
+        <TouchableOpacity
+          onPress={() => setselectionProj(!selectionProj)}
+          style={styles.selectProj}>
           <Text style={styles.projName}>{props.selectedProject}</Text>
           <Icon
-            onPress={() => props.navigation.goBack()}
+            // onPress={() => props.navigation.goBack()}
             size={wp(3)}
             containerStyle={styles.downIcon}
             name="down"
@@ -38,43 +57,46 @@ const Selector = (props: Props) => {
           />
         </TouchableOpacity>
 
-        <ScrollView
-          style={{
-            top: wp(20),
-            borderRadius: wp(1),
-            borderColor: colors.textOpa,
-            width: wp(42),
-            borderWidth: wp(0.2),
-            position: 'absolute',
-            // paddingTop: 60,
-            // marginTop: 0,
-            backgroundColor: colors.secondary,
-            maxHeight: wp(40),
-          }}>
-          {allOrg.map((d: any) => (
-            <TouchableOpacity
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                padding: wp(3),
-              }}>
-              <Icon
-                name={'stats-chart-sharp'}
-                type={'ionicon'}
-                color={colors.text}
-                size={wp(3)}
-                containerStyle={{marginRight: wp(3)}}
-              />
-              <Text
+        {selectionProj == true && (
+          <ScrollView
+            style={{
+              // top: wp(20),
+              borderRadius: wp(1),
+              borderColor: colors.textOpa,
+              width: wp(42),
+              borderWidth: wp(0.2),
+              // position: 'absolute',
+              // paddingTop: 60,
+              // marginTop: 0,
+
+              backgroundColor: colors.secondary,
+              maxHeight: wp(40),
+            }}>
+            {selectedProj.map((d: any) => (
+              <TouchableOpacity
                 style={{
-                  fontSize: wp(3),
-                  fontFamily: fonts.SFuiDisplayMedium,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  padding: wp(3),
                 }}>
-                {d.name}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+                <Icon
+                  name={'stats-chart-sharp'}
+                  type={'ionicon'}
+                  color={colors.text}
+                  size={wp(3)}
+                  containerStyle={{marginRight: wp(3)}}
+                />
+                <Text
+                  style={{
+                    fontSize: wp(3),
+                    fontFamily: fonts.SFuiDisplayMedium,
+                  }}>
+                  {d.project_name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        )}
       </View>
 
       {/* Select location */}

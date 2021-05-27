@@ -59,7 +59,7 @@ class Home extends React.Component<HomeProps, any> {
       user: {},
       name: '',
       image: '',
-      newsorModal: true,
+      newsorModal: false,
       totalObservations: 0,
       count: 0,
       projectId: '',
@@ -75,17 +75,29 @@ class Home extends React.Component<HomeProps, any> {
 
   componentDidMount = () => {
     getCurrentProject().then((currentProj: any) => {
+      console.log('current organization');
       console.log(currentProj);
+      if (this.state.currentorg !== '') {
+      } else {
+      }
       this.setState({projectId: currentProj});
     });
 
     getCurrentOrganization().then((currentorg) => {
       console.log(currentorg);
-      // console.log('amsdjkasjdksajkd');
-
+      console.log('current project');
+      if (this.state.currentorg !== '') {
+      } else {
+      }
       this.setState({currentorg});
     });
     // this.setState({name: 'sds'});
+
+    if (this.state.currentorg === '' || this.state.currentProj === '') {
+      this.setState({newsorModal: true});
+    } else {
+      this.setState({newsorModal: false});
+    }
 
     AsyncStorage.getItem('email').then((email: any) => {
       createApi
