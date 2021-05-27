@@ -14,7 +14,13 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import styles from './styles';
-import {classifySor, getCurrentOrganization, getCurrentProject} from '@utils';
+import {
+  classifySor,
+  getCurrentOrganization,
+  getCurrentProject,
+  savedCurrentProject,
+  savedCurrentOrganization,
+} from '@utils';
 import {Avatar, Icon} from 'react-native-elements';
 import {View_sor, recentActivity} from '@service';
 import {ListCard} from '@components';
@@ -134,6 +140,7 @@ class Home extends React.Component<HomeProps, any> {
       orgSelection: false,
     });
 
+    savedCurrentOrganization(d._id);
     console.log(d);
     if (d.projects.length != 0) {
       this.setState({allProjects: d.projects});
@@ -145,7 +152,10 @@ class Home extends React.Component<HomeProps, any> {
     this.setState({
       selectedProject: d,
       projSelection: false,
+      newsorModal: false,
     });
+
+    savedCurrentProject(d.project_id);
   };
 
   render() {
