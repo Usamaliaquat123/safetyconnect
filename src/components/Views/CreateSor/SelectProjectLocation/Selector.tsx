@@ -19,19 +19,39 @@ const Selector = (props: Props) => {
   const [selectionProj, setselectionProj] = React.useState(false);
   const [selectionOrg, setselectionOrg] = React.useState(false);
   // all projects and organizations
-  const [selectedProj, setselectedProj] = React.useState([]);
+  const [selectedProj, setselectedProj] = React.useState();
+  const [selectedorg, setselectedorg] = React.useState([]);
+  const [allproj, setallproj] = React.useState([]);
   const [allOrg, setallOrg] = React.useState([]);
+
+  // user
+
   AsyncStorage.getItem('email').then((email: any) => {
     createApi
       .createApi()
       .getUser(email)
-      .then((user: any) => {
+      .then((usr: any) => {
         console.log('selected organization');
-        console.log();
-        setselectedProj(
-          user.data.data.organizations.filter(
+        // console.log();
+        setallproj(
+          usr.data.data.organizations.filter(
             (d: any) => d._id == props.orgnaization,
           )[0].projects,
+        );
+
+        console.log(
+          usr.data.data.organizations
+            .filter((d: any) => d._id == props.orgnaization)[0]
+            .projects.filter(
+              (d: any) => d.project_id == props.selectedProject,
+            )[0],
+        );
+        setselectedProj(
+          usr.data.data.organizations
+            .filter((d: any) => d._id == props.orgnaization)[0]
+            .projects.filter(
+              (d: any) => d.project_id == props.selectedProject,
+            )[0],
         );
       });
 
@@ -46,7 +66,7 @@ const Selector = (props: Props) => {
         <TouchableOpacity
           onPress={() => setselectionProj(!selectionProj)}
           style={styles.selectProj}>
-          <Text style={styles.projName}>{props.selectedProject}</Text>
+          {/* <Text style={styles.projName}>{selectedProj.project_name}</Text> */}
           <Icon
             // onPress={() => props.navigation.goBack()}
             size={wp(3)}
@@ -72,7 +92,7 @@ const Selector = (props: Props) => {
               backgroundColor: colors.secondary,
               maxHeight: wp(40),
             }}>
-            {selectedProj.map((d: any) => (
+            {allproj.map((d: any) => (
               <TouchableOpacity
                 style={{
                   flexDirection: 'row',

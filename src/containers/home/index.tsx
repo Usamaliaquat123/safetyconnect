@@ -92,7 +92,6 @@ class Home extends React.Component<HomeProps, any> {
       this.setState({currentorg});
     });
     // this.setState({name: 'sds'});
-
     if (this.state.currentorg === '' && this.state.currentProj === '') {
       this.setState({newsorModal: true});
     } else {

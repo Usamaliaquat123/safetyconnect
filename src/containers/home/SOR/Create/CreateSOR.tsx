@@ -318,10 +318,20 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         .then((user: any) => {
           var dta = user.data.data;
           this.setState({user: user.data.data});
-         
+          console.log(dta);
+          console.log(this.state.currentOrg);
+          console.log(
+            dta.organizations.filter(
+              (d: any) => d._id == this.state.currentOrg,
+            ),
+          );
+
+          
+
+
         });
     });
-
+    AsyncStorage.getItem('user').then((user: any) => {});
     this.mappingMapping(1, 1);
 
     AsyncStorage.getItem('email').then((email: any) => {
@@ -890,7 +900,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               orgnaization={this.state.currentOrg}
               projects={this.state.projectid}
               selectedLocation={'Assembly Line'}
-              selectedProject={'Safety Connect'}
+              selectedProject={this.state.projectid}
               navigation={this.props.navigation}
             />
             {/* Line  */}
