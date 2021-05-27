@@ -116,11 +116,12 @@ class Login extends React.Component<LoginProps, any> {
             .getUser(this.state.username)
             .then((user: any) => {
               AsyncStorage.setItem('user', JSON.stringify(user.data.data));
-              if (user.data.data.orgnaizations.length != 0) {
-                savedCurrentOrganization(user.data.data.orgnaizations[0]);
-                if (user.data.data.orgnaizations[0].projects.length != 0) {
+              // console.log(user.data.data.organizations[0]._id);
+              if (user.data.data.organizations.length != 0) {
+                savedCurrentOrganization(user.data.data.organizations[0]._id);
+                if (user.data.data.organizations[0].projects.length != 0) {
                   savedCurrentProject(
-                    user.data.data.orgnaizations[0].projects[0].project_id,
+                    user.data.data.organizations[0].projects[0].project_id,
                   );
                 }
               }

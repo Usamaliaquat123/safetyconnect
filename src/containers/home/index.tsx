@@ -53,11 +53,17 @@ class Home extends React.Component<HomeProps, any> {
       user: {},
       name: '',
       image: '',
-      orgName: '',
-      newsorModal: false,
+      newsorModal: true,
       totalObservations: 0,
       count: 0,
       projectId: '',
+      orgSelection: false,
+      currentorg: '',
+      allOrganizations: [],
+      allProjects: [],
+      selectedOrganization: {},
+      projSelection: false,
+      selectedProject: {},
     };
   }
 
@@ -69,15 +75,49 @@ class Home extends React.Component<HomeProps, any> {
 
     getCurrentOrganization().then((currentorg) => {
       console.log(currentorg);
+      // console.log('amsdjkasjdksajkd');
+
+      this.setState({currentorg});
     });
     // this.setState({name: 'sds'});
-    AsyncStorage.getItem('user').then((res: any) => {
-      this.setState({name: JSON.parse(res).name});
-      this.setState({image: JSON.parse(res).img_url});
-      this.setState({user: JSON.parse(res)});
-      if (JSON.parse(res).orgnaization.length != 0) {
-        this.setState({orgName: JSON.parse(res).organizations[0].name});
-      }
+
+    AsyncStorage.getItem('email').then((email: any) => {
+      createApi
+        .createApi()
+        .getUser(email)
+        .then((res: any) => {
+          // console.log(res.data.data.)
+
+          this.setState({name: res.data.data.name});
+          this.setState({image: res.data.data.img_url});
+          this.setState({user: res.data.data});
+          this.setState({allOrganizations: res.data.data.organizations});
+
+          // console.log(
+          //   res.data.data.organizations.filter(
+          //     (d: any) => d._id == this.state.currentorg,
+          //   )[0].projects,
+          // );
+
+          if (
+            res.data.data.organizations.filter(
+              (d: any) => d._id == this.state.currentorg,
+            )[0].projects.length != 0
+          ) {
+            this.setState({
+              allProjects: res.data.data.organizations.filter(
+                (d: any) => d._id == this.state.currentorg,
+              )[0].projects,
+            });
+          } else {
+            this.setState({allProjects: []});
+          }
+          this.setState({
+            selectedOrganization: res.data.data.organizations.filter(
+              (d: any) => d._id == this.state.currentorg,
+            )[0],
+          });
+        });
     });
   };
 
@@ -87,6 +127,21 @@ class Home extends React.Component<HomeProps, any> {
     });
     // this.componentDidMount();
   };
+
+  selectedOrg = async (d: any) => {
+    this.setState({
+      selectedOrganization: d,
+      orgSelection: false,
+    });
+
+    console.log(d);
+    if (d.projects.length != 0) {
+      this.setState({allProjects: d.projects});
+    } else {
+      this.setState({allProjects: []});
+    }
+  };
+
   render() {
     if (this.state.projectId == '') {
     } else {
@@ -438,54 +493,176 @@ class Home extends React.Component<HomeProps, any> {
         </ScrollView>
         {/* when you don't have any sors  */}
         {/* Modal Container */}
-        <Modal
-          isVisible={this.state.newsorModal}
-          onBackdropPress={() => this.setState({newsorModal: false})}>
+
+        <Modal isVisible={this.state.newsorModal}>
           <View style={styles.modelContainer}>
             <View>
               <Text style={styles.errHeadPop}>
-                looks like you don't have any sors yet
+                Select your Organization and Project
               </Text>
+
+              {/* Select Organization  */}
               <TouchableOpacity
                 style={{
+                  marginTop: wp(3),
                   flexDirection: 'row',
                   padding: wp(3),
+                  alignSelf: 'center',
+                  borderRadius: wp(2),
+                  width: wp(42),
+                  borderWidth: wp(0.2),
                   alignItems: 'center',
+                  justifyContent: 'space-between',
                 }}
                 onPress={() => {
-                  this.props.navigation.navigate('CreateSOR');
-
-                  this.setState({newsorModal: false});
+                  this.setState({orgSelection: !this.state.orgSelection});
+                  // this.setState({newsorModal: false});
                 }}>
+                <Text style={styles.errEmailPassDesc}>
+                  {this.state.selectedOrganization.name}
+                </Text>
                 <Icon
-                  size={wp(5)}
-                  name="add-outline"
-                  type="ionicon"
+                  size={wp(3)}
+                  name="down"
+                  type="antdesign"
                   color={colors.primary}
                 />
-                <Text style={styles.errEmailPassDesc}>Create New SOR</Text>
               </TouchableOpacity>
+              {this.state.orgSelection ? (
+                <ScrollView
+                  showsVerticalScrollIndicator={false}
+                  style={{
+                    height: wp(50),
+                    // position: 'absolute',
+                    backgroundColor: colors.secondary,
+                    // top: wp(10),
+                    // zIndex: wp(2),
+                    borderWidth: wp(0.2),
+                    alignSelf: 'center',
+                    // justifyContent: 'center',
+                    width: wp(42),
+                    borderRadius: wp(2),
+                    borderColor: colors.textOpa,
+                  }}>
+                  <>
+                    {this.state.allOrganizations.map((d: any) => (
+                      <TouchableOpacity
+                        onPress={() => this.selectedOrg(d)}
+                        style={{padding: wp(3), flexDirection: 'row'}}>
+                        <Icon
+                          name={'stats-chart-sharp'}
+                          type={'ionicon'}
+                          size={wp(3)}
+                          color={colors.text}
+                        />
+                        <Text style={{fontSize: wp(3), marginLeft: wp(3)}}>
+                          {d.name}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </>
+                </ScrollView>
+              ) : null}
 
-              <TouchableOpacity
-                style={{
-                  flexDirection: 'row',
-                  padding: wp(3),
-                  alignItems: 'center',
-                }}
-                onPress={() => {
-                  this.props.navigation.navigate('createProject');
+              {/* Select Project  */}
+              {this.state.allProjects.length == 0 ? (
+                <TouchableOpacity
+                  style={{
+                    flexDirection: 'row',
+                    // padding: wp(2),
+                    marginTop: wp(3),
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                  onPress={() => {
+                    this.props.navigation.navigate('createProject', {
+                      organization: this.state.projectId,
+                    });
 
-                  this.setState({newsorModal: false});
-                }}>
-                {/* <Image source={images.} /> */}
-                <Icon
-                  size={wp(5)}
-                  name="add-outline"
-                  type="ionicon"
-                  color={colors.primary}
-                />
-                <Text style={styles.plzTryAgain}>Create New Project</Text>
-              </TouchableOpacity>
+                    // this.setState({newsorModal: false});
+                  }}>
+                  {/* <Image source={images.} /> */}
+                  <Icon
+                    size={wp(5)}
+                    name="add-outline"
+                    type="ionicon"
+                    color={colors.primary}
+                  />
+                  <Text style={styles.plzTryAgain}>Create New Project</Text>
+                </TouchableOpacity>
+              ) : (
+                <>
+                  <TouchableOpacity
+                    style={{
+                      marginTop: wp(3),
+                      flexDirection: 'row',
+                      padding: wp(3),
+                      alignSelf: 'center',
+                      borderRadius: wp(2),
+                      width: wp(42),
+                      borderWidth: wp(0.2),
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}
+                    onPress={() => {
+                      this.setState({projSelection: !this.state.projSelection});
+                      // this.setState({newsorModal: false});
+                    }}>
+                    <Text
+                      style={[
+                        styles.errEmailPassDesc,
+                        this.state.selectedProject.name == undefined
+                          ? {opacity: 0.5}
+                          : {color: colors.text},
+                      ]}>
+                      {this.state.selectedProject.name == undefined
+                        ? 'Select your project'
+                        : ''}
+                    </Text>
+                    <Icon
+                      size={wp(3)}
+                      name="down"
+                      type="antdesign"
+                      color={colors.primary}
+                    />
+                  </TouchableOpacity>
+                  {this.state.projSelection ? (
+                    <ScrollView
+                      showsVerticalScrollIndicator={false}
+                      style={{
+                        height: wp(50),
+                        // position: 'absolute',
+                        backgroundColor: colors.secondary,
+                        // top: wp(10),
+                        // zIndex: wp(2),
+                        borderWidth: wp(0.2),
+                        alignSelf: 'center',
+                        // justifyContent: 'center',
+                        width: wp(42),
+                        borderRadius: wp(2),
+                        borderColor: colors.textOpa,
+                      }}>
+                      <>
+                        {this.state.allProjects.map((d: any) => (
+                          <TouchableOpacity
+                            onPress={() => this.selectedOrg(d)}
+                            style={{padding: wp(3), flexDirection: 'row'}}>
+                            <Icon
+                              name={'stats-chart-sharp'}
+                              type={'ionicon'}
+                              size={wp(3)}
+                              color={colors.text}
+                            />
+                            <Text style={{fontSize: wp(3), marginLeft: wp(3)}}>
+                              {d.project_name}
+                            </Text>
+                          </TouchableOpacity>
+                        ))}
+                      </>
+                    </ScrollView>
+                  ) : null}
+                </>
+              )}
             </View>
           </View>
         </Modal>

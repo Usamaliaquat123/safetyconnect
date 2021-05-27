@@ -44,7 +44,7 @@ import {
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
-import {classifySorBtn, Isor, involved_persons} from '@typings';
+import {classifySorBtn, Isor, involved_persons, orgnaization} from '@typings';
 import Modal from 'react-native-modal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createApi, submitted} from '@service';
@@ -885,6 +885,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           <Animated.View style={[styles.content]}>
             {/* Select Project  / Select location */}
             <Selector
+              orgnaization={this.state.currentOrg}
+              projects={this.state.project}
               selectedLocation={'Assembly Line'}
               selectedProject={'Safety Connect'}
               navigation={this.props.navigation}

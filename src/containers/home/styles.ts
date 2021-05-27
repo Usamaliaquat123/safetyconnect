@@ -216,9 +216,8 @@ const styles = StyleSheet.create({
     borderRadius: wp(5),
   },
   errEmailPassDesc: {
-    marginTop: wp(2),
-    marginLeft: wp(2),
-
+    // marginTop: wp(2),
+    marginRight: wp(5),
     textAlign: 'center',
     fontSize: wp(3),
     // padding: wp(3),
@@ -237,9 +236,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: wp(3),
     marginLeft: wp(2),
-    fontWeight: 'bold',
     // padding: wp(3),
-    color: colors.text,
+    fontFamily: fonts.SFuiDisplayBold,
+    color: colors.primary,
   },
 });
 
