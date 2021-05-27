@@ -141,6 +141,12 @@ class Home extends React.Component<HomeProps, any> {
       this.setState({allProjects: []});
     }
   };
+  selecteProj = async (d: any) => {
+    this.setState({
+      selectedProject: d,
+      projSelection: false,
+    });
+  };
 
   render() {
     if (this.state.projectId == '') {
@@ -615,9 +621,9 @@ class Home extends React.Component<HomeProps, any> {
                           ? {opacity: 0.5}
                           : {color: colors.text},
                       ]}>
-                      {this.state.selectedProject.name == undefined
+                      {this.state.selectedProject.project_name == undefined
                         ? 'Select your project'
-                        : ''}
+                        : this.state.selectedProject.project_name}
                     </Text>
                     <Icon
                       size={wp(3)}
@@ -645,7 +651,7 @@ class Home extends React.Component<HomeProps, any> {
                       <>
                         {this.state.allProjects.map((d: any) => (
                           <TouchableOpacity
-                            onPress={() => this.selectedOrg(d)}
+                            onPress={() => this.selecteProj(d)}
                             style={{padding: wp(3), flexDirection: 'row'}}>
                             <Icon
                               name={'stats-chart-sharp'}
