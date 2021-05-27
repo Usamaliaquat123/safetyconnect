@@ -508,67 +508,99 @@ class Home extends React.Component<HomeProps, any> {
               </Text>
 
               {/* Select Organization  */}
-              <TouchableOpacity
-                style={{
-                  marginTop: wp(3),
-                  flexDirection: 'row',
-                  padding: wp(3),
-                  alignSelf: 'center',
-                  borderRadius: wp(2),
-                  width: wp(42),
-                  borderWidth: wp(0.2),
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
-                onPress={() => {
-                  this.setState({orgSelection: !this.state.orgSelection});
-                  // this.setState({newsorModal: false});
-                }}>
-                <Text style={styles.errEmailPassDesc}>
-                  {this.state.selectedOrganization.name}
-                </Text>
-                <Icon
-                  size={wp(3)}
-                  name="down"
-                  type="antdesign"
-                  color={colors.primary}
-                />
-              </TouchableOpacity>
-              {this.state.orgSelection ? (
-                <ScrollView
-                  showsVerticalScrollIndicator={false}
+
+              {this.state.allOrganizations.length == 0 ? (
+                <TouchableOpacity
                   style={{
-                    height: wp(50),
-                    // position: 'absolute',
-                    backgroundColor: colors.secondary,
-                    // top: wp(10),
-                    // zIndex: wp(2),
-                    borderWidth: wp(0.2),
-                    alignSelf: 'center',
-                    // justifyContent: 'center',
-                    width: wp(42),
-                    borderRadius: wp(2),
-                    borderColor: colors.textOpa,
+                    flexDirection: 'row',
+                    // padding: wp(2),
+                    marginTop: wp(3),
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                  onPress={() => {
+                    this.props.navigation.navigate('createProject', {
+                      organization: this.state.projectId,
+                    });
+
+                    // this.setState({newsorModal: false});
                   }}>
-                  <>
-                    {this.state.allOrganizations.map((d: any) => (
-                      <TouchableOpacity
-                        onPress={() => this.selectedOrg(d)}
-                        style={{padding: wp(3), flexDirection: 'row'}}>
-                        <Icon
-                          name={'stats-chart-sharp'}
-                          type={'ionicon'}
-                          size={wp(3)}
-                          color={colors.text}
-                        />
-                        <Text style={{fontSize: wp(3), marginLeft: wp(3)}}>
-                          {d.name}
-                        </Text>
-                      </TouchableOpacity>
-                    ))}
-                  </>
-                </ScrollView>
-              ) : null}
+                  {/* <Image source={images.} /> */}
+                  <Icon
+                    size={wp(5)}
+                    name="add-outline"
+                    type="ionicon"
+                    color={colors.primary}
+                  />
+                  <Text style={styles.plzTryAgain}>
+                    Create New Organization
+                  </Text>
+                </TouchableOpacity>
+              ) : (
+                <>
+                  <TouchableOpacity
+                    style={{
+                      marginTop: wp(3),
+                      flexDirection: 'row',
+                      padding: wp(3),
+                      alignSelf: 'center',
+                      borderRadius: wp(2),
+                      width: wp(42),
+                      borderWidth: wp(0.2),
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}
+                    onPress={() => {
+                      this.setState({orgSelection: !this.state.orgSelection});
+                      // this.setState({newsorModal: false});
+                    }}>
+                    <Text style={styles.errEmailPassDesc}>
+                      {this.state.selectedOrganization.name}
+                    </Text>
+                    <Icon
+                      size={wp(3)}
+                      name="down"
+                      type="antdesign"
+                      color={colors.primary}
+                    />
+                  </TouchableOpacity>
+                  {this.state.orgSelection ? (
+                    <ScrollView
+                      showsVerticalScrollIndicator={false}
+                      style={{
+                        height: wp(50),
+                        // position: 'absolute',
+                        backgroundColor: colors.secondary,
+                        // top: wp(10),
+                        // zIndex: wp(2),
+                        borderWidth: wp(0.2),
+                        alignSelf: 'center',
+                        // justifyContent: 'center',
+                        width: wp(42),
+                        borderRadius: wp(2),
+                        borderColor: colors.textOpa,
+                      }}>
+                      <>
+                        {this.state.allOrganizations.map((d: any) => (
+                          <TouchableOpacity
+                            onPress={() => this.selectedOrg(d)}
+                            style={{padding: wp(3), flexDirection: 'row'}}>
+                            <Icon
+                              name={'stats-chart-sharp'}
+                              type={'ionicon'}
+                              size={wp(3)}
+                              color={colors.text}
+                            />
+                            <Text style={{fontSize: wp(3), marginLeft: wp(3)}}>
+                              {d.name}
+                            </Text>
+                          </TouchableOpacity>
+                        ))}
+                      </>
+                    </ScrollView>
+                  ) : null}
+                </>
+              )}
 
               {/* Select Project  */}
               {this.state.allProjects.length == 0 ? (
