@@ -519,11 +519,9 @@ class Home extends React.Component<HomeProps, any> {
                     alignItems: 'center',
                   }}
                   onPress={() => {
-                    this.props.navigation.navigate('createProject', {
-                      organization: this.state.projectId,
-                    });
+                    this.props.navigation.navigate('CreateOrg');
 
-                    // this.setState({newsorModal: false});
+                    this.setState({newsorModal: false});
                   }}>
                   {/* <Image source={images.} /> */}
                   <Icon
@@ -538,9 +536,18 @@ class Home extends React.Component<HomeProps, any> {
                 </TouchableOpacity>
               ) : (
                 <>
+                  <Text
+                    style={{
+                      fontSize: wp(3),
+                      fontFamily: fonts.SFuiDisplayMedium,
+                      marginTop: wp(3),
+                      opacity: 0.6,
+                    }}>
+                    Select your Organization :
+                  </Text>
                   <TouchableOpacity
                     style={{
-                      marginTop: wp(3),
+                      marginTop: wp(2),
                       flexDirection: 'row',
                       padding: wp(3),
                       alignSelf: 'center',
@@ -617,7 +624,7 @@ class Home extends React.Component<HomeProps, any> {
                       organization: this.state.projectId,
                     });
 
-                    // this.setState({newsorModal: false});
+                    this.setState({newsorModal: false});
                   }}>
                   {/* <Image source={images.} /> */}
                   <Icon
@@ -630,6 +637,15 @@ class Home extends React.Component<HomeProps, any> {
                 </TouchableOpacity>
               ) : (
                 <>
+                  <Text
+                    style={{
+                      fontSize: wp(3),
+                      fontFamily: fonts.SFuiDisplayMedium,
+                      marginTop: wp(3),
+                      opacity: 0.6,
+                    }}>
+                    Select your Project :
+                  </Text>
                   <TouchableOpacity
                     style={{
                       marginTop: wp(3),
@@ -668,7 +684,7 @@ class Home extends React.Component<HomeProps, any> {
                     <ScrollView
                       showsVerticalScrollIndicator={false}
                       style={{
-                        height: wp(50),
+                        // height: wp(50),
                         // position: 'absolute',
                         backgroundColor: colors.secondary,
                         // top: wp(10),
