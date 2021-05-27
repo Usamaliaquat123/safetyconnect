@@ -474,12 +474,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               (a, b) => new Date(a.date) - new Date(b.date),
             );
 
-            // res.data.data.all_comments.sort(function(a,b){
-            //     // Turn your strings into dates, and then subtract them
-            //     // to get a value that is either negative, positive, or zero.
-            //     return new Date(a.date) - new Date(b.date);
-            //   });
-
             console.log('================');
             console.log(res.data.data.all_comments);
             console.log('================');
