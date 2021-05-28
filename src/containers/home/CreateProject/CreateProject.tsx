@@ -87,6 +87,16 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       locationSupervisor: '',
       locationSupervisorErr: false,
       additionalSuppervisors: '',
+// Location : suggestion
+locationSuppervisorsTags  : [],
+locationSuppervisorsSugg : [],
+
+additionalSuppervisorsSugg : [],
+additionalSuppervisorsTags : [],
+
+
+
+    
     };
   }
   // Filter All countries
@@ -422,6 +432,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                               e,
                               this.state.allAssignLeaders,
                             );
+
                             this.setState({
                               assignLeaderssText: arr,
                               assignLeaderssT: e,
@@ -437,7 +448,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     ) : null}
                   </View>
 
-                  {/* Suggestions of emails  */}
+                  {/* Suggestions of projectEmail  */}
                   {this.state.assignLeaderssText.length != 0 ? (
                     <View style={styles.involveSuggestCont}>
                       {this.state.assignLeaderssText.map(
@@ -464,7 +475,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       )}
                     </View>
                   ) : null}
-
+                  {/* Tags or project leaders */}
                   <View
                     style={{
                       flexWrap: 'wrap',
@@ -686,12 +697,71 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       <TextInput
                         value={this.state.locationSupervisor}
                         style={styles.authInputs}
-                        onChangeText={(e) =>
-                          this.setState({locationSupervisor: e})
-                        }
+                        onChangeText={(e) => {
+                          if (e !== '') {
+                            var arr = searchInSuggestions(
+                              e,
+                              this.state.allAssignLeaders,
+                            );
+                            this.setState({locationSuppervisorsSugg: arr});
+                          } else {
+                            this.setState({locationSuppervisorsSugg: []});
+                          }
+
+                          this.setState({locationSupervisor: e});
+                        }}
                         placeholder={'Enter Name'}
                       />
                     </View>
+
+                    {/* Suggestions of projectEmail  */}
+                    {this.state.locationSuppervisorsSugg.length != 0 ? (
+                      <View style={styles.involveSuggestCont}>
+                        {this.state.assignLeaderssText.map(
+                          (d: any, i: number) => (
+                            <TouchableOpacity
+                              key={i}
+                              onPress={() => {
+                                this.setState({
+                                  locationSupervisor: '',
+                                  locationSuppervisorsSugg: [],
+                                });
+
+                                this.state.locationSuppervisorsTags.push(d);
+                              }}
+                              style={[
+                                styles.involvePsuggCont,
+                                this.state.locationSuppervisorsSugg.length ==
+                                i + 1
+                                  ? {borderBottomWidth: wp(0)}
+                                  : null,
+                              ]}>
+                              <Text style={styles.involvePSt}>{d.email}</Text>
+                            </TouchableOpacity>
+                          ),
+                        )}
+                      </View>
+                    ) : null}
+                    {/* Tags or project leaders */}
+                    <View
+                      style={{
+                        flexWrap: 'wrap',
+                        flexDirection: 'row',
+                        marginTop: wp(2),
+                      }}>
+                      <Tags
+                        type={'addTeamMem'}
+                        onClose={(d: any) => {
+                          this.setState({
+                            locationSuppervisorsTags: this.state.locationSuppervisorsTags.filter(
+                              (v: any) => v !== d,
+                            ),
+                          });
+                        }}
+                        tags={this.state.locationSuppervisorsTags}
+                      />
+                    </View>
+
                     {this.state.locationSupervisorErr && (
                       <Text style={{fontSize: wp(3), color: colors.error}}>
                         Assign your location supervisor
@@ -717,10 +787,67 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       <TextInput
                         value={this.state.additionalSuppervisors}
                         style={styles.authInputs}
-                        onChangeText={(e) =>
-                          this.setState({additionalSuppervisors: e})
-                        }
+                        onChangeText={(e) => {
+                          if (e !== '') {
+                            var arr = searchInSuggestions(
+                              e,
+                              this.state.allAssignLeaders,
+                            );
+                            this.setState({additionalSuppervisorsSugg: arr});
+                          } else {
+                            this.setState({additionalSuppervisorsSugg: []});
+                          }
+                          this.setState({additionalSuppervisors: e});
+                        }}
                         placeholder={'Enter name'}
+                      />
+                    </View>
+
+                    {/* Suggestions of projectEmail  */}
+                    {this.state.additionalSuppervisorsSugg.length != 0 ? (
+                      <View style={styles.involveSuggestCont}>
+                        {this.state.additionalSuppervisorsSugg.map(
+                          (d: any, i: number) => (
+                            <TouchableOpacity
+                              key={i}
+                              onPress={() => {
+                                this.setState({
+                                  locationSupervisor: '',
+                                  additionalSuppervisorsSugg: [],
+                                });
+
+                                this.state.additionalSuppervisorsTags.push(d);
+                              }}
+                              style={[
+                                styles.involvePsuggCont,
+                                this.state.additionalSuppervisorsSugg.length ==
+                                i + 1
+                                  ? {borderBottomWidth: wp(0)}
+                                  : null,
+                              ]}>
+                              <Text style={styles.involvePSt}>{d.email}</Text>
+                            </TouchableOpacity>
+                          ),
+                        )}
+                      </View>
+                    ) : null}
+                    {/* Tags or project leaders */}
+                    <View
+                      style={{
+                        flexWrap: 'wrap',
+                        flexDirection: 'row',
+                        marginTop: wp(2),
+                      }}>
+                      <Tags
+                        type={'addTeamMem'}
+                        onClose={(d: any) => {
+                          this.setState({
+                            additionalSuppervisorsTags: this.state.additionalSuppervisorsTags.filter(
+                              (v: any) => v !== d,
+                            ),
+                          });
+                        }}
+                        tags={this.state.additionalSuppervisorsTags}
                       />
                     </View>
                   </View>

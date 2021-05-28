@@ -227,7 +227,8 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
               <View
                 style={{
                   alignSelf: 'center',
-                  marginTop: wp(40),
+                  justifyContent: 'center',
+                  // marginTop: wp(40),
                 }}>
                 <LottieView
                   autoPlay={true}
