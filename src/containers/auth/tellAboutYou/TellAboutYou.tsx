@@ -308,7 +308,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
 
                 <View style={styles.inputsContainer}>
                   <Text style={[styles.emailTextContainer, {marginTop: wp(2)}]}>
-                    Your Industry*
+                    Your Industry *
                   </Text>
                   <View
                     style={[
@@ -328,7 +328,14 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       onChange={(e) =>
                         this.setState({name: e.nativeEvent.text})
                       }
-                      placeholder={'Oil and Gas'}
+                      placeholder={'For example: Oil and Gas'}
+                    />
+
+                    <Icon
+                      name={'down'}
+                      type={'antdesign'}
+                      size={wp(3)}
+                      color={colors.text}
                     />
                   </View>
                   {this.state.nameError && (
@@ -377,7 +384,13 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
 
                         this.setState({IndustryRole: e});
                       }}
-                      placeholder={'Top Management'}
+                      placeholder={'For example: Top Management'}
+                    />
+                    <Icon
+                      name={'down'}
+                      type={'antdesign'}
+                      size={wp(3)}
+                      color={colors.text}
                     />
                   </View>
                   {this.state.IndustryRoleError && (
@@ -435,7 +448,13 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                           DesignAndArchitectureText: e.nativeEvent.text,
                         })
                       }
-                      placeholder={'General Management'}
+                      placeholder={'For example: General Management'}
+                    />
+                    <Icon
+                      name={'down'}
+                      type={'antdesign'}
+                      size={wp(3)}
+                      color={colors.text}
                     />
                   </View>
                   {this.state.DesignAndArchitectureTextError && (
