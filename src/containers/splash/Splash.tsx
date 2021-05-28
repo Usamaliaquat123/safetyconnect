@@ -7,9 +7,50 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-export interface SplashProps {}
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {createApi} from '@service';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigatorProps} from '@nav';
+import {RouteProp} from '@react-navigation/native';
+
+export interface SplashProps {
+  navigation: SplashNavigationProp;
+  route: SplashRouteProp;
+  reduxActions: any;
+  reduxState: any;
+}
+
+type SplashNavigationProp = StackNavigationProp<StackNavigatorProps, 'Splash'>;
+type SplashRouteProp = RouteProp<StackNavigatorProps, 'Splash'>;
 
 export default class Splash extends React.Component<SplashProps, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {};
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem('email').then((res: any) => {
+      this.setState({user: res});
+      if (res != null) {
+        setTimeout(() => {
+          createApi
+            .createApi()
+            .getUser(res)
+            .then((res: any) => {
+              // console.log(res);
+              AsyncStorage.setItem('user', JSON.stringify(res.data.data));
+              this.props.navigation.navigate('Main');
+            });
+        }, 5000);
+      } else {
+        setTimeout(() => {
+          this.props.navigation.navigate('Signup');
+        }, 5000);
+      }
+    });
+  }
+
   render() {
     return (
       <View

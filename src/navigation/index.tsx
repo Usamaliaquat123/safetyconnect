@@ -49,14 +49,11 @@ export const Navigator = (props: any) => {
       });
   });
 
-  console.log(user);
-  AsyncStorage.setItem('current_project', '604b13d114ba138bd23d7f75');
-
   return (
     <SafeAreaProvider>
       <NavigationContainer>
         {/* <WelcomeHome /> */}
-        <MainStackNavigator screen={user === null ? 'Splash' : 'Main'} />
+        <MainStackNavigator screen={'Splash'} />
       </NavigationContainer>
     </SafeAreaProvider>
   );
