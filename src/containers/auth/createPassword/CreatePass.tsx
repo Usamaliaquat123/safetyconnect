@@ -398,7 +398,9 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                   onPress={() => {
                     Auth.forgotPassword(this.props.route.params.email).then(
                       () => {
-                        this.props.navigation.navigate('Verify');
+                        this.props.navigation.navigate('Verify', {
+                          email: this.props.route.params.email,
+                        });
                       },
                     );
                   }}
