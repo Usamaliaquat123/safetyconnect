@@ -46,6 +46,7 @@ const industries = [
   'Power Generation & Distribution',
   'Transportation & Logistics',
   'Health Care & Pharmaceuticals',
+  'Others (Please Specify)',
 ];
 export interface TellAboutYouProps {
   navigation: TellAboutYouNavigationProp;
@@ -325,25 +326,59 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       underlineColorAndroid="transparent"
                       style={styles.selectText}
                       value={this.state.name}
-                      onChange={(e) =>
-                        this.setState({name: e.nativeEvent.text})
-                      }
+                      onChangeText={(e) => {
+                        if (e !== '') {
+                          this.setState({
+                            arrayOfRole: suggestInActionsRecommendations(
+                              e,
+                              industries,
+                            ),
+                          });
+                        } else {
+                          this.setState({arrayOfRole: []});
+                        }
+                        this.setState({name: e});
+                      }}
                       placeholder={'For example: Oil and Gas'}
                     />
 
                     <Icon
+                      containerStyle={{marginRight: wp(3)}}
                       name={'down'}
                       type={'antdesign'}
                       size={wp(3)}
                       color={colors.text}
                     />
                   </View>
+
                   {this.state.nameError && (
                     <Text style={{color: colors.error, fontSize: wp(3)}}>
                       * Enter your Industry Name
                     </Text>
                   )}
-                  {/*Industry selectionv   */}
+                  {this.state.arrayOfRole.length != 0 ? (
+                    <View style={styles.involveSuggestCont}>
+                      {this.state.arrayOfRole.map((d: string, i: number) => (
+                        <TouchableOpacity
+                          key={i}
+                          onPress={() => {
+                            this.setState({
+                              IndustryRole: d,
+                              arrayOfRole: [],
+                            });
+                          }}
+                          style={[
+                            styles.involvePsuggCont,
+                            this.state.arrayOfRole.length == i + 1
+                              ? {borderBottomWidth: wp(0)}
+                              : null,
+                          ]}>
+                          <Text style={styles.involvePSt}>{d}</Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  ) : null}
+                  {/*Industry selection   */}
                   <Text style={styles.emailTextContainer}>Type of Role</Text>
 
                   <View
@@ -369,28 +404,9 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                         //   this.setState({error: true});
                         // }
 
-                        if (e !== '') {
-                          this.setState({
-                            arrayOfRole: suggestInActionsRecommendations(
-                              e,
-                              industries,
-                            ),
-                          });
-                        } else {
-                          this.setState({arrayOfRole: []});
-                        }
-
-                        console.log();
-
                         this.setState({IndustryRole: e});
                       }}
                       placeholder={'For example: Top Management'}
-                    />
-                    <Icon
-                      name={'down'}
-                      type={'antdesign'}
-                      size={wp(3)}
-                      color={colors.text}
                     />
                   </View>
                   {this.state.IndustryRoleError && (
@@ -398,28 +414,6 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       * Enter your Industry Role
                     </Text>
                   )}
-                  {this.state.arrayOfRole.length != 0 ? (
-                    <View style={styles.involveSuggestCont}>
-                      {this.state.arrayOfRole.map((d: string, i: number) => (
-                        <TouchableOpacity
-                          key={i}
-                          onPress={() => {
-                            this.setState({
-                              IndustryRole: d,
-                              arrayOfRole: [],
-                            });
-                          }}
-                          style={[
-                            styles.involvePsuggCont,
-                            this.state.arrayOfRole.length == i + 1
-                              ? {borderBottomWidth: wp(0)}
-                              : null,
-                          ]}>
-                          <Text style={styles.involvePSt}>{d}</Text>
-                        </TouchableOpacity>
-                      ))}
-                    </View>
-                  ) : null}
 
                   {/* <Text style={styles.passwordWarning}>
                     Password must contain at least 8 characters and must include
@@ -449,12 +443,6 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                         })
                       }
                       placeholder={'For example: General Management'}
-                    />
-                    <Icon
-                      name={'down'}
-                      type={'antdesign'}
-                      size={wp(3)}
-                      color={colors.text}
                     />
                   </View>
                   {this.state.DesignAndArchitectureTextError && (

@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     paddingLeft: wp(3),
     padding: wp(4),
     borderRadius: wp(3),
+    justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
   },
