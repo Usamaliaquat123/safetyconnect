@@ -17,6 +17,7 @@ import {
 } from 'react-native-responsive-screen';
 import {connect} from 'react-redux';
 import {Auth} from 'aws-amplify';
+import {openInbox} from 'react-native-email-link';
 
 import {RouteProp} from '@react-navigation/native';
 import styles from './styles';
@@ -88,7 +89,9 @@ class Verify extends React.Component<VerifyProps, any> {
 
           {/* Open Gmail */}
           <TouchableOpacity
-            onPress={() => Linking.openURL('https://mail.google.com/mail/u/0/')}
+            onPress={() => {
+              openInbox({app: 'gmail'});
+            }}
             style={styles.siginwithGoogle}>
             <View style={{width: wp(7), height: wp(7), marginRight: wp(3)}}>
               <Image source={images.socialIcon.gmail} style={GlStyles.images} />
@@ -97,7 +100,7 @@ class Verify extends React.Component<VerifyProps, any> {
           </TouchableOpacity>
           {/* Open Outlook */}
           <TouchableOpacity
-            onPress={() => Linking.openURL('https://outlook.com/')}
+            onPress={() => openInbox({app: 'outlook'})}
             style={styles.siginwithGoogle}>
             <View style={{width: wp(7), height: wp(7), marginRight: wp(3)}}>
               <Image
@@ -109,7 +112,7 @@ class Verify extends React.Component<VerifyProps, any> {
           </TouchableOpacity>
           {/* Open Yahoo */}
           <TouchableOpacity
-            onPress={() => Linking.openURL('https://mail.yahoo.com')}
+            onPress={() => openInbox({app: 'yahoo'})}
             style={styles.siginwithGoogle}>
             <View style={{width: wp(7), height: wp(7), marginRight: wp(3)}}>
               <Image source={images.socialIcon.yahoo} style={GlStyles.images} />

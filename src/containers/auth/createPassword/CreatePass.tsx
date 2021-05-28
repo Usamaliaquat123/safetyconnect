@@ -285,7 +285,6 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                   and must include number, special character and one capital
                   character{' '}
                 </Text>
-                <Text style={[styles.dontHaveAccount]}>character</Text>
               </View>
               {/* )} */}
 

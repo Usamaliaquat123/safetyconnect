@@ -173,8 +173,8 @@ class Signup extends React.Component<SignupProps, any> {
                   <TextInput
                     style={styles.authInputs}
                     value={this.state.username}
-                    onChange={(e) => {
-                      this.setState({username: e.nativeEvent.text});
+                    onChangeText={(e) => {
+                      this.setState({username: e});
                     }}
                     placeholder={'Enter your email'}
                   />

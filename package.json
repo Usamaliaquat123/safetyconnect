@@ -50,6 +50,7 @@
     "react-native-calendars": "^1.1129.0",
     "react-native-document-picker": "^4.2.0",
     "react-native-elements": "^3.0.1",
+    "react-native-email-link": "^1.11.3",
     "react-native-flash-message": "^0.1.22",
     "react-native-fs": "^2.16.6",
     "react-native-gesture-handler": "^1.9.0",

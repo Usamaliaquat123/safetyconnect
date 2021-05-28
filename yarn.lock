@@ -9541,6 +9541,11 @@ react-native-elements@^3.0.1:
     react-native-ratings "^7.3.0"
     react-native-size-matters "^0.3.1"
 
+react-native-email-link@^1.11.3:
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/react-native-email-link/-/react-native-email-link-1.11.3.tgz#22b04688a6efd750b0247da0b5162233ed65fa33"
+  integrity sha512-y60NO5asmF6bnuI4eFBjo7kwiPngnZG4DXixhrfa0pJaRRJdarPXG05qK8NVS3szG0fw7cRv4m9ZEfHykqycaQ==
+
 react-native-flash-message@^0.1.22:
   version "0.1.23"
   resolved "https://registry.yarnpkg.com/react-native-flash-message/-/react-native-flash-message-0.1.23.tgz#50a17201a2d9d6b22a2f174a97b22c30bff15638"
