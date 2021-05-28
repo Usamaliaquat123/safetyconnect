@@ -49,7 +49,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       password: '',
       error: false,
       isEye: true,
-      contentPopup: 'Your session is expired, you have to resend the email',
+      contentPopup: 'Your session is expired',
       passMachErr: false,
       errorModal: true,
       passMatchText: '',
@@ -367,37 +367,62 @@ class CreatePass extends React.Component<CreatePassProps, any> {
               <View
                 style={{
                   backgroundColor: colors.secondary,
-                  borderRadius: wp(1),
+                  borderRadius: wp(3),
                   padding: wp(5),
                 }}>
+                <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+                  <Icon
+                    name={'warning'}
+                    type={'entypo'}
+                    size={wp(8)}
+                    color={colors.error}
+                  />
+                  <Text
+                    style={{
+                      // marginTop: wp(5),
+                      fontSize: wp(4.5),
+                      fontFamily: fonts.SFuiDisplaySemiBold,
+                      color: colors.error,
+                    }}>
+                    {this.state.contentPopup}
+                  </Text>
+                </View>
+
                 <Text
                   style={{
-                    // marginTop: wp(5),
                     fontSize: wp(4),
+                    marginTop: wp(3),
                     fontFamily: fonts.SFuiDisplaySemiBold,
                     textAlign: 'center',
-                    color: colors.primary,
+                    color: colors.text,
                   }}>
-                  {this.state.contentPopup}
+                  You have to resend the email...
                 </Text>
                 <TouchableOpacity
                   style={{
                     padding: wp(4),
                     backgroundColor: colors.primary,
-                    marginRight: wp(10),
                     borderRadius: wp(3),
-                    marginLeft: wp(10),
+                    flexDirection: 'row',
+                    alignSelf: 'center',
                     marginTop: wp(5),
+                    width: wp(50),
                   }}>
                   <Text
                     style={{
                       fontSize: wp(3.5),
+                      marginLeft: wp(7),
                       fontFamily: fonts.SFuiDisplaySemiBold,
                       color: colors.secondary,
-                      textAlign: 'center',
                     }}>
                     Resend Email
                   </Text>
+                  <Icon
+                    name={'redo'}
+                    type={'evilicon'}
+                    size={wp(7)}
+                    color={colors.secondary}
+                  />
                 </TouchableOpacity>
               </View>
             </View>
