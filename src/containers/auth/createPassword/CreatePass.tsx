@@ -14,6 +14,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Auth} from 'aws-amplify';
+import {Bars} from 'react-native-loader';
 import {connect} from 'react-redux';
 import {Icon} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -353,8 +354,8 @@ class CreatePass extends React.Component<CreatePassProps, any> {
             this.setState({errorModal: false, loading: false})
           }>
           {this.state.loading == true && (
-            <View>
-              <ActivityIndicator color={colors.primary} size={'large'} />
+            <View style={{alignSelf: 'center'}}>
+              <Bars size={wp(5)} color={colors.primary} />
             </View>
           )}
           {this.state.contentPopup !== '' && (

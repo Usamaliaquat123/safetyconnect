@@ -129,101 +129,92 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
   };
 
   updateProfile = () => {
-    if (this.state.uploadedImage !== '') {
-      if (this.state.name !== '') {
-        if (this.state.DesignAndArchitectureText !== '') {
-          this.setState({DesignAndArchitectureTextError: false});
-          if (this.state.IndustryRole !== '') {
-            this.setState({
-              loading: true,
-              errorModal: true,
-              IndustryRoleError: false,
-            });
-            var data = {
-              bucket: 'hns-codist',
-              report: 'profile',
-              fileType: [this.state.photofileType],
-              ext: [this.state.fileType],
-            };
-            console.log(data);
-            createApi
-              .createApi()
-              .getFilesUrl(data)
-              .then((geturi: any) => {
-                console.log(geturi);
-                createApi
-                  .createApi('', '', '', '', '', '', geturi.data[0].url)
-                  .uploadFile(this.state.uploadedImage)
-                  .then((res) => {
-                    console.log(geturi.status);
-                    if (res.status == 200) {
-                      api
-                        .createApi()
-                        .setUserInfo({
-                          email: this.props.route.params.username,
-                          role: this.state.DesignAndArchitectureText,
-                          department: this.state.IndustryRole,
-                          industry: this.state.name,
-                          img_url: geturi.data[0].fileName,
-                        })
-                        .then((res) => {
-                          console.log('with in set user info');
-                          console.log(res);
-                          console.log('with in set user info');
-                          if ((res.status = 200)) {
-                            this.setState({
-                              loading: false,
-                              errorModal: false,
-                            });
-                            api
-                              .createApi()
-                              .getUser(this.props.route.params.username)
-                              .then((res: any) => {
-                                AsyncStorage.setItem(
-                                  'user',
-                                  JSON.stringify(res.data.data),
-                                );
-                              });
-                            AsyncStorage.setItem(
-                              'email',
-                              this.props.route.params.username,
-                            );
-
-                            this.props.navigation.navigate(
-                              'CreateOrganization',
-                            );
-                          }
-                        })
-                        .catch((err) => console.log(err));
-                    }
-                  });
-                console.log(geturi.data[0].url);
-              });
-          } else {
-            this.setState({IndustryRoleError: true, nameError: false});
-          }
-        } else {
+    if (this.state.name !== '') {
+      if (this.state.DesignAndArchitectureText !== '') {
+        this.setState({DesignAndArchitectureTextError: false});
+        if (this.state.IndustryRole !== '') {
           this.setState({
-            DesignAndArchitectureTextError: true,
-            nameError: false,
+            loading: true,
+            errorModal: true,
+            IndustryRoleError: false,
           });
-        }
+          var data = {
+            bucket: 'hns-codist',
+            report: 'profile',
+            fileType: [this.state.photofileType],
+            ext: [this.state.fileType],
+          };
+          console.log(data);
+          createApi
+            .createApi()
+            .getFilesUrl(data)
+            .then((geturi: any) => {
+              console.log(geturi);
+              createApi
+                .createApi('', '', '', '', '', '', geturi.data[0].url)
+                .uploadFile(this.state.uploadedImage)
+                .then((res) => {
+                  console.log(geturi.status);
+                  if (res.status == 200) {
+                    api
+                      .createApi()
+                      .setUserInfo({
+                        email: this.props.route.params.username,
+                        role: this.state.DesignAndArchitectureText,
+                        department: this.state.IndustryRole,
+                        industry: this.state.name,
+                        img_url: geturi.data[0].fileName,
+                      })
+                      .then((res) => {
+                        console.log('with in set user info');
+                        console.log(res);
+                        console.log('with in set user info');
+                        if ((res.status = 200)) {
+                          this.setState({
+                            loading: false,
+                            errorModal: false,
+                          });
+                          api
+                            .createApi()
+                            .getUser(this.props.route.params.username)
+                            .then((res: any) => {
+                              AsyncStorage.setItem(
+                                'user',
+                                JSON.stringify(res.data.data),
+                              );
+                            });
+                          AsyncStorage.setItem(
+                            'email',
+                            this.props.route.params.username,
+                          );
 
-        // api.
+                          this.props.navigation.navigate('CreateOrganization');
+                        }
+                      })
+                      .catch((err) => console.log(err));
+                  }
+                });
+              console.log(geturi.data[0].url);
+            });
+        } else {
+          this.setState({IndustryRoleError: true, nameError: false});
+        }
       } else {
-        this.setState({nameError: true});
+        this.setState({
+          DesignAndArchitectureTextError: true,
+          nameError: false,
+        });
       }
+
+      // api.
     } else {
+      this.setState({nameError: true});
     }
   };
 
   render() {
     return (
-      <View
-        style={[
-          styles.container,
-          this.state.loading && {justifyContent: 'center'},
-        ]}>
+      <View style={[styles.container]}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* content */}
           <View>
@@ -232,7 +223,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                 style={{
                   alignSelf: 'center',
                   justifyContent: 'center',
-                  // marginTop: wp(40),
+                  marginTop: wp(55),
                 }}>
                 <LottieView
                   autoPlay={true}

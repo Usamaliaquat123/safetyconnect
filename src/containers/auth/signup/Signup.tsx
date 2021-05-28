@@ -24,6 +24,8 @@ import {validateEmail} from '@utils';
 import {RouteProp} from '@react-navigation/native';
 import {animation} from '@theme';
 import styles from './styles';
+import {Bars} from 'react-native-loader';
+
 import {validatePassword, mainPass, redirectDynamiclink} from '@utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
@@ -251,6 +253,7 @@ class Signup extends React.Component<SignupProps, any> {
             </View>
           </View>
         </ScrollView>
+
         <Modal
           isVisible={this.state.errorModal}
           onBackdropPress={() =>
@@ -261,8 +264,8 @@ class Signup extends React.Component<SignupProps, any> {
             })
           }>
           {this.state.loading == true && (
-            <View>
-              <ActivityIndicator color={colors.primary} size={'large'} />
+            <View style={{alignSelf: 'center'}}>
+              <Bars size={wp(5)} color={colors.primary} />
             </View>
           )}
 

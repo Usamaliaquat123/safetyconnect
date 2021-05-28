@@ -15,6 +15,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {Bars} from 'react-native-loader';
 import * as reduxActions from '../../../store/actions/listSorActions';
 import {Tags} from '@components';
 import {Icon} from 'react-native-elements';
@@ -411,7 +412,9 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
           }>
           {this.state.loading == true && (
             <View>
-              <ActivityIndicator color={colors.primary} size={'large'} />
+              <View style={{alignSelf: 'center'}}>
+                <Bars size={wp(5)} color={colors.primary} />
+              </View>
             </View>
           )}
         </Modal>

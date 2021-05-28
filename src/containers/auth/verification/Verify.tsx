@@ -12,10 +12,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {colors, images, GlStyles} from '@theme';
+import {Bars} from 'react-native-loader';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+
 import Modal from 'react-native-modal';
 import {connect} from 'react-redux';
 import {Auth} from 'aws-amplify';
@@ -166,8 +168,8 @@ class Verify extends React.Component<VerifyProps, any> {
               this.setState({errorModal: false, loading: false})
             }>
             {this.state.loading == true ? (
-              <View>
-                <ActivityIndicator color={colors.primary} size={'large'} />
+              <View style={{alignSelf: 'center'}}>
+                <Bars size={wp(5)} color={colors.primary} />
               </View>
             ) : null}
           </Modal>
