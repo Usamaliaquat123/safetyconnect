@@ -24,7 +24,7 @@ import {validateEmail} from '@utils';
 import {RouteProp} from '@react-navigation/native';
 import {animation} from '@theme';
 import styles from './styles';
-import {validatePassword, mainPass} from '@utils';
+import {validatePassword, mainPass, redirectDynamiclink} from '@utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
 import {Auth} from 'aws-amplify';
@@ -56,6 +56,7 @@ class Signup extends React.Component<SignupProps, any> {
     Linking.addEventListener('sd', (e) => {});
     dynamicLinks().onLink((l) => {
       // this.handleDynamicLink(l);
+      redirectDynamiclink(l, this.props.navigation);
     });
   };
   async signup() {

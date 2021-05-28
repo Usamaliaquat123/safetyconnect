@@ -103,7 +103,7 @@ class Home extends React.Component<HomeProps, any> {
         .createApi()
         .getUser(email)
         .then((res: any) => {
-          // console.log(res.data.data.)
+          console.log(res.data.data.img_url);
 
           this.setState({name: res.data.data.name});
           this.setState({image: res.data.data.img_url});

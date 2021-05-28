@@ -87,16 +87,12 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       locationSupervisor: '',
       locationSupervisorErr: false,
       additionalSuppervisors: '',
-// Location : suggestion
-locationSuppervisorsTags  : [],
-locationSuppervisorsSugg : [],
+      // Location : suggestion
+      locationSuppervisorsTags: [],
+      locationSuppervisorsSugg: [],
 
-additionalSuppervisorsSugg : [],
-additionalSuppervisorsTags : [],
-
-
-
-    
+      additionalSuppervisorsSugg: [],
+      additionalSuppervisorsTags: [],
     };
   }
   // Filter All countries
@@ -717,7 +713,7 @@ additionalSuppervisorsTags : [],
                     {/* Suggestions of projectEmail  */}
                     {this.state.locationSuppervisorsSugg.length != 0 ? (
                       <View style={styles.involveSuggestCont}>
-                        {this.state.assignLeaderssText.map(
+                        {this.state.locationSuppervisorsSugg.map(
                           (d: any, i: number) => (
                             <TouchableOpacity
                               key={i}
