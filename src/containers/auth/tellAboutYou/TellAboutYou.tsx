@@ -164,7 +164,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                           role: this.state.DesignAndArchitectureText,
                           department: this.state.IndustryRole,
                           industry: this.state.name,
-                          img_url: geturi.data[0].url,
+                          img_url: geturi.data[0].fileName,
                         })
                         .then((res) => {
                           console.log('with in set user info');
