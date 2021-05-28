@@ -219,7 +219,11 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          this.state.loading && {justifyContent: 'center'},
+        ]}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* content */}
           <View>

@@ -19,6 +19,7 @@ import {
   MyTasks,
   WelcomeHome,
   Chat,
+  Splash,
   ViewAll,
   InvitePeople,
   ViewSOR,
@@ -98,6 +99,13 @@ export const MainStackNavigator = (screen: route) => {
         <Stack.Screen
           name="ChangePassword"
           component={ChangePassword}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Splash"
+          component={Splash}
           options={{
             headerShown: false,
           }}
