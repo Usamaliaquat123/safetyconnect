@@ -293,9 +293,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   }
 
   componentDidMount = () => {
-    getCurrentProject().then((currentProj: any) =>
-      this.setState({projectid: currentProj}),
-    );
+    getCurrentProject().then((currentProj: any) => {
+      console.log(currentProj);
+      this.setState({projectid: currentProj});
+    });
     getCurrentOrganization().then((currentOrg: any) =>
       this.setState({currentOrg}),
     );
@@ -318,17 +319,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         .then((user: any) => {
           var dta = user.data.data;
           this.setState({user: user.data.data});
-          console.log(dta);
-          console.log(this.state.currentOrg);
-          console.log(
-            dta.organizations.filter(
-              (d: any) => d._id == this.state.currentOrg,
-            ),
-          );
-
-          
-
-
+          // console.log(dta);
+          // console.log(this.state.currentOrg);
+          // console.log(
+          //   dta.organizations.filter(
+          //     (d: any) => d._id == this.state.currentOrg,
+          //   ),
+          // );
         });
     });
     AsyncStorage.getItem('user').then((user: any) => {});
@@ -337,14 +334,23 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     AsyncStorage.getItem('email').then((email: any) => {
       this.setState({email});
     });
-    createApi
-      .createApi()
-      .getProject({
-        projectid: this.state.projectid,
-      })
-      .then((res: any) => {
-        this.setState({involved_persons: res.data.data.involved_persons});
-      });
+    console.log('before ');
+    console.log(this.state.projectid);
+    getCurrentProject().then((currentProj: any) => {
+      console.log(currentProj);
+      this.setState({projectid: currentProj});
+
+      createApi
+        .createApi()
+        .getProject({
+          projectid: currentProj,
+        })
+        .then((res: any) => {
+          console.log('gte project ');
+          console.log(res);
+          this.setState({involved_persons: res.data.data.involved_persons});
+        });
+    });
     // Time Update on every seconds
 
     // setInterval(() => {
@@ -486,7 +492,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         comments: ' ',
                       },
                       organization: this.state.currentOrg,
-                      project: this.state.projectId,
+                      project: this.state.projectid,
                     };
 
                     if (this.state.fiveWhytoggle) {
@@ -499,7 +505,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             contributoryCauses: this.state.countributoryCauses,
                             rootCauses: this.state.rootCauses,
                           },
-                          project: this.state.projectId,
+                          project: this.state.projectid,
                           report: this.state.reportIdInvestigation,
                           user: JSON.parse(user)._id,
                           date: moment().format('MM-DD-YYYY'),
@@ -526,7 +532,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             comments: '',
                             status: 1,
                           },
-                          project: this.state.projectId,
+                          project: this.state.projectid,
                         };
                         createApi
                           .createApi()
@@ -712,7 +718,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           comments: ' ',
                         },
                         organization: this.state.currentOrg,
-                        project: this.state.projectId,
+                        project: this.state.projectid,
                       };
 
                       if (this.state.fiveWhytoggle) {
@@ -728,7 +734,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 .countributoryCauses,
                               rootCauses: this.state.rootCauses,
                             },
-                            project: this.state.projectId,
+                            project: this.state.projectid,
                             report: this.state.reportIdInvestigation,
                             user: JSON.parse(user)._id,
                             date: moment().format('MM-DD-YYYY'),
@@ -754,7 +760,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               comments: '',
                               status: 1,
                             },
-                            project: this.state.projectId,
+                            project: this.state.projectid,
                           };
                           createApi
                             .createApi()
@@ -896,13 +902,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           {/* content */}
           <Animated.View style={[styles.content]}>
             {/* Select Project  / Select location */}
-            <Selector
+            {/* <Selector
               orgnaization={this.state.currentOrg}
               projects={this.state.projectid}
               selectedLocation={'Assembly Line'}
               selectedProject={this.state.projectid}
               navigation={this.props.navigation}
-            />
+            /> */}
             {/* Line  */}
             <View style={styles.lineheight} />
             {/* Classify SOR */}
@@ -1175,7 +1181,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               comments: '',
                               status: 1,
                             },
-                            project: this.state.projectId,
+                            project: this.state.projectid,
                           };
                           createApi
                             .createApi()

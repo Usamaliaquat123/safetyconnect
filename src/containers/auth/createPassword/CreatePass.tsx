@@ -48,7 +48,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
     this.state = {
       password: '',
       error: false,
-      isEye: false,
+      isEye: true,
       contentPopup: '',
       passMachErr: false,
       errorModal: false,
@@ -207,9 +207,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
               </View>
 
               {/* inputs container */}
-              <Text style={styles.passTextContainer}>
-                What is your First Name ?
-              </Text>
+              <Text style={styles.passTextContainer}>Enter your full Name</Text>
               <View style={[styles.inputContainer]}>
                 <TextInput
                   style={styles.authInputs}
@@ -284,7 +282,8 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                   Password must contain atleast 8 characters
                 </Text>
                 <Text style={[styles.dontHaveAccount]}>
-                  and must include numbers and special{' '}
+                  and must include number, special character and one capital
+                  character{' '}
                 </Text>
                 <Text style={[styles.dontHaveAccount]}>character</Text>
               </View>
