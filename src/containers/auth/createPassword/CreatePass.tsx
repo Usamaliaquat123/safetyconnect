@@ -49,7 +49,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       password: '',
       error: false,
       isEye: true,
-      contentPopup: 'Your session is expired',
+      contentPopup: 'sds',
       passMachErr: false,
       errorModal: true,
       passMatchText: '',
@@ -379,18 +379,19 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                   />
                   <Text
                     style={{
-                      // marginTop: wp(5),
-                      fontSize: wp(4.5),
+                      marginTop: wp(1),
+                      fontSize: wp(4),
                       fontFamily: fonts.SFuiDisplaySemiBold,
                       color: colors.error,
                     }}>
-                    {this.state.contentPopup}
+                    Your session is expired
                   </Text>
                 </View>
 
                 <Text
                   style={{
                     fontSize: wp(4),
+
                     marginTop: wp(3),
                     fontFamily: fonts.SFuiDisplaySemiBold,
                     textAlign: 'center',
@@ -399,6 +400,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                   You have to resend the email...
                 </Text>
                 <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('Signup')}
                   style={{
                     padding: wp(4),
                     backgroundColor: colors.primary,
