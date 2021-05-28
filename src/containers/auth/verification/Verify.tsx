@@ -8,6 +8,7 @@ import {
   Image,
   Linking,
   TextInput,
+  ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
 import {colors, images, GlStyles} from '@theme';
@@ -15,6 +16,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import Modal from 'react-native-modal';
 import {connect} from 'react-redux';
 import {Auth} from 'aws-amplify';
 import {openInbox} from 'react-native-email-link';
@@ -36,7 +38,11 @@ export interface VerifyProps {
 class Verify extends React.Component<VerifyProps, any> {
   constructor(props: any) {
     super(props);
-    this.state = {};
+    this.state = {
+      errorModal: false,
+
+      disableVerify: false,
+    };
   }
 
   componentDidMount() {
@@ -65,21 +71,24 @@ class Verify extends React.Component<VerifyProps, any> {
   };
   // resend verification email
   handleResendVerificationEmail = async () => {
-    await Auth.forgotPassword(this.props.route.params.email).catch(
-      (error: any) => {
-        console.log(error);
-      },
-    );
+    if (this.state.disableVerify == false) {
+      this.setState({loading: true, errorModal: true, disableVerify: true});
+      await Auth.forgotPassword(this.props.route.params.email)
+        .then(() => {
+          this.setState({loading: false, errorModal: false});
+          setTimeout(() => {
+            this.setState({disableVerify: false});
+          }, 10000);
+        })
+        .catch((error: any) => {
+          console.log(error);
+        });
+    }
   };
   render() {
     return (
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {/* content */}
-          {/* <View style={styles.content}> */}
-          {/* <View style={{alignSelf: 'center'}}>
-            <Image source={images.forgotPass} width={wp(40)} height={wp(40)} />
-          </View> */}
           <View style={styles.containerVerifyText}>
             <Text style={styles.headingContainer}>
               Please verify your email before
@@ -139,11 +148,30 @@ class Verify extends React.Component<VerifyProps, any> {
           <Text style={styles.dontHaveAccount}>Didn't received email ? </Text>
           <TouchableOpacity
             onPress={() => this.handleResendVerificationEmail()}
-            style={styles.createnewaccountContainer}>
-            <Text style={styles.createNewAccount}>
+            style={[styles.createnewaccountContainer]}>
+            <Text
+              style={[
+                styles.createNewAccount,
+                this.state.disableVerify ? {opacity: 0.5} : null,
+              ]}>
               Resend Verification Email
             </Text>
           </TouchableOpacity>
+
+          {/* validations error */}
+          {/* Modal Container */}
+          <Modal
+            isVisible={this.state.errorModal}
+            onBackdropPress={() =>
+              this.setState({errorModal: false, loading: false})
+            }>
+            {this.state.loading == true ? (
+              <View>
+                <ActivityIndicator color={colors.primary} size={'large'} />
+              </View>
+            ) : null}
+          </Modal>
+
           {/* </View> */}
         </ScrollView>
       </View>
