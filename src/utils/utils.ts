@@ -459,6 +459,9 @@ export const redirectDynamiclink = (link: any, navigation: any) => {
           .split('&')[0],
         code: link.url.split('/')[3].split('?')[1].split('&')[1].split('=')[1],
       });
+    } else if (link.url.split('/')[3].split('?')[0] == 'check-social-user') {
+      // social login
+      console.log(link);
     }
   }
 };

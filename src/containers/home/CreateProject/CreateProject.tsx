@@ -123,7 +123,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
             var members = this.state.assignLeaderss.concat(
               this.state.assignSuppervisor,
             );
-            console.log(members.map((d: any) => d._id));
+            // console.log(members.map((d: any) => d._id));
             api
               .createApi()
               .Postproject({
