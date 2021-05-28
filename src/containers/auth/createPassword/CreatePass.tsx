@@ -24,7 +24,7 @@ import {RouteProp, ThemeProvider} from '@react-navigation/native';
 import styles from './styles';
 import LottieView from 'lottie-react-native';
 import {createApi as api} from '@service';
-import {animation} from '@theme';
+import {animation, fonts} from '@theme';
 import Modal from 'react-native-modal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -49,9 +49,9 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       password: '',
       error: false,
       isEye: true,
-      contentPopup: '',
+      contentPopup: 'Your session is expired, you have to resend the email',
       passMachErr: false,
-      errorModal: false,
+      errorModal: true,
       passMatchText: '',
       loading: true,
       name: '',
@@ -132,23 +132,16 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                       console.log(err);
                       console.log('with in create user apo');
                     });
-
-                  // console.log(res);
-                  // if (this.props.route.params.type == 'forgot') {
-                  //   this.setState({loading: false, errorModal: false});
-                  //   this.props.navigation.navigate('Login');
-                  // } else if (this.props.route.params.type == 'verify') {
-                  //   this.setState({loading: false, errorModal: false});
-                  //   this.props.navigation.navigate('tellAboutYou', {
-                  //     username: this.props.route.params.email,
-                  //   });
-                  // }
                 });
               })
               .catch((err) => {
                 console.log('error on forgot password submit ');
                 console.log(err);
-                this.setState({loading: false, errorModal: false});
+                this.setState({
+                  loading: false,
+                  errorModal: true,
+                  contentPopup: 'Your session is expired',
+                });
               });
           } catch (err) {
             console.log(err);
@@ -370,9 +363,43 @@ class CreatePass extends React.Component<CreatePassProps, any> {
             </View>
           )}
           {this.state.contentPopup !== '' && (
-            <View
-              style={{backgroundColor: colors.secondary, borderRadius: wp(4)}}>
-              <Text>{this.state.contentPopup}</Text>
+            <View>
+              <View
+                style={{
+                  backgroundColor: colors.secondary,
+                  borderRadius: wp(1),
+                  padding: wp(5),
+                }}>
+                <Text
+                  style={{
+                    // marginTop: wp(5),
+                    fontSize: wp(4),
+                    fontFamily: fonts.SFuiDisplaySemiBold,
+                    textAlign: 'center',
+                    color: colors.primary,
+                  }}>
+                  {this.state.contentPopup}
+                </Text>
+                <TouchableOpacity
+                  style={{
+                    padding: wp(4),
+                    backgroundColor: colors.primary,
+                    marginRight: wp(10),
+                    borderRadius: wp(3),
+                    marginLeft: wp(10),
+                    marginTop: wp(5),
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: wp(3.5),
+                      fontFamily: fonts.SFuiDisplaySemiBold,
+                      color: colors.secondary,
+                      textAlign: 'center',
+                    }}>
+                    Resend Email
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           )}
         </Modal>
