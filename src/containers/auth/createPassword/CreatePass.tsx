@@ -49,9 +49,9 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       password: '',
       error: false,
       isEye: true,
-      contentPopup: 'sds',
+      contentPopup: '',
       passMachErr: false,
-      errorModal: true,
+      errorModal: false,
       passMatchText: '',
       loading: true,
       name: '',
@@ -60,11 +60,6 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       email: 'defaje7099@troikos.com',
       code: '3D449672',
     };
-  }
-  componentDidMount() {
-    console.log(this.props.route.params.code);
-    console.log(this.props.route.params.email);
-    console.log(this.props.route.params.type);
   }
 
   componentWillUnmount = () => {
@@ -400,7 +395,13 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                   You have to resend the email...
                 </Text>
                 <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('Signup')}
+                  onPress={() => {
+                    Auth.forgotPassword(this.props.route.params.email).then(
+                      () => {
+                        this.props.navigation.navigate('Verify');
+                      },
+                    );
+                  }}
                   style={{
                     padding: wp(4),
                     backgroundColor: colors.primary,
