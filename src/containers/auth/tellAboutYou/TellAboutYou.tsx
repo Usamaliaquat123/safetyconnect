@@ -343,6 +343,13 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     />
 
                     <Icon
+                      onPress={() => {
+                        if (this.state.arrayOfRole.length == 0) {
+                          this.setState({arrayOfRole: industries});
+                        } else {
+                          this.setState({arrayOfRole: []});
+                        }
+                      }}
                       containerStyle={{marginRight: wp(3)}}
                       name={'down'}
                       type={'antdesign'}
@@ -363,7 +370,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                           key={i}
                           onPress={() => {
                             this.setState({
-                              IndustryRole: d,
+                              name: d,
                               arrayOfRole: [],
                             });
                           }}
