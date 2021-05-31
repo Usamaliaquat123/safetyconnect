@@ -213,11 +213,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* content */}
-          <View
-            style={[
-              styles.content,
-              // this.state.loading ? {height: wp(100)} : {height: wp(100)},
-            ]}>
+          <View style={[styles.content]}>
             {this.state.loading == true ? (
               <View
                 style={{
