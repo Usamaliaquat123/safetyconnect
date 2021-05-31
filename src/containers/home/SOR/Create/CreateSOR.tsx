@@ -989,9 +989,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     type="material-community"
                     color={colors.primary}
                   />
-                  <Text style={[styles.obserttle, {color: colors.primary}]}>
-                    {moment().format('MMMM DD')}, {moment().format('YYYY')}{' '}
-                  </Text>
+                  <TouchableOpacity onPress={() => console.log('sds')}>
+                    <Text style={[styles.obserttle, {color: colors.primary}]}>
+                      {moment().format('MMMM DD')}, {moment().format('YYYY')}{' '}
+                    </Text>
+                  </TouchableOpacity>
                   <Text style={styles.obserttle}>
                     at about {this.state.curTime}
                   </Text>
