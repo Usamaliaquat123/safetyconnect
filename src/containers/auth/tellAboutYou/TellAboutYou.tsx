@@ -326,7 +326,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                         if (e !== '') {
                           this.setState({
                             arrayOfRole: suggestInActionsRecommendations(
-                              e,
+                              e.toLowerCase(),
                               industries,
                             ),
                           });
