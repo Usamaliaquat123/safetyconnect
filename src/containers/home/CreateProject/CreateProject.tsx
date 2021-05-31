@@ -151,6 +151,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       );
                       this.setState({loading: false});
                       AsyncStorage.setItem('email', email);
+
                       this.props.navigation.navigate('Main');
                       //  AsyncStorage.setItem('token', res.)
                     });

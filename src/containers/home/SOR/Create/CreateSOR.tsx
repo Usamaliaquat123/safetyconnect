@@ -497,14 +497,17 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     if (this.state.fiveWhytoggle) {
                       sor.report['_id'] = this.state.reportIdInvestigation;
 
-
-                      AsyncStorage.getItem("email").then((email : any) => {
-                          createApi.createApi().getUser(email).then((user : any) => {
+                      AsyncStorage.getItem('email').then((email: any) => {
+                        createApi
+                          .createApi()
+                          .getUser(email)
+                          .then((user: any) => {
                             var obj = {
                               justification: {
                                 question: [this.state.fiveWhyQuestion],
                                 answer: [this.state.fiveWhyAnswer],
-                                contributoryCauses: this.state.countributoryCauses,
+                                contributoryCauses: this.state
+                                  .countributoryCauses,
                                 rootCauses: this.state.rootCauses,
                               },
                               project: this.state.projectid,
@@ -512,9 +515,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               user: user.data.data._id,
                               date: moment().format('MM-DD-YYYY'),
                             };
-    
+
                             console.log(obj);
-    
+
                             createApi
                               .createApi()
                               .createFiveWhy(obj)
@@ -523,10 +526,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 console.log(res);
                               })
                               .catch((err: any) => console.log(err));
-                          })
-                      })
+                          });
+                      });
                       // AsyncStorage.getItem('user').then((user: any) => {
-                       
+
                       // });
 
                       // _id: ress.data.data.report_id,
