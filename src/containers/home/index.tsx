@@ -82,7 +82,7 @@ class Home extends React.Component<HomeProps, any> {
       .createApi()
       .getFileApi(data)
       .then((file: any) => {
-        console.log(file);
+        console.log(file.data);
       });
 
     getCurrentProject().then((currentProj: any) => {
