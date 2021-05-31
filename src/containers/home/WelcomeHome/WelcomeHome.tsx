@@ -60,7 +60,7 @@ class WelcomeHome extends React.Component<WelcomeHomeProps, any> {
           <Text
             style={{
               fontSize: wp(5),
-              fontFamily: fonts.SFuiDisplayMedium,
+              fontFamily: fonts.SFuiDisplayBold,
               color: colors.primary,
             }}>
             Hey John! Lets start using
@@ -68,7 +68,7 @@ class WelcomeHome extends React.Component<WelcomeHomeProps, any> {
           <Text
             style={{
               fontSize: wp(5),
-              fontFamily: fonts.SFuiDisplayMedium,
+              fontFamily: fonts.SFuiDisplayBold,
               color: colors.primary,
             }}>
             SefetyConnect!

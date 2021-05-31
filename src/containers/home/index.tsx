@@ -266,7 +266,9 @@ class Home extends React.Component<HomeProps, any> {
           </View>
           <View style={styles.content}>
             <View style={styles.menu}>
-              <View style={{alignItems: 'center'}}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('ViewAllSOr')}
+                style={{alignItems: 'center'}}>
                 <View style={styles.item}>
                   <Image
                     source={images.homeIcon.observationfeedback}
@@ -274,7 +276,7 @@ class Home extends React.Component<HomeProps, any> {
                   />
                 </View>
                 <Text style={styles.itemText}>Observation & Feedback</Text>
-              </View>
+              </TouchableOpacity>
               <View style={{alignItems: 'center'}}>
                 <View style={styles.item}>
                   <Image
