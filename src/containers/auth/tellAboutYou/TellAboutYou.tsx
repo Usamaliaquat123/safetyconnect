@@ -194,6 +194,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                         }
                       })
                       .catch((err) => console.log(err));
+                  } else if (res.status == null) {
                   }
                 });
               console.log(geturi.data[0].url);
