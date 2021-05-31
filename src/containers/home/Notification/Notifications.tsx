@@ -13,10 +13,10 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {Icon, Avatar} from 'react-native-elements';
 import {RouteProp} from '@react-navigation/native';
-import {createApi} from '@service';
 import {colors} from '@theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
+import {createApi as api} from '@service';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 export interface NotificationsProps {
   route: MyTasksRouteProp;
@@ -46,8 +46,13 @@ class Notifications extends React.Component<NotificationsProps, any> {
 
   componentDidMount() {
     // this.props.route.params
-    AsyncStorage.getItem('user').then((user: any) => {
-      this.setState({user: JSON.parse(user)});
+    AsyncStorage.getItem('email').then((email: any) => {
+      api
+        .createApi()
+        .getUser(email)
+        .then((user: any) => {
+          this.setState({user: user.data.data});
+        });
     });
   }
 

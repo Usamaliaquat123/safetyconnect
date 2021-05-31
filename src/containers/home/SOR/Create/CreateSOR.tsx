@@ -328,7 +328,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           // );
         });
     });
-    AsyncStorage.getItem('user').then((user: any) => {});
     this.mappingMapping(1, 1);
 
     AsyncStorage.getItem('email').then((email: any) => {
@@ -497,31 +496,38 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                     if (this.state.fiveWhytoggle) {
                       sor.report['_id'] = this.state.reportIdInvestigation;
-                      AsyncStorage.getItem('user').then((user: any) => {
-                        var obj = {
-                          justification: {
-                            question: [this.state.fiveWhyQuestion],
-                            answer: [this.state.fiveWhyAnswer],
-                            contributoryCauses: this.state.countributoryCauses,
-                            rootCauses: this.state.rootCauses,
-                          },
-                          project: this.state.projectid,
-                          report: this.state.reportIdInvestigation,
-                          user: JSON.parse(user)._id,
-                          date: moment().format('MM-DD-YYYY'),
-                        };
 
-                        console.log(obj);
 
-                        createApi
-                          .createApi()
-                          .createFiveWhy(obj)
-                          .then((res) => {
-                            console.log('five why');
-                            console.log(res);
+                      AsyncStorage.getItem("email").then((email : any) => {
+                          createApi.createApi().getUser(email).then((user : any) => {
+                            var obj = {
+                              justification: {
+                                question: [this.state.fiveWhyQuestion],
+                                answer: [this.state.fiveWhyAnswer],
+                                contributoryCauses: this.state.countributoryCauses,
+                                rootCauses: this.state.rootCauses,
+                              },
+                              project: this.state.projectid,
+                              report: this.state.reportIdInvestigation,
+                              user: user.data.data._id,
+                              date: moment().format('MM-DD-YYYY'),
+                            };
+    
+                            console.log(obj);
+    
+                            createApi
+                              .createApi()
+                              .createFiveWhy(obj)
+                              .then((res) => {
+                                console.log('five why');
+                                console.log(res);
+                              })
+                              .catch((err: any) => console.log(err));
                           })
-                          .catch((err: any) => console.log(err));
-                      });
+                      })
+                      // AsyncStorage.getItem('user').then((user: any) => {
+                       
+                      // });
 
                       // _id: ress.data.data.report_id,
                     } else {

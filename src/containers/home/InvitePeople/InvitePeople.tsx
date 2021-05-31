@@ -95,14 +95,19 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
     });
     console.log(this.state.projects.filter((d: any) => d.selected == true));
 
-    AsyncStorage.getItem('user').then((user: any) => {
-      var usr = JSON.parse(user);
+    AsyncStorage.getItem('email').then((email: any) => {
+      api
+        .createApi()
+        .getUser(email)
+        .then((user: any) => {
+          var usr = user.data.data;
 
-      if (usr.organizations.length == 0) {
-        this.setState({noOrg: true});
-      } else {
-        this.setState({noOrg: false});
-      }
+          if (usr.organizations.length == 0) {
+            this.setState({noOrg: true});
+          } else {
+            this.setState({noOrg: false});
+          }
+        });
     });
   }
 

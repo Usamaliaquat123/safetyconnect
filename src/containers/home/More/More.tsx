@@ -14,7 +14,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {BottomTabNavigatorProp} from '@nav';
 import {RouteProp, CommonActions} from '@react-navigation/native';
 import {colors, images} from '@theme';
-
+import {createApi as api} from '@service';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -44,10 +44,15 @@ export default class More extends React.Component<MoreProps, any> {
   }
 
   componentDidMount() {
-    AsyncStorage.getItem('user').then((user: any) => {
-      var usr = JSON.parse(user);
-      console.log(usr);
-      this.setState({name: usr.name, email: usr.email, url: usr.img_url});
+    AsyncStorage.getItem('email').then((email: any) => {
+      api
+        .createApi()
+        .getUser(email)
+        .then((user: any) => {
+          var usr = user.data.data;
+          console.log(usr);
+          this.setState({name: usr.name, email: usr.email, url: usr.img_url});
+        });
     });
   }
 
