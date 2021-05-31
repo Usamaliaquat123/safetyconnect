@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginTop: wp(1),
+    // width: wp(80),
     borderColor: colors.green,
     borderWidth: wp(0.3),
     paddingLeft: wp(3),
@@ -75,6 +76,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   authInputs: {
+    width: wp(90),
     fontSize: wp(3),
     fontFamily: fonts.SFuiDisplayMedium,
   },

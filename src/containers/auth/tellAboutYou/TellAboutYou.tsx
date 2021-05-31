@@ -259,7 +259,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     <View style={{paddingRight: wp(10)}}>
                       <Avatar
                         rounded
-                        size={'large'}
+                        size={wp(25)}
                         source={{
                           uri:
                             this.state.uploadedImage !== ''
