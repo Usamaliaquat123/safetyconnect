@@ -28,6 +28,7 @@ import {route} from '@nav';
 import {PieChart} from 'react-native-svg-charts';
 import {createApi} from '@service';
 import Modal from 'react-native-modal';
+import {InAppBrowser} from 'react-native-inappbrowser-reborn';
 
 import {
   widthPercentageToDP as wp,
@@ -76,13 +77,15 @@ class Home extends React.Component<HomeProps, any> {
   componentDidMount = () => {
     var data = {
       bucket: 'hns-codist',
-      report: 'profile/1621937387877.jpeg',
+      report: 'profile/1622449429163.jpeg',
     };
     createApi
       .createApi()
       .getFileApi(data)
       .then((file: any) => {
         console.log(file.data);
+
+        this.setState({image: file.data});
       });
 
     getCurrentProject().then((currentProj: any) => {
@@ -147,6 +150,19 @@ class Home extends React.Component<HomeProps, any> {
           });
         });
     });
+
+    var data = {
+      bucket: 'hns-codist',
+      report: 'profile/1621937387877.jpeg',
+    };
+    createApi
+      .createApi()
+      .getFileApi(data)
+      .then((file: any) => {
+        console.log(`data:image/jpeg;base64,${file.data}`);
+
+        this.setState({image: file.data});
+      });
   };
 
   _onRefresh = () => {
@@ -268,7 +284,7 @@ class Home extends React.Component<HomeProps, any> {
                   source={{
                     uri:
                       this.state.image !== ''
-                        ? this.state.image
+                        ? `${this.state.image}`
                         : 'https://via.placeholder.com/150',
                   }}
                 />

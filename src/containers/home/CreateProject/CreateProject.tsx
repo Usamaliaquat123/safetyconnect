@@ -211,7 +211,9 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{justifyContent: 'center'}}>
           {/* content */}
           <View style={[styles.content]}>
             {this.state.loading == true ? (
@@ -422,7 +424,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         onChangeText={(e) => {
                           if (e !== '') {
                             var arr = searchInSuggestions(
-                              e,
+                              e.toLowerCase(),
                               this.state.allAssignLeaders,
                             );
 
@@ -516,7 +518,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                             if (e !== '') {
                               this.setState({
                                 assignSuppervisorText: searchInSuggestions(
-                                  e,
+                                  e.toLowerCase(),
                                   this.state.allAssignLeaders,
                                 ),
                                 assignSuppervisorT: e,
@@ -693,7 +695,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         onChangeText={(e) => {
                           if (e !== '') {
                             var arr = searchInSuggestions(
-                              e,
+                              e.toLowerCase(),
                               this.state.allAssignLeaders,
                             );
                             this.setState({locationSuppervisorsSugg: arr});
@@ -783,7 +785,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         onChangeText={(e) => {
                           if (e !== '') {
                             var arr = searchInSuggestions(
-                              e,
+                              e.toLowerCase(),
                               this.state.allAssignLeaders,
                             );
                             this.setState({additionalSuppervisorsSugg: arr});

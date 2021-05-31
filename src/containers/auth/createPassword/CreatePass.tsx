@@ -48,6 +48,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
     super(props);
     this.state = {
       password: '',
+      isEyeConfirm: true,
       error: false,
       isEye: true,
       contentPopup: '',
@@ -283,7 +284,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                 </Text>
                 <View style={[styles.inputContainer]}>
                   <TextInput
-                    secureTextEntry={this.state.isEye}
+                    secureTextEntry={this.state.isEyeConfirm}
                     style={styles.authInputs}
                     value={this.state.passMatchText}
                     onChange={(e) => {
@@ -297,9 +298,11 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                     placeholder={'******'}
                   />
                   <TouchableOpacity
-                    onPress={() => this.setState({isEye: !this.state.isEye})}
+                    onPress={() =>
+                      this.setState({isEyeConfirm: !this.state.isEyeConfirm})
+                    }
                     style={styles.eyeIconContainer}>
-                    {this.state.isEye == true ? (
+                    {this.state.isEyeConfirm == true ? (
                       <Icon
                         containerStyle={{opacity: 0.5}}
                         size={wp(5)}
