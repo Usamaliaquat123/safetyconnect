@@ -156,15 +156,17 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                 .then((res) => {
                   console.log(geturi.status);
                   if (res.status == 200) {
+                    var setUserInfoData = {
+                      email: this.props.route.params.username,
+                      role: this.state.DesignAndArchitectureText,
+                      department: this.state.IndustryRole,
+                      industry: this.state.name,
+                      img_url: geturi.data[0].fileName,
+                    };
+                    console.log(setUserInfoData);
                     api
                       .createApi()
-                      .setUserInfo({
-                        email: this.props.route.params.username,
-                        role: this.state.DesignAndArchitectureText,
-                        department: this.state.IndustryRole,
-                        industry: this.state.name,
-                        img_url: geturi.data[0].fileName,
-                      })
+                      .setUserInfo(setUserInfoData)
                       .then((res) => {
                         console.log('with in set user info');
                         console.log(res);
