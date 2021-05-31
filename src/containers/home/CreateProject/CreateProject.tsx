@@ -808,7 +808,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                               key={i}
                               onPress={() => {
                                 this.setState({
-                                  locationSupervisor: '',
+                                  additionalSuppervisors: '',
                                   additionalSuppervisorsSugg: [],
                                 });
 
