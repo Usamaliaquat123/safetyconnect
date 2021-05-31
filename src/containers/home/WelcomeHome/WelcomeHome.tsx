@@ -115,7 +115,7 @@ class WelcomeHome extends React.Component<WelcomeHomeProps, any> {
                   marginLeft: wp(5),
 
                   fontSize: wp(4),
-                  fontFamily: fonts.SFuiDisplayLight,
+                  fontFamily: fonts.SFuiDisplayMedium,
                   color: colors.secondary,
                 }}>
                 Create your first
@@ -125,7 +125,7 @@ class WelcomeHome extends React.Component<WelcomeHomeProps, any> {
                   marginLeft: wp(5),
 
                   fontSize: wp(4),
-                  fontFamily: fonts.SFuiDisplayLight,
+                  fontFamily: fonts.SFuiDisplayMedium,
                   color: colors.secondary,
                 }}>
                 Observation
@@ -170,7 +170,7 @@ class WelcomeHome extends React.Component<WelcomeHomeProps, any> {
                   marginLeft: wp(5),
 
                   fontSize: wp(4),
-                  fontFamily: fonts.SFuiDisplayLight,
+                  fontFamily: fonts.SFuiDisplayMedium,
                   color: colors.secondary,
                 }}>
                 Invite your Team
@@ -180,7 +180,7 @@ class WelcomeHome extends React.Component<WelcomeHomeProps, any> {
                   marginLeft: wp(5),
 
                   fontSize: wp(4),
-                  fontFamily: fonts.SFuiDisplayLight,
+                  fontFamily: fonts.SFuiDisplayMedium,
                   color: colors.secondary,
                 }}>
                 Members
