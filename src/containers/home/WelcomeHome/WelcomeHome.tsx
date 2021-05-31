@@ -49,7 +49,21 @@ export interface WelcomeHomeProps {
 class WelcomeHome extends React.Component<WelcomeHomeProps, any> {
   constructor(props: any) {
     super(props);
-    this.state = {};
+    this.state = {
+      name: '',
+    };
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem('email').then((email: any) => {
+      api
+        .createApi()
+        .getUser(email)
+        .then((userData: any) => {
+          // console.log(userData.data.data.name);
+          this.setState({name: userData.data.data.name});
+        });
+    });
   }
 
   WelcomeHome = () => {};
@@ -63,7 +77,7 @@ class WelcomeHome extends React.Component<WelcomeHomeProps, any> {
               fontFamily: fonts.SFuiDisplayBold,
               color: colors.primary,
             }}>
-            Hey John! Lets start using
+            Hey {this.state.name}! Lets start using
           </Text>
           <Text
             style={{
@@ -190,16 +204,16 @@ class WelcomeHome extends React.Component<WelcomeHomeProps, any> {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={{position: 'absolute', alignSelf: 'center', bottom: wp(20)}}
+          style={{position: 'absolute', alignSelf: 'center', bottom: wp(10)}}
           onPress={() => this.props.navigation.navigate('Main')}>
           <Text
             style={{
               fontSize: wp(4),
-              fontFamily: fonts.SFuiDisplayMedium,
+              fontFamily: fonts.SFuiDisplaySemiBold,
               color: colors.primary,
               textAlign: 'center',
             }}>
-            SKIP
+            Skip
           </Text>
         </TouchableOpacity>
       </View>
