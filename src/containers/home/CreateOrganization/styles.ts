@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     padding: wp(5),
     // justifyContent: 'center',
     // alignSelf: 'center',
-    paddingBottom: hp(5),
+    paddingBottom: hp(3),
     backgroundColor: colors.secondary,
     borderRadius: wp(3),
   },

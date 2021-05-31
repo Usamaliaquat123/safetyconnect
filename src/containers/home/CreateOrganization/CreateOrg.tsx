@@ -34,6 +34,8 @@ import {bindActionCreators} from 'redux';
 import {AllSorDTO} from '@dtos';
 import {getActiveChildNavigationOptions} from 'react-navigation';
 import {validateEmail} from '@utils/utils';
+import {default as Model} from 'react-native-modal';
+
 // import {validateEmail} from '@utils/';
 type CreateOrgNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -75,6 +77,8 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
       ],
       projectleadersText: '',
       suggestedProjectLeadersEmail: false,
+
+      createNewProject: false,
     };
   }
   componentDidMount() {
@@ -243,9 +247,14 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
   render() {
     return (
       <View style={styles.container}>
-        <View
-          style={{marginRight: wp(5), marginLeft: wp(5), marginTop: wp(10)}}>
-          <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View
+            style={{
+              marginRight: wp(5),
+              marginLeft: wp(5),
+              marginTop: wp(2),
+              marginBottom: wp(5),
+            }}>
             <View style={styles.content}>
               <View>
                 <View
@@ -351,7 +360,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                     {/* add new location */}
                     {this.state.assignProjects.length < 3 && (
                       <TouchableOpacity
-                        onPress={() => this.setState({createModal: true})}
+                        onPress={() => this.setState({createNewProject: true})}
                         style={{
                           flexDirection: 'row',
                           justifyContent: 'center',
@@ -567,10 +576,10 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
               </View>
               {/* )} */}
             </View>
-          </ScrollView>
-          {/* validations error */}
-          {/* Modal Container */}
-        </View>
+            {/* validations error */}
+            {/* Modal Container */}
+          </View>
+        </ScrollView>
 
         {/* Error modal */}
         <Modal
@@ -586,6 +595,13 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
             </View>
           )}
         </Modal>
+
+        {/* Project */}
+        <Model
+          isVisible={this.state.createNewProject}
+          onBackdropPress={() => {
+            this.setState({createNewProject: false, loading: false});
+          }}></Model>
       </View>
     );
   }

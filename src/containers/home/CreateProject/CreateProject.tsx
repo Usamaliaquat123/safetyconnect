@@ -218,13 +218,11 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
           <View style={[styles.content]}>
             {this.state.loading == true ? (
               <View
-                style={
-                  {
-                    // alignSelf: 'center',
-                    // marginTop: wp(4),
-                    // marginBottom: wp(40),
-                  }
-                }>
+                style={{
+                  alignSelf: 'center',
+                  marginTop: wp(4),
+                  marginBottom: wp(40),
+                }}>
                 <LottieView
                   autoPlay={true}
                   style={{width: wp(90)}}
@@ -874,62 +872,3 @@ const mapDispatchToProps = (dispatch: any) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateProject);
-
-// <View>
-// {/* Add Team Members */}
-// <Text style={styles.emailTextContainer}>
-//   Add Team Members
-// </Text>
-// <View style={[styles.inputContainer]}>
-//   {this.state.teamMembers.length < 15 ? (
-//     <TextInput
-//       style={styles.authInputs}
-//       value={this.state.teamMembersText}
-//       placeholder={'Add Team Members'}
-//       onChange={(e) => {
-//         {
-//           this.setState({
-//             teamMembersText: e.nativeEvent.text,
-//           });
-//         }
-//       }}
-//     />
-//   ) : null}
-// </View>
-// {this.state.errorTeamMem && (
-//   <Text style={{fontSize: wp(3), color: colors.error}}>
-//     Add atleast 2 members{' '}
-//   </Text>
-// )}
-
-// {/* Add Team Suggestions */}
-// {this.state.teamMembersText != '' ? (
-//   <SuggestionsAvatar
-//     onSelect={(d: string) => {
-//       this.state.teamMembers.push(d);
-//       this.setState({
-//         teamMembersText: '',
-//       });
-//     }}
-//     text={this.state.teamMembersText}
-//   />
-// ) : null}
-// <View
-//   style={{
-//     flexWrap: 'wrap',
-//     flexDirection: 'row',
-//     marginTop: wp(2),
-//   }}>
-//   <Tags
-//     type={'addTeamMem'}
-//     onClose={(d: any) => {
-//       this.setState({
-//         teamMembers: this.state.teamMembers.filter(
-//           (v: any) => v !== d,
-//         ),
-//       });
-//     }}
-//     tags={this.state.teamMembers}
-//   />
-// </View>
-// </View>
