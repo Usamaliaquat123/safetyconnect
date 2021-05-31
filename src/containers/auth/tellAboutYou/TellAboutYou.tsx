@@ -382,7 +382,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     </View>
                   ) : null}
                   {/*Industry selection   */}
-                  <Text style={styles.emailTextContainer}>Type of Role</Text>
+                  <Text style={styles.emailTextContainer}>Type of Role *</Text>
 
                   <View
                     style={[
@@ -423,7 +423,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     numbers and special character.
                   </Text> */}
                   {/*Deraprtment selectionv   */}
-                  <Text style={styles.emailTextContainer}>Your Role</Text>
+                  <Text style={styles.emailTextContainer}>Your Role *</Text>
 
                   <View
                     style={[
