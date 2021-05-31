@@ -74,6 +74,17 @@ class Home extends React.Component<HomeProps, any> {
   }
 
   componentDidMount = () => {
+    var data = {
+      bucket: 'hns-codist',
+      report: 'profile/1621937387877.jpeg',
+    };
+    createApi
+      .createApi()
+      .getFileApi(data)
+      .then((file: any) => {
+        console.log(file);
+      });
+
     getCurrentProject().then((currentProj: any) => {
       console.log('current organization');
       console.log(currentProj);
