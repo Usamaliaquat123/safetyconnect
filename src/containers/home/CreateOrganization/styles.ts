@@ -8,11 +8,12 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     backgroundColor: 'transparent',
-    marginLeft: wp(7),
-    justifyContent: 'center',
-    alignSelf: 'center',
-    marginTop: wp(7),
-    marginRight: wp(7),
+    // marginLeft: wp(7),
+
+    // justifyContent: 'center',
+    // alignSelf: 'center',
+    // marginTop: wp(7),
+    // marginRight: wp(7),
   },
   header: {
     padding: wp(7),
@@ -57,7 +58,8 @@ const styles = StyleSheet.create({
   content: {
     // height: hp(100),
     padding: wp(5),
-
+    // justifyContent: 'center',
+    // alignSelf: 'center',
     paddingBottom: hp(5),
     backgroundColor: colors.secondary,
     borderRadius: wp(3),
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
   },
   authInputs: {
     fontSize: wp(3),
-    width: wp(80),
+    width: wp(70),
   },
   signinText: {
     fontSize: wp(4),

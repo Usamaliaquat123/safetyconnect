@@ -36,7 +36,7 @@
     "amazon-cognito-identity-js": "^4.5.10",
     "apisauce": "^2.0.1",
     "aws-amplify": "3.0.22",
-    "aws-amplify-react-native": "^4.3.1",
+    "aws-amplify-react-native": "^5.0.1",
     "buffer": "^6.0.3",
     "deepmerge": "^4.2.2",
     "flux": "^4.0.0",

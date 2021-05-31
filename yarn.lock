@@ -3996,10 +3996,10 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-aws-amplify-react-native@^4.3.1:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/aws-amplify-react-native/-/aws-amplify-react-native-4.3.1.tgz#f4a452250965ea3d2335a0dc73cd49274bb883a4"
-  integrity sha512-L86VoOj7avVgRBlycQ1Z7ztXfAhlT8TzdZc0ewA4LG/qnv2P3wRgYWJwZWmBPTQMXsXu7o7MMPUDsM++B05yPg==
+aws-amplify-react-native@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/aws-amplify-react-native/-/aws-amplify-react-native-5.0.1.tgz#8ce431f5472188bba7b2cb4d86668b7723d0cf87"
+  integrity sha512-26lVks30Oy0f9KkIJqElUGiUai1jrmq0mt81iDLuOCefJFdb0O+OAdQ0mw96xDfn9SZyXoH1REqiSal9cv2n3A==
   dependencies:
     babel-preset-es2015 "^6.24.1"
     buffer "^5.2.1"

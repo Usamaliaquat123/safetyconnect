@@ -23,7 +23,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 
 import {RouteProp} from '@react-navigation/native';
-import {colors, images, GlStyles} from '@theme';
+import {colors, images, GlStyles, fonts} from '@theme';
 import {animation} from '@theme';
 import LottieView from 'lottie-react-native';
 import {createApi as api} from '@service';
@@ -65,7 +65,16 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
       suggestedEmail: false,
       selectedEmails: [],
       members: [],
-      projects: [],
+      assignProjects: [],
+      // Project Leaders
+      selectedProjectleadersEmail: [
+        's@d.com',
+        'd@d.com',
+        'd@d.com',
+        'asdha@asghd.com',
+      ],
+      projectleadersText: '',
+      suggestedProjectLeadersEmail: false,
     };
   }
   componentDidMount() {
@@ -86,6 +95,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
     }
     this.setState({peoplesText: e});
   };
+
   createOrg = () => {
     if (this.state.org !== '') {
       if (this.state.orgDetails !== '') {
@@ -233,178 +243,336 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.content}>
-            <View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}>
-                <Text style={styles.headingContainer}>
-                  Add New Organization
-                </Text>
-                <Icon
-                  onPress={() => this.props.navigation.goBack()}
-                  containerStyle={{marginLeft: wp(2)}}
-                  name={'cross'}
-                  type={'entypo'}
-                  size={wp(4.6)}
-                  iconStyle={{opacity: 0.5}}
-                />
-              </View>
-              {/* inputs container */}
-              <View style={styles.inputsContainer}>
-                {/* Email Container */}
-                <View>
-                  <View style={{flexDirection: 'row'}}>
-                    <Text style={styles.emailTextContainer}>
-                      Organization Name
-                    </Text>
-                    <Text
-                      style={[
-                        styles.emailTextContainer,
-                        {opacity: 0.5, marginLeft: wp(3)},
-                      ]}>
-                      (Mandatory)
-                    </Text>
-                  </View>
-                  <View style={[styles.inputContainer]}>
-                    <TextInput
-                      value={this.state.org}
-                      style={styles.authInputs}
-                      onChangeText={(e) => this.setState({org: e})}
-                      placeholder={'Enter Organization Name'}
-                    />
-                  </View>
-                  {this.state.orgError && (
-                    <Text style={{fontSize: wp(3), color: colors.error}}>
-                      Type your organization name
-                    </Text>
-                  )}
+        <View
+          style={{marginRight: wp(5), marginLeft: wp(5), marginTop: wp(10)}}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.content}>
+              <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text style={styles.headingContainer}>
+                    Add New Organization
+                  </Text>
+                  <Icon
+                    onPress={() => this.props.navigation.goBack()}
+                    containerStyle={{marginLeft: wp(2)}}
+                    name={'cross'}
+                    type={'entypo'}
+                    size={wp(4.6)}
+                    iconStyle={{opacity: 0.5}}
+                  />
                 </View>
+                {/* inputs container */}
+                <View style={styles.inputsContainer}>
+                  {/* Email Container */}
+                  <View>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={styles.emailTextContainer}>
+                        Organization Name
+                      </Text>
+                      <Text
+                        style={[
+                          styles.emailTextContainer,
+                          {opacity: 0.5, marginLeft: wp(3)},
+                        ]}>
+                        (Mandatory)
+                      </Text>
+                    </View>
+                    <View style={[styles.inputContainer]}>
+                      <TextInput
+                        value={this.state.org}
+                        style={styles.authInputs}
+                        onChangeText={(e) => this.setState({org: e})}
+                        placeholder={'Enter Organization Name'}
+                      />
+                    </View>
+                    {this.state.orgError && (
+                      <Text style={{fontSize: wp(3), color: colors.error}}>
+                        Type your organization name
+                      </Text>
+                    )}
+                  </View>
 
-                {/* Organization Description */}
-                <View>
-                  <View style={{flexDirection: 'row', marginTop: wp(3)}}>
-                    <Text style={styles.emailTextContainer}>
-                      Organization Description
-                    </Text>
-                    <Text
-                      style={[
-                        styles.emailTextContainer,
-                        {opacity: 0.5, marginLeft: wp(3)},
-                      ]}>
-                      (Mandatory)
-                    </Text>
+                  {/* Organization Description */}
+                  <View>
+                    <View style={{flexDirection: 'row', marginTop: wp(3)}}>
+                      <Text style={styles.emailTextContainer}>
+                        Organization Description
+                      </Text>
+                      <Text
+                        style={[
+                          styles.emailTextContainer,
+                          {opacity: 0.5, marginLeft: wp(3)},
+                        ]}>
+                        (Mandatory)
+                      </Text>
+                    </View>
+                    <View style={[styles.inputContainer]}>
+                      <TextInput
+                        value={this.state.orgDetails}
+                        style={styles.authInputs}
+                        onChangeText={(e) => this.setState({orgDetails: e})}
+                        placeholder={'Enter Organization description here'}
+                      />
+                    </View>
+                    {this.state.orgDescError && (
+                      <Text style={{fontSize: wp(3), color: colors.error}}>
+                        Type your organization description
+                      </Text>
+                    )}
                   </View>
-                  <View style={[styles.inputContainer]}>
-                    <TextInput
-                      value={this.state.orgDetails}
-                      style={styles.authInputs}
-                      onChangeText={(e) => this.setState({orgDetails: e})}
-                      placeholder={'Enter Organization description here'}
-                    />
-                  </View>
-                  {this.state.orgDescError && (
-                    <Text style={{fontSize: wp(3), color: colors.error}}>
-                      Type your organization description
-                    </Text>
-                  )}
-                </View>
 
-                {/* People */}
-                <View>
-                  <View style={{flexDirection: 'row', marginTop: wp(3)}}>
-                    <Text style={styles.emailTextContainer}>People</Text>
-                    <Icon
-                      containerStyle={{marginTop: wp(1), marginLeft: wp(2)}}
-                      name={'info'}
-                      type={'feather'}
-                      size={wp(3)}
-                      iconStyle={{opacity: 0.5}}
-                    />
-                  </View>
-                  <View style={[styles.inputContainer]}>
-                    <TextInput
-                      value={this.state.peoplesText}
-                      style={styles.authInputs}
-                      onChangeText={(e) => this.searchForUsers(e)}
-                      placeholder={'Enter name or add email'}
-                    />
-                  </View>
-                  {this.state.orgError && (
-                    <Text style={{fontSize: wp(3), color: colors.error}}>
-                      Add people to the organization
-                    </Text>
-                  )}
-                </View>
-                <View>
-                  {this.state.suggestedEmail == false ? null : (
-                    <View style={styles.involveSuggestCont}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          this.state.selectedEmails.push(
-                            this.state.peoplesText,
-                          );
+                  {/* Projects */}
+                  <View style={{marginTop: wp(3)}}>
+                    <Text style={styles.emailTextContainer}>Projects</Text>
+                    <View
+                      style={{
+                        flexWrap: 'wrap',
+                        alignContent: 'center',
+                        flexDirection: 'row',
+                        marginTop: wp(2),
+                      }}>
+                      <Tags
+                        type={'location'}
+                        onClose={(d: any) => {
                           this.setState({
-                            peoplesText: '',
-                            suggestedEmail: false,
+                            assignProjects: this.state.assignProjects.filter(
+                              (v: any) => v !== d,
+                            ),
                           });
                         }}
-                        style={[
-                          styles.involvePsuggCont,
-                          {borderBottomWidth: 0},
-                        ]}>
-                        <Icon
-                          name={'send'}
-                          type={'feather'}
-                          size={wp(5)}
-                          containerStyle={{opacity: 0.5}}
-                        />
-                        <View style={{alignItems: 'center'}}>
-                          <Text
-                            style={{
-                              opacity: 0.5,
-                              fontSize: wp(3),
-                              marginLeft: wp(4),
-                            }}>
-                            Invite {this.state.peoplesText}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
+                        tags={this.state.assignProjects}
+                      />
                     </View>
-                  )}
-                </View>
-                <View style={{flexDirection: 'row'}}>
-                  {this.state.selectedEmails.length != 0 && (
-                    <Tags
-                      type={'organizationPeoplesSuggestioms'}
-                      style={{height: wp(10)}}
-                      tags={this.state.selectedEmails}
-                      onClose={(d: any) =>
-                        this.setState({
-                          selectedEmails: this.state.selectedEmails.filter(
-                            (v: any) => v !== d,
-                          ),
-                        })
-                      }
-                    />
-                  )}
-                </View>
-              </View>
 
-              <TouchableOpacity
-                onPress={() => this.createOrg()}
-                style={styles.siginBtnContainer}>
-                <Text style={styles.signinText}>Create Organization</Text>
-              </TouchableOpacity>
+                    {/* add new location */}
+                    {this.state.assignProjects.length < 3 && (
+                      <TouchableOpacity
+                        onPress={() => this.setState({createModal: true})}
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Icon
+                          containerStyle={{marginRight: wp(3)}}
+                          name={'plus'}
+                          type={'antdesign'}
+                          size={wp(4)}
+                          color={colors.primary}
+                        />
+                        <Text
+                          style={{
+                            fontSize: wp(3.4),
+                            color: colors.primary,
+                            fontFamily: fonts.SFuiDisplayMedium,
+                          }}>
+                          Add New Project
+                        </Text>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+
+                  {/* Project Leader */}
+                  <View>
+                    <View style={{flexDirection: 'row', marginTop: wp(3)}}>
+                      <Text style={styles.emailTextContainer}>
+                        Project Leaders
+                      </Text>
+                      <Icon
+                        containerStyle={{marginTop: wp(1), marginLeft: wp(2)}}
+                        name={'info'}
+                        type={'feather'}
+                        size={wp(3)}
+                        iconStyle={{opacity: 0.5}}
+                      />
+                    </View>
+                    <View style={[styles.inputContainer]}>
+                      <TextInput
+                        value={this.state.projectleadersText}
+                        style={styles.authInputs}
+                        onChangeText={(e) => {
+                          if (validateEmail(e)) {
+                            this.setState({suggestedProjectLeadersEmail: true});
+                          } else {
+                          }
+                          this.setState({projectleadersText: e});
+                        }}
+                        placeholder={'Enter Name'}
+                      />
+                    </View>
+                    {this.state.orgError && (
+                      <Text style={{fontSize: wp(3), color: colors.error}}>
+                        Add people to the organization
+                      </Text>
+                    )}
+                  </View>
+
+                  {/* Project Leaders email suggestions */}
+
+                  <View>
+                    {this.state.suggestedProjectLeadersEmail == false ? null : (
+                      <View style={styles.involveSuggestCont}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.state.selectedProjectleadersEmail.push(
+                              this.state.projectleadersText,
+                            );
+                            this.setState({
+                              projectleadersText: '',
+                              suggestedProjectLeadersEmail: false,
+                            });
+                          }}
+                          style={[
+                            styles.involvePsuggCont,
+                            {borderBottomWidth: 0},
+                          ]}>
+                          <Icon
+                            name={'send'}
+                            type={'feather'}
+                            size={wp(5)}
+                            containerStyle={{opacity: 0.5}}
+                          />
+                          <View style={{alignItems: 'center'}}>
+                            <Text
+                              style={{
+                                opacity: 0.5,
+                                fontSize: wp(3),
+                                marginLeft: wp(4),
+                              }}>
+                              Invite {this.state.projectleadersText}
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    )}
+                  </View>
+
+                  {/* selected projectLeaders tags */}
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                      // width: wp(80),
+                    }}>
+                    {this.state.selectedProjectleadersEmail.length != 0 && (
+                      <Tags
+                        type={'organizationPeoplesSuggestioms'}
+                        style={{height: wp(10)}}
+                        tags={this.state.selectedProjectleadersEmail}
+                        onClose={(d: any) =>
+                          this.setState({
+                            selectedProjectleadersEmail: this.state.selectedProjectleadersEmail.filter(
+                              (v: any) => v !== d,
+                            ),
+                          })
+                        }
+                      />
+                    )}
+                  </View>
+
+                  {/* People */}
+                  <View>
+                    <View style={{flexDirection: 'row', marginTop: wp(3)}}>
+                      <Text style={styles.emailTextContainer}>People</Text>
+                      <Icon
+                        containerStyle={{marginTop: wp(1), marginLeft: wp(2)}}
+                        name={'info'}
+                        type={'feather'}
+                        size={wp(3)}
+                        iconStyle={{opacity: 0.5}}
+                      />
+                    </View>
+                    <View style={[styles.inputContainer]}>
+                      <TextInput
+                        value={this.state.peoplesText}
+                        style={styles.authInputs}
+                        onChangeText={(e) => this.searchForUsers(e)}
+                        placeholder={'Enter name or add email'}
+                      />
+                    </View>
+                    {this.state.orgError && (
+                      <Text style={{fontSize: wp(3), color: colors.error}}>
+                        Add people to the organization
+                      </Text>
+                    )}
+                  </View>
+                  {/* Peoples email suggestions */}
+
+                  <View>
+                    {this.state.suggestedEmail == false ? null : (
+                      <View style={styles.involveSuggestCont}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.state.selectedEmails.push(
+                              this.state.peoplesText,
+                            );
+                            this.setState({
+                              peoplesText: '',
+                              suggestedEmail: false,
+                            });
+                          }}
+                          style={[
+                            styles.involvePsuggCont,
+                            {borderBottomWidth: 0},
+                          ]}>
+                          <Icon
+                            name={'send'}
+                            type={'feather'}
+                            size={wp(5)}
+                            containerStyle={{opacity: 0.5}}
+                          />
+                          <View style={{alignItems: 'center'}}>
+                            <Text
+                              style={{
+                                opacity: 0.5,
+                                fontSize: wp(3),
+                                marginLeft: wp(4),
+                              }}>
+                              Invite {this.state.peoplesText}
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    )}
+                  </View>
+
+                  {/* selected peoples tags */}
+                  <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {this.state.selectedEmails.length != 0 && (
+                      <Tags
+                        type={'organizationPeoplesSuggestioms'}
+                        style={{height: wp(10)}}
+                        tags={this.state.selectedEmails}
+                        onClose={(d: any) =>
+                          this.setState({
+                            selectedEmails: this.state.selectedEmails.filter(
+                              (v: any) => v !== d,
+                            ),
+                          })
+                        }
+                      />
+                    )}
+                  </View>
+                </View>
+
+                <TouchableOpacity
+                  onPress={() => this.createOrg()}
+                  style={styles.siginBtnContainer}>
+                  <Text style={styles.signinText}>Create Organization</Text>
+                </TouchableOpacity>
+              </View>
+              {/* )} */}
             </View>
-            {/* )} */}
-          </View>
-        </ScrollView>
-        {/* validations error */}
-        {/* Modal Container */}
+          </ScrollView>
+          {/* validations error */}
+          {/* Modal Container */}
+        </View>
+
+        {/* Error modal */}
         <Modal
           isVisible={this.state.errorModal}
           onBackdropPress={() =>

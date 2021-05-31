@@ -410,6 +410,17 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                         //   this.setState({error: true});
                         // }
 
+                        if (e !== '') {
+                          this.setState({
+                            arrayOfRole: suggestInActionsRecommendations(
+                              e.toLowerCase(),
+                              industries,
+                            ),
+                          });
+                        } else {
+                          this.setState({arrayOfRole: []});
+                        }
+                        this.setState({name: e});
                         this.setState({IndustryRole: e});
                       }}
                       placeholder={'For example: Top Management'}
@@ -421,6 +432,28 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     </Text>
                   )}
 
+                  {this.state.arrayOfRole.length != 0 ? (
+                    <View style={styles.involveSuggestCont}>
+                      {this.state.arrayOfRole.map((d: string, i: number) => (
+                        <TouchableOpacity
+                          key={i}
+                          onPress={() => {
+                            this.setState({
+                              name: d,
+                              arrayOfRole: [],
+                            });
+                          }}
+                          style={[
+                            styles.involvePsuggCont,
+                            this.state.arrayOfRole.length == i + 1
+                              ? {borderBottomWidth: wp(0)}
+                              : null,
+                          ]}>
+                          <Text style={styles.involvePSt}>{d}</Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  ) : null}
                   {/* <Text style={styles.passwordWarning}>
                     Password must contain at least 8 characters and must include
                     numbers and special character.

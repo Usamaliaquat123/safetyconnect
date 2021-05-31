@@ -4,6 +4,7 @@ import {fromCognitoIdentityPool} from '@aws-sdk/credential-provider-cognito-iden
 import {CognitoIdentityClient} from '@aws-sdk/client-cognito-identity';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import OneSignal from 'react-native-onesignal';
+import InAppBrowser from 'react-native-inappbrowser-reborn';
 
 // Load the SDK for JavaScript
 // var AWS = require('aws-sdk');
@@ -93,6 +94,21 @@ const configSentry = () => {
 //   })
 
 // }
+
+const urlOpener = async (url: any, redirectUrl: any) => {
+  await InAppBrowser.isAvailable();
+  const {type, url: newUrl} = await InAppBrowser.openAuth(url, redirectUrl, {
+    showTitle: false,
+    enableUrlBarHiding: true,
+    enableDefaultShare: false,
+    ephemeralWebSession: false,
+  });
+
+  if (type === 'success') {
+    console.log(newUrl);
+    // Linking.openURL(newUrl);
+  }
+};
 
 const AmlifyConfigure = () => {
   return new Promise((resolve, reject) => {

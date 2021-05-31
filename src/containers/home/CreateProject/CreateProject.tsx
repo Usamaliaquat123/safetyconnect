@@ -218,11 +218,13 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
           <View style={[styles.content]}>
             {this.state.loading == true ? (
               <View
-                style={{
-                  alignSelf: 'center',
-                  marginTop: wp(40),
-                  marginBottom: wp(40),
-                }}>
+                style={
+                  {
+                    // alignSelf: 'center',
+                    // marginTop: wp(4),
+                    // marginBottom: wp(40),
+                  }
+                }>
                 <LottieView
                   autoPlay={true}
                   style={{width: wp(90)}}
