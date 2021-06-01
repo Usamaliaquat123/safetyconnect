@@ -437,8 +437,8 @@ export const cameraCapture = () => {
 };
 
 export const redirectDynamiclink = (link: any, navigation: any) => {
-  console.log('Dynamic link');
-  console.log(link);
+  // console.log('Dynamic link');
+  // console.log(link);
   // console.log(link);
   if (link != null) {
     if (link.url.split('/')[3].split('?')[0] == 'user-info') {
@@ -463,7 +463,7 @@ export const redirectDynamiclink = (link: any, navigation: any) => {
       });
     } else if (link.url.split('/')[3].split('?')[0] == 'check-social-user') {
       // social login
-      console.log(link);
+      // console.log(link);
     }
   }
 };

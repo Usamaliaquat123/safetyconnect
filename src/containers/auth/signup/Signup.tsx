@@ -17,7 +17,7 @@ import {
 } from 'react-native-responsive-screen';
 import {Icon, Avatar} from 'react-native-elements';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
-
+import {CognitoAuth} from 'amazon-cognito-auth-js';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {colors, images, GlStyles} from '@theme';
@@ -53,16 +53,39 @@ class Signup extends React.Component<SignupProps, any> {
       conentLoading: '',
       error: false,
       errorModal: false,
+      user: {},
     };
   }
 
   componentDidMount = () => {
+    // console.log();
+    // Linking.getInitialURL().then((res) => console.log(res));
     // Auth.signOut();
-    Linking.addEventListener('sd', (e) => {});
+    Linking.addEventListener('sd', (e) => {
+      // console.log(e);
+    });
     dynamicLinks().onLink((l) => {
-      console.log(l);
+      // console.log(l);
+      console.log('line67');
+
+      // Hub.listen('auth', ({payload: {event, data}}) => {
+      //   console.log('line 70');
+      //   console.log(event);
+      //   console.log(data);
+      //   switch (event) {
+      //     case 'signIn':
+      //       this.setState({user: data});
+      //       break;
+
+      //     default:
+      //       break;
+      //   }
+      // });
+
       try {
-        Auth.currentAuthenticatedUser().then((user) => console.log(user));
+        console.log('line 84');
+        Auth.currentSession().then((user: any) => this.setState({user}));
+        Auth.currentAuthenticatedUser().then((user) => this.setState({user}));
       } catch (error) {
         console.log(error);
       }
@@ -164,9 +187,9 @@ class Signup extends React.Component<SignupProps, any> {
   continuewithgoogle = async () => {
     // it isn't working at all
     try {
-      const user = await Auth.federatedSignIn({provider: 'Google'});
+      let user = await Auth.federatedSignIn({provider: 'Google'});
 
-      console.log('user');
+      console.log('line 194');
       console.log(user);
     } catch (err) {
       console.log('user error');
