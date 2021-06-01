@@ -371,21 +371,30 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       }}
                       placeholder={'For example: Oil and Gas'}
                     />
-
-                    <Icon
+                    <TouchableOpacity
+                      style={{
+                        // marginRight: wp(),
+                        paddingRight: wp(2),
+                        width: wp(10),
+                        height: wp(10),
+                        justifyContent: 'center',
+                        alignSelf: 'center',
+                      }}
                       onPress={() => {
                         if (this.state.arrayOfRole.length == 0) {
                           this.setState({arrayOfRole: industries});
                         } else {
                           this.setState({arrayOfRole: []});
                         }
-                      }}
-                      containerStyle={{marginRight: wp(3)}}
-                      name={'down'}
-                      type={'antdesign'}
-                      size={wp(3)}
-                      color={colors.text}
-                    />
+                      }}>
+                      <Icon
+                        containerStyle={{marginRight: wp(3)}}
+                        name={'down'}
+                        type={'antdesign'}
+                        size={wp(3)}
+                        color={colors.text}
+                      />
+                    </TouchableOpacity>
                   </View>
 
                   {this.state.nameError && (
@@ -455,20 +464,30 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       }}
                       placeholder={'For example: Top Management'}
                     />
-                    <Icon
-                      onPress={() => {
-                        if (this.state.arrayOfRole.length == 0) {
-                          this.setState({arrayOfRole: industries});
-                        } else {
-                          this.setState({arrayOfRole: []});
-                        }
+                    <TouchableOpacity
+                      style={{
+                        // marginRight: wp(),
+                        paddingRight: wp(6),
+                        width: wp(10),
+                        height: wp(10),
+                        justifyContent: 'center',
+                        alignSelf: 'center',
                       }}
-                      containerStyle={{marginRight: wp(3)}}
-                      name={'down'}
-                      type={'antdesign'}
-                      size={wp(3)}
-                      color={colors.text}
-                    />
+                      onPress={() => {
+                        if (this.state.arrayOfTypesOfRole.length == 0) {
+                          this.setState({arrayOfTypesOfRole: typeofRole});
+                        } else {
+                          this.setState({arrayOfTypesOfRole: []});
+                        }
+                      }}>
+                      <Icon
+                        // containerStyle={{marginRight: wp(3)}}
+                        name={'down'}
+                        type={'antdesign'}
+                        size={wp(3)}
+                        color={colors.text}
+                      />
+                    </TouchableOpacity>
                   </View>
                   {this.state.IndustryRoleError && (
                     <Text style={{color: colors.error, fontSize: wp(3)}}>
@@ -538,6 +557,30 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       }}
                       placeholder={'For example: General Management'}
                     />
+                    <TouchableOpacity
+                      style={{
+                        // marginRight: wp(),
+                        paddingRight: wp(6),
+                        width: wp(10),
+                        height: wp(10),
+                        justifyContent: 'center',
+                        alignSelf: 'center',
+                      }}
+                      onPress={() => {
+                        if (this.state.arrayOfYourRole.length == 0) {
+                          this.setState({arrayOfYourRole: typeofRole});
+                        } else {
+                          this.setState({arrayOfYourRole: []});
+                        }
+                      }}>
+                      <Icon
+                        // containerStyle={{marginRight: wp(8)}}
+                        name={'down'}
+                        type={'antdesign'}
+                        size={wp(3)}
+                        color={colors.text}
+                      />
+                    </TouchableOpacity>
                   </View>
                   {this.state.DesignAndArchitectureTextError && (
                     <Text style={{color: colors.error, fontSize: wp(3)}}>

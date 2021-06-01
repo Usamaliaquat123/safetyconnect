@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   authInputs: {
-    width: wp(90),
+    width: wp(80),
     fontSize: wp(3),
     fontFamily: fonts.SFuiDisplayMedium,
   },
