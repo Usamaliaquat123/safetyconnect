@@ -15,6 +15,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import jwt_decode from 'jwt-decode';
 import {Icon, Avatar} from 'react-native-elements';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
 import {CognitoAuth} from 'amazon-cognito-auth-js';
@@ -33,6 +34,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
 import {Auth, Hub} from 'aws-amplify';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
+import {Create_sor, createApi} from '@service';
 
 type SignupNavigationProp = StackNavigationProp<StackNavigatorProps, 'Signup'>;
 type SignupRouteProp = RouteProp<StackNavigatorProps, 'Signup'>;
@@ -56,11 +58,61 @@ class Signup extends React.Component<SignupProps, any> {
       user: {},
     };
   }
+  componentDidUpdate = () => {
+    console.log('ssds');
+  };
+  handleOpenURL(event: any) {
+    // console.log(event.url);
+    try {
+      Auth.currentSession().then((user: any) => {
+        // console.log('session', user.accessToken.);
 
+        var data = jwt_decode(user.accessToken.jwtToken);
+
+        console.log(data);
+      });
+
+      Auth.currentAuthenticatedUser().then((user) => {
+        createApi
+          .createApi()
+          .getUser(user.signInUserSession.idToken.payload.email)
+          .then((data: any) => {
+            // if(data.success)
+            // console.log(data.data.success);
+            // console.log(this.props.navigation);
+            if (data.data.success == false) {
+              // this.componentDidMount();
+            } else {
+              // this.componentDidMount();
+              // this.props.navigation.navigate('Main');
+              // this.componentDidMount();
+              AsyncStorage.setItem(
+                'email',
+                user.signInUserSession.idToken.payload.email,
+              );
+            }
+          })
+          .catch((err) => console.log(err));
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
   componentDidMount = () => {
+    Linking.addEventListener('url', this.handleOpenURL);
+    const url = Linking.getInitialURL();
+    console.log(url);
+    Linking.getInitialURL().then((res) => {
+      console.log('sdsds');
+      console.log(res);
+    });
+    // const onReceiveURL = ({url}: {url: string}) => listener(url);
+
     // console.log();
     // Linking.getInitialURL().then((res) => console.log(res));
     // Auth.signOut();
+    // Linking.addEventListener('url', onReceiveURL);
+
     Linking.addEventListener('sd', (e) => {
       // console.log(e);
     });
@@ -191,6 +243,7 @@ class Signup extends React.Component<SignupProps, any> {
 
       console.log('line 194');
       console.log(user);
+      // this.props.navigation.navigate('Splash');
     } catch (err) {
       console.log('user error');
       console.log(err);

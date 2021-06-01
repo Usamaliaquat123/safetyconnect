@@ -6,6 +6,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import OneSignal from 'react-native-onesignal';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
 import jwt_decode from 'jwt-decode';
+import {createApi, submitted} from '@service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // Load the SDK for JavaScript
 // var AWS = require('aws-sdk');
@@ -13,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // AWS.config.update({region: 'us-west-2'});
 
 // OneSignal Configuration
+
 const oneSignalConfig = () => {
   /* O N E S I G N A L   S E T U P */
   OneSignal.setAppId('df570e2e-881b-406d-b974-885ff8f31be3');
@@ -45,10 +47,6 @@ const oneSignalConfig = () => {
         notifReceivedEvent.complete(notif);
       },
     };
-
-    // Alert.alert('Complete notification?', 'Test', [button1, button2], {
-    //   cancelable: true,
-    // });
   });
   OneSignal.setNotificationOpenedHandler((notification) => {
     console.log('OneSignal: notification opened:', notification);
@@ -120,7 +118,17 @@ const urlOpener = async (url: any, redirectUrl: any) => {
       });
 
       Auth.currentAuthenticatedUser().then((user) => {
-        console.log('user', user.signInUserSession.idToken.payload.email);
+        createApi
+          .createApi()
+          .getUser(user.signInUserSession.idToken.payload.email)
+          .then((data: any) => {
+            // if(data.success)
+            console.log(data.data.success);
+            if (data.data.success == false) {
+            } else {
+            }
+          })
+          .catch((err) => console.log(err));
       });
     } catch (error) {
       console.log(error);
