@@ -48,6 +48,33 @@ const industries = [
   'Health Care & Pharmaceuticals',
   'Others (Please Specify)',
 ];
+
+const typeofRole = [
+  'Figurehead',
+  'Leader',
+  'Liaison',
+  'Monitor',
+  'Disseminator',
+  'Spokesperson',
+  'Entrepreneur',
+  'Disturbance Handler',
+  'Resource Allocator',
+  'Negotiator',
+];
+
+const yourRole = [
+  'Figurehead',
+  'Leader',
+  'Liaison',
+  'Monitor',
+  'Disseminator',
+  'Spokesperson',
+  'Entrepreneur',
+  'Disturbance Handler',
+  'Resource Allocator',
+  'Negotiator',
+];
+
 export interface TellAboutYouProps {
   navigation: TellAboutYouNavigationProp;
   route: TellAboutYouRouteProp;
@@ -81,7 +108,11 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
       laoding: false,
       arrayOfRole: [],
 
+      arrayOfTypesOfRole: [],
       IndustryRole: '',
+
+      // Array of your role
+      arrayOfYourRole: [],
     };
   }
 
@@ -412,15 +443,14 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
 
                         if (e !== '') {
                           this.setState({
-                            arrayOfRole: suggestInActionsRecommendations(
+                            arrayOfTypesOfRole: suggestInActionsRecommendations(
                               e.toLowerCase(),
-                              industries,
+                              typeofRole,
                             ),
                           });
                         } else {
-                          this.setState({arrayOfRole: []});
+                          this.setState({arrayOfTypesOfRole: []});
                         }
-                        this.setState({name: e});
                         this.setState({IndustryRole: e});
                       }}
                       placeholder={'For example: Top Management'}
@@ -432,28 +462,31 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     </Text>
                   )}
 
-                  {this.state.arrayOfRole.length != 0 ? (
+                  {this.state.arrayOfTypesOfRole.length != 0 ? (
                     <View style={styles.involveSuggestCont}>
-                      {this.state.arrayOfRole.map((d: string, i: number) => (
-                        <TouchableOpacity
-                          key={i}
-                          onPress={() => {
-                            this.setState({
-                              name: d,
-                              arrayOfRole: [],
-                            });
-                          }}
-                          style={[
-                            styles.involvePsuggCont,
-                            this.state.arrayOfRole.length == i + 1
-                              ? {borderBottomWidth: wp(0)}
-                              : null,
-                          ]}>
-                          <Text style={styles.involvePSt}>{d}</Text>
-                        </TouchableOpacity>
-                      ))}
+                      {this.state.arrayOfTypesOfRole.map(
+                        (d: string, i: number) => (
+                          <TouchableOpacity
+                            key={i}
+                            onPress={() => {
+                              this.setState({
+                                IndustryRole: d,
+                                arrayOfTypesOfRole: [],
+                              });
+                            }}
+                            style={[
+                              styles.involvePsuggCont,
+                              this.state.arrayOfTypesOfRole.length == i + 1
+                                ? {borderBottomWidth: wp(0)}
+                                : null,
+                            ]}>
+                            <Text style={styles.involvePSt}>{d}</Text>
+                          </TouchableOpacity>
+                        ),
+                      )}
                     </View>
                   ) : null}
+
                   {/* <Text style={styles.passwordWarning}>
                     Password must contain at least 8 characters and must include
                     numbers and special character.
@@ -476,11 +509,19 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       underlineColorAndroid="transparent"
                       style={styles.selectText}
                       value={this.state.DesignAndArchitectureText}
-                      onChange={(e) =>
-                        this.setState({
-                          DesignAndArchitectureText: e.nativeEvent.text,
-                        })
-                      }
+                      onChangeText={(e) => {
+                        if (e !== '') {
+                          this.setState({
+                            arrayOfYourRole: suggestInActionsRecommendations(
+                              e.toLowerCase(),
+                              typeofRole,
+                            ),
+                          });
+                        } else {
+                          this.setState({arrayOfYourRole: []});
+                        }
+                        this.setState({DesignAndArchitectureText: e});
+                      }}
                       placeholder={'For example: General Management'}
                     />
                   </View>
@@ -489,6 +530,30 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       * Enter your Role
                     </Text>
                   )}
+                  {this.state.arrayOfYourRole.length != 0 ? (
+                    <View style={styles.involveSuggestCont}>
+                      {this.state.arrayOfYourRole.map(
+                        (d: string, i: number) => (
+                          <TouchableOpacity
+                            key={i}
+                            onPress={() => {
+                              this.setState({
+                                DesignAndArchitectureText: d,
+                                arrayOfYourRole: [],
+                              });
+                            }}
+                            style={[
+                              styles.involvePsuggCont,
+                              this.state.arrayOfYourRole.length == i + 1
+                                ? {borderBottomWidth: wp(0)}
+                                : null,
+                            ]}>
+                            <Text style={styles.involvePSt}>{d}</Text>
+                          </TouchableOpacity>
+                        ),
+                      )}
+                    </View>
+                  ) : null}
                 </View>
 
                 <TouchableOpacity
