@@ -69,12 +69,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
       members: [],
       assignProjects: [],
       // Project Leaders
-      selectedProjectleadersEmail: [
-        's@d.com',
-        'd@d.com',
-        'd@d.com',
-        'asdha@asghd.com',
-      ],
+      selectedProjectleadersEmail: [],
       projectleadersText: '',
       suggestedProjectLeadersEmail: false,
 
@@ -252,7 +247,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
             style={{
               marginRight: wp(5),
               marginLeft: wp(5),
-              marginTop: wp(2),
+              marginTop: wp(15),
               marginBottom: wp(5),
             }}>
             <View style={styles.content}>
@@ -331,57 +326,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                       <Text style={{fontSize: wp(3), color: colors.error}}>
                         Type your organization description
                       </Text>
-                    )}
-                  </View>
-
-                  {/* Projects */}
-                  <View style={{marginTop: wp(3)}}>
-                    <Text style={styles.emailTextContainer}>Projects</Text>
-                    <View
-                      style={{
-                        flexWrap: 'wrap',
-                        alignContent: 'center',
-                        flexDirection: 'row',
-                        marginTop: wp(2),
-                      }}>
-                      <Tags
-                        type={'location'}
-                        onClose={(d: any) => {
-                          this.setState({
-                            assignProjects: this.state.assignProjects.filter(
-                              (v: any) => v !== d,
-                            ),
-                          });
-                        }}
-                        tags={this.state.assignProjects}
-                      />
-                    </View>
-
-                    {/* add new location */}
-                    {this.state.assignProjects.length < 3 && (
-                      <TouchableOpacity
-                        onPress={() => this.setState({createNewProject: true})}
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}>
-                        <Icon
-                          containerStyle={{marginRight: wp(3)}}
-                          name={'plus'}
-                          type={'antdesign'}
-                          size={wp(4)}
-                          color={colors.primary}
-                        />
-                        <Text
-                          style={{
-                            fontSize: wp(3.4),
-                            color: colors.primary,
-                            fontFamily: fonts.SFuiDisplayMedium,
-                          }}>
-                          Add New Project
-                        </Text>
-                      </TouchableOpacity>
                     )}
                   </View>
 
