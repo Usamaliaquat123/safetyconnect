@@ -116,8 +116,12 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                 console.log(res);
                 if (res.status == 200) {
                   if (this.state.selectedEmails.length != 0) {
+                    var emails = this.state.selectedEmails.concat(
+                      this.state.selectedProjectleadersEmail,
+                    );
+
                     var inviteData = {
-                      emails: this.state.selectedEmails,
+                      emails: emails,
                       organization: res.data.data.organization_id,
                       invitedBy: email,
                       organizationName: this.state.org,
@@ -374,6 +378,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                             this.state.selectedProjectleadersEmail.push(
                               this.state.projectleadersText,
                             );
+
                             this.setState({
                               projectleadersText: '',
                               suggestedProjectLeadersEmail: false,
