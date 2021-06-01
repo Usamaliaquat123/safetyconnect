@@ -16,6 +16,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Icon, Avatar} from 'react-native-elements';
+import InAppBrowser from 'react-native-inappbrowser-reborn';
+
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {colors, images, GlStyles} from '@theme';
@@ -29,7 +31,7 @@ import {Bars} from 'react-native-loader';
 import {validatePassword, mainPass, redirectDynamiclink} from '@utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
-import {Auth} from 'aws-amplify';
+import {Auth, Hub} from 'aws-amplify';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 
 type SignupNavigationProp = StackNavigationProp<StackNavigatorProps, 'Signup'>;
@@ -55,8 +57,19 @@ class Signup extends React.Component<SignupProps, any> {
   }
 
   componentDidMount = () => {
+    // Auth.signOut();
     Linking.addEventListener('sd', (e) => {});
     dynamicLinks().onLink((l) => {
+      console.log(l);
+      try {
+        Auth.currentAuthenticatedUser().then((user) => console.log(user));
+      } catch (error) {
+        console.log(error);
+      }
+
+      // console.log('user');
+      // console.log(user);
+
       // this.handleDynamicLink(l);
       redirectDynamiclink(l, this.props.navigation);
     });
@@ -152,7 +165,13 @@ class Signup extends React.Component<SignupProps, any> {
     // it isn't working at all
     try {
       const user = await Auth.federatedSignIn({provider: 'Google'});
-    } catch (err) {}
+
+      console.log('user');
+      console.log(user);
+    } catch (err) {
+      console.log('user error');
+      console.log(err);
+    }
   };
   render() {
     return (

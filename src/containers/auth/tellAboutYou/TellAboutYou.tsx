@@ -455,6 +455,20 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       }}
                       placeholder={'For example: Top Management'}
                     />
+                    <Icon
+                      onPress={() => {
+                        if (this.state.arrayOfRole.length == 0) {
+                          this.setState({arrayOfRole: industries});
+                        } else {
+                          this.setState({arrayOfRole: []});
+                        }
+                      }}
+                      containerStyle={{marginRight: wp(3)}}
+                      name={'down'}
+                      type={'antdesign'}
+                      size={wp(3)}
+                      color={colors.text}
+                    />
                   </View>
                   {this.state.IndustryRoleError && (
                     <Text style={{color: colors.error, fontSize: wp(3)}}>

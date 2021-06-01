@@ -66,6 +66,7 @@ export const classifySor: Array<Object> = [
 //   }
 
 // };
+
 export const filterLocation = (str: any) => {
   return str.match(/@\S+/);
 };
@@ -436,6 +437,7 @@ export const cameraCapture = () => {
 };
 
 export const redirectDynamiclink = (link: any, navigation: any) => {
+  console.log('Dynamic link');
   console.log(link);
   // console.log(link);
   if (link != null) {
@@ -470,7 +472,7 @@ export const redirectDynamiclink = (link: any, navigation: any) => {
 export const GOOGLE_AUTH = () => {
   return new Promise((resolve, reject) => {
     try {
-      var data = Auth.federatedSignIn({provider: 'Google'});
+      var data = Auth.federatedSignIn();
 
       resolve(data);
     } catch (error) {
