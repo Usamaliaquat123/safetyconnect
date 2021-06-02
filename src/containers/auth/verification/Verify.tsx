@@ -11,8 +11,8 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
-import {colors, images, GlStyles} from '@theme';
-import {Bars} from 'react-native-loader';
+import {colors, images, GlStyles, animation} from '@theme';
+import LottieView from 'lottie-react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -169,7 +169,12 @@ class Verify extends React.Component<VerifyProps, any> {
             }>
             {this.state.loading == true ? (
               <View style={{alignSelf: 'center'}}>
-                <Bars size={wp(5)} color={colors.primary} />
+                <LottieView
+                  autoPlay={true}
+                  style={{width: wp(90)}}
+                  source={animation.loading}
+                  loop={true}
+                />
               </View>
             ) : null}
           </Modal>

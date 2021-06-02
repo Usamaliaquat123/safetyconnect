@@ -85,7 +85,7 @@ class Home extends React.Component<HomeProps, any> {
       .then((file: any) => {
         console.log(file.data);
 
-        this.setState({image: file.data});
+        // this.setState({image: file.data});
       });
 
     getCurrentProject().then((currentProj: any) => {
