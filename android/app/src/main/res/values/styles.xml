@@ -4,6 +4,21 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:textColor">#000000</item>
+         <item name="android:timePickerDialogTheme">@style/ClockTimePickerDialog</item>
     </style>
+
+ 
+   
+
+   <style name="ClockTimePickerDialog" parent="Theme.AppCompat.DayNight.Dialog">
+
+        <!-- bg colour change -->
+        <item name="android:windowBackground">#181818</item>
+
+        <!-- my app primary blue colour -->
+        <item name="colorAccent">#68B7FC</item>
+    </style>
+
+
 
 </resources>

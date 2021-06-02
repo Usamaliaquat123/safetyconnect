@@ -14,6 +14,7 @@ import {connect} from 'react-redux';
 import {Create_sor, riskxSeverityxliklihood} from '@service/mock';
 import styles from './style';
 import moment from 'moment';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import {
   searchInSuggestions,
@@ -60,6 +61,7 @@ type CreateSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'CreateSOR'
 >;
+
 type CreateSORRouteProp = RouteProp<StackNavigatorProps, 'CreateSOR'>;
 
 export interface CreateSORProps {
@@ -147,6 +149,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       marked: {
         [moment().format('YYYY-MM-DD')]: {marked: true, color: 'green'},
       },
+      setTimeModal: true,
     };
   }
 
@@ -1058,7 +1061,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       marginLeft: wp(1),
                     }}>
                     <Text style={{fontWeight: 'bold'}}>
-                      {moment().format('MMMM DD, YYYY')}
+                      {moment(this.state.todayDateCallender).format(
+                        'MMMM DD, YYYY',
+                      )}
                     </Text>{' '}
                     at about{' '}
                     <Text style={{fontWeight: 'bold'}}>
@@ -2109,6 +2114,31 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               />
             </View>
           </Modal>
+
+          {/* <Modal
+            animationInTiming={1000}
+            animationIn={'bounceInUp'}
+            animationOut={'bounceOutDown'}
+            animationOutTiming={1000}
+            useNativeDriver={true}
+            isVisible={this.state.setTimeModal}
+            onBackdropPress={() => {
+              this.setState({errorModal: false, loading: false});
+            }}> */}
+          <DateTimePicker
+            // testID="dateTimePicker"
+            style={{backgroundColor: colors.darkLightGrey}}
+            // themeVariant={'dark'}
+            value={new Date()}
+            mode={'time'}
+            is24Hour={true}
+            display="clock"
+            onChange={() => {
+              console.log('sds');
+            }}
+          />
+          {/* </Modal> */}
+          {/* Time Picker */}
 
           {/* SuggestionPop */}
           {this.state.SuggestionPop == true && (
