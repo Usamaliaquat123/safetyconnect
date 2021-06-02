@@ -152,7 +152,7 @@ const AmlifyConfigure = () => {
           scopes: ['email', 'openId'],
           domain: 'homesafety.auth.us-east-2.amazoncognito.com',
           redirectSignIn: 'safetyconnect://chat/Eri',
-          redirectSignOut: 'https://safetyconnect.page.link/signGoogle?code',
+          redirectSignOut: 'safetyconnect://chat/Eri',
           urlOpener,
           responseType: 'code', // or 'token', note that REFRESH token will only be generated when the responseType is code
         },

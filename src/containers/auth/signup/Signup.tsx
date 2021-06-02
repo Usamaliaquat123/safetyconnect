@@ -61,12 +61,10 @@ class Signup extends React.Component<SignupProps, any> {
   componentDidUpdate = () => {
     console.log('ssds');
   };
-  handleOpenURL(event: any) {
-    // console.log(event.url);
+  handleOpenURL(navigation: any) {
+    this.setState({loading: true, errorModal: true});
     try {
       Auth.currentSession().then((user: any) => {
-        // console.log('session', user.accessToken.);
-
         var data = jwt_decode(user.accessToken.jwtToken);
 
         console.log(data);
@@ -77,19 +75,18 @@ class Signup extends React.Component<SignupProps, any> {
           .createApi()
           .getUser(user.signInUserSession.idToken.payload.email)
           .then((data: any) => {
-            // if(data.success)
-            // console.log(data.data.success);
-            // console.log(this.props.navigation);
             if (data.data.success == false) {
-              // this.componentDidMount();
+              this.setState({loading: false, errorModal: false});
+              navigation.navigate('TellAboutYou', {
+                username: user.signInUserSession.idToken.payload.email,
+              });
             } else {
-              // this.componentDidMount();
-              // this.props.navigation.navigate('Main');
-              // this.componentDidMount();
+              this.setState({loading: false, errorModal: false});
               AsyncStorage.setItem(
                 'email',
                 user.signInUserSession.idToken.payload.email,
               );
+              navigation.navigate('Main');
             }
           })
           .catch((err) => console.log(err));
@@ -98,20 +95,11 @@ class Signup extends React.Component<SignupProps, any> {
       console.log(error);
     }
   }
-  componentDidMount = () => {
-    Linking.addEventListener('url', this.handleOpenURL);
-    const url = Linking.getInitialURL();
-    console.log(url);
-    Linking.getInitialURL().then((res) => {
-      console.log('sdsds');
-      console.log(res);
-    });
-    // const onReceiveURL = ({url}: {url: string}) => listener(url);
 
-    // console.log();
-    // Linking.getInitialURL().then((res) => console.log(res));
-    // Auth.signOut();
-    // Linking.addEventListener('url', onReceiveURL);
+  componentDidMount = () => {
+    Linking.addEventListener('url', () => {
+      this.handleOpenURL(this.props.navigation);
+    });
 
     Linking.addEventListener('sd', (e) => {
       // console.log(e);
@@ -119,28 +107,6 @@ class Signup extends React.Component<SignupProps, any> {
     dynamicLinks().onLink((l) => {
       // console.log(l);
       console.log('line67');
-
-      // Hub.listen('auth', ({payload: {event, data}}) => {
-      //   console.log('line 70');
-      //   console.log(event);
-      //   console.log(data);
-      //   switch (event) {
-      //     case 'signIn':
-      //       this.setState({user: data});
-      //       break;
-
-      //     default:
-      //       break;
-      //   }
-      // });
-
-      try {
-        console.log('line 84');
-        Auth.currentSession().then((user: any) => this.setState({user}));
-        Auth.currentAuthenticatedUser().then((user) => this.setState({user}));
-      } catch (error) {
-        console.log(error);
-      }
 
       // console.log('user');
       // console.log(user);

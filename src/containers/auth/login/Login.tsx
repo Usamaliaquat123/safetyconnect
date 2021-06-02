@@ -10,6 +10,7 @@ import {
   TextInput,
   Linking,
 } from 'react-native';
+import jwt_decode from 'jwt-decode';
 import {Avatar, Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
 import styles from './styles';
@@ -77,7 +78,44 @@ class Login extends React.Component<LoginProps, any> {
     });
   };
 
+  handleOpenURL(navigation: any) {
+    this.setState({loading: true, errorModal: true});
+    try {
+      Auth.currentSession().then((user: any) => {
+        var data = jwt_decode(user.accessToken.jwtToken);
+
+        console.log(data);
+      });
+
+      Auth.currentAuthenticatedUser().then((user) => {
+        createApi
+          .createApi()
+          .getUser(user.signInUserSession.idToken.payload.email)
+          .then((data: any) => {
+            if (data.data.success == false) {
+              this.setState({loading: false, errorModal: false});
+              navigation.navigate('TellAboutYou', {
+                username: user.signInUserSession.idToken.payload.email,
+              });
+            } else {
+              this.setState({loading: false, errorModal: false});
+              AsyncStorage.setItem(
+                'email',
+                user.signInUserSession.idToken.payload.email,
+              );
+              navigation.navigate('Main');
+            }
+          })
+          .catch((err) => console.log(err));
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
   componentDidMount() {
+    Linking.addEventListener('url', () => {
+      this.handleOpenURL(this.props.navigation);
+    });
     Linking.addEventListener('sd', (e) => {});
     // dynamicLinks().app.;
     // dynamicLinks()
