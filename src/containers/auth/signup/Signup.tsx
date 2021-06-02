@@ -11,6 +11,7 @@ import {
   Linking,
 } from 'react-native';
 import {connect} from 'react-redux';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -27,7 +28,6 @@ import {validateEmail} from '@utils';
 import {RouteProp} from '@react-navigation/native';
 import {animation} from '@theme';
 import styles from './styles';
-// import {Bars} from 'react-native-loader';
 
 import {validatePassword, mainPass, redirectDynamiclink} from '@utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -220,6 +220,18 @@ class Signup extends React.Component<SignupProps, any> {
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* content */}
+          <DateTimePicker
+            // testID="dateTimePicker"
+            style={{backgroundColor: colors.darkLightGrey}}
+            // themeVariant={'dark'}
+            value={new Date()}
+            mode={'time'}
+            is24Hour={true}
+            display="clock"
+            onChange={() => {
+              console.log('sds');
+            }}
+          />
           <View>
             <View style={{marginTop: wp(10)}}>
               <Text style={styles.headingContainer}>

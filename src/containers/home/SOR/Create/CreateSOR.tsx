@@ -149,7 +149,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       marked: {
         [moment().format('YYYY-MM-DD')]: {marked: true, color: 'green'},
       },
-      setTimeModal: true,
+      setTimeModal: false,
+      currentTime: Date.now(),
     };
   }
 
@@ -1011,9 +1012,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       {moment(this.state.todayDateCallender).format('YYYY')}{' '}
                     </Text>
                   </TouchableOpacity>
-                  <Text style={styles.obserttle}>
-                    at about {this.state.curTime}
-                  </Text>
+
+                  <Text style={styles.obserttle}>at about</Text>
+                  <Text>{this.state.curTime}</Text>
                 </View>
                 <Text style={styles.obserttle}>it was observed that</Text>
                 <TextInput
@@ -1066,10 +1067,21 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       )}
                     </Text>{' '}
                     at about{' '}
-                    <Text style={{fontWeight: 'bold'}}>
-                      {moment().format('LT')}
-                    </Text>
                   </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      console.log('sds');
+                      this.setState({setTimeModal: !this.state.setTimeModal});
+                    }}>
+                    <Text
+                      style={{
+                        fontFamily: fonts.SFuiDisplayBold,
+                        marginTop: wp(3),
+                        fontSize: wp(3),
+                      }}>
+                      {moment(this.state.currentTime).format('LT')}
+                    </Text>
+                  </TouchableOpacity>
                 </View>
               </View>
               {/* Suggestions  */}
@@ -2115,29 +2127,25 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             </View>
           </Modal>
 
-          {/* <Modal
-            animationInTiming={1000}
-            animationIn={'bounceInUp'}
-            animationOut={'bounceOutDown'}
-            animationOutTiming={1000}
-            useNativeDriver={true}
-            isVisible={this.state.setTimeModal}
-            onBackdropPress={() => {
-              this.setState({errorModal: false, loading: false});
-            }}> */}
-          <DateTimePicker
-            // testID="dateTimePicker"
-            style={{backgroundColor: colors.darkLightGrey}}
-            // themeVariant={'dark'}
-            value={new Date()}
-            mode={'time'}
-            is24Hour={true}
-            display="clock"
-            onChange={() => {
-              console.log('sds');
-            }}
-          />
-          {/* </Modal> */}
+          {this.state.setTimeModal && (
+            <DateTimePicker
+              // testID="dateTimePicker"
+              style={{backgroundColor: colors.darkLightGrey}}
+              // themeVariant={'dark'}
+              value={new Date()}
+              mode={'time'}
+              is24Hour={true}
+              display="clock"
+              onChange={(d: any) => {
+                console.log(d);
+                this.setState({setTimeModal: false});
+                if (d.type == 'set') {
+                  this.setState({currentTime: d.nativeEvent.timestamp});
+                }
+                // console.log('sds');
+              }}
+            />
+          )}
           {/* Time Picker */}
 
           {/* SuggestionPop */}

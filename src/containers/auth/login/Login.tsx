@@ -20,7 +20,6 @@ import {Create_sor, createApi} from '@service';
 import {RouteProp} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import {Auth} from 'aws-amplify';
-import {Bars} from 'react-native-loader';
 import {colors, images, GlStyles, animation} from '@theme';
 import Modal from 'react-native-modal';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
