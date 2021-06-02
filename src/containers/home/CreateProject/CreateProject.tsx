@@ -213,7 +213,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       <View style={styles.container}>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          style={{justifyContent: 'center'}}>
+       >
           {/* content */}
           <View style={[styles.content]}>
             {this.state.loading == true ? (
