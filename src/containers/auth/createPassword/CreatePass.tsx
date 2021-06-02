@@ -358,7 +358,12 @@ class CreatePass extends React.Component<CreatePassProps, any> {
           }>
           {this.state.loading == true && (
             <View style={{alignSelf: 'center'}}>
-              <Bars size={wp(5)} color={colors.primary} />
+              <LottieView
+                autoPlay={true}
+                style={{width: wp(90)}}
+                source={animation.loading}
+                loop={true}
+              />
             </View>
           )}
           {this.state.contentPopup !== '' && (

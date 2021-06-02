@@ -389,7 +389,14 @@ class Login extends React.Component<LoginProps, any> {
           {this.state.loading == true ? (
             <View>
               <View style={{alignSelf: 'center'}}>
-                <Bars size={wp(5)} color={colors.primary} />
+                {/* <Bars size={wp(5)} color={colors.primary} /> */}
+                {/* <Bars size={wp(5)} color={colors.primary} /> */}
+                <LottieView
+                  autoPlay={true}
+                  style={{width: wp(90)}}
+                  source={animation.loading}
+                  loop={true}
+                />
               </View>
             </View>
           ) : (
