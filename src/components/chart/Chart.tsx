@@ -21,32 +21,14 @@ const Chart = (props: Props) => {
   const [severity, setseverity] = useState(props.severity);
   const [total, setTotal] = useState();
 
-  // console.log(props.liklihood.filter((i: any) => i.selected == true)[0].value);
-  // if(liklihood.filter((i: any) => i.selected == true))
-
   if (severity.filter((i: any) => i.selected == true).length != 0) {
-    if (severity.filter((i: any) => i.selected == true).length != 0) {
+    if (liklihood.filter((i: any) => i.selected == true).length != 0) {
       var ttl =
         liklihood.filter((i: any) => i.selected == true)[0].value *
         severity.filter((i: any) => i.selected == true)[0].value;
     }
   }
 
-  console.log();
-  // console.log(props.liklihood.filter((i: any) => i.selected == true).);
-  // if (props.liklihood.filter((i: any) => i.selected == true).length == 0) {
-  //   props.liklihood[0].selected = true;
-  //   props.severity[0].selected = true;
-  //   ttl =
-  //     props.liklihood.filter((i: any) => i.selected == true)[0].value *
-  //     props.severity.filter((i: any) => i.selected == true)[0].value;
-  // } else {
-  //   ttl =
-  //     props.liklihood.filter((i: any) => i.selected == true)[0].value *
-  //     props.severity.filter((i: any) => i.selected == true)[0].value;
-  // }
-  // p[]
-  // var ttl = 9;
   return (
     <View style={props.style}>
       <View style={{paddingBottom: wp(3)}}>

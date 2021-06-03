@@ -431,7 +431,7 @@ const styles = StyleSheet.create({
   },
   AttchimageContainer: {
     width: wp(43),
-    height: wp(30),
+    height: wp(50),
     borderRadius: wp(3),
     margin: wp(1),
   },
@@ -620,6 +620,7 @@ const styles = StyleSheet.create({
   },
   attachmentContentContainer: {
     flexDirection: 'row',
+    // marginTop: wp(5),
   },
   supportedfileFotmatsText: {
     opacity: 0.7,

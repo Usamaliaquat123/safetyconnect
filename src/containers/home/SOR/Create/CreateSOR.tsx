@@ -161,11 +161,24 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         type: [DocumentPicker.types.allFiles],
       });
 
+      if (res.uri == 'image/jpeg' || res.uri == 'image/png') {
+        res.uri = 'image';
+      } else {
+        if (res.name.split('.')[1] == 'docx') {
+          res.type = 'docx';
+        } else if (res.name.split('.')[1] == 'pdf') {
+          res.type = 'pdf';
+        } else if (res.name.split('.')[1] == 'xlsx') {
+          res.type = 'xlsx';
+        }
+      }
+
       this.state.filename.push({
         name: res.name,
         uri: res.uri,
         type: res.type,
       });
+      console.log(this.state.filename);
       this.setState({});
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
@@ -1592,18 +1605,95 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     alignSelf: 'center',
                   }}>
                   {this.state.filename.map((d: any, i: number) => {
-                    if (d.type == 'photo') {
+                    if (d.type == 'image') {
                       return (
                         <TouchableOpacity
                           onPress={() => this.setState({imageViewer: true})}
                           style={styles.AttchimageContainer}>
                           <Image
                             source={{
-                              uri: d.url,
+                              uri: d.uri,
                             }}
                             style={[GlStyles.images, {borderRadius: wp(3)}]}
                             resizeMode={'cover'}
                           />
+                          <TouchableOpacity
+                            onPress={() => {}}
+                            style={{position: 'absolute', right: wp(0)}}>
+                            <TouchableOpacity
+                              onPress={() => {
+                                var arr = [...this.state.filename].filter(
+                                  (b) => b != d,
+                                );
+                                this.setState({filename: arr});
+                              }}>
+                              <Icon
+                                containerStyle={{
+                                  marginRight: wp(2),
+                                  marginTop: wp(2),
+                                  opacity: 0.5,
+                                }}
+                                name="circle-with-cross"
+                                size={wp(5)}
+                                type="entypo"
+                                color={colors.text}
+                              />
+                            </TouchableOpacity>
+                          </TouchableOpacity>
+                        </TouchableOpacity>
+                      );
+                    } else {
+                      return (
+                        <TouchableOpacity
+                          onPress={() => this.setState({imageViewer: true})}
+                          style={[
+                            styles.AttchimageContainer,
+                            {borderWidth: wp(0.3), borderColor: colors.textOpa},
+                          ]}>
+                          <Image
+                            source={
+                              d.type == 'pdf'
+                                ? images.pdf
+                                : d.type == 'docx'
+                                ? images.doc
+                                : d.type == 'xlsx'
+                                ? images.excel
+                                : null
+                            }
+                            style={[GlStyles.images]}
+                            resizeMode={'center'}
+                          />
+                          <Text
+                            style={{
+                              fontSize: wp(3),
+                              fontFamily: fonts.SFuiDisplayLight,
+                              textAlign: 'center',
+                            }}>
+                            {d.name}
+                          </Text>
+                          <TouchableOpacity
+                            onPress={() => {}}
+                            style={{position: 'absolute', right: wp(0)}}>
+                            <TouchableOpacity
+                              onPress={() => {
+                                var arr = [...this.state.filename].filter(
+                                  (b) => b != d,
+                                );
+                                this.setState({filename: arr});
+                              }}>
+                              <Icon
+                                containerStyle={{
+                                  marginRight: wp(2),
+                                  marginTop: wp(2),
+                                  opacity: 0.5,
+                                }}
+                                name="circle-with-cross"
+                                size={wp(5)}
+                                type="entypo"
+                                color={colors.text}
+                              />
+                            </TouchableOpacity>
+                          </TouchableOpacity>
                         </TouchableOpacity>
                       );
                     }
@@ -1615,81 +1705,88 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               {this.state.filename.map((d: any, i: number) => (
                 <View>
                   {d.type != 'photo' ? (
-                    <View style={styles.attachFileContainer}>
-                      <View>
-                        <Image
-                          source={
-                            d.type == 'pdf'
-                              ? images.pdf
-                              : d.type == 'doc'
-                              ? images.doc
-                              : d.type == 'text'
-                              ? images.text
-                              : d.type == 'doc'
-                              ? images.doc
-                              : // : d.type == 'excel'
-                                // ? images.excel
-                                // : d.type == 'powerpoint'
-                                // ? images.powerpoint
-                                null
-                          }
-                          style={{width: wp(7), height: wp(7)}}
-                        />
-                      </View>
-                      <Text style={styles.attchFileText}>
-                        {d.name.substring(0, 10)}.../.{d.type}
-                      </Text>
-                      <View
-                        style={{
-                          position: 'absolute',
-                          right: wp(1),
-                          top: wp(1.5),
-                          alignItems: 'center',
-                          flexDirection: 'row',
-                        }}>
-                        <TouchableOpacity
-                          onPress={() => {
-                            if (d.upload != 'self') {
-                              // this.photoAnim.play();
-                              // downloadFile(d.url, d.type)
-                              //   .then((res: any) => {})
-                              //   .catch((err) => {});
-                            }
-                          }}>
-                          {/* <LottieView
-                            ref={(animation) => {
-                              this.animation = animation;
-                            }}
-                            style={{width: wp(15)}}
-                            source={animation.download}
-                            loop={false}
-                          /> */}
-                        </TouchableOpacity>
-
-                        {d.upload == 'self' ? (
-                          <TouchableOpacity
-                            onPress={() => {
-                              var arr = [...this.state.filename].filter(
-                                (b) => b != d,
-                              );
-                              this.setState({filename: arr});
-                            }}>
-                            <Icon
-                              containerStyle={{
-                                marginRight: wp(2),
-                                marginTop: wp(2),
-                                opacity: 0.5,
-                              }}
-                              name="circle-with-cross"
-                              size={wp(5)}
-                              type="entypo"
-                              color={colors.text}
-                            />
-                          </TouchableOpacity>
-                        ) : null}
-                      </View>
+                    <View>
+                      <Image
+                        source={d.uri}
+                        style={{width: wp(10), height: wp(10)}}
+                      />
                     </View>
-                  ) : null}
+                  ) : //   <View style={styles.attachFileContainer}>
+                  //     <View>
+                  //       <Image
+                  //         source={
+                  //           d.type == 'pdf'
+                  //             ? images.pdf
+                  //             : d.type == 'doc'
+                  //             ? images.doc
+                  //             : d.type == 'text'
+                  //             ? images.text
+                  //             : d.type == 'doc'
+                  //             ? images.doc
+                  //             : // : d.type == 'excel'
+                  //               // ? images.excel
+                  //               // : d.type == 'powerpoint'
+                  //               // ? images.powerpoint
+                  //               null
+                  //         }
+                  //         style={{width: wp(7), height: wp(7)}}
+                  //       />
+                  //     </View>
+                  //     <Text style={styles.attchFileText}>
+                  //       {d.name.substring(0, 10)}.../.{d.type}
+                  //     </Text>
+                  //     {/* Cross of attachments */}
+                  //     <View
+                  //       style={{
+                  //         position: 'absolute',
+                  //         right: wp(1),
+                  //         top: wp(1.5),
+                  //         alignItems: 'center',
+                  //         flexDirection: 'row',
+                  //       }}>
+                  //       <TouchableOpacity
+                  //         onPress={() => {
+                  //           if (d.upload != 'self') {
+                  //             // this.photoAnim.play();
+                  //             // downloadFile(d.url, d.type)
+                  //             //   .then((res: any) => {})
+                  //             //   .catch((err) => {});
+                  //           }
+                  //         }}>
+                  //         {/* <LottieView
+                  //           ref={(animation) => {
+                  //             this.animation = animation;
+                  //           }}
+                  //           style={{width: wp(15)}}
+                  //           source={animation.download}
+                  //           loop={false}
+                  //         /> */}
+                  //       </TouchableOpacity>
+
+                  //       {/* {d.upload == 'self' ? ( */}
+                  //       <TouchableOpacity
+                  //         onPress={() => {
+                  //           var arr = [...this.state.filename].filter(
+                  //             (b) => b != d,
+                  //           );
+                  //           this.setState({filename: arr});
+                  //         }}>
+                  //         <Icon
+                  //           containerStyle={{
+                  //             marginRight: wp(2),
+                  //             marginTop: wp(4),
+                  //             opacity: 0.5,
+                  //           }}
+                  //           name="circle-with-cross"
+                  //           size={wp(5)}
+                  //           type="entypo"
+                  //           color={colors.text}
+                  //         />
+                  //       </TouchableOpacity>
+                  //       {/* ) : null} */}
+                  //     </View>
+                  //   </View>
+                  null}
                 </View>
               ))}
 
@@ -1720,31 +1817,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   </View>
                 </View>
               </View>
-
-              {this.state.filename.length != 0 ? (
-                <View>
-                  {/* {this.state.filename.map((d: string, i: number) => ( */}
-                  <View
-                    style={{
-                      flexWrap: 'wrap',
-                      flexDirection: 'row',
-                    }}>
-                    <Tags
-                      onClose={(d: any) => {
-                        this.setState({
-                          filename: this.state.filename.filter(
-                            (v: any) => v !== d,
-                          ),
-                        });
-                      }}
-                      type={'attachments'}
-                      style={{alignContent: 'center'}}
-                      tags={this.state.filename}
-                    />
-                  </View>
-                  {/* ))} */}
-                </View>
-              ) : null}
             </View>
             {/* Line  */}
             <View style={styles.lineheight} />
@@ -2039,11 +2111,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 borderRadius: wp(3),
                 backgroundColor: colors.secondary,
               }}>
-              
-              
-
-
-
               <Text
                 style={{
                   fontSize: wp(3.5),
@@ -2052,7 +2119,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 }}>
                 Select Your Date
               </Text>
-              <Icon name={'cross'} type={'entypo'} size={wp(3)} color={colors.text} />
+              <Icon
+                name={'cross'}
+                type={'entypo'}
+                size={wp(3)}
+                color={colors.text}
+              />
               <Calendar
                 theme={{
                   textDayFontSize: wp(3),

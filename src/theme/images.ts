@@ -14,7 +14,7 @@ export const images = {
   nothingFound: require('./images/nothingFound.png'),
   forgotPassEmail: require('./images/forgotPass.png'),
   meetBefore: require('./images/metBefore.png'),
-  // excel: require('./images/excel.png'),
+  excel: require('./images/excel.png'),
   // powerpoint: require('./images/powerpoint.png'),
 
   listview: require('./images/icons/list.png'),
