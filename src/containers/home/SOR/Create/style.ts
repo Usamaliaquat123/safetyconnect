@@ -431,7 +431,7 @@ const styles = StyleSheet.create({
   },
   AttchimageContainer: {
     width: wp(43),
-    height: wp(50),
+    height: wp(30),
     borderRadius: wp(3),
     margin: wp(1),
   },

@@ -144,7 +144,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       currentOrg: '',
 
       // Select date and time
-      setDateModal: false,
+      setDateModal: true,
       todayDateCallender: moment().format('YYYY-MM-DD'),
       marked: {
         [moment().format('YYYY-MM-DD')]: {marked: true, color: 'green'},
@@ -1661,12 +1661,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 : null
                             }
                             style={[GlStyles.images]}
-                            resizeMode={'center'}
+                            resizeMode={'contain'}
                           />
                           <Text
                             style={{
-                              fontSize: wp(3),
-                              fontFamily: fonts.SFuiDisplayLight,
+                              fontSize: wp(2.5),
+                              marginTop: wp(1),
+                              fontFamily: fonts.SFuiDisplayMedium,
                               textAlign: 'center',
                             }}>
                             {d.name}
@@ -1700,95 +1701,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   })}
                 </View>
               </View>
-
-              {/* attachments filenams */}
-              {this.state.filename.map((d: any, i: number) => (
-                <View>
-                  {d.type != 'photo' ? (
-                    <View>
-                      <Image
-                        source={d.uri}
-                        style={{width: wp(10), height: wp(10)}}
-                      />
-                    </View>
-                  ) : //   <View style={styles.attachFileContainer}>
-                  //     <View>
-                  //       <Image
-                  //         source={
-                  //           d.type == 'pdf'
-                  //             ? images.pdf
-                  //             : d.type == 'doc'
-                  //             ? images.doc
-                  //             : d.type == 'text'
-                  //             ? images.text
-                  //             : d.type == 'doc'
-                  //             ? images.doc
-                  //             : // : d.type == 'excel'
-                  //               // ? images.excel
-                  //               // : d.type == 'powerpoint'
-                  //               // ? images.powerpoint
-                  //               null
-                  //         }
-                  //         style={{width: wp(7), height: wp(7)}}
-                  //       />
-                  //     </View>
-                  //     <Text style={styles.attchFileText}>
-                  //       {d.name.substring(0, 10)}.../.{d.type}
-                  //     </Text>
-                  //     {/* Cross of attachments */}
-                  //     <View
-                  //       style={{
-                  //         position: 'absolute',
-                  //         right: wp(1),
-                  //         top: wp(1.5),
-                  //         alignItems: 'center',
-                  //         flexDirection: 'row',
-                  //       }}>
-                  //       <TouchableOpacity
-                  //         onPress={() => {
-                  //           if (d.upload != 'self') {
-                  //             // this.photoAnim.play();
-                  //             // downloadFile(d.url, d.type)
-                  //             //   .then((res: any) => {})
-                  //             //   .catch((err) => {});
-                  //           }
-                  //         }}>
-                  //         {/* <LottieView
-                  //           ref={(animation) => {
-                  //             this.animation = animation;
-                  //           }}
-                  //           style={{width: wp(15)}}
-                  //           source={animation.download}
-                  //           loop={false}
-                  //         /> */}
-                  //       </TouchableOpacity>
-
-                  //       {/* {d.upload == 'self' ? ( */}
-                  //       <TouchableOpacity
-                  //         onPress={() => {
-                  //           var arr = [...this.state.filename].filter(
-                  //             (b) => b != d,
-                  //           );
-                  //           this.setState({filename: arr});
-                  //         }}>
-                  //         <Icon
-                  //           containerStyle={{
-                  //             marginRight: wp(2),
-                  //             marginTop: wp(4),
-                  //             opacity: 0.5,
-                  //           }}
-                  //           name="circle-with-cross"
-                  //           size={wp(5)}
-                  //           type="entypo"
-                  //           color={colors.text}
-                  //         />
-                  //       </TouchableOpacity>
-                  //       {/* ) : null} */}
-                  //     </View>
-                  //   </View>
-                  null}
-                </View>
-              ))}
 
               <View style={styles.attachmentContentContainer}>
                 <TouchableOpacity
@@ -2103,7 +2015,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             useNativeDriver={true}
             isVisible={this.state.setDateModal}
             onBackdropPress={() => {
-              this.setState({errorModal: false, loading: false});
+              this.setState({setDateModal: false, loading: false});
             }}>
             <View
               style={{
@@ -2120,9 +2032,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 Select Your Date
               </Text>
               <Icon
+                containerStyle={{position: 'absolute', right: wp(0)}}
                 name={'cross'}
                 type={'entypo'}
-                size={wp(3)}
+                size={wp(4)}
                 color={colors.text}
               />
               <Calendar
