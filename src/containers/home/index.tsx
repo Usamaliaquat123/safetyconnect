@@ -89,31 +89,37 @@ class Home extends React.Component<HomeProps, any> {
       });
 
     getCurrentProject().then((currentProj: any) => {
-      console.log('current organization');
+      // console.log('current project');
       console.log(currentProj);
-      if (this.state.currentorg !== '') {
-      } else {
-      }
+      console.log('currentProj');
+      // if (currentProj == null) {
+      // this.setState({newsorModal: true});
+      // }
+      // if (this.state.currentorg !== '') {
+      // } else {
+      // }
+
+      // if()
       this.setState({projectId: currentProj});
     });
 
-    getCurrentOrganization().then((currentorg) => {
+    getCurrentOrganization().then((currentorg: any) => {
       console.log(currentorg);
       console.log('current project');
-      if (this.state.currentorg !== '') {
-      } else {
-      }
+      // if (currentorg == null) {
+      //   this.setState({newsorModal: true});
+      // }
       this.setState({currentorg});
     });
     // this.setState({name: 'sds'});
 
-    console.log(this.state.currentorg);
-    console.log(this.state.currentProj);
-    if (this.state.currentorg === '' && this.state.currentProj === '') {
-      this.setState({newsorModal: true});
-    } else {
-      this.setState({newsorModal: false});
-    }
+    // console.log(this.state.currentorg);
+    // console.log(this.state.currentProj);
+    // if (this.state.currentorg == null && this.state.currentProj == null) {
+    //   this.setState({newsorModal: true});
+    // } else {
+    //   this.setState({newsorModal: false});
+    // }
 
     AsyncStorage.getItem('email').then((email: any) => {
       createApi
@@ -195,7 +201,7 @@ class Home extends React.Component<HomeProps, any> {
       newsorModal: false,
     });
 
-    savedCurrentProject(d.project_id);
+    await savedCurrentProject(d.project_id);
   };
 
   render() {

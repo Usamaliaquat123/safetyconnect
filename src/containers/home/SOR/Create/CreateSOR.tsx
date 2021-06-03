@@ -747,6 +747,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   if (this.state.submitToTags.length !== 0) {
                     if (this.state.exclateToTags.length !== 0) {
                       this.setState({loading: true, errorModal: true});
+                      console.log(this.state.exclateToTags);
                       // for (
                       //   let i = 0;
                       //   i < this.state.actionRecommendations.length;
@@ -1299,14 +1300,20 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             },
                             project: this.state.projectid,
                           };
+
+                          console.log(bodyInitial);
                           createApi
                             .createApi()
                             .createSorInit(bodyInitial)
                             .then((res: any) => {
-                              this.setState({
-                                reportIdInvestigation: res.data.data.report_id,
-                              });
-                              this.setState({fiveWhytoggle: true});
+                              console.log(res);
+                              if (res.statue == 200) {
+                                this.setState({
+                                  reportIdInvestigation:
+                                    res.data.data.report_id,
+                                });
+                                this.setState({fiveWhytoggle: true});
+                              }
                             })
                             .catch((err) => console.log(err));
                         } else {

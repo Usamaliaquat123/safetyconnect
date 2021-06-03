@@ -158,15 +158,22 @@ class Login extends React.Component<LoginProps, any> {
               if (user.data.data.organizations.length != 0) {
                 savedCurrentOrganization(user.data.data.organizations[0]._id);
                 if (user.data.data.organizations[0].projects.length != 0) {
+                  console.log(
+                    'user.data.data.organizations[0].projects[0].project_id',
+                  );
+                  console.log(
+                    user.data.data.organizations[0].projects[0].project_id,
+                  );
                   savedCurrentProject(
                     user.data.data.organizations[0].projects[0].project_id,
                   );
+
+                  AsyncStorage.setItem('email', this.state.username);
+
+                  this.props.navigation.navigate('Main');
                 }
               }
             });
-          AsyncStorage.setItem('email', this.state.username);
-
-          this.props.navigation.navigate('Main');
         } catch (err) {
           this.setState({errorModal: true, loading: false});
         }
