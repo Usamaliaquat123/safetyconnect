@@ -173,13 +173,20 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         }
       }
 
-      this.state.filename.push({
-        name: res.name,
-        uri: res.uri,
-        type: res.type,
-      });
-      console.log(this.state.filename);
-      this.setState({});
+      if (
+        res.type == 'docx' ||
+        res.type == 'pdf' ||
+        res.type == 'xlsx' ||
+        res.type == 'image'
+      ) {
+        this.state.filename.push({
+          name: res.name,
+          uri: res.uri,
+          type: res.type,
+        });
+        console.log(this.state.filename);
+        this.setState({});
+      }
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         // User cancelled the picker, exit any dialogs or menus and move on
@@ -503,6 +510,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
       console.log(uploadedfiles);
     }
+
     if (this.state.observationT !== '') {
       if (this.state.observation != '') {
         if (sorbtns.length != 0) {
@@ -803,7 +811,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             (d: any) => d.email,
                           ),
                           status: status,
-                          attachments: [],
+                          attachments:
+                            uploadedfiles.length != 0 ? [] : uploadedfiles,
                           comments: ' ',
                         },
                         organization: this.state.currentOrg,
