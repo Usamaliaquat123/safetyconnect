@@ -70,7 +70,7 @@ class MeetBefore extends React.Component<MeetBeforeProps, any> {
 
         this.setState({loading: true, errorModal: true});
         const user = await Auth.signIn(this.state.email, this.state.password);
-        this.setState({errorModal: false, loading: false});
+        // this.setState({errorModal: false, loading: false});
         createApi
           .createApi()
           .getUser(this.props.route.params.email)

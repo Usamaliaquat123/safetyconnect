@@ -452,64 +452,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     }).start();
   };
   onCreateSor = (status: number) => {
+    var uploadedfiles = [];
     var sorbtns = this.state.classifySorbtns.filter(
       (d: any) => d.selected === true,
     );
     var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
     var severity = this.state.severity.filter((d: any) => d.selected == true);
-
-    var uploadedfiles: Array<any>;
-    if (this.state.filename.length != 0) {
-      var filetypes = [];
-      var extensions = [];
-      // if (res.type == 'image/jpeg' || res.type == 'image/png') {
-      //   res.type = 'image';
-      // } else {
-
-      for (let i = 0; i < this.state.filename.length; i++) {
-        if (this.state.filename.type == 'docx') {
-          filetypes.push('application/docx');
-          extensions.push('docx');
-        } else if (this.state.filename.type == 'pdf') {
-          filetypes.push('application/pdf');
-          extensions.push('pdf');
-        } else if (this.state.filename.type == 'xlsx') {
-          filetypes.push('application/xlsx');
-          extensions.push('xlsx');
-        } else if (this.state.filename.type == 'image/jpeg') {
-          filetypes.push('image/jpeg');
-          extensions.push('jpeg');
-        } else if (this.state.filename.type == 'image/png') {
-          filetypes.push('image/png');
-          extensions.push('png');
-        }
-      }
-
-      var attachmentsData = {
-        bucket: 'hns-codist',
-        report: 'attachments',
-        fileType: filetypes,
-        ext: extensions,
-      };
-
-      createApi
-        .createApi()
-        .getFilesUrl(attachmentsData)
-        .then((getUrl: any) => {
-          for (let j = 0; j < this.state.filename.length; j++) {
-            createApi
-              .createApi('', '', '', '', '', '', getUrl.data[0].url)
-              .uploadFile(this.state.filename[j].uri)
-              .then((uploaddta) => {
-                if (uploaddta.status == 200) {
-                  uploadedfiles.push(getUrl.data[0].fileName);
-                }
-              });
-          }
-        });
-
-      console.log(uploadedfiles);
-    }
 
     if (this.state.observationT !== '') {
       if (this.state.observation != '') {
@@ -574,8 +522,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           (d: any) => d.email,
                         ),
                         status: status,
-                        attachments:
-                          uploadedfiles.length != 0 ? [] : uploadedfiles,
+                        attachments: [],
                         comments: ' ',
                       },
                       organization: this.state.currentOrg,
@@ -795,8 +742,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             (d: any) => d.email,
                           ),
                           status: status,
-                          attachments:
-                            uploadedfiles.length != 0 ? [] : uploadedfiles,
+                          attachments: [],
                           comments: ' ',
                         },
                         organization: this.state.currentOrg,
@@ -2244,3 +2190,55 @@ const mapDispatchToProps = (dispatch: any) => ({
   reduxActions: bindActionCreators(reduxActions, dispatch),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CreateSOR);
+
+// if (this.state.filename.length != 0) {
+//   var filetypes = [];
+//   var extensions = [];
+//   // if (res.type == 'image/jpeg' || res.type == 'image/png') {
+//   //   res.type = 'image';
+//   // } else {
+
+//   for (let i = 0; i < this.state.filename.length; i++) {
+//     if (this.state.filename.type == 'docx') {
+//       filetypes.push('application/docx');
+//       extensions.push('docx');
+//     } else if (this.state.filename.type == 'pdf') {
+//       filetypes.push('application/pdf');
+//       extensions.push('pdf');
+//     } else if (this.state.filename.type == 'xlsx') {
+//       filetypes.push('application/xlsx');
+//       extensions.push('xlsx');
+//     } else if (this.state.filename.type == 'image/jpeg') {
+//       filetypes.push('image/jpeg');
+//       extensions.push('jpeg');
+//     } else if (this.state.filename.type == 'image/png') {
+//       filetypes.push('image/png');
+//       extensions.push('png');
+//     }
+//   }
+
+//   var attachmentsData = {
+//     bucket: 'hns-codist',
+//     report: 'attachments',
+//     fileType: filetypes,
+//     ext: extensions,
+//   };
+
+//   createApi
+//     .createApi()
+//     .getFilesUrl(attachmentsData)
+//     .then((getUrl: any) => {
+//       for (let j = 0; j < this.state.filename.length; j++) {
+//         createApi
+//           .createApi('', '', '', '', '', '', getUrl.data[0].url)
+//           .uploadFile(this.state.filename[j].uri)
+//           .then((uploaddta) => {
+//             if (uploaddta.status == 200) {
+//               uploadedfiles.push(getUrl.data[0].fileName);
+//             }
+//           });
+//       }
+//     });
+
+//   console.log(uploadedfiles);
+// }
