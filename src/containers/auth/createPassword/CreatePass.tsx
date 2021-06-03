@@ -14,7 +14,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Auth} from 'aws-amplify';
-import {Bars} from 'react-native-loader';
 import {connect} from 'react-redux';
 import {Icon} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
