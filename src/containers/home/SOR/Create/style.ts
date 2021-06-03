@@ -620,7 +620,7 @@ const styles = StyleSheet.create({
   },
   attachmentContentContainer: {
     flexDirection: 'row',
-    // marginTop: wp(5),
+    marginTop: wp(5),
   },
   supportedfileFotmatsText: {
     opacity: 0.7,
