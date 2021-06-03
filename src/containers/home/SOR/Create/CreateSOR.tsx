@@ -2032,7 +2032,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 Select Your Date
               </Text>
               <Icon
-                containerStyle={{position: 'absolute', right: wp(0)}}
+                onPress={() => this.setState({setDateModal: false})}
+                containerStyle={{
+                  position: 'absolute',
+                  right: wp(2),
+                  top: wp(2),
+                }}
                 name={'cross'}
                 type={'entypo'}
                 size={wp(4)}
@@ -2047,16 +2052,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                   selectedDayTextColor: colors.primary,
                 }}
-                // Initially visible month. Default = Date()
-                // current={'2021-06-06'}
-                // current={`${moment().format('YYYY')}-${moment()
-                //   .month(this.state.selectedMonth)
-                //   .format('MM')}-01`} // 2018-04-01
-                // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-                // minDate={Date.now()}
-                // // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-                // maxDate={Date.now() + 27}
-                // Handler which gets executed on day press. Default = undefined
+         
                 onDayPress={(day) => {
                   let data = {
                     [day.dateString]: {marked: true, color: 'green'},
