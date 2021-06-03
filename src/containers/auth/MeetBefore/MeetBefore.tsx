@@ -13,7 +13,11 @@ import {connect} from 'react-redux';
 import {RouteProp, CommonActions} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
-import {validatePassword} from '@utils';
+import {
+  validatePassword,
+  savedCurrentOrganization,
+  savedCurrentProject,
+} from '@utils';
 import styles from './styles';
 import {colors, images, GlStyles, fonts} from '@theme';
 import {Icon} from 'react-native-elements';
@@ -73,6 +77,19 @@ class MeetBefore extends React.Component<MeetBeforeProps, any> {
           .getUser(this.state.username)
           .then((user: any) => {
             AsyncStorage.setItem('user', JSON.stringify(user.data.data));
+            // console.log(user.data.data.organizations[0]._id);
+            if (user.data.data.organizations.length != 0) {
+              savedCurrentOrganization(user.data.data.organizations[0]._id);
+              if (user.data.data.organizations[0].projects.length != 0) {
+                savedCurrentProject(
+                  user.data.data.organizations[0].projects[0].project_id,
+                );
+
+                AsyncStorage.setItem('email', this.state.username);
+
+                this.props.navigation.navigate('Main');
+              }
+            }
           });
 
         AsyncStorage.setItem('email', this.state.username);

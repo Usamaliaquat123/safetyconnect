@@ -748,23 +748,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     if (this.state.exclateToTags.length !== 0) {
                       this.setState({loading: true, errorModal: true});
                       console.log(this.state.exclateToTags);
-                      // for (
-                      //   let i = 0;
-                      //   i < this.state.actionRecommendations.length;
-                      //   i++
-                      // ) {
-                      //   this.state.actionRecommendations[
-                      //     i
-                      //   ].assigned_to = this.state.actionRecommendations[
-                      //     i
-                      //   ].assigned_to[0];
-                      // }
-                      // Repeated observations
-                      // res.data.results
-
-                      // this.state.actionRecommendations
-                      //   .filter((d: any) => d.selected == true)
-                      //   .filter((d: any) => d.assigned_to.length != 0);
 
                       var rec = this.state.actionRecommendations.filter(
                         (d: any) => d.selected == true,
