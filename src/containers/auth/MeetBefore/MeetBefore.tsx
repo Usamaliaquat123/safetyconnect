@@ -71,13 +71,12 @@ class MeetBefore extends React.Component<MeetBeforeProps, any> {
         this.setState({loading: true, errorModal: true});
         const user = await Auth.signIn(this.state.email, this.state.password);
         this.setState({errorModal: false, loading: false});
-
         createApi
           .createApi()
-          .getUser(this.state.username)
+          .getUser(this.props.route.params.email)
           .then((user: any) => {
-            AsyncStorage.setItem('user', JSON.stringify(user.data.data));
-            // console.log(user.data.data.organizations[0]._id);
+            console.log(user);
+            console.log(user.data.data.organizations[0]._id);
             if (user.data.data.organizations.length != 0) {
               savedCurrentOrganization(user.data.data.organizations[0]._id);
               if (user.data.data.organizations[0].projects.length != 0) {
@@ -87,10 +86,8 @@ class MeetBefore extends React.Component<MeetBeforeProps, any> {
                 savedCurrentProject(
                   user.data.data.organizations[0].projects[0].project_id,
                 );
-
-                AsyncStorage.setItem('email', this.state.username);
-                this.props.navigation.navigate('Main');
-
+                AsyncStorage.setItem('email', this.props.route.params.email);
+                this.setState({errorModal: false, loading: false});
                 this.props.navigation.navigate('Main');
               }
             }
