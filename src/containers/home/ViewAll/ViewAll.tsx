@@ -72,54 +72,46 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       console.log(JSON.parse(user));
     });
 
-    getCurrentProject().then((currentProj) =>
-      this.setState({projectId: currentProj}),
-    );
-    // var d = [];
-    // for (let i = 0; i < this.props.reduxState.allSors.length; i++) {
-    //   if (
-    //     this.props.reduxState.allSors[i].status == this.props.route.params.data
-    //   ) {
-    //     d.push(this.props.reduxState.allSors[i]);
-    //   }
-    // }
-    // this.setState({reports: d});
-    // console.log(this.props.route.params.data);
-    // s.setState({reports: this.props.reduxState.allSors});
-    this.setState({loading: true});
-
-    AsyncStorage.getItem('involved_person').then((involvedPersons: any) => {
-      var data = {
-        project: this.state.projectId,
-        limit: 100000,
-        page: 0,
-        query: {status: [this.props.route.params.data]},
-      };
+    getCurrentProject().then((currentProj: any) => {
+      this.setState({projectId: currentProj});
 
       createApi
         .createApi()
-        .filterSors(data)
-        .then((res: any) => {
-          var sors = [];
-          for (let i = 0; i < res.data.data.report.length; i++) {
-            // console.log(res.data.data.report[i]);
+        .getProject({projectid: currentProj})
+        .then((currentProj: any) => {
+          var data = {
+            project: this.state.currentProj,
+            limit: 100000,
+            page: 0,
+            query: {status: [this.props.route.params.data]},
+          };
 
-            var rep = filterAndMappingPersons(
-              res.data.data.report[i],
-              JSON.parse(involvedPersons),
-            );
+          createApi
+            .createApi()
+            .filterSors(data)
+            .then((res: any) => {
+              var sors = [];
+              for (let i = 0; i < res.data.data.report.length; i++) {
+                // console.log(res.data.data.report[i]);
 
-            sors.push(rep);
-          }
+                var rep = filterAndMappingPersons(
+                  res.data.data.report[i],
+                  currentProj.data.data.involved_person,
+                );
 
-          console.log(sors);
-          this.setState({loading: false});
+                sors.push(rep);
+              }
 
-          this.setState({reports: sors});
-        })
-        .catch((err) => {
-          this.setState({loading: false});
+              this.setState({loading: false});
+
+              this.setState({reports: sors});
+            })
+            .catch((err) => {
+              this.setState({loading: false});
+            });
         });
+
+      this.setState({loading: true});
     });
 
     // console.log(this.props.reduxState.allSors);

@@ -121,9 +121,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   componentDidMount = () => {
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
-      console.log(currentProj);
-
-      console.log(currentProj);
       createApi
         .createApi()
         .getProject({projectid: currentProj})
@@ -149,7 +146,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
             );
           }
 
-          //  this.state.involvedPerson.push(j)
           AsyncStorage.setItem(
             'involved_person',
             JSON.stringify(this.state.involvedPerson),
@@ -168,11 +164,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         .createApi()
         .filterSors(data)
         .then((res: any) => {
-          //  res.data = Object.assign({}, res.data);
-          //  console.log(res.data)
           if (res.data.data == undefined) {
           } else {
-            // console.log(res.data.data.report);
             res.data.data.report.sort(
               (a: any, b: any) => new Date(b.createdAt) - new Date(a.createdAt),
             );

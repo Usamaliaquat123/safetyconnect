@@ -102,10 +102,6 @@ class MeetBefore extends React.Component<MeetBeforeProps, any> {
   // Continue with google
   loginWithGoogle = async () => {
     try {
-      // GoogleSignin.signIn().then(res => {
-      //   console.log(res)
-      // }).catch(err => console.log(err))
-
       const user = await Auth.federatedSignIn({provider: 'Google'});
 
       this.props.navigation.navigate('Main');
