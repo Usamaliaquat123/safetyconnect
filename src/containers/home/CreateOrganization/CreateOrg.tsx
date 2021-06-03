@@ -15,7 +15,6 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {Bars} from 'react-native-loader';
 import * as reduxActions from '../../../store/actions/listSorActions';
 import {Tags} from '@components';
 import {Icon} from 'react-native-elements';
@@ -39,9 +38,9 @@ import {default as Model} from 'react-native-modal';
 // import {validateEmail} from '@utils/';
 type CreateOrgNavigationProp = StackNavigationProp<
   StackNavigatorProps,
-  'Login'
+  'CreateOrganization'
 >;
-type CreateOrgRouteProp = RouteProp<StackNavigatorProps, 'Login'>;
+type CreateOrgRouteProp = RouteProp<StackNavigatorProps, 'CreateOrganization'>;
 
 export interface CreateOrgProps {
   navigation: CreateOrgNavigationProp;

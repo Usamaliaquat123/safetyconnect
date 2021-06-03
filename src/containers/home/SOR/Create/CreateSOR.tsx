@@ -481,7 +481,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         _id: '',
                         created_by: this.state.email,
                         details: this.state.observationT,
-                        occured_at: new Date(),
+                        occured_at: this.state.currentTime,
                         involved_persons: this.state.involvePersonTags.map(
                           (d: any) => d._id,
                         ),
@@ -717,7 +717,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           _id: '',
                           created_by: this.state.email,
                           details: this.state.observationT,
-                          occured_at: new Date(),
+                          occured_at: this.state.currentTime,
                           involved_persons: this.state.involvePersonTags.map(
                             (d: any) => d._id,
                           ),
@@ -2039,6 +2039,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 borderRadius: wp(3),
                 backgroundColor: colors.secondary,
               }}>
+              
+              
+
+
+
               <Text
                 style={{
                   fontSize: wp(3.5),
@@ -2047,11 +2052,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 }}>
                 Select Your Date
               </Text>
+              <Icon name={'cross'} type={'entypo'} size={wp(3)} color={colors.text} />
               <Calendar
                 theme={{
                   textDayFontSize: wp(3),
                   textDayFontFamily: fonts.SFuiDisplayMedium,
                   dotColor: colors.primary,
+                  // textSectionTitleColor: colors.primary,
+
                   selectedDayTextColor: colors.primary,
                 }}
                 // Initially visible month. Default = Date()
@@ -2074,6 +2082,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     selectedDay: day.dateString,
                   });
 
+                  var date = `${day.dateString}`;
+
+                  console.log(this.state.currentTime);
                   this.setState({todayDateCallender: day.dateString});
                   this.setState({setDateModal: false});
                 }}

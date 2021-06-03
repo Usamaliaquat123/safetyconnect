@@ -11,7 +11,6 @@ import {
   Linking,
 } from 'react-native';
 import {connect} from 'react-redux';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -81,6 +80,7 @@ class Signup extends React.Component<SignupProps, any> {
                 username: user.signInUserSession.idToken.payload.email,
               });
             } else {
+              // AsyncStorage.setItem('')
               this.setState({loading: false, errorModal: false});
               AsyncStorage.setItem(
                 'email',
@@ -220,18 +220,7 @@ class Signup extends React.Component<SignupProps, any> {
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* content */}
-          <DateTimePicker
-            // testID="dateTimePicker"
-            style={{backgroundColor: colors.darkLightGrey}}
-            // themeVariant={'dark'}
-            value={new Date()}
-            mode={'time'}
-            is24Hour={true}
-            display="clock"
-            onChange={() => {
-              console.log('sds');
-            }}
-          />
+
           <View>
             <View style={{marginTop: wp(10)}}>
               <Text style={styles.headingContainer}>

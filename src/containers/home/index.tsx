@@ -106,6 +106,9 @@ class Home extends React.Component<HomeProps, any> {
       this.setState({currentorg});
     });
     // this.setState({name: 'sds'});
+
+    console.log(this.state.currentorg);
+    console.log(this.state.currentProj);
     if (this.state.currentorg === '' && this.state.currentProj === '') {
       this.setState({newsorModal: true});
     } else {
@@ -159,9 +162,8 @@ class Home extends React.Component<HomeProps, any> {
       .createApi()
       .getFileApi(data)
       .then((file: any) => {
-        console.log(`data:image/jpeg;base64,${file.data}`);
-
-        this.setState({image: file.data});
+        // console.log(`data:image/jpeg;base64,${file.data}`);
+        // this.setState({image: file.data});
       });
   };
 
