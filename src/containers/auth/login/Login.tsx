@@ -147,7 +147,6 @@ class Login extends React.Component<LoginProps, any> {
             this.state.username,
             this.state.password,
           );
-          this.setState({errorModal: false, loading: false});
 
           createApi
             .createApi()
@@ -167,8 +166,8 @@ class Login extends React.Component<LoginProps, any> {
                   savedCurrentProject(
                     user.data.data.organizations[0].projects[0].project_id,
                   );
-
                   AsyncStorage.setItem('email', this.state.username);
+                  this.setState({errorModal: false, loading: false});
 
                   this.props.navigation.navigate('Main');
                 }
