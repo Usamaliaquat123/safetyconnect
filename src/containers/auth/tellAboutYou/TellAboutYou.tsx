@@ -114,10 +114,13 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
 
       // Array of your role
       arrayOfYourRole: [],
+
+      userFullNameError: false,
+      userFullName: '',
     };
   }
 
-  componentDidMount = () => {};
+  // componentDidMount = () => {};
 
   imgCap = (str: string) => {
     if (str == 'upload') {
@@ -207,7 +210,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
             .then((geturi: any) => {
               console.log('get uri from profile ');
               console.log(geturi);
-              this.uploadImageUri(geturi.data[0].url, this.state.uploadedImage);
+              // this.uploadImageUri(geturi.data[0].url, this.state.uploadedImage);
 
               createApi
                 .createApi('', '', '', '', '', '', geturi.data[0].url)
@@ -215,7 +218,24 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                 .then((res) => {
                   console.log('get status from upload file');
                   console.log(geturi.status);
+
                   if (res.status == 200) {
+                    if (this.props.route.params.isgoogle == true) {
+                      var createUserData = {
+                        name: this.state.userFullName,
+                        email: this.props.route.params.username,
+                        organization: [],
+                        img_url: ' ',
+                      };
+                      createApi
+                        .createApi()
+                        .createUser(createUserData)
+                        .then((res: any) => {
+                          console.log('user created?');
+                          console.log(res);
+                        });
+                    }
+
                     var setUserInfoData = {
                       email: this.props.route.params.username,
                       role: this.state.DesignAndArchitectureText,
@@ -365,7 +385,42 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     </View>
                   </View>
                 </View>
+                {this.props.route.params.isgoogle == true && (
+                  <View style={styles.inputsContainer}>
+                    <Text
+                      style={[styles.emailTextContainer, {marginTop: wp(2)}]}>
+                      Your Full Name *
+                    </Text>
+                    <View
+                      style={[
+                        styles.inputContainer,
+                        this.state.selected == 0
+                          ? {borderColor: colors.primary, padding: wp(0)}
+                          : {
+                              borderColor: colors.textOpa,
+                              padding: wp(0),
+                            },
+                      ]}>
+                      <TextInput
+                        onFocus={() => this.setState({selected: 0})}
+                        underlineColorAndroid="transparent"
+                        style={styles.selectText}
+                        value={this.state.userFullName}
+                        onChangeText={(e) => {
+                          this.setState({userFullName: e});
+                        }}
+                        placeholder={'john doe'}
+                      />
+                    </View>
+                    {this.state.userFullNameError && (
+                      <Text style={{color: colors.error, fontSize: wp(3)}}>
+                        * Enter your Industry Name
+                      </Text>
+                    )}
+                  </View>
+                )}
 
+                {/* your industry */}
                 <View style={styles.inputsContainer}>
                   <Text style={[styles.emailTextContainer, {marginTop: wp(2)}]}>
                     Your Industry *

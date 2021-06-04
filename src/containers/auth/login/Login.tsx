@@ -95,6 +95,7 @@ class Login extends React.Component<LoginProps, any> {
               this.setState({loading: false, errorModal: false});
               navigation.navigate('TellAboutYou', {
                 username: user.signInUserSession.idToken.payload.email,
+                isgoogle: true,
               });
             } else {
               this.setState({loading: false, errorModal: false});

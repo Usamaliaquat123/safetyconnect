@@ -76,26 +76,10 @@ class Signup extends React.Component<SignupProps, any> {
           .then((data: any) => {
             if (data.data.success == false) {
               this.setState({loading: false, errorModal: false});
-
-              var createUserData = {
-                name: 'blah blah',
-                email: user.signInUserSession.idToken.payload.email,
-                organization: [],
-                img_url: ' ',
-              };
-              createApi
-                .createApi()
-                .createUser(createUserData)
-                .then((res: any) => {
-                  console.log('user created?');
-                  console.log(res);
-                  if (res.data.success == true) {
-                    navigation.navigate('TellAboutYou', {
-                      username: user.signInUserSession.idToken.payload.email,
-                    });
-                    this.setState({loading: false, errorModal: false});
-                  }
-                });
+              navigation.navigate('TellAboutYou', {
+                username: user.signInUserSession.idToken.payload.email,
+              });
+              this.setState({loading: false, errorModal: false});
             } else {
               // AsyncStorage.setItem('')
               this.setState({loading: false, errorModal: false});
