@@ -17,7 +17,7 @@ const createApi = (
   baseAi: string = `${base_uri}:5004/`,
   // External Countries api
   // upload files
-  getFile: string = `https://1w2qv98cv8.execute-api.us-west-1.amazonaws.com/`,
+  getFile: string = `https://v7qm45ginh.execute-api.us-west-1.amazonaws.com/`,
   getFileUri: string = `https://64g95tsm4b.execute-api.us-west-1.amazonaws.com/`,
   uploadFilesUri?: string,
 ) => {
@@ -152,7 +152,7 @@ const createApi = (
   const uploadFile = (file: any) =>
     uploadFiles.put('', file, {headers: {'Content-Type': 'image/jpeg'}});
 
-  const getFileApi = (data: any) => getfiles.post('default/getFiles', data);
+  const getFileApi = (data: any) => getfiles.post('default/getFilesUrl', data);
 
   return {
     createFiveWhy,

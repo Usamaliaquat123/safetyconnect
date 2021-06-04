@@ -75,19 +75,6 @@ class Home extends React.Component<HomeProps, any> {
   }
 
   componentDidMount = () => {
-    var data = {
-      bucket: 'hns-codist',
-      report: 'profile/1622449429163.jpeg',
-    };
-    createApi
-      .createApi()
-      .getFileApi(data)
-      .then((file: any) => {
-        console.log(file.data);
-
-        // this.setState({image: file.data});
-      });
-
     getCurrentProject().then((currentProj: any) => {
       // console.log('current project');
       console.log(currentProj);
@@ -138,7 +125,17 @@ class Home extends React.Component<HomeProps, any> {
           //     (d: any) => d._id == this.state.currentorg,
           //   )[0].projects,
           // );
-
+          console.log(res.data.data.img_url);
+          var data = {
+            bucket: 'hns-codist',
+            report: [`profile/${res.data.data.img_url}`],
+          };
+          createApi
+            .createApi()
+            .getFileApi(data)
+            .then((file: any) => {
+              this.setState({image: file.data[0]});
+            });
           if (
             res.data.data.organizations.filter(
               (d: any) => d._id == this.state.currentorg,
@@ -160,17 +157,17 @@ class Home extends React.Component<HomeProps, any> {
         });
     });
 
-    var data = {
-      bucket: 'hns-codist',
-      report: 'profile/1621937387877.jpeg',
-    };
-    createApi
-      .createApi()
-      .getFileApi(data)
-      .then((file: any) => {
-        // console.log(`data:image/jpeg;base64,${file.data}`);
-        // this.setState({image: file.data});
-      });
+    // var data = {
+    //   bucket: 'hns-codist',
+    //   report: 'profile/1621937387877.jpeg',
+    // };
+    // createApi
+    //   .createApi()
+    //   .getFileApi(data)
+    //   .then((file: any) => {
+    //     // console.log(`data:image/jpeg;base64,${file.data}`);
+    //     // this.setState({image: file.data});
+    //   });
   };
 
   _onRefresh = () => {

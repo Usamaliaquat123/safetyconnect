@@ -13,6 +13,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import RNFetchBlob from 'rn-fetch-blob';
 import {View_sor, profileSetupSelections, createApi} from '@service';
 import {connect} from 'react-redux';
 import styles from './styles';
@@ -159,6 +160,19 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
     }
   };
 
+  uploadImageUri = async (url: any, img: any) => {
+    const uri = img;
+    const response = await fetch(uri);
+    const imgBlob = await response.blob();
+
+    createApi
+      .createApi('', '', '', '', '', '', url)
+      .uploadFile(imgBlob)
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
   updateProfile = () => {
     if (this.state.name !== '') {
       if (this.state.DesignAndArchitectureText !== '') {
@@ -169,22 +183,37 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
             errorModal: true,
             IndustryRoleError: false,
           });
+
           var data = {
             bucket: 'hns-codist',
             report: 'profile',
             fileType: [this.state.photofileType],
             ext: [this.state.fileType],
           };
+
+          RNFetchBlob.fetch('GET', this.state.uploadedImage).then(
+            (uploadImage) => {
+              console.log('rnfetch blob');
+              console.log(uploadImage.base64());
+              console.log('rnfetch blob');
+            },
+          );
+
+          // console.log();
           console.log(data);
           createApi
             .createApi()
             .getFilesUrl(data)
             .then((geturi: any) => {
+              console.log('get uri from profile ');
               console.log(geturi);
+              this.uploadImageUri(geturi.data[0].url, this.state.uploadedImage);
+
               createApi
                 .createApi('', '', '', '', '', '', geturi.data[0].url)
                 .uploadFile(this.state.uploadedImage)
                 .then((res) => {
+                  console.log('get status from upload file');
                   console.log(geturi.status);
                   if (res.status == 200) {
                     var setUserInfoData = {

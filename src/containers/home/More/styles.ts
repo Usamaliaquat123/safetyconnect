@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   content: {
     padding: wp(5),
     backgroundColor: colors.secondary,
-
+    flex: 1,
     // flex: 2,
     // marginTop: wp(80),
     // borderTopLeftRadius: wp(8),
