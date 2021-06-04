@@ -169,7 +169,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
       .createApi('', '', '', '', '', '', url)
       .uploadFile(imgBlob)
       .then((res) => {
-        console.log(res);
+        console.log(img);
       });
   };
 
