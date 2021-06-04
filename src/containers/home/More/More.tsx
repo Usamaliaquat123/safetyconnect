@@ -173,6 +173,7 @@ export default class More extends React.Component<MoreProps, any> {
 
                   AsyncStorage.removeItem('user');
                   AsyncStorage.removeItem('email');
+
                   this.props.navigation.dispatch(
                     CommonActions.reset({
                       index: 1,
