@@ -114,14 +114,8 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       this.setState({loading: true});
     });
 
-    // console.log(this.props.reduxState.allSors);
   }
 
-  // isCloseToBottom({layoutMeasurement, contentOffset, contentSize}) {
-  //   return (
-  //     layoutMeasurement.height + contentOffset.y >= contentSize.height - 50
-  //   );
-  // }
 
   _onRefresh = () => {
     this.setState({
