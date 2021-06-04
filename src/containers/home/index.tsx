@@ -217,9 +217,21 @@ class Home extends React.Component<HomeProps, any> {
         })
         .then((res: any) => {
           if (res.data.data.report.length > 3) {
-            this.setState({recentActivity: res.data.data.report.slice(0, 3)});
+            for (let i = 0; i < res.data.data.report.length; i++) {
+              if (res.data.data.report[i].details != undefined) {
+                this.setState({
+                  recentActivity: res.data.data.report.slice(0, 3),
+                });
+
+                // this.recentActivity.push(res.data.data.report[])
+              }
+            }
           } else {
-            this.setState({recentActivity: res.data.data.report});
+            for (let i = 0; i < res.data.data.report.length; i++) {
+              if (res.data.data.report[i].details != undefined) {
+                this.setState({recentActivity: res.data.data.report});
+              }
+            }
           }
         });
     }
