@@ -8,7 +8,6 @@ import {
   Image,
   Linking,
   TextInput,
-  ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
 import {colors, images, GlStyles, animation} from '@theme';

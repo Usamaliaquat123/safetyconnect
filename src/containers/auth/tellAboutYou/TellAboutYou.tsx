@@ -6,7 +6,6 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
-  ActivityIndicator,
   Image,
 } from 'react-native';
 import {
@@ -722,7 +721,6 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
             }>
             {this.state.loading == true && (
               <View>
-                <ActivityIndicator color={colors.primary} size={'large'} />
               </View>
             )}
           </Modal> */}

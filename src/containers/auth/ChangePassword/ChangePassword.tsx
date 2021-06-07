@@ -7,7 +7,6 @@ import {
   Image,
   TextInput,
   ScrollView,
-  ActivityIndicator,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -19,7 +18,8 @@ import {Icon} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {validatePassword} from '@utils';
-import {colors, images, GlStyles} from '@theme';
+import LottieView from 'lottie-react-native';
+import {colors, images, GlStyles, animation} from '@theme';
 import {RouteProp, ThemeProvider} from '@react-navigation/native';
 import styles from './styles';
 import {createApi as api} from '@service';
@@ -312,7 +312,12 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
           }>
           {this.state.loading == true && (
             <View>
-              <ActivityIndicator color={colors.primary} size={'large'} />
+              <LottieView
+                autoPlay={true}
+                style={{width: wp(90)}}
+                source={animation.loading}
+                loop={true}
+              />
             </View>
           )}
           {this.state.contentPopup !== '' && (

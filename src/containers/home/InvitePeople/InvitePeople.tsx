@@ -6,7 +6,6 @@ import {
   Text,
   ScrollView,
   Image,
-  ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
 import {connect} from 'react-redux';
@@ -412,7 +411,12 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
           }>
           {this.state.loading == true ? (
             <View>
-              <ActivityIndicator color={colors.primary} size={'large'} />
+              <LottieView
+                autoPlay={true}
+                style={{width: wp(90)}}
+                source={animation.loading}
+                loop={true}
+              />
             </View>
           ) : (
             <View style={styles.modelContainer}>

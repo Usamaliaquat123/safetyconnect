@@ -6,7 +6,6 @@ import {
   Text,
   ScrollView,
   Image,
-  ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
 import {connect} from 'react-redux';
@@ -202,10 +201,6 @@ class AddLocation extends React.Component<AddLocationProps, any> {
             </View>
             {/* )} */}
           </View>
-      
-      
-      
-      
         </ScrollView>
         {/* validations error */}
         {/* Modal Container */}
@@ -216,7 +211,12 @@ class AddLocation extends React.Component<AddLocationProps, any> {
           }>
           {this.state.loading == true && (
             <View>
-              <ActivityIndicator color={colors.primary} size={'large'} />
+              <LottieView
+                autoPlay={true}
+                style={{width: wp(90)}}
+                source={animation.loading}
+                loop={true}
+              />
             </View>
           )}
         </Modal>

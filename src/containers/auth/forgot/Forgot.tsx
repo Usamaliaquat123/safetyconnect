@@ -7,14 +7,13 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
-  ActivityIndicator,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import styles from './styles';
-import {colors, images} from '@theme';
+import {colors, images, animation} from '@theme';
 import {Auth} from 'aws-amplify';
 import Modal from 'react-native-modal';
 
@@ -185,7 +184,12 @@ class Forgot extends React.Component<ForgotProps, any> {
           }>
           {this.state.loading == true ? (
             <View>
-              <ActivityIndicator color={colors.primary} size={'large'} />
+              <LottieView
+                autoPlay={true}
+                style={{width: wp(90)}}
+                source={animation.loading}
+                loop={true}
+              />
             </View>
           ) : (
             <View style={styles.modelContainer}>

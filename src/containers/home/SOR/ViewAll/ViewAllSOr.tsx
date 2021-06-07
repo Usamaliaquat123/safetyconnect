@@ -8,7 +8,6 @@ import {
   Animated,
   Easing,
   RefreshControl,
-  ActivityIndicator,
   PanResponder,
   Image,
   TextInput,

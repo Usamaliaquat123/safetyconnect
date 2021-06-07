@@ -8,7 +8,6 @@ import {
   Animated,
   Easing,
   Image,
-  ActivityIndicator,
 } from 'react-native';
 import {connect} from 'react-redux';
 import LottieView from 'lottie-react-native';

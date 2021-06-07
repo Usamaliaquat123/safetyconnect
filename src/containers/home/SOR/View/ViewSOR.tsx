@@ -12,7 +12,6 @@ import {
   Modal,
   Easing,
   Alert,
-  ActivityIndicator,
 } from 'react-native';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 import moment from 'moment';
@@ -441,7 +440,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       console.log('sdsd');
       console.log(this.props.route.params.data.comments);
       console.log(this.props.route.params.data._id);
-      
+
       createApi
         .createApi()
         .getAllComents(
@@ -2793,19 +2792,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         />
         <FlashMessage ref="myLocalFlashMessage" />
 
+        {this.state.loading ? (
+          <LottieView
+            autoPlay={true}
+            style={{width: wp(90)}}
+            source={animation.loading}
+            loop={true}
+          />
+        ) : null}
 
-          {this.state.loading  ?
-
-<LottieView
-autoPlay={true}
-style={{width: wp(90)}}
-source={animation.loading}
-loop={true}
-/>
-
-           : null}
-
-{/* 
+        {/* 
         <Model
           animationIn={'bounceInUp'}
           animationOut={'bounceOutDown'}
@@ -2816,7 +2812,6 @@ loop={true}
 
 
 
-          <ActivityIndicator color={colors.primary} size={'large'} />
         </Model> */}
       </Animated.View>
     );

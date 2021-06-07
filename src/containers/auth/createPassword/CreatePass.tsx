@@ -9,6 +9,7 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
+import LottieView from 'lottie-react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,

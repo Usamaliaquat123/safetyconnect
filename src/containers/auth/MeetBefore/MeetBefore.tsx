@@ -5,7 +5,6 @@ import {
   Text,
   ScrollView,
   TextInput,
-  ActivityIndicator,
   TouchableOpacity,
   Image,
 } from 'react-native';
@@ -19,7 +18,8 @@ import {
   savedCurrentProject,
 } from '@utils';
 import styles from './styles';
-import {colors, images, GlStyles, fonts} from '@theme';
+import LottieView from 'lottie-react-native';
+import {colors, images, GlStyles, fonts, animation} from '@theme';
 import {Icon} from 'react-native-elements';
 import {Auth} from 'aws-amplify';
 import {Create_sor, createApi} from '@service';
@@ -287,7 +287,13 @@ class MeetBefore extends React.Component<MeetBeforeProps, any> {
                 }>
                 {this.state.loading == true ? (
                   <View>
-                    <ActivityIndicator color={colors.primary} size={'large'} />
+                    {' '}
+                    <LottieView
+                      autoPlay={true}
+                      style={{width: wp(90)}}
+                      source={animation.loading}
+                      loop={true}
+                    />
                   </View>
                 ) : (
                   <View style={styles.modelContainer}>
