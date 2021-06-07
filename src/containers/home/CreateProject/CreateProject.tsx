@@ -18,7 +18,7 @@ import {colors, fonts} from '@theme';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {Tags, SuggestionsAvatar} from '@components';
-import {RouteProp} from '@react-navigation/native';
+import {RouteProp, CommonActions} from '@react-navigation/native';
 import styles from './styles';
 import {createApi as api} from '@service';
 import {animation} from '@theme';
@@ -135,6 +135,8 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               })
 
               .then((res: any) => {
+                console.log(res);
+
                 if (res.status == 200) {
                   api
                     .createApi()
@@ -152,7 +154,17 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       this.setState({loading: false});
                       AsyncStorage.setItem('email', email);
 
-                      this.props.navigation.navigate('Main');
+                      this.props.navigation.dispatch(
+                        CommonActions.reset({
+                          index: 1,
+                          routes: [
+                            {
+                              name: 'Main',
+                            },
+                          ],
+                        }),
+                      );
+                      // this.props.navigation.navigate('Main');
                       //  AsyncStorage.setItem('token', res.)
                     });
                 }
@@ -189,9 +201,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     }
   };
   componentDidMount = async () => {
-    getCurrentOrganization().then((org) => {
-      console.log(org);
-    });
+    console.log(this.props.route.params.organization);
 
     this.setState({
       allAssignSuppervisorText: this.props.route.params.suggestedUsers,

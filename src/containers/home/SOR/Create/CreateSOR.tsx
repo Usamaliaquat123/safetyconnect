@@ -329,6 +329,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   componentDidMount = () => {
     getCurrentProject().then((currentProj: any) => {
       console.log(currentProj);
+      console.log('project on create sor');
       this.setState({projectid: currentProj});
     });
     getCurrentOrganization().then((currentOrg: any) =>

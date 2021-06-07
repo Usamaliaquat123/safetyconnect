@@ -114,8 +114,12 @@ class Menu extends React.Component<MenuProps, any> {
           {/* Incident and Accident Report */}
           <TouchableOpacity
             onPress={() => {
+              AsyncStorage.getItem('organization').then((org: any) => {
+                this.props.navigation.navigate('createProject', {
+                  organization: org,
+                });
+              });
               //   this.setState({createModal: false});
-              this.props.navigation.navigate('createProject');
             }}
             style={styles.containerOfIcon}>
             <View style={styles.incidentContaineR}>

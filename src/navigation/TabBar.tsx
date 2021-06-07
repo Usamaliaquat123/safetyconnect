@@ -233,12 +233,12 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                 )}
               </TouchableOpacity>
               {/* Create Modal  */}
-
+              {/* 
               <Model
                 isVisible={this.state.createModal}
                 onBackdropPress={() => {
                   this.setState({createModal: false, loading: false});
-                }}></Model>
+                }}></Model> */}
             </View>
           );
         })}

@@ -17,7 +17,7 @@ import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {Create_sor, createApi} from '@service';
-import {RouteProp} from '@react-navigation/native';
+import {RouteProp, CommonActions} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import {Auth} from 'aws-amplify';
 import {colors, images, GlStyles, animation} from '@theme';
@@ -167,7 +167,16 @@ class Login extends React.Component<LoginProps, any> {
                   AsyncStorage.setItem('email', this.state.username);
                   this.setState({errorModal: false, loading: false});
 
-                  this.props.navigation.navigate('Main');
+                  this.props.navigation.dispatch(
+                    CommonActions.reset({
+                      index: 1,
+                      routes: [
+                        {
+                          name: 'Main',
+                        },
+                      ],
+                    }),
+                  );
                 }
               }
             });
