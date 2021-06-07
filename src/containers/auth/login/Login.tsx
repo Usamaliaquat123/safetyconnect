@@ -66,10 +66,7 @@ class Login extends React.Component<LoginProps, any> {
       code: '',
     };
   }
-  // handleDynamicLink = (link: any) => {
-  //   // Handle dynamic link inside your own application
-  //   this.setState({dynamicLink: JSON.stringify(link)});
-  // };
+
   componentWillUnmount = () => {
     this.setState({
       username: '',

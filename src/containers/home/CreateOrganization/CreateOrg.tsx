@@ -119,6 +119,8 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                       this.state.selectedProjectleadersEmail,
                     );
 
+                    console.log(emails);
+
                     var inviteData = {
                       emails: emails,
                       organization: res.data.data.organization_id,
@@ -130,7 +132,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                       .inviteBulk(inviteData)
                       .then((invited) => {
                         var invitedPP = {
-                          users: this.state.selectedEmails,
+                          users: emails,
                           orgnaizationId: res.data.data.organization_id,
                           organizationName: this.state.org,
                         };
@@ -148,24 +150,23 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                                 d._id == res.data.data.organization_id,
                             )[0].members;
 
+                            console.log('SELECTED EMAILS');
+                            console.log(emails);
                             console.log(memeberId);
 
                             var members = [];
-                            for (
-                              let j = 0;
-                              j < this.state.selectedEmails.length;
-                              j++
-                            ) {
+                            for (let j = 0; j < emails.length; j++) {
                               // const element = this.state.selectedEmails[j];
                               for (let i = 0; i < memeberId.length; i++) {
                                 members.push({
                                   _id: memeberId[i],
-                                  email: this.state.selectedEmails[j],
+                                  email: emails[j],
                                 });
                               }
                             }
 
-                            console.log(members);
+                            // console.log(members);
+                            // console.log('members level');
                             AsyncStorage.setItem(
                               'invitedUsersEmails',
                               JSON.stringify(members),

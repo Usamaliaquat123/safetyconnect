@@ -63,12 +63,6 @@ class Signup extends React.Component<SignupProps, any> {
   handleOpenURL(navigation: any) {
     this.setState({loading: true, errorModal: true});
     try {
-      Auth.currentSession().then((user: any) => {
-        var data = jwt_decode(user.accessToken.jwtToken);
-
-        console.log(data);
-      });
-
       Auth.currentAuthenticatedUser().then((user) => {
         createApi
           .createApi()
@@ -78,10 +72,10 @@ class Signup extends React.Component<SignupProps, any> {
               this.setState({loading: false, errorModal: false});
               navigation.navigate('TellAboutYou', {
                 username: user.signInUserSession.idToken.payload.email,
+                isgoogle: true,
               });
               this.setState({loading: false, errorModal: false});
             } else {
-              // AsyncStorage.setItem('')
               this.setState({loading: false, errorModal: false});
               AsyncStorage.setItem(
                 'email',
@@ -101,18 +95,8 @@ class Signup extends React.Component<SignupProps, any> {
     Linking.addEventListener('url', () => {
       this.handleOpenURL(this.props.navigation);
     });
-
-    Linking.addEventListener('sd', (e) => {
-      // console.log(e);
-    });
+    Linking.addEventListener('sd', (e) => {});
     dynamicLinks().onLink((l) => {
-      // console.log(l);
-      console.log('line67');
-
-      // console.log('user');
-      // console.log(user);
-
-      // this.handleDynamicLink(l);
       redirectDynamiclink(l, this.props.navigation);
     });
   };
@@ -204,11 +188,8 @@ class Signup extends React.Component<SignupProps, any> {
   }
 
   continuewithgoogle = async () => {
-    // it isn't working at all
     try {
       let user = await Auth.federatedSignIn({provider: 'Google'});
-
-      // this.props.navigation.navigate('Splash');
     } catch (err) {
       console.log('user error');
       console.log(err);
@@ -275,7 +256,7 @@ class Signup extends React.Component<SignupProps, any> {
                   this.continuewithgoogle();
                 }}
                 style={styles.siginwithGoogle}>
-                <View style={{width: wp(5), height: wp(5), marginRight: wp(3)}}>
+                <View style={styles.imgContainerOfSocialAccounts}>
                   <Image source={images.google} style={GlStyles.images} />
                 </View>
                 <Text style={styles.signinTextGoogle}>
@@ -288,7 +269,7 @@ class Signup extends React.Component<SignupProps, any> {
                   this.continuewithgoogle();
                 }}
                 style={styles.signUpWithApple}>
-                <View style={{width: wp(5), height: wp(5), marginRight: wp(3)}}>
+                <View style={styles.imgContainerOfSocialAccounts}>
                   <Icon
                     size={wp(5)}
                     name="apple1"
@@ -336,13 +317,7 @@ class Signup extends React.Component<SignupProps, any> {
           )}
 
           {this.state.conentLoading !== '' && (
-            <View
-              style={{
-                backgroundColor: colors.secondary,
-                padding: wp(5),
-                alignContent: 'center',
-                borderRadius: wp(3),
-              }}>
+            <View style={styles.errorloadingContent}>
               <Text style={{fontSize: wp(3)}}>{this.state.conentLoading}</Text>
             </View>
           )}

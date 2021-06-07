@@ -183,6 +183,19 @@ const styles = StyleSheet.create({
     padding: wp(10),
     borderRadius: wp(5),
   },
+  imgContainerOfSocialAccounts: {
+    width: wp(5),
+    height: wp(5),
+    marginRight: wp(3),
+  },
+  errorloadingContent : {
+    
+      backgroundColor: colors.secondary,
+      padding: wp(5),
+      alignContent: 'center',
+      borderRadius: wp(3),
+  
+  }
 });
 
 export default styles;

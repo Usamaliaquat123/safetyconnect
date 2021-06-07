@@ -79,23 +79,12 @@ class Home extends React.Component<HomeProps, any> {
       // console.log('current project');
       console.log(currentProj);
       console.log('currentProj');
-      // if (currentProj == null) {
-      // this.setState({newsorModal: true});
-      // }
-      // if (this.state.currentorg !== '') {
-      // } else {
-      // }
-
-      // if()
       this.setState({projectId: currentProj});
     });
 
     getCurrentOrganization().then((currentorg: any) => {
       console.log(currentorg);
       console.log('current project');
-      // if (currentorg == null) {
-      //   this.setState({newsorModal: true});
-      // }
       this.setState({currentorg});
     });
     // this.setState({name: 'sds'});
