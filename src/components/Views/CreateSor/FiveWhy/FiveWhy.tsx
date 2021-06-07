@@ -10,7 +10,7 @@ import {
   ViewStyle,
   Animated,
 } from 'react-native';
-import {suffixThNd} from '@utils';
+import {suffixThNd, FiveWhySubMenus, FiveWhyMenus} from '@utils';
 import {colors, GlStyles, images, fonts} from '@theme';
 
 import styles from './styles';
@@ -44,6 +44,14 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
       answer: '',
       rootcauses: this.props.rootCauses,
       countributoryCauses: this.props.contributoryCauses,
+
+      rootCausesArray: [],
+      contributoryCauseArray: [],
+
+      selectedContributoryCauseQ: '',
+      selectedContributoryCauseA: '',
+      selectedrootCausesQ: '',
+      selectedrootCausesA: '',
     };
   }
   componentDidMount() {
@@ -104,6 +112,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
     this.props.fiveWhyQuestions(this.state.fivewhy.map((d: any) => d.question));
     this.props.fiveWhyAnswer(this.state.fivewhy.map((d: any) => d.answer));
   };
+
   render() {
     return (
       <View style={this.props.containerStyle}>
@@ -189,34 +198,102 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
         <View style={styles.rootCauseContainer}>
           <Text style={styles.keyfindingsText}>Root Causes</Text>
           {/* <View style={styles.rootCauseInputContainer}> */}
-          <TextInput
-            underlineColorAndroid="transparent"
-            style={styles.rootCausesInput}
-            multiline={true}
-            value={this.state.rootcauses}
-            onChangeText={(e) => {
-              this.props.onChangeRiskCause(e);
-              this.setState({rootcauses: e});
-            }}
-            placeholder={'Add Root Causes'}
-          />
+          <TouchableOpacity
+            onPress={() => this.setState({rootCausesArray: FiveWhyMenus})}>
+            <TextInput
+              editable={false}
+              underlineColorAndroid="transparent"
+              style={styles.rootCausesInput}
+              multiline={true}
+              value={this.state.rootcauses}
+              onChangeText={(e) => {
+                this.props.onChangeRiskCause(e);
+                this.setState({rootcauses: e});
+              }}
+              placeholder={'Select Root Causes'}
+            />
+          </TouchableOpacity>
+          {this.state.rootCausesArray.length == 0 ? null : (
+            <View style={styles.involveSuggestCont}>
+              {this.state.rootCausesArray.map((d: any, i: number) => (
+                <TouchableOpacity
+                  key={i}
+                  onPress={() => {
+                    this.state.AssignedTo.push(d.email);
+                    this.setState({
+                      involvePersonText: '',
+                      suggestions: [],
+                    });
+                  }}
+                  style={[
+                    styles.involvePsuggCont,
+                    this.state.rootCausesArray.length == i + 1
+                      ? {borderBottomWidth: wp(0)}
+                      : null,
+                  ]}>
+                  <View>
+                    <Text style={styles.involvePSt}>{d}</Text>
+                  </View>
+                  <Icon
+                    containerStyle={{opacity: 0.5}}
+                    name={'right'}
+                    type={'antdesign'}
+                    size={wp(3)}
+                    color={colors.text}
+                  />
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
           {/* </View> */}
         </View>
         {/* Contributory Causes */}
         <View style={styles.rootCauseContainer}>
           <Text style={styles.keyfindingsText}>Contributory Causes</Text>
           {/* <View style={styles.rootCauseInputContainer}> */}
-          <TextInput
-            underlineColorAndroid="transparent"
-            style={styles.rootCausesInput}
-            multiline={true}
-            value={this.state.countributoryCauses}
-            onChangeText={(e) => {
-              this.props.onChangeCountributory(e);
-              this.setState({countributoryCauses: e});
-            }}
-            placeholder={'Add Contributory causes'}
-          />
+          <TouchableOpacity
+            onPress={() =>
+              this.setState({contributoryCauseArray: FiveWhyMenus})
+            }>
+            <TextInput
+              editable={false}
+              underlineColorAndroid="transparent"
+              style={styles.rootCausesInput}
+              multiline={true}
+              value={this.state.countributoryCauses}
+              onChangeText={(e) => {
+                this.props.onChangeCountributory(e);
+                this.setState({countributoryCauses: e});
+              }}
+              placeholder={'Select Contributory causes'}
+            />
+          </TouchableOpacity>
+          {this.state.contributoryCauseArray.length == 0 ? null : (
+            <View style={styles.involveSuggestCont}>
+              {this.state.contributoryCauseArray.map((d: any, i: number) => (
+                <TouchableOpacity
+                  key={i}
+                  onPress={() => {}}
+                  style={[
+                    styles.involvePsuggCont,
+                    this.state.contributoryCauseArray.length == i + 1
+                      ? {borderBottomWidth: wp(0)}
+                      : null,
+                  ]}>
+                  <View>
+                    <Text style={styles.involvePSt}>{d}</Text>
+                  </View>
+                  <Icon
+                    containerStyle={{opacity: 0.5}}
+                    name={'right'}
+                    type={'antdesign'}
+                    size={wp(3)}
+                    color={colors.text}
+                  />
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
           {/* </View> */}
         </View>
       </View>

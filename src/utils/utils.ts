@@ -45,6 +45,25 @@ export const classifySor: Array<Object> = [
   },
 ];
 
+export const FiveWhyMenus = [
+  'Following Procedure',
+  'Use of tools or equipments',
+  'Use of Protective Method',
+  'Lack of Attention/Awareness',
+  'Exposure to',
+  'Workplace Environment',
+  'Others',
+];
+
+export const FiveWhySubMenus = [
+  'Violation by Individual',
+  'Violation by Group',
+  'Violation by Supervisor',
+  'Operation of Equipment without approval',
+  'Improper position or posture of task',
+  'Work or motion at improper speed',
+  'Others',
+];
 // export const filterEmailsAndSave = (str: Array<any>): Array<any> => {
 //   for (let i = 0; i < str.length; i++) {
 

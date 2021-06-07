@@ -130,7 +130,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  //   Root causes container
+  involveSuggestCont: {
+    borderColor: colors.textOpa,
+    borderRadius: wp(3),
+    padding: wp(3),
+    borderWidth: wp(0.3),
+    marginTop: wp(1),
+  },
+  involvePSt: {
+    fontSize: wp(3),
+    color: colors.text,
+    opacity: 0.8,
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  involvePsuggCont: {
+    borderColor: colors.textOpa,
+    borderBottomWidth: wp(0.1),
+    paddingTop: wp(3),
+    justifyContent: 'space-between',
+    paddingBottom: wp(3),
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
 });
 
 export default styles;

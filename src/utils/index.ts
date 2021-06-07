@@ -6,6 +6,7 @@ import {
   createAction,
   downloadFile,
   searchInObjects,
+  FiveWhyMenus,
   setAsncStorage,
   imagePicker,
   cameraCapture,
@@ -36,6 +37,7 @@ import {
   savedCurrentProject,
   savedCurrentOrganization,
   getAllProjects,
+  FiveWhySubMenus,
 } from './utils';
 export {
   classifySor,
@@ -64,7 +66,9 @@ export {
   suggestInActionsRecommendations,
   searchInSuggestions,
   setHeaderAllign,
+  FiveWhyMenus,
   createAction,
+  FiveWhySubMenus,
   imageAndVideoObjectMap,
   validateEmail,
   searchInObjects,
