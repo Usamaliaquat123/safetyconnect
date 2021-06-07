@@ -126,14 +126,18 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
             console.log(members.map((d: any) => d._id));
 
             // remove commmon member who invited but they didn't use that
-            api
-              .createApi()
-              .getUser(email)
-              .then((d: any) => {
-                members.filter(
-                  (suggUser: any) => suggUser._id != d.data.data._id,
-                );
-              });
+            // api
+            //   .createApi()
+            //   .getUser(email)
+            //   .then((d: any) => {
+            //     members.filter(
+            //       (suggUser: any) => suggUser._id != d.data.data._id,
+            //     );
+            //   });
+
+            console.log('members');
+            console.log(members);
+            console.log('members');
 
             api
               .createApi()
@@ -215,6 +219,8 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   componentDidMount = async () => {
     console.log(this.props.route.params.organization);
     console.log(this.props.route.params.suggestedUsers);
+
+    // api
 
     AsyncStorage.getItem('email').then((email: any) => {
       api
