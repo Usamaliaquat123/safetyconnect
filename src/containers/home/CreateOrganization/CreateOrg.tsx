@@ -153,6 +153,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                             console.log('SELECTED EMAILS');
                             console.log(emails);
                             console.log(memeberId);
+                            console.log('members id');
 
                             var members = [];
                             for (let j = 0; j < emails.length; j++) {
@@ -165,19 +166,22 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                               }
                             }
 
+                            console.log;
+
                             // console.log(members);
                             // console.log('members level');
-                            AsyncStorage.setItem(
-                              'invitedUsersEmails',
-                              JSON.stringify(members),
-                            );
-                            this.setState({members});
+                            // AsyncStorage.setItem(
+                            //   'invitedUsersEmails',
+                            //   JSON.stringify(members),
+                            // );
+                            // this.setState({members});
 
-                            this.setState({loading: false, errorModal: false});
-                            this.props.navigation.navigate('createProject', {
-                              organization: res.data.data.organization_id,
-                              suggestedUsers: members,
-                            });
+                            // this.setState({loading: false, errorModal: false});
+
+                            // this.props.navigation.navigate('createProject', {
+                            //   organization: res.data.data.organization_id,
+                            //   suggestedUsers: members,
+                            // });
                           });
 
                         // AsyncStorage.getItem('invitedUsersEmails').then(

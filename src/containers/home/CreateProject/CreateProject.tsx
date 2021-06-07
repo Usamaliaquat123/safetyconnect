@@ -24,7 +24,6 @@ import {createApi as api} from '@service';
 import {animation} from '@theme';
 import LottieView from 'lottie-react-native';
 
-import {orgnaization} from '@typings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {default as Model} from 'react-native-modal';
 
@@ -123,7 +122,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
             var members = this.state.assignLeaderss.concat(
               this.state.assignSuppervisor,
             );
-            // console.log(members.map((d: any) => d._id));
+            console.log(members.map((d: any) => d._id));
             api
               .createApi()
               .Postproject({
@@ -136,6 +135,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
 
               .then((res: any) => {
                 console.log(res);
+                console.log('created project');
 
                 if (res.status == 200) {
                   api
@@ -154,16 +154,16 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       this.setState({loading: false});
                       AsyncStorage.setItem('email', email);
 
-                      this.props.navigation.dispatch(
-                        CommonActions.reset({
-                          index: 1,
-                          routes: [
-                            {
-                              name: 'Main',
-                            },
-                          ],
-                        }),
-                      );
+                      // this.props.navigation.dispatch(
+                      //   CommonActions.reset({
+                      //     index: 1,
+                      //     routes: [
+                      //       {
+                      //         name: 'Main',
+                      //       },
+                      //     ],
+                      //   }),
+                      // );
                       // this.props.navigation.navigate('Main');
                       //  AsyncStorage.setItem('token', res.)
                     });

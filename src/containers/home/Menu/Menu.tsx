@@ -25,7 +25,7 @@ import {RouteProp} from '@react-navigation/native';
 import {colors, images, GlStyles} from '@theme';
 import {animation} from '@theme';
 import LottieView from 'lottie-react-native';
-import {createApi as api} from '@service';
+import {createApi as api, createApi} from '@service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
 import {bindActionCreators} from 'redux';
@@ -115,9 +115,14 @@ class Menu extends React.Component<MenuProps, any> {
           <TouchableOpacity
             onPress={() => {
               AsyncStorage.getItem('organization').then((org: any) => {
-                this.props.navigation.navigate('createProject', {
-                  organization: org,
-                });
+                AsyncStorage.getItem('invitedUsersEmails').then(
+                  (invitedEmails: any) => {
+                    this.props.navigation.navigate('createProject', {
+                      organization: org,
+                      suggestedUsers: JSON.parse(invitedEmails),
+                    });
+                  },
+                );
               });
               //   this.setState({createModal: false});
             }}
