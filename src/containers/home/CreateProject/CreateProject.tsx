@@ -124,6 +124,16 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               this.state.assignSuppervisor,
             );
             console.log(members.map((d: any) => d._id));
+
+            api
+              .createApi()
+              .getUser(email)
+              .then((d: any) => {
+                members.filter(
+                  (suggUser: any) => suggUser._id != d.data.data._id,
+                );
+              });
+
             api
               .createApi()
               .Postproject({
@@ -220,12 +230,8 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
           );
 
           this.setState({
-            allAssignSuppervisorText: this.props.route.params.suggestedUsers?.filter(
-              (sugg: any) => sugg._id != d.data.data._id,
-            ),
-            allAssignLeaders: this.props.route.params.suggestedUsers?.filter(
-              (sugg: any) => sugg._id != d.data.data._id,
-            ),
+            allAssignSuppervisorText: this.props.route.params.suggestedUsers,
+            allAssignLeaders: this.props.route.params.suggestedUsers,
           });
         });
     });
