@@ -148,8 +148,8 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       );
 
                       savedCurrentProjectAndOrganizations(
-                        this.props.route.params.organization,
                         res.data.data.project_id,
+                        this.props.route.params.organization,
                       );
                       this.setState({loading: false});
                       AsyncStorage.setItem('email', email);
