@@ -156,20 +156,31 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                             console.log('members id');
 
                             var members = [];
+                            var indexes = [];
                             for (let j = 0; j < emails.length; j++) {
+                              indexes.push(j);
                               // const element = this.state.selectedEmails[j];
+                              members.push({
+                                email: emails[j],
+                              });
+                            }
+
+                            for (let f = 0; f < indexes.length; f++) {
                               for (let i = 0; i < memeberId.length; i++) {
-                                members.push({
-                                  _id: memeberId[i],
-                                  email: emails[j],
-                                });
+                                // if(members.)
+                                // members.filter((d : any) => d.email == emails[j])[0]['']
+                                if (indexes[f] == i) {
+                                  members[f]['_id'] = memeberId[i];
+                                }
                               }
                             }
 
-                            console.log;
+                            // emails.map((d: any) => {});
 
-                            // console.log(members);
-                            // console.log('members level');
+                            // console.log('');
+
+                            console.log(members);
+                            console.log('members level');
                             // AsyncStorage.setItem(
                             //   'invitedUsersEmails',
                             //   JSON.stringify(members),
