@@ -125,6 +125,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
             );
             console.log(members.map((d: any) => d._id));
 
+            // remove commmon member who invited but they didn't use that
             api
               .createApi()
               .getUser(email)
