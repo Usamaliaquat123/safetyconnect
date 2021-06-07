@@ -1231,18 +1231,19 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             project: this.state.projectid,
                           };
 
-                          console.log(bodyInitial);
+                          // console.log(bodyInitial);
                           createApi
                             .createApi()
                             .createSorInit(bodyInitial)
                             .then((res: any) => {
-                              console.log(res);
-                              if (res.statue == 200) {
+                              console.log(res.data.data);
+                              if (res.status == 200) {
                                 this.setState({
                                   reportIdInvestigation:
                                     res.data.data.report_id,
+                                  fiveWhytoggle: true,
                                 });
-                                this.setState({fiveWhytoggle: true});
+                                // this.setState({fiveWhytoggle: true});
                               }
                             })
                             .catch((err) => console.log(err));
@@ -1280,7 +1281,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     <View
                       style={[
                         styles.fivewhyToggeYes,
-                        this.state.fiveWhytoggle
+                        this.state.fiveWhytoggle == true
                           ? {
                               borderColor: colors.green,
                               backgroundColor: colors.lightGreen,
@@ -1294,7 +1295,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       <Text
                         style={[
                           styles.fivewhyToggeYesText,
-                          this.state.fiveWhytoggle
+                          this.state.fiveWhytoggle == true
                             ? {color: colors.green}
                             : {color: colors.text},
                         ]}>

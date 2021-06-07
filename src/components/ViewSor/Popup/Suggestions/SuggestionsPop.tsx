@@ -69,6 +69,8 @@ export default class SuggestionsPop extends React.Component<
   }
 
   componentDidMount = () => {
+    console.log('asdsd');
+    console.log(this.props.suggestions.justification);
     if (this.props.suggestions.justification != undefined) {
       this.setState({
         addjustificationPop: false,
