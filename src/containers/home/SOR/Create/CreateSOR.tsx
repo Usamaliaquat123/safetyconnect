@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {connect} from 'react-redux';
+import LottieView from 'lottie-react-native';
 import {Create_sor, riskxSeverityxliklihood} from '@service/mock';
 import styles from './style';
 import moment from 'moment';
@@ -28,7 +29,7 @@ import {bindActionCreators} from 'redux';
 import * as reduxActions from '../../../../store/actions/listSorActions';
 
 import {Icon, Avatar} from 'react-native-elements';
-import {colors, images, GlStyles, fonts} from '@theme';
+import {colors, images, GlStyles, fonts, animation} from '@theme';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 
@@ -1964,7 +1965,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               this.setState({errorModal: false, loading: false});
             }}>
             {this.state.loading == true ? (
-              <ActivityIndicator color={colors.primary} size={'large'} />
+              <LottieView
+                autoPlay={true}
+                style={{width: wp(90)}}
+                source={animation.loading}
+                loop={true}
+              />
             ) : (
               <View style={styles.modelContainer}>
                 <View>

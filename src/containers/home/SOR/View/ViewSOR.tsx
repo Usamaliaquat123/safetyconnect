@@ -2793,6 +2793,19 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         />
         <FlashMessage ref="myLocalFlashMessage" />
 
+
+          {this.state.loading  ?
+
+<LottieView
+autoPlay={true}
+style={{width: wp(90)}}
+source={animation.loading}
+loop={true}
+/>
+
+           : null}
+
+{/* 
         <Model
           animationIn={'bounceInUp'}
           animationOut={'bounceOutDown'}
@@ -2800,8 +2813,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           animationOutTiming={1000}
           isVisible={this.state.loading}
           onBackdropPress={() => this.setState({loading: false})}>
+
+
+
           <ActivityIndicator color={colors.primary} size={'large'} />
-        </Model>
+        </Model> */}
       </Animated.View>
     );
   }
