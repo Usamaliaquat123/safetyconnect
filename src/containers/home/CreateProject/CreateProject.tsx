@@ -36,6 +36,7 @@ import {
   suggestInActionsRecommendations,
 } from '@utils';
 import {loadingSceneName} from 'aws-amplify';
+import {DEFAULT_HEADERS} from 'apisauce';
 type CreateProjectNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'createProject'
@@ -152,18 +153,18 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         this.props.route.params.organization,
                       );
                       this.setState({loading: false});
-                      AsyncStorage.setItem('email', email);
+                      // AsyncStorage.setItem('email', email);
 
-                      // this.props.navigation.dispatch(
-                      //   CommonActions.reset({
-                      //     index: 1,
-                      //     routes: [
-                      //       {
-                      //         name: 'Main',
-                      //       },
-                      //     ],
-                      //   }),
-                      // );
+                      this.props.navigation.dispatch(
+                        CommonActions.reset({
+                          index: 1,
+                          routes: [
+                            {
+                              name: 'Main',
+                            },
+                          ],
+                        }),
+                      );
                       // this.props.navigation.navigate('Main');
                       //  AsyncStorage.setItem('token', res.)
                     });
@@ -202,13 +203,33 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   };
   componentDidMount = async () => {
     console.log(this.props.route.params.organization);
+    console.log(this.props.route.params.suggestedUsers);
 
-    this.setState({
-      allAssignSuppervisorText: this.props.route.params.suggestedUsers,
-      allAssignLeaders: this.props.route.params.suggestedUsers,
+    AsyncStorage.getItem('email').then((email: any) => {
+      api
+        .createApi()
+        .getUser(email)
+        .then((d: any) => {
+          AsyncStorage.setItem(
+            'usersInvitedButNotAccepted',
+            JSON.stringify(
+              this.props.route.params.suggestedUsers?.filter(
+                (suggUser) => suggUser._id == d.data.data._id,
+              ),
+            ),
+          );
+
+          this.setState({
+            allAssignSuppervisorText: this.props.route.params.suggestedUsers?.filter(
+              (sugg: any) => sugg._id != d.data.data._id,
+            ),
+            allAssignLeaders: this.props.route.params.suggestedUsers?.filter(
+              (sugg: any) => sugg._id != d.data.data._id,
+            ),
+          });
+        });
     });
 
-    console.log(this.state.allAssignLeaders);
     AsyncStorage.getItem('locations').then((locations: any) => {
       console.log(locations);
       var location = JSON.parse(locations);

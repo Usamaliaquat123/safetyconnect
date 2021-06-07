@@ -175,24 +175,22 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                               }
                             }
 
-                            // emails.map((d: any) => {});
-
                             // console.log('');
 
                             console.log(members);
                             console.log('members level');
-                            // AsyncStorage.setItem(
-                            //   'invitedUsersEmails',
-                            //   JSON.stringify(members),
-                            // );
-                            // this.setState({members});
+                            AsyncStorage.setItem(
+                              'invitedUsersEmails',
+                              JSON.stringify(members),
+                            );
+                            this.setState({members});
 
-                            // this.setState({loading: false, errorModal: false});
+                            this.setState({loading: false, errorModal: false});
 
-                            // this.props.navigation.navigate('createProject', {
-                            //   organization: res.data.data.organization_id,
-                            //   suggestedUsers: members,
-                            // });
+                            this.props.navigation.navigate('createProject', {
+                              organization: res.data.data.organization_id,
+                              suggestedUsers: members,
+                            });
                           });
 
                         // AsyncStorage.getItem('invitedUsersEmails').then(
