@@ -49,11 +49,12 @@ class Settings extends React.Component<SettingsProps, any> {
   componentDidMount() {
     this.setState({loading: true});
     AsyncStorage.getItem('email').then((email: any) => {
+      console.log(email);
       api
         .createApi()
         .getUser(email)
         .then((user: any) => {
-          console.log(user.data.data);
+          console.log(user.data);
 
           this.setState({loading: false});
 
@@ -66,7 +67,8 @@ class Settings extends React.Component<SettingsProps, any> {
           });
 
           console.log(this.state.username);
-        });
+        })
+        .catch((err) => console.log(err));
     });
   }
 
@@ -87,7 +89,7 @@ class Settings extends React.Component<SettingsProps, any> {
           .setUserInfo(data)
           .then((res: any) => {
             this.setState({loading: false});
-            console.log(res);
+            this.props.navigation.goBack();
           })
           .catch((err) => {
             console.log(err);

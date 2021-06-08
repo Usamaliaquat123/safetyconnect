@@ -58,7 +58,7 @@ export default class More extends React.Component<MoreProps, any> {
 
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: colors.primary}}>
+      <View style={{flex: 1, backgroundColor: colors.secondary}}>
         <ScrollView>
           <View style={styles.header}>
             <View style={styles.headertle}>
