@@ -14,11 +14,14 @@ import {RouteProp, CommonActions} from '@react-navigation/native';
 import {StackNavigatorProps} from '@nav';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Icon, Avatar} from 'react-native-elements';
+import Modal from 'react-native-modal';
+import LottieView from 'lottie-react-native';
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {colors, fonts} from '@theme';
+import {colors, fonts, animation} from '@theme';
 import api from '@service/api';
 export interface SettingsProps {
   route: MoreRouteProp;
@@ -39,16 +42,20 @@ class Settings extends React.Component<SettingsProps, any> {
       department: '',
       industry: '',
       role: '',
+      loading: false,
     };
   }
 
   componentDidMount() {
+    this.setState({loading: true});
     AsyncStorage.getItem('email').then((email: any) => {
       api
         .createApi()
         .getUser(email)
         .then((user: any) => {
           console.log(user.data.data);
+
+          this.setState({loading: false});
 
           this.setState({
             username: user.data.data.name,
@@ -66,6 +73,7 @@ class Settings extends React.Component<SettingsProps, any> {
   updateUser = () => {
     if (this.state.username !== ' ') {
       if (this.state.role !== ' ') {
+        this.setState({loading: false});
         var data = {
           email: this.state.email,
           role: this.state.role,
@@ -78,7 +86,12 @@ class Settings extends React.Component<SettingsProps, any> {
           .createApi()
           .setUserInfo(data)
           .then((res: any) => {
+            this.setState({loading: false});
             console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+            this.setState({loading: false});
           });
       }
     }
@@ -265,6 +278,26 @@ class Settings extends React.Component<SettingsProps, any> {
             </View>
           </View>
         </ScrollView>
+
+        {/* Modal Container */}
+        <Modal
+          isVisible={this.state.loading}
+          onBackdropPress={() => this.setState({loading: false})}>
+          {this.state.loading == true ? (
+            <View>
+              <View style={{alignSelf: 'center'}}>
+                {/* <Bars size={wp(5)} color={colors.primary} /> */}
+                {/* <Bars size={wp(5)} color={colors.primary} /> */}
+                <LottieView
+                  autoPlay={true}
+                  style={{width: wp(90)}}
+                  source={animation.loading}
+                  loop={true}
+                />
+              </View>
+            </View>
+          ) : null}
+        </Modal>
       </View>
     );
   }
