@@ -285,6 +285,7 @@ class Home extends React.Component<HomeProps, any> {
                     color={colors.secondary}
                   />
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("Settings")}>
                 <Avatar
                   rounded
                   source={{
@@ -294,6 +295,8 @@ class Home extends React.Component<HomeProps, any> {
                         : 'https://via.placeholder.com/150',
                   }}
                 />
+                </TouchableOpacity>
+               
               </View>
             </View>
           </View>

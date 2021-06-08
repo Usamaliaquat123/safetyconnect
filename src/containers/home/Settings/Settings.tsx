@@ -36,6 +36,8 @@ class Settings extends React.Component<SettingsProps, any> {
     this.state = {
       username: '',
       email: '',
+      department: '',
+      industry: '',
       role: '',
     };
   }
@@ -46,13 +48,44 @@ class Settings extends React.Component<SettingsProps, any> {
         .createApi()
         .getUser(email)
         .then((user: any) => {
-          console.log(user);
+          console.log(user.data.data);
+
+          this.setState({
+            username: user.data.data.name,
+            email: user.data.data.email,
+            role: user.data.data.role,
+            department: user.data.data.department,
+            industry: user.data.data.industry,
+          });
+
+          console.log(this.state.username);
         });
     });
   }
+
+  updateUser = () => {
+    if (this.state.username !== ' ') {
+      if (this.state.role !== ' ') {
+        var data = {
+          email: this.state.email,
+          role: this.state.role,
+          department: this.state.department,
+          industry: this.state.industry,
+          img_url:
+            'https://user-images.githubusercontent.com/33973828/115679334-e690a780-a36b-11eb-9202-3f5fb5413bbf.png',
+        };
+        api
+          .createApi()
+          .setUserInfo(data)
+          .then((res: any) => {
+            console.log(res);
+          });
+      }
+    }
+  };
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: colors.primary}}>
+      <View style={{flex: 1, backgroundColor: colors.secondary}}>
         <ScrollView>
           <View style={styles.header}>
             <View style={styles.headertle}>
@@ -94,8 +127,8 @@ class Settings extends React.Component<SettingsProps, any> {
               <View
                 style={{
                   backgroundColor: colors.green,
-                  width: wp(10),
-                  padding: wp(3),
+                  width: wp(8),
+                  padding: wp(2.2),
                   right: wp(7),
                   top: wp(5),
                   // alignSelf: 'center',
@@ -145,6 +178,7 @@ class Settings extends React.Component<SettingsProps, any> {
                 </Text>
                 <View style={[styles.inputContainer]}>
                   <TextInput
+                    editable={false}
                     style={styles.authInputs}
                     value={this.state.email}
                     onChangeText={(e) => {
@@ -171,7 +205,49 @@ class Settings extends React.Component<SettingsProps, any> {
                     onChangeText={(e) => {
                       this.setState({role: e});
                     }}
-                    placeholder={'johndoe@email.com'}
+                    placeholder={'Role'}
+                  />
+                </View>
+              </View>
+              {/* Your Department */}
+              <View>
+                <Text
+                  style={{
+                    fontSize: wp(3.2),
+                    marginTop: wp(3),
+                    fontFamily: fonts.SFuiDisplaySemiBold,
+                  }}>
+                  Your Department
+                </Text>
+                <View style={[styles.inputContainer]}>
+                  <TextInput
+                    style={styles.authInputs}
+                    value={this.state.department}
+                    onChangeText={(e) => {
+                      this.setState({department: e});
+                    }}
+                    placeholder={'Department'}
+                  />
+                </View>
+              </View>
+              {/* Your Industry */}
+              <View>
+                <Text
+                  style={{
+                    fontSize: wp(3.2),
+                    marginTop: wp(3),
+                    fontFamily: fonts.SFuiDisplaySemiBold,
+                  }}>
+                  Your Industry
+                </Text>
+                <View style={[styles.inputContainer]}>
+                  <TextInput
+                    style={styles.authInputs}
+                    value={this.state.industry}
+                    onChangeText={(e) => {
+                      this.setState({industry: e});
+                    }}
+                    placeholder={'Industry'}
                   />
                 </View>
               </View>
@@ -179,15 +255,12 @@ class Settings extends React.Component<SettingsProps, any> {
 
               <TouchableOpacity
                 // this.setState({repeatedSorModal: true})
-                // onPress={() => this.onCreateSor(4)}
+                onPress={() => this.updateUser()}
                 style={[
                   styles.submitsorbtnSb,
-                  {backgroundColor: colors.green},
+                  // {backgroundColor: colors.green},
                 ]}>
-                <Text
-                  style={[styles.submitsorbtnSbtxt, {color: colors.secondary}]}>
-                  Mark as Complete
-                </Text>
+                <Text style={[styles.submitsorbtnSbtxt]}>Update </Text>
               </TouchableOpacity>
             </View>
           </View>

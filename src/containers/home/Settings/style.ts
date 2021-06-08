@@ -38,18 +38,18 @@ const styles = StyleSheet.create({
   },
   submitsorbtnSb: {
     padding: wp(5),
-    width: wp(45),
+    // width: wp(45),
     borderColor: colors.green,
     marginTop: wp(6),
     alignItems: 'center',
-    backgroundColor: colors.primary,
-    borderWidth: wp(0.1),
+    backgroundColor: colors.green,
+    borderWidth: wp(0.3),
     borderRadius: wp(3),
   },
   submitsorbtnSbtxt: {
-    fontSize: wp(3.5),
+    fontSize: wp(4),
     color: colors.secondary,
-    fontFamily: fonts.SFuiDisplayMedium,
+    fontFamily: fonts.SFuiDisplayBold,
   },
   content: {
     padding: wp(5),

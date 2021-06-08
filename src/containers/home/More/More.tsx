@@ -154,7 +154,9 @@ export default class More extends React.Component<MoreProps, any> {
                 <Text style={styles.itemText}>Data Analytics</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.containerOfItem}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Settings')}
+              style={styles.containerOfItem}>
               <View style={{flexDirection: 'row'}}>
                 <View>
                   <Image
