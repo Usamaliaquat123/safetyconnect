@@ -81,9 +81,12 @@ export default class More extends React.Component<MoreProps, any> {
                 <Text style={styles.username}>{this.state.name}</Text>
                 <Text style={styles.organizations}>{this.state.email}</Text>
               </View>
-              <View style={{position: 'absolute', right: wp(0)}}>
+
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Settings')}
+                style={{position: 'absolute', right: wp(0)}}>
                 <Image style={styles.itemIcon} source={images.menuIcons.edit} />
-              </View>
+              </TouchableOpacity>
             </View>
             {/*  content */}
             <TouchableOpacity style={styles.containerOfItem}>

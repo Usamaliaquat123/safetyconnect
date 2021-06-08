@@ -71,6 +71,7 @@ class Home extends React.Component<HomeProps, any> {
       selectedOrganization: {},
       projSelection: false,
       selectedProject: {},
+      refreshing: false,
     };
   }
 
@@ -80,6 +81,10 @@ class Home extends React.Component<HomeProps, any> {
       console.log(currentProj);
       console.log('currentProj');
       this.setState({projectId: currentProj});
+
+      // createApi.createApi().getProject({projectid :currentProj }).then(res => {
+      //   this.setState( { })
+      // })
     });
 
     getCurrentOrganization().then((currentorg: any) => {
@@ -163,7 +168,7 @@ class Home extends React.Component<HomeProps, any> {
     this.setState({
       recentActivity: [],
     });
-    // this.componentDidMount();
+    this.componentDidMount();
   };
 
   selectedOrg = async (d: any) => {
@@ -180,6 +185,7 @@ class Home extends React.Component<HomeProps, any> {
       this.setState({allProjects: []});
     }
   };
+
   selecteProj = async (d: any) => {
     this.setState({
       selectedProject: d,
@@ -238,6 +244,7 @@ class Home extends React.Component<HomeProps, any> {
         },
         key: `pie-${index}`,
       }));
+
     return (
       <View style={{flex: 1, backgroundColor: colors.primary}}>
         <ScrollView
@@ -285,18 +292,18 @@ class Home extends React.Component<HomeProps, any> {
                     color={colors.secondary}
                   />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("Settings")}>
-                <Avatar
-                  rounded
-                  source={{
-                    uri:
-                      this.state.image !== ''
-                        ? `${this.state.image}`
-                        : 'https://via.placeholder.com/150',
-                  }}
-                />
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('Settings')}>
+                  <Avatar
+                    rounded
+                    source={{
+                      uri:
+                        this.state.image !== ''
+                          ? `${this.state.image}`
+                          : 'https://via.placeholder.com/150',
+                    }}
+                  />
                 </TouchableOpacity>
-               
               </View>
             </View>
           </View>
@@ -403,7 +410,13 @@ class Home extends React.Component<HomeProps, any> {
                   </View>
                 </View>
               ) : (
-                <View>
+                <ScrollView
+                  refreshControl={
+                    <RefreshControl
+                      onRefresh={() => this._onRefresh()}
+                      refreshing={this.state.refreshing}
+                    />
+                  }>
                   <View style={{marginTop: wp(3)}}>
                     {this.state.recentActivity.map((d: Isor, i: number) => (
                       <ListCard
@@ -427,7 +440,7 @@ class Home extends React.Component<HomeProps, any> {
                       />
                     ))}
                   </View>
-                </View>
+                </ScrollView>
               )}
             </View>
             <View style={styles.perfStats}>

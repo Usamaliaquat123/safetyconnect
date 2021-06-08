@@ -104,12 +104,14 @@ class Settings extends React.Component<SettingsProps, any> {
         <ScrollView>
           <View style={styles.header}>
             <View style={styles.headertle}>
-              <Icon
-                name={'arrowleft'}
-                type={'antdesign'}
-                size={wp(5)}
-                color={colors.secondary}
-              />
+              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                <Icon
+                  name={'arrowleft'}
+                  type={'antdesign'}
+                  size={wp(5)}
+                  color={colors.secondary}
+                />
+              </TouchableOpacity>
               <View>
                 <Text style={styles.title}>Profile</Text>
                 {/* <View style={styles.underScrore} /> */}
