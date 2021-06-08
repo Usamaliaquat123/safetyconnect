@@ -26,7 +26,31 @@ const styles = StyleSheet.create({
     color: colors.secondary,
     fontFamily: fonts.SFuiDisplayBold,
   },
+  inputContainer: {
+    marginTop: wp(2),
+    borderColor: colors.primary,
+    borderWidth: wp(0.2),
+    paddingLeft: wp(3),
 
+    borderRadius: wp(1),
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  submitsorbtnSb: {
+    padding: wp(5),
+    width: wp(45),
+    borderColor: colors.green,
+    marginTop: wp(6),
+    alignItems: 'center',
+    backgroundColor: colors.primary,
+    borderWidth: wp(0.1),
+    borderRadius: wp(3),
+  },
+  submitsorbtnSbtxt: {
+    fontSize: wp(3.5),
+    color: colors.secondary,
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
   content: {
     padding: wp(5),
     backgroundColor: colors.secondary,
@@ -35,6 +59,11 @@ const styles = StyleSheet.create({
     // marginTop: wp(80),
     // borderTopLeftRadius: wp(8),
     // borderTopRightRadius: wp(8),
+  },
+  authInputs: {
+    fontSize: wp(3),
+    width: wp(70),
+    fontFamily: fonts.SFuiDisplayMedium,
   },
 });
 

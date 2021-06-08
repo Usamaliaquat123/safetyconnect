@@ -1,5 +1,12 @@
 import * as React from 'react';
-import {View, StyleSheet, Text, ScrollView} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import {connect} from 'react-redux';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -22,6 +29,14 @@ type MoreNavigationProp = StackNavigationProp<StackNavigatorProps, 'Settings'>;
 type MoreRouteProp = RouteProp<StackNavigatorProps, 'Settings'>;
 
 class Settings extends React.Component<SettingsProps, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      username: '',
+      email: '',
+      role: '',
+    };
+  }
   render() {
     return (
       <View style={{flex: 1, backgroundColor: colors.primary}}>
@@ -81,6 +96,86 @@ class Settings extends React.Component<SettingsProps, any> {
                   color={colors.secondary}
                 />
               </View>
+            </View>
+            {/* user profile details */}
+            <View style={{marginTop: wp(5)}}>
+              {/* Full name */}
+              <View>
+                <Text
+                  style={{
+                    fontSize: wp(3.2),
+                    fontFamily: fonts.SFuiDisplaySemiBold,
+                  }}>
+                  Full Name
+                </Text>
+                <View style={[styles.inputContainer]}>
+                  <TextInput
+                    style={styles.authInputs}
+                    value={this.state.username}
+                    onChangeText={(e) => {
+                      this.setState({username: e});
+                    }}
+                    placeholder={'Your Full Name'}
+                  />
+                </View>
+              </View>
+
+              {/* Email Address */}
+              <View>
+                <Text
+                  style={{
+                    fontSize: wp(3.2),
+                    marginTop: wp(3),
+                    fontFamily: fonts.SFuiDisplaySemiBold,
+                  }}>
+                  Email Address
+                </Text>
+                <View style={[styles.inputContainer]}>
+                  <TextInput
+                    style={styles.authInputs}
+                    value={this.state.email}
+                    onChangeText={(e) => {
+                      this.setState({email: e});
+                    }}
+                    placeholder={'johndoe@email.com'}
+                  />
+                </View>
+              </View>
+              {/* Your Role */}
+              <View>
+                <Text
+                  style={{
+                    fontSize: wp(3.2),
+                    marginTop: wp(3),
+                    fontFamily: fonts.SFuiDisplaySemiBold,
+                  }}>
+                  Your Role
+                </Text>
+                <View style={[styles.inputContainer]}>
+                  <TextInput
+                    style={styles.authInputs}
+                    value={this.state.role}
+                    onChangeText={(e) => {
+                      this.setState({role: e});
+                    }}
+                    placeholder={'johndoe@email.com'}
+                  />
+                </View>
+              </View>
+              {/* Save  */}
+
+              <TouchableOpacity
+                // this.setState({repeatedSorModal: true})
+                // onPress={() => this.onCreateSor(4)}
+                style={[
+                  styles.submitsorbtnSb,
+                  {backgroundColor: colors.green},
+                ]}>
+                <Text
+                  style={[styles.submitsorbtnSbtxt, {color: colors.secondary}]}>
+                  Mark as Complete
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
