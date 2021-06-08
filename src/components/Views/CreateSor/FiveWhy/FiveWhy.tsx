@@ -46,8 +46,9 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
       countributoryCauses: this.props.contributoryCauses,
 
       rootCausesArray: [],
+      rootCausesArrayA: [],
       contributoryCauseArray: [],
-
+      contributoryCauseArrayA: [],
       selectedContributoryCauseQ: '',
       selectedContributoryCauseA: '',
       selectedrootCausesQ: '',
@@ -197,32 +198,51 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
         {/* Root Causes */}
         <View style={styles.rootCauseContainer}>
           <Text style={styles.keyfindingsText}>Root Causes</Text>
-          {/* <View style={styles.rootCauseInputContainer}> */}
-          <TouchableOpacity
-            onPress={() => this.setState({rootCausesArray: FiveWhyMenus})}>
-            <TextInput
-              editable={false}
-              underlineColorAndroid="transparent"
-              style={styles.rootCausesInput}
-              multiline={true}
-              value={this.state.rootcauses}
-              onChangeText={(e) => {
-                this.props.onChangeRiskCause(e);
-                this.setState({rootcauses: e});
+
+          <View
+            style={[
+              styles.involveSuggestCont,
+              {padding: wp(0), paddingLeft: wp(3)},
+            ]}>
+            <TouchableOpacity
+              onPress={() => {
+                this.setState({rootCausesArray: FiveWhyMenus});
               }}
-              placeholder={'Select Root Causes'}
-            />
-          </TouchableOpacity>
+              style={[styles.involvePsuggCont, {borderBottomWidth: wp(0)}]}>
+              <View>
+                <Text
+                  style={[
+                    styles.involvePSt,
+                    this.state.selectedrootCausesQ === ''
+                      ? {opacity: 0.3, fontSize: wp(3)}
+                      : null,
+                  ]}>
+                  {this.state.selectedrootCausesQ === ''
+                    ? 'Select Root Causes  '
+                    : this.state.selectedrootCausesQ}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: wp(2.5),
+                    opacity: 0.5,
+                    fontFamily: fonts.SFuiDisplayMedium,
+                  }}>
+                  {this.state.selectedContributoryCauseA}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
           {this.state.rootCausesArray.length == 0 ? null : (
             <View style={styles.involveSuggestCont}>
               {this.state.rootCausesArray.map((d: any, i: number) => (
                 <TouchableOpacity
                   key={i}
                   onPress={() => {
-                    this.state.AssignedTo.push(d.email);
                     this.setState({
-                      involvePersonText: '',
-                      suggestions: [],
+                      selectedrootCausesQ: d,
+                      rootCausesArray: [],
+                      rootCausesArrayA: FiveWhySubMenus,
                     });
                   }}
                   style={[
@@ -245,17 +265,54 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
               ))}
             </View>
           )}
+
+          {this.state.rootCausesArrayA.length == 0 ? null : (
+            <View style={styles.involveSuggestCont}>
+              {this.state.rootCausesArrayA.map((d: any, i: number) => (
+                <TouchableOpacity
+                  key={i}
+                  onPress={() => {
+                    this.setState({
+                      selectedContributoryCauseA: d,
+                      rootCausesArrayA: [],
+                    });
+                  }}
+                  style={[
+                    styles.involvePsuggCont,
+                    this.state.rootCausesArrayA.length == i + 1
+                      ? {borderBottomWidth: wp(0)}
+                      : null,
+                  ]}>
+                  <View>
+                    <Text style={styles.involvePSt}>{d}</Text>
+                  </View>
+                  <Icon
+                    containerStyle={{opacity: 0.5}}
+                    name={'right'}
+                    type={'antdesign'}
+                    size={wp(3)}
+                    color={colors.text}
+                  />
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
           {/* </View> */}
         </View>
         {/* Contributory Causes */}
         <View style={styles.rootCauseContainer}>
           <Text style={styles.keyfindingsText}>Contributory Causes</Text>
-          {/* <View style={styles.rootCauseInputContainer}> */}
-          <TouchableOpacity
-            onPress={() =>
-              this.setState({contributoryCauseArray: FiveWhyMenus})
-            }>
-            <TextInput
+          <View
+            style={[
+              styles.involveSuggestCont,
+              {padding: wp(0), paddingLeft: wp(3)},
+            ]}>
+            <TouchableOpacity
+              onPress={() => {
+                this.setState({contributoryCauseArray: FiveWhyMenus});
+              }}
+              style={[styles.involvePsuggCont, {borderBottomWidth: wp(0)}]}>
+              {/* <TextInput
               editable={false}
               underlineColorAndroid="transparent"
               style={styles.rootCausesInput}
@@ -266,14 +323,39 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
                 this.setState({countributoryCauses: e});
               }}
               placeholder={'Select Contributory causes'}
-            />
-          </TouchableOpacity>
+            /> */}
+
+              <View>
+                <Text
+                  style={[
+                    styles.involvePSt,
+                    this.state.electedContributoryCauseQ === ''
+                      ? {opacity: 0.3, fontSize: wp(3)}
+                      : null,
+                  ]}>
+                  {this.state.selectedContributoryCauseQ === ''
+                    ? 'Select Contributory Causes  '
+                    : this.state.selectedContributoryCauseQ}
+                </Text>
+                <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                  {this.state.selectedContributoryCauseA}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          {/* CountriButory Cause QUESTION */}
           {this.state.contributoryCauseArray.length == 0 ? null : (
             <View style={styles.involveSuggestCont}>
               {this.state.contributoryCauseArray.map((d: any, i: number) => (
                 <TouchableOpacity
                   key={i}
-                  onPress={() => {}}
+                  onPress={() => {
+                    this.setState({
+                      selectedContributoryCauseQ: d,
+                      contributoryCauseArray: [],
+                      contributoryCauseArrayA: FiveWhySubMenus,
+                    });
+                  }}
                   style={[
                     styles.involvePsuggCont,
                     this.state.contributoryCauseArray.length == i + 1
@@ -294,6 +376,38 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
               ))}
             </View>
           )}
+          {this.state.contributoryCauseArrayA.length == 0 ? null : (
+            <View style={styles.involveSuggestCont}>
+              {this.state.contributoryCauseArrayA.map((d: any, i: number) => (
+                <TouchableOpacity
+                  key={i}
+                  onPress={() => {
+                    this.setState({
+                      selectedContributoryCauseA: d,
+                      contributoryCauseArrayA: [],
+                    });
+                  }}
+                  style={[
+                    styles.involvePsuggCont,
+                    this.state.contributoryCauseArrayA.length == i + 1
+                      ? {borderBottomWidth: wp(0)}
+                      : null,
+                  ]}>
+                  <View>
+                    <Text style={styles.involvePSt}>{d}</Text>
+                  </View>
+                  <Icon
+                    containerStyle={{opacity: 0.5}}
+                    name={'right'}
+                    type={'antdesign'}
+                    size={wp(3)}
+                    color={colors.text}
+                  />
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
+
           {/* </View> */}
         </View>
       </View>

@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     fontSize: wp(3),
     color: colors.text,
     opacity: 0.8,
-    fontFamily: fonts.SFuiDisplayMedium,
+    fontFamily: fonts.SFuiDisplaySemiBold,
   },
   involvePsuggCont: {
     borderColor: colors.textOpa,
