@@ -15,6 +15,7 @@ import {
   Home,
   NoInternet,
   NothingFound,
+  Settings,
   Messaging,
   MyTasks,
   WelcomeHome,
@@ -275,6 +276,13 @@ export const MainStackNavigator = (screen: route) => {
         <Stack.Screen
           name="CreateSOR"
           component={CreateSOR}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Settings"
+          component={Settings}
           options={{
             headerShown: false,
           }}
