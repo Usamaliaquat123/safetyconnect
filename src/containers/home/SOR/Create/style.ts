@@ -455,11 +455,12 @@ const styles = StyleSheet.create({
     fontSize: wp(3),
   },
   involveSuggestCont: {
-    borderColor: colors.green,
+    borderColor: colors.textOpa,
     borderRadius: wp(3),
     padding: wp(3),
     borderWidth: wp(0.3),
     marginTop: wp(1),
+    marginBottom: wp(1),
   },
   submitsorbtnSb: {
     padding: wp(5),

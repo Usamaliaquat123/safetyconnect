@@ -1509,7 +1509,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 style={[
                   styles.optnselector,
                   this.state.selectedInputIndex == 5
-                    ? {borderColor: colors.green}
+                    ? {borderColor: colors.primary}
                     : null,
                 ]}>
                 <TextInput
@@ -1748,7 +1748,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   style={[
                     styles.optnselector,
                     this.state.selectedInputIndex == 4
-                      ? {borderColor: colors.green}
+                      ? {borderColor: colors.primary}
                       : null,
                   ]}>
                   <TextInput
@@ -1847,7 +1847,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   style={[
                     styles.optnselector,
                     this.state.selectedInputIndex == 5
-                      ? {borderColor: colors.green}
+                      ? {borderColor: colors.primary}
                       : null,
                   ]}>
                   <TextInput
