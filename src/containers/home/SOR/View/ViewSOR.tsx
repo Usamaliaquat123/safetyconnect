@@ -166,9 +166,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
-    getCurrentProject().then((currentProj: any) =>
-      this.setState({projectId: currentProj}),
-    );
+    getCurrentProject().then((currentProj: any) => {
+      this.setState({projectId: currentProj});
+    });
     AsyncStorage.getItem('user').then((user: any) => {
       this.setState({user: JSON.parse(user)});
     });
@@ -196,10 +196,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     this.props.route.params.data.action_required.forEach(
       (v) => delete v.default,
     );
+
     createApi
       .createApi()
       .getProject({projectid: this.state.projectId})
       .then((res: any) => {
+        console.log(res.data);
         this.setState({
           projectName: res.data.data.project_name,
           // involvedPerson: res.data.data.involved_persons,
@@ -219,7 +221,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         for (let i = 0; i < res.data.data.involved_persons.length; i++) {
           res.data.data.involved_persons[i]['selected'] = false;
         }
-      });
+      })
+      .catch((err) => console.log(err));
 
     // console.log(this.props.route.params.data.involved_persons);
     // console.log(this.state.involvedPerson);
@@ -1991,6 +1994,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 ) : null}
                 <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
                   <Tags
+                    type={'tagsofEsclatedToinvIewSor'}
                     onClose={(d: any) => {
                       this.setState({
                         esclate_to: this.state.esclate_to.filter(
