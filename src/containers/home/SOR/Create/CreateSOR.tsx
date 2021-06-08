@@ -1569,7 +1569,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               uri: d.img_url,
                             }}
                           />
-                          <Text style={styles.involvePSt}>{d.name}</Text>
+                          <View>
+                            <Text style={styles.involvePSt}>{d.name}</Text>
+                            <Text style={{fontSize: wp(3), opacity: 0.5}}>
+                              {d.email}
+                            </Text>
+                          </View>
                         </TouchableOpacity>
                       ),
                     )}
