@@ -227,7 +227,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
                     opacity: 0.5,
                     fontFamily: fonts.SFuiDisplayMedium,
                   }}>
-                  {this.state.selectedContributoryCauseA}
+                  {this.state.selectedrootCausesA}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -273,7 +273,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
                   key={i}
                   onPress={() => {
                     this.setState({
-                      selectedContributoryCauseA: d,
+                      selectedrootCausesA: d,
                       rootCausesArrayA: [],
                     });
                   }}

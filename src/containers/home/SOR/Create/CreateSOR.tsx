@@ -1019,8 +1019,16 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     </Text>
                   </TouchableOpacity>
 
-                  <Text style={styles.obserttle}>at about</Text>
-                  <Text>{this.state.curTime}</Text>
+                  <Text style={styles.obserttle}>at about </Text>
+
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({setTimeModal: !this.state.setTimeModal});
+                    }}>
+                    <Text style={[styles.obserttle, {color: colors.primary}]}>
+                      {moment(this.state.currentTime).format('LT')}
+                    </Text>
+                  </TouchableOpacity>
                 </View>
                 <Text style={styles.obserttle}>it was observed that</Text>
                 <TextInput
@@ -1074,19 +1082,15 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     </Text>{' '}
                     at about{' '}
                   </Text>
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.setState({setTimeModal: !this.state.setTimeModal});
+
+                  <Text
+                    style={{
+                      fontFamily: fonts.SFuiDisplayBold,
+                      marginTop: wp(3),
+                      fontSize: wp(3),
                     }}>
-                    <Text
-                      style={{
-                        fontFamily: fonts.SFuiDisplayBold,
-                        marginTop: wp(3),
-                        fontSize: wp(3),
-                      }}>
-                      {moment(this.state.currentTime).format('LT')}
-                    </Text>
-                  </TouchableOpacity>
+                    {moment().format('LT')}
+                  </Text>
                 </View>
               </View>
               {/* Suggestions  */}
