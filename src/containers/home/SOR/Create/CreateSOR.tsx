@@ -1571,7 +1571,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           />
                           <View>
                             <Text style={styles.involvePSt}>{d.name}</Text>
-                            <Text style={{fontSize: wp(3), opacity: 0.5}}>
+                            <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
                               {d.email}
                             </Text>
                           </View>
@@ -1815,7 +1815,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               uri: d.img_url,
                             }}
                           />
-                          <Text style={styles.involvePSt}>{d.name}</Text>
+                          <View>
+                            <Text style={styles.involvePSt}>{d.name}</Text>
+                            <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                              {d.email}
+                            </Text>
+                          </View>
                         </TouchableOpacity>
                       ),
                     )}
@@ -1899,7 +1904,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 uri: d.img_url,
                               }}
                             />
-                            <Text style={styles.involvePSt}>{d.name}</Text>
+                            <View>
+                              <Text style={styles.involvePSt}>{d.name}</Text>
+                              <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                                {d.email}
+                              </Text>
+                            </View>
                           </TouchableOpacity>
                         ),
                       )}
