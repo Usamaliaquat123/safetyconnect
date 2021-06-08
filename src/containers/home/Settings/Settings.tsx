@@ -12,12 +12,14 @@ import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp, CommonActions} from '@react-navigation/native';
 import {StackNavigatorProps} from '@nav';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Icon, Avatar} from 'react-native-elements';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {colors, fonts} from '@theme';
+import api from '@service/api';
 export interface SettingsProps {
   route: MoreRouteProp;
   navigation: MoreNavigationProp;
@@ -36,6 +38,17 @@ class Settings extends React.Component<SettingsProps, any> {
       email: '',
       role: '',
     };
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem('email').then((email: any) => {
+      api
+        .createApi()
+        .getUser(email)
+        .then((user: any) => {
+          console.log(user);
+        });
+    });
   }
   render() {
     return (
