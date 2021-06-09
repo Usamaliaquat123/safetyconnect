@@ -213,21 +213,26 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     // api
 
     AsyncStorage.getItem('email').then((email: any) => {
-      api
-        .createApi()
-        .getUser(email)
-        .then((res :  any) => {
-
-
-
-
-        })
-
-          this.setState({
-            allAssignSuppervisorText: this.props.route.params.suggestedUsers,
-            allAssignLeaders: this.props.route.params.suggestedUsers,
+      for (let i = 0; i < this.props.route.params.suggestedUsers.length; i++) {
+        api
+          .createApi()
+          .getUser(this.props.route.params.suggestedUsers[i].email)
+          .then((res: any) => {
+            this.state.allAssignSuppervisorText.push({
+              email: res.data.data.email,
+              _id: res.data.data._id,
+            });
+            this.state.allAssignLeaders.push({
+              email: res.data.data.email,
+              _id: res.data.data._id,
+            });
           });
-        });/
+      }
+
+      // this.setState({
+      //   allAssignSuppervisorText: this.props.route.params.suggestedUsers,
+      //   allAssignLeaders: this.props.route.params.suggestedUsers,
+      // });
     });
 
     AsyncStorage.getItem('locations').then((locations: any) => {
