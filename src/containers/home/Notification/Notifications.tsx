@@ -73,7 +73,9 @@ class Notifications extends React.Component<NotificationsProps, any> {
         console.log(res);
         this.setState({loading: false});
         this.setState({
-          count: res.data.data[0].notifications.length,
+          count: res.data.data[0].notifications.filter(
+            (n: any) => n.status == '0',
+          ),
           newNotify: res.data.data[0].notifications.filter(
             (n: any) => n.status == '0',
           ),
@@ -96,6 +98,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
     reportId: string,
     notificationId: any,
   ) => {
+    this.setState({loading: true});
     await api
       .createApi()
       .getSors(projectId, reportId)
@@ -104,6 +107,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
           .createApi()
           .readSpecificNotification(this.state.user.email, notificationId)
           .then((res: any) => {
+            this.setState({loading: false});
             if (userD.status == 200) {
               this.props.navigation.navigate('ViewSOR', {
                 data: userD.data.data.report[0],

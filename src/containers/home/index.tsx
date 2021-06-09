@@ -8,7 +8,7 @@ import {
   Animated,
   RefreshControl,
 } from 'react-native';
-import {colors, GlStyles, images, fonts} from '@theme';
+import {colors, GlStyles, images, fonts, animation} from '@theme';
 import {connect} from 'react-redux';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
@@ -70,12 +70,14 @@ class Home extends React.Component<HomeProps, any> {
       allProjects: [],
       selectedOrganization: {},
       projSelection: false,
+      loading: false,
       selectedProject: {},
       refreshing: false,
     };
   }
 
   componentDidMount = () => {
+    this.setState({loading: true});
     getCurrentProject().then((currentProj: any) => {
       // console.log('current project');
       console.log(currentProj);
@@ -99,6 +101,17 @@ class Home extends React.Component<HomeProps, any> {
     // }
 
     AsyncStorage.getItem('email').then((email: any) => {
+      createApi
+        .createApi()
+        .getAllNotifications(email, '["0"]')
+        .then((notify: any) => {
+          console.log(notify);
+          this.setState({
+            count: notify.data.data[0].notifications.filter(
+              (n: any) => n.status == '0',
+            ),
+          });
+        });
       createApi
         .createApi()
         .getUser(email)
@@ -158,6 +171,7 @@ class Home extends React.Component<HomeProps, any> {
     //     // console.log(`data:image/jpeg;base64,${file.data}`);
     //     // this.setState({image: file.data});
     //   });
+    this.setState({loading: false});
   };
 
   _onRefresh = () => {
@@ -787,6 +801,27 @@ class Home extends React.Component<HomeProps, any> {
               )}
             </View>
           </View>
+        </Modal>
+
+        {/* validations error */}
+        {/* Modal Container */}
+        <Modal
+          isVisible={this.state.loading}
+          onBackdropPress={() => this.setState({loading: false})}>
+          {this.state.loading == true ? (
+            <View>
+              <View style={{alignSelf: 'center'}}>
+                {/* <Bars size={wp(5)} color={colors.primary} /> */}
+                {/* <Bars size={wp(5)} color={colors.primary} /> */}
+                <LottieView
+                  autoPlay={true}
+                  style={{width: wp(90)}}
+                  source={animation.loading}
+                  loop={true}
+                />
+              </View>
+            </View>
+          ) : null}
         </Modal>
       </View>
     );
