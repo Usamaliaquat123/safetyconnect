@@ -287,7 +287,6 @@ class MeetBefore extends React.Component<MeetBeforeProps, any> {
                 }>
                 {this.state.loading == true ? (
                   <View>
-                    {' '}
                     <LottieView
                       autoPlay={true}
                       style={{width: wp(90)}}

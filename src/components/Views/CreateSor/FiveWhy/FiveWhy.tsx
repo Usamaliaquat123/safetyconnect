@@ -53,6 +53,8 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
       selectedContributoryCauseA: '',
       selectedrootCausesQ: '',
       selectedrootCausesA: '',
+      contributoryCauseAQ: [],
+      rootCausesQA: [],
     };
   }
   componentDidMount() {
@@ -244,6 +246,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
                       rootCausesArray: [],
                       rootCausesArrayA: FiveWhySubMenus,
                     });
+                    this.state.rootCausesQA.push({category: d});
                   }}
                   style={[
                     styles.involvePsuggCont,
@@ -276,6 +279,9 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
                       selectedrootCausesA: d,
                       rootCausesArrayA: [],
                     });
+
+                    this.state.rootCausesQA[0]['subCategory'] = [d];
+                    this.props.onChangeRiskCause(this.state.rootCausesQA);
                   }}
                   style={[
                     styles.involvePsuggCont,
@@ -348,6 +354,10 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
                       contributoryCauseArray: [],
                       contributoryCauseArrayA: FiveWhySubMenus,
                     });
+
+                    this.state.contributoryCauseAQ.push({
+                      category: d,
+                    });
                   }}
                   style={[
                     styles.involvePsuggCont,
@@ -379,6 +389,10 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
                       selectedContributoryCauseA: d,
                       contributoryCauseArrayA: [],
                     });
+                    this.state.contributoryCauseAQ[0]['subCategory'] = [d];
+                    this.props.onChangeCountributory(
+                      this.state.contributoryCauseAQ,
+                    );
                   }}
                   style={[
                     styles.involvePsuggCont,

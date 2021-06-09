@@ -1311,12 +1311,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                 {this.state.fiveWhytoggle ? (
                   <FiveWhy
-                    onChangeCountributory={(e: any) =>
-                      this.setState({countributoryCauses: e})
-                    }
-                    onChangeRiskCause={(e: any) =>
-                      this.setState({rootCauses: e})
-                    }
+                    onChangeCountributory={(e: any) => {
+                      console.log(e);
+                      this.setState({countributoryCauses: e});
+                    }}
+                    onChangeRiskCause={(e: any) => {
+                      console.log(e);
+                      this.setState({rootCauses: e});
+                    }}
                     contributoryCauses={this.state.countributoryCauses}
                     rootCauses={this.state.rootCauses}
                     data={this.state.fiveWHYdata}
