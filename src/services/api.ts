@@ -135,8 +135,11 @@ const createApi = (
   /*
    * @Notifications
    */
-  const getAllNotifications = (email: string) =>
-    baseapi.get(`notification/?email=${email}`);
+  const getAllNotifications = (email: string, status: string) =>
+    baseapi.get(`notification/?email=${email}&status=["${status}"]`);
+  const readSpecificNotification = (email: string, notificationId: string) =>
+    baseapi.get(`notification/?email=${email}&notification=${notificationId}`);
+
   /*
    * @Invite Users
    */
@@ -173,6 +176,7 @@ const createApi = (
     createSor,
     updateSor,
     filterSors,
+    readSpecificNotification,
     getSors,
     getProject,
     project,

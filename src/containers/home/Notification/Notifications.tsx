@@ -51,24 +51,28 @@ class Notifications extends React.Component<NotificationsProps, any> {
         .createApi()
         .getUser(email)
         .then((user: any) => {
+          console.log(user.data.data);
           this.setState({user: user.data.data});
+          this.getAllNotifications(user.data.data.email);
         });
     });
   }
 
   //   All Notificatiosn
-  getAllNotifications = async () => {
-    await createApi
+  getAllNotifications = async (email: string) => {
+    await api
       .createApi()
-      .getAllNotifications(this.state.user.email)
+      .getAllNotifications(email, '1')
       .then((res: any) => {
+        console.log('data from notifications');
+        console.log(res.data.data[0]);
         this.setState({
-          count: res.data.data.notifications.length,
-          newNotify: res.data.data.notifications.filter(
-            (n: any) => n.status == 1,
+          count: res.data.data[0].notifications.length,
+          newNotify: res.data.data[0].notifications.filter(
+            (n: any) => n.status == '1',
           ),
-          oldNotify: res.data.data.notifications.filter(
-            (n: any) => n.status == 0,
+          oldNotify: res.data.data[0].notifications.filter(
+            (n: any) => n.status == '0',
           ),
         });
       });
@@ -81,22 +85,30 @@ class Notifications extends React.Component<NotificationsProps, any> {
   };
 
   // redirecting to view sor
-  onViewSor = async (projectId: string, reportId: string) => {
-    await createApi
+  onViewSor = async (
+    projectId: string,
+    reportId: string,
+    notificationId: any,
+  ) => {
+    await api
       .createApi()
       .getSors(projectId, reportId)
-      .then((res: any) => {
-        if (res.status == 200) {
-          this.props.navigation.navigate('ViewSOR', {
-            data: res.data.data.report[0],
+      .then((userD: any) => {
+        api
+          .createApi()
+          .readSpecificNotification(this.state.user.email, notificationId)
+          .then((res: any) => {
+            if (userD.status == 200) {
+              this.props.navigation.navigate('ViewSOR', {
+                data: userD.data.data.report[0],
+              });
+            }
           });
-        }
       })
       .catch((err) => console.log(err));
   };
 
   render() {
-    this.getAllNotifications();
     return (
       <View style={styles.container}>
         <ScrollView
@@ -171,6 +183,14 @@ class Notifications extends React.Component<NotificationsProps, any> {
                           {moment(d.date).format('dddd,  DD MMM ')}
                         </Text>
                       </View>
+
+                      <Icon
+                        containerStyle={{position: 'absolute', right: wp(5)}}
+                        name={'right'}
+                        type={'antdesign'}
+                        size={wp(4)}
+                        color={colors.text}
+                      />
                     </View>
                   </TouchableOpacity>
                 ))}
