@@ -13,7 +13,10 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {Icon, Avatar} from 'react-native-elements';
 import {RouteProp} from '@react-navigation/native';
-import {colors} from '@theme';
+import {colors, animation} from '@theme';
+import Modal from 'react-native-modal';
+import LottieView from 'lottie-react-native';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 import {createApi as api} from '@service';
@@ -40,6 +43,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
       newNotify: [],
       oldNotify: [],
       refreshing: false,
+      loading: false,
       count: 0,
     };
   }
@@ -60,19 +64,21 @@ class Notifications extends React.Component<NotificationsProps, any> {
 
   //   All Notificatiosn
   getAllNotifications = async (email: string) => {
+    this.setState({loading: true});
     await api
       .createApi()
-      .getAllNotifications(email, '1')
+      .getAllNotifications(email, '["0", "1"]')
       .then((res: any) => {
         console.log('data from notifications');
-        console.log(res.data.data[0]);
+        console.log(res);
+        this.setState({loading: false});
         this.setState({
           count: res.data.data[0].notifications.length,
           newNotify: res.data.data[0].notifications.filter(
-            (n: any) => n.status == '1',
+            (n: any) => n.status == '0',
           ),
           oldNotify: res.data.data[0].notifications.filter(
-            (n: any) => n.status == '0',
+            (n: any) => n.status == '1',
           ),
         });
       });
@@ -188,7 +194,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
                         containerStyle={{position: 'absolute', right: wp(5)}}
                         name={'right'}
                         type={'antdesign'}
-                        size={wp(4)}
+                        size={wp(3)}
                         color={colors.text}
                       />
                     </View>
@@ -226,6 +232,13 @@ class Notifications extends React.Component<NotificationsProps, any> {
                             {moment(d.date).format('dddd,  DD MMM ')}
                           </Text>
                         </View>
+                        <Icon
+                          containerStyle={{position: 'absolute', right: wp(5)}}
+                          name={'right'}
+                          type={'antdesign'}
+                          size={wp(3)}
+                          color={colors.text}
+                        />
                       </View>
                     </TouchableOpacity>
                   ))}
@@ -233,6 +246,26 @@ class Notifications extends React.Component<NotificationsProps, any> {
               )}
             </View>
           </View>
+          {/* validations error */}
+          {/* Modal Container */}
+          <Modal
+            isVisible={this.state.loading}
+            onBackdropPress={() => this.setState({loading: false})}>
+            {this.state.loading == true ? (
+              <View>
+                <View style={{alignSelf: 'center'}}>
+                  {/* <Bars size={wp(5)} color={colors.primary} /> */}
+                  {/* <Bars size={wp(5)} color={colors.primary} /> */}
+                  <LottieView
+                    autoPlay={true}
+                    style={{width: wp(90)}}
+                    source={animation.loading}
+                    loop={true}
+                  />
+                </View>
+              </View>
+            ) : null}
+          </Modal>
         </ScrollView>
       </View>
     );
