@@ -125,16 +125,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
             );
             console.log(members.map((d: any) => d._id));
 
-            // remove commmon member who invited but they didn't use that
-            // api
-            //   .createApi()
-            //   .getUser(email)
-            //   .then((d: any) => {
-            //     members.filter(
-            //       (suggUser: any) => suggUser._id != d.data.data._id,
-            //     );
-            //   });
-
             console.log('members');
             console.log(members);
             console.log('members');
@@ -226,21 +216,18 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       api
         .createApi()
         .getUser(email)
-        .then((d: any) => {
-          AsyncStorage.setItem(
-            'usersInvitedButNotAccepted',
-            JSON.stringify(
-              this.props.route.params.suggestedUsers?.filter(
-                (suggUser) => suggUser._id == d.data.data._id,
-              ),
-            ),
-          );
+        .then((res :  any) => {
+
+
+
+
+        })
 
           this.setState({
             allAssignSuppervisorText: this.props.route.params.suggestedUsers,
             allAssignLeaders: this.props.route.params.suggestedUsers,
           });
-        });
+        });/
     });
 
     AsyncStorage.getItem('locations').then((locations: any) => {
