@@ -286,13 +286,6 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
                   <View>
                     <Text style={styles.involvePSt}>{d}</Text>
                   </View>
-                  <Icon
-                    containerStyle={{opacity: 0.5}}
-                    name={'right'}
-                    type={'antdesign'}
-                    size={wp(3)}
-                    color={colors.text}
-                  />
                 </TouchableOpacity>
               ))}
             </View>
@@ -396,13 +389,6 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
                   <View>
                     <Text style={styles.involvePSt}>{d}</Text>
                   </View>
-                  <Icon
-                    containerStyle={{opacity: 0.5}}
-                    name={'right'}
-                    type={'antdesign'}
-                    size={wp(3)}
-                    color={colors.text}
-                  />
                 </TouchableOpacity>
               ))}
             </View>
