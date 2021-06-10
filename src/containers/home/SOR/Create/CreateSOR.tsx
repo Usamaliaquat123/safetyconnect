@@ -498,6 +498,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       }
                     }
 
+                    console.log('actions and recommendation ');
+                    console.log(actions);
+
                     var sor = {
                       report: {
                         _id: '',
@@ -530,6 +533,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       project: this.state.projectid,
                     };
 
+                    console.log('sor api');
+                    console.log(sor);
                     if (this.state.fiveWhytoggle) {
                       sor.report['_id'] = this.state.reportIdInvestigation;
 
@@ -709,11 +714,15 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           date: rec[i].date,
                           is_complete: rec[i].is_complete,
                           is_selected: rec[i].is_selected,
+                          justification : rec[i].justification
                         });
-                        if (rec[i].justification !== '') {
-                          actions['justification'] = rec[i].justification;
-                        }
+                        // if (rec[i].justification !== '') {
+                        //   actions['justification'] = rec[i].justification;
+                        // }
                       }
+
+                      console.log('actions and recommendatons');
+                      console.log(actions);
 
                       var sors = {
                         report: {
@@ -746,6 +755,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         organization: this.state.currentOrg,
                         project: this.state.projectid,
                       };
+
+                      console.log('sors of actions ');
+                      console.log(sors);
 
                       if (this.state.fiveWhytoggle) {
                         sors.report['_id'] = this.state.reportIdInvestigation;

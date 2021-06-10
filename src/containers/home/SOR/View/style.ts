@@ -387,7 +387,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   commentTextInput: {
-    width: wp(80),
+    width: wp(90),
     backgroundColor: colors.secondary,
     borderRadius: wp(4),
     alignItems: 'center',

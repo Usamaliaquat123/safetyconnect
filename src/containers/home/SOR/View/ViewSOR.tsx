@@ -2205,7 +2205,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   />
                   <View
                     style={{
-                      top: wp(2.7),
+                      // top: wp(2.7),
                       position: 'absolute',
                       right: wp(3),
                       flexDirection: 'row',

@@ -156,7 +156,13 @@ const Chart = (props: Props) => {
               ttl < 7
                 ? {backgroundColor: colors.green}
                 : ttl < 14
-                ? {backgroundColor: colors.riskIcons.orrange}
+                ? {
+                    backgroundColor: colors.riskIcons.orrange,
+                    paddingTop: wp(8),
+                    paddingBottom: wp(8),
+                    paddingLeft: wp(3),
+                    paddingRight: wp(3),
+                  }
                 : {backgroundColor: colors.error},
             ]}>
             <Text
@@ -306,7 +312,7 @@ const Chart = (props: Props) => {
                     <Text
                       style={{
                         textAlign: 'center',
-                        fontSize: wp(2.2),
+                        fontSize: wp(2),
                         position: 'absolute',
                         bottom: wp(1),
                         alignSelf: 'center',
