@@ -536,55 +536,27 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                     console.log('sor api');
                     console.log(sor);
-                    if (this.state.fiveWhytoggle) {
-                      sor.report['_id'] = this.state.reportIdInvestigation;
 
-                      var obj = {
-                        justification: {
-                          question: [this.state.fiveWhyQuestion],
-                          answer: [this.state.fiveWhyAnswer],
-                        },
-                        contributoryCauses: this.state.countributoryCauses,
-                        rootCauses: this.state.rootCauses,
-                        project: this.state.projectid,
-                        report: this.state.reportIdInvestigation,
-                        user: this.state.user._id,
-                        date: moment().format('MM-DD-YYYY'),
-                      };
-
-                      createApi
-                        .createApi()
-                        .createFiveWhy(obj)
-                        .then((res) => {
-                          console.log(res);
-                        })
-                        .catch((err: any) => console.log(err));
-                      // AsyncStorage.getItem('user').then((user: any) => {
-
-                      // });
-
-                      // _id: ress.data.data.report_id,
-                    } else {
-                      if (this.state.reportIdInvestigation == '') {
-                        var bodyInitial = {
-                          report: {
-                            created_by: this.state.email,
-                            comments: '',
-                            status: 1,
-                          },
-                          project: this.state.projectid,
-                        };
-                        createApi
-                          .createApi()
-                          .createSorInit(bodyInitial)
-                          .then((res: any) => {
-                            sor.report['_id'] = res.data.data.report_id;
-                          })
-                          .catch((err) => console.log(err));
-                      } else {
-                        sor.report['_id'] = this.state.reportIdInvestigation;
-                      }
-                    }
+                    // if (this.state.reportIdInvestigation == '') {
+                    var bodyInitial = {
+                      report: {
+                        created_by: this.state.email,
+                        comments: '',
+                        status: 1,
+                      },
+                      project: this.state.projectid,
+                    };
+                    createApi
+                      .createApi()
+                      .createSorInit(bodyInitial)
+                      .then((res: any) => {
+                        this.setState({
+                          reportIdInvestigation: res.data.data.report_id,
+                        });
+                        sor.report['_id'] = res.data.data.report_id;
+                      })
+                      .catch((err) => console.log(err));
+                    // }
 
                     // console.log(sor)
                     // Repeated observations
@@ -617,11 +589,52 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         .createSor(sor)
                         .then((res: any) => {
                           this.setState({loading: false, errorModal: false});
-
                           console.log(res);
 
+                          if (this.state.fiveWhytoggle) {
+                            // sor.report['_id'] = this.state.reportIdInvestigation;
+                            this.setState({loading: true, errorModal: true});
+                            var obj = {
+                              justification: {
+                                question: [this.state.fiveWhyQuestion],
+                                answer: [this.state.fiveWhyAnswer],
+                              },
+                              contributoryCauses: this.state
+                                .countributoryCauses,
+                              rootCauses: this.state.rootCauses,
+                              project: this.state.projectid,
+                              report: this.state.reportIdInvestigation,
+                              user: this.state.user._id,
+                              date: moment().format('MM-DD-YYYY'),
+                            };
+
+                            createApi
+                              .createApi()
+                              .createFiveWhy(obj)
+                              .then((res) => {
+                                this.setState({
+                                  loading: false,
+                                  errorModal: false,
+                                });
+                                this.props.navigation.goBack();
+
+                                console.log(res);
+                              })
+                              .catch((err: any) => console.log(err));
+                            // AsyncStorage.getItem('user').then((user: any) => {
+
+                            // });
+
+                            // _id: ress.data.data.report_id,
+                          } else {
+                            this.setState({
+                              loading: false,
+                              errorModal: false,
+                            });
+                            this.props.navigation.goBack();
+                          }
+
                           if (res.status == 200) {
-                            // this.props.navigation.goBack();
                           } else {
                             console.log(res);
                             // this.setState({
@@ -708,6 +721,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           is_complete: rec[i].is_complete,
                           is_selected: rec[i].is_selected,
                           justification: rec[i].justification,
+                          action: 'low',
                         });
                         // if (rec[i].justification !== '') {
                         //   actions['justification'] = rec[i].justification;
@@ -752,57 +766,24 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       console.log('sors of actions ');
                       console.log(sors);
 
-                      if (this.state.fiveWhytoggle == true) {
-                        sors.report['_id'] = this.state.reportIdInvestigation;
-
-                        var newObj = {
-                          //    countributoryCauses: '',
-                          // rootCauses: '',
-                          justification: {
-                            question: this.state.fiveWhyQuestion,
-                            answer: this.state.fiveWhyAnswer,
-                          },
-                          project: this.state.projectid,
-                          contributoryCauses: this.state.countributoryCauses,
-                          rootCauses: this.state.rootCauses,
-                          report: this.state.reportIdInvestigation,
-                          user: this.state.user._id,
-                          date: moment().format('MM-DD-YYYY'),
-                        };
-
-                        console.log(newObj);
-                        console.log('five why data ');
-                        createApi
-                          .createApi()
-                          .createFiveWhy(newObj)
-                          .then((res) => {
-                            console.log('five why');
-                            console.log(res);
-                          })
-                          .catch((err: any) => console.log(err));
-
-                        // _id: ress.data.data.report_id,
-                      } else {
-                        if (this.state.reportIdInvestigation == '') {
-                          var bodyInitial = {
-                            report: {
-                              created_by: this.state.email,
-                              comments: '',
-                              status: 1,
-                            },
-                            project: this.state.projectid,
-                          };
-                          createApi
-                            .createApi()
-                            .createSorInit(bodyInitial)
-                            .then((res: any) => {
-                              sors.report['_id'] = res.data.data.report_id;
-                            })
-                            .catch((err) => console.log(err));
-                        } else {
-                          sors.report['_id'] = this.state.reportIdInvestigation;
-                        }
-                      }
+                      var bodyInitial = {
+                        report: {
+                          created_by: this.state.email,
+                          comments: '',
+                          status: 1,
+                        },
+                        project: this.state.projectid,
+                      };
+                      createApi
+                        .createApi()
+                        .createSorInit(bodyInitial)
+                        .then((res: any) => {
+                          this.setState({
+                            reportIdInvestigation: res.data.data.report_id,
+                          });
+                          sors.report['_id'] = res.data.data.report_id;
+                        })
+                        .catch((err) => console.log(err));
 
                       console.log(sors);
                       setTimeout(() => {
@@ -810,19 +791,59 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           .createApi()
                           .createSor(sors)
                           .then((res: any) => {
-                            console.log(res);
-                            this.setState({
-                              loading: false,
-                              errorModal: false,
-                            });
+                            if (this.state.fiveWhytoggle == true) {
+                              this.setState({
+                                loading: true,
+                                errorModal: true,
+                              });
+                              var newObj = {
+                                //    countributoryCauses: '',
+                                // rootCauses: '',
+                                justification: {
+                                  question: this.state.fiveWhyQuestion,
+                                  answer: this.state.fiveWhyAnswer,
+                                },
+                                project: this.state.projectid,
+                                contributoryCauses: this.state
+                                  .countributoryCauses,
+                                rootCauses: this.state.rootCauses,
+                                report: this.state.reportIdInvestigation,
+                                user: this.state.user._id,
+                                date: moment().format('MM-DD-YYYY'),
+                              };
 
-                            if (res.status == 200) {
-                              console.log('sdsd');
+                              console.log(newObj);
+                              console.log('five why data ');
+                              createApi
+                                .createApi()
+                                .createFiveWhy(newObj)
+                                .then((res) => {
+                                  this.setState({
+                                    loading: false,
+                                    errorModal: false,
+                                  });
+                                  this.props.navigation.goBack();
+                                  console.log('five why');
+                                  console.log(res);
+                                })
+                                .catch((err: any) => console.log(err));
 
-                              // this.props.navigation.goBack();
+                              // _id: ress.data.data.report_id,
                             } else {
                               console.log(res);
+                              this.setState({
+                                loading: false,
+                                errorModal: false,
+                              });
+
+                              this.props.navigation.goBack();
                             }
+                            // if (res.status == 200) {
+                            //   console.log('sdsd');
+
+                            // } else {
+                            //   console.log(res);
+                            // }
                           })
                           .catch(() =>
                             this.setState({
@@ -1222,39 +1243,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   </Text>
                   <TouchableOpacity
                     onPress={() => {
-                      if (this.state.fiveWhytoggle == true) {
-                        this.setState({fiveWhytoggle: false});
-                      } else {
-                        if (this.state.reportIdInvestigation === '') {
-                          var bodyInitial = {
-                            report: {
-                              created_by: this.state.user.email,
-                              comments: '',
-                              status: 1,
-                            },
-                            project: this.state.projectid,
-                          };
+                      this.setState({fiveWhytoggle: !this.state.fiveWhytoggle});
 
-                          // console.log(bodyInitial);
-                          createApi
-                            .createApi()
-                            .createSorInit(bodyInitial)
-                            .then((res: any) => {
-                              console.log(res);
-                              if (res.status == 200) {
-                                this.setState({
-                                  reportIdInvestigation:
-                                    res.data.data.report_id,
-                                  fiveWhytoggle: true,
-                                });
-                                // this.setState({fiveWhytoggle: true});
-                              }
-                            })
-                            .catch((err) => console.log(err));
-                        } else {
-                          this.setState({fiveWhytoggle: true});
-                        }
-                      }
                       // this.setState({fiveWhytoggle: !this.state.fiveWhytoggle});
                     }}
                     style={styles.fivewhyToggleContainer}>

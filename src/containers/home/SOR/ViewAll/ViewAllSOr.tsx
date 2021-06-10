@@ -730,22 +730,15 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           //  console.log(d)
 
                                           {
-                                            createApi
-                                              .createApi()
-                                              .getSors(
-                                                this.state.projectId,
-                                                d._id,
-                                              )
-                                              .then((res) => {
-                                                console.log(res);
-                                                this.props.navigation.navigate(
-                                                  'ViewSOR',
-                                                  {
-                                                    data:
-                                                      res.data.data.report[0],
-                                                  },
-                                                );
-                                              });
+
+
+                                            this.props.navigation.navigate(
+                                              'ViewSOR',
+                                              {
+                                                data:d
+                                              },
+                                            );
+                                        
                                           }
                                         }
                                         date={d.occured_at}
