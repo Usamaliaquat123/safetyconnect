@@ -542,16 +542,18 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               justification: {
                                 question: [this.state.fiveWhyQuestion],
                                 answer: [this.state.fiveWhyAnswer],
-                                contributoryCauses: this.state
-                                  .countributoryCauses,
-                                rootCauses: this.state.rootCauses,
                               },
+                              contributoryCauses: this.state
+                                .countributoryCauses,
+                              rootCauses: this.state.rootCauses,
                               project: this.state.projectid,
                               report: this.state.reportIdInvestigation,
                               user: user.data.data._id,
                               date: moment().format('MM-DD-YYYY'),
                             };
 
+                            
+                            console.log('five why obj');
                             console.log(obj);
 
                             createApi
@@ -1312,22 +1314,23 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 {this.state.fiveWhytoggle ? (
                   <FiveWhy
                     onChangeCountributory={(e: any) => {
-                      console.log(e);
                       this.setState({countributoryCauses: e});
                     }}
                     onChangeRiskCause={(e: any) => {
-                      console.log(e);
                       this.setState({rootCauses: e});
                     }}
                     contributoryCauses={this.state.countributoryCauses}
                     rootCauses={this.state.rootCauses}
                     data={this.state.fiveWHYdata}
-                    fiveWhyQuestions={(q: Array<string>) =>
-                      this.setState({fiveWhyQuestion: q})
-                    }
-                    fiveWhyAnswer={(a: Array<string>) =>
-                      this.setState({fiveWhyAnswer: a})
-                    }
+                    fiveWhyQuestions={(q: Array<string>) => {
+                      console.log(q);
+
+                      this.setState({fiveWhyQuestion: q});
+                    }}
+                    fiveWhyAnswer={(a: Array<string>) => {
+                      console.log(a);
+                      this.setState({fiveWhyAnswer: a});
+                    }}
                     reportId={this.state.reportIdInvestigation}
                     userId={this.state.user._id}
                     containerStyle={{marginTop: wp(3)}}

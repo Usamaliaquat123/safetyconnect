@@ -727,6 +727,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           (e: any) => e.title == d.sor_type,
                                         )}
                                         onPress={() =>
+                                          //  console.log(d)
                                           this.props.navigation.navigate(
                                             'ViewSOR',
                                             {

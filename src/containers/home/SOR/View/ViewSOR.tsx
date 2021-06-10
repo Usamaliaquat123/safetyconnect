@@ -191,8 +191,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       ).format('YYYY-MM-DD');
     }
 
-    console.log(this.props.route.params.data);
-
     this.props.route.params.data.action_required.forEach(
       (v) => delete v.default,
     );
@@ -234,6 +232,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.props.route.params.data.risk.severity,
       this.props.route.params.data.risk.likelihood,
     );
+
+    console.log('this.state.esclate_to');
+    console.log(this.state.esclate_to);
   };
 
   // FIVE WHY
@@ -453,7 +454,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         .then((res: any) => {
           console.log(res.data.data);
           AsyncStorage.getItem('involved_person').then((involveppl: any) => {
-            console.log(JSON.parse(involveppl));
+            // console.log(JSON.parse(involveppl));
             // console.log(res.data.data.all_comments);
 
             var involvedPersonss = JSON.parse(involveppl);
@@ -767,6 +768,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               </View>
             </View>
           </View>
+
           <Animated.View
             style={[styles.content, {marginTop: this.state.contentAnim}]}>
             {/* Observation Details */}
@@ -983,6 +985,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               </View>
             </View>
             {/* Line  */}
+
             <View style={styles.lineheight} />
             <View style={styles.obserContainer}>
               <Text style={styles.observationDate}>
@@ -1993,7 +1996,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </View>
                 ) : null}
                 <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                  <Tags
+                  {/* <Tags
                     type={'tagsofEsclatedToinvIewSor'}
                     onClose={(d: any) => {
                       this.setState({
@@ -2003,7 +2006,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       });
                     }}
                     tags={this.state.esclate_to}
-                  />
+                  /> */}
                 </View>
               </View>
             </View>
@@ -2428,6 +2431,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             </View>
           </Animated.View>
         </ScrollView>
+
         <Model
           animationIn={'bounceInUp'}
           animationOut={'bounceOutDown'}
