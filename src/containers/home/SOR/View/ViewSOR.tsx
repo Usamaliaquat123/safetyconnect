@@ -240,6 +240,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   // FIVE WHY
   getFiveWHY = () => {
     // Question map and them push
+    console.log('Justififcation in details');
+    console.log(this.props.route.params.data);
 
     if (this.props.route.params.data.justifications.length != 0) {
       this.props.route.params.data.justifications[0].justification[0].question.map(
@@ -1290,7 +1292,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             <View style={styles.fiveWhyContainer}>
               <View style={styles.fiveWhyHeadingContainer}>
                 <Text style={styles.investigationReqtext}>
-                  {' '}
                   Investigation Required
                 </Text>
                 <TouchableOpacity
@@ -1996,8 +1997,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </View>
                 ) : null}
                 <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                  {/* <Tags
-                    type={'tagsofEsclatedToinvIewSor'}
+                  <Tags
                     onClose={(d: any) => {
                       this.setState({
                         esclate_to: this.state.esclate_to.filter(
@@ -2006,7 +2006,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       });
                     }}
                     tags={this.state.esclate_to}
-                  /> */}
+                  />
                 </View>
               </View>
             </View>
@@ -2156,7 +2156,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 );
               })}
               <View style={{flexDirection: 'row'}}>
-                <Avatar
+                {/* <Avatar
                   containerStyle={{
                     marginRight: wp(2),
                     marginTop: wp(4),
@@ -2166,7 +2166,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   source={{
                     uri: this.state.user.img_url,
                   }}
-                />
+                /> */}
 
                 <View
                   style={[
