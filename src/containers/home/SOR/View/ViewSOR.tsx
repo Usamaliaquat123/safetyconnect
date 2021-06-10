@@ -167,6 +167,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
   componentDidMount = () => {
     getCurrentProject().then((currentProj: any) => {
+      console.log('currentProj of the vaue');
+      console.log(currentProj);
       this.setState({projectId: currentProj});
     });
     AsyncStorage.getItem('user').then((user: any) => {

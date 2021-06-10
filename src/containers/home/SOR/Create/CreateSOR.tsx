@@ -354,6 +354,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         .then((user: any) => {
           var dta = user.data.data;
           this.setState({user: user.data.data});
+
           // console.log(dta);
           // console.log(this.state.currentOrg);
           // console.log(
@@ -538,34 +539,26 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     if (this.state.fiveWhytoggle) {
                       sor.report['_id'] = this.state.reportIdInvestigation;
 
-                      AsyncStorage.getItem('email').then((email: any) => {
-                        createApi
-                          .createApi()
-                          .getUser(email)
-                          .then((user: any) => {
-                            var obj = {
-                              justification: {
-                                question: [this.state.fiveWhyQuestion],
-                                answer: [this.state.fiveWhyAnswer],
-                              },
-                              contributoryCauses: this.state
-                                .countributoryCauses,
-                              rootCauses: this.state.rootCauses,
-                              project: this.state.projectid,
-                              report: this.state.reportIdInvestigation,
-                              user: user.data.data._id,
-                              date: moment().format('MM-DD-YYYY'),
-                            };
+                      var obj = {
+                        justification: {
+                          question: [this.state.fiveWhyQuestion],
+                          answer: [this.state.fiveWhyAnswer],
+                        },
+                        contributoryCauses: this.state.countributoryCauses,
+                        rootCauses: this.state.rootCauses,
+                        project: this.state.projectid,
+                        report: this.state.reportIdInvestigation,
+                        user: this.state.user._id,
+                        date: moment().format('MM-DD-YYYY'),
+                      };
 
-                            createApi
-                              .createApi()
-                              .createFiveWhy(obj)
-                              .then((res) => {
-                                console.log(res);
-                              })
-                              .catch((err: any) => console.log(err));
-                          });
-                      });
+                      createApi
+                        .createApi()
+                        .createFiveWhy(obj)
+                        .then((res) => {
+                          console.log(res);
+                        })
+                        .catch((err: any) => console.log(err));
                       // AsyncStorage.getItem('user').then((user: any) => {
 
                       // });
@@ -628,7 +621,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           console.log(res);
 
                           if (res.status == 200) {
-                            this.props.navigation.goBack();
+                            // this.props.navigation.goBack();
                           } else {
                             console.log(res);
                             // this.setState({
@@ -714,7 +707,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           date: rec[i].date,
                           is_complete: rec[i].is_complete,
                           is_selected: rec[i].is_selected,
-                          justification : rec[i].justification
+                          justification: rec[i].justification,
                         });
                         // if (rec[i].justification !== '') {
                         //   actions['justification'] = rec[i].justification;
@@ -759,35 +752,34 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       console.log('sors of actions ');
                       console.log(sors);
 
-                      if (this.state.fiveWhytoggle) {
+                      if (this.state.fiveWhytoggle == true) {
                         sors.report['_id'] = this.state.reportIdInvestigation;
-                        AsyncStorage.getItem('user').then((user: any) => {
-                          var obj = {
-                            //    countributoryCauses: '',
-                            // rootCauses: '',
-                            justification: {
-                              question: this.state.fiveWhyQuestion,
-                              answer: this.state.fiveWhyAnswer,
-                              contributoryCauses: this.state
-                                .countributoryCauses,
-                              rootCauses: this.state.rootCauses,
-                            },
-                            project: this.state.projectid,
-                            report: this.state.reportIdInvestigation,
-                            user: JSON.parse(user)._id,
-                            date: moment().format('MM-DD-YYYY'),
-                          };
 
-                          console.log(obj);
-                          createApi
-                            .createApi()
-                            .createFiveWhy(obj)
-                            .then((res) => {
-                              console.log('five why');
-                              console.log(res);
-                            })
-                            .catch((err: any) => console.log(err));
-                        });
+                        var newObj = {
+                          //    countributoryCauses: '',
+                          // rootCauses: '',
+                          justification: {
+                            question: this.state.fiveWhyQuestion,
+                            answer: this.state.fiveWhyAnswer,
+                          },
+                          project: this.state.projectid,
+                          contributoryCauses: this.state.countributoryCauses,
+                          rootCauses: this.state.rootCauses,
+                          report: this.state.reportIdInvestigation,
+                          user: this.state.user._id,
+                          date: moment().format('MM-DD-YYYY'),
+                        };
+
+                        console.log(newObj);
+                        console.log('five why data ');
+                        createApi
+                          .createApi()
+                          .createFiveWhy(newObj)
+                          .then((res) => {
+                            console.log('five why');
+                            console.log(res);
+                          })
+                          .catch((err: any) => console.log(err));
 
                         // _id: ress.data.data.report_id,
                       } else {
@@ -826,7 +818,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                             if (res.status == 200) {
                               console.log('sdsd');
-                              this.props.navigation.goBack();
+
+                              // this.props.navigation.goBack();
                             } else {
                               console.log(res);
                             }
@@ -847,7 +840,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         errHeadingText: 'You didnt esclated anyone.',
                         errDesText: 'you are not selected esclated users.',
                       });
-                      // Error on esclated to
                     }
                   } else {
                     this.setState({
@@ -856,7 +848,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       errHeadingText: 'You didnt submitted anyone.',
                       errDesText: 'you are not selected submitted users.',
                     });
-                    // Error on submitted to
                   }
                 } else {
                   this.setState({
