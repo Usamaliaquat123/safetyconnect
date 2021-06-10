@@ -552,15 +552,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               date: moment().format('MM-DD-YYYY'),
                             };
 
-                            
-                            console.log('five why obj');
-                            console.log(obj);
-
                             createApi
                               .createApi()
                               .createFiveWhy(obj)
                               .then((res) => {
-                                console.log('five why');
                                 console.log(res);
                               })
                               .catch((err: any) => console.log(err));
@@ -1242,7 +1237,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             .createApi()
                             .createSorInit(bodyInitial)
                             .then((res: any) => {
-                              console.log(res.data.data);
+                              console.log(res);
                               if (res.status == 200) {
                                 this.setState({
                                   reportIdInvestigation:
