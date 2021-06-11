@@ -293,12 +293,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     var liklihood = this.state.liklihood.filter(
       (d: any) => d.selected == true,
     )[0].value;
-    // this.state.actionsAndRecommendations.filter(())
     var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
       .value;
-
-    //   fiveWhyQuestion:
-    // fiveWhyAnswer:
 
     AsyncStorage.getItem('user').then((user: any) => {
       if (this.state.fiveWhytoggle == true) {
