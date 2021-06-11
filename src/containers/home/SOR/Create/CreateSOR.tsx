@@ -701,8 +701,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           });
                         }
 
-                        console.log('actions and recommendatons');
-                        console.log(actions);
+                        // console.log('actions and recommendatons');
+                        // console.log(actions);
 
                         var sors = {
                           report: {
