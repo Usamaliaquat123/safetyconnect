@@ -203,7 +203,7 @@ class Signup extends React.Component<SignupProps, any> {
           <View>
             <View style={{marginTop: wp(10)}}>
               <Text style={styles.headingContainer}>
-                Welcome to Safety Connect
+                Welcomee to Safety Connect
               </Text>
               <Text style={styles.headingContent}>
                 Create your account and get started with SafetyConnect to ensure

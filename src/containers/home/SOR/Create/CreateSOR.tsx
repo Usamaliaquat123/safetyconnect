@@ -621,9 +621,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 console.log(res);
                               })
                               .catch((err: any) => console.log(err));
-                            // AsyncStorage.getItem('user').then((user: any) => {
-
-                            // });
 
                             // _id: ress.data.data.report_id,
                           } else {
