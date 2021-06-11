@@ -103,7 +103,7 @@ class Home extends React.Component<HomeProps, any> {
     AsyncStorage.getItem('email').then((email: any) => {
       createApi
         .createApi()
-        .getAllNotifications(email, '["0"]')
+        .getAllNotifications(email, '[0,1]')
         .then((notify: any) => {
           console.log(notify);
           this.setState({

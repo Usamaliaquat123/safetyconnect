@@ -67,7 +67,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
     this.setState({loading: true});
     await api
       .createApi()
-      .getAllNotifications(email, '["0", "1"]')
+      .getAllNotifications(email, [0, 1])
       .then((res: any) => {
         console.log('data from notifications');
         console.log(res);
