@@ -114,9 +114,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                 console.log(res);
                 if (res.status == 200) {
                   if (this.state.selectedEmails.length != 0) {
-                    var emails = this.state.selectedEmails.concat(
-                      this.state.selectedProjectleadersEmail,
-                    );
+                    var emails = this.state.selectedEmails;
 
                     console.log(emails);
 
@@ -345,104 +343,9 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                     )}
                   </View>
 
-                  {/* Project Leader */}
-                  <View>
-                    <View style={{flexDirection: 'row', marginTop: wp(3)}}>
-                      <Text style={styles.emailTextContainer}>
-                        Project Leaders
-                      </Text>
-                      <Icon
-                        containerStyle={{marginTop: wp(1), marginLeft: wp(2)}}
-                        name={'info'}
-                        type={'feather'}
-                        size={wp(3)}
-                        iconStyle={{opacity: 0.5}}
-                      />
-                    </View>
-                    <View style={[styles.inputContainer]}>
-                      <TextInput
-                        value={this.state.projectleadersText}
-                        style={styles.authInputs}
-                        onChangeText={(e) => {
-                          if (validateEmail(e)) {
-                            this.setState({suggestedProjectLeadersEmail: true});
-                          } else {
-                          }
-                          this.setState({projectleadersText: e});
-                        }}
-                        placeholder={'Enter Name'}
-                      />
-                    </View>
-                    {this.state.orgError && (
-                      <Text style={{fontSize: wp(3), color: colors.error}}>
-                        Add people to the organization
-                      </Text>
-                    )}
-                  </View>
-
                   {/* Project Leaders email suggestions */}
 
-                  <View>
-                    {this.state.suggestedProjectLeadersEmail == false ? null : (
-                      <View style={styles.involveSuggestCont}>
-                        <TouchableOpacity
-                          onPress={() => {
-                            this.state.selectedProjectleadersEmail.push(
-                              this.state.projectleadersText,
-                            );
-
-                            this.setState({
-                              projectleadersText: '',
-                              suggestedProjectLeadersEmail: false,
-                            });
-                          }}
-                          style={[
-                            styles.involvePsuggCont,
-                            {borderBottomWidth: 0},
-                          ]}>
-                          <Icon
-                            name={'send'}
-                            type={'feather'}
-                            size={wp(5)}
-                            containerStyle={{opacity: 0.5}}
-                          />
-                          <View style={{alignItems: 'center'}}>
-                            <Text
-                              style={{
-                                opacity: 0.5,
-                                fontSize: wp(3),
-                                marginLeft: wp(4),
-                              }}>
-                              Invite {this.state.projectleadersText}
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      </View>
-                    )}
-                  </View>
-
                   {/* selected projectLeaders tags */}
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      flexWrap: 'wrap',
-                      // width: wp(80),
-                    }}>
-                    {this.state.selectedProjectleadersEmail.length != 0 && (
-                      <Tags
-                        type={'organizationPeoplesSuggestioms'}
-                        style={{height: wp(10)}}
-                        tags={this.state.selectedProjectleadersEmail}
-                        onClose={(d: any) =>
-                          this.setState({
-                            selectedProjectleadersEmail: this.state.selectedProjectleadersEmail.filter(
-                              (v: any) => v !== d,
-                            ),
-                          })
-                        }
-                      />
-                    )}
-                  </View>
 
                   {/* People */}
                   <View>

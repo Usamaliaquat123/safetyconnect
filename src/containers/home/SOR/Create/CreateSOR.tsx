@@ -1055,9 +1055,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   value={this.state.observationT}
                   underlineColorAndroid="transparent"
                   placeholder="Enter your observation here"
-                  onChange={(t) => {
-                    this.setState({observationT: t.nativeEvent.text});
-                    this.searchInObservation(t.nativeEvent.text);
+                  onChangeText={(t) => {
+                    this.setState({observationT: t});
+                    this.searchInObservation(t);
                   }}
                   style={[styles.obInputText]}
                 />
