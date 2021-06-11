@@ -163,6 +163,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         .createApi()
         .filterSors(data)
         .then((res: any) => {
+          console.log('reports  are not available');
+          console.log(res.data.data.report);
           if (res.data.data == undefined) {
           } else {
             res.data.data.report.sort(
@@ -730,15 +732,12 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           //  console.log(d)
 
                                           {
-
-
                                             this.props.navigation.navigate(
                                               'ViewSOR',
                                               {
-                                                data:d
+                                                data: d,
                                               },
                                             );
-                                        
                                           }
                                         }
                                         date={d.occured_at}

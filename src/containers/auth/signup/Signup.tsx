@@ -199,7 +199,6 @@ class Signup extends React.Component<SignupProps, any> {
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* content */}
-
           <View>
             <View style={{marginTop: wp(10)}}>
               <Text style={styles.headingContainer}>

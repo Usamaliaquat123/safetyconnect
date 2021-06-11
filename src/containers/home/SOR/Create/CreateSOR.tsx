@@ -15,6 +15,7 @@ import {Create_sor, riskxSeverityxliklihood} from '@service/mock';
 import styles from './style';
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import RNFetchBlob from 'rn-fetch-blob';
 
 import {
   searchInSuggestions,
@@ -184,6 +185,15 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           uri: res.uri,
           type: res.type,
         });
+
+        for (let i = 0; i < this.state.filename.length; i++) {
+          RNFetchBlob.fs
+            .readFile(this.state.filename[i].uri, 'base64')
+            .then((data) => {
+              this.state.filenmae[i]['uri'] = data;
+            });
+        }
+
         console.log(this.state.filename);
         this.setState({});
       }
@@ -259,38 +269,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     }
   };
 
-  // Upload Files  to S3
-  upoadFiles = async (
-    userId: string,
-    file: string,
-    date: Date,
-    type: string,
-    uri: string,
-  ) => {
-    // RNFS.readFile(uri, 'base64')
-    //   .then((res: any) => {
-    //     Storage.put(
-    //       `/public/sors/${userId}/${userId}-${file}-${date}`,
-    //       Buffer.from(res, 'base64'),
-    //     )
-    //       .then((stored) => {})
-    //       .catch((err) => {});
-    //   })
-    //   .catch((err: any) => {});
-    // const result = await Storage.put('test.txt', 'Hello');
-    // const object = {
-    //   uri: `${uri}`,
-    //   name: `${userId}${file}${date}`,
-    //   type: `${type}`,
-    // };
-    // // Uploading files to S3
-    // await Storage.put(
-    //   `Users/sors/${userId}/${userId}${file}${date}`,
-    //   object,
-    // ).then((res) => {
-    // });
-    // .catch((err) => {});
-  };
   // Getting files from the s3 storage
 
   // search in observatiosn
@@ -492,15 +470,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         date: rec[i].date,
                         is_complete: rec[i].is_complete,
                         is_selected: rec[i].is_selected,
-                        // justification: rec[i].justification,
+                        justification: rec[i].justification,
                       });
-                      if (rec[i].justification !== '') {
-                        actions['justification'] = rec[i].justification;
-                      }
+                      // if (rec[i].justification !== '') {
+                      //   actions['justification'] = rec[i].justification;
+                      // }
                     }
-
-                    console.log('actions and recommendation ');
-                    console.log(actions);
 
                     var sor = {
                       report: {
@@ -705,7 +680,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       var rec = this.state.actionRecommendations.filter(
                         (d: any) => d.selected == true,
                       );
-                      console.log(rec);
+                      // console.log(rec);
                       // console.log(rec.map((d: any) => delete d['selected']));
 
                       var actions: Array<any> = [];
@@ -759,9 +734,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         organization: this.state.currentOrg,
                         project: this.state.projectid,
                       };
-
-                      console.log('sors of actions ');
-                      console.log(sors);
 
                       var bodyInitial = {
                         report: {
