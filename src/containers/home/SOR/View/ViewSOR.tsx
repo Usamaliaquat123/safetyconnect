@@ -246,35 +246,37 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     console.log(this.props.route.params.data);
 
     if (this.props.route.params.data.justifications.length != 0) {
-      this.props.route.params.data.justifications[0].justification[0].question.map(
+      // console.log(this.props.route.params.data);
+      this.props.route.params.data.justifications[0].justification.question.map(
         (d, i) => {
           this.state.fiveWHYdata.push({question: d});
         },
       );
-      // Answer map and then push
-      this.props.route.params.data.justifications[0].justification[0].answer.map(
+      //   // Answer map and then push
+      this.props.route.params.data.justifications[0].justification.answer.map(
         (d, i) => {
           this.state.fiveWHYdata[i]['answer'] = d;
         },
       );
-      // If contributoryCauses exists
-      if (this.props.route.params.data.justifications[0].contributoryCauses) {
-        this.setState({
-          countributoryCauses: this.props.route.params.data.justifications[0]
-            .contributoryCauses,
-          rootCauses: this.props.route.params.data.justifications[0].rootCauses,
-        });
-      }
-      // Set the state of 5 whys Questions /Answers
-      this.setState({
-        fiveWhyQuestion: this.props.route.params.data.justifications[0]
-          .justification[0].question,
-        fiveWhyAnswer: this.props.route.params.data.justifications[0]
-          .justification[0].answer,
-        fiveWhytoggle: true,
-      });
-    } else {
-      this.setState({fiveWhytoggle: false});
+      //   // If contributoryCauses exists
+      // if (this.props.route.params.data.justifications[0].contributoryCauses) {
+      //   this.setState({
+      //     countributoryCauses: this.props.route.params.data.justifications[0]
+      //       .contributoryCauses[0],
+      //     rootCauses: this.props.route.params.data.justifications[0]
+      //       .rootCauses[0],
+      //   });
+      // }
+      //   // Set the state of 5 whys Questions /Answers
+      //   this.setState({
+      //     fiveWhyQuestion: this.props.route.params.data.justifications[0]
+      //       .justification[0].question,
+      //     fiveWhyAnswer: this.props.route.params.data.justifications[0]
+      //       .justification[0].answer,
+      //     fiveWhytoggle: true,
+      //   });
+      // } else {
+      //   this.setState({fiveWhytoggle: false});
     }
   };
 

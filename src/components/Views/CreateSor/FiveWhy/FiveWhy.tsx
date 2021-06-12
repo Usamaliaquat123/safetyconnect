@@ -58,7 +58,19 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
     };
   }
   componentDidMount() {
-    console.log(this.props.reportId);
+    console.log('this.props.countributoryCauses');
+    console.log(this.props.countributoryCauses);
+
+    if (this.props.countributoryCauses == undefined) {
+      this.setState({
+        // contributoryCauseArray: this.props.contributoryCauses[0].category,
+        // contributoryCauseArrayA: this.props.contributoryCauses[0]
+        //   .subCategory[0],
+        // rootCausesArray: this.props.rootCauses[0].category,
+        // rootCausesArrayA: this.props.rootCauses[0].subCategory[0],
+      });
+    }
+
     // for (let i = 0; i < this.props.fiveWhyQuestions.length; i++) {
     //   for (let j = 0; j < this.props.fiveWhyAnswer.length; j++) {
     //     this.state.fivewhy.push({question: i, answer});
