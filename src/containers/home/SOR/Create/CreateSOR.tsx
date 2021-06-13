@@ -135,9 +135,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       SuggestionPop: false,
       fiveWhytoggle: false,
       countributoryCauses: '',
-      countributoryCausesD: '',
       rootCauses: '',
-      rootCausesD: '',
       fiveWHYdata: [],
       // Involved person
       involvedToArr: [],
@@ -1289,8 +1287,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     onChangeRiskCause={(e: any) => {
                       this.setState({rootCauses: e});
                     }}
-                    contributoryCauses={this.state.countributoryCausesD}
-                    rootCauses={this.state.rootCausesD}
+                    contributoryCauses={this.state.countributoryCauses}
+                    rootCauses={this.state.rootCauses}
                     data={this.state.fiveWHYdata}
                     fiveWhyQuestions={(q: Array<string>) => {
                       console.log(q);

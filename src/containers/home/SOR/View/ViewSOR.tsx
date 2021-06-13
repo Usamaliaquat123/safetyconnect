@@ -173,11 +173,18 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       console.log(currentProj);
       this.setState({projectId: currentProj});
     });
-    AsyncStorage.getItem('user').then((user: any) => {
-      this.setState({user: JSON.parse(user)});
+
+    // Get user and save it on state
+    AsyncStorage.getItem('email').then((email: any) => {
+      createApi
+        .createApi()
+        .getUser(email)
+        .then((user: any) => {
+          this.setState({user: user.data.data});
+        });
     });
+
     // console.log(this.props.route.params.data.comments);
-    console.log(this.state.involvedPerson);
     this.getFiveWHY();
     this.mappingMapping(
       this.props.route.params.data.risk.severity,
@@ -300,54 +307,52 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
       .value;
 
-    AsyncStorage.getItem('user').then((user: any) => {
-      if (this.state.fiveWhytoggle == true) {
-        if (this.props.route.params.data.justification == undefined) {
-          // create five why
-          var obj = {
-            justification: {
-              question: this.state.fiveWhyQuestion,
-              answer: this.state.fiveWhyAnswer,
-              contributoryCauses: this.state.countributoryCauses,
-              rootCauses: this.state.rootCauses,
-            },
-            project: this.state.projectId,
-            report: this.props.route.params.data._id,
-            user: JSON.parse(user)._id,
-            date: moment().format('MM-DD-YYYY'),
-          };
-
-          createApi
-            .createApi()
-            .createFiveWhy(obj)
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err));
-        } else {
-          // create justification
-          var updatefiveWhy = {
-            id: this.props.route.params.data.justification,
-            justification: {
-              question: this.state.fiveWhyQuestion,
-              answer: this.state.fiveWhyAnswer,
-            },
+    if (this.state.fiveWhytoggle == true) {
+      if (this.props.route.params.data.justification == undefined) {
+        // create five why
+        var obj = {
+          justification: {
+            question: this.state.fiveWhyQuestion,
+            answer: this.state.fiveWhyAnswer,
             contributoryCauses: this.state.countributoryCauses,
             rootCauses: this.state.rootCauses,
-          };
+          },
+          project: this.state.projectId,
+          report: this.props.route.params.data._id,
+          user: this.state.user._id,
+          date: moment().format('MM-DD-YYYY'),
+        };
 
-          console.log(updatefiveWhy);
-          createApi
-            .createApi()
-            .editFiveWhy(updatefiveWhy)
-            .then((res) => {
-              console.log(res);
-            })
-            .catch((err) => console.log(err));
-        }
+        createApi
+          .createApi()
+          .createFiveWhy(obj)
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err));
+      } else {
+        // create justification
+        var updatefiveWhy = {
+          id: this.props.route.params.data.justification,
+          justification: {
+            question: this.state.fiveWhyQuestion,
+            answer: this.state.fiveWhyAnswer,
+          },
+          contributoryCauses: this.state.countributoryCauses,
+          rootCauses: this.state.rootCauses,
+        };
 
-        //   fiveWhyQuestion:
-        // fiveWhyAnswer:
+        console.log(updatefiveWhy);
+        createApi
+          .createApi()
+          .editFiveWhy(updatefiveWhy)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => console.log(err));
       }
-    });
+
+      //   fiveWhyQuestion:
+      // fiveWhyAnswer:
+    }
 
     var update = {
       report: {
@@ -444,7 +449,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   // Get All Comments
   getAllComments = () => {
     // this.props.route.params.data.comments;
-    AsyncStorage.getItem('user').then((user: any) => {
       console.log('sdsd');
       console.log(this.props.route.params.data.comments);
       console.log(this.props.route.params.data._id);
@@ -493,7 +497,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           });
         })
         .catch((err) => console.log(err));
-    });
   };
 
   // Add Comment
