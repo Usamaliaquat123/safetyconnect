@@ -149,7 +149,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       fiveWhyAnswer: [],
       fiveWHYdata: [],
       countributoryCauses: '',
+      countributoryCausesD: '',
       rootCauses: '',
+      rootCausesD: '',
       // Reassign to
       reAssignToArr: [],
       exclateToTags: [],
@@ -1383,8 +1385,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     this.setState({countributoryCauses: e})
                   }
                   onChangeRiskCause={(e: any) => this.setState({rootCauses: e})}
-                  contributoryCauses={this.state.countributoryCauses}
-                  rootCauses={this.state.rootCauses}
+                  contributoryCauses={this.state.countributoryCausesD}
+                  rootCauses={this.state.rootCausesD}
                   data={this.state.fiveWHYdata}
                   fiveWhyQuestions={(q: Array<string>) =>
                     this.setState({fiveWhyQuestion: q})
