@@ -43,7 +43,6 @@ type HomeScreenNavigationProp = StackNavigationProp<
   'Home'
 >;
 type HomeRouteProp = RouteProp<StackNavigatorProps, 'Home'>;
-const PROJECT_ID: string = '';
 export interface HomeProps {
   route: HomeRouteProp;
   navigation: HomeScreenNavigationProp;

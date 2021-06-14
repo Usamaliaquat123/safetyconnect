@@ -71,8 +71,6 @@ export interface CreateSORProps {
   reduxActions: any;
   reduxState: any;
 }
-// Project Id
-const PROJECT_ID: string = '';
 
 class CreateSOR extends React.Component<CreateSORProps, any> {
   constructor(props: any) {

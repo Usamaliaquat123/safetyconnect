@@ -50,8 +50,6 @@ export interface ViewAllProps {
   reduxActions: any;
   reduxState: AllSorDTO;
 }
-// Project Id
-const PROJECT_ID: string = '608fcd465509dad0d436cdd0';
 class ViewAll extends React.Component<ViewAllProps, any> {
   constructor(props: any) {
     super(props);

@@ -54,8 +54,6 @@ type ViewAllSOrNavigationProp = StackNavigationProp<
   'ViewAllSOr'
 >;
 type ViewAllSOrRouteProp = RouteProp<StackNavigatorProps, 'ViewAllSOr'>;
-// Project Id
-const PROJECT_ID: string = '608fcd465509dad0d436cdd0';
 export interface ViewAllProps {
   route: ViewAllSOrRouteProp;
   navigation: ViewAllSOrNavigationProp;
