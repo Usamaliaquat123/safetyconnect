@@ -152,22 +152,22 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
 
         AsyncStorage.getItem('email')
           .then((email: any) => {
-            var img = {
-              bucket: 'hns-codist',
-              report: 'profile',
-              fileType: [`image/${this.state.photofileType}`],
-              ext: [this.state.photofileType],
-            };
+            // var img = {
+            //   bucket: 'hns-codist',
+            //   report: 'profile',
+            //   fileType: [`image/${this.state.photofileType}`],
+            //   ext: [this.state.photofileType],
+            // };
 
-            api
-              .createApi()
-              .getFileApi(img)
-              .then((imgUri: any) => {
-                api
-                  .createApi('', '', '', '', '', '', imgUri.data.url)
-                  .uploadFile(this.state.orgImageBase64)
-                  .then((res) => console.log(res));
-              });
+            // api
+            //   .createApi()
+            //   .getFileApi(img)
+            //   .then((imgUri: any) => {
+            //     api
+            //       .createApi('', '', '', '', '', '', imgUri.data.url)
+            //       .uploadFile(this.state.orgImageBase64)
+            //       .then((res) => console.log(res));
+            //   });
 
             var data = {
               created_by: email,
