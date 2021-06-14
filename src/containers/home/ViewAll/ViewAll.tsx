@@ -111,9 +111,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
 
       this.setState({loading: true});
     });
-
   }
-
 
   _onRefresh = () => {
     this.setState({
@@ -239,12 +237,6 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     );
   }
 }
-// const mapStateToProps = (state: AllSorDTO) => ({
-
-// })
-// const mapDispatchToProps = (dispatch: unknown) => {
-//   return {};
-// };
 
 const mapStateToProps = (state: AllSorDTO) => ({
   reduxState: state.allSors,

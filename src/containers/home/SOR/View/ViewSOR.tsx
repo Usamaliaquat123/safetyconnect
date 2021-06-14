@@ -65,7 +65,6 @@ export interface ViewSORProps {
   reduxActions: any;
   reduxState: any;
 }
-// Project Id
 class ViewSOR extends React.Component<ViewSORProps, any> {
   public animation: any;
   public photoAnim: any;
@@ -171,6 +170,25 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       console.log('currentProj of the vaue');
       console.log(currentProj);
       this.setState({projectId: currentProj});
+
+      createApi
+        .createApi()
+        .getProject({projectid: currentProj})
+        .then((res: any) => {
+          this.setState({
+            projectName: res.data.data.project_name,
+            involvedPerson: res.data.data.involved_persons,
+          });
+
+          this.mappingInvolved(
+            res.data.data.involved_persons,
+            this.props.route.params.data.involved_persons[0],
+          );
+          for (let i = 0; i < res.data.data.involved_persons.length; i++) {
+            res.data.data.involved_persons[i]['selected'] = false;
+          }
+        })
+        .catch((err) => console.log(err));
     });
 
     // Get user and save it on state
@@ -204,34 +222,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     this.props.route.params.data.action_required.forEach(
       (v) => delete v.default,
     );
-
-    createApi
-      .createApi()
-      .getProject({projectid: this.state.projectId})
-      .then((res: any) => {
-        console.log(res.data);
-        console.log('get the project name');
-        this.setState({
-          projectName: res.data.data.project_name,
-          // involvedPerson: res.data.data.involved_persons,
-          // commentsSugg: res.data.data.involved_persons,
-          involvedPerson: res.data.data.involved_persons,
-        });
-
-        // var arr = filterAndMappingPersons(
-        //   this.props.route.params.data,
-        //   res.data.data.involved_persons,
-        // );
-
-        this.mappingInvolved(
-          res.data.data.involved_persons,
-          this.props.route.params.data.involved_persons[0],
-        );
-        for (let i = 0; i < res.data.data.involved_persons.length; i++) {
-          res.data.data.involved_persons[i]['selected'] = false;
-        }
-      })
-      .catch((err) => console.log(err));
 
     // console.log(this.props.route.params.data.involved_persons);
     // console.log(this.state.involvedPerson);
