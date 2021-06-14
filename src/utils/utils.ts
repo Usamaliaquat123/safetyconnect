@@ -428,7 +428,12 @@ export const imagePicker = () => {
   return new Promise((resolve, reject) => {
     try {
       ImagePicker.launchImageLibrary(
-        {mediaType: 'photo'},
+        {
+          mediaType: 'photo',
+          includeBase64: true,
+          maxHeight: 1000,
+          maxWidth: 1000,
+        },
         (res: ImagePicker.ImagePickerResponse) => {
           resolve(res);
         },

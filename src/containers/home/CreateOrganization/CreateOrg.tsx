@@ -108,29 +108,34 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
           if (res.didCancel == true) {
             this.setState({photoModal: false, uploadedImage: ''});
           } else {
+            console.log(res.type.split('/'));
             this.setState({
               photoModal: false,
+              orgImageBase64: res.base64,
               uploadedImage: res.uri,
-              photofileType: res.type,
+              photofileType: res.type.split('/')[1],
+
               fileType: res.type.split('/')[1],
             });
-          }
-        })
-        .catch((err) => {
-          this.setState({photoModal: false, uploadedImage: ''});
-        });
-    } else {
-      cameraCapture()
-        .then((res: any) => {
-          if (res.didCancel == true) {
-            this.setState({photoModal: false, uploadedImage: ''});
-          } else {
-            this.setState({
-              photoModal: false,
-              uploadedImage: res.uri,
-              photofileType: res.type,
-              fileType: res.type.split('/')[1],
-            });
+
+            var img = {
+              bucket: 'hns-codist',
+              report: 'profile',
+              fileType: [`image/${this.state.photofileType}`],
+              ext: [this.state.photofileType],
+            };
+
+            console.log(img);
+            api
+              .createApi()
+              .getFilesUrl(img)
+              .then((imgUri: any) => {
+                console.log(imgUri);
+                api
+                  .createApi('', '', '', '', '', '', imgUri.data[0].url)
+                  .uploadFile(this.state.orgImageBase64)
+                  .then((res) => console.log(res));
+              });
           }
         })
         .catch((err) => {
@@ -147,6 +152,23 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
 
         AsyncStorage.getItem('email')
           .then((email: any) => {
+            var img = {
+              bucket: 'hns-codist',
+              report: 'profile',
+              fileType: [`image/${this.state.photofileType}`],
+              ext: [this.state.photofileType],
+            };
+
+            api
+              .createApi()
+              .getFileApi(img)
+              .then((imgUri: any) => {
+                api
+                  .createApi('', '', '', '', '', '', imgUri.data.url)
+                  .uploadFile(this.state.orgImageBase64)
+                  .then((res) => console.log(res));
+              });
+
             var data = {
               created_by: email,
               name: this.state.org,
@@ -220,40 +242,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                               suggestedUsers: members,
                             });
                           });
-
-                        // AsyncStorage.getItem('invitedUsersEmails').then(
-                        //   (invitedEmails: any) => {
-                        //     var emails = JSON.parse(invitedEmails);
-                        //     if (emails == null) {
-                        //       AsyncStorage.setItem(
-                        //         'invitedUsersEmails',
-                        //         JSON.stringify(this.state.selectedEmails),
-                        //       );
-                        //     } else {
-                        //       for (let l = 0; l < emails.length; l++) {
-                        //         for (
-                        //           let k = 0;
-                        //           k < this.state.selectedEmails.length;
-                        //           k++
-                        //         ) {
-                        //           if (
-                        //             emails[l] ==
-                        //             this.state.selectedEmails[k].email
-                        //           ) {
-                        //             // emails.push(this.state.selectedEmails[k]);
-                        //           } else {
-                        //             emails.push(this.state.selectedEmails[k]);
-                        //           }
-                        //         }
-                        //       }
-
-                        //       AsyncStorage.setItem(
-                        //         'invitedUsersEmails',
-                        //         JSON.stringify(emails),
-                        //       );
-                        //     }
-                        //   },
-                        // );
                       });
                   } else {
                     this.setState({loading: false, errorModal: false});
@@ -311,7 +299,8 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                 />
               </View>
               {/* Upload profile photo */}
-              <View
+              <TouchableOpacity
+                onPress={() => this.imgCap('upload')}
                 style={{
                   padding: wp(3),
                   // width: wp(50),
@@ -330,14 +319,14 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                     }}
                   />
                 </View>
-              </View>
+              </TouchableOpacity>
               <Text
                 style={{
                   textAlign: 'center',
                   fontSize: wp(3.5),
                   fontFamily: fonts.SFuiDisplayBold,
                 }}>
-                Upload orgnaization image
+                Organization Logo
               </Text>
 
               <View>
