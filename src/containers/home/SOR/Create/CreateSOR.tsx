@@ -330,14 +330,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         .then((user: any) => {
           var dta = user.data.data;
           this.setState({user: user.data.data});
-
-          // console.log(dta);
-          // console.log(this.state.currentOrg);
-          // console.log(
-          //   dta.organizations.filter(
-          //     (d: any) => d._id == this.state.currentOrg,
-          //   ),
-          // );
         });
     });
     this.mappingMapping(1, 1);
@@ -1280,7 +1272,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 {this.state.fiveWhytoggle ? (
                   <FiveWhy
                     onChangeCountributory={(e: any) => {
-                      this.setState({countributoryCauses: e}  );
+                      this.setState({countributoryCauses: e});
                     }}
                     onChangeRiskCause={(e: any) => {
                       this.setState({rootCauses: e});
