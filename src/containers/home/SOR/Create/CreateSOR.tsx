@@ -178,7 +178,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         res.type == 'xlsx' ||
         res.type == 'image'
       ) {
-        const img = '';
+        var img = '';
         RNFetchBlob.fs.readFile(res.uri, 'base64').then((data) => {
           img = data;
         });
@@ -264,7 +264,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         .createApi()
         .suggestiosns(form)
         .then((res: any) => {
-          // console.log(res.data.results)
           this.setState({
             actionRecommendations: [...res.data.results],
           });
@@ -282,7 +281,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       .createApi()
       .observationSuggestions(str)
       .then((res: any) => {
-        // console.log(res);
         if (res.status == 200) {
           this.setState({suggestions: res.data.results});
         }
@@ -309,8 +307,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
   componentDidMount = () => {
     getCurrentProject().then((currentProj: any) => {
-      console.log(currentProj);
-      console.log('project on create sor');
       this.setState({projectid: currentProj});
     });
     getCurrentOrganization().then((currentOrg: any) =>
@@ -342,10 +338,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     AsyncStorage.getItem('email').then((email: any) => {
       this.setState({email});
     });
-    console.log('before ');
-    console.log(this.state.projectid);
     getCurrentProject().then((currentProj: any) => {
-      console.log(currentProj);
       this.setState({projectid: currentProj});
 
       createApi
@@ -354,8 +347,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           projectid: currentProj,
         })
         .then((res: any) => {
-          console.log('gte project ');
-          console.log(res);
           this.setState({involved_persons: res.data.data.involved_persons});
         });
     });
@@ -386,7 +377,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     //       obj[i]['date'] =moment().format('YYYY-MM-DD'),
     //       obj[i]['assigned_to'] = []
     //   }
-    //     // console.log(res.data.results)
     //     this.setState({
     //       actionRecommendations: [...obj],
     //     });
@@ -505,9 +495,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         project: this.state.projectid,
                       };
 
-                      console.log('sor api');
-                      console.log(sor);
-
                       // if (this.state.reportIdInvestigation == '') {
                       var bodyInitial = {
                         report: {
@@ -560,7 +547,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           .createSor(sor)
                           .then((res: any) => {
                             this.setState({loading: false, errorModal: false});
-                            console.log(res);
 
                             if (this.state.fiveWhytoggle) {
                               // sor.report['_id'] = this.state.reportIdInvestigation;
@@ -588,8 +574,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                     errorModal: false,
                                   });
                                   this.props.navigation.goBack();
-
-                                  console.log(res);
                                 })
                                 .catch((err: any) => console.log(err));
 
@@ -604,7 +588,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                             if (res.status == 200) {
                             } else {
-                              console.log(res);
                               // this.setState({
                               //   errorModal: false,
                               //   errHeadingText: `CreateSor api returns ${res.data.status}.`,
@@ -671,13 +654,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     if (this.state.submitToTags.length !== 0) {
                       if (this.state.exclateToTags.length !== 0) {
                         this.setState({loading: true, errorModal: true});
-                        console.log(this.state.exclateToTags);
 
                         var rec = this.state.actionRecommendations.filter(
                           (d: any) => d.selected == true,
                         );
-                        // console.log(rec);
-                        // console.log(rec.map((d: any) => delete d['selected']));
 
                         var actions: Array<any> = [];
                         for (let i = 0; i < rec.length; i++) {
@@ -695,9 +675,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             action: 'low',
                           });
                         }
-
-                        // console.log('actions and recommendatons');
-                        // console.log(actions);
 
                         var sors = {
                           report: {
@@ -750,7 +727,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           })
                           .catch((err) => console.log(err));
 
-                        console.log(sors);
                         setTimeout(() => {
                           createApi
                             .createApi()
@@ -777,8 +753,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   date: moment().format('MM-DD-YYYY'),
                                 };
 
-                                console.log(newObj);
-                                console.log('five why data ');
                                 createApi
                                   .createApi()
                                   .createFiveWhy(newObj)
@@ -788,17 +762,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                       errorModal: false,
                                     });
                                     // this.props.navigation.goBack();
-
-                                    console.log(createdsor);
-
-                                    // console.log('five why');
-                                    // console.log(res);
                                   })
                                   .catch((err: any) => console.log(err));
 
                                 // _id: ress.data.data.report_id,
                               } else {
-                                // console.log(res);
                                 this.setState({
                                   loading: false,
                                   errorModal: false,
@@ -807,7 +775,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 this.props.navigation.goBack();
                               }
                               // if (res.status == 200) {
-                              //   console.log('sdsd');
 
                               // } else {
                               //   console.log(res);
@@ -1192,13 +1159,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       // } else {
                       // }
                       // if (v.liklihood == undefined) {
-                      //   console.log(
-                      //     this.state.severity.filter((d) => d == v.severity),
-                      //   );
-                      //   this.setState({severity: [v.severity]});
-                      // } else {
-                      //   this.setState({liklihood: [v.liklihood]});
-                      // }
                     }}
                   />
                 </View>
@@ -1286,12 +1246,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     rootCauses={this.state.rootCauses}
                     data={this.state.fiveWHYdata}
                     fiveWhyQuestions={(q: Array<string>) => {
-                      console.log(q);
-
                       this.setState({fiveWhyQuestion: q});
                     }}
                     fiveWhyAnswer={(a: Array<string>) => {
-                      console.log(a);
                       this.setState({fiveWhyAnswer: a});
                     }}
                     reportId={this.state.reportIdInvestigation}
@@ -1321,7 +1278,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         this.setState({actionRecommendations: arr});
                       }}
                       onLongPress={() => {
-                        console.log(this.state.allActionsEdit);
                         this.setState({
                           allActionsEdit: d,
                           allActionsEditIndex: i,
@@ -2055,7 +2011,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                   var date = `${day.dateString}`;
 
-                  console.log(moment(this.state.currentTime).format('LT'));
                   this.setState({todayDateCallender: day.dateString});
                   this.setState({setDateModal: false});
                 }}
@@ -2063,15 +2018,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 // markedDates={{}}
                 markingType={'custom'}
                 // Handler which gets executed on day long press. Default = undefined
-                onDayLongPress={(day) => {
-                  console.log('selected day', day);
-                }}
+                onDayLongPress={(day) => {}}
                 // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
                 monthFormat={'yyyy MM'}
                 // Handler which gets executed when visible month changes in calendar. Default = undefined
-                onMonthChange={(month) => {
-                  console.log('month changed', month);
-                }}
+                onMonthChange={(month) => {}}
                 // Hide month navigation arrows. Default = false
                 hideArrows={true}
                 // Replace default arrows with custom ones (direction can be 'left' or 'right')
@@ -2100,8 +2051,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 // Replace default month and year title with custom one. the function receive a date as parameter.
                 renderHeader={(date) => {
                   /*Return JSX*/
-
-                  console.log(date);
                 }}
                 // Enable the option to swipe between months. Default = false
                 enableSwipeMonths={true}
@@ -2119,12 +2068,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               is24Hour={true}
               display="clock"
               onChange={(d: any) => {
-                console.log(d);
                 this.setState({setTimeModal: false});
                 if (d.type == 'set') {
                   this.setState({currentTime: d.nativeEvent.timestamp});
                 }
-                // console.log('sds');
               }}
             />
           )}
@@ -2141,10 +2088,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               isOpen={this.state.SuggestionPop}
               suggestions={this.state.allActionsEdit}
               save={(d: any) => {
-                console.log(d);
-                // console.log(this.state.newActions)
-                // console.log(this.state.actionRecommendations)
-                // console.log(this.state.allActionsEditIndex)
                 if (this.state.newActions == true) {
                   this.state.actionRecommendations.push(d);
                 } else {
@@ -2155,12 +2098,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     this.state.allActionsEditIndex
                   ].is_complete = true;
                 }
-                // this.state.actionsAndRecommendations.push(d)
                 this.setState({SuggestionPop: false});
               }}
               discard={() => {
-                console.log('sdsd');
-                // console.log(this.state.actionRecommendations)
                 this.setState({
                   actionRecommendations: this.state.actionRecommendations.filter(
                     (d: any) => d != this.state.allActionsEdit,

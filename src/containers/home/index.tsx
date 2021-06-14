@@ -78,21 +78,14 @@ class Home extends React.Component<HomeProps, any> {
   componentDidMount = () => {
     this.setState({loading: true});
     getCurrentProject().then((currentProj: any) => {
-      // console.log('current project');
-      console.log(currentProj);
-      console.log('currentProj');
       this.setState({projectId: currentProj});
     });
 
     getCurrentOrganization().then((currentorg: any) => {
-      console.log(currentorg);
-      console.log('current project');
       this.setState({currentorg});
     });
     // this.setState({name: 'sds'});
 
-    // console.log(this.state.currentorg);
-    // console.log(this.state.currentProj);
     // if (this.state.currentorg == null && this.state.currentProj == null) {
     //   this.setState({newsorModal: true});
     // } else {
@@ -104,7 +97,6 @@ class Home extends React.Component<HomeProps, any> {
         .createApi()
         .getAllNotifications(email, '[0,1]')
         .then((notify: any) => {
-          console.log(notify);
           this.setState({
             count: notify.data.data[0].notifications.filter(
               (n: any) => n.status == '0',
@@ -115,19 +107,11 @@ class Home extends React.Component<HomeProps, any> {
         .createApi()
         .getUser(email)
         .then((res: any) => {
-          console.log(res.data.data.img_url);
 
           this.setState({name: res.data.data.name});
           this.setState({image: res.data.data.img_url});
           this.setState({user: res.data.data});
           this.setState({allOrganizations: res.data.data.organizations});
-
-          // console.log(
-          //   res.data.data.organizations.filter(
-          //     (d: any) => d._id == this.state.currentorg,
-          //   )[0].projects,
-          // );
-          console.log(res.data.data.img_url);
           var data = {
             bucket: 'hns-codist',
             report: [`profile/${res.data.data.img_url}`],
@@ -167,7 +151,6 @@ class Home extends React.Component<HomeProps, any> {
     //   .createApi()
     //   .getFileApi(data)
     //   .then((file: any) => {
-    //     // console.log(`data:image/jpeg;base64,${file.data}`);
     //     // this.setState({image: file.data});
     //   });
     this.setState({loading: false});
@@ -187,7 +170,6 @@ class Home extends React.Component<HomeProps, any> {
     });
 
     savedCurrentOrganization(d._id);
-    console.log(d);
     if (d.projects.length != 0) {
       this.setState({allProjects: d.projects});
     } else {
