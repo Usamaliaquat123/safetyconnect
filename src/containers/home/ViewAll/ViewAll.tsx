@@ -67,7 +67,6 @@ class ViewAll extends React.Component<ViewAllProps, any> {
   componentDidMount() {
     AsyncStorage.getItem('user').then((user: any) => {
       this.setState({user: JSON.parse(user)});
-      console.log(JSON.parse(user));
     });
 
     getCurrentProject().then((currentProj: any) => {
@@ -90,8 +89,6 @@ class ViewAll extends React.Component<ViewAllProps, any> {
             .then((res: any) => {
               var sors = [];
               for (let i = 0; i < res.data.data.report.length; i++) {
-                // console.log(res.data.data.report[i]);
-
                 var rep = filterAndMappingPersons(
                   res.data.data.report[i],
                   currentProj.data.data.involved_person,

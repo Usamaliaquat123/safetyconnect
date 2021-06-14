@@ -167,15 +167,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
   componentDidMount = () => {
     getCurrentProject().then((currentProj: any) => {
-      console.log('currentProj of the vaue');
-      console.log(currentProj);
       this.setState({projectId: currentProj});
 
       createApi
         .createApi()
         .getProject({projectid: currentProj})
         .then((res: any) => {
-          console.log(res);
           this.setState({
             projectName: res.data.data.project_name,
             involvedPerson: res.data.data.involved_persons,
@@ -188,7 +185,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             res.data.data.involved_persons[i]['selected'] = false;
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {});
     });
 
     // Get user and save it on state
@@ -201,7 +198,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         });
     });
 
-    // console.log(this.props.route.params.data.comments);
     this.getFiveWHY();
     this.mappingMapping(
       this.props.route.params.data.risk.severity,
@@ -223,9 +219,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       (v) => delete v.default,
     );
 
-    // console.log(this.props.route.params.data.involved_persons);
-    // console.log(this.state.involvedPerson);
-
     this.fileAndImageCapturer(this.props.route.params.data.attachments);
     this.mapViewSorPhoto();
     this.AnimatedViews();
@@ -233,19 +226,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.props.route.params.data.risk.severity,
       this.props.route.params.data.risk.likelihood,
     );
-
-    console.log('this.state.esclate_to');
-    console.log(this.state.esclate_to);
   };
 
   // FIVE WHY
   getFiveWHY = () => {
     // Question map and them push
-    console.log('Justififcation in details');
-    console.log(this.props.route.params.data);
 
     if (this.props.route.params.data.justifications.length != 0) {
-      // console.log(this.props.route.params.data);
       this.props.route.params.data.justifications[0].justification.question.map(
         (d, i) => {
           this.state.fiveWHYdata.push({question: d});
@@ -313,11 +300,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           date: moment().format('MM-DD-YYYY'),
         };
 
-        createApi
-          .createApi()
-          .createFiveWhy(obj)
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err));
+        createApi.createApi().createFiveWhy(obj);
       } else {
         // create justification
         var updatefiveWhy = {
@@ -330,14 +313,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           rootCauses: this.state.rootCauses,
         };
 
-        console.log(updatefiveWhy);
-        createApi
-          .createApi()
-          .editFiveWhy(updatefiveWhy)
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => console.log(err));
+        createApi.createApi().editFiveWhy(updatefiveWhy);
       }
 
       //   fiveWhyQuestion:
@@ -372,13 +348,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       project: this.state.projectId,
     };
 
-    console.log(update);
-
     createApi
       .createApi()
       .updateSor(update)
       .then((res) => {
-        console.log(res);
         this.setState({loading: false});
         if (res.status == 200) {
           this.props.navigation.goBack();
@@ -392,15 +365,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         // ]);
         // this.props.navigation.navigate('ViewAllSOr');
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   // delete comment through commentId
   deleteComment = (comment: any) => {
-    // console.log(comment);
-
     createApi
       .createApi()
       .delComment(comment[0]._id, this.props.route.params.data.comments)
@@ -410,7 +379,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           this.setState({editDelComment: false});
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   };
 
   // Add edit comment
@@ -426,22 +395,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       comment_id: comment._id,
       comment_document_id: this.props.route.params.data.comments,
     };
-    console.log(data);
     createApi
       .createApi()
       .editComment(data)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
+      .then((res) => {})
+      .catch((err) => {});
   };
 
   // Get All Comments
   getAllComments = () => {
     // this.props.route.params.data.comments;
-    console.log('sdsd');
-    console.log(this.props.route.params.data.comments);
-    console.log(this.props.route.params.data._id);
 
     createApi
       .createApi()
@@ -450,22 +413,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         this.props.route.params.data._id,
       )
       .then((res: any) => {
-        console.log(res.data.data);
         AsyncStorage.getItem('involved_person').then((involveppl: any) => {
-          // console.log(JSON.parse(involveppl));
-          // console.log(res.data.data.all_comments);
-
           var involvedPersonss = JSON.parse(involveppl);
 
           for (let i = 0; i < res.data.data.all_comments.length; i++) {
             for (let j = 0; j < involvedPersonss.length; j++) {
-              console.log(res.data.data.all_comments[i]);
               // if (res.data.data.all_comments[i].user != null) {
               //   if (
               //     res.data.data.all_comments[i].user.email ==
               //     involvedPersonss[j].email
               //   ) {
-              //     console.log('dtra');
               //     console.log(involvedPersonss[i]);
               //     res.data.data.all_comments[i].user = involvedPersonss[j];
               //   }
@@ -476,17 +433,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             (a, b) => new Date(a.date) - new Date(b.date),
           );
 
-          console.log('================');
-          console.log(res.data.data.all_comments);
-          console.log('================');
           this.setState({comments: sortedActivities});
 
           // this.state..sort(function(a, b){return a-b});
-
-          console.log(this.state.comments);
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   };
 
   // Add Comment
@@ -513,7 +465,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         .createApi()
         .createComment(comments)
         .then((res: any) => {
-          console.log(res);
           var map = [...this.state.comments];
           map.push({
             date: Date.now(),
@@ -532,7 +483,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
           this.setState({comments: map});
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {});
     });
   };
   // Save aas draft
@@ -1312,7 +1263,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     //         });
                     //         this.setState({fiveWhytoggle: true});
                     //       })
-                    //       .catch((err) => console.log(err));
                     //   } else {
                     //     this.setState({fiveWhytoggle: true});
                     //   }
@@ -1859,11 +1809,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               <TouchableOpacity
                                 key={i}
                                 onPress={() => {
-                                  // console.log(
-                                  //   this.state.reAssignToArr.filter(
-                                  //     (v: involved_persons) => v == d,
-                                  //   ),
-                                  // );
                                   this.setState({
                                     reassignToText: '',
                                     reAssignToArr: [],
@@ -1955,11 +1900,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           <TouchableOpacity
                             key={i}
                             onPress={() => {
-                              // console.log(
-                              //   this.state.exclateToArr.filter(
-                              //     (v: involved_persons) => v == d,
-                              //   ),
-                              // );
                               this.setState({esclateTo: '', exclateToArr: []});
                               if (
                                 this.state.exclateToArr.filter(
@@ -2179,10 +2119,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       // mentionComment
 
                       if (filterLocation(e.nativeEvent.text) != null) {
-                        console.log(
-                          filterLocation(e.nativeEvent.text)[0].split('@')[1],
-                        );
-
                         this.setState({
                           commentsSugg: searchInSuggestions(
                             filterLocation(e.nativeEvent.text)[0].split('@')[1],
@@ -2766,11 +2702,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 (d: any, i: number) => i == this.state.editDiscardCommentIndex,
               ),
             );
-            // console.log(
-            //   e.filter(
-            //     (d: any, i: number) => i == this.state.editDiscardCommentIndex,
-            //   ),
-            // );
 
             // this.state.comments.splice(this.state.editDiscardCommentIndex, 1);
 

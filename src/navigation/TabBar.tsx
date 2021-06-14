@@ -72,7 +72,6 @@ export default class TabBar extends React.Component<TabBarProps, any> {
   }
 
   componentDidMount = () => {
-    // console.log(this.props.reduxActions);
     // this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
     //   1,
     //   2,
@@ -157,7 +156,6 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                 testID={options.tabBarTestID}
                 onPress={() => {
                   // if (route.name == 'addNew') {
-                  //   console.log('if match');
                   //   // return this.setState({
                   //   //   createModal: !this.state.createModal,
                   //   // });
