@@ -178,9 +178,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         res.type == 'xlsx' ||
         res.type == 'image'
       ) {
+        const img = '';
+        RNFetchBlob.fs.readFile(res.uri, 'base64').then((data) => {
+          img = data;
+        });
+
         this.state.filename.push({
           name: res.name,
-          uri: res.uri,
+          uri: img,
           type: res.type,
         });
 
