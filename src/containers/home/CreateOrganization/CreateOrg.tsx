@@ -11,15 +11,21 @@ import {
 import {connect} from 'react-redux';
 import styles from './styles';
 import {
+  imagePicker,
+  cameraCapture,
+  suggestInActionsRecommendations,
+} from '@utils';
+import RNFetchBlob from 'rn-fetch-blob';
+import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import * as reduxActions from '../../../store/actions/listSorActions';
 import {Tags} from '@components';
-import {Icon} from 'react-native-elements';
+import {Icon, Avatar} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
-
+import DocumentPicker from 'react-native-document-picker';
 import {RouteProp} from '@react-navigation/native';
 import {colors, images, GlStyles, fonts} from '@theme';
 import {animation} from '@theme';
@@ -55,6 +61,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
       loading: false,
       // Error State
       errorModal: false,
+      uploadedImage: '',
       orgError: false,
       orgDescError: false,
       org: '',
@@ -93,6 +100,46 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
     this.setState({peoplesText: e});
   };
 
+  // Image capture of the organization
+  imgCap = (str: string) => {
+    if (str == 'upload') {
+      imagePicker()
+        .then((res: any) => {
+          if (res.didCancel == true) {
+            this.setState({photoModal: false, uploadedImage: ''});
+          } else {
+            this.setState({
+              photoModal: false,
+              uploadedImage: res.uri,
+              photofileType: res.type,
+              fileType: res.type.split('/')[1],
+            });
+          }
+        })
+        .catch((err) => {
+          this.setState({photoModal: false, uploadedImage: ''});
+        });
+    } else {
+      cameraCapture()
+        .then((res: any) => {
+          if (res.didCancel == true) {
+            this.setState({photoModal: false, uploadedImage: ''});
+          } else {
+            this.setState({
+              photoModal: false,
+              uploadedImage: res.uri,
+              photofileType: res.type,
+              fileType: res.type.split('/')[1],
+            });
+          }
+        })
+        .catch((err) => {
+          this.setState({photoModal: false, uploadedImage: ''});
+        });
+    }
+  };
+  uplaodOrganizationImage = () => {};
+
   createOrg = () => {
     if (this.state.org !== '') {
       if (this.state.orgDetails !== '') {
@@ -111,12 +158,9 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
               .createApi()
               .organization(data)
               .then((res: any) => {
-                console.log(res);
                 if (res.status == 200) {
                   if (this.state.selectedEmails.length != 0) {
                     var emails = this.state.selectedEmails;
-
-                    console.log(emails);
 
                     var inviteData = {
                       emails: emails,
@@ -138,19 +182,10 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                           .createApi()
                           .getUser(email)
                           .then((checkingMem: any) => {
-                            console.log('new organi');
-                            console.log(checkingMem);
-                            console.log(res.data.data.organization_id);
-
                             var memeberId = checkingMem.data.data.organizations.filter(
                               (d: any) =>
                                 d._id == res.data.data.organization_id,
                             )[0].members;
-
-                            console.log('SELECTED EMAILS');
-                            console.log(emails);
-                            console.log(memeberId);
-                            console.log('members id');
 
                             var members = [];
                             var indexes = [];
@@ -172,10 +207,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                               }
                             }
 
-                            // console.log('');
-
-                            console.log(members);
-                            console.log('members level');
                             AsyncStorage.setItem(
                               'invitedUsersEmails',
                               JSON.stringify(members),
@@ -192,7 +223,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
 
                         // AsyncStorage.getItem('invitedUsersEmails').then(
                         //   (invitedEmails: any) => {
-                        //     console.log(this.state.selectedEmails);
                         //     var emails = JSON.parse(invitedEmails);
                         //     if (emails == null) {
                         //       AsyncStorage.setItem(
@@ -216,8 +246,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                         //           }
                         //         }
                         //       }
-
-                        //       console.log('saved');
 
                         //       AsyncStorage.setItem(
                         //         'invitedUsersEmails',
@@ -265,24 +293,54 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
               marginBottom: wp(5),
             }}>
             <View style={styles.content}>
-              <View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <Text style={styles.headingContainer}>
-                    Add New Organization
-                  </Text>
-                  <Icon
-                    onPress={() => this.props.navigation.goBack()}
-                    containerStyle={{marginLeft: wp(2)}}
-                    name={'cross'}
-                    type={'entypo'}
-                    size={wp(4.6)}
-                    iconStyle={{opacity: 0.5}}
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <Text style={styles.headingContainer}>
+                  Add New Organization
+                </Text>
+                <Icon
+                  onPress={() => this.props.navigation.goBack()}
+                  containerStyle={{marginLeft: wp(2)}}
+                  name={'cross'}
+                  type={'entypo'}
+                  size={wp(4.6)}
+                  iconStyle={{opacity: 0.5}}
+                />
+              </View>
+              {/* Upload profile photo */}
+              <View
+                style={{
+                  padding: wp(3),
+                  // width: wp(50),
+                  justifyContent: 'center',
+                  alignSelf: 'center',
+                }}>
+                <View>
+                  <Avatar
+                    rounded
+                    size={wp(25)}
+                    source={{
+                      uri:
+                        this.state.uploadedImage !== ''
+                          ? this.state.uploadedImage
+                          : 'https://via.placeholder.com/150',
+                    }}
                   />
                 </View>
+              </View>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: wp(3.5),
+                  fontFamily: fonts.SFuiDisplayBold,
+                }}>
+                Upload orgnaization image
+              </Text>
+
+              <View>
                 {/* inputs container */}
                 <View style={styles.inputsContainer}>
                   {/* Email Container */}

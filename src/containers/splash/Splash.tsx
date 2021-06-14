@@ -40,7 +40,7 @@ export default class Splash extends React.Component<SplashProps, any> {
             .then((res: any) => {
               // console.log(res);
               AsyncStorage.setItem('user', JSON.stringify(res.data.data));
-              this.props.navigation.navigate('Main');
+              this.props.navigation.navigate('CreateOrganization');
             });
         }, 5000);
       } else {
