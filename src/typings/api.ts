@@ -60,8 +60,20 @@ export interface project {
   involved_persons?: Array<string>;
   organization?: string;
   project?: string;
+  p_locations?: location;
   projectid?: string;
 }
+
+/*
+ * Location
+ */
+
+export interface location {
+  name: string;
+  supervisor: string;
+  additional_supervisor: string;
+}
+
 /*
  * SOR's
  */
@@ -89,7 +101,7 @@ export interface report {
   risk?: risk;
   sor_type: string;
   action_required?: Array<actionRequired>;
-  location?: location;
+  location?: any;
   submit_to?: Array<string> | Array<any>;
   esclate_to?: Array<string> | Array<any>;
   attachments?: Array<string>;
@@ -108,10 +120,10 @@ export interface risk {
   severity?: number;
   likelihood?: number;
 }
-export interface location {
-  latitude?: string;
-  longitude?: string;
-}
+// export interface location {
+//   latitude?: string;
+//   longitude?: string;
+// }
 export interface comments {
   email?: string;
   comment?: string;

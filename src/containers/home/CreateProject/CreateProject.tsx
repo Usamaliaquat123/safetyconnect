@@ -136,6 +136,12 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                 project_name: this.state.projectName,
                 involved_persons: members.map((d: any) => d._id),
                 locations: this.state.assignLocations,
+                p_locations: {
+                  name: this.state.locationName,
+                  supervisor: this.state.locationSuppervisorsTags[0].email,
+                  additional_supervisor: this.state
+                    .additionalSuppervisorsTags[0].email,
+                },
                 organization: this.props.route.params.organization,
               })
 
@@ -194,11 +200,11 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       // var loca = JSON.parse(location);
       this.state.locations.push(this.state.locationName);
       this.setState({createModal: false});
-      this.setState({
-        locationName: '',
-        locationSupervisor: '',
-        additionalSuppervisors: '',
-      });
+      // this.setState({
+      //   locationName: '',
+      //   locationSupervisor: '',
+      //   additionalSuppervisors: '',
+      // });
       this.state.assignLocations.push(this.state.locationName);
       // await AsyncStorage.setItem('locations', this.state.locationName);
       // this.props.navigation.goBack();

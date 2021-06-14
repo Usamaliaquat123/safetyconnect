@@ -68,7 +68,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
       orgDetails: '',
       peoplesText: '',
       peoples: [], // must be array of id's
-      suggestedPps: ['asdhj@jasd.com'],
       suggestedEmail: false,
       selectedEmails: [],
       members: [],
@@ -81,16 +80,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
       createNewProject: false,
     };
   }
-  componentDidMount() {
-    // AsyncStorage.getItem('inviteEmails').then((emails) => {
-    //   if (emails != null) {
-    //     if (JSON.parse(emails) != null) {
-    //     } else {
-    //       this.setState({suggestedPps: JSON.parse(emails)});
-    //     }
-    //   }
-    // });
-  }
+  componentDidMount() {}
 
   searchForUsers = (e: string) => {
     if (validateEmail(e)) {
