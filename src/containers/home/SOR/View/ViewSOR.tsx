@@ -211,6 +211,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .getProject({projectid: this.state.projectId})
       .then((res: any) => {
         console.log(res.data);
+        console.log('get the project name');
         this.setState({
           projectName: res.data.data.project_name,
           // involvedPerson: res.data.data.involved_persons,
@@ -449,54 +450,54 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   // Get All Comments
   getAllComments = () => {
     // this.props.route.params.data.comments;
-      console.log('sdsd');
-      console.log(this.props.route.params.data.comments);
-      console.log(this.props.route.params.data._id);
+    console.log('sdsd');
+    console.log(this.props.route.params.data.comments);
+    console.log(this.props.route.params.data._id);
 
-      createApi
-        .createApi()
-        .getAllComents(
-          this.props.route.params.data.comments,
-          this.props.route.params.data._id,
-        )
-        .then((res: any) => {
-          console.log(res.data.data);
-          AsyncStorage.getItem('involved_person').then((involveppl: any) => {
-            // console.log(JSON.parse(involveppl));
-            // console.log(res.data.data.all_comments);
+    createApi
+      .createApi()
+      .getAllComents(
+        this.props.route.params.data.comments,
+        this.props.route.params.data._id,
+      )
+      .then((res: any) => {
+        console.log(res.data.data);
+        AsyncStorage.getItem('involved_person').then((involveppl: any) => {
+          // console.log(JSON.parse(involveppl));
+          // console.log(res.data.data.all_comments);
 
-            var involvedPersonss = JSON.parse(involveppl);
+          var involvedPersonss = JSON.parse(involveppl);
 
-            for (let i = 0; i < res.data.data.all_comments.length; i++) {
-              for (let j = 0; j < involvedPersonss.length; j++) {
-                console.log(res.data.data.all_comments[i]);
-                // if (res.data.data.all_comments[i].user != null) {
-                //   if (
-                //     res.data.data.all_comments[i].user.email ==
-                //     involvedPersonss[j].email
-                //   ) {
-                //     console.log('dtra');
-                //     console.log(involvedPersonss[i]);
-                //     res.data.data.all_comments[i].user = involvedPersonss[j];
-                //   }
-                // }
-              }
+          for (let i = 0; i < res.data.data.all_comments.length; i++) {
+            for (let j = 0; j < involvedPersonss.length; j++) {
+              console.log(res.data.data.all_comments[i]);
+              // if (res.data.data.all_comments[i].user != null) {
+              //   if (
+              //     res.data.data.all_comments[i].user.email ==
+              //     involvedPersonss[j].email
+              //   ) {
+              //     console.log('dtra');
+              //     console.log(involvedPersonss[i]);
+              //     res.data.data.all_comments[i].user = involvedPersonss[j];
+              //   }
+              // }
             }
-            const sortedActivities = res.data.data.all_comments.sort(
-              (a, b) => new Date(a.date) - new Date(b.date),
-            );
+          }
+          const sortedActivities = res.data.data.all_comments.sort(
+            (a, b) => new Date(a.date) - new Date(b.date),
+          );
 
-            console.log('================');
-            console.log(res.data.data.all_comments);
-            console.log('================');
-            this.setState({comments: sortedActivities});
+          console.log('================');
+          console.log(res.data.data.all_comments);
+          console.log('================');
+          this.setState({comments: sortedActivities});
 
-            // this.state..sort(function(a, b){return a-b});
+          // this.state..sort(function(a, b){return a-b});
 
-            console.log(this.state.comments);
-          });
-        })
-        .catch((err) => console.log(err));
+          console.log(this.state.comments);
+        });
+      })
+      .catch((err) => console.log(err));
   };
 
   // Add Comment
