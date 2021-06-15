@@ -512,6 +512,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             reportIdInvestigation: res.data.data.report_id,
                           });
                           sor.report['_id'] = res.data.data.report_id;
+                          sor.report['comments'] = res.data.data.comments_id;
                         })
                         .catch((err) => console.log(err));
                       // }
@@ -702,7 +703,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             ),
                             status: status,
                             attachments: [],
-                            comments: ' ',
+                            comments: '',
                           },
                           organization: this.state.currentOrg,
                           project: this.state.projectid,
@@ -724,6 +725,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               reportIdInvestigation: res.data.data.report_id,
                             });
                             sors.report['_id'] = res.data.data.report_id;
+                            sors.report['comments'] = res.data.data.comments_id;
                           })
                           .catch((err) => console.log(err));
 

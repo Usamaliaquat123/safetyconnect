@@ -418,6 +418,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   getAllComments = () => {
     // this.props.route.params.data.comments;
 
+    console.log('this.props.route.params.data');
+    console.log(this.props.route.params.data.comments);
+    console.log('ahdjsadh');
+    console.log( this.props.route.params.data._id);
     createApi
       .createApi()
       .getAllComents(
@@ -425,6 +429,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         this.props.route.params.data._id,
       )
       .then((res: any) => {
+        console.log('comments ');
+        console.log(res.data);
         AsyncStorage.getItem('involved_person').then((involveppl: any) => {
           var involvedPersonss = JSON.parse(involveppl);
 
@@ -445,10 +451,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           //   (a, b) => new Date(a.date) - new Date(b.date),
           // );
 
-
-
-          console.log('all comments res.data.data.all_comment')
-          console.log(res.data.data.all_comment)
+          // console.log('all comments res.data.data.all_comment');
+          console.log(res.data.data);
           this.setState({comments: sortedActivities});
 
           // this.state..sort(function(a, b){return a-b});

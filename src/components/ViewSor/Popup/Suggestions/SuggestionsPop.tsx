@@ -176,8 +176,6 @@ export default class SuggestionsPop extends React.Component<
                             ),
                           });
 
-                          console.log(this.state.suggestions);
-                          console.log(this.state.suggestedUsers);
                           this.setState({actionsText: e});
                         }
                       }}
