@@ -18,6 +18,8 @@ import moment from 'moment';
 import {connect} from 'react-redux';
 import {Icon, Avatar, Card} from 'react-native-elements';
 import {colors, GlStyles, animation, images, fonts} from '@theme';
+import RNFetchBlob from 'rn-fetch-blob';
+
 import {
   View_sor,
   notified,
@@ -469,48 +471,44 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       commentAttachment: [],
     });
     AsyncStorage.getItem('email').then((email: any) => {
+      createApi
+        .createApi()
+        .getUser(email)
+        .then((user: any) => {
+          var comments = {
+            data: {
+              user: user.data.data._id,
+              comment: comment,
+              date: Date.now(),
+              files: [],
+              is_comment: true,
+            },
+            comment_document_id: this.props.route.params.data.comments,
+          };
 
+          // this.state.commentAttachment
+          createApi
+            .createApi()
+            .createComment(comments)
+            .then((res: any) => {
+              var map = [...this.state.comments];
+              map.push({
+                date: Date.now(),
+                comment: comment,
+                files: [],
+                _id: res.data.data,
+                user: {
+                  name: user.data.data.name,
+                  email: user.data.data.email,
+                  _id: user.data.data._id,
+                  img_url: user.data.data.img_url,
+                },
+                is_comment: true,
+              });
 
-      createApi.createApi().getUser(email).then((user : any) => {
-        var comments = {
-          data: {
-            user: user.data.data._id,
-            comment: comment,
-            date: Date.now(),
-            files: [],
-            is_comment: true,
-          },
-          comment_document_id: this.props.route.params.data.comments,
-        };
-
-
-  // this.state.commentAttachment
-  createApi
-  .createApi()
-  .createComment(comments)
-  .then((res: any) => {
-    var map = [...this.state.comments];
-    map.push({  
-      date: Date.now(),
-      comment: comment,
-      files: [],
-      _id: res.data.data,
-      user: {
-        name: user.data.data.name,
-        email: user.data.data.email,
-        _id: user.data.data._id,
-        img_url:user.data.data.img_url
-      },
-      is_comment: true,
-    });
-
-    this.setState({comments: map});
-  })
-
-
-      })
-
-    
+              this.setState({comments: map});
+            });
+        });
     });
   };
   // Save aas draft
@@ -629,13 +627,19 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       //   this.setState({});
       // });
 
+      console.log('asdasd');
+      console.log(res);
+
       res.map((d, i) => {
         if (d.type.split('/')[0] == 'image') {
-          attach.splice(0, 0, {
-            type: 'photo',
-            upload: 'self',
-            name: d.name,
-            url: d.uri,
+          RNFetchBlob.fs.readFile(d.uri, 'base64').then((data) => {
+            attach.splice(0, 0, {
+              type: 'photo',
+              upload: 'self',
+              name: d.name,
+              url: d.uri,
+              base64 : data
+            });
           });
         } else if (d.type.split('/')[0] == 'video') {
           attach.splice(0, 0, {
