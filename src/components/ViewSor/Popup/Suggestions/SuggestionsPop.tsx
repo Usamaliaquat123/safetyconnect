@@ -154,13 +154,7 @@ export default class SuggestionsPop extends React.Component<
                       You have to assign someone..
                     </Text>
                   )}
-                  <View
-                    style={[
-                      styles.commentTextInput,
-                      this.state.selectedInput == 2
-                        ? {borderColor: colors.green, borderWidth: wp(0.3)}
-                        : {borderColor: colors.lightGrey},
-                    ]}>
+                  <View style={[styles.commentTextInput]}>
                     <TextInput
                       maxLength={500}
                       onFocus={() => this.setState({selectedInput: 2})}
@@ -171,6 +165,8 @@ export default class SuggestionsPop extends React.Component<
                         if (e === '') {
                           this.setState({suggestions: [], actionsText: e});
                         } else {
+                          // this.state.suggestedUsers.filter((d : any) => d.email != )
+
                           this.setState({
                             suggestions: searchInSuggestions(
                               e,

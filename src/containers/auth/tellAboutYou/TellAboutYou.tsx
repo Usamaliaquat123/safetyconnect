@@ -384,6 +384,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     </View>
                   </View>
                 </View>
+
                 {this.props.route.params.isgoogle == true && (
                   <View style={styles.inputsContainer}>
                     <Text

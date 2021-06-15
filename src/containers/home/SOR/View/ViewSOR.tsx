@@ -166,6 +166,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
+    console.log('this.props.route.params.data.submit_to');
+    console.log(this.props.route.params.data.submit_to);
+    console.log(this.props.route.params.data.involved_persons);
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
 
@@ -177,13 +180,22 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             projectName: res.data.data.project_name,
             involvedPerson: res.data.data.involved_persons,
           });
+
+          console.log('involved person on 181');
+          console.log(res.data.data.involved_persons);
           this.mappingInvolved(
             res.data.data.involved_persons,
             this.props.route.params.data.involved_persons[0],
           );
+
+          // console.log('on line 189');
+          // console.log(this.props.route.params.data.involved_persons[0]);
+
           for (let i = 0; i < res.data.data.involved_persons.length; i++) {
             res.data.data.involved_persons[i]['selected'] = false;
           }
+
+          this.setState({involved_person: res.data.data.involved_persons});
         })
         .catch((err) => {});
     });
@@ -960,7 +972,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   Involved Person:{' '}
                 </Text>
                 <Text style={{fontSize: wp(3.5)}}>
-                  {this.state.involved_person[0].name}
+                  {/* {this.state.involved_person[0].name} */}
                 </Text>
               </View>
             </View>
@@ -1761,7 +1773,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   Submitted To:
                 </Text>
                 <Text style={styles.initializeByAndSubmitedToAnswer}>
-                  {this.state.submitted_to[0].name}
+                  {/* {this.state.submitted_to[0].name} */}
                 </Text>
               </View>
               {/* REASSIGNED to  */}

@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     marginRight: wp(20),
   },
   involveSuggestCont: {
-    borderColor: colors.green,
+    // borderColor: colors.green,
     borderRadius: wp(3),
     padding: wp(3),
     borderWidth: wp(0.3),

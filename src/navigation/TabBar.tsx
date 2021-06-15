@@ -37,7 +37,7 @@ export const BottomTabNavigator = () => {
       <Tab.Navigator
         tabBar={(props) => <TabBar {...props} />}
         sceneContainerStyle={{backgroundColor: 'transparent'}}
-        initialRouteName={'home'}>
+        initialRouteName={'My Tasks'}>
         <Tab.Screen
           name="home"
           // initialParams={}
