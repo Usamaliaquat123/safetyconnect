@@ -64,13 +64,15 @@ export default class SuggestionsPop extends React.Component<
       actionsText: '',
       selectedInput: 0,
       justificationT: '',
+      statuses: props.suggestions.status,
       addjustificationPop: true,
     };
   }
 
   componentDidMount = () => {
-    console.log('asdsd');
-    console.log(this.props.suggestions.justification);
+    console.log('this.props.suggestion on line 73s');
+    console.log(this.props.suggestions);
+    // console.log(this.props.suggestions.justification);
     if (this.props.suggestions.justification != undefined) {
       this.setState({
         addjustificationPop: false,
@@ -90,7 +92,7 @@ export default class SuggestionsPop extends React.Component<
         onBackdropPress={() => this.props.onClose()}>
         <View style={styles.containerPopup}>
           <View style={styles.containerText}>
-            <Icon
+            {/* <Icon
               style={{}}
               size={wp(5)}
               name="checkcircle"
@@ -99,7 +101,7 @@ export default class SuggestionsPop extends React.Component<
               color={
                 this.state.is_complete == true ? colors.green : colors.lightGrey
               }
-            />
+            /> */}
             <Text style={styles.containerTextString}>
               Action / Recommendation
             </Text>
@@ -198,12 +200,6 @@ export default class SuggestionsPop extends React.Component<
                   </View>
                   {/* Suggestions  */}
                   {this.state.suggestions.length == 0 ? null : (
-                    // <Suggestions
-                    //   styles={{}}
-                    //   arr={this.state.suggestions}
-                    //   onPress={(d: string) => this.setState({observationT: d})}
-                    // />
-
                     // {this.state.involvePersonSuggestions.length != 0 ? (
                     <View style={styles.involveSuggestCont}>
                       {this.state.suggestions.map(
@@ -254,38 +250,118 @@ export default class SuggestionsPop extends React.Component<
                   />
                 ) : null}
               </View>
-              {/* Add Justification */}
-              {this.state.addjustificationPop == true ? (
+
+              {/* change statuses */}
+              <Text style={styles.selectYourElemination}>
+                Select your actions status
+              </Text>
+              <View style={styles.eleminationAndAdministrativeContainer}>
                 <TouchableOpacity
-                  onPress={() =>
-                    this.setState({
-                      addjustificationPop: !this.state.addjustificationPop,
-                    })
-                  }
-                  style={styles.justificationContainer}>
-                  <Text style={styles.justificationtext}>
-                    Add Justification
+                  onPress={() => {
+                    this.setState({statuses: 'InProgress'});
+                  }}
+                  style={{marginLeft: wp(2), marginRight: wp(2)}}>
+                  <Icon
+                    //@ts-ignore
+                    size={wp(7)}
+                    name="progress-clock"
+                    type="material-community"
+                    color={
+                      this.state.statuses == 'InProgress'
+                        ? colors.green
+                        : colors.lightGrey
+                    }
+                  />
+                  <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                    In Progress
                   </Text>
                 </TouchableOpacity>
-              ) : (
-                <View>
-                  <Text style={styles.justificationHeadingText}>
-                    Justification:{'    '}
-                    <Text style={styles.justificationtextOptional}>
-                      (Optional)
-                    </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({statuses: 'Completed'});
+                  }}
+                  style={{marginLeft: wp(2), marginRight: wp(2)}}>
+                  <Icon
+                    //@ts-ignore
+                    size={wp(7)}
+                    name="progress-check"
+                    type="material-community"
+                    color={
+                      this.state.statuses == 'Completed'
+                        ? colors.green
+                        : colors.lightGrey
+                    }
+                  />
+                  <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                    Completed
                   </Text>
-                  <View style={styles.commentTextInput}>
-                    <TextInput
-                      onChangeText={(e) => this.setState({justificationT: e})}
-                      multiline={true}
-                      value={this.state.justificationT}
-                      style={styles.textInputPopup}
-                      placeholder={'Add your justification'}
-                    />
-                  </View>
-                </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({statuses: 'Rejected'});
+                  }}
+                  style={{marginLeft: wp(2), marginRight: wp(2)}}>
+                  <Icon
+                    //@ts-ignore
+                    size={wp(7)}
+                    name="progress-alert"
+                    type="material-community"
+                    color={
+                      this.state.statuses == 'Rejected'
+                        ? colors.green
+                        : colors.lightGrey
+                    }
+                  />
+                  <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                    Rejected
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              {/* Add Justification */}
+              {this.state.statuses != 'InProgress' && (
+                <>
+                  {this.state.addjustificationPop == true ? (
+                    <TouchableOpacity
+                      onPress={() =>
+                        this.setState({
+                          addjustificationPop: !this.state.addjustificationPop,
+                        })
+                      }
+                      style={styles.justificationContainer}>
+                      <Text style={styles.justificationtext}>
+                        Add Justification
+                      </Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <View>
+                      <Text style={styles.justificationHeadingText}>
+                        Justification:{'    '}
+                        <Text style={styles.justificationtextOptional}>
+                          (Optional)
+                        </Text>
+                      </Text>
+                      <View style={styles.commentTextInput}>
+                        <TextInput
+                          onChangeText={(e) =>
+                            this.setState({justificationT: e})
+                          }
+                          multiline={true}
+                          value={this.state.justificationT}
+                          style={styles.textInputPopup}
+                          placeholder={'Add your justification'}
+                        />
+                        <Icon
+                          name={'attachment'}
+                          type={'entypo'}
+                          size={wp(4)}
+                        />
+                      </View>
+                    </View>
+                  )}
+                </>
               )}
+
               {/* Elimination / Administrative */}
               <Text style={styles.selectYourElemination}>
                 Select your elimination / Administrative
@@ -390,6 +466,7 @@ export default class SuggestionsPop extends React.Component<
                 </TouchableOpacity>
               </View>
 
+              {/* Discard and save buttons */}
               <View style={styles.btnsContainer}>
                 <TouchableOpacity
                   onPress={() => {
@@ -409,6 +486,7 @@ export default class SuggestionsPop extends React.Component<
                         is_complete: this.state.is_complete,
                         is_selected: this.state.is_selected,
                         category: this.state.type,
+                        status: this.state.statuses,
                       };
 
                       if (this.state.addjustificationPop == false) {

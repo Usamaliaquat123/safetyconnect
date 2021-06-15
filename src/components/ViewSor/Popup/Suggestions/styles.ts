@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   textInputPopup: {
     fontSize: wp(3),
-    width: wp(60),
+    width: wp(67),
   },
   pickerIcon: {
     top: wp(2.7),
@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: wp(3),
   },
 
   // Discard and save container
