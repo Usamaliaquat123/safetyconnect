@@ -421,7 +421,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     console.log('this.props.route.params.data');
     console.log(this.props.route.params.data.comments);
     console.log('ahdjsadh');
-    console.log( this.props.route.params.data._id);
+    console.log(this.props.route.params.data._id);
     createApi
       .createApi()
       .getAllComents(
@@ -429,36 +429,36 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         this.props.route.params.data._id,
       )
       .then((res: any) => {
-        console.log('comments ');
-        console.log(res.data);
-        AsyncStorage.getItem('involved_person').then((involveppl: any) => {
-          var involvedPersonss = JSON.parse(involveppl);
+        // console.log('comments ');
+        // console.log(res.data);
+        // AsyncStorage.getItem('involved_person').then((involveppl: any) => {
+        // var involvedPersonss = JSON.parse(involveppl);
 
-          for (let i = 0; i < res.data.data.all_comments.length; i++) {
-            for (let j = 0; j < involvedPersonss.length; j++) {
-              // if (res.data.data.all_comments[i].user != null) {
-              //   if (
-              //     res.data.data.all_comments[i].user.email ==
-              //     involvedPersonss[j].email
-              //   ) {
-              //     console.log(involvedPersonss[i]);
-              //     res.data.data.all_comments[i].user = involvedPersonss[j];
-              //   }
-              // }
-            }
-          }
-          // const sortedActivities = res.data.data.all_comments.sort(
-          //   (a, b) => new Date(a.date) - new Date(b.date),
-          // );
+        for (let i = 0; i < res.data.data.all_comments.length; i++) {
+          // for (let j = 0; j < involvedPersonss.length; j++) {
+          // if (res.data.data.all_comments[i].user != null) {
+          //   if (
+          //     res.data.data.all_comments[i].user.email ==
+          //     involvedPersonss[j].email
+          //   ) {
+          //     console.log(involvedPersonss[i]);
+          //     res.data.data.all_comments[i].user = involvedPersonss[j];
+          //   }
+          // }
+          // }
+        }
+        const sortedActivities = res.data.data.all_comments.sort(
+          (a, b) => new Date(a.date) - new Date(b.date),
+        );
 
-          // console.log('all comments res.data.data.all_comment');
-          console.log(res.data.data);
-          this.setState({comments: sortedActivities});
+        console.log('all comments res.data.data.all_comment');
+        console.log(res.data.data);
+        this.setState({comments: sortedActivities});
 
-          // this.state..sort(function(a, b){return a-b});
-        });
-      })
-      .catch((err) => {});
+        // this.state..sort(function(a, b){return a-b});
+      });
+    // })
+    // .catch((err) => {});
   };
 
   // Add Comment
@@ -468,42 +468,49 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
       commentAttachment: [],
     });
-    AsyncStorage.getItem('user').then((user: any) => {
-      var comments = {
-        data: {
-          user: JSON.parse(user)._id,
-          comment: comment,
-          date: Date.now(),
-          files: [],
-          is_comment: true,
-        },
-        comment_document_id: this.props.route.params.data.comments,
-      };
+    AsyncStorage.getItem('email').then((email: any) => {
 
-      // this.state.commentAttachment
-      createApi
-        .createApi()
-        .createComment(comments)
-        .then((res: any) => {
-          var map = [...this.state.comments];
-          map.push({
-            date: Date.now(),
+
+      createApi.createApi().getUser(email).then((user : any) => {
+        var comments = {
+          data: {
+            user: user.data.data._id,
             comment: comment,
+            date: Date.now(),
             files: [],
-            _id: res.data.data,
-            user: {
-              name: JSON.parse(user).name,
-              email: JSON.parse(user).email,
-              _id: JSON.parse(user)._id,
-              img_url:
-                'https://user-images.githubusercontent.com/33973828/115679334-e690a780-a36b-11eb-9202-3f5fb5413bbf.png',
-            },
             is_comment: true,
-          });
+          },
+          comment_document_id: this.props.route.params.data.comments,
+        };
 
-          this.setState({comments: map});
-        })
-        .catch((err) => {});
+
+  // this.state.commentAttachment
+  createApi
+  .createApi()
+  .createComment(comments)
+  .then((res: any) => {
+    var map = [...this.state.comments];
+    map.push({  
+      date: Date.now(),
+      comment: comment,
+      files: [],
+      _id: res.data.data,
+      user: {
+        name: user.data.data.name,
+        email: user.data.data.email,
+        _id: user.data.data._id,
+        img_url:user.data.data.img_url
+      },
+      is_comment: true,
+    });
+
+    this.setState({comments: map});
+  })
+
+
+      })
+
+    
     });
   };
   // Save aas draft
