@@ -441,10 +441,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               // }
             }
           }
-          const sortedActivities = res.data.data.all_comments.sort(
-            (a, b) => new Date(a.date) - new Date(b.date),
-          );
+          // const sortedActivities = res.data.data.all_comments.sort(
+          //   (a, b) => new Date(a.date) - new Date(b.date),
+          // );
 
+
+
+          console.log('all comments res.data.data.all_comment')
+          console.log(res.data.data.all_comment)
           this.setState({comments: sortedActivities});
 
           // this.state..sort(function(a, b){return a-b});
