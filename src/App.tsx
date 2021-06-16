@@ -41,14 +41,14 @@ export default class App extends React.Component<AppProps, any> {
   render() {
     return (
       <Provider store={Store}>
-        <NetworkProvider>
-          {/* {this.state.authenticated == true ? ( */}
-          {/* <AuthStackNavigator /> */}
-          {/* <BottomTabNavigator /> */}
+        {/* <NetworkProvider> */}
+        {/* {this.state.authenticated == true ? ( */}
+        {/* <AuthStackNavigator /> */}
+        {/* <BottomTabNavigator /> */}
 
-          <Navigator />
-          {/* ) */}
-        </NetworkProvider>
+        <Navigator />
+        {/* ) */}
+        {/* </NetworkProvider> */}
       </Provider>
     );
   }

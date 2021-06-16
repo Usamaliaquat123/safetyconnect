@@ -9537,6 +9537,11 @@ react-native-animatable@1.3.3:
   dependencies:
     prop-types "^15.7.2"
 
+react-native-background-upload@^6.2.4:
+  version "6.2.4"
+  resolved "https://registry.yarnpkg.com/react-native-background-upload/-/react-native-background-upload-6.2.4.tgz#685e4b9108506384535cc99c7887eb6241ef77c5"
+  integrity sha512-veTB7jgucrwXTdz1ntRBgOn0gBecX253u6/WbtVEOFNMf2CgK8mczdFfxwl9MByhI1MPAYCjjRb48L9UcJhEtg==
+
 react-native-calendars@^1.1129.0:
   version "1.1254.0"
   resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.1254.0.tgz#49dfb880c6588188a49ba15ecfb56cace2d3b3fe"

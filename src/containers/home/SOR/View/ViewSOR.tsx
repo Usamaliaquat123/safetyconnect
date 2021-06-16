@@ -19,6 +19,7 @@ import {connect} from 'react-redux';
 import {Icon, Avatar, Card} from 'react-native-elements';
 import {colors, GlStyles, animation, images, fonts} from '@theme';
 import RNFetchBlob from 'rn-fetch-blob';
+import Upload from 'react-native-background-upload'
 
 import {
   View_sor,
@@ -485,10 +486,49 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         console.log(res.data[0].url);
         // RN
 
+        createApi
+          .createApi('', '', '', '', '', '', res.data[0].url)
+          .uploadFile(attachment[0].base64)
+          .then((d: any) => {
+            console.log(d);
+          });
 
-        createApi.createApi('','','','','','',res.data[0].url).uploadFile(attachment[0].base64).then((d : any) => {
-            console.log(d)
-        })
+
+          const options = {
+            url: res.data[0].url,
+            path: attachment[0].url,
+            method: 'PUT',
+            type: 'raw',
+            maxRetries: 2, // set retry count (Android only). Default 2
+            // headers: {
+            //   'content-type': 'application/octet-stream', // Customize content-type
+            //   'my-custom-header': 's3headervalueorwhateveryouneed'
+            // },
+            // Below are options only supported on Android
+            notification: {
+              enabled: true
+            },
+            useUtf8Charset: true
+          }
+
+          Upload.startUpload(options).then((uploadId) => {
+            console.log('Upload started')
+            Upload.addListener('progress', uploadId, (data) => {
+              console.log(`Progress: ${data.progress}%`)
+            })
+            Upload.addListener('error', uploadId, (data) => {
+              console.log(`Error: ${data.error}%`)
+            })
+            Upload.addListener('cancelled', uploadId, (data) => {
+              console.log(`Cancelled!`)
+            })
+            Upload.addListener('completed', uploadId, (data) => {
+              // data includes responseCode: number and responseBody: Object
+              console.log('Completed!')
+            })
+          }).catch((err) => {
+            console.log('Upload error!', err)
+          })
       });
 
     console.log(comment);
