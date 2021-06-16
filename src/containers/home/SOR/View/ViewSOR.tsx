@@ -19,7 +19,7 @@ import {connect} from 'react-redux';
 import {Icon, Avatar, Card} from 'react-native-elements';
 import {colors, GlStyles, animation, images, fonts} from '@theme';
 import RNFetchBlob from 'rn-fetch-blob';
-import Upload from 'react-native-background-upload'
+import Upload from 'react-native-background-upload';
 
 import {
   View_sor,
@@ -483,52 +483,64 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .createApi()
       .getFilesUrl(data)
       .then((res: any) => {
-        console.log(res.data[0].url);
+        // console.log(res.data);
         // RN
 
-        createApi
-          .createApi('', '', '', '', '', '', res.data[0].url)
-          .uploadFile(attachment[0].base64)
-          .then((d: any) => {
-            console.log(d);
-          });
+        // createApi
+        //   .createApi('', '', '', '', '', '', res.data[0].url)
+        //   .uploadFile(attachment[0].base64)
+        //   .then((d: any) => {
+        //     console.log(d);
+        //   });
+        console.log();
+        const options = {
+          url: res.data[0].url,
+          path: attachment[0].url,
+          method: 'PUT',
+          type: 'raw',
+          maxRetries: 2, // set retry count (Android only). Default 2
+          headers: {
+            'content-type': attachment[0].orgType, // Customize content-type
+          },
+          notification: {
+            enabled: true,
+          },
+          useUtf8Charset: true,
+        };
 
+        const blob = new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.onload = function () {
+            resolve(xhr.response); // when BlobModule finishes reading, resolve with the blob
+          };
+          xhr.onerror = function () {
+            reject(new TypeError('Network request failed')); // error occurred, rejecting
+          };
+          xhr.responseType = 'blob'; // use BlobModule's UriHandler
+          xhr.open('GET', uri, true); // fetch the blob from uri in async mode
+          xhr.send(null); // no initial data
+        });
 
-          const options = {
-            url: res.data[0].url,
-            path: attachment[0].url,
-            method: 'PUT',
-            type: 'raw',
-            maxRetries: 2, // set retry count (Android only). Default 2
-            // headers: {
-            //   'content-type': 'application/octet-stream', // Customize content-type
-            //   'my-custom-header': 's3headervalueorwhateveryouneed'
-            // },
-            // Below are options only supported on Android
-            notification: {
-              enabled: true
-            },
-            useUtf8Charset: true
-          }
-
-          Upload.startUpload(options).then((uploadId) => {
-            console.log('Upload started')
+        Upload.startUpload(options)
+          .then((uploadId) => {
+            console.log('Upload started');
             Upload.addListener('progress', uploadId, (data) => {
-              console.log(`Progress: ${data.progress}%`)
-            })
+              console.log(`Progress: ${data.progress}%`);
+            });
             Upload.addListener('error', uploadId, (data) => {
-              console.log(`Error: ${data.error}%`)
-            })
+              console.log(`Error: ${data.error}%`);
+            });
             Upload.addListener('cancelled', uploadId, (data) => {
-              console.log(`Cancelled!`)
-            })
+              console.log(`Cancelled!`);
+            });
             Upload.addListener('completed', uploadId, (data) => {
               // data includes responseCode: number and responseBody: Object
-              console.log('Completed!')
-            })
-          }).catch((err) => {
-            console.log('Upload error!', err)
+              console.log('Completed!');
+            });
           })
+          .catch((err) => {
+            console.log('Upload error!', err);
+          });
       });
 
     console.log(comment);
@@ -698,6 +710,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           RNFetchBlob.fs.readFile(d.uri, 'base64').then((data) => {
             attach.splice(0, 0, {
               type: 'photo',
+              orgType: d.type,
               upload: 'self',
               name: d.name,
               url: d.uri,
@@ -711,6 +724,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               upload: 'self',
               name: d.name,
               url: d.uri,
+              orgType: d.type,
               base64: data,
             });
           });
@@ -719,6 +733,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             attach.splice(0, 0, {
               type: 'pdf',
               upload: 'self',
+              orgType: d.type,
               name: d.name,
               url: d.uri,
               base64: data,
@@ -729,6 +744,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             attach.splice(0, 0, {
               type: 'text',
               upload: 'self',
+              orgType: d.type,
               name: d.name,
               url: d.uri,
               base64: data,
@@ -743,6 +759,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               type: 'doc',
               upload: 'self',
               name: d.name,
+              orgType: d.type,
               url: d.uri,
               base64: data,
             });
