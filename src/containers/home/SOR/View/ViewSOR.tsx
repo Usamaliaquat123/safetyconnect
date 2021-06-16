@@ -517,9 +517,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             reject(new TypeError('Network request failed')); // error occurred, rejecting
           };
           xhr.responseType = 'blob'; // use BlobModule's UriHandler
-          xhr.open('GET', uri, true); // fetch the blob from uri in async mode
+          xhr.open('GET', attachment[0].uri, true); // fetch the blob from uri in async mode
           xhr.send(null); // no initial data
         });
+
+        console.log(blob);
 
         Upload.startUpload(options)
           .then((uploadId) => {
