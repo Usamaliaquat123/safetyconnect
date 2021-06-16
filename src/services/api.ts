@@ -152,11 +152,25 @@ const createApi = (
    */
   const getFilesUrl = (data: any) =>
     getFilesUri.post(`default/getPresingedUrl`, data);
-  const uploadFile = (file: any) => uploadFiles.put('', file);
+  const uploadFile = (file: any, type: any) =>
+    uploadFiles.put('', file, {headers: {'Content-Type': type}});
 
   const getFileApi = (data: any) => getfiles.post('default/getFilesUrl', data);
 
+  /*
+   * @Search
+   */
+
+  const searchApi = (data: any) =>
+    baseapi.get('project/getReports', {
+      project: data.project,
+      limit: data.limit,
+      page: data.page,
+      query: data.query,
+    });
+
   return {
+    searchApi,
     createFiveWhy,
     logs,
     getFileApi,

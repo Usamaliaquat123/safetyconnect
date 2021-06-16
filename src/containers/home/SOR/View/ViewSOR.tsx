@@ -501,9 +501,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
         console.log('blob');
         console.log(blob);
+
         createApi
           .createApi('', '', '', '', '', '', res.data[0].url)
-          .uploadFile(blob)
+          .uploadFile(attachment[0].base64, attachment[0].org)
           .then((d: any) => {
             console.log(d);
           });
@@ -699,6 +700,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     try {
       var res = await DocumentPicker.pickMultiple({
         type: [DocumentPicker.types.allFiles],
+        copyTo: "cachesDirectory",
       });
       // DocType(res, this.state.attachments).then((res) => {
       //   this.setState({});
@@ -709,15 +711,24 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
       res.map((d, i) => {
         if (d.type.split('/')[0] == 'image') {
-          RNFetchBlob.fs.readFile(d.uri, 'base64').then((data) => {
-            attach.splice(0, 0, {
-              type: 'photo',
-              orgType: d.type,
-              upload: 'self',
-              name: d.name,
-              url: d.uri,
-              base64: data,
+          console.log('imagesdasds');
+          RNFetchBlob.fs.readStream(d.uri, 'base64').then((ifstream) => {
+            ifstream.open();
+            ifstream.onData((data) => {
+              attach.splice(0, 0, {
+                type: 'photo',
+                orgType: d.type,
+                upload: 'self',
+                name: d.name,
+                url: d.uri,
+                base64: `data:${d.type};base64,${data}`,
+              });
+
+              // console.log('sdsdsd');
+              // console.log(data);
             });
+
+            // ifstream.bufferSize;
           });
         } else if (d.type.split('/')[0] == 'video') {
           RNFetchBlob.fs.readFile(d.uri, 'base64').then((data) => {
