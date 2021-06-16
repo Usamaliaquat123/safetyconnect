@@ -464,52 +464,75 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
 
   // Add Comment
-  addComment = (comment: string) => {
+  addComment = (comment: string, attachment: any) => {
     this.setState({
       commentText: '',
 
       commentAttachment: [],
     });
-    AsyncStorage.getItem('email').then((email: any) => {
-      createApi
-        .createApi()
-        .getUser(email)
-        .then((user: any) => {
-          var comments = {
-            data: {
-              user: user.data.data._id,
-              comment: comment,
-              date: Date.now(),
-              files: [],
-              is_comment: true,
-            },
-            comment_document_id: this.props.route.params.data.comments,
-          };
 
-          // this.state.commentAttachment
-          createApi
-            .createApi()
-            .createComment(comments)
-            .then((res: any) => {
-              var map = [...this.state.comments];
-              map.push({
-                date: Date.now(),
-                comment: comment,
-                files: [],
-                _id: res.data.data,
-                user: {
-                  name: user.data.data.name,
-                  email: user.data.data.email,
-                  _id: user.data.data._id,
-                  img_url: user.data.data.img_url,
-                },
-                is_comment: true,
-              });
+    var data = {
+      bucket: 'hns-codist',
+      report: 'profile',
+      fileType: ['image/png'],
+      ext: ['png'],
+    };
 
-              this.setState({comments: map});
-            });
-        });
-    });
+    createApi
+      .createApi()
+      .getFilesUrl(data)
+      .then((res: any) => {
+        console.log(res.data[0].url);
+        // RN
+
+
+        createApi.createApi('','','','','','',res.data[0].url).uploadFile(attachment[0].base64).then((d : any) => {
+            console.log(d)
+        })
+      });
+
+    console.log(comment);
+    console.log(attachment);
+    // AsyncStorage.getItem('email').then((email: any) => {
+    //   createApi
+    //     .createApi()
+    //     .getUser(email)
+    //     .then((user: any) => {
+    //       var comments = {
+    //         data: {
+    //           user: user.data.data._id,
+    //           comment: comment,
+    //           date: Date.now(),
+    //           files: [],
+    //           is_comment: true,
+    //         },
+    //         comment_document_id: this.props.route.params.data.comments,
+    //       };
+
+    //       // this.state.commentAttachment
+    //       createApi
+    //         .createApi()
+    //         .createComment(comments)
+    //         .then((res: any) => {
+    //           var map = [...this.state.comments];
+    //           map.push({
+    //             date: Date.now(),
+    //             comment: comment,
+    //             files: [],
+    //             _id: res.data.data,
+    //             user: {
+    //               name: user.data.data.name,
+    //               email: user.data.data.email,
+    //               _id: user.data.data._id,
+    //               img_url: user.data.data.img_url,
+    //             },
+    //             is_comment: true,
+    //           });
+
+    //           this.setState({comments: map});
+    //         });
+    //     });
+    // });
   };
   // Save aas draft
   saveAsDraft = () => {
@@ -638,39 +661,51 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               upload: 'self',
               name: d.name,
               url: d.uri,
-              base64 : data
+              base64: data,
             });
           });
         } else if (d.type.split('/')[0] == 'video') {
-          attach.splice(0, 0, {
-            type: 'video',
-            upload: 'self',
-            name: d.name,
-            url: d.uri,
+          RNFetchBlob.fs.readFile(d.uri, 'base64').then((data) => {
+            attach.splice(0, 0, {
+              type: 'video',
+              upload: 'self',
+              name: d.name,
+              url: d.uri,
+              base64: data,
+            });
           });
         } else if (d.type.split('/')[1] == 'pdf') {
-          attach.splice(0, 0, {
-            type: 'pdf',
-            upload: 'self',
-            name: d.name,
-            url: d.uri,
+          RNFetchBlob.fs.readFile(d.uri, 'base64').then((data) => {
+            attach.splice(0, 0, {
+              type: 'pdf',
+              upload: 'self',
+              name: d.name,
+              url: d.uri,
+              base64: data,
+            });
           });
         } else if (d.type.split('/')[0] == 'text') {
-          attach.splice(0, 0, {
-            type: 'text',
-            upload: 'self',
-            name: d.name,
-            url: d.uri,
+          RNFetchBlob.fs.readFile(d.uri, 'base64').then((data) => {
+            attach.splice(0, 0, {
+              type: 'text',
+              upload: 'self',
+              name: d.name,
+              url: d.uri,
+              base64: data,
+            });
           });
         } else if (
           d.type.split('.').pop() == 'document' ||
           d.type.split('/')[1] == 'msword'
         ) {
-          attach.splice(0, 0, {
-            type: 'doc',
-            upload: 'self',
-            name: d.name,
-            url: d.uri,
+          RNFetchBlob.fs.readFile(d.uri, 'base64').then((data) => {
+            attach.splice(0, 0, {
+              type: 'doc',
+              upload: 'self',
+              name: d.name,
+              url: d.uri,
+              base64: data,
+            });
           });
         } else if (
           d.type.split('/')[1] == 'vnd.ms-excel' ||
@@ -2192,7 +2227,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         if (this.state.commentText != '') {
                           var map = [...this.state.comments];
 
-                          this.addComment(this.state.commentText);
+                          this.addComment(
+                            this.state.commentText,
+                            this.state.commentAttachment,
+                          );
                         }
                       }}
                       style={{
@@ -2210,6 +2248,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </View>
                 </View>
               </View>
+              {/* User suggestions  */}
               {this.state.commentsSugg.length !== 0 ? (
                 <View style={styles.commentSuggContainer}>
                   {this.state.commentsSugg.map(
@@ -2256,6 +2295,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   )}
                 </View>
               ) : null}
+
+              {/* Comments Attachments */}
               {this.state.commentAttachment.length != 0 ? (
                 <ScrollView
                   horizontal={true}
