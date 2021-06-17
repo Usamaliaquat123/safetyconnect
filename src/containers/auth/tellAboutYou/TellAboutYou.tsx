@@ -132,6 +132,9 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
             this.setState({photoModal: false, uploadedImage: ''});
           } else {
             console.log();
+
+            RNFS.readFile(res.uri).then((file) => console.log(file));
+
             this.setState({});
             this.setState({
               photoModal: false,
@@ -169,7 +172,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
     const response = await fetch(uri);
     const imgBlob = await response.blob();
 
-    // RNFS.readFile(uri).then((file) => console.log(file));
+    RNFS.readFile(uri).then((file) => console.log(file));
 
     createApi
       .createApi('', '', '', '', '', '', url)

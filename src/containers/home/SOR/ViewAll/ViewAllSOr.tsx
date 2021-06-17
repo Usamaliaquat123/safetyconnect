@@ -163,6 +163,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           console.log('reports  are not available');
           console.log(res.data.data.report);
           if (res.data.data == undefined) {
+            this.setState({loading: false});
           } else {
             res.data.data.report.sort(
               (a: any, b: any) => new Date(b.createdAt) - new Date(a.createdAt),
@@ -215,6 +216,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           this.setState({loading: false});
         })
         .catch((err) => console.log(err));
+
+      
     });
   };
   _onRefresh = () => {

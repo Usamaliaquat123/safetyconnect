@@ -108,6 +108,9 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
               fileType: res.type.split('/')[1],
             });
 
+            console.log('res.uri');
+            console.log(res.uri);
+
             var img = {
               bucket: 'hns-codist',
               report: 'profile',
@@ -121,6 +124,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
               .getFilesUrl(img)
               .then((imgUri: any) => {
                 console.log(imgUri);
+                // console.log(imgUri);
                 api
                   .createApi('', '', '', '', '', '', imgUri.data[0].url)
                   .uploadFile(this.state.orgImageBase64)
