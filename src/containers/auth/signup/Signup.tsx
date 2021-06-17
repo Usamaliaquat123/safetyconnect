@@ -56,9 +56,6 @@ class Signup extends React.Component<SignupProps, any> {
       user: {},
     };
   }
-  componentDidUpdate = () => {
-    console.log('ssds');
-  };
   handleOpenURL(navigation: any) {
     this.setState({loading: true, errorModal: true});
     try {

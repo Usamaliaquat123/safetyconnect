@@ -585,7 +585,7 @@ const styles = StyleSheet.create({
     marginTop: wp(2),
     flexDirection: 'row',
     borderWidth: wp(0.2),
-    height: wp(14),
+    // height: wp(14),
     borderColor: '#686868',
     borderRadius: wp(1),
   },
@@ -597,7 +597,7 @@ const styles = StyleSheet.create({
   },
   actionDesc: {
     color: colors.text,
-    fontSize: wp(4),
+    fontSize: wp(3.2),
     fontFamily: fonts.SFuiDisplayMedium,
   },
 

@@ -21,6 +21,7 @@ import {StackNavigatorProps, route} from '@nav';
 import {Avatar, Icon} from 'react-native-elements';
 import {colors, images, GlStyles, fonts} from '@theme';
 import {RouteProp} from '@react-navigation/native';
+
 import {
   imagePicker,
   cameraCapture,
