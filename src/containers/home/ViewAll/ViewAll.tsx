@@ -70,7 +70,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
         .createApi()
         .getUser(email)
         .then((user: any) => {
-          this.setState({user});
+          this.setState({user: user.data.data});
         });
     });
 

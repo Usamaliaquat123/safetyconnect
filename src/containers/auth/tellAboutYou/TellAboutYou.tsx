@@ -12,6 +12,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import RNFS from 'react-native-fs';
 import RNFetchBlob from 'rn-fetch-blob';
 import {View_sor, profileSetupSelections, createApi} from '@service';
 import {connect} from 'react-redux';
@@ -167,6 +168,8 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
     const uri = img;
     const response = await fetch(uri);
     const imgBlob = await response.blob();
+
+    // RNFS.readFile(uri).then((file) => console.log(file));
 
     createApi
       .createApi('', '', '', '', '', '', url)

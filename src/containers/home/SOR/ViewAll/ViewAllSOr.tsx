@@ -216,10 +216,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         })
         .catch((err) => console.log(err));
     });
-    OneSignal.promptForPushNotificationsWithUserResponse((response) => {
-      // this.OSLog("Prompt response:", response);
-      // console.log(response);
-    });
   };
   _onRefresh = () => {
     this.setState({
