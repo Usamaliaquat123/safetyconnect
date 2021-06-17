@@ -195,7 +195,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             });
         }
 
-        console.log(this.state.filename);
         this.setState({});
       }
     } catch (err: any) {
@@ -262,8 +261,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         .createApi()
         .suggestiosns(form)
         .then((res: any) => {
-          console.log('res.data.results');
-          console.log(res.data.results);
           this.setState({
             actionRecommendations: [...res.data.results],
           });
@@ -514,10 +511,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           sor.report['_id'] = res.data.data.report_id;
                           sor.report['comments'] = res.data.data.comments_id;
                         })
-                        .catch((err) => console.log(err));
+                        .catch((err) => {});
                       // }
 
-                      // console.log(sor)
                       // Repeated observations
                       // res.data.resultss
                       // var bodyInitial = {
@@ -576,9 +572,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   });
                                   this.props.navigation.goBack();
                                 })
-                                .catch((err: any) => console.log(err));
-
-                              // _id: ress.data.data.report_id,
+                                .catch((err: any) => {});
                             } else {
                               this.setState({
                                 loading: false,
@@ -727,7 +721,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             sors.report['_id'] = res.data.data.report_id;
                             sors.report['comments'] = res.data.data.comments_id;
                           })
-                          .catch((err) => console.log(err));
+                          .catch((err) => {});
 
                         setTimeout(() => {
                           createApi
@@ -765,7 +759,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                     });
                                     // this.props.navigation.goBack();
                                   })
-                                  .catch((err: any) => console.log(err));
+                                  .catch((err: any) => {});
 
                                 // _id: ress.data.data.report_id,
                               } else {
@@ -779,7 +773,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               // if (res.status == 200) {
 
                               // } else {
-                              //   console.log(res);
                               // }
                             })
                             .catch(() =>
@@ -2176,5 +2169,4 @@ export default connect(mapStateToProps, mapDispatchToProps)(CreateSOR);
 //       }
 //     });
 
-//   console.log(uploadedfiles);
 // }
