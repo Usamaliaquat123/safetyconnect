@@ -414,7 +414,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     }).start();
   };
   onCreateSor = (status: number) => {
-    var uploadedfiles = [];
     var sorbtns = this.state.classifySorbtns.filter(
       (d: any) => d.selected === true,
     );
@@ -497,7 +496,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         report: {
                           created_by: this.state.email,
                           comments: '',
-                          status: 1,
+                          status: status,
                         },
                         project: this.state.projectid,
                       };
@@ -707,7 +706,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           report: {
                             created_by: this.state.email,
                             comments: '',
-                            status: 1,
+                            status: status,
                           },
                           project: this.state.projectid,
                         };
