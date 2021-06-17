@@ -52,8 +52,6 @@ import {classifySorBtn, Isor, involved_persons, orgnaization} from '@typings';
 import Modal from 'react-native-modal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createApi, submitted} from '@service';
-// import * as RNFS from 'react-native-fs';
-// import {Buffer} from 'buffer';
 import {AllSorDTO} from '@dtos';
 import QuickReplies from 'react-native-gifted-chat/lib/QuickReplies';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -200,7 +198,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         console.log(this.state.filename);
         this.setState({});
       }
-    } catch (err) {
+    } catch (err: any) {
       if (DocumentPicker.isCancel(err)) {
         // User cancelled the picker, exit any dialogs or menus and move on
       } else {
@@ -264,6 +262,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         .createApi()
         .suggestiosns(form)
         .then((res: any) => {
+          console.log('res.data.results');
+          console.log(res.data.results);
           this.setState({
             actionRecommendations: [...res.data.results],
           });
@@ -1357,7 +1357,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             content: this.state.actionsAndRecommendationText,
                             assigned_to: [],
                             date: moment().format('YYYY-MM-DD'),
-                            status: 0,
+                            status: 'InProgress',
                             category: 'Elimination',
                           },
 

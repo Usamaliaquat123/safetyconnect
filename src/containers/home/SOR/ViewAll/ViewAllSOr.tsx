@@ -26,8 +26,6 @@ import Modal from 'react-native-modal';
 import {bindActionCreators} from 'redux';
 import OneSignal from 'react-native-onesignal';
 import * as reduxActions from '../../../../store/actions/listSorActions';
-// import * as initialApp from '@store';
-// import { Create_sor, viewas, notified, submitted, draft, profileSetupSelections } from '@service';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';

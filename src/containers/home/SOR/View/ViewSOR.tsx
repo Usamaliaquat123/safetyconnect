@@ -486,21 +486,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         // console.log(res.data);
         // RN
         console.log();
-        const blob = new Promise((resolve, reject) => {
-          const xhr = new XMLHttpRequest();
-          xhr.onload = function () {
-            resolve(xhr.response); // when BlobModule finishes reading, resolve with the blob
-          };
-          xhr.onerror = function () {
-            reject(new TypeError('Network request failed')); // error occurred, rejecting
-          };
-          xhr.responseType = 'blob'; // use BlobModule's UriHandler
-          xhr.open('GET', attachment[0].url, true); // fetch the blob from uri in async mode
-          xhr.send(null); // no initial data
-        });
+        // const blob = new Promise((resolve, reject) => {
+        //   const xhr = new XMLHttpRequest();
+        //   xhr.onload = function () {
+        //     resolve(xhr.response); // when BlobModule finishes reading, resolve with the blob
+        //   };
+        //   xhr.onerror = function () {
+        //     reject(new TypeError('Network request failed')); // error occurred, rejecting
+        //   };
+        //   xhr.responseType = 'blob'; // use BlobModule's UriHandler
+        //   xhr.open('GET', attachment[0].url, true); // fetch the blob from uri in async mode
+        //   xhr.send(null); // no initial data
+        // });
 
         console.log('blob');
-        console.log(blob);
+        // console.log(blob);
 
         createApi
           .createApi('', '', '', '', '', '', res.data[0].url)
@@ -511,7 +511,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
         const options = {
           url: res.data[0].url,
-          path: blob,
+          // path: blob,
           method: 'PUT',
           type: 'raw',
           maxRetries: 2, // set retry count (Android only). Default 2
@@ -700,7 +700,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     try {
       var res = await DocumentPicker.pickMultiple({
         type: [DocumentPicker.types.allFiles],
-        copyTo: "cachesDirectory",
+        copyTo: 'cachesDirectory',
       });
       // DocType(res, this.state.attachments).then((res) => {
       //   this.setState({});
@@ -723,9 +723,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 url: d.uri,
                 base64: `data:${d.type};base64,${data}`,
               });
-
-              // console.log('sdsdsd');
-              // console.log(data);
             });
 
             // ifstream.bufferSize;

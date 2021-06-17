@@ -25,7 +25,10 @@ const styles = StyleSheet.create({
     // borderColor: colors.green,
     borderRadius: wp(3),
     padding: wp(3),
-    borderWidth: wp(0.3),
+    paddingTop: wp(2),
+    paddingBottom: wp(2),
+    borderWidth: wp(0.1),
+    borderColor: colors.lightGrey,
     marginTop: wp(1),
   },
   involvePSt: {
