@@ -1894,7 +1894,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   Submitted To:
                 </Text>
                 <Text style={styles.initializeByAndSubmitedToAnswer}>
-                  {/* {this.state.submitted_to[0].name} */}
+                  {this.state.submitted_to[0].name}
                 </Text>
               </View>
               {/* REASSIGNED to  */}

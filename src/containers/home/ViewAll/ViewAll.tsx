@@ -65,8 +65,13 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     };
   }
   componentDidMount() {
-    AsyncStorage.getItem('user').then((user: any) => {
-      this.setState({user: JSON.parse(user)});
+    AsyncStorage.getItem('email').then((email: any) => {
+      createApi
+        .createApi()
+        .getUser(email)
+        .then((user: any) => {
+          this.setState({user});
+        });
     });
 
     getCurrentProject().then((currentProj: any) => {
