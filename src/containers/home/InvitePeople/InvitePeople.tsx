@@ -38,6 +38,7 @@ type InvitePeopleNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'InvitePeople'
 >;
+at;
 type InvitePeopleRouteProp = RouteProp<StackNavigatorProps, 'InvitePeople'>;
 
 export interface InvitePeopleProps {

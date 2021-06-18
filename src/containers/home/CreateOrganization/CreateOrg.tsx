@@ -471,6 +471,17 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                       />
                     )}
                   </View>
+
+                  {/* Invite peoples */}
+                  <View style={{marginTop: wp(3)}}>
+                    <Text
+                      style={{
+                        fontSize: wp(3),
+                        fontFamily: fonts.SFuiDisplayMedium,
+                      }}>
+                      Invite new People
+                    </Text>
+                  </View>
                 </View>
 
                 <TouchableOpacity
