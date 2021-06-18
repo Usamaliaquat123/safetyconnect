@@ -508,6 +508,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           this.setState({
                             reportIdInvestigation: res.data.data.report_id,
                           });
+                        // if(status == 1){
+                        
+                        // }else{
+
+                        // }
+
                           sor.report['_id'] = res.data.data.report_id;
                           sor.report['comments'] = res.data.data.comments_id;
                         })
@@ -573,7 +579,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                       loading: false,
                                       errorModal: false,
                                     });
-                                    // this.props.navigation.goBack();
+                                    this.props.navigation.navigate("ViewAllSOr");
                                   })
                                   .catch((err: any) => {});
 
@@ -584,7 +590,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   errorModal: false,
                                 });
 
-                                this.props.navigation.goBack();
+                                this.props.navigation.navigate("ViewAllSOr");
                               }
                               // if (res.status == 200) {
 
@@ -842,10 +848,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                                   this.props.navigation.goBack();
                                 }
-                                // if (res.status == 200) {
-
-                                // } else {
-                                // }
                               })
                               .catch(() =>
                                 this.setState({
