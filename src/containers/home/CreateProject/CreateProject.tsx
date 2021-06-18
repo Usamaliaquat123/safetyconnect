@@ -634,6 +634,39 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     </View>
                   </View>
                 </View>
+
+                {/* Invite people */}
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate('InvitePeople', {
+                      data: 'organization',
+                    })
+                  }
+                  style={{
+                    marginTop: wp(3),
+                    flexDirection: 'row',
+                    alignSelf: 'center',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Icon
+                    containerStyle={{marginRight: wp(1)}}
+                    name={'plus'}
+                    type={'antdesign'}
+                    color={colors.primary}
+                    size={wp(3.5)}
+                  />
+                  <Text
+                    style={{
+                      fontSize: wp(3),
+                      textAlign: 'center',
+                      color: colors.primary,
+                      fontFamily: fonts.SFuiDisplayBold,
+                    }}>
+                    Invite new People
+                  </Text>
+                </TouchableOpacity>
+
                 <TouchableOpacity
                   onPress={() => this.createProject()}
                   style={styles.siginBtnContainer}>

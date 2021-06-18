@@ -114,7 +114,6 @@ class Settings extends React.Component<SettingsProps, any> {
               </TouchableOpacity>
               <View>
                 <Text style={styles.title}>Profile</Text>
-                {/* <View style={styles.underScrore} /> */}
               </View>
             </View>
           </View>
@@ -133,8 +132,8 @@ class Settings extends React.Component<SettingsProps, any> {
 
             <View style={{width: wp(50), alignSelf: 'center'}}>
               <Avatar
-                containerStyle={{alignSelf: 'center', marginTop: wp(3)}}
-                size={wp(30)}
+                // containerStyle={{alignSelf: 'center', marginTop: wp(3)}}
+                // size={wp(30)}
                 rounded
                 source={{
                   uri:
@@ -148,7 +147,6 @@ class Settings extends React.Component<SettingsProps, any> {
                   padding: wp(2.2),
                   right: wp(7),
                   top: wp(5),
-                  // alignSelf: 'center',
                   position: 'absolute',
                   borderRadius: wp(10),
                 }}>
@@ -160,10 +158,8 @@ class Settings extends React.Component<SettingsProps, any> {
                 />
               </View>
             </View>
-            {/* user profile details */}
             <View style={{marginTop: wp(5)}}>
-              {/* Full name */}
-              <View>
+              {/* <View>
                 <Text
                   style={{
                     fontSize: wp(3.2),
@@ -181,93 +177,93 @@ class Settings extends React.Component<SettingsProps, any> {
                     placeholder={'Your Full Name'}
                   />
                 </View>
-              </View>
+              </View> */}
 
               {/* Email Address */}
-              <View>
-                <Text
-                  style={{
-                    fontSize: wp(3.2),
-                    marginTop: wp(3),
-                    fontFamily: fonts.SFuiDisplaySemiBold,
-                  }}>
-                  Email Address
-                </Text>
-                <View style={[styles.inputContainer]}>
-                  <TextInput
-                    editable={false}
-                    style={styles.authInputs}
-                    value={this.state.email}
-                    onChangeText={(e) => {
-                      this.setState({email: e});
-                    }}
-                    placeholder={'johndoe@email.com'}
-                  />
-                </View>
+              {/* <View>
+              <Text
+                style={{
+                  fontSize: wp(3.2),
+                  marginTop: wp(3),
+                  fontFamily: fonts.SFuiDisplaySemiBold,
+                }}>
+                Email Address
+              </Text>
+              <View style={[styles.inputContainer]}>
+                <TextInput
+                  editable={false}
+                  style={styles.authInputs}
+                  value={this.state.email}
+                  onChangeText={(e) => {
+                    this.setState({email: e});
+                  }}
+                  placeholder={'johndoe@email.com'}
+                />
               </View>
+            </View> */}
               {/* Your Role */}
-              <View>
-                <Text
-                  style={{
-                    fontSize: wp(3.2),
-                    marginTop: wp(3),
-                    fontFamily: fonts.SFuiDisplaySemiBold,
-                  }}>
-                  Your Role
-                </Text>
-                <View style={[styles.inputContainer]}>
-                  <TextInput
-                    style={styles.authInputs}
-                    value={this.state.role}
-                    onChangeText={(e) => {
-                      this.setState({role: e});
-                    }}
-                    placeholder={'Role'}
-                  />
-                </View>
+              {/* <View>
+              <Text
+                style={{
+                  fontSize: wp(3.2),
+                  marginTop: wp(3),
+                  fontFamily: fonts.SFuiDisplaySemiBold,
+                }}>
+                Your Role
+              </Text>
+              <View style={[styles.inputContainer]}>
+                <TextInput
+                  style={styles.authInputs}
+                  value={this.state.role}
+                  onChangeText={(e) => {
+                    this.setState({role: e});
+                  }}
+                  placeholder={'Role'}
+                />
               </View>
+            </View> */}
               {/* Your Department */}
-              <View>
-                <Text
-                  style={{
-                    fontSize: wp(3.2),
-                    marginTop: wp(3),
-                    fontFamily: fonts.SFuiDisplaySemiBold,
-                  }}>
-                  Your Department
-                </Text>
-                <View style={[styles.inputContainer]}>
-                  <TextInput
-                    style={styles.authInputs}
-                    value={this.state.department}
-                    onChangeText={(e) => {
-                      this.setState({department: e});
-                    }}
-                    placeholder={'Department'}
-                  />
-                </View>
+              {/* <View>
+              <Text
+                style={{
+                  fontSize: wp(3.2),
+                  marginTop: wp(3),
+                  fontFamily: fonts.SFuiDisplaySemiBold,
+                }}>
+                Your Department
+              </Text>
+              <View style={[styles.inputContainer]}>
+                <TextInput
+                  style={styles.authInputs}
+                  value={this.state.department}
+                  onChangeText={(e) => {
+                    this.setState({department: e});
+                  }}
+                  placeholder={'Department'}
+                />
               </View>
+            </View> */}
               {/* Your Industry */}
-              <View>
-                <Text
-                  style={{
-                    fontSize: wp(3.2),
-                    marginTop: wp(3),
-                    fontFamily: fonts.SFuiDisplaySemiBold,
-                  }}>
-                  Your Industry
-                </Text>
-                <View style={[styles.inputContainer]}>
-                  <TextInput
-                    style={styles.authInputs}
-                    value={this.state.industry}
-                    onChangeText={(e) => {
-                      this.setState({industry: e});
-                    }}
-                    placeholder={'Industry'}
-                  />
-                </View>
+              {/* <View>
+              <Text
+                style={{
+                  fontSize: wp(3.2),
+                  marginTop: wp(3),
+                  fontFamily: fonts.SFuiDisplaySemiBold,
+                }}>
+                Your Industry
+              </Text>
+              <View style={[styles.inputContainer]}>
+                <TextInput
+                  style={styles.authInputs}
+                  value={this.state.industry}
+                  onChangeText={(e) => {
+                    this.setState({industry: e});
+                  }}
+                  placeholder={'Industry'}
+                />
               </View>
+            </View> */}
               {/* Save  */}
 
               <TouchableOpacity
@@ -284,14 +280,12 @@ class Settings extends React.Component<SettingsProps, any> {
         </ScrollView>
 
         {/* Modal Container */}
-        <Modal
+        {/* <Modal
           isVisible={this.state.loading}
           onBackdropPress={() => this.setState({loading: false})}>
           {this.state.loading == true ? (
             <View>
               <View style={{alignSelf: 'center'}}>
-                {/* <Bars size={wp(5)} color={colors.primary} /> */}
-                {/* <Bars size={wp(5)} color={colors.primary} /> */}
                 <LottieView
                   autoPlay={true}
                   style={{width: wp(90)}}
@@ -301,7 +295,7 @@ class Settings extends React.Component<SettingsProps, any> {
               </View>
             </View>
           ) : null}
-        </Modal>
+        </Modal> */}
       </View>
     );
   }
