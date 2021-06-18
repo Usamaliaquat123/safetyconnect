@@ -45,7 +45,7 @@ export default class Splash extends React.Component<SplashProps, any> {
         }, 5000);
       } else {
         setTimeout(() => {
-          this.props.navigation.navigate('Forgot');
+          this.props.navigation.navigate('Signup');
         }, 5000);
       }
     });
