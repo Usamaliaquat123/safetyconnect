@@ -500,6 +500,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         },
                         project: this.state.projectid,
                       };
+
                       createApi
                         .createApi()
                         .createSorInit(bodyInitial)
@@ -538,60 +539,131 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       // );
 
                       setTimeout(() => {
-                        createApi
-                          .createApi()
-                          .createSor(sor)
-                          .then((res: any) => {
-                            this.setState({loading: false, errorModal: false});
+                        if (status == 1) {
+                          createApi
+                            .createApi()
+                            .createSorDraft(sor)
+                            .then((createdsor: any) => {
+                              if (this.state.fiveWhytoggle == true) {
+                                this.setState({
+                                  loading: true,
+                                  errorModal: true,
+                                });
+                                var newObj = {
+                                  //    countributoryCauses: '',
+                                  // rootCauses: '',
+                                  justification: {
+                                    question: this.state.fiveWhyQuestion,
+                                    answer: this.state.fiveWhyAnswer,
+                                  },
+                                  project: this.state.projectid,
+                                  contributoryCauses: this.state
+                                    .countributoryCauses,
+                                  rootCauses: this.state.rootCauses,
+                                  report: this.state.reportIdInvestigation,
+                                  user: this.state.user._id,
+                                  date: moment().format('MM-DD-YYYY'),
+                                };
 
-                            if (this.state.fiveWhytoggle) {
-                              // sor.report['_id'] = this.state.reportIdInvestigation;
-                              this.setState({loading: true, errorModal: true});
-                              var obj = {
-                                justification: {
-                                  question: [this.state.fiveWhyQuestion],
-                                  answer: [this.state.fiveWhyAnswer],
-                                },
-                                contributoryCauses: this.state
-                                  .countributoryCauses,
-                                rootCauses: this.state.rootCauses,
-                                project: this.state.projectid,
-                                report: this.state.reportIdInvestigation,
-                                user: this.state.user._id,
-                                date: moment().format('MM-DD-YYYY'),
-                              };
+                                createApi
+                                  .createApi()
+                                  .createFiveWhy(newObj)
+                                  .then((res) => {
+                                    this.setState({
+                                      loading: false,
+                                      errorModal: false,
+                                    });
+                                    // this.props.navigation.goBack();
+                                  })
+                                  .catch((err: any) => {});
 
-                              createApi
-                                .createApi()
-                                .createFiveWhy(obj)
-                                .then((res) => {
-                                  this.setState({
-                                    loading: false,
-                                    errorModal: false,
-                                  });
-                                  this.props.navigation.goBack();
-                                })
-                                .catch((err: any) => {});
-                            } else {
+                                // _id: ress.data.data.report_id,
+                              } else {
+                                this.setState({
+                                  loading: false,
+                                  errorModal: false,
+                                });
+
+                                this.props.navigation.goBack();
+                              }
+                              // if (res.status == 200) {
+
+                              // } else {
+                              // }
+                            })
+                            .catch(() =>
+                              this.setState({
+                                loading: false,
+                                errorModal: true,
+                                errHeadingText: 'Error on create sor',
+                                errDesText: 'Please refresh the app state.',
+                              }),
+                            );
+                        } else {
+                          createApi
+                            .createApi()
+                            .createSor(sor)
+                            .then((res: any) => {
                               this.setState({
                                 loading: false,
                                 errorModal: false,
                               });
-                              this.props.navigation.goBack();
-                            }
 
-                            if (res.status == 200) {
-                            } else {
-                              // this.setState({
-                              //   errorModal: false,
-                              //   errHeadingText: `CreateSor api returns ${res.data.status}.`,
-                              //   errDesText: res.data.message,
-                              // });
-                            }
-                          })
-                          .catch(() =>
-                            this.setState({loading: false, errorModal: false}),
-                          );
+                              if (this.state.fiveWhytoggle) {
+                                // sor.report['_id'] = this.state.reportIdInvestigation;
+                                this.setState({
+                                  loading: true,
+                                  errorModal: true,
+                                });
+                                var obj = {
+                                  justification: {
+                                    question: [this.state.fiveWhyQuestion],
+                                    answer: [this.state.fiveWhyAnswer],
+                                  },
+                                  contributoryCauses: this.state
+                                    .countributoryCauses,
+                                  rootCauses: this.state.rootCauses,
+                                  project: this.state.projectid,
+                                  report: this.state.reportIdInvestigation,
+                                  user: this.state.user._id,
+                                  date: moment().format('MM-DD-YYYY'),
+                                };
+
+                                createApi
+                                  .createApi()
+                                  .createFiveWhy(obj)
+                                  .then((res) => {
+                                    this.setState({
+                                      loading: false,
+                                      errorModal: false,
+                                    });
+                                    this.props.navigation.goBack();
+                                  })
+                                  .catch((err: any) => {});
+                              } else {
+                                this.setState({
+                                  loading: false,
+                                  errorModal: false,
+                                });
+                                this.props.navigation.goBack();
+                              }
+
+                              if (res.status == 200) {
+                              } else {
+                                // this.setState({
+                                //   errorModal: false,
+                                //   errHeadingText: `CreateSor api returns ${res.data.status}.`,
+                                //   errDesText: res.data.message,
+                                // });
+                              }
+                            })
+                            .catch(() =>
+                              this.setState({
+                                loading: false,
+                                errorModal: false,
+                              }),
+                            );
+                        }
                       }, 3000);
 
                       // })
@@ -723,65 +795,127 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           .catch((err) => {});
 
                         setTimeout(() => {
-                          createApi
-                            .createApi()
-                            .createSor(sors)
-                            .then((createdsor: any) => {
-                              if (this.state.fiveWhytoggle == true) {
-                                this.setState({
-                                  loading: true,
-                                  errorModal: true,
-                                });
-                                var newObj = {
-                                  //    countributoryCauses: '',
-                                  // rootCauses: '',
-                                  justification: {
-                                    question: this.state.fiveWhyQuestion,
-                                    answer: this.state.fiveWhyAnswer,
-                                  },
-                                  project: this.state.projectid,
-                                  contributoryCauses: this.state
-                                    .countributoryCauses,
-                                  rootCauses: this.state.rootCauses,
-                                  report: this.state.reportIdInvestigation,
-                                  user: this.state.user._id,
-                                  date: moment().format('MM-DD-YYYY'),
-                                };
+                          if (status == 1) {
+                            createApi
+                              .createApi()
+                              .createSorDraft(sors)
+                              .then((createdsor: any) => {
+                                if (this.state.fiveWhytoggle == true) {
+                                  this.setState({
+                                    loading: true,
+                                    errorModal: true,
+                                  });
+                                  var newObj = {
+                                    //    countributoryCauses: '',
+                                    // rootCauses: '',
+                                    justification: {
+                                      question: this.state.fiveWhyQuestion,
+                                      answer: this.state.fiveWhyAnswer,
+                                    },
+                                    project: this.state.projectid,
+                                    contributoryCauses: this.state
+                                      .countributoryCauses,
+                                    rootCauses: this.state.rootCauses,
+                                    report: this.state.reportIdInvestigation,
+                                    user: this.state.user._id,
+                                    date: moment().format('MM-DD-YYYY'),
+                                  };
 
-                                createApi
-                                  .createApi()
-                                  .createFiveWhy(newObj)
-                                  .then((res) => {
-                                    this.setState({
-                                      loading: false,
-                                      errorModal: false,
-                                    });
-                                    // this.props.navigation.goBack();
-                                  })
-                                  .catch((err: any) => {});
+                                  createApi
+                                    .createApi()
+                                    .createFiveWhy(newObj)
+                                    .then((res) => {
+                                      this.setState({
+                                        loading: false,
+                                        errorModal: false,
+                                      });
+                                      // this.props.navigation.goBack();
+                                    })
+                                    .catch((err: any) => {});
 
-                                // _id: ress.data.data.report_id,
-                              } else {
+                                  // _id: ress.data.data.report_id,
+                                } else {
+                                  this.setState({
+                                    loading: false,
+                                    errorModal: false,
+                                  });
+
+                                  this.props.navigation.goBack();
+                                }
+                                // if (res.status == 200) {
+
+                                // } else {
+                                // }
+                              })
+                              .catch(() =>
                                 this.setState({
                                   loading: false,
-                                  errorModal: false,
-                                });
+                                  errorModal: true,
+                                  errHeadingText: 'Error on create sor',
+                                  errDesText: 'Please refresh the app state.',
+                                }),
+                              );
+                          } else {
+                            createApi
+                              .createApi()
+                              .createSor(sors)
+                              .then((createdsor: any) => {
+                                if (this.state.fiveWhytoggle == true) {
+                                  this.setState({
+                                    loading: true,
+                                    errorModal: true,
+                                  });
+                                  var newObj = {
+                                    //    countributoryCauses: '',
+                                    // rootCauses: '',
+                                    justification: {
+                                      question: this.state.fiveWhyQuestion,
+                                      answer: this.state.fiveWhyAnswer,
+                                    },
+                                    project: this.state.projectid,
+                                    contributoryCauses: this.state
+                                      .countributoryCauses,
+                                    rootCauses: this.state.rootCauses,
+                                    report: this.state.reportIdInvestigation,
+                                    user: this.state.user._id,
+                                    date: moment().format('MM-DD-YYYY'),
+                                  };
 
-                                this.props.navigation.goBack();
-                              }
-                              // if (res.status == 200) {
+                                  createApi
+                                    .createApi()
+                                    .createFiveWhy(newObj)
+                                    .then((res) => {
+                                      this.setState({
+                                        loading: false,
+                                        errorModal: false,
+                                      });
+                                      // this.props.navigation.goBack();
+                                    })
+                                    .catch((err: any) => {});
 
-                              // } else {
-                              // }
-                            })
-                            .catch(() =>
-                              this.setState({
-                                loading: false,
-                                errorModal: true,
-                                errHeadingText: 'Error on create sor',
-                                errDesText: 'Please refresh the app state.',
-                              }),
-                            );
+                                  // _id: ress.data.data.report_id,
+                                } else {
+                                  this.setState({
+                                    loading: false,
+                                    errorModal: false,
+                                  });
+
+                                  this.props.navigation.goBack();
+                                }
+                                // if (res.status == 200) {
+
+                                // } else {
+                                // }
+                              })
+                              .catch(() =>
+                                this.setState({
+                                  loading: false,
+                                  errorModal: true,
+                                  errHeadingText: 'Error on create sor',
+                                  errDesText: 'Please refresh the app state.',
+                                }),
+                              );
+                          }
                         }, 3000);
                       } else {
                         this.setState({

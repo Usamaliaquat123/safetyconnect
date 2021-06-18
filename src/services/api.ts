@@ -108,6 +108,7 @@ const createApi = (
   // Create initial to get the reportId
   const createSorInit = (data: any) => baseapi.post('project/newreport', data);
   const createSor = (data: any) => baseapi.post('project/publish', data);
+  const createSorDraft = (data: any) => baseapi.put('project/publish', data);
 
   /*
    * @comments
@@ -193,6 +194,7 @@ const createApi = (
     editComment,
     suggestiosns,
     repeatedsorsugg,
+    createSorDraft,
     observationSuggestions,
     createSor,
     updateSor,
