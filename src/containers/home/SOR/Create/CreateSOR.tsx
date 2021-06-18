@@ -483,7 +483,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           esclate_to: this.state.exclateToTags.map(
                             (d: any) => d.email,
                           ),
-                          status: status,
+                          status: 1,
                           attachments: [],
                           comments: ' ',
                         },
@@ -508,11 +508,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           this.setState({
                             reportIdInvestigation: res.data.data.report_id,
                           });
-                        // if(status == 1){
-                        
-                        // }else{
+                          // if(status == 1){
 
-                        // }
+                          // }else{
+
+                          // }
 
                           sor.report['_id'] = res.data.data.report_id;
                           sor.report['comments'] = res.data.data.comments_id;
@@ -579,7 +579,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                       loading: false,
                                       errorModal: false,
                                     });
-                                    this.props.navigation.navigate("ViewAllSOr");
+                                    this.props.navigation.navigate(
+                                      'ViewAllSOr',
+                                    );
                                   })
                                   .catch((err: any) => {});
 
@@ -590,7 +592,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   errorModal: false,
                                 });
 
-                                this.props.navigation.navigate("ViewAllSOr");
+                                this.props.navigation.navigate('ViewAllSOr');
                               }
                               // if (res.status == 200) {
 
@@ -772,7 +774,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             esclate_to: this.state.exclateToTags.map(
                               (d: any) => d.email,
                             ),
-                            status: status,
+                            status: 1,
                             attachments: [],
                             comments: '',
                           },
@@ -780,17 +782,17 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           project: this.state.projectid,
                         };
 
-                        var bodyInitial = {
+                        var sd = {
                           report: {
-                            created_by: this.state.email,
-                            comments: '',
+                            // created_by: this.state.email,
+                            // comments: '',
                             status: status,
                           },
                           project: this.state.projectid,
                         };
                         createApi
                           .createApi()
-                          .createSorInit(bodyInitial)
+                          .createSorInit(sd)
                           .then((res: any) => {
                             this.setState({
                               reportIdInvestigation: res.data.data.report_id,
@@ -1155,7 +1157,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     onChange={(e) =>
                       this.setState({observation: e.nativeEvent.text})
                     }
-                    placeholder={'@Add Location'}
+                    placeholder={'@Add Area'}
                   />
                   <Text style={styles.obText}> and it happend at</Text>
                 </View>
