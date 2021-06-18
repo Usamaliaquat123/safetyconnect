@@ -473,11 +473,27 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                   </View>
 
                   {/* Invite peoples */}
-                  <View style={{marginTop: wp(3)}}>
+                  <View
+                    style={{
+                      marginTop: wp(3),
+                      flexDirection: 'row',
+                      alignSelf: 'center',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Icon
+                      containerStyle={{marginRight: wp(1)}}
+                      name={'plus'}
+                      type={'antdesign'}
+                      color={colors.primary}
+                      size={wp(3.5)}
+                    />
                     <Text
                       style={{
                         fontSize: wp(3),
-                        fontFamily: fonts.SFuiDisplayMedium,
+                        textAlign: 'center',
+                        color: colors.primary,
+                        fontFamily: fonts.SFuiDisplayBold,
                       }}>
                       Invite new People
                     </Text>

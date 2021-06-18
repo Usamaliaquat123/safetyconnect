@@ -154,7 +154,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         page: 0,
         query: {status: [1, 2, 3, 4, 5]},
       };
-      this.setState({loading: true});
+      // this.setState({loading: true});
 
       createApi
         .createApi()
@@ -162,7 +162,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         .then((res: any) => {
           console.log('reports  are not available');
           console.log(res.data.data.report);
-          if (res.data.data == undefined) {
+          if (res.data.data.report == undefined) {
             this.setState({loading: false});
           } else {
             res.data.data.report.sort(
