@@ -472,8 +472,13 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                     )}
                   </View>
 
-                  {/* Invite peoples */}
-                  <View
+{/* Invite people */}
+                  {/* <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('InvitePeople', {
+                        data: 'organization',
+                      })
+                    }
                     style={{
                       marginTop: wp(3),
                       flexDirection: 'row',
@@ -497,7 +502,10 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                       }}>
                       Invite new People
                     </Text>
-                  </View>
+                  </TouchableOpacity>
+                
+                 */}
+                
                 </View>
 
                 <TouchableOpacity

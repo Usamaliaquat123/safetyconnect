@@ -22,6 +22,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import LottieView from 'lottie-react-native';
 import {validateEmail} from '@utils';
 export interface ForgotProps {
   navigation: forgotPassNavigationProp;

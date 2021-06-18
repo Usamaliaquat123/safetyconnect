@@ -14,6 +14,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import styles from './styles';
 import {colors, images} from '@theme';
+import LottieView from 'lottie-react-native';
 import {Icon} from 'react-native-elements';
 import {
   widthPercentageToDP as wp,

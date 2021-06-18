@@ -24,7 +24,7 @@ export type StackNavigatorProps = {
   NothingFound: undefined;
   NoInternet: undefined;
   Main: undefined;
-  InvitePeople: undefined;
+  InvitePeople: {data: string};
   Settings: undefined;
   Notification: undefined;
   WelcomeHome: undefined;
