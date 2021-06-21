@@ -651,6 +651,54 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     width: '50%',
   },
+  submitsorbtnSb: {
+    padding: wp(3),
+    width: wp(45),
+    borderColor: colors.green,
+    marginTop: wp(6),
+    alignItems: 'center',
+    backgroundColor: colors.primary,
+    borderWidth: wp(0.1),
+    borderRadius: wp(3),
+  },
+  submitsorbtnSbtxt: {
+    fontSize: wp(3.5),
+    color: colors.secondary,
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  submitsorbtn: {
+    padding: wp(5),
+    marginTop: wp(6),
+    alignItems: 'center',
+    borderColor: colors.primary,
+    borderWidth: wp(0.1),
+    borderRadius: wp(3),
+    width: wp(45),
+  },
+  submitsorbtntxt: {
+    fontSize: wp(3.5),
+    color: colors.primary,
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+
+  errEmailPassDesc: {
+    marginTop: wp(2),
+    textAlign: 'center',
+    fontSize: wp(3),
+    color: colors.text,
+  },
+
+  errHeadPop: {
+    fontSize: wp(5),
+    textAlign: 'center',
+    fontFamily: fonts.SFuiDisplayMedium,
+    color: colors.error,
+  },
+  modelContainer: {
+    backgroundColor: colors.secondary,
+    padding: wp(10),
+    borderRadius: wp(5),
+  },
 });
 
 export default styles;

@@ -105,6 +105,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       involvedAndNotifiedUserType: 'involved',
       commentAttachment: [],
       addInvolvedandNotifiedUsers: [],
+      errorModal: false,
       selectedRisk: true,
       // Risk Array
       liklihood: riskxSeverityxliklihood.liklihood,
@@ -278,6 +279,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       //   });
       // } else {
       //   this.setState({fiveWhytoggle: false});
+    } else {
+      this.setState({fiveWhytoggle: false});
     }
   };
 
@@ -291,7 +294,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
   };
   onSubmitUpdateSor = async (status?: number) => {
-    this.setState({loading: true});
+    this.setState({loading: true, errorModal :true});
 
     var liklihood = this.state.liklihood.filter(
       (d: any) => d.selected == true,
@@ -355,7 +358,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           this.state.reAssignToArrTags.length == 0
             ? this.state.esclate_to.map((d: any) => d.email)
             : this.state.reAssignToArrTags.map((d: any) => d.email) /** done */,
-        status: 2 /** done */,
+        status: status /** done */,
         attachments: [] /** done */,
         comments: this.props.route.params.data.comments /** done */,
         updatedAt: Date.now() /** done */,
@@ -367,18 +370,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .createApi()
       .updateSor(update)
       .then((res) => {
-        this.setState({loading: false});
+        this.setState({loading: false,errorModal: false });
         if (res.status == 200) {
           this.props.navigation.goBack();
         }
-        // this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
-        //   1,
-        //   2,
-        //   3,
-        //   4,
-        //   5,
-        // ]);
-        // this.props.navigation.navigate('ViewAllSOr');
       })
       .catch((err) => {});
   };
@@ -548,92 +543,140 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
     console.log(comment);
     console.log(attachment);
-    // AsyncStorage.getItem('email').then((email: any) => {
-    //   createApi
-    //     .createApi()
-    //     .getUser(email)
-    //     .then((user: any) => {
-    //       var comments = {
-    //         data: {
-    //           user: user.data.data._id,
-    //           comment: comment,
-    //           date: Date.now(),
-    //           files: [],
-    //           is_comment: true,
-    //         },
-    //         comment_document_id: this.props.route.params.data.comments,
-    //       };
+    AsyncStorage.getItem('email').then((email: any) => {
+      createApi
+        .createApi()
+        .getUser(email)
+        .then((user: any) => {
+          var comments = {
+            data: {
+              user: user.data.data._id,
+              comment: comment,
+              date: Date.now(),
+              files: [],
+              is_comment: true,
+            },
+            comment_document_id: this.props.route.params.data.comments,
+          };
 
-    //       // this.state.commentAttachment
-    //       createApi
-    //         .createApi()
-    //         .createComment(comments)
-    //         .then((res: any) => {
-    //           var map = [...this.state.comments];
-    //           map.push({
-    //             date: Date.now(),
-    //             comment: comment,
-    //             files: [],
-    //             _id: res.data.data,
-    //             user: {
-    //               name: user.data.data.name,
-    //               email: user.data.data.email,
-    //               _id: user.data.data._id,
-    //               img_url: user.data.data.img_url,
-    //             },
-    //             is_comment: true,
-    //           });
+          // this.state.commentAttachment
+          createApi
+            .createApi()
+            .createComment(comments)
+            .then((res: any) => {
+              var map = [...this.state.comments];
+              map.push({
+                date: Date.now(),
+                comment: comment,
+                files: [],
+                _id: res.data.data,
+                user: {
+                  name: user.data.data.name,
+                  email: user.data.data.email,
+                  _id: user.data.data._id,
+                  img_url: user.data.data.img_url,
+                },
+                is_comment: true,
+              });
 
-    //           this.setState({comments: map});
-    //         });
-    //     });
-    // });
+              this.setState({comments: map});
+            });
+        });
+    });
   };
-  // Save aas draft
-  saveAsDraft = () => {
-    this.setState({loading: true});
+  // // Save aas draft
+  // saveAsDraft = () => {
+  //   this.setState({loading: true});
 
-    var liklihood = this.state.liklihood.filter(
-      (d: any) => d.selected == true,
-    )[0].value;
-    // this.state.actionsAndRecommendations.filter(())
-    var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
-      .value;
-    var update = {
-      report: {
-        _id: this.props.route.params.data._id,
-        created_by: 'haider@gmail.com',
-        details: this.state.observation,
-        occured_at: moment().format('YYYY-MM-DD'),
-        involved_persons: this.props.route.params.data.involved_persons,
-        risk: {
-          severity: severity,
-          likelihood: liklihood,
-        },
-        action_required: this.state.actionsAndRecommendations,
-        user_location: {
-          latitude: 66.666,
-          longitude: 66.666,
-        },
-        location: this.props.route.params.data.location,
-        submit_to: this.state.submitted_to.map((d: any) => d.email) /** done */,
-        esclate_to: this.state.esclate_to.map((d: any) => d.email),
-        status: 1,
-        attachments: [],
-        comments: [],
-      },
-      project: this.state.projectId,
-    };
+  //   var liklihood = this.state.liklihood.filter(
+  //     (d: any) => d.selected == true,
+  //   )[0].value;
+  //   var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
+  //     .value;
 
-    createApi
-      .createApi()
-      .updateSor(update)
-      .then((res) => {
-        this.setState({loading: false});
-        this.props.navigation.navigate('ViewAllSOr');
-      })
-      .catch((err) => {});
-  };
+  //   if (this.state.fiveWhytoggle == true) {
+  //     if (this.props.route.params.data.justification == undefined) {
+  //       // create five why
+  //       var obj = {
+  //         justification: {
+  //           question: this.state.fiveWhyQuestion,
+  //           answer: this.state.fiveWhyAnswer,
+  //           contributoryCauses: this.state.countributoryCauses,
+  //           rootCauses: this.state.rootCauses,
+  //         },
+  //         project: this.state.projectId,
+  //         report: this.props.route.params.data._id,
+  //         user: this.state.user._id,
+  //         date: moment().format('MM-DD-YYYY'),
+  //       };
+
+  //       createApi.createApi().createFiveWhy(obj);
+  //     } else {
+  //       // create justification
+  //       var updatefiveWhy = {
+  //         id: this.props.route.params.data.justification,
+  //         justification: {
+  //           question: this.state.fiveWhyQuestion,
+  //           answer: this.state.fiveWhyAnswer,
+  //         },
+  //         contributoryCauses: this.state.countributoryCauses,
+  //         rootCauses: this.state.rootCauses,
+  //       };
+
+  //       createApi.createApi().editFiveWhy(updatefiveWhy);
+  //     }
+
+  //     //   fiveWhyQuestion:
+  //     // fiveWhyAnswer:
+  //   }
+
+  //   var update = {
+  //     report: {
+  //       _id: this.props.route.params.data._id /** done  */,
+  //       created_by: this.props.route.params.data.created_by /** done */,
+  //       details: this.state.observation /** done */,
+  //       createdAt: Date.now() /** done */,
+  //       occured_at: moment().format('YYYY-MM-DD') /** done */,
+  //       involved_persons: this.props.route.params.data
+  //         .involved_persons /** done */,
+  //       risk: {
+  //         /** done */ severity: severity,
+  //         likelihood: liklihood,
+  //       },
+  //       action_required: this.state.actionsAndRecommendations /** done */,
+  //       location: this.props.route.params.data.location /** done */,
+  //       submit_to: this.state.submitted_to.map((d: any) => d.email) /** done */,
+  //       esclate_to:
+  //         this.state.reAssignToArrTags.length == 0
+  //           ? this.state.esclate_to.map((d: any) => d.email)
+  //           : this.state.reAssignToArrTags.map((d: any) => d.email) /** done */,
+  //       status: 1 /** done */,
+  //       attachments: [] /** done */,
+  //       comments: this.props.route.params.data.comments /** done */,
+  //       updatedAt: Date.now() /** done */,
+  //     },
+  //     project: this.state.projectId,
+  //   };
+
+  //   createApi
+  //     .createApi()
+  //     .updateSor(update)
+  //     .then((res) => {
+  //       this.setState({loading: false});
+  //       if (res.status == 200) {
+  //         this.props.navigation.goBack();
+  //       }
+  //       // this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
+  //       //   1,
+  //       //   2,
+  //       //   3,
+  //       //   4,
+  //       //   5,
+  //       // ]);
+  //       // this.props.navigation.navigate('ViewAllSOr');
+  //     })
+  //     .catch((err) => {});
+  // };
 
   // Submitted To
 
@@ -2489,14 +2532,43 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 marginTop: wp(5),
               }}>
               <TouchableOpacity
-                onPress={() => this.saveAsDraft()}
+                onPress={() => this.onSubmitUpdateSor(1)}
                 style={styles.saveAsDraftContainer}>
                 <Text style={styles.saveAsDraftText}>Save as Draft</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => this.onSubmitUpdateSor()}
+                onPress={() => this.onSubmitUpdateSor(2)}
                 style={styles.saveAsSubmitContainer}>
                 <Text style={styles.saveAsSubmitText}>Submit</Text>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginBottom: wp(10),
+                marginTop: wp(3),
+              }}>
+              <TouchableOpacity
+                onPress={() => this.onSubmitUpdateSor(1)}
+                style={styles.saveAsDraftContainer}>
+                <Text style={styles.saveAsDraftText}>Preview</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  AsyncStorage.getItem('email').then((email) => {
+                    if (email == this.props.route.params.data.created_by) {
+                      this.onSubmitUpdateSor(5);
+                    } else {
+                      this.onSubmitUpdateSor(3);
+                    }
+                  });
+                }}
+                style={[
+                  styles.saveAsSubmitContainer,
+                  {backgroundColor: colors.green},
+                ]}>
+                <Text style={[styles.saveAsSubmitText]}>Mark as Complete</Text>
               </TouchableOpacity>
             </View>
           </Animated.View>
@@ -2866,12 +2938,32 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         <FlashMessage ref="myLocalFlashMessage" />
 
         {this.state.loading ? (
-          <LottieView
-            autoPlay={true}
-            style={{width: wp(90)}}
-            source={animation.loading}
-            loop={true}
-          />
+          <Model
+            isVisible={this.state.errorModal}
+            onBackdropPress={() => {
+              this.setState({errorModal: false, loading: false});
+            }}>
+            {this.state.loading == true ? (
+              <LottieView
+                autoPlay={true}
+                style={{width: wp(90)}}
+                source={animation.loading}
+                loop={true}
+              />
+            ) : (
+              <View style={styles.modelContainer}>
+                <View>
+                  <Text style={styles.errHeadPop}>
+                    {this.state.errHeadingText}
+                  </Text>
+                  <Text style={styles.errEmailPassDesc}>
+                    {this.state.errDesText}
+                  </Text>
+                  {/* <Text style={styles.plzTryAgain}>Please try again later.</Text> */}
+                </View>
+              </View>
+            )}
+          </Model>
         ) : null}
 
         {/* 

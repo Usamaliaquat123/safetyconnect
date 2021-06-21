@@ -408,13 +408,12 @@ const styles = StyleSheet.create({
     padding: wp(3),
   },
   submitsorbtn: {
-    padding: wp(5),
-    marginTop: wp(6),
-    alignItems: 'center',
-    borderColor: colors.primary,
-    borderWidth: wp(0.1),
-    borderRadius: wp(3),
     width: wp(45),
+    backgroundColor: colors.primary,
+    padding: wp(4),
+    justifyContent: 'center',
+    borderRadius: wp(4),
+    alignItems: 'center',
   },
   submitsorbtntxt: {
     fontSize: wp(3.5),

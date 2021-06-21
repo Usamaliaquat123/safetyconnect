@@ -71,6 +71,7 @@ export default class SuggestionsPop extends React.Component<
 
   componentDidMount = () => {
     console.log('this.props.suggestion on line 73s');
+    console.log(this.state.statuses);
     console.log(this.props.suggestions);
     // console.log(this.props.suggestions.justification);
     if (this.props.suggestions.justification != undefined) {
