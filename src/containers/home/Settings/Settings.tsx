@@ -131,7 +131,7 @@ class Settings extends React.Component<SettingsProps, any> {
             </Text>
 
             <View style={{width: wp(50), alignSelf: 'center'}}>
-              <Avatar
+              {/* <Avatar
                 // containerStyle={{alignSelf: 'center', marginTop: wp(3)}}
                 // size={wp(30)}
                 rounded
@@ -139,7 +139,7 @@ class Settings extends React.Component<SettingsProps, any> {
                   uri:
                     'https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fuser&psig=AOvVaw1mZl6u-R0ttxXEyWKiuF_8&ust=1623222366332000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKjA_ta8h_ECFQAAAAAdAAAAABAD',
                 }}
-              />
+              /> */}
               <View
                 style={{
                   backgroundColor: colors.green,
@@ -159,7 +159,7 @@ class Settings extends React.Component<SettingsProps, any> {
               </View>
             </View>
             <View style={{marginTop: wp(5)}}>
-              {/* <View>
+              <View>
                 <Text
                   style={{
                     fontSize: wp(3.2),
@@ -177,93 +177,93 @@ class Settings extends React.Component<SettingsProps, any> {
                     placeholder={'Your Full Name'}
                   />
                 </View>
-              </View> */}
+              </View>
 
               {/* Email Address */}
-              {/* <View>
-              <Text
-                style={{
-                  fontSize: wp(3.2),
-                  marginTop: wp(3),
-                  fontFamily: fonts.SFuiDisplaySemiBold,
-                }}>
-                Email Address
-              </Text>
-              <View style={[styles.inputContainer]}>
-                <TextInput
-                  editable={false}
-                  style={styles.authInputs}
-                  value={this.state.email}
-                  onChangeText={(e) => {
-                    this.setState({email: e});
-                  }}
-                  placeholder={'johndoe@email.com'}
-                />
+              <View>
+                <Text
+                  style={{
+                    fontSize: wp(3.2),
+                    marginTop: wp(3),
+                    fontFamily: fonts.SFuiDisplaySemiBold,
+                  }}>
+                  Email Address
+                </Text>
+                <View style={[styles.inputContainer]}>
+                  <TextInput
+                    editable={false}
+                    style={styles.authInputs}
+                    value={this.state.email}
+                    onChangeText={(e) => {
+                      this.setState({email: e});
+                    }}
+                    placeholder={'johndoe@email.com'}
+                  />
+                </View>
               </View>
-            </View> */}
               {/* Your Role */}
-              {/* <View>
-              <Text
-                style={{
-                  fontSize: wp(3.2),
-                  marginTop: wp(3),
-                  fontFamily: fonts.SFuiDisplaySemiBold,
-                }}>
-                Your Role
-              </Text>
-              <View style={[styles.inputContainer]}>
-                <TextInput
-                  style={styles.authInputs}
-                  value={this.state.role}
-                  onChangeText={(e) => {
-                    this.setState({role: e});
-                  }}
-                  placeholder={'Role'}
-                />
+              <View>
+                <Text
+                  style={{
+                    fontSize: wp(3.2),
+                    marginTop: wp(3),
+                    fontFamily: fonts.SFuiDisplaySemiBold,
+                  }}>
+                  Your Role
+                </Text>
+                <View style={[styles.inputContainer]}>
+                  <TextInput
+                    style={styles.authInputs}
+                    value={this.state.role}
+                    onChangeText={(e) => {
+                      this.setState({role: e});
+                    }}
+                    placeholder={'Role'}
+                  />
+                </View>
               </View>
-            </View> */}
               {/* Your Department */}
-              {/* <View>
-              <Text
-                style={{
-                  fontSize: wp(3.2),
-                  marginTop: wp(3),
-                  fontFamily: fonts.SFuiDisplaySemiBold,
-                }}>
-                Your Department
-              </Text>
-              <View style={[styles.inputContainer]}>
-                <TextInput
-                  style={styles.authInputs}
-                  value={this.state.department}
-                  onChangeText={(e) => {
-                    this.setState({department: e});
-                  }}
-                  placeholder={'Department'}
-                />
+              <View>
+                <Text
+                  style={{
+                    fontSize: wp(3.2),
+                    marginTop: wp(3),
+                    fontFamily: fonts.SFuiDisplaySemiBold,
+                  }}>
+                  Your Department
+                </Text>
+                <View style={[styles.inputContainer]}>
+                  <TextInput
+                    style={styles.authInputs}
+                    value={this.state.department}
+                    onChangeText={(e) => {
+                      this.setState({department: e});
+                    }}
+                    placeholder={'Department'}
+                  />
+                </View>
               </View>
-            </View> */}
               {/* Your Industry */}
-              {/* <View>
-              <Text
-                style={{
-                  fontSize: wp(3.2),
-                  marginTop: wp(3),
-                  fontFamily: fonts.SFuiDisplaySemiBold,
-                }}>
-                Your Industry
-              </Text>
-              <View style={[styles.inputContainer]}>
-                <TextInput
-                  style={styles.authInputs}
-                  value={this.state.industry}
-                  onChangeText={(e) => {
-                    this.setState({industry: e});
-                  }}
-                  placeholder={'Industry'}
-                />
+              <View>
+                <Text
+                  style={{
+                    fontSize: wp(3.2),
+                    marginTop: wp(3),
+                    fontFamily: fonts.SFuiDisplaySemiBold,
+                  }}>
+                  Your Industry
+                </Text>
+                <View style={[styles.inputContainer]}>
+                  <TextInput
+                    style={styles.authInputs}
+                    value={this.state.industry}
+                    onChangeText={(e) => {
+                      this.setState({industry: e});
+                    }}
+                    placeholder={'Industry'}
+                  />
+                </View>
               </View>
-            </View> */}
               {/* Save  */}
 
               <TouchableOpacity
