@@ -294,7 +294,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
   };
   onSubmitUpdateSor = async (status?: number) => {
-    this.setState({loading: true, errorModal :true});
+    this.setState({loading: true, errorModal: true});
 
     var liklihood = this.state.liklihood.filter(
       (d: any) => d.selected == true,
@@ -370,7 +370,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .createApi()
       .updateSor(update)
       .then((res) => {
-        this.setState({loading: false,errorModal: false });
+        this.setState({loading: false, errorModal: false});
         if (res.status == 200) {
           this.props.navigation.goBack();
         }
