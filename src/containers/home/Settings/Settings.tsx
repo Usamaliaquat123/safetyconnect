@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import {Buffer} from 'buffer';
 import {connect} from 'react-redux';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -16,6 +17,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Icon, Avatar} from 'react-native-elements';
 import Modal from 'react-native-modal';
 import LottieView from 'lottie-react-native';
+import RNFetchBlob from 'rn-fetch-blob';
+
 import {
   imagePicker,
   cameraCapture,
@@ -117,6 +120,32 @@ class Settings extends React.Component<SettingsProps, any> {
 
             // RNFS.readFile(res.uri).then((file) => console.log(file));
 
+            var data = {
+              bucket: 'hns-codist',
+              report: 'old',
+              fileType: [res.type],
+              ext: [res.type.split('/')[1]],
+            };
+
+            api
+              .createApi()
+              .getFilesUrl(data)
+              .then(async (res: any) => {
+                console.log(res);
+
+                const fs = RNFetchBlob.fs;
+                // const base64 = await fs.readFile(res.uri, 'base64');
+                var buffer = Buffer.from(res.base64, 'base64');
+
+                console.log(buffer);
+                api
+                  .createApi('', '', '', '', '', '', res.data[0].url)
+                  .uploadFile(buffer, res.type)
+                  .then((res) =>
+                    console.log('responce of image upload:::', res),
+                  );
+              });
+            console.log(data);
             this.setState({});
 
             console.log(res);
