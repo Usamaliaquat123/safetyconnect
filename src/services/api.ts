@@ -20,6 +20,7 @@ const createApi = (
   getFile: string = `https://v7qm45ginh.execute-api.us-west-1.amazonaws.com/`,
   getFileUri: string = `https://64g95tsm4b.execute-api.us-west-1.amazonaws.com/`,
   uploadFilesUri?: string,
+  getPublicFiles: string = 'https://3i07qolh6j.execute-api.us-west-1.amazonaws.com',
 ) => {
   const baseapi = apisauce.create({
     baseURL,
@@ -53,6 +54,10 @@ const createApi = (
 
   const uploadFiles = apisauce.create({
     baseURL: uploadFilesUri,
+    timeout: 10000,
+  });
+  const getPublicFiless = apisauce.create({
+    baseURL: getPublicFiles,
     timeout: 10000,
   });
 
@@ -153,9 +158,12 @@ const createApi = (
    */
   const getFilesUrl = (data: any) =>
     getFilesUri.post(`default/getPresingedUrl`, data);
-  const uploadFile = (file: any, type: any) =>  uploadFiles.put('', file, {headers: {'Content-Type': type}});
+  const uploadFile = (file: any, type: any) =>
+    uploadFiles.put('', file, {headers: {'Content-Type': type}});
 
   const getFileApi = (data: any) => getfiles.post('default/getFilesUrl', data);
+  const getPublicPhotos = (data: any) =>
+    getPublicFiless.post('default/getFilePublic', data);
 
   /*
    * @Search
@@ -196,6 +204,7 @@ const createApi = (
     getProject,
     project,
     Postproject,
+    getPublicPhotos,
     createSorInit,
     updateOrganization,
     getOrganization,

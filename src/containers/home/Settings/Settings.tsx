@@ -130,20 +130,31 @@ class Settings extends React.Component<SettingsProps, any> {
             api
               .createApi()
               .getFilesUrl(data)
-              .then(async (res: any) => {
-                console.log(res);
+              .then(async (resdata: any) => {
+                console.log(resdata);
 
                 const fs = RNFetchBlob.fs;
-                // const base64 = await fs.readFile(res.uri, 'base64');
                 var buffer = Buffer.from(res.base64, 'base64');
 
                 console.log(buffer);
                 api
-                  .createApi('', '', '', '', '', '', res.data[0].url)
+                  .createApi('', '', '', '', '', '', resdata.data[0].url)
                   .uploadFile(buffer, res.type)
-                  .then((res) =>
-                    console.log('responce of image upload:::', res),
-                  );
+                  .then((final) => {
+                    if (final.status == 200) {
+                      var dta = {
+                        bucket: 'hns-codist',
+                        report: [`old/${resdata.data[0].fileName}`],
+                      };
+                      api
+                        .createApi()
+                        .getPublicPhotos(dta)
+                        .then((pubFileuri: any) => {
+                          this.setState({img_url: pubFileuri.data[0]});
+                        });
+                      console.log('responce of image upload:::', final);
+                    }
+                  });
               });
             console.log(data);
             this.setState({});
