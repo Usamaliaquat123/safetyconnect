@@ -2,6 +2,7 @@ import {colors} from '@theme/colors';
 import * as ImagePicker from 'react-native-image-picker/src';
 import {Auth} from 'aws-amplify';
 
+import {createApi as api} from '@service';
 import RNFetchBlob from 'rn-fetch-blob';
 import {
   widthPercentageToDP as wp,
@@ -502,6 +503,49 @@ export const GOOGLE_AUTH = () => {
     } catch (error) {
       reject(error);
     }
+  });
+};
+
+// File uploader
+export const fileuploader = (): Array<string> => {
+  return [''];
+};
+// Proile picture uploader
+export const profileUploader = (types: string, ext: string, base64: string) => {
+  var data = {
+    bucket: 'hns-codist',
+    report: 'old',
+    fileType: [types],
+    ext: [ext],
+  };
+
+  return new Promise((resolve, reject) => {
+    api
+      .createApi()
+      .getFilesUrl(data)
+      .then((url: any) => {
+        var buffer = Buffer.from(base64, 'base64');
+        api
+          .createApi('', '', '', '', '', '', url.data[0].url)
+          .uploadFile(buffer, types)
+          .then((final) => {
+            if (final.status == 200) {
+              var dta = {
+                bucket: 'hns-codist',
+                report: [`old/${url.data[0].fileName}`],
+              };
+              api
+                .createApi()
+                .getPublicPhotos(dta)
+                .then((pubFileuri: any) => {
+                  resolve(pubFileuri.data);
+                })
+                .catch((err) => reject(err));
+            }
+          })
+          .catch((err) => reject(err));
+      })
+      .catch((err) => reject(err));
   });
 };
 

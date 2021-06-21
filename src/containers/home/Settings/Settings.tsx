@@ -17,11 +17,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Icon, Avatar} from 'react-native-elements';
 import Modal from 'react-native-modal';
 import LottieView from 'lottie-react-native';
+
 import RNFetchBlob from 'rn-fetch-blob';
 
 import {
   imagePicker,
   cameraCapture,
+  profileUploader,
   suggestInActionsRecommendations,
 } from '@utils';
 import {
@@ -127,45 +129,52 @@ class Settings extends React.Component<SettingsProps, any> {
               ext: [res.type.split('/')[1]],
             };
 
-            api
-              .createApi()
-              .getFilesUrl(data)
-              .then(async (resdata: any) => {
-                console.log(resdata);
+            profileUploader(res.type, res.type.split('/')[1], res.base64)
+              .then((uploadUri) => {
+                console.log('testing');
+                console.log(uploadUri);
+              })
+              .catch((err) => console.log(err));
 
-                const fs = RNFetchBlob.fs;
-                var buffer = Buffer.from(res.base64, 'base64');
+            // this.setState({img_url: res.uri});
+            // api
+            //   .createApi()
+            //   .getFilesUrl(data)
+            //   .then(async (resdata: any) => {
+            //     console.log(resdata);
 
-                console.log(buffer);
-                api
-                  .createApi('', '', '', '', '', '', resdata.data[0].url)
-                  .uploadFile(buffer, res.type)
-                  .then((final) => {
-                    if (final.status == 200) {
-                      var dta = {
-                        bucket: 'hns-codist',
-                        report: [`old/${resdata.data[0].fileName}`],
-                      };
-                      api
-                        .createApi()
-                        .getPublicPhotos(dta)
-                        .then((pubFileuri: any) => {
-                          this.setState({img_url: pubFileuri.data[0]});
-                        });
-                      console.log('responce of image upload:::', final);
-                    }
-                  });
-              });
+            //     var buffer = Buffer.from(res.base64, 'base64');
+
+            //     console.log(buffer);
+            //     api
+            //       .createApi('', '', '', '', '', '', resdata.data[0].url)
+            //       .uploadFile(buffer, res.type)
+            //       .then((final) => {
+            //         if (final.status == 200) {
+            //           var dta = {
+            //             bucket: 'hns-codist',
+            //             report: [`old/${resdata.data[0].fileName}`],
+            //           };
+            //           api
+            //             .createApi()
+            //             .getPublicPhotos(dta)
+            //             .then((pubFileuri: any) => {
+            //               this.setState({img_url: pubFileuri.data[0]});
+            //             });
+            //           console.log('responce of image upload:::', final);
+            //         }
+            //       });
+            //   });
             console.log(data);
             this.setState({});
 
             console.log(res);
-            this.setState({
-              photoModal: false,
-              uploadedImage: res.uri,
-              photofileType: res.type,
-              fileType: res.type.split('/')[1],
-            });
+            // this.setState({
+            //   photoModal: false,
+            //   uploadedImage: res.uri,
+            //   photofileType: res.type,
+            //   fileType: res.type.split('/')[1],
+            // });
           }
         })
         .catch((err) => {
