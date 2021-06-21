@@ -75,7 +75,7 @@ class Settings extends React.Component<SettingsProps, any> {
   updateUser = () => {
     if (this.state.username !== ' ') {
       if (this.state.role !== ' ') {
-        this.setState({loading: false});
+        this.setState({loading: true});
         var data = {
           email: this.state.email,
           role: this.state.role,
@@ -131,15 +131,15 @@ class Settings extends React.Component<SettingsProps, any> {
             </Text>
 
             <View style={{width: wp(50), alignSelf: 'center'}}>
-              {/* <Avatar
+              <Avatar
                 // containerStyle={{alignSelf: 'center', marginTop: wp(3)}}
                 // size={wp(30)}
                 rounded
                 source={{
-                  uri:
-                    'https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fuser&psig=AOvVaw1mZl6u-R0ttxXEyWKiuF_8&ust=1623222366332000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKjA_ta8h_ECFQAAAAAdAAAAABAD',
+                  uri: 'https://avatars.githubusercontent.com/u/33973828?v=4',
                 }}
-              /> */}
+              />
+
               <View
                 style={{
                   backgroundColor: colors.green,
@@ -280,7 +280,7 @@ class Settings extends React.Component<SettingsProps, any> {
         </ScrollView>
 
         {/* Modal Container */}
-        {/* <Modal
+        <Modal
           isVisible={this.state.loading}
           onBackdropPress={() => this.setState({loading: false})}>
           {this.state.loading == true ? (
@@ -295,7 +295,7 @@ class Settings extends React.Component<SettingsProps, any> {
               </View>
             </View>
           ) : null}
-        </Modal> */}
+        </Modal>
       </View>
     );
   }

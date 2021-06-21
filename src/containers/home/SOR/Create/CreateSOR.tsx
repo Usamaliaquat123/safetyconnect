@@ -1837,7 +1837,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </TouchableOpacity>
               <TouchableOpacity
                 // this.setState({repeatedSorModal: true})
-                onPress={() => this.onCreateSor(4)}
+                onPress={() => this.onCreateSor(5)}
                 style={[
                   styles.submitsorbtnSb,
                   {backgroundColor: colors.green},

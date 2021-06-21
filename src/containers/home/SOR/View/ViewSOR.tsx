@@ -170,7 +170,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
-    console.log('this.props.route.params.data.submit_to');
+    console.log('line 173');
     console.log(this.props.route.params.data.submit_to);
     console.log(this.props.route.params.data.involved_persons);
     getCurrentProject().then((currentProj: any) => {
