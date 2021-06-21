@@ -135,6 +135,15 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
 
             RNFS.readFile(res.uri).then((file) => console.log(file));
 
+            //   var data = {
+            //     bucket:"hns-codist",
+            //     report:"old",
+            //     fileType: [""],
+            //     ext:[""]
+            // }
+
+            console.log(res);
+
             this.setState({});
             this.setState({
               photoModal: false,

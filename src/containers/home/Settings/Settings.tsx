@@ -16,12 +16,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Icon, Avatar} from 'react-native-elements';
 import Modal from 'react-native-modal';
 import LottieView from 'lottie-react-native';
-
+import {
+  imagePicker,
+  cameraCapture,
+  suggestInActionsRecommendations,
+} from '@utils';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {colors, fonts, animation} from '@theme';
+import {colors, fonts, animation, images} from '@theme';
 import api from '@service/api';
 export interface SettingsProps {
   route: MoreRouteProp;
@@ -42,6 +46,7 @@ class Settings extends React.Component<SettingsProps, any> {
       department: '',
       industry: '',
       role: '',
+      img_url: '',
       loading: false,
     };
   }
@@ -49,7 +54,7 @@ class Settings extends React.Component<SettingsProps, any> {
   componentDidMount() {
     this.setState({loading: true});
     AsyncStorage.getItem('email').then((email: any) => {
-      console.log(email);
+      // console.log(email);
       api
         .createApi()
         .getUser(email)
@@ -64,6 +69,7 @@ class Settings extends React.Component<SettingsProps, any> {
             role: user.data.data.role,
             department: user.data.data.department,
             industry: user.data.data.industry,
+            img_url: user.data.data.img_url,
           });
 
           console.log(this.state.username);
@@ -98,6 +104,53 @@ class Settings extends React.Component<SettingsProps, any> {
       }
     }
   };
+
+  imgCap = (str: string) => {
+    if (str == 'upload') {
+      imagePicker()
+        .then((res: any) => {
+          console.log(res);
+          if (res.didCancel == true) {
+            this.setState({photoModal: false, uploadedImage: ''});
+          } else {
+            console.log();
+
+            // RNFS.readFile(res.uri).then((file) => console.log(file));
+
+            this.setState({});
+
+            console.log(res);
+            this.setState({
+              photoModal: false,
+              uploadedImage: res.uri,
+              photofileType: res.type,
+              fileType: res.type.split('/')[1],
+            });
+          }
+        })
+        .catch((err) => {
+          this.setState({photoModal: false, uploadedImage: ''});
+        });
+    } else {
+      cameraCapture()
+        .then((res: any) => {
+          if (res.didCancel == true) {
+            this.setState({photoModal: false, uploadedImage: ''});
+          } else {
+            this.setState({
+              photoModal: false,
+              uploadedImage: res.uri,
+              photofileType: res.type,
+              fileType: res.type.split('/')[1],
+            });
+          }
+        })
+        .catch((err) => {
+          this.setState({photoModal: false, uploadedImage: ''});
+        });
+    }
+  };
+
   render() {
     return (
       <View style={{flex: 1, backgroundColor: colors.secondary}}>
@@ -130,13 +183,18 @@ class Settings extends React.Component<SettingsProps, any> {
               Edit Your Profile
             </Text>
 
-            <View style={{width: wp(50), alignSelf: 'center'}}>
+            <TouchableOpacity
+              onPress={() => this.imgCap('upload')}
+              style={{width: wp(50), alignSelf: 'center'}}>
               <Avatar
-                // containerStyle={{alignSelf: 'center', marginTop: wp(3)}}
-                // size={wp(30)}
+                containerStyle={{alignSelf: 'center', marginTop: wp(3)}}
+                size={wp(30)}
                 rounded
                 source={{
-                  uri: 'https://avatars.githubusercontent.com/u/33973828?v=4',
+                  uri:
+                    this.state.img_url === ' '
+                      ? this.state.img_url
+                      : 'https://via.placeholder.com/150',
                 }}
               />
 
@@ -157,7 +215,7 @@ class Settings extends React.Component<SettingsProps, any> {
                   color={colors.secondary}
                 />
               </View>
-            </View>
+            </TouchableOpacity>
             <View style={{marginTop: wp(5)}}>
               <View>
                 <Text
@@ -280,9 +338,7 @@ class Settings extends React.Component<SettingsProps, any> {
         </ScrollView>
 
         {/* Modal Container */}
-        <Modal
-          isVisible={this.state.loading}
-          onBackdropPress={() => this.setState({loading: false})}>
+        <Modal isVisible={this.state.loading}>
           {this.state.loading == true ? (
             <View>
               <View style={{alignSelf: 'center'}}>
