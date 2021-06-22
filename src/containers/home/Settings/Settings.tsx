@@ -77,7 +77,7 @@ class Settings extends React.Component<SettingsProps, any> {
           role: this.state.role,
           department: this.state.department,
           industry: this.state.industry,
-          img_url: this.state.
+          img_url: this.state.uploadedImage === "" ? this.state.uploadedImage: this.props.route.params.data.img_url
         };
         api
           .createApi()
