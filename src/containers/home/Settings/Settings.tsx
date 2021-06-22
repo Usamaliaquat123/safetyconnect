@@ -52,6 +52,8 @@ class Settings extends React.Component<SettingsProps, any> {
       industry: '',
       role: '',
       img_url: '',
+      type: " ",
+      profileupload : false,
       loading: false,
     };
   }
@@ -77,8 +79,29 @@ class Settings extends React.Component<SettingsProps, any> {
           role: this.state.role,
           department: this.state.department,
           industry: this.state.industry,
-          img_url: this.state.uploadedImage === "" ? this.state.uploadedImage: this.props.route.params.data.img_url
+          img_url: this.props.route.params.data.img_url
         };
+
+
+
+
+
+
+        if(this.state.type !== ' '){
+
+          profileUploader(this.state.type, this.state.type.split('/')[1], this.state.base64)
+          .then((uploadUri : any) => {
+
+            data['img_url'] = uploadUri[0]
+
+  
+          })
+          .catch((err) => console.log(err));
+        }else{
+
+
+          data['img_url'] = this.state.img_url
+        }
         api
           .createApi()
           .setUserInfo(data)
@@ -191,7 +214,10 @@ class Settings extends React.Component<SettingsProps, any> {
             </Text>
 
             <TouchableOpacity
-              onPress={() => this.imgCap('upload')}
+              onPress={() => {
+                
+                
+                this.imgCap('upload')}}
               style={{width: wp(50), alignSelf: 'center'}}>
               <Avatar
                 containerStyle={{alignSelf: 'center', marginTop: wp(3)}}
