@@ -52,7 +52,7 @@ class Settings extends React.Component<SettingsProps, any> {
       industry: '',
       role: '',
       img_url: '',
-      type: " ",
+      type: "",
       profileupload : false,
       loading: false,
     };
