@@ -15,6 +15,7 @@ import {involved_persons, report, orgnaization} from '@typings';
 import Amplify, {Storage} from 'aws-amplify';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export const mainPass: string = 'Safety_Connect1';
+import {Buffer} from 'buffer';
 export const classifySor: Array<Object> = [
   {
     icon: 'warning',

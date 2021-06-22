@@ -77,8 +77,7 @@ class Settings extends React.Component<SettingsProps, any> {
           role: this.state.role,
           department: this.state.department,
           industry: this.state.industry,
-          img_url:
-            'https://user-images.githubusercontent.com/33973828/115679334-e690a780-a36b-11eb-9202-3f5fb5413bbf.png',
+          img_url: this.state.
         };
         api
           .createApi()
@@ -114,42 +113,16 @@ class Settings extends React.Component<SettingsProps, any> {
               ext: [res.type.split('/')[1]],
             };
 
+
+            this.setState( {img_url : res.uri })
+
             profileUploader(res.type, res.type.split('/')[1], res.base64)
-              .then((uploadUri) => {
-                console.log('testing');
-                console.log(uploadUri);
+              .then((uploadUri : any) => {
+
+                this.setState({ uploadedImage : uploadUri[0] })
               })
               .catch((err) => console.log(err));
 
-            // this.setState({img_url: res.uri});
-            // api
-            //   .createApi()
-            //   .getFilesUrl(data)
-            //   .then(async (resdata: any) => {
-            //     console.log(resdata);
-
-            //     var buffer = Buffer.from(res.base64, 'base64');
-
-            //     console.log(buffer);
-            //     api
-            //       .createApi('', '', '', '', '', '', resdata.data[0].url)
-            //       .uploadFile(buffer, res.type)
-            //       .then((final) => {
-            //         if (final.status == 200) {
-            //           var dta = {
-            //             bucket: 'hns-codist',
-            //             report: [`old/${resdata.data[0].fileName}`],
-            //           };
-            //           api
-            //             .createApi()
-            //             .getPublicPhotos(dta)
-            //             .then((pubFileuri: any) => {
-            //               this.setState({img_url: pubFileuri.data[0]});
-            //             });
-            //           console.log('responce of image upload:::', final);
-            //         }
-            //       });
-            //   });
             console.log(data);
             this.setState({});
 
@@ -227,8 +200,8 @@ class Settings extends React.Component<SettingsProps, any> {
                 source={{
                   uri:
                     this.state.img_url === ' '
-                      ? this.state.img_url
-                      : 'https://via.placeholder.com/150',
+                    ? 'https://via.placeholder.com/150'
+                      : this.state.img_url
                 }}
               />
 
