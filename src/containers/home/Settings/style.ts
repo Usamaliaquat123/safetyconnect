@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: wp(7),
-    paddingTop: wp(7),
-    paddingBottom: wp(7),
+    paddingTop: wp(4),
+    paddingBottom: wp(4),
     backgroundColor: colors.primary,
   },
   title: {

@@ -57,30 +57,15 @@ class Settings extends React.Component<SettingsProps, any> {
   }
 
   componentDidMount() {
-    this.setState({loading: true});
-    AsyncStorage.getItem('email').then((email: any) => {
-      // console.log(email);
-      api
-        .createApi()
-        .getUser(email)
-        .then((user: any) => {
-          console.log(user.data);
-
-          this.setState({loading: false});
-
-          this.setState({
-            username: user.data.data.name,
-            email: user.data.data.email,
-            role: user.data.data.role,
-            department: user.data.data.department,
-            industry: user.data.data.industry,
-            img_url: user.data.data.img_url,
-          });
-
-          console.log(this.state.username);
-        })
-        .catch((err) => console.log(err));
+    this.setState({
+      username: this.props.route.params.data.name,
+      email: this.props.route.params.data.email,
+      role: this.props.route.params.data.role,
+      department: this.props.route.params.data.department,
+      industry: this.props.route.params.data.industry,
+      img_url: this.props.route.params.data.img_url,
     });
+
   }
 
   updateUser = () => {

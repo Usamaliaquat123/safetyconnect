@@ -108,6 +108,8 @@ class Home extends React.Component<HomeProps, any> {
         .getUser(email)
         .then((res: any) => {
 
+
+
           this.setState({name: res.data.data.name});
           this.setState({image: res.data.data.img_url});
           this.setState({user: res.data.data});
@@ -284,9 +286,19 @@ class Home extends React.Component<HomeProps, any> {
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('Settings')}>
+                  onPress={() =>{
+                    
+                      
+
+
+                    
+                    
+                    
+                    this.props.navigation.navigate('Settings',{data: this.state.user})}}>
                   <Avatar
                     rounded
+
+                    
                     source={{
                       uri:
                         this.state.image !== ''
