@@ -172,7 +172,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   componentDidMount = () => {
     console.log('line 173');
     console.log(this.props.route.params.data.submit_to);
-    console.log(this.props.route.params.data.involved_persons);
+    console.log(this.props.route.params.data.attachments);
+
+    this.getFilesFromServer(this.props.route.params.data.attachments)
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
 
@@ -243,6 +245,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.props.route.params.data.risk.likelihood,
     );
   };
+
+
+
 
   // FIVE WHY
   getFiveWHY = () => {
@@ -715,6 +720,42 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     var mapped = imageAndVideoObjectMap(attachments);
   };
 
+
+
+  getFilesFromServer = (attach? : any) => {
+    console.log(attach)
+
+    for (let i = 0; i < attach.length; i++) {
+      var data =   {
+          bucket: "hns-codist",
+          report: [`report/${attach[i]}`]
+      }
+        createApi.createApi().getFileApi(data).then((d: any) => {
+
+
+
+
+          console.log(d.data[0])
+
+          if(attach[i].split('.')[1] == "png" || attach[i].split('.')[1] == "jpeg" || attach[i].split('.')[1] == "jpg"){
+          
+          console.log(attach[i])
+            this.state.attachments.push({
+              type:"image",
+              upload: '',
+              name: attach[i],
+              url: d.data[0],
+  
+            })
+
+          }
+        })
+      
+    }
+
+    
+  }
+
   // imgCap = (str: string, arr: Array<Object>) => {
   //   if (str == 'upload') {
   //     imagePicker()
@@ -755,68 +796,34 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       res.map((d, i) => {
         if (d.type.split('/')[0] == 'image') {
           console.log('imagesdasds');
-          RNFetchBlob.fs.readStream(d.uri, 'base64').then((ifstream) => {
-            ifstream.open();
-            ifstream.onData((data) => {
               attach.splice(0, 0, {
                 type: 'photo',
                 orgType: d.type,
                 upload: 'self',
                 name: d.name,
                 url: d.uri,
-                base64: `data:${d.type};base64,${data}`,
               });
-            });
 
             // ifstream.bufferSize;
-          });
-        } else if (d.type.split('/')[0] == 'video') {
-          RNFetchBlob.fs.readFile(d.uri, 'base64').then((data) => {
-            attach.splice(0, 0, {
-              type: 'video',
-              upload: 'self',
-              name: d.name,
-              url: d.uri,
-              orgType: d.type,
-              base64: data,
-            });
-          });
         } else if (d.type.split('/')[1] == 'pdf') {
-          RNFetchBlob.fs.readFile(d.uri, 'base64').then((data) => {
             attach.splice(0, 0, {
               type: 'pdf',
               upload: 'self',
               orgType: d.type,
               name: d.name,
               url: d.uri,
-              base64: data,
             });
-          });
-        } else if (d.type.split('/')[0] == 'text') {
-          RNFetchBlob.fs.readFile(d.uri, 'base64').then((data) => {
-            attach.splice(0, 0, {
-              type: 'text',
-              upload: 'self',
-              orgType: d.type,
-              name: d.name,
-              url: d.uri,
-              base64: data,
-            });
-          });
-        } else if (
+        }  else if (
           d.type.split('.').pop() == 'document' ||
           d.type.split('/')[1] == 'msword'
         ) {
-          RNFetchBlob.fs.readFile(d.uri, 'base64').then((data) => {
             attach.splice(0, 0, {
               type: 'doc',
               upload: 'self',
               name: d.name,
               orgType: d.type,
               url: d.uri,
-              base64: data,
             });
-          });
         } else if (
           d.type.split('/')[1] == 'vnd.ms-excel' ||
           d.type.split('.').pop() == 'sheet'
@@ -1410,6 +1417,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             </View>
             {/* five WHY Questionaries */}
             {/* Line  */}
+            {this.props.route.params.data.sor_type == "near miss" && <>
+
             <View style={styles.lineheight} />
             <View style={styles.fiveWhyContainer}>
               <View style={styles.fiveWhyHeadingContainer}>
@@ -1519,6 +1528,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 />
               ) : null}
             </View>
+           </>
+           
+            }
+           
             {/* Line  */}
             <View style={styles.lineheight} />
             {/* Actions / recommendations */}
