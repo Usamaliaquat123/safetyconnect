@@ -120,6 +120,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       severity: riskxSeverityxliklihood.severity,
       // Involved Persons of this project
       involved_persons: [],
+      fileLoading : false,
       potientialRisk: 0,
       errorModal: false,
       user: {},
@@ -183,31 +184,18 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         res.type == 'xlsx' ||
         res.type == 'image'
       ) {
-      
-
-
-
-
-        
-         
-
 
                 var imgData = {
                   name: res.name,
                   uri: res.uri,
                   type: res.type,
                 }
-
-
-            
-
-                this.setState({ loading : true, errorModal : true })
+                this.setState({ fileLoading : true})
                 
                 fileuploader(res.orgType,res.orgType.split('/')[1], res.uri).then((filename : any) => { 
                   imgData['name'] = filename
-                  this.setState({ loading : false, errorModal : false })
+                  this.setState({ fileLoading : false })
                   this.state.uploadedfiles.push(filename)
-          console.log(this.state.uploadedfiles)
         })
 
 
@@ -1506,101 +1494,132 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     flexWrap: 'wrap',
                     alignSelf: 'center',
                   }}>
-                  {this.state.filename.map((d: any, i: number) => {
-                    if (d.type == 'image') {
-                      return (
-                        <TouchableOpacity
-                          onPress={() => this.setState({imageViewer: true})}
-                          style={styles.AttchimageContainer}>
-                          <Image
-                            source={{
-                              uri: d.uri,
-                            }}
-                            style={[GlStyles.images, {borderRadius: wp(3)}]}
-                            resizeMode={'cover'}
-                          />
-                          <TouchableOpacity
-                            onPress={() => {}}
-                            style={{position: 'absolute', right: wp(0)}}>
-                            <TouchableOpacity
-                              onPress={() => {
-                                var arr = [...this.state.filename].filter(
-                                  (b) => b != d,
-                                );
-                                this.setState({filename: arr});
-                              }}>
-                              <Icon
-                                containerStyle={{
-                                  marginRight: wp(2),
-                                  marginTop: wp(2),
-                                  opacity: 0.5,
-                                }}
-                                name="circle-with-cross"
-                                size={wp(5)}
-                                type="entypo"
-                                color={colors.text}
-                              />
-                            </TouchableOpacity>
-                          </TouchableOpacity>
-                        </TouchableOpacity>
-                      );
-                    } else {
-                      return (
-                        <TouchableOpacity
-                          onPress={() => this.setState({imageViewer: true})}
-                          style={[
-                            styles.AttchimageContainer,
-                            {borderWidth: wp(0.3), borderColor: colors.textOpa},
-                          ]}>
-                          <Image
-                            source={
-                              d.type == 'pdf'
-                                ? images.pdf
-                                : d.type == 'docx'
-                                ? images.doc
-                                : d.type == 'xlsx'
-                                ? images.excel
-                                : null
-                            }
-                            style={[GlStyles.images]}
-                            resizeMode={'contain'}
-                          />
-                          <Text
-                            style={{
-                              fontSize: wp(2.5),
-                              marginTop: wp(1),
-                              fontFamily: fonts.SFuiDisplayMedium,
-                              textAlign: 'center',
-                            }}>
-                            {d.name}
-                          </Text>
-                          <TouchableOpacity
-                            onPress={() => {}}
-                            style={{position: 'absolute', right: wp(0)}}>
-                            <TouchableOpacity
-                              onPress={() => {
-                                var arr = [...this.state.filename].filter(
-                                  (b) => b != d,
-                                );
-                                this.setState({filename: arr});
-                              }}>
-                              <Icon
-                                containerStyle={{
-                                  marginRight: wp(2),
-                                  marginTop: wp(2),
-                                  opacity: 0.5,
-                                }}
-                                name="circle-with-cross"
-                                size={wp(5)}
-                                type="entypo"
-                                color={colors.text}
-                              />
-                            </TouchableOpacity>
-                          </TouchableOpacity>
-                        </TouchableOpacity>
-                      );
-                    }
-                  })}
+
+
+                    {/* File uploading */}
+
+{this.state.fileLoading == true ? 
+
+  <View>
+ <LottieView
+                autoPlay={true}
+                style={{width: wp(30)}}
+                source={animation.imageLoading}
+                loop={true}
+              />
+  </View>
+
+:
+      <>
+      {this.state.filename.map((d: any, i: number) => {
+        if (d.type == 'image') {
+          return (
+            <TouchableOpacity
+              onPress={() => this.setState({imageViewer: true})}
+              style={styles.AttchimageContainer}>
+              <Image
+                source={{
+                  uri: d.uri,
+                }}
+                style={[GlStyles.images, {borderRadius: wp(3)}]}
+                resizeMode={'cover'}
+              />
+              <TouchableOpacity
+                onPress={() => {}}
+                style={{position: 'absolute', right: wp(0)}}>
+                <TouchableOpacity
+                  onPress={() => {
+                    var arr = [...this.state.filename].filter(
+                      (b) => b != d,
+                    );
+                    this.setState({filename: arr});
+                  }}>
+                  <Icon
+                    containerStyle={{
+                      marginRight: wp(2),
+                      marginTop: wp(2),
+                      opacity: 0.5,
+                    }}
+                    name="circle-with-cross"
+                    size={wp(5)}
+                    type="entypo"
+                    color={colors.text}
+                  />
+                </TouchableOpacity>
+              </TouchableOpacity>
+            </TouchableOpacity>
+          );
+        } else {
+          return (
+            <TouchableOpacity
+              onPress={() => this.setState({imageViewer: true})}
+              style={[
+                styles.AttchimageContainer,
+                {borderWidth: wp(0.3), borderColor: colors.textOpa},
+              ]}>
+              <Image
+                source={
+                  d.type == 'pdf'
+                    ? images.pdf
+                    : d.type == 'docx'
+                    ? images.doc
+                    : d.type == 'xlsx'
+                    ? images.excel
+                    : null
+                }
+                style={[GlStyles.images]}
+                resizeMode={'contain'}
+              />
+              <Text
+                style={{
+                  fontSize: wp(2.5),
+                  marginTop: wp(1),
+                  fontFamily: fonts.SFuiDisplayMedium,
+                  textAlign: 'center',
+                }}>
+                {d.name}
+              </Text>
+              <TouchableOpacity
+                onPress={() => {}}
+                style={{position: 'absolute', right: wp(0)}}>
+                <TouchableOpacity
+                  onPress={() => {
+                    var arr = [...this.state.filename].filter(
+                      (b) => b != d,
+                    );
+                    this.setState({filename: arr});
+                  }}>
+                  <Icon
+                    containerStyle={{
+                      marginRight: wp(2),
+                      marginTop: wp(2),
+                      opacity: 0.5,
+                    }}
+                    name="circle-with-cross"
+                    size={wp(5)}
+                    type="entypo"
+                    color={colors.text}
+                  />
+                </TouchableOpacity>
+              </TouchableOpacity>
+            </TouchableOpacity>
+          );
+        }
+      })}
+
+
+
+
+      
+
+
+
+
+</>
+
+}
+            
+
                 </View>
               </View>
 
@@ -1828,17 +1847,17 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             {/* Line  */}
             <View style={styles.lineheight} />
             {/* Draft And Submit Btns */}
-            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <View style={{flexDirection: 'row',marginTop : wp(10), justifyContent: 'center'}}>
               <TouchableOpacity
                 onPress={() => this.onCreateSor(1)}
-                style={[styles.submitsorbtn, {marginRight: wp(3)}]}>
+                style={[styles.submitsorbtn, {marginRight: wp(3), backgroundColor : 'transparent', borderWidth: wp(0.2)}]}>
                 <Text style={styles.submitsorbtntxt}>Save as Draft</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 // this.setState({repeatedSorModal: true})
                 onPress={() => this.onCreateSor(2)}
-                style={[styles.submitsorbtn, {borderWidth: wp(0.2), borderColor :colors.primary, backgroundColor: colors.secondary}]}>
-                <Text style={[styles.submitsorbtntxt, {color: colors.primary}]}>
+                style={[styles.submitsorbtn, { backgroundColor: colors.primary}]}>
+                <Text style={[styles.submitsorbtntxt, {color: colors.secondary}]}>
                   Submit
                 </Text>
               </TouchableOpacity>
@@ -1851,7 +1870,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               }}>
               <TouchableOpacity
                 onPress={() => this.preview()}
-                style={[styles.submitsorbtn, {marginRight: wp(3)}]}>
+                style={[styles.submitsorbtn, {height : wp(16), marginTop : wp(8),marginRight: wp(3), backgroundColor : 'transparent', borderWidth: wp(0.2)}]}>
                 <Text style={styles.submitsorbtntxt}>Preview</Text>
               </TouchableOpacity>
               <TouchableOpacity
