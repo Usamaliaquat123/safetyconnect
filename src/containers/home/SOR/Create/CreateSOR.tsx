@@ -24,6 +24,7 @@ import {
   classifySor,
   suggestInActionsRecommendations,
   getCurrentOrganization,
+  fileuploader
 } from '@utils';
 import {bindActionCreators} from 'redux';
 import * as reduxActions from '../../../../store/actions/listSorActions';
@@ -159,13 +160,17 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       });
 
       if (res.type == 'image/jpeg' || res.type == 'image/png') {
+        res["orgType"] = res.type
         res.type = 'image';
       } else {
         if (res.name.split('.')[1] == 'docx') {
+          res["orgType"] = res.type
           res.type = 'docx';
         } else if (res.name.split('.')[1] == 'pdf') {
+          res["orgType"] = res.type
           res.type = 'pdf';
         } else if (res.name.split('.')[1] == 'xlsx') {
+          res["orgType"] = res.type
           res.type = 'xlsx';
         }
       }
@@ -176,24 +181,31 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         res.type == 'xlsx' ||
         res.type == 'image'
       ) {
-        var img = '';
-        RNFetchBlob.fs.readFile(res.uri, 'base64').then((data) => {
-          img = data;
-        });
+      
 
-        this.state.filename.push({
-          name: res.name,
-          uri: img,
-          type: res.type,
-        });
 
-        for (let i = 0; i < this.state.filename.length; i++) {
-          RNFetchBlob.fs
-            .readFile(this.state.filename[i].uri, 'base64')
-            .then((data) => {
-              this.state.filenmae[i]['uri'] = data;
-            });
-        }
+
+
+        
+         
+
+
+                var imgData = {
+                  name: res.name,
+                  uri: res.uri,
+                  type: res.type,
+                
+                }
+
+
+        fileuploader(res.orgType,res.orgType.split('/')[1], res.uri).then((filename : any) => { 
+          console.log(filename)
+            imgData['name'] = filename
+        })
+        
+
+        this.state.filename.push(imgData);
+
 
         this.setState({});
       }

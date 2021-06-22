@@ -486,7 +486,7 @@ export const redirectDynamiclink = (link: any, navigation: any) => {
           .split('email=')[1]
           .split('&')[0],
         code: link.url.split('/')[3].split('?')[1].split('&')[1].split('=')[1],
-      });
+      }); 
     } else if (link.url.split('/')[3].split('?')[0] == 'check-social-user') {
       // social login
       // console.log(link);
@@ -508,8 +508,33 @@ export const GOOGLE_AUTH = () => {
 };
 
 // File uploader
-export const fileuploader = (): Array<string> => {
-  return [''];
+export const fileuploader = (types: string, ext : string, uri : string) => {
+  var data = {
+    bucket: 'hns-codist',
+    report: 'report',
+    fileType: [types],
+    ext: [ext],
+  };
+  return new Promise((  resolve, reject ) => {
+
+    api.createApi().getFilesUrl(data).then(async (url : any) => {
+      const base64 = await fs.readFile(uri, 'base64')
+      var buffer = Buffer.from(base64, 'base64');
+
+      api.createApi('', '', '', '', '', '', url.data[0].url).uploadFile(buffer, types).then((uploadedFile) => {
+        if (uploadedFile.status == 200) {
+       
+          resolve(url.data[0].fileName);
+    
+        }else{
+          reject(400)
+        }
+      }).catch(err => reject(err))
+
+
+    }).catch(err => reject(err))
+
+  })
 };
 // Proile picture uploader
 export const profileUploader = (types: string, ext: string, base64: string) => {
