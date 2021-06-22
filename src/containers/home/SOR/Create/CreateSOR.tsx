@@ -141,6 +141,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       projectid: '',
       currentOrg: '',
 
+      uploadedfiles : [],
+
       // Select date and time
       setDateModal: false,
       todayDateCallender: moment().format('YYYY-MM-DD'),
@@ -194,15 +196,20 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   name: res.name,
                   uri: res.uri,
                   type: res.type,
-                
                 }
 
 
-        fileuploader(res.orgType,res.orgType.split('/')[1], res.uri).then((filename : any) => { 
-          console.log(filename)
-            imgData['name'] = filename
+            
+
+                this.setState({ loading : true, errorModal : true })
+                
+                fileuploader(res.orgType,res.orgType.split('/')[1], res.uri).then((filename : any) => { 
+                  imgData['name'] = filename
+                  this.setState({ loading : false, errorModal : false })
+                  this.state.uploadedfiles.push(filename)
+          console.log(this.state.uploadedfiles)
         })
-        
+
 
         this.state.filename.push(imgData);
 
@@ -1830,8 +1837,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               <TouchableOpacity
                 // this.setState({repeatedSorModal: true})
                 onPress={() => this.onCreateSor(2)}
-                style={[styles.submitsorbtn, {borderColor: colors.green}]}>
-                <Text style={[styles.submitsorbtntxt, {color: colors.green}]}>
+                style={[styles.submitsorbtn, {borderWidth: wp(0.2), borderColor :colors.primary, backgroundColor: colors.secondary}]}>
+                <Text style={[styles.submitsorbtntxt, {color: colors.primary}]}>
                   Submit
                 </Text>
               </TouchableOpacity>
