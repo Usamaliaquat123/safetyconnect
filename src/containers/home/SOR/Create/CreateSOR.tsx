@@ -352,9 +352,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           projectid: currentProj,
         })
         .then((res: any) => {
-
-
-        // res.data.data.involved_persons.map((d, i) => )
+          // res.data.data.involved_persons.map((d, i) => )
           this.setState({involved_persons: res.data.data.involved_persons});
 
           // var dups = res.data.data.involved_persons;
@@ -539,10 +537,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               position: 'bottom',
                             });
 
-                          setTimeout(() => {
-                            
-                            this.props.navigation.goBack();
-                          }, 3000);
+                            setTimeout(() => {
+                              this.props.navigation.goBack();
+                            }, 3000);
 
                             console.log(res);
                           })
@@ -561,9 +558,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           position: 'bottom',
                         });
 
-
                         setTimeout(() => {
-                          
                           this.props.navigation.goBack();
                         }, 3000);
                       }
@@ -627,178 +622,171 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     .filter((d: any) => d.assigned_to.length != 0).length != 0
                 ) {
                   if (this.state.submitToTags.length !== 0) {
-                    if (this.state.exclateToTags.length !== 0) {
-                      this.setState({loading: true, errorModal: true});
-                      console.log(this.state.exclateToTags);
+                    this.setState({loading: true, errorModal: true});
+                    console.log('============================= ');
+                    console.log(this.state.exclateToTags);
+                    console.log('esclated to users ');
 
-                      var rec = this.state.actionRecommendations.filter(
-                        (d: any) => d.selected == true,
-                      );
-                      console.log(rec);
-                      // console.log(rec.map((d: any) => delete d['selected']));
+                    var rec = this.state.actionRecommendations.filter(
+                      (d: any) => d.selected == true,
+                    );
+                    console.log(rec);
+                    // console.log(rec.map((d: any) => delete d['selected']));
 
-                      var actions: Array<any> = [];
-                      for (let i = 0; i < rec.length; i++) {
-                        actions.push({
-                          assigned_to: rec[i].assigned_to,
-                          category: rec[i].category,
-                          content: rec[i].content,
-                          date: rec[i].date,
-                          is_complete: rec[i].is_complete,
-                          is_selected: rec[i].is_selected,
-                          justification: rec[i].justification,
-                          action: 'low',
+                    var actions: Array<any> = [];
+                    for (let i = 0; i < rec.length; i++) {
+                      actions.push({
+                        assigned_to: rec[i].assigned_to,
+                        category: rec[i].category,
+                        content: rec[i].content,
+                        date: rec[i].date,
+                        is_complete: rec[i].is_complete,
+                        is_selected: rec[i].is_selected,
+                        justification: rec[i].justification,
+                        action: 'low',
+                      });
+                      // if (rec[i].justification !== '') {
+                      //   actions['justification'] = rec[i].justification;
+                      // }
+                    }
+
+                    var sors = {
+                      report: {
+                        _id: '',
+                        created_by: this.state.email,
+                        details: this.state.observationT,
+                        occured_at: this.state.currentTime,
+                        involved_persons: this.state.involvePersonTags.map(
+                          (d: any) => d._id,
+                        ),
+
+                        sor_type: sorbtns[0].title,
+                        risk: {
+                          severity: liklihood[0].value,
+                          likelihood: severity[0].value,
+                        },
+                        action_required: actions,
+
+                        location: this.state.observation,
+                        submit_to: this.state.submitToTags.map(
+                          (d: any) => d.email,
+                        ),
+                        esclate_to: this.state.exclateToTags.map(
+                          (d: any) => d.email,
+                        ),
+                        status: status,
+                        attachments:
+                          this.state.uploadedfiles.length == 0
+                            ? []
+                            : this.state.uploadedfiles,
+                        comments: ' ',
+                      },
+                      organization: this.state.currentOrg,
+                      project: this.state.projectid,
+                    };
+
+                    console.log('sors of actions ');
+                    console.log(sors);
+
+                    var bodyInitial = {
+                      report: {
+                        created_by: this.state.email,
+                        comments: '',
+                        status: 1,
+                      },
+                      project: this.state.projectid,
+                    };
+                    createApi
+                      .createApi()
+                      .createSorInit(bodyInitial)
+                      .then((res: any) => {
+                        this.setState({
+                          reportIdInvestigation: res.data.data.report_id,
                         });
-                        // if (rec[i].justification !== '') {
-                        //   actions['justification'] = rec[i].justification;
-                        // }
-                      }
+                        sors.report['_id'] = res.data.data.report_id;
+                      })
+                      .catch((err) => console.log(err));
 
-                      var sors = {
-                        report: {
-                          _id: '',
-                          created_by: this.state.email,
-                          details: this.state.observationT,
-                          occured_at: this.state.currentTime,
-                          involved_persons: this.state.involvePersonTags.map(
-                            (d: any) => d._id,
-                          ),
-
-                          sor_type: sorbtns[0].title,
-                          risk: {
-                            severity: liklihood[0].value,
-                            likelihood: severity[0].value,
-                          },
-                          action_required: actions,
-
-                          location: this.state.observation,
-                          submit_to: this.state.submitToTags.map(
-                            (d: any) => d.email,
-                          ),
-                          esclate_to: this.state.exclateToTags.map(
-                            (d: any) => d.email,
-                          ),
-                          status: status,
-                          attachments:
-                            this.state.uploadedfiles.length == 0
-                              ? []
-                              : this.state.uploadedfiles,
-                          comments: ' ',
-                        },
-                        organization: this.state.currentOrg,
-                        project: this.state.projectid,
-                      };
-
-                      console.log('sors of actions ');
-                      console.log(sors);
-
-                      var bodyInitial = {
-                        report: {
-                          created_by: this.state.email,
-                          comments: '',
-                          status: 1,
-                        },
-                        project: this.state.projectid,
-                      };
+                    console.log(sors);
+                    setTimeout(() => {
                       createApi
                         .createApi()
-                        .createSorInit(bodyInitial)
+                        .createSor(sors)
                         .then((res: any) => {
-                          this.setState({
-                            reportIdInvestigation: res.data.data.report_id,
-                          });
-                          sors.report['_id'] = res.data.data.report_id;
-                        })
-                        .catch((err) => console.log(err));
+                          if (this.state.fiveWhytoggle == true) {
+                            this.setState({
+                              loading: true,
+                              errorModal: true,
+                            });
+                            var newObj = {
+                              //    countributoryCauses: '',
+                              // rootCauses: '',
+                              justification: {
+                                question: this.state.fiveWhyQuestion,
+                                answer: this.state.fiveWhyAnswer,
+                              },
+                              project: this.state.projectid,
+                              contributoryCauses: this.state
+                                .countributoryCauses,
+                              rootCauses: this.state.rootCauses,
+                              report: this.state.reportIdInvestigation,
+                              user: this.state.user._id,
+                              date: moment().format('MM-DD-YYYY'),
+                            };
 
-                      console.log(sors);
-                      setTimeout(() => {
-                        createApi
-                          .createApi()
-                          .createSor(sors)
-                          .then((res: any) => {
-                            if (this.state.fiveWhytoggle == true) {
-                              this.setState({
-                                loading: true,
-                                errorModal: true,
-                              });
-                              var newObj = {
-                                //    countributoryCauses: '',
-                                // rootCauses: '',
-                                justification: {
-                                  question: this.state.fiveWhyQuestion,
-                                  answer: this.state.fiveWhyAnswer,
-                                },
-                                project: this.state.projectid,
-                                contributoryCauses: this.state
-                                  .countributoryCauses,
-                                rootCauses: this.state.rootCauses,
-                                report: this.state.reportIdInvestigation,
-                                user: this.state.user._id,
-                                date: moment().format('MM-DD-YYYY'),
-                              };
+                            console.log(newObj);
+                            console.log('five why data ');
+                            createApi
+                              .createApi()
+                              .createFiveWhy(newObj)
+                              .then((res) => {
+                                this.setState({
+                                  loading: false,
+                                  errorModal: false,
+                                });
 
-                              console.log(newObj);
-                              console.log('five why data ');
-                              createApi
-                                .createApi()
-                                .createFiveWhy(newObj)
-                                .then((res) => {
-                                  this.setState({
-                                    loading: false,
-                                    errorModal: false,
-                                  });
+                                showMessage({
+                                  message: 'SOR sucessfully subitted',
+                                  type: 'success',
+                                  position: 'bottom',
+                                });
+                                this.props.navigation.goBack();
+                                console.log('five why');
+                                console.log(res);
+                              })
+                              .catch((err: any) => console.log(err));
 
-                                  showMessage({
-                                    message: 'SOR sucessfully subitted',
-                                    type: 'success',
-                                    position: 'bottom',
-                                  });
-                                  this.props.navigation.goBack();
-                                  console.log('five why');
-                                  console.log(res);
-                                })
-                                .catch((err: any) => console.log(err));
-
-                              // _id: ress.data.data.report_id,
-                            } else {
-                              console.log(res);
-                              this.setState({
-                                loading: false,
-                                errorModal: false,
-                              });
-
-                              showMessage({
-                                message: 'SOR sucessfully subitted',
-                                type: 'success',
-                                position: 'bottom',
-                              });
-                              this.props.navigation.goBack();
-                            }
-                            // if (res.status == 200) {
-                            //   console.log('sdsd');
-
-                            // } else {
-                            //   console.log(res);
-                            // }
-                          })
-                          .catch(() =>
+                            // _id: ress.data.data.report_id,
+                          } else {
+                            console.log(res);
                             this.setState({
                               loading: false,
-                              errorModal: true,
-                              errHeadingText: 'Error on create sor',
-                              errDesText: 'Please refresh the app state.',
-                            }),
-                          );
-                      }, 3000);
-                    } else {
-                      this.setState({
-                        errorModal: true,
+                              errorModal: false,
+                            });
 
-                        errHeadingText: 'You didnt esclated anyone.',
-                        errDesText: 'you are not selected esclated users.',
-                      });
-                    }
+                            showMessage({
+                              message: 'SOR sucessfully subitted',
+                              type: 'success',
+                              position: 'bottom',
+                            });
+                            this.props.navigation.goBack();
+                          }
+                          // if (res.status == 200) {
+                          //   console.log('sdsd');
+
+                          // } else {
+                          //   console.log(res);
+                          // }
+                        })
+                        .catch(() =>
+                          this.setState({
+                            loading: false,
+                            errorModal: true,
+                            errHeadingText: 'Error on create sor',
+                            errDesText: 'Please refresh the app state.',
+                          }),
+                        );
+                    }, 3000);
                   } else {
                     this.setState({
                       errorModal: true,
