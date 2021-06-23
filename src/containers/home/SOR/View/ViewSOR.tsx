@@ -344,6 +344,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       report: {
         _id: this.props.route.params.data._id /** done  */,
         created_by: this.props.route.params.data.created_by /** done */,
+        sor_type: this.state.sor_type,
         details: this.state.observation /** done */,
         createdAt: Date.now() /** done */,
         occured_at: moment().format('YYYY-MM-DD') /** done */,
@@ -372,27 +373,17 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .createApi()
       .updateSor(update)
       .then((res) => {
-
-
-
         this.setState({loading: false, errorModal: false});
-        
-        
-        
+
         if (res.status == 200) {
-          this.props.navigation.goBack();
-        
-
-
           setTimeout(() => {
             showMessage({
-             message: 'SOR Report is sucessfully submitted',
-             type:"success",
-             position: 'bottom',
-           });
-            
+              message: 'SOR Report is sucessfully submitted',
+              type: 'success',
+              position: 'bottom',
+            });
           }, 3000);
-        
+          this.props.navigation.goBack();
         }
       })
       .catch((err) => {});

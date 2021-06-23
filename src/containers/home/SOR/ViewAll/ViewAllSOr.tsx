@@ -101,6 +101,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       submitted: [],
       closed: [],
       inprogress: [],
+      pendingClosure: [],
       isAuthenticated: false,
       slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
       bottomWidth: wp(100),
@@ -1038,7 +1039,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     this.state.inprogress.length == 0 &&
                     this.state.exclated.length == 0 &&
                     this.state.closed.length == 0 &&
-                    this.state.submitted.length == 0 ? (
+                    this.state.pendingClosure.length == 0 ? (
                       <View style={[styles.nonReport, {padding: wp(25)}]}>
                         <Text style={styles.nonReportText}>
                           You don't have any reports yet...
