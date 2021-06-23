@@ -2021,7 +2021,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                     uri: d.img_url,
                                   }}
                                 />
-                                <Text style={styles.involvePSt}>{d.name}</Text>
+                                <View>
+                                  <Text style={styles.involvePSt}>
+                                    {d.name}
+                                  </Text>
+                                  <Text style={{fontSize: wp(2)}}>
+                                    {d.email}
+                                  </Text>
+                                </View>
                               </TouchableOpacity>
                             ),
                           )}
@@ -2108,7 +2115,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 uri: d.img_url,
                               }}
                             />
-                            <Text style={styles.involvePSt}>{d.name}</Text>
+                            <View>
+                              <Text style={styles.involvePSt}>{d.name}</Text>
+                              <Text style={{fontSize: wp(2)}}>{d.email}</Text>
+                            </View>
                           </TouchableOpacity>
                         ),
                       )}
