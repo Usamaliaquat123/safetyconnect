@@ -352,8 +352,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           projectid: currentProj,
         })
         .then((res: any) => {
-          console.log('res.data.data.involved_persons');
-          console.log(res.data.data.involved_persons);
+
+
+        // res.data.data.involved_persons.map((d, i) => )
           this.setState({involved_persons: res.data.data.involved_persons});
 
           // var dups = res.data.data.involved_persons;
@@ -532,13 +533,17 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               loading: false,
                               errorModal: false,
                             });
-                            this.props.navigation.goBack();
-
                             showMessage({
                               message: 'SOR sucessfully subitted',
                               type: 'success',
                               position: 'bottom',
                             });
+
+                          setTimeout(() => {
+                            
+                            this.props.navigation.goBack();
+                          }, 3000);
+
                             console.log(res);
                           })
                           .catch((err: any) => console.log(err));
@@ -555,7 +560,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           type: 'success',
                           position: 'bottom',
                         });
-                        this.props.navigation.goBack();
+
+
+                        setTimeout(() => {
+                          
+                          this.props.navigation.goBack();
+                        }, 3000);
                       }
 
                       if (res.status == 200) {
