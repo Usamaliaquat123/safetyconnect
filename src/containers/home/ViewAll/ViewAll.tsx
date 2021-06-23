@@ -33,7 +33,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {report} from '@typings';
+import {report, involved_persons} from '@typings';
 import LottieView from 'lottie-react-native';
 // import {connect} from '../../decorators/index';
 // import {color} from 'react-native-reanimated';
@@ -60,6 +60,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       searchValue: '',
       refreshing: false,
       user: {},
+      involvedPerson: [],
       projectId: '',
       bottomWidth: wp(100),
     };
@@ -89,20 +90,53 @@ class ViewAll extends React.Component<ViewAllProps, any> {
             query: {status: [this.props.route.params.data]},
           };
 
+          console.log(currentProj.data.data.involved_persons);
+
+          var j = {};
+          var arr = [];
+          for (
+            let i = 0;
+            i < currentProj.data.data.involved_persons.length;
+            i++
+          ) {
+            Object.defineProperty(
+              j,
+              currentProj.data.data.involved_persons[i].email,
+              {
+                value: currentProj.data.data.involved_persons[i],
+                writable: false,
+              },
+            );
+            this.state.involvedPerson.push(
+              currentProj.data.data.involved_persons[i],
+            );
+          }
+
+          // AsyncStorage.setItem(
+          //   'involved_person',
+          //   JSON.stringify(this.state.involvedPerson),
+          // );
+          // });
+
           createApi
             .createApi()
             .filterSors(data)
             .then((res: any) => {
               console.log(res);
+              // console.log(currentProj.data.data.);
               var sors = [];
               for (let i = 0; i < res.data.data.report.length; i++) {
+                console.log(res.data.data.report[i]);
                 var rep = filterAndMappingPersons(
                   res.data.data.report[i],
-                  currentProj.data.data.involved_person,
+                  currentProj.data.data.involved_persons,
                 );
 
+                console.log(rep);
                 sors.push(rep);
               }
+              console.log('sors');
+              console.log(sors);
 
               this.setState({loading: false});
 
