@@ -372,9 +372,27 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .createApi()
       .updateSor(update)
       .then((res) => {
+
+
+
         this.setState({loading: false, errorModal: false});
+        
+        
+        
         if (res.status == 200) {
           this.props.navigation.goBack();
+        
+
+
+          setTimeout(() => {
+            showMessage({
+             message: 'SOR Report is sucessfully submitted',
+             type:"success",
+             position: 'bottom',
+           });
+            
+          }, 3000);
+        
         }
       })
       .catch((err) => {});

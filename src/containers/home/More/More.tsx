@@ -52,8 +52,12 @@ export default class More extends React.Component<MoreProps, any> {
           var usr = user.data.data;
           console.log(usr);
 
-        
-          this.setState({name: usr.name, email: usr.email, url: usr.img_url, user : user});
+          this.setState({
+            name: usr.name,
+            email: usr.email,
+            url: usr.img_url,
+            user: user,
+          });
         });
     });
   }
@@ -85,7 +89,11 @@ export default class More extends React.Component<MoreProps, any> {
               </View>
 
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Settings',{data: this.state.user})}
+                onPress={() =>
+                  this.props.navigation.navigate('Settings', {
+                    data: this.state.user,
+                  })
+                }
                 style={{position: 'absolute', right: wp(0)}}>
                 <Image style={styles.itemIcon} source={images.menuIcons.edit} />
               </TouchableOpacity>
@@ -160,7 +168,11 @@ export default class More extends React.Component<MoreProps, any> {
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Settings')}
+              onPress={() =>
+                this.props.navigation.navigate('Settings', {
+                  data: this.state.user,
+                })
+              }
               style={styles.containerOfItem}>
               <View style={{flexDirection: 'row'}}>
                 <View>
