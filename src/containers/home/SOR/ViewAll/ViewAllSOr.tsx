@@ -99,7 +99,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       draft: [],
       exclated: [],
       submitted: [],
-      completed: [],
+      closed: [],
       inprogress: [],
       isAuthenticated: false,
       slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
@@ -183,7 +183,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   this.state.involvedPerson,
                 );
                 if (res.data.data.report[i].details != undefined) {
-                  this.state.submitted.push(rep);
+                  this.state.inprogress.push(rep);
+                  // this.state.submitted.push(rep);
                 }
               } else if (res.data.data.report[i].status == 3) {
                 var rep = filterAndMappingPersons(
@@ -199,7 +200,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   this.state.involvedPerson,
                 );
                 if (res.data.data.report[i].details != undefined) {
-                  this.state.inprogress.push(rep);
+                  this.state.pendingClosure.push(rep);
                 }
               } else if (res.data.data.report[i].status == 5) {
                 var rep = filterAndMappingPersons(
@@ -207,7 +208,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   this.state.involvedPerson,
                 );
                 if (res.data.data.report[i].details != undefined) {
-                  this.state.completed.push(rep);
+                  this.state.closed.push(rep);
                 }
               }
             }
@@ -216,18 +217,16 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           this.setState({loading: false});
         })
         .catch((err) => console.log(err));
-
-      
     });
   };
   _onRefresh = () => {
     this.setState({
       involvedPerson: [],
       draft: [],
-      submitted: [],
-      exclated: [],
       inprogress: [],
-      completed: [],
+      exclated: [],
+      pendingClosure: [],
+      closed: [],
     });
     this.componentDidMount();
   };
@@ -341,8 +340,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       {this.state.draft.length == 0 &&
                       this.state.inprogress.length == 0 &&
                       this.state.exclated.length == 0 &&
-                      this.state.completed.length == 0 &&
-                      this.state.submitted.length == 0 ? (
+                      this.state.closed.length == 0 &&
+                      this.state.pendingClosure.length == 0 ? (
                         <View style={styles.nonReport}>
                           <Text style={styles.nonReportText}>
                             You don't have any reports yet...
@@ -663,14 +662,14 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 <TouchableOpacity
                                   onPress={() => {
                                     if (this.state.notifiedToSorted == true) {
-                                      this.state.submitted.sort(
+                                      this.state.exclated.sort(
                                         (a: any, b: any) =>
                                           new Date(a.createdAt) -
                                           new Date(b.createdAt),
                                       );
                                       this.setState({notifiedToSorted: false});
                                     } else {
-                                      this.state.submitted.sort(
+                                      this.state.exclated.sort(
                                         (a: any, b: any) =>
                                           new Date(b.createdAt) -
                                           new Date(a.createdAt),
@@ -696,14 +695,14 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               </View>
                               {this.state.isSubmited == true ? (
                                 <View style={styles.listViewContent}>
-                                  {this.state.submitted
+                                  {this.state.exclated
                                     .slice(0, 3)
                                     .map((d: Isor, i: number) => (
                                       <ListCard
                                         key={i}
                                         classify={d.sor_type}
                                         styles={
-                                          this.state.submitted.slice(0, 3)
+                                          this.state.exclated.slice(0, 3)
                                             .length ==
                                           i + 1
                                             ? {borderBottomWidth: wp(0)}
@@ -739,13 +738,13 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                         date={d.occured_at}
                                       />
                                     ))}
-                                  {this.state.submitted.length > 3 && (
+                                  {this.state.exclated.length > 3 && (
                                     <TouchableOpacity
                                       onPress={() => {
                                         this.props.navigation.navigate(
                                           'ViewAll',
                                           {
-                                            data: 2,
+                                            data: 3,
                                             title: 'Notified To',
                                           },
                                         );
@@ -799,7 +798,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                     if (
                                       this.state.pendingClosureSorted == true
                                     ) {
-                                      this.state.exclated.sort(
+                                      this.state.pendingClosure.sort(
                                         (a: any, b: any) =>
                                           new Date(a.createdAt) -
                                           new Date(b.createdAt),
@@ -808,7 +807,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                         pendingClosureSorted: false,
                                       });
                                     } else {
-                                      this.state.exclated.sort(
+                                      this.state.pendingClosure.sort(
                                         (a: any, b: any) =>
                                           new Date(b.createdAt) -
                                           new Date(a.createdAt),
@@ -830,14 +829,14 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               </View>
                               {this.state.isNotified == true ? (
                                 <View style={styles.listViewContent}>
-                                  {this.state.exclated
+                                  {this.state.pendingClosure
                                     .slice(0, 3)
                                     .map((d: Isor, i: number) => (
                                       <ListCard
                                         key={i}
                                         classify={d.sor_type}
                                         styles={
-                                          this.state.exclated.slice(0, 3)
+                                          this.state.pendingClosure.slice(0, 3)
                                             .length ==
                                           i + 1
                                             ? {borderBottomWidth: wp(0)}
@@ -869,7 +868,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                         date={d.occured_at}
                                       />
                                     ))}
-                                  {this.state.exclated.length > 3 && (
+                                  {this.state.pendingClosure.length > 3 && (
                                     <TouchableOpacity
                                       onPress={() => {
                                         this.props.navigation.navigate(
@@ -899,7 +898,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           </View>
                           {/* )} */}
 
-                          {/* {this.state.completed.length == 0 ? null : ( */}
+                          {/* {this.state.closed.length == 0 ? null : ( */}
                           <View>
                             <View style={styles.lineheight}></View>
                             <View style={styles.inProgressTop}>
@@ -928,14 +927,14 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 <TouchableOpacity
                                   onPress={() => {
                                     if (this.state.closedSorted == true) {
-                                      this.state.completed.sort(
+                                      this.state.closed.sort(
                                         (a: any, b: any) =>
                                           new Date(a.createdAt) -
                                           new Date(b.createdAt),
                                       );
                                       this.setState({closedSorted: false});
                                     } else {
-                                      this.state.completed.sort(
+                                      this.state.closed.sort(
                                         (a: any, b: any) =>
                                           new Date(b.createdAt) -
                                           new Date(a.createdAt),
@@ -955,14 +954,14 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               </View>
                               {this.state.isCompleted == true ? (
                                 <View style={styles.listViewContent}>
-                                  {this.state.completed
+                                  {this.state.closed
                                     .slice(0, 3)
                                     .map((d: Isor, i: number) => (
                                       <ListCard
                                         key={i}
                                         classify={d.sor_type}
                                         styles={
-                                          this.state.completed.slice(0, 3)
+                                          this.state.closed.slice(0, 3)
                                             .length ==
                                           i + 1
                                             ? {borderBottomWidth: wp(0)}
@@ -994,7 +993,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                         date={d.occured_at}
                                       />
                                     ))}
-                                  {this.state.completed.length > 5 && (
+                                  {this.state.closed.length > 5 && (
                                     <TouchableOpacity
                                       onPress={() => {
                                         this.props.navigation.navigate(
@@ -1038,7 +1037,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     {this.state.draft.length == 0 &&
                     this.state.inprogress.length == 0 &&
                     this.state.exclated.length == 0 &&
-                    this.state.completed.length == 0 &&
+                    this.state.closed.length == 0 &&
                     this.state.submitted.length == 0 ? (
                       <View style={[styles.nonReport, {padding: wp(25)}]}>
                         <Text style={styles.nonReportText}>
@@ -1206,7 +1205,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           onPress={() => {
                             // this.props.reduxActions.clearAllSor();
                             this.props.navigation.navigate('ViewAll', {
-                              data: this.state.submitted,
+                              data: 2,
                               title: 'Notified To',
                             });
                           }}
@@ -1268,7 +1267,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           onPress={() => {
                             // this.props.reduxActions.clearAllSor();
                             this.props.navigation.navigate('ViewAll', {
-                              data: this.state.exclated,
+                              data: 3,
                               title: 'Exclated',
                             });
                           }}
@@ -1291,12 +1290,12 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       )}
                     </View>
                     {/* )} */}
-                    {/* {this.state.completed.length == 0 ? null : ( */}
+                    {/* {this.state.closed.length == 0 ? null : ( */}
                     <View style={styles.boardContainer}>
                       <View style={styles.draftTextContainer}>
                         <Text style={styles.draftText}>Closed</Text>
                       </View>
-                      {this.state.completed
+                      {this.state.closed
                         .slice(0, 3)
                         .map((d: Isor, i: number) => (
                           <Card
@@ -1323,13 +1322,13 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             user2={d.user2}
                           />
                         ))}
-                      {this.state.completed.length > 3 && (
+                      {this.state.closed.length > 3 && (
                         <TouchableOpacity
                           onPress={() => {
                             // this.props.reduxActions.clearAllSor();
                             this.props.navigation.navigate('ViewAll', {
-                              data: this.state.completed,
-                              title: 'Completed',
+                              data: 5,
+                              title: 'Closed',
                             });
                           }}
                           style={{
