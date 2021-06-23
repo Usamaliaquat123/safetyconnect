@@ -75,6 +75,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
     });
 
     getCurrentProject().then((currentProj: any) => {
+      console.log(currentProj);
       this.setState({projectId: currentProj});
 
       createApi
@@ -82,7 +83,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
         .getProject({projectid: currentProj})
         .then((currentProj: any) => {
           var data = {
-            project: this.state.currentProj,
+            project: currentProj.data.data._id,
             limit: 100000,
             page: 0,
             query: {status: [this.props.route.params.data]},
@@ -92,6 +93,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
             .createApi()
             .filterSors(data)
             .then((res: any) => {
+              console.log(res);
               var sors = [];
               for (let i = 0; i < res.data.data.report.length; i++) {
                 var rep = filterAndMappingPersons(

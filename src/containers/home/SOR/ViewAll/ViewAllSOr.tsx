@@ -599,7 +599,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                         this.props.navigation.navigate(
                                           'ViewAll',
                                           {
-                                            data: 4,
+                                            data: 2,
                                             title: 'In Progress',
                                           },
                                         );
@@ -875,7 +875,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                         this.props.navigation.navigate(
                                           'ViewAll',
                                           {
-                                            data: 3,
+                                            data: 4,
                                             title: 'Pending Closure',
                                           },
                                         );
@@ -1153,7 +1153,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             //   [this.props.route.params.data],
                             // );
                             this.props.navigation.navigate('ViewAll', {
-                              data: this.state.inprogress,
+                              data: 2,
                               title: 'In Progress',
                             });
                           }}
@@ -1206,7 +1206,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           onPress={() => {
                             // this.props.reduxActions.clearAllSor();
                             this.props.navigation.navigate('ViewAll', {
-                              data: 2,
+                              data: 3,
                               title: 'Notified To',
                             });
                           }}
@@ -1268,8 +1268,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           onPress={() => {
                             // this.props.reduxActions.clearAllSor();
                             this.props.navigation.navigate('ViewAll', {
-                              data: 3,
-                              title: 'Exclated',
+                              data: 4,
+                              title: 'Pending Closure',
                             });
                           }}
                           style={{
