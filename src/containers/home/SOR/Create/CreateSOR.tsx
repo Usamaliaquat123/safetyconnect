@@ -16,6 +16,7 @@ import styles from './style';
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import RNFetchBlob from 'rn-fetch-blob';
+import FlashMessage, {showMessage} from 'react-native-flash-message';
 
 import {
   searchInSuggestions,
@@ -54,7 +55,7 @@ import Modal from 'react-native-modal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createApi, submitted} from '@service';
 import {AllSorDTO} from '@dtos';
-import QuickReplies from 'react-native-gifted-chat/lib/QuickReplies';
+// import QuickReplies from 'react-native-gifted-chat/lib/QuickReplies';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 type CreateSORNavigationProp = StackNavigationProp<
@@ -143,7 +144,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       currentOrg: '',
 
       uploadedfiles: [],
-      sucessModal: true,
       // Select date and time
       setDateModal: false,
       todayDateCallender: moment().format('YYYY-MM-DD'),
@@ -534,6 +534,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             });
                             this.props.navigation.goBack();
 
+                            showMessage({
+                              message: 'SOR sucessfully subitted',
+                              type: 'success',
+                              position: 'bottom',
+                            });
                             console.log(res);
                           })
                           .catch((err: any) => console.log(err));
@@ -543,6 +548,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         this.setState({
                           loading: false,
                           errorModal: false,
+                        });
+
+                        showMessage({
+                          message: 'SOR sucessfully subitted',
+                          type: 'success',
+                          position: 'bottom',
                         });
                         this.props.navigation.goBack();
                       }
@@ -727,6 +738,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                     loading: false,
                                     errorModal: false,
                                   });
+
+                                  showMessage({
+                                    message: 'SOR sucessfully subitted',
+                                    type: 'success',
+                                    position: 'bottom',
+                                  });
                                   this.props.navigation.goBack();
                                   console.log('five why');
                                   console.log(res);
@@ -741,6 +758,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 errorModal: false,
                               });
 
+                              showMessage({
+                                message: 'SOR sucessfully subitted',
+                                type: 'success',
+                                position: 'bottom',
+                              });
                               this.props.navigation.goBack();
                             }
                             // if (res.status == 200) {
@@ -1904,17 +1926,19 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </TouchableOpacity>
             </View>
           </Animated.View>
-
+          {/* 
           <Modal isVisible={this.state.sucessModal}>
             <View style={styles.modelContainer}>
               <View>
-                <Text style={styles.errHeadPop}>Sor haas been created</Text>
+                <Text style={styles.errHeadPop}>SOR submitted</Text>
                 <Text style={styles.errEmailPassDesc}>
                   sor has been sucessfully created
                 </Text>
               </View>
             </View>
-          </Modal>
+          </Modal> */}
+
+          <FlashMessage ref="myLocalFlashMessage" />
 
           {/* validations error */}
           {/* Modal Container */}
