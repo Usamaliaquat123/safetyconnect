@@ -174,7 +174,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     console.log(this.props.route.params.data.submit_to);
     console.log(this.props.route.params.data.attachments);
 
-    this.getFilesFromServer(this.props.route.params.data.attachments)
+    this.getFilesFromServer(this.props.route.params.data.attachments);
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
 
@@ -245,9 +245,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.props.route.params.data.risk.likelihood,
     );
   };
-
-
-
 
   // FIVE WHY
   getFiveWHY = () => {
@@ -720,41 +717,36 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     var mapped = imageAndVideoObjectMap(attachments);
   };
 
-
-
-  getFilesFromServer = (attach? : any) => {
-    console.log(attach)
+  getFilesFromServer = (attach?: any) => {
+    console.log(attach);
 
     for (let i = 0; i < attach.length; i++) {
-      var data =   {
-          bucket: "hns-codist",
-          report: [`report/${attach[i]}`]
-      }
-        createApi.createApi().getFileApi(data).then((d: any) => {
+      var data = {
+        bucket: 'hns-codist',
+        report: [`report/${attach[i]}`],
+      };
+      createApi
+        .createApi()
+        .getFileApi(data)
+        .then((d: any) => {
+          console.log(d.data[0]);
 
-
-
-
-          console.log(d.data[0])
-
-          if(attach[i].split('.')[1] == "png" || attach[i].split('.')[1] == "jpeg" || attach[i].split('.')[1] == "jpg"){
-          
-          console.log(attach[i])
+          if (
+            attach[i].split('.')[1] == 'png' ||
+            attach[i].split('.')[1] == 'jpeg' ||
+            attach[i].split('.')[1] == 'jpg'
+          ) {
+            console.log(attach[i]);
             this.state.attachments.push({
-              type:"image",
+              type: 'image',
               upload: '',
               name: attach[i],
               url: d.data[0],
-  
-            })
-
+            });
           }
-        })
-      
+        });
     }
-
-    
-  }
+  };
 
   // imgCap = (str: string, arr: Array<Object>) => {
   //   if (str == 'upload') {
@@ -796,34 +788,34 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       res.map((d, i) => {
         if (d.type.split('/')[0] == 'image') {
           console.log('imagesdasds');
-              attach.splice(0, 0, {
-                type: 'photo',
-                orgType: d.type,
-                upload: 'self',
-                name: d.name,
-                url: d.uri,
-              });
+          attach.splice(0, 0, {
+            type: 'photo',
+            orgType: d.type,
+            upload: 'self',
+            name: d.name,
+            url: d.uri,
+          });
 
-            // ifstream.bufferSize;
+          // ifstream.bufferSize;
         } else if (d.type.split('/')[1] == 'pdf') {
-            attach.splice(0, 0, {
-              type: 'pdf',
-              upload: 'self',
-              orgType: d.type,
-              name: d.name,
-              url: d.uri,
-            });
-        }  else if (
+          attach.splice(0, 0, {
+            type: 'pdf',
+            upload: 'self',
+            orgType: d.type,
+            name: d.name,
+            url: d.uri,
+          });
+        } else if (
           d.type.split('.').pop() == 'document' ||
           d.type.split('/')[1] == 'msword'
         ) {
-            attach.splice(0, 0, {
-              type: 'doc',
-              upload: 'self',
-              name: d.name,
-              orgType: d.type,
-              url: d.uri,
-            });
+          attach.splice(0, 0, {
+            type: 'doc',
+            upload: 'self',
+            name: d.name,
+            orgType: d.type,
+            url: d.uri,
+          });
         } else if (
           d.type.split('/')[1] == 'vnd.ms-excel' ||
           d.type.split('.').pop() == 'sheet'
@@ -1417,121 +1409,124 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             </View>
             {/* five WHY Questionaries */}
             {/* Line  */}
-            {this.props.route.params.data.sor_type == "near miss" && <>
-
-            <View style={styles.lineheight} />
-            <View style={styles.fiveWhyContainer}>
-              <View style={styles.fiveWhyHeadingContainer}>
-                <Text style={styles.investigationReqtext}>
-                  Investigation Required
-                </Text>
-                <TouchableOpacity
-                  onPress={() => {
-                    // if (this.state.fiveWhytoggle == true) {
-                    //   this.setState({fiveWhytoggle: false});
-                    // } else {
-                    //   if (this.state.reportIdInvestigation === '') {
-                    //     var bodyInitial = {
-                    //       report: {
-                    //         created_by: this.state.user.email,
-                    //         comments: '',
-                    //         status: 1,
-                    //       },
-                    //       project: '607820d5724677561cf67ec5',
-                    //     };
-                    //     createApi
-                    //       .createApi()
-                    //       .createSorInit(bodyInitial)
-                    //       .then((res: any) => {
-                    //         this.setState({
-                    //           reportIdInvestigation: res.data.data.report_id,
-                    //         });
-                    //         this.setState({fiveWhytoggle: true});
-                    //       })
-                    //   } else {
-                    //     this.setState({fiveWhytoggle: true});
-                    //   }
-                    // }
-                    this.setState({fiveWhytoggle: !this.state.fiveWhytoggle});
-                  }}
-                  style={styles.fivewhyToggleContainer}>
-                  <View
-                    style={[
-                      styles.fivewhyToggeNo,
-                      this.state.fiveWhytoggle == false
-                        ? {
-                            borderColor: colors.error,
-                            backgroundColor: '#F59798',
-                          }
-                        : {
-                            borderColor: colors.text,
-                            borderRightWidth: wp(0),
-                            opacity: 0.5,
-                          },
-                    ]}>
-                    <Text
-                      style={[
-                        styles.fivewhyToggeNoText,
-                        this.state.fiveWhytoggle == false
-                          ? {color: colors.secondary}
-                          : {color: colors.text},
-                      ]}>
-                      No
+            {this.props.route.params.data.sor_type == 'near miss' && (
+              <>
+                <View style={styles.lineheight} />
+                <View style={styles.fiveWhyContainer}>
+                  <View style={styles.fiveWhyHeadingContainer}>
+                    <Text style={styles.investigationReqtext}>
+                      Investigation Required
                     </Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        // if (this.state.fiveWhytoggle == true) {
+                        //   this.setState({fiveWhytoggle: false});
+                        // } else {
+                        //   if (this.state.reportIdInvestigation === '') {
+                        //     var bodyInitial = {
+                        //       report: {
+                        //         created_by: this.state.user.email,
+                        //         comments: '',
+                        //         status: 1,
+                        //       },
+                        //       project: '607820d5724677561cf67ec5',
+                        //     };
+                        //     createApi
+                        //       .createApi()
+                        //       .createSorInit(bodyInitial)
+                        //       .then((res: any) => {
+                        //         this.setState({
+                        //           reportIdInvestigation: res.data.data.report_id,
+                        //         });
+                        //         this.setState({fiveWhytoggle: true});
+                        //       })
+                        //   } else {
+                        //     this.setState({fiveWhytoggle: true});
+                        //   }
+                        // }
+                        this.setState({
+                          fiveWhytoggle: !this.state.fiveWhytoggle,
+                        });
+                      }}
+                      style={styles.fivewhyToggleContainer}>
+                      <View
+                        style={[
+                          styles.fivewhyToggeNo,
+                          this.state.fiveWhytoggle == false
+                            ? {
+                                borderColor: colors.error,
+                                backgroundColor: '#F59798',
+                              }
+                            : {
+                                borderColor: colors.text,
+                                borderRightWidth: wp(0),
+                                opacity: 0.5,
+                              },
+                        ]}>
+                        <Text
+                          style={[
+                            styles.fivewhyToggeNoText,
+                            this.state.fiveWhytoggle == false
+                              ? {color: colors.secondary}
+                              : {color: colors.text},
+                          ]}>
+                          No
+                        </Text>
+                      </View>
+                      <View
+                        style={[
+                          styles.fivewhyToggeYes,
+                          this.state.fiveWhytoggle
+                            ? {
+                                borderColor: colors.green,
+                                backgroundColor: colors.lightGreen,
+                              }
+                            : {
+                                borderColor: colors.text,
+                                borderLeftWidth: wp(0),
+                                opacity: 0.5,
+                              },
+                        ]}>
+                        <Text
+                          style={[
+                            styles.fivewhyToggeYesText,
+                            this.state.fiveWhytoggle
+                              ? {color: colors.green}
+                              : {color: colors.text},
+                          ]}>
+                          Yes
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
                   </View>
-                  <View
-                    style={[
-                      styles.fivewhyToggeYes,
-                      this.state.fiveWhytoggle
-                        ? {
-                            borderColor: colors.green,
-                            backgroundColor: colors.lightGreen,
-                          }
-                        : {
-                            borderColor: colors.text,
-                            borderLeftWidth: wp(0),
-                            opacity: 0.5,
-                          },
-                    ]}>
-                    <Text
-                      style={[
-                        styles.fivewhyToggeYesText,
-                        this.state.fiveWhytoggle
-                          ? {color: colors.green}
-                          : {color: colors.text},
-                      ]}>
-                      Yes
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-              {/* countributoryCauses : "",
+                  {/* countributoryCauses : "",
       rootCauses : "" */}
-              {this.state.fiveWhytoggle == true ? (
-                <FiveWhy
-                  onChangeCountributory={(e: any) =>
-                    this.setState({countributoryCauses: e})
-                  }
-                  onChangeRiskCause={(e: any) => this.setState({rootCauses: e})}
-                  contributoryCauses={this.state.countributoryCausesD}
-                  rootCauses={this.state.rootCausesD}
-                  data={this.state.fiveWHYdata}
-                  fiveWhyQuestions={(q: Array<string>) =>
-                    this.setState({fiveWhyQuestion: q})
-                  }
-                  fiveWhyAnswer={(a: Array<string>) =>
-                    this.setState({fiveWhyAnswer: a})
-                  }
-                  reportId={this.state.reportIdInvestigation}
-                  userId={this.state.user._id}
-                  containerStyle={{marginTop: wp(3)}}
-                />
-              ) : null}
-            </View>
-           </>
-           
-            }
-           
+                  {this.state.fiveWhytoggle == true ? (
+                    <FiveWhy
+                      onChangeCountributory={(e: any) =>
+                        this.setState({countributoryCauses: e})
+                      }
+                      onChangeRiskCause={(e: any) =>
+                        this.setState({rootCauses: e})
+                      }
+                      contributoryCauses={this.state.countributoryCausesD}
+                      rootCauses={this.state.rootCausesD}
+                      data={this.state.fiveWHYdata}
+                      fiveWhyQuestions={(q: Array<string>) =>
+                        this.setState({fiveWhyQuestion: q})
+                      }
+                      fiveWhyAnswer={(a: Array<string>) =>
+                        this.setState({fiveWhyAnswer: a})
+                      }
+                      reportId={this.state.reportIdInvestigation}
+                      userId={this.state.user._id}
+                      containerStyle={{marginTop: wp(3)}}
+                    />
+                  ) : null}
+                </View>
+              </>
+            )}
+
             {/* Line  */}
             <View style={styles.lineheight} />
             {/* Actions / recommendations */}
