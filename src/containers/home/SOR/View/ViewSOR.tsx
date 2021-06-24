@@ -737,6 +737,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       bucket: 'hns-codist',
       report: dta,
     };
+
+   
     createApi
       .createApi()
       .getFileApi(data)
@@ -749,15 +751,36 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             attach[i].split('.')[1] == 'jpeg' ||
             attach[i].split('.')[1] == 'jpg'
           ) {
-            console.log(attach[i]);
             this.state.attachments.push({
               type: 'photo',
               upload: '',
               name: attach[i],
               url: d.data[i],
             });
-            this.setState({});
-            console.log(this.state.attachments);
+          }else if(attach[i].split('.')[1] == 'pdf'){
+            this.state.attachments.push({
+              type: 'pdf',
+              upload: '',
+              name: attach[i],
+              url: d.data[i],
+            });
+          }else if(attach[i].split('.')[1] == "docx" || attach[i].split('.')[1] == "doc" ){
+            this.state.attachments.push({
+              type: 'pdf',
+              upload: '',
+              name: attach[i],
+              url: d.data[i],
+            });
+
+          }
+          else if(attach[i].split('.')[1] == "xlsx" ){
+            this.state.attachments.push({
+              type: 'xlsx',
+              upload: '',
+              name: attach[i],
+              url: d.data[i],
+            });
+
           }
         }
       });
