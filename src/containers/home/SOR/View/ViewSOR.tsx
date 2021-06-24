@@ -714,7 +714,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
   };
 
-  fileAndImageCapturer = (attachments: Array<string>) => {
+  fileAndImageCapturer = (attach: Array<string>) => {
     /*
      * Image object Map to this
      *
