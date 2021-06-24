@@ -538,7 +538,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             });
 
                             setTimeout(() => {
-                              this.props.navigation.goBack();
+                              this.props.navigation.navigate('Main');
                             }, 1000);
 
                             console.log(res);
@@ -559,7 +559,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         });
 
                         setTimeout(() => {
-                          this.props.navigation.goBack();
+                          this.props.navigation.navigate('Main');
                         }, 1000);
                       }
 
@@ -750,7 +750,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   position: 'bottom',
                                 });
                                 setTimeout(() => {
-                                  this.props.navigation.goBack();
+                                  this.props.navigation.navigate('Main');
                                 }, 1000);
                                 console.log('five why');
                                 console.log(res);
@@ -771,7 +771,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               position: 'bottom',
                             });
                             setTimeout(() => {
-                              this.props.navigation.goBack();
+                              this.props.navigation.navigate('Main');
                             }, 1000);
                           }
                           // if (res.status == 200) {

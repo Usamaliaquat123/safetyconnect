@@ -54,7 +54,6 @@ class Notifications extends React.Component<NotificationsProps, any> {
     console.log('sdsd');
     this.setState({loading: true});
     AsyncStorage.getItem('email').then((email: any) => {
-      this.getAllNotifications(email);
       console.log(email);
       // api
       //   .createApi()
@@ -63,33 +62,29 @@ class Notifications extends React.Component<NotificationsProps, any> {
       //     console.log(user.data.data);
       //     this.setState({user: user.data.data});
       //   });
+
+      api
+        .createApi()
+        .getAllNotifications(email, [0, 1])
+        .then((res: any) => {
+          console.log('data from notifications');
+          console.log(res);
+          this.setState({loading: false});
+          this.setState({
+            count: res.data.data[0].notifications.filter(
+              (n: any) => n.status == 0,
+            ),
+            newNotify: res.data.data[0].notifications.filter(
+              (n: any) => n.status == 0,
+            ),
+            oldNotify: res.data.data[0].notifications.filter(
+              (n: any) => n.status == 1,
+            ),
+          });
+        })
+        .catch((err) => console.log(err));
     });
   }
-
-  //   All Notificatiosn
-  getAllNotifications = (email: string) => {
-    console.log(email);
-    api
-      .createApi()
-      .getAllNotifications(email, [0, 1])
-      .then((res: any) => {
-        console.log('data from notifications');
-        console.log(res);
-        this.setState({loading: false});
-        this.setState({
-          count: res.data.data[0].notifications.filter(
-            (n: any) => n.status == 0,
-          ),
-          newNotify: res.data.data[0].notifications.filter(
-            (n: any) => n.status == 0,
-          ),
-          oldNotify: res.data.data[0].notifications.filter(
-            (n: any) => n.status == 1,
-          ),
-        });
-      })
-      .catch((err) => console.log(err));
-  };
 
   //   Refreshing Scrollview
   _onRefresh = () => {
