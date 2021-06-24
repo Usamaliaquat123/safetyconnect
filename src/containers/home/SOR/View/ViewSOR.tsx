@@ -362,7 +362,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             ? this.state.esclate_to.map((d: any) => d.email)
             : this.state.reAssignToArrTags.map((d: any) => d.email) /** done */,
         status: status /** done */,
-        attachments: [] /** done */,
+        attachments: this.state.attachments /** done */,
         comments: this.props.route.params.data.comments /** done */,
         updatedAt: Date.now() /** done */,
       },
@@ -723,10 +723,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
      *      name: d.name,
      *      url: d.uri,
      */
-    var mapped = imageAndVideoObjectMap(attachments);
-  };
 
-  getFilesFromServer = (attach?: any) => {
+    // console.log(attachments)
+    // var mapped = imageAndVideoObjectMap(attachments);
+
     console.log(attach);
 
     var dta = attach.map((d) => `report/${d}`);
@@ -757,7 +757,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               url: d.data[i],
             });
 
-            this.setState({ })
+            this.setState({});
           } else if (attach[i].split('.')[1] == 'pdf') {
             this.state.attachments.push({
               type: 'pdf',
@@ -765,32 +765,34 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               name: attach[i],
               url: d.data[i],
             });
-            this.setState({ })
+            this.setState({});
           } else if (
             attach[i].split('.')[1] == 'docx' ||
             attach[i].split('.')[1] == 'doc'
-            ) {
-              this.state.attachments.push({
-                type: 'pdf',
-                upload: '',
-                name: attach[i],
-                url: d.data[i],
-              });
-              this.setState({ })
-            } else if (attach[i].split('.')[1] == 'xlsx') {
-              this.state.attachments.push({
-                type: 'xlsx',
-                upload: '',
-                name: attach[i],
-                url: d.data[i],
-              });
-              this.setState({ })
-            }
+          ) {
+            this.state.attachments.push({
+              type: 'pdf',
+              upload: '',
+              name: attach[i],
+              url: d.data[i],
+            });
+            this.setState({});
+          } else if (attach[i].split('.')[1] == 'xlsx') {
+            this.state.attachments.push({
+              type: 'xlsx',
+              upload: '',
+              name: attach[i],
+              url: d.data[i],
+            });
+            this.setState({});
+          }
         }
       });
 
     console.log(this.state.attach);
   };
+
+  getFilesFromServer = (attach?: any) => {};
 
   // imgCap = (str: string, arr: Array<Object>) => {
   //   if (str == 'upload') {
