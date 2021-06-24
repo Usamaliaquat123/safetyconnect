@@ -158,7 +158,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   // Document Picker and update the state
   pickupDoc = async () => {
     try {
-      const res = await DocumentPicker.pick({
+      const res : any = await DocumentPicker.pick({
         type: [DocumentPicker.types.allFiles],
       });
 

@@ -50,6 +50,7 @@ import {
   filterAndMappingPersons,
   downloadFile,
   filterLocation,
+  fileuploader,
   getCurrentProject,
 } from '@utils';
 import DocumentPicker from 'react-native-document-picker';
@@ -174,7 +175,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     console.log(this.props.route.params.data.submit_to);
     console.log(this.props.route.params.data.involved_persons);
 
-    this.getFilesFromServer(this.props.route.params.data.attachments);
+    // this.getFilesFromServer(this.props.route.params.data.attachments);
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
 
@@ -751,7 +752,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             attach[i].split('.')[1] == 'jpg'
           ) {
             this.state.attachments.push({
-              type: 'photo',
+              type: 'image',
               upload: '',
               name: attach[i],
               url: d.data[i],
@@ -792,7 +793,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     console.log(this.state.attach);
   };
 
-  getFilesFromServer = (attach?: any) => {};
+  // getFilesFromServer = (attach?: any) => {};
 
   // imgCap = (str: string, arr: Array<Object>) => {
   //   if (str == 'upload') {
@@ -820,7 +821,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   // Document Attachments
   openDoc = async (attach: Array<Object>) => {
     try {
-      var res = await DocumentPicker.pickMultiple({
+      var res = await DocumentPicker.pick({
         type: [DocumentPicker.types.allFiles],
         copyTo: 'cachesDirectory',
       });
@@ -831,65 +832,109 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       console.log('asdasd');
       console.log(res);
 
-      res.map((d, i) => {
-        if (d.type.split('/')[0] == 'image') {
-          console.log('imagesdasds');
-          attach.splice(0, 0, {
-            type: 'photo',
-            orgType: d.type,
-            upload: 'self',
-            name: d.name,
-            url: d.uri,
-          });
-
-          // ifstream.bufferSize;
-        } else if (d.type.split('/')[1] == 'pdf') {
-          attach.splice(0, 0, {
-            type: 'pdf',
-            upload: 'self',
-            orgType: d.type,
-            name: d.name,
-            url: d.uri,
-          });
-        } else if (
-          d.type.split('.').pop() == 'document' ||
-          d.type.split('/')[1] == 'msword'
-        ) {
-          attach.splice(0, 0, {
-            type: 'doc',
-            upload: 'self',
-            name: d.name,
-            orgType: d.type,
-            url: d.uri,
-          });
-        } else if (
-          d.type.split('/')[1] == 'vnd.ms-excel' ||
-          d.type.split('.').pop() == 'sheet'
-        ) {
-          // attach.splice(0, 0, {
-          //   type: 'excel',
-          //   upload: 'self',
-          //   name: d.name,
-          //   url: d.uri,
-          // });
-        } else if (
-          d.type.split('/')[1] == 'vnd.ms-powerpoint' ||
-          d.type.split('.').pop() == 'presentation'
-        ) {
-          // attach.splice(0, 0, {
-          //   type: 'powerpoint',
-          //   upload: 'self',
-          //   name: d.name,
-          //   url: d.uri,
-          // });
-        } else {
-          showMessage({
-            message: 'File not supported',
-            type: 'danger',
-            position: 'bottom',
-          });
+      if (res.type == 'image/jpeg' || res.type == 'image/png') {
+        res['orgType'] = res.type;
+        res.type = 'image';
+      } else {
+        if (res.name.split('.')[1] == 'docx') {
+          res['orgType'] = res.type;
+          res.type = 'docx';
+        } else if (res.name.split('.')[1] == 'pdf') {
+          res['orgType'] = res.type;
+          res.type = 'pdf';
+        } else if (res.name.split('.')[1] == 'xlsx') {
+          res['orgType'] = res.type;
+          res.type = 'xlsx';
         }
-      });
+      }
+
+      if (
+        res.type == 'docx' ||
+        res.type == 'pdf' ||
+        res.type == 'xlsx' ||
+        res.type == 'image'
+      ) {
+        var imgData = {
+          name: res.name,
+          uri: res.uri,
+          type: res.type,
+        };
+        // this.setState({fileLoading: true});
+
+        fileuploader(res.orgType, res.orgType.split('/')[1], res.uri).then(
+          (filename: any) => {
+            console.log(filename);
+            imgData['name'] = filename;
+            // this.setState({fileLoading: false});
+            attach.splice(0, 0, imgData);
+            // this.state.uploadedfiles.push(filename);
+            this.setState({});
+
+            console.log(attach);
+          },
+        );
+        // this.state.filename.push(imgData);
+      }
+
+      // res.map((d, i) => {
+      //   if (d.type.split('/')[0] == 'image') {
+      //     console.log('imagesdasds');
+      //     attach.splice(0, 0, {
+      //       type: 'photo',
+      //       orgType: d.type,
+      //       upload: 'self',
+      //       name: d.name,
+      //       url: d.uri,
+      //     });
+
+      //     // ifstream.bufferSize;
+      //   } else if (d.type.split('/')[1] == 'pdf') {
+      //     attach.splice(0, 0, {
+      //       type: 'pdf',
+      //       upload: 'self',
+      //       orgType: d.type,
+      //       name: d.name,
+      //       url: d.uri,
+      //     });
+      //   } else if (
+      //     d.type.split('.').pop() == 'document' ||
+      //     d.type.split('/')[1] == 'msword'
+      //   ) {
+      //     attach.splice(0, 0, {
+      //       type: 'doc',
+      //       upload: 'self',
+      //       name: d.name,
+      //       orgType: d.type,
+      //       url: d.uri,
+      //     });
+      //   } else if (
+      //     d.type.split('/')[1] == 'vnd.ms-excel' ||
+      //     d.type.split('.').pop() == 'sheet'
+      //   ) {
+      //     // attach.splice(0, 0, {
+      //     //   type: 'excel',
+      //     //   upload: 'self',
+      //     //   name: d.name,
+      //     //   url: d.uri,
+      //     // });
+      //   } else if (
+      //     d.type.split('/')[1] == 'vnd.ms-powerpoint' ||
+      //     d.type.split('.').pop() == 'presentation'
+      //   ) {
+      //     // attach.splice(0, 0, {
+      //     //   type: 'powerpoint',
+      //     //   upload: 'self',
+      //     //   name: d.name,
+      //     //   url: d.uri,
+      //     // });
+      //   } else {
+      //     showMessage({
+      //       message: 'File not supported',
+      //       type: 'danger',
+      //       position: 'bottom',
+      //     });
+      //   }
+      // });
 
       this.setState({});
     } catch (err) {
@@ -1803,7 +1848,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       alignSelf: 'center',
                     }}>
                     {this.state.attachments.map((d: any, i: number) => {
-                      if (d.type == 'photo') {
+                      if (d.type == 'c') {
                         return (
                           <TouchableOpacity
                             onPress={() => this.setState({imageViewer: true})}
@@ -1867,7 +1912,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
               {this.state.attachments.map((d: any, i: number) => (
                 <View>
-                  {d.type != 'photo' ? (
+                  {d.type != 'image' ? (
                     <View style={styles.attachFileContainer}>
                       <View>
                         <Image
@@ -2272,7 +2317,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 alignItems: 'center',
                               },
                             ]}>
-                            {d.type == 'photo' ? (
+                            {d.type == 'image' ? (
                               <Image
                                 source={{
                                   uri: d.url,
