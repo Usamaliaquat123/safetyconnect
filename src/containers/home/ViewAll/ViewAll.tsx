@@ -92,26 +92,6 @@ class ViewAll extends React.Component<ViewAllProps, any> {
 
           console.log(currentProj.data.data.involved_persons);
 
-          var j = {};
-          var arr = [];
-          for (
-            let i = 0;
-            i < currentProj.data.data.involved_persons.length;
-            i++
-          ) {
-            Object.defineProperty(
-              j,
-              currentProj.data.data.involved_persons[i].email,
-              {
-                value: currentProj.data.data.involved_persons[i],
-                writable: false,
-              },
-            );
-            this.state.involvedPerson.push(
-              currentProj.data.data.involved_persons[i],
-            );
-          }
-
           // AsyncStorage.setItem(
           //   'involved_person',
           //   JSON.stringify(this.state.involvedPerson),
@@ -127,13 +107,13 @@ class ViewAll extends React.Component<ViewAllProps, any> {
               var sors = [];
               for (let i = 0; i < res.data.data.report.length; i++) {
                 console.log(res.data.data.report[i]);
-                var rep = filterAndMappingPersons(
-                  res.data.data.report[i],
-                  currentProj.data.data.involved_persons,
-                );
+                // var rep = filterAndMappingPersons(
+                //   res.data.data.report[i],
+                //   currentProj.data.data.involved_persons,
+                // );
 
-                console.log(rep);
-                sors.push(rep);
+                console.log(res.data.data.report[i]);
+                sors.push(res.data.data.report[i]);
               }
               console.log('sors');
               console.log(sors);

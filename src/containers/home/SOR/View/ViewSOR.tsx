@@ -172,7 +172,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   componentDidMount = () => {
     console.log('line 173');
     console.log(this.props.route.params.data.submit_to);
-    console.log(this.props.route.params.data.attachments);
+    console.log(this.props.route.params.data.involved_persons);
 
     this.getFilesFromServer(this.props.route.params.data.attachments);
     getCurrentProject().then((currentProj: any) => {
@@ -347,7 +347,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         sor_type: this.state.sor_type,
         details: this.state.observation /** done */,
         createdAt: Date.now() /** done */,
-        occured_at: moment().format('YYYY-MM-DD') /** done */,
+        occured_at: Date.now() /** done */,
         involved_persons: this.props.route.params.data
           .involved_persons /** done */,
         risk: {
@@ -1144,7 +1144,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   Involved Person:{' '}
                 </Text>
                 <Text style={{fontSize: wp(3.5)}}>
-                  {/* {this.state.involved_person[0].name} */}
+                  {this.state.involved_person[0].name}
                 </Text>
               </View>
             </View>
