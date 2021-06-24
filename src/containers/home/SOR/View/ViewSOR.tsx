@@ -729,17 +729,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   getFilesFromServer = (attach?: any) => {
     console.log(attach);
 
-    for (let i = 0; i < attach.length; i++) {
-      var data = {
-        bucket: 'hns-codist',
-        report: [`report/${attach[i]}`],
-      };
-      createApi
-        .createApi()
-        .getFileApi(data)
-        .then((d: any) => {
-          console.log(d.data[0]);
+    var dta = attach.map((d) => `report/${d}`);
 
+    console.log(dta);
+
+    var data = {
+      bucket: 'hns-codist',
+      report: dta,
+    };
+    createApi
+      .createApi()
+      .getFileApi(data)
+      .then((d: any) => {
+        console.log(d.data[0]);
+        for (let i = 0; i < d.data.length; i++) {
+          console.log(d.data[i]);
           if (
             attach[i].split('.')[1] == 'png' ||
             attach[i].split('.')[1] == 'jpeg' ||
@@ -747,14 +751,18 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           ) {
             console.log(attach[i]);
             this.state.attachments.push({
-              type: 'image',
+              type: 'photo',
               upload: '',
               name: attach[i],
-              url: d.data[0],
+              url: d.data[i],
             });
+            this.setState({});
+            console.log(this.state.attachments);
           }
-        });
-    }
+        }
+      });
+
+    console.log(this.state.attach);
   };
 
   // imgCap = (str: string, arr: Array<Object>) => {

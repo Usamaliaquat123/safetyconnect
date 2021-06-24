@@ -288,7 +288,7 @@ class Home extends React.Component<HomeProps, any> {
                 <TouchableOpacity
                   onPress={() =>{
                     
-                      
+                        
 
 
                     
