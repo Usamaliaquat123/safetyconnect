@@ -756,6 +756,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               name: attach[i],
               url: d.data[i],
             });
+
+            this.setState({ })
           } else if (attach[i].split('.')[1] == 'pdf') {
             this.state.attachments.push({
               type: 'pdf',
@@ -763,28 +765,29 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               name: attach[i],
               url: d.data[i],
             });
+            this.setState({ })
           } else if (
             attach[i].split('.')[1] == 'docx' ||
             attach[i].split('.')[1] == 'doc'
-          ) {
-            this.state.attachments.push({
-              type: 'pdf',
-              upload: '',
-              name: attach[i],
-              url: d.data[i],
-            });
-          } else if (attach[i].split('.')[1] == 'xlsx') {
-            this.state.attachments.push({
-              type: 'xlsx',
-              upload: '',
-              name: attach[i],
-              url: d.data[i],
-            });
-          }
+            ) {
+              this.state.attachments.push({
+                type: 'pdf',
+                upload: '',
+                name: attach[i],
+                url: d.data[i],
+              });
+              this.setState({ })
+            } else if (attach[i].split('.')[1] == 'xlsx') {
+              this.state.attachments.push({
+                type: 'xlsx',
+                upload: '',
+                name: attach[i],
+                url: d.data[i],
+              });
+              this.setState({ })
+            }
         }
       });
-
-    this.setState({});
 
     console.log(this.state.attach);
   };
