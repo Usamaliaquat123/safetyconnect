@@ -74,13 +74,13 @@ class Notifications extends React.Component<NotificationsProps, any> {
         this.setState({loading: false});
         this.setState({
           count: res.data.data[0].notifications.filter(
-            (n: any) => n.status == '0',
+            (n: any) => n.status == 0,
           ),
           newNotify: res.data.data[0].notifications.filter(
-            (n: any) => n.status == '0',
+            (n: any) => n.status == 0,
           ),
           oldNotify: res.data.data[0].notifications.filter(
-            (n: any) => n.status == '1',
+            (n: any) => n.status == 1,
           ),
         });
       });
