@@ -479,79 +479,31 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       commentAttachment: [],
     });
 
-    var data = {
-      bucket: 'hns-codist',
-      report: 'profile',
-      fileType: ['image/png'],
-      ext: ['png'],
-    };
+    if (attachment.length != 0) {
+      console.log(attachment);
+      var data = {
+        bucket: 'hns-codist',
+        report: 'profile',
+        fileType: ['image/png'],
+        ext: ['png'],
+      };
+    } else {
+    }
 
-    createApi
-      .createApi()
-      .getFilesUrl(data)
-      .then((res: any) => {
-        // console.log(res.data);
-        // RN
-        console.log();
-        // const blob = new Promise((resolve, reject) => {
-        //   const xhr = new XMLHttpRequest();
-        //   xhr.onload = function () {
-        //     resolve(xhr.response); // when BlobModule finishes reading, resolve with the blob
-        //   };
-        //   xhr.onerror = function () {
-        //     reject(new TypeError('Network request failed')); // error occurred, rejecting
-        //   };
-        //   xhr.responseType = 'blob'; // use BlobModule's UriHandler
-        //   xhr.open('GET', attachment[0].url, true); // fetch the blob from uri in async mode
-        //   xhr.send(null); // no initial data
-        // });
+    // createApi
+    //   .createApi()
+    //   .getFilesUrl(data)
+    //   .then((res: any) => {
+    //     console.log();
 
-        console.log('blob');
-        // console.log(blob);
+    //     createApi
+    //       .createApi('', '', '', '', '', '', res.data[0].url)
+    //       .uploadFile(attachment[0].base64, attachment[0].org)
+    //       .then((d: any) => {
+    //         console.log(d);
+    //       });
 
-        createApi
-          .createApi('', '', '', '', '', '', res.data[0].url)
-          .uploadFile(attachment[0].base64, attachment[0].org)
-          .then((d: any) => {
-            console.log(d);
-          });
-
-        const options = {
-          url: res.data[0].url,
-          // path: blob,
-          method: 'PUT',
-          type: 'raw',
-          maxRetries: 2, // set retry count (Android only). Default 2
-          headers: {
-            'content-type': attachment[0].orgType, // Customize content-type
-          },
-          notification: {
-            enabled: true,
-          },
-          useUtf8Charset: true,
-        };
-
-        // Upload.startUpload(options)
-        //   .then((uploadId) => {
-        //     console.log('Upload started');
-        //     Upload.addListener('progress', uploadId, (data) => {
-        //       console.log(`Progress: ${data.progress}%`);
-        //     });
-        //     Upload.addListener('error', uploadId, (data) => {
-        //       console.log(`Error: ${data.error}%`);
-        //     });
-        //     Upload.addListener('cancelled', uploadId, (data) => {
-        //       console.log(`Cancelled!`);
-        //     });
-        //     Upload.addListener('completed', uploadId, (data) => {
-        //       // data includes responseCode: number and responseBody: Object
-        //       console.log('Completed!');
-        //     });
-        //   })
-        //   .catch((err) => {
-        //     console.log('Upload error!', err);
-        //   });
-      });
+    //   });
 
     console.log(comment);
     console.log(attachment);
