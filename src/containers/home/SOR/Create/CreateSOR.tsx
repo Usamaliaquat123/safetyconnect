@@ -539,7 +539,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                             setTimeout(() => {
                               this.props.navigation.goBack();
-                            }, 3000);
+                            }, 1000);
 
                             console.log(res);
                           })
@@ -560,7 +560,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                         setTimeout(() => {
                           this.props.navigation.goBack();
-                        }, 3000);
+                        }, 1000);
                       }
 
                       if (res.status == 200) {
@@ -744,13 +744,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   loading: false,
                                   errorModal: false,
                                 });
-
                                 showMessage({
                                   message: 'SOR sucessfully subitted',
                                   type: 'success',
                                   position: 'bottom',
                                 });
-                                this.props.navigation.goBack();
+                                setTimeout(() => {
+                                  this.props.navigation.goBack();
+                                }, 1000);
                                 console.log('five why');
                                 console.log(res);
                               })
@@ -769,7 +770,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               type: 'success',
                               position: 'bottom',
                             });
-                            this.props.navigation.goBack();
+                            setTimeout(() => {
+                              this.props.navigation.goBack();
+                            }, 1000);
                           }
                           // if (res.status == 200) {
                           //   console.log('sdsd');
