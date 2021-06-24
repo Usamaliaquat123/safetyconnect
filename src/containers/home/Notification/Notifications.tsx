@@ -50,22 +50,26 @@ class Notifications extends React.Component<NotificationsProps, any> {
 
   componentDidMount() {
     // this.props.route.params
+
+    console.log('sdsd');
+    this.setState({loading: true});
     AsyncStorage.getItem('email').then((email: any) => {
-      api
-        .createApi()
-        .getUser(email)
-        .then((user: any) => {
-          console.log(user.data.data);
-          this.setState({user: user.data.data});
-          this.getAllNotifications(user.data.data.email);
-        });
+      this.getAllNotifications(email);
+      console.log(email);
+      // api
+      //   .createApi()
+      //   .getUser(email)
+      //   .then((user: any) => {
+      //     console.log(user.data.data);
+      //     this.setState({user: user.data.data});
+      //   });
     });
   }
 
   //   All Notificatiosn
-  getAllNotifications = async (email: string) => {
-    this.setState({loading: true});
-    await api
+  getAllNotifications = (email: string) => {
+    console.log(email);
+    api
       .createApi()
       .getAllNotifications(email, [0, 1])
       .then((res: any) => {
@@ -83,7 +87,8 @@ class Notifications extends React.Component<NotificationsProps, any> {
             (n: any) => n.status == 1,
           ),
         });
-      });
+      })
+      .catch((err) => console.log(err));
   };
 
   //   Refreshing Scrollview
@@ -252,9 +257,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
           </View>
           {/* validations error */}
           {/* Modal Container */}
-          <Modal
-            isVisible={this.state.loading}
-            onBackdropPress={() => this.setState({loading: false})}>
+          <Modal isVisible={this.state.loading}>
             {this.state.loading == true ? (
               <View>
                 <View style={{alignSelf: 'center'}}>
