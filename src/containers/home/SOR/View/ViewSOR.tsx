@@ -480,13 +480,38 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
 
     if (attachment.length != 0) {
-      console.log(attachment);
-      var data = {
-        bucket: 'hns-codist',
-        report: 'profile',
-        fileType: ['image/png'],
-        ext: ['png'],
-      };
+      // console.log(attachment);
+
+
+
+      // var data = {
+      //   bucket: 'hns-codist',
+      //   report: 'profile',
+      //   fileType: ['image/png'],
+      //   ext: ['png'],
+      // };
+
+
+
+      // var imgData = {
+      //   name: attachment.,
+      //   uri: res.uri,
+      //   type: res.type,
+      // };
+      // this.setState({fileLoading: true});
+
+      // fileuploader(res.orgType, res.orgType.split('/')[1], res.uri).then(
+      //   (filename: any) => {
+      //     console.log(filename);
+      //     imgData['name'] = filename;
+      //     // this.setState({fileLoading: false});
+      //     attach.splice(0, 0, imgData);
+      //     // this.state.uploadedfiles.push(filename);
+      //     this.setState({});
+
+      //     console.log(attach);
+      //   },
+      // );
     } else {
     }
 
@@ -517,7 +542,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               user: user.data.data._id,
               comment: comment,
               date: Date.now(),
-              files: [],
+              files: attachment.map((d : any) => d.name),
               is_comment: true,
             },
             comment_document_id: this.props.route.params.data.comments,
@@ -532,7 +557,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               map.push({
                 date: Date.now(),
                 comment: comment,
-                files: [],
+                files: attachment,
                 _id: res.data.data,
                 user: {
                   name: user.data.data.name,
