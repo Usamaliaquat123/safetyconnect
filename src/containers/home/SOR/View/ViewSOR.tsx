@@ -481,25 +481,18 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
     if (attachment.length != 0) {
       // console.log(attachment);
-
-
-
       // var data = {
       //   bucket: 'hns-codist',
       //   report: 'profile',
       //   fileType: ['image/png'],
       //   ext: ['png'],
       // };
-
-
-
       // var imgData = {
       //   name: attachment.,
       //   uri: res.uri,
       //   type: res.type,
       // };
       // this.setState({fileLoading: true});
-
       // fileuploader(res.orgType, res.orgType.split('/')[1], res.uri).then(
       //   (filename: any) => {
       //     console.log(filename);
@@ -508,7 +501,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       //     attach.splice(0, 0, imgData);
       //     // this.state.uploadedfiles.push(filename);
       //     this.setState({});
-
       //     console.log(attach);
       //   },
       // );
@@ -530,7 +522,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
     //   });
 
-    console.log(comment);
+    console.log('attachments ===============');
     console.log(attachment);
     AsyncStorage.getItem('email').then((email: any) => {
       createApi
@@ -542,7 +534,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               user: user.data.data._id,
               comment: comment,
               date: Date.now(),
-              files: attachment.map((d : any) => d.name),
+              files: attachment.map((d: any) => d.name),
               is_comment: true,
             },
             comment_document_id: this.props.route.params.data.comments,
@@ -2284,7 +2276,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         style={{marginBottom: wp(3), marginLeft: wp(8)}}
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}>
-                        {d.attachments.map((d: any, i: number) => (
+                        {d.attachments.map((f: any, i: number) => (
                           <View
                             style={[
                               styles.AttchimageContainer,
@@ -2297,7 +2289,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             {d.type == 'image' ? (
                               <Image
                                 source={{
-                                  uri: d.url,
+                                  uri: f.uri,
                                 }}
                                 style={[GlStyles.images, {borderRadius: wp(5)}]}
                                 resizeMode={'cover'}
@@ -2306,13 +2298,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               <View>
                                 <Image
                                   source={
-                                    d.type == 'pdf'
+                                    f.type == 'pdf'
                                       ? images.pdf
-                                      : d.type == 'doc'
+                                      : f.type == 'doc'
                                       ? images.doc
-                                      : d.type == 'text'
+                                      : f.type == 'text'
                                       ? images.text
-                                      : d.type == 'doc'
+                                      : f.type == 'doc'
                                       ? images.doc
                                       : // : d.type == 'excel'
                                         // ? images.excel

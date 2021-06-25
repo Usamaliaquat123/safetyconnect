@@ -85,7 +85,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
             });
 
             await Auth.forgotPasswordSubmit(
-              this.props.route.params.email, // dynal=mic link
+              this.props.route.params.email, // dynamic link
               this.props.route.params.code, // dynamic link
               this.state.password, //password new
             )
