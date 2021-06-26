@@ -226,98 +226,36 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
             IndustryRoleError: false,
           });
 
-          var data = {
-            bucket: 'hns-codist',
-            report: 'profile',
-            fileType: [this.state.photofileType],
-            ext: [this.state.fileType],
+          var setUserInfoData = {
+            email: this.props.route.params.username,
+            role: this.state.DesignAndArchitectureText,
+            department: this.state.IndustryRole,
+            industry: this.state.name,
+            img_url: this.state.uploadedImage,
           };
-
-          // RNFetchBlob.fetch('GET', this.state.uploadedImage).then(
-          //   (uploadImage) => {
-          //     console.log('rnfetch blob');
-          //     console.log(uploadImage.base64());
-          //     console.log('rnfetch blob');
-          //   },
-          // );
-
-          // console.log();
-          console.log(data);
-          createApi
+          api
             .createApi()
-            .getFilesUrl(data)
-            .then((geturi: any) => {
-              console.log('get uri from profile ');
-              console.log(geturi);
-              // this.uploadImageUri(geturi.data[0].url, this.state.uploadedImage);
-
-              createApi
-                .createApi('', '', '', '', '', '', geturi.data[0].url)
-                .uploadFile(this.state.uploadedImage)
-                .then((res) => {
-                  console.log('get status from upload file');
-                  console.log(res);
-
-                  // if (res.status == 200) {
-                  // if (this.props.route.params.isgoogle == true) {
-                  //   var createUserData = {
-                  //     name: this.state.userFullName,
-                  //     email: this.props.route.params.username,
-                  //     organization: [],
-                  //     img_url: ' ',
-                  //   };
-                  //   createApi
-                  //     .createApi()
-                  //     .createUser(createUserData)
-                  //     .then((res: any) => {
-                  //       console.log('user created?');
-                  //       console.log(res);
-                  //     });
-                  // }
-
-                  var setUserInfoData = {
-                    email: this.props.route.params.username,
-                    role: this.state.DesignAndArchitectureText,
-                    department: this.state.IndustryRole,
-                    industry: this.state.name,
-                    img_url: geturi.data[0].fileName,
-                  };
-                  console.log(setUserInfoData);
-                  api
-                    .createApi()
-                    .setUserInfo(setUserInfoData)
-                    .then((res) => {
-                      console.log('with in set user info');
-                      console.log(res);
-                      console.log('with in set user info');
-                      if ((res.status = 200)) {
-                        this.setState({
-                          loading: false,
-                          errorModal: false,
-                        });
-                        api
-                          .createApi()
-                          .getUser(this.props.route.params.username)
-                          .then((res: any) => {
-                            AsyncStorage.setItem(
-                              'user',
-                              JSON.stringify(res.data.data),
-                            );
-                          });
-                        AsyncStorage.setItem(
-                          'email',
-                          this.props.route.params.username,
-                        );
-
-                        this.props.navigation.navigate('CreateOrganization');
-                      }
-                    })
-                    .catch((err) => console.log(err));
-                  // } else if (res.status == null) {
-                  // }
+            .setUserInfo(setUserInfoData)
+            .then((res) => {
+              if ((res.status = 200)) {
+                this.setState({
+                  loading: false,
+                  errorModal: false,
                 });
-              console.log(geturi.data[0].url);
-            });
+                api
+                  .createApi()
+                  .getUser(this.props.route.params.username)
+                  .then((res: any) => {
+                    AsyncStorage.setItem('user', JSON.stringify(res.data.data));
+                  });
+                AsyncStorage.setItem('email', this.props.route.params.username);
+
+                this.props.navigation.navigate('CreateOrganization');
+              }
+            })
+            .catch((err) => console.log(err));
+          // } else if (res.status == null) {
+          // }
         } else {
           this.setState({IndustryRoleError: true, nameError: false});
         }
