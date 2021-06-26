@@ -25,6 +25,8 @@ import {RouteProp} from '@react-navigation/native';
 
 import {
   imagePicker,
+  // fileuploader,
+  profileUploader,
   cameraCapture,
   suggestInActionsRecommendations,
 } from '@utils';
@@ -121,19 +123,19 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
     };
   }
 
-  // componentDidMount = () => {};
+  componentDidMount = () => {};
 
   imgCap = (str: string) => {
     if (str == 'upload') {
       imagePicker()
         .then((res: any) => {
-          console.log(res);
+          // console.log(res);
           if (res.didCancel == true) {
             this.setState({photoModal: false, uploadedImage: ''});
           } else {
             console.log();
 
-            RNFS.readFile(res.uri).then((file) => console.log(file));
+            // RNFS.readFile(res.uri).then((file) => console.log(file));
 
             //   var data = {
             //     bucket:"hns-codist",
@@ -142,15 +144,33 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
             //     ext:[""]
             // }
 
-            console.log(res);
+            var imgData = {
+              name: res.name,
+              uri: res.uri,
+              type: res.type,
+            };
+            // this.setState({fileLoading: true});
+
+            profileUploader(res.type, res.type.split('/')[1], res.base64).then(
+              (filename: any) => {
+                imgData['uri'] = filename[0];
+                console.log(imgData);
+                this.setState({
+                  photoModal: false,
+                  uploadedImage: filename[0],
+                  photofileType: res.type,
+                  fileType: res.type.split('/')[1],
+                });
+              },
+            );
+
+            // this.state.filename.push(imgData);
 
             this.setState({});
-            this.setState({
-              photoModal: false,
-              uploadedImage: res.uri,
-              photofileType: res.type,
-              fileType: res.type.split('/')[1],
-            });
+
+            // console.log(res);
+
+            // this.setState({});
           }
         })
         .catch((err) => {
@@ -401,7 +421,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                   </View>
                 </View>
 
-                {this.props.route.params.isgoogle == true && (
+                {/* {this.props.route.params.isgoogle == true && (
                   <View style={styles.inputsContainer}>
                     <Text
                       style={[styles.emailTextContainer, {marginTop: wp(2)}]}>
@@ -434,7 +454,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       </Text>
                     )}
                   </View>
-                )}
+                )} */}
 
                 {/* your industry */}
                 <View style={styles.inputsContainer}>
