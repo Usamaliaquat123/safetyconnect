@@ -95,6 +95,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
       selected: 0,
       photo: '',
       photofileType: '',
+      fileLoading: false,
       fileType: '',
       role: '',
       name: '',
@@ -149,15 +150,18 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
               uri: res.uri,
               type: res.type,
             };
-            // this.setState({fileLoading: true});
+            this.setState({fileLoading: true});
 
             profileUploader(res.type, res.type.split('/')[1], res.base64).then(
               (filename: any) => {
                 imgData['uri'] = filename[0];
                 console.log(imgData);
+
                 this.setState({
+                  fileLoading: false,
                   photoModal: false,
                   uploadedImage: filename[0],
+                  // orgUploadImgUrl : filename[0],
                   photofileType: res.type,
                   fileType: res.type.split('/')[1],
                 });
@@ -375,16 +379,25 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       justifyContent: 'space-between',
                     }}>
                     <View style={{paddingRight: wp(10)}}>
-                      <Avatar
-                        rounded
-                        size={wp(25)}
-                        source={{
-                          uri:
-                            this.state.uploadedImage !== ''
-                              ? this.state.uploadedImage
-                              : 'https://via.placeholder.com/150',
-                        }}
-                      />
+                      {this.state.fileLoading ? (
+                        <LottieView
+                          autoPlay={true}
+                          style={{width: wp(20)}}
+                          source={animation.profileimage}
+                          loop={true}
+                        />
+                      ) : (
+                        <Avatar
+                          rounded
+                          size={wp(25)}
+                          source={{
+                            uri:
+                              this.state.uploadedImage != ''
+                                ? this.state.uploadedImage
+                                : 'https://via.placeholder.com/150',
+                          }}
+                        />
+                      )}
                     </View>
                     <View>
                       <Text
