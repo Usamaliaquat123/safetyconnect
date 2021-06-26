@@ -37,7 +37,7 @@ import {bindActionCreators} from 'redux';
 
 import {AllSorDTO} from '@dtos';
 import {getActiveChildNavigationOptions} from 'react-navigation';
-import {validateEmail} from '@utils/utils';
+import {validateEmail, profileUploader} from '@utils';
 import {default as Model} from 'react-native-modal';
 
 // import {validateEmail} from '@utils/';
@@ -67,6 +67,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
       org: '',
       orgDetails: '',
       peoplesText: '',
+      fileLoading: false,
       peoples: [], // must be array of id's
       suggestedEmail: false,
       selectedEmails: [],
@@ -98,38 +99,39 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
           if (res.didCancel == true) {
             this.setState({photoModal: false, uploadedImage: ''});
           } else {
-            console.log(res.type.split('/'));
-            this.setState({
-              photoModal: false,
-              orgImageBase64: res.base64,
-              uploadedImage: res.uri,
-              photofileType: res.type.split('/')[1],
+            console.log(res);
 
-              fileType: res.type.split('/')[1],
-            });
+            // this.setState({
+            //   photoModal: false,
+            //   orgImageBase64: res.base64,
+            //   uploadedImage: res.uri,
+            //   photofileType: res.type.split('/')[1],
 
-            console.log('res.uri');
-            console.log(res.uri);
+            //   fileType: res.type.split('/')[1],
+            // });
 
-            var img = {
-              bucket: 'hns-codist',
-              report: 'profile',
-              fileType: [`image/${this.state.photofileType}`],
-              ext: [this.state.photofileType],
+            var imgData = {
+              name: res.name,
+              uri: res.uri,
+              type: res.type,
             };
+            this.setState({fileLoading: true});
 
-            console.log(img);
-            api
-              .createApi()
-              .getFilesUrl(img)
-              .then((imgUri: any) => {
-                console.log(imgUri);
-                // console.log(imgUri);
-                api
-                  .createApi('', '', '', '', '', '', imgUri.data[0].url)
-                  .uploadFile(this.state.orgImageBase64)
-                  .then((res) => console.log(res));
-              });
+            profileUploader(res.type, res.type.split('/')[1], res.base64).then(
+              (filename: any) => {
+                imgData['uri'] = filename[0];
+                console.log(imgData);
+
+                this.setState({
+                  fileLoading: false,
+                  photoModal: false,
+                  uploadedImage: filename[0],
+                  // orgUploadImgUrl : filename[0],
+                  photofileType: res.type,
+                  fileType: res.type.split('/')[1],
+                });
+              },
+            );
           }
         })
         .catch((err) => {
@@ -168,6 +170,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
               name: this.state.org,
               details: this.state.orgDetails,
               members: [],
+              img_url: this.state.uploadedImage,
               projects: [],
             };
             api
@@ -302,16 +305,25 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                   alignSelf: 'center',
                 }}>
                 <View>
-                  <Avatar
-                    rounded
-                    size={wp(25)}
-                    source={{
-                      uri:
-                        this.state.uploadedImage !== ''
-                          ? this.state.uploadedImage
-                          : 'https://via.placeholder.com/150',
-                    }}
-                  />
+                  {this.state.fileLoading ? (
+                    <LottieView
+                      autoPlay={true}
+                      style={{width: wp(20)}}
+                      source={animation.profileimage}
+                      loop={true}
+                    />
+                  ) : (
+                    <Avatar
+                      rounded
+                      size={wp(25)}
+                      source={{
+                        uri:
+                          this.state.uploadedImage !== ''
+                            ? this.state.uploadedImage
+                            : 'https://via.placeholder.com/150',
+                      }}
+                    />
+                  )}
                 </View>
               </TouchableOpacity>
               <Text
@@ -472,7 +484,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                     )}
                   </View>
 
-{/* Invite people */}
+                  {/* Invite people */}
                   {/* <TouchableOpacity
                     onPress={() =>
                       this.props.navigation.navigate('InvitePeople', {
@@ -505,7 +517,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                   </TouchableOpacity>
                 
                  */}
-                
                 </View>
 
                 <TouchableOpacity
