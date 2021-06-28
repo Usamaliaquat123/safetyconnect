@@ -688,11 +688,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
         {/* //////////// */}
         {/* //////////// */}
 
-        <Model
-          isVisible={this.state.createModal}
-          onBackdropPress={() => {
-            this.setState({createModal: false, loading: false});
-          }}>
+        <Model isVisible={this.state.createModal}>
           <View>
             {/* content */}
             <View style={styles.contentLocations}>

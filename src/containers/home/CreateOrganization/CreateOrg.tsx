@@ -73,10 +73,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
       selectedEmails: [],
       members: [],
       assignProjects: [],
-      // Project Leaders
-      // selectedProjectleadersEmail: [],
-      // projectleadersText: '',
-      // suggestedProjectLeadersEmail: false,
 
       createNewProject: false,
     };
