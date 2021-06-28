@@ -584,10 +584,19 @@ export const getSorData = (id: string, projectid: string) => {
       project: projectid,
       limit: 1000000,
       page: 0,
-      query: {_id:id },
+      query: {_id: id},
     };
 
-    createApi.createApi().filterSors(data).then((res: any) => resolve(res.data.report)).catch(err => reject(err))
+    createApi
+      .createApi()
+      .filterSors(data)
+      .then((res: any) => {
+        console.log(res);
+        console.log('utils');
+
+        resolve(res.data.data.report);
+      })
+      .catch((err) => reject(err));
   });
 };
 

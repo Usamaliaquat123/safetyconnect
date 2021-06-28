@@ -21,13 +21,7 @@ import {colors, GlStyles, animation, images, fonts} from '@theme';
 import RNFetchBlob from 'rn-fetch-blob';
 import Upload from 'react-native-background-upload';
 
-import {
-  View_sor,
-  notified,
-  Create_sor,
-  riskxSeverityxliklihood,
-  createApi,
-} from '@service';
+import {View_sor, notified, riskxSeverityxliklihood, createApi} from '@service';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {Tags, Chart, CommentPop, SuggestionsPop, FiveWhy} from '@components';
@@ -50,6 +44,7 @@ import {
   filterAndMappingPersons,
   downloadFile,
   filterLocation,
+  getSorData,
   fileuploader,
   getCurrentProject,
 } from '@utils';
@@ -76,6 +71,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
+      sor: {},
       user: {},
       time: this.props.route.params.data.occured_at,
       initAnim: new Animated.Value(0),
@@ -178,6 +174,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     // this.getFilesFromServer(this.props.route.params.data.attachments);
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
+      getSorData(this.props.route.params.data._id, currentProj).then(
+        (sorData: any) => {
+          console.log('sorData');
+
+          this.setState({sor: sorData[0]});
+          console.log(sorData);
+        },
+      );
 
       createApi
         .createApi()
