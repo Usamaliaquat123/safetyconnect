@@ -2,7 +2,7 @@ import {colors} from '@theme/colors';
 import * as ImagePicker from 'react-native-image-picker/src';
 import {Auth} from 'aws-amplify';
 
-import {createApi as api} from '@service';
+import {createApi as api, createApi} from '@service';
 import RNFetchBlob from 'rn-fetch-blob';
 import {
   widthPercentageToDP as wp,
@@ -574,6 +574,20 @@ export const profileUploader = (types: string, ext: string, base64: string) => {
           .catch((err) => reject(err));
       })
       .catch((err) => reject(err));
+  });
+};
+
+// get  sor report data
+export const getSorData = (id: string, projectid: string) => {
+  return new Promise((resolve, reject) => {
+    var data = {
+      project: projectid,
+      limit: 1000000,
+      page: 0,
+      query: {_id:id },
+    };
+
+    createApi.createApi().filterSors(data).then((res: any) => resolve(res.data.report)).catch(err => reject(err))
   });
 };
 

@@ -20,7 +20,7 @@ import {Icon} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 
-import {RouteProp} from '@react-navigation/native';
+import {RouteProp, CommonActions} from '@react-navigation/native';
 import {colors, images, GlStyles} from '@theme';
 import {animation} from '@theme';
 import LottieView from 'lottie-react-native';
@@ -76,6 +76,17 @@ class Menu extends React.Component<MenuProps, any> {
               onPress={() => {
                 //   this.setState({createModal: false});
                 this.props.navigation.navigate('CreateSOR');
+
+                this.props.navigation.dispatch(
+                  CommonActions.reset({
+                    index: 1,
+                    routes: [
+                      {
+                        name: 'CreateSOR',
+                      },
+                    ],
+                  }),
+                );
               }}
               style={styles.containerOfIcon}>
               <View style={styles.newsorContainer}>
