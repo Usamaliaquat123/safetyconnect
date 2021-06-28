@@ -174,7 +174,10 @@ class Notifications extends React.Component<NotificationsProps, any> {
               <>
                 <Text style={styles.allNotificationsText}>New </Text>
                 {this.state.newNotify.map((d: any, i: any) => (
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.onViewSor(d.project_id, d.sor_id, d._id)
+                    }>
                     <View style={styles.lineheight} />
                     <View style={styles.notificationContainer}>
                       <Icon
@@ -187,7 +190,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
 
                       <View
                         style={{
-                          marginTop: wp(-1),
+                          marginTop: wp(-5),
                           backgroundColor: colors.error,
                           padding: wp(0.7),
                           borderRadius: wp(10),
