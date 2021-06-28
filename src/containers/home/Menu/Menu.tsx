@@ -76,17 +76,6 @@ class Menu extends React.Component<MenuProps, any> {
               onPress={() => {
                 //   this.setState({createModal: false});
                 this.props.navigation.navigate('CreateSOR');
-
-                this.props.navigation.dispatch(
-                  CommonActions.reset({
-                    index: 1,
-                    routes: [
-                      {
-                        name: 'CreateSOR',
-                      },
-                    ],
-                  }),
-                );
               }}
               style={styles.containerOfIcon}>
               <View style={styles.newsorContainer}>

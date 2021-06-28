@@ -1003,6 +1003,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     value={this.state.observation}
                     style={{
                       marginTop: wp(-4.5),
+                      width: wp(20),
                       borderBottomWidth: 0,
                       color: colors.primary,
                       fontWeight: 'bold',
