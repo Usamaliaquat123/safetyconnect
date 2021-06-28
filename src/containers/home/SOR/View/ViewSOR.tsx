@@ -174,14 +174,19 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     // this.getFilesFromServer(this.props.route.params.data.attachments);
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
-      getSorData(this.props.route.params.data._id, currentProj).then(
-        (sorData: any) => {
-          console.log('sorData');
+      // getSorData(this.props.route.params.data._id, currentProj).then(
+      //   (sorData: any) => {
+      //     console.log('sorData');
 
-          this.setState({sor: sorData[0]});
-          console.log(sorData);
-        },
-      );
+      //     this.setState({sor: sorData[0]});
+      //     console.log(sorData);
+          
+
+
+
+        
+      //   },
+      // );
 
       createApi
         .createApi()
