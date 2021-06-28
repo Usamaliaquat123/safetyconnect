@@ -55,9 +55,12 @@ class Notifications extends React.Component<NotificationsProps, any> {
     this.setState({
       count: this.props.route.params.data.filter((n: any) => n.status == 0)
         .length,
-      newNotify: this.props.route.params.data.filter((n: any) => n.status == 0),
+      newNotify: this.props.route.params.data
+        .filter((n: any) => n.status == 0)
+        .sort((a: any, b: any) => new Date(b.date) - new Date(a.date)),
       oldNotify: this.props.route.params.data.filter((n: any) => n.status == 1),
     });
+
     // console.log(this.props.route.params.data);
 
     // console.log('sdsd');
@@ -93,13 +96,9 @@ class Notifications extends React.Component<NotificationsProps, any> {
   };
 
   // redirecting to view sor
-  onViewSor = async (
-    projectId: string,
-    reportId: string,
-    notificationId: any,
-  ) => {
+  onViewSor = (projectId: string, reportId: string, notificationId: any) => {
     this.setState({loading: true});
-    await api
+    api
       .createApi()
       .getSors(projectId, reportId)
       .then((userD: any) => {
@@ -108,6 +107,8 @@ class Notifications extends React.Component<NotificationsProps, any> {
           .readSpecificNotification(this.state.user.email, notificationId)
           .then((res: any) => {
             this.setState({loading: false});
+
+            console.log(res);
             if (userD.status == 200) {
               this.props.navigation.navigate('ViewSOR', {
                 data: userD.data.data.report[0],
@@ -202,7 +203,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
                         <Text style={styles.notificationDes}>{d.message}</Text>
                         {/* Date */}
                         <Text style={styles.notifyDate}>
-                          {moment(d.date).format('dddd,  DD MMM ')}
+                          {moment(d.date).fromNow()}
                         </Text>
                       </View>
 
@@ -248,7 +249,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
                           </Text>
                           {/* Date */}
                           <Text style={styles.notifyDate}>
-                            {moment(d.date).format('dddd,  DD MMM ')}
+                            {moment(d.date).fromNow()}
                           </Text>
                         </View>
                         <Icon
