@@ -636,6 +636,9 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                 </View>
 
                 {/* Invite people */}
+
+                {/* 
+
                 <TouchableOpacity
                   onPress={() =>
                     this.props.navigation.navigate('InvitePeople', {
@@ -666,6 +669,8 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     Invite new People
                   </Text>
                 </TouchableOpacity>
+
+ */}
 
                 <TouchableOpacity
                   onPress={() => this.createProject()}
