@@ -97,33 +97,31 @@ class Home extends React.Component<HomeProps, any> {
         .createApi()
         .getAllNotifications(email, '[0,1]')
         .then((notify: any) => {
+          console.log(notify.data.data.notifications);
           this.setState({
-            count: notify.data.data[0].notifications.filter(
-              (n: any) => n.status == '0',
-            ),
+            count: notify.data.data.notifications.filter(
+              (n: any) => n.status == 0,
+            ).length,
           });
         });
       createApi
         .createApi()
         .getUser(email)
         .then((res: any) => {
-
-
-
           this.setState({name: res.data.data.name});
           this.setState({image: res.data.data.img_url});
           this.setState({user: res.data.data});
           this.setState({allOrganizations: res.data.data.organizations});
-          var data = {
-            bucket: 'hns-codist',
-            report: [`profile/${res.data.data.img_url}`],
-          };
-          createApi
-            .createApi()
-            .getFileApi(data)
-            .then((file: any) => {
-              this.setState({image: file.data[0]});
-            });
+          // var data = {
+          //   bucket: 'hns-codist',
+          //   report: [`profile/${res.data.data.img_url}`],
+          // };
+          // createApi
+          //   .createApi()
+          //   .getFileApi(data)
+          //   .then((file: any) => {
+          //     this.setState({image: file.data[0]});
+          //   });
           if (
             res.data.data.organizations.filter(
               (d: any) => d._id == this.state.currentorg,
@@ -286,19 +284,13 @@ class Home extends React.Component<HomeProps, any> {
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() =>{
-                    
-                        
-
-
-                    
-                    
-                    
-                    this.props.navigation.navigate('Settings',{data: this.state.user})}}>
+                  onPress={() => {
+                    this.props.navigation.navigate('Settings', {
+                      data: this.state.user,
+                    });
+                  }}>
                   <Avatar
                     rounded
-
-                    
                     source={{
                       uri:
                         this.state.image !== ''

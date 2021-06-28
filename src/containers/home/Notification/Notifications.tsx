@@ -65,19 +65,19 @@ class Notifications extends React.Component<NotificationsProps, any> {
 
       api
         .createApi()
-        .getAllNotifications(email, [0, 1])
+        .getAllNotifications(email, '[0,1]')
         .then((res: any) => {
           console.log('data from notifications');
           console.log(res);
           this.setState({loading: false});
           this.setState({
-            count: res.data.data[0].notifications.filter(
+            count: res.data.data.notifications.filter(
               (n: any) => n.status == 0,
             ),
-            newNotify: res.data.data[0].notifications.filter(
+            newNotify: res.data.data.notifications.filter(
               (n: any) => n.status == 0,
             ),
-            oldNotify: res.data.data[0].notifications.filter(
+            oldNotify: res.data.data.notifications.filter(
               (n: any) => n.status == 1,
             ),
           });
