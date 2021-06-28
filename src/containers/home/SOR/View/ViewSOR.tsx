@@ -1599,156 +1599,166 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             {/* Line  */}
             <View style={styles.lineheight} />
             {/* Actions / recommendations */}
-            <View style={styles.actionContainer}>
-              <Text style={styles.actionText}>Action / Recommendation</Text>
-              {/* <Text style={styles.sugForYouText}>Suggested for you</Text> */}
-              {this.props.route.params.data.action_required == undefined ? (
-                <Text style={styles.nosuchActionsAndRecommendations}>
-                  No such Actions / Recommendations
-                </Text>
-              ) : (
-                <View>
-                  {/* {this.state.actionsAndRecommendations.map(
-                    (d: actions, i: number) => (
-                      <TouchableOpacity
-                        onPress={() => {
-                          var data = [...this.state.actionsAndRecommendations];
-                          if (d.is_complete == true) {
-                            data[i].is_complete = false;
-                          } else {
-                            data[i].is_complete = true;
-                          }
-                          this.setState({actionsAndRecommendations: data});
-                        }}
-                        onLongPress={() => {
-                          this.setState({
-                            allActionsEdit: d,
-                            SuggestionPop: true,
-                            allActionsEditIndex: i,
-                            newActions: false,
-                          });
-                        }}
-                        style={[
-                          styles.actionRecomCon,
-                          d.is_complete == true
-                            ? {
-                                borderWidth: wp(0.2),
-                                backgroundColor: colors.lightBlue,
-                                borderColor: colors.primary,
+                  
+
+                  {this.state.sor_type == "positive" ? 
+                  
+                  <View style={styles.actionContainer}>
+                  <Text style={styles.actionText}>Action / Recommendation</Text>
+                  {/* <Text style={styles.sugForYouText}>Suggested for you</Text> */}
+                  {this.props.route.params.data.action_required == undefined ? (
+                    <Text style={styles.nosuchActionsAndRecommendations}>
+                      No such Actions / Recommendations
+                    </Text>
+                  ) : (
+                    <View>
+                      {/* {this.state.actionsAndRecommendations.map(
+                        (d: actions, i: number) => (
+                          <TouchableOpacity
+                            onPress={() => {
+                              var data = [...this.state.actionsAndRecommendations];
+                              if (d.is_complete == true) {
+                                data[i].is_complete = false;
+                              } else {
+                                data[i].is_complete = true;
                               }
-                            : {
-                                borderWidth: wp(0.3),
-                                borderColor: colors.lightGrey,
-                              },
-                        ]}>
-                        <View>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              alignItems: 'center',
-                            }}>
-                            <Icon
-                              size={wp(3.5)}
-                              name="checkcircle"
-                              type="antdesign"
-                              color={
-                                d.is_complete == true
-                                  ? colors.green
-                                  : colors.lightGrey
-                              }
-                            />
-                            <Text style={styles.statusARText}>
-                              {d.is_complete == true ? 'Completed' : 'Status'}
-                            </Text>
-                            <View style={{position: 'absolute', right: wp(3)}}>
-                              <Text style={[styles.actionTypeElemAsdmin]}>
-                                {d.category}
+                              this.setState({actionsAndRecommendations: data});
+                            }}
+                            onLongPress={() => {
+                              this.setState({
+                                allActionsEdit: d,
+                                SuggestionPop: true,
+                                allActionsEditIndex: i,
+                                newActions: false,
+                              });
+                            }}
+                            style={[
+                              styles.actionRecomCon,
+                              d.is_complete == true
+                                ? {
+                                    borderWidth: wp(0.2),
+                                    backgroundColor: colors.lightBlue,
+                                    borderColor: colors.primary,
+                                  }
+                                : {
+                                    borderWidth: wp(0.3),
+                                    borderColor: colors.lightGrey,
+                                  },
+                            ]}>
+                            <View>
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                }}>
+                                <Icon
+                                  size={wp(3.5)}
+                                  name="checkcircle"
+                                  type="antdesign"
+                                  color={
+                                    d.is_complete == true
+                                      ? colors.green
+                                      : colors.lightGrey
+                                  }
+                                />
+                                <Text style={styles.statusARText}>
+                                  {d.is_complete == true ? 'Completed' : 'Status'}
+                                </Text>
+                                <View style={{position: 'absolute', right: wp(3)}}>
+                                  <Text style={[styles.actionTypeElemAsdmin]}>
+                                    {d.category}
+                                  </Text>
+                                </View>
+                              </View>
+                              <Text
+                                style={[
+                                  styles.obvTextAction,
+                                  d.is_complete == true
+                                    ? {color: colors.text, opacity: 0.5}
+                                    : null,
+                                ]}>
+                                {d.content}
                               </Text>
                             </View>
-                          </View>
-                          <Text
-                            style={[
-                              styles.obvTextAction,
-                              d.is_complete == true
-                                ? {color: colors.text, opacity: 0.5}
-                                : null,
-                            ]}>
-                            {d.content}
-                          </Text>
-                        </View>
-
-                        <View style={styles.subAss}>
-                          <TouchableOpacity>
-                            <Text style={styles.subAssText}>
-                              Assigned to:{' '}
-                              <Text style={styles.subAssuser}>
-                                {d.assigned_to}
+    
+                            <View style={styles.subAss}>
+                              <TouchableOpacity>
+                                <Text style={styles.subAssText}>
+                                  Assigned to:{' '}
+                                  <Text style={styles.subAssuser}>
+                                    {d.assigned_to}
+                                  </Text>
+                                </Text>
+                              </TouchableOpacity>
+    
+                              <Text style={styles.subAssText}>
+                                {moment(d.date).format('MMM DD YYYY')}
                               </Text>
-                            </Text>
+                            </View>
                           </TouchableOpacity>
-
-                          <Text style={styles.subAssText}>
-                            {moment(d.date).format('MMM DD YYYY')}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                    ),
-                  )} */}
-
-                  {this.state.actionsAndRecommendations.map(
-                    (d: any, i: number) => (
-                      <TouchableOpacity
-                        onPress={() => {
-                          var data = [...this.state.actionsAndRecommendations];
-                          if (d.is_complete == true) {
-                            data[i].is_complete = false;
-                          } else {
-                            data[i].is_complete = true;
-                          }
-                          this.setState({actionsAndRecommendations: data});
-                        }}
-                        onLongPress={() => {
-                          this.setState({
-                            allActionsEdit: d,
-                            SuggestionPop: true,
-                            allActionsEditIndex: i,
-                            newActions: false,
-                          });
-                        }}
-                        key={i}
-                        style={[
-                          styles.suggestedActionsContainer,
-                          d.is_complete == true
-                            ? {
-                                backgroundColor: colors.lightBlue,
-                                borderWidth: wp(0),
+                        ),
+                      )} */}
+    
+                      {this.state.actionsAndRecommendations.map(
+                        (d: any, i: number) => (
+                          <TouchableOpacity
+                            onPress={() => {
+                              var data = [...this.state.actionsAndRecommendations];
+                              if (d.is_complete == true) {
+                                data[i].is_complete = false;
+                              } else {
+                                data[i].is_complete = true;
                               }
-                            : {
-                                backgroundColor: colors.secondary,
-                                borderWidth: wp(0.2),
-                              },
-                        ]}>
-                        <View style={{flexDirection: 'row', width: wp(84)}}>
-                          <Text style={styles.actionType}>
-                            {d.category}:{' '}
-                            <Text style={styles.actionDesc}>
-                              {d.content.substring(0, 50)}...
-                            </Text>
-                          </Text>
-                        </View>
-                        <Icon
-                          size={wp(6)}
-                          name="more-vertical"
-                          type="feather"
-                          color={'#686868'}
-                        />
-                      </TouchableOpacity>
-                    ),
+                              this.setState({actionsAndRecommendations: data});
+                            }}
+                            onLongPress={() => {
+                              this.setState({
+                                allActionsEdit: d,
+                                SuggestionPop: true,
+                                allActionsEditIndex: i,
+                                newActions: false,
+                              });
+                            }}
+                            key={i}
+                            style={[
+                              styles.suggestedActionsContainer,
+                              d.is_complete == true
+                                ? {
+                                    backgroundColor: colors.lightBlue,
+                                    borderWidth: wp(0),
+                                  }
+                                : {
+                                    backgroundColor: colors.secondary,
+                                    borderWidth: wp(0.2),
+                                  },
+                            ]}>
+                            <View style={{flexDirection: 'row', width: wp(84)}}>
+                              <Text style={styles.actionType}>
+                                {d.category}:{' '}
+                                <Text style={styles.actionDesc}>
+                                  {d.content.substring(0, 50)}...
+                                </Text>
+                              </Text>
+                            </View>
+                            <Icon
+                              size={wp(6)}
+                              name="more-vertical"
+                              type="feather"
+                              color={'#686868'}
+                            />
+                          </TouchableOpacity>
+                        ),
+                      )}
+                    </View>
                   )}
                 </View>
-              )}
-            </View>
-            {/* submit actions and recommendations  */}
+                {/* submit actions and recommendations  */}
+                
+                :  null}
+
+
+
+       
             <View
               style={[
                 styles.addActionAndRecommendation,
