@@ -177,18 +177,11 @@ class Notifications extends React.Component<NotificationsProps, any> {
                   <TouchableOpacity>
                     <View style={styles.lineheight} />
                     <View style={styles.notificationContainer}>
-                      {/* <Avatar
-                        size={wp(7)}
-                        rounded
-                        source={{
-                          uri: 'https://via.placeholder.com/150',
-                        }}
-                      /> */}
                       <Icon
-                        name={'md-notifications-circle-outline'}
+                        name={'notifications'}
                         type={'ionicon'}
-                        size={wp(7)}
-                        containerStyle={{opacity: 0.5}}
+                        size={wp(5)}
+                        // containerStyle={{opacity: 0.5}}
                         color={colors.text}
                       />
                       {/* Content */}
@@ -228,10 +221,10 @@ class Notifications extends React.Component<NotificationsProps, any> {
                       <View style={styles.lineheight} />
                       <View style={styles.notificationContainer}>
                         <Icon
-                          name={'md-notifications-circle-outline'}
+                          name={'notifications'}
                           type={'ionicon'}
-                          size={wp(7)}
-                          containerStyle={{opacity: 0.5}}
+                          size={wp(5)}
+                          // containerStyle={{opacity: 0.5}}
                           color={colors.text}
                         />
                         {/* Content */}
