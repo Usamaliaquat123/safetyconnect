@@ -25,8 +25,8 @@ export type StackNavigatorProps = {
   NoInternet: undefined;
   Main: undefined;
   InvitePeople: {data: string};
-  Settings: {data : any};
-  Notification: undefined;
+  Settings: {data: any};
+  Notification: {data: any};
   WelcomeHome: undefined;
   Splash: undefined;
   AddLocation: undefined;

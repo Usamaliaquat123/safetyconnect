@@ -50,46 +50,45 @@ class Notifications extends React.Component<NotificationsProps, any> {
 
   componentDidMount() {
     // this.props.route.params
+    console.log(this.props.route.params.data);
+    this.setState({
+      count: this.props.route.params.data.filter((n: any) => n.status == 0)
+        .length,
+      newNotify: this.props.route.params.data.filter((n: any) => n.status == 0),
+      oldNotify: this.props.route.params.data.filter((n: any) => n.status == 1),
+    });
+    // console.log(this.props.route.params.data);
 
-    console.log('sdsd');
-    this.setState({loading: true});
+    // console.log('sdsd');
+    // this.setState({loading: true});
     AsyncStorage.getItem('email').then((email: any) => {
-      console.log(email);
-      // api
-      //   .createApi()
-      //   .getUser(email)
-      //   .then((user: any) => {
-      //     console.log(user.data.data);
-      //     this.setState({user: user.data.data});
-      //   });
-
+      //   console.log(email);
       api
         .createApi()
-        .getAllNotifications(email, '[0,1]')
-        .then((res: any) => {
-          console.log('data from notifications');
-          console.log(res);
-          this.setState({loading: false});
-          this.setState({
-            count: res.data.data.notifications.filter(
-              (n: any) => n.status == 0,
-            ),
-            newNotify: res.data.data.notifications.filter(
-              (n: any) => n.status == 0,
-            ),
-            oldNotify: res.data.data.notifications.filter(
-              (n: any) => n.status == 1,
-            ),
-          });
-        })
-        .catch((err) => console.log(err));
+        .getUser(email)
+        .then((user: any) => {
+          console.log(user.data.data);
+          this.setState({user: user.data.data});
+        });
+
+      //   api
+      //     .createApi()
+      //     .getAllNotifications(email, '[0,1]')
+      //     .then((res: any) => {
+      //       console.log('data from notifications');
+      //       console.log(res);
+      //       this.setState({loading: false});
+
+      //     })
+      //     .catch((err) => console.log(err));
     });
   }
 
   //   Refreshing Scrollview
   _onRefresh = () => {
-    this.componentDidMount();
+    // this.componentDidMount();
     this.setState({refreshing: false});
+    // ths
   };
 
   // redirecting to view sor
@@ -215,7 +214,9 @@ class Notifications extends React.Component<NotificationsProps, any> {
                   </Text>
                   {this.state.oldNotify.map((d: any, i: any) => (
                     <TouchableOpacity
-                      onPress={() => this.onViewSor(d.project_id, d.sor_id)}>
+                      onPress={() =>
+                        this.onViewSor(d.project_id, d.sor_id, d._id)
+                      }>
                       <View style={styles.lineheight} />
                       <View style={styles.notificationContainer}>
                         <Avatar

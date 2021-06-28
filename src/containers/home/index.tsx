@@ -64,6 +64,7 @@ class Home extends React.Component<HomeProps, any> {
       count: 0,
       projectId: '',
       orgSelection: false,
+      notificationsData: [],
       currentorg: '',
       allOrganizations: [],
       allProjects: [],
@@ -99,6 +100,7 @@ class Home extends React.Component<HomeProps, any> {
         .then((notify: any) => {
           console.log(notify.data.data.notifications);
           this.setState({
+            notificationsData: notify.data.data.notifications,
             count: notify.data.data.notifications.filter(
               (n: any) => n.status == 0,
             ).length,
@@ -268,7 +270,11 @@ class Home extends React.Component<HomeProps, any> {
                   flexDirection: 'row',
                 }}>
                 <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('Notification')}
+                  onPress={() =>
+                    this.props.navigation.navigate('Notification', {
+                      data: this.state.notificationsData,
+                    })
+                  }
                   style={{marginRight: wp(1)}}>
                   {this.state.count != 0 && (
                     <View style={styles.badge}>
