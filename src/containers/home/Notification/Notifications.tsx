@@ -184,6 +184,15 @@ class Notifications extends React.Component<NotificationsProps, any> {
                         // containerStyle={{opacity: 0.5}}
                         color={colors.text}
                       />
+
+                      <View
+                        style={{
+                          marginTop: wp(-1),
+                          backgroundColor: colors.error,
+                          padding: wp(0.7),
+                          borderRadius: wp(10),
+                        }}
+                      />
                       {/* Content */}
                       <View style={styles.notificationContent}>
                         {/* description */}
@@ -227,6 +236,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
                           // containerStyle={{opacity: 0.5}}
                           color={colors.text}
                         />
+
                         {/* Content */}
                         <View style={styles.notificationContent}>
                           {/* description */}
