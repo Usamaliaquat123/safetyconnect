@@ -866,7 +866,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
-                onPress={() => this.props.navigation.goBack()}
+                onPress={() => this.props.navigation.navigate("Main")}
                 size={25}
                 name="arrow-back-outline"
                 type="ionicon"
