@@ -15,6 +15,7 @@ import {Icon, Avatar} from 'react-native-elements';
 import {RouteProp} from '@react-navigation/native';
 import {colors, animation} from '@theme';
 import Modal from 'react-native-modal';
+
 import LottieView from 'lottie-react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -182,6 +183,12 @@ class Notifications extends React.Component<NotificationsProps, any> {
                         source={{
                           uri: 'https://via.placeholder.com/150',
                         }}
+                      />
+                      <Icon
+                        name={'md-notifications-circle-outline'}
+                        type={'ionicon'}
+                        size={wp(3)}
+                        color={colors.text}
                       />
                       {/* Content */}
                       <View style={styles.notificationContent}>
