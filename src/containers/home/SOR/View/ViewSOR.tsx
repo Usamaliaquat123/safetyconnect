@@ -180,11 +180,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
       //     this.setState({sor: sorData[0]});
       //     console.log(sorData);
-          
 
-
-
-        
       //   },
       // );
 
@@ -379,24 +375,25 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       project: this.state.projectId,
     };
 
-    createApi
-      .createApi()
-      .updateSor(update)
-      .then((res) => {
-        this.setState({loading: false, errorModal: false});
+    console.log(update);
+    // createApi
+    //   .createApi()
+    //   .updateSor(update)
+    //   .then((res) => {
+    //     this.setState({loading: false, errorModal: false});
 
-        if (res.status == 200) {
-          setTimeout(() => {
-            showMessage({
-              message: 'SOR Report is sucessfully submitted',
-              type: 'success',
-              position: 'bottom',
-            });
-          }, 3000);
-          this.props.navigation.goBack();
-        }
-      })
-      .catch((err) => {});
+    //     if (res.status == 200) {
+    //       setTimeout(() => {
+    //         showMessage({
+    //           message: 'SOR Report is sucessfully submitted',
+    //           type: 'success',
+    //           position: 'bottom',
+    //         });
+    //       }, 3000);
+    //       this.props.navigation.goBack();
+    //     }
+    //   })
+    //   .catch((err) => {});
   };
 
   // delete comment through commentId
@@ -1599,20 +1596,18 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             {/* Line  */}
             <View style={styles.lineheight} />
             {/* Actions / recommendations */}
-                  
 
-                  {this.state.sor_type == "positive" ? 
-                  
-                  <View style={styles.actionContainer}>
-                  <Text style={styles.actionText}>Action / Recommendation</Text>
-                  {/* <Text style={styles.sugForYouText}>Suggested for you</Text> */}
-                  {this.props.route.params.data.action_required == undefined ? (
-                    <Text style={styles.nosuchActionsAndRecommendations}>
-                      No such Actions / Recommendations
-                    </Text>
-                  ) : (
-                    <View>
-                      {/* {this.state.actionsAndRecommendations.map(
+            {this.state.sor_type == 'positive' ? (
+              <View style={styles.actionContainer}>
+                <Text style={styles.actionText}>Action / Recommendation</Text>
+                {/* <Text style={styles.sugForYouText}>Suggested for you</Text> */}
+                {this.props.route.params.data.action_required == undefined ? (
+                  <Text style={styles.nosuchActionsAndRecommendations}>
+                    No such Actions / Recommendations
+                  </Text>
+                ) : (
+                  <View>
+                    {/* {this.state.actionsAndRecommendations.map(
                         (d: actions, i: number) => (
                           <TouchableOpacity
                             onPress={() => {
@@ -1698,67 +1693,66 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           </TouchableOpacity>
                         ),
                       )} */}
-    
-                      {this.state.actionsAndRecommendations.map(
-                        (d: any, i: number) => (
-                          <TouchableOpacity
-                            onPress={() => {
-                              var data = [...this.state.actionsAndRecommendations];
-                              if (d.is_complete == true) {
-                                data[i].is_complete = false;
-                              } else {
-                                data[i].is_complete = true;
-                              }
-                              this.setState({actionsAndRecommendations: data});
-                            }}
-                            onLongPress={() => {
-                              this.setState({
-                                allActionsEdit: d,
-                                SuggestionPop: true,
-                                allActionsEditIndex: i,
-                                newActions: false,
-                              });
-                            }}
-                            key={i}
-                            style={[
-                              styles.suggestedActionsContainer,
-                              d.is_complete == true
-                                ? {
-                                    backgroundColor: colors.lightBlue,
-                                    borderWidth: wp(0),
-                                  }
-                                : {
-                                    backgroundColor: colors.secondary,
-                                    borderWidth: wp(0.2),
-                                  },
-                            ]}>
-                            <View style={{flexDirection: 'row', width: wp(84)}}>
-                              <Text style={styles.actionType}>
-                                {d.category}:{' '}
-                                <Text style={styles.actionDesc}>
-                                  {d.content.substring(0, 50)}...
-                                </Text>
+
+                    {this.state.actionsAndRecommendations.map(
+                      (d: any, i: number) => (
+                        <TouchableOpacity
+                          onPress={() => {
+                            var data = [
+                              ...this.state.actionsAndRecommendations,
+                            ];
+                            if (d.is_complete == true) {
+                              data[i].is_complete = false;
+                            } else {
+                              data[i].is_complete = true;
+                            }
+                            this.setState({actionsAndRecommendations: data});
+                          }}
+                          onLongPress={() => {
+                            this.setState({
+                              allActionsEdit: d,
+                              SuggestionPop: true,
+                              allActionsEditIndex: i,
+                              newActions: false,
+                            });
+                          }}
+                          key={i}
+                          style={[
+                            styles.suggestedActionsContainer,
+                            d.is_complete == true
+                              ? {
+                                  backgroundColor: colors.lightBlue,
+                                  borderWidth: wp(0),
+                                }
+                              : {
+                                  backgroundColor: colors.secondary,
+                                  borderWidth: wp(0.2),
+                                },
+                          ]}>
+                          <View style={{flexDirection: 'row', width: wp(84)}}>
+                            <Text style={styles.actionType}>
+                              {d.category}:{' '}
+                              <Text style={styles.actionDesc}>
+                                {d.content.substring(0, 50)}...
                               </Text>
-                            </View>
-                            <Icon
-                              size={wp(6)}
-                              name="more-vertical"
-                              type="feather"
-                              color={'#686868'}
-                            />
-                          </TouchableOpacity>
-                        ),
-                      )}
-                    </View>
-                  )}
-                </View>
-                // {/* submit actions and recommendations  */}
-                
-                :  null}
+                            </Text>
+                          </View>
+                          <Icon
+                            size={wp(6)}
+                            name="more-vertical"
+                            type="feather"
+                            color={'#686868'}
+                          />
+                        </TouchableOpacity>
+                      ),
+                    )}
+                  </View>
+                )}
+              </View>
+            ) : // {/* submit actions and recommendations  */}
 
+            null}
 
-
-       
             <View
               style={[
                 styles.addActionAndRecommendation,
