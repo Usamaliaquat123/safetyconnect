@@ -365,6 +365,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           /** done */ severity: severity,
           likelihood: liklihood,
         },
+        
         action_required: this.state.actionsAndRecommendations /** done */,
         location: this.props.route.params.data.location /** done */,
         submit_to: this.state.submitted_to.map((d: any) => d.email) /** done */,
@@ -372,7 +373,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           this.state.reAssignToArrTags.length == 0
             ? this.state.esclate_to.map((d: any) => d.email)
             : this.state.reAssignToArrTags.map((d: any) => d.email) /** done */,
-        status: status /** done */,
+        status: this.state.esclate_to.length ==0  ?status :  3   /** done */,
         attachments: this.state.attachments /** done */,
         comments: this.props.route.params.data.comments /** done */,
         updatedAt: Date.now() /** done */,
