@@ -310,7 +310,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
       .value;
 
+    // add five why
     if (this.state.fiveWhytoggle == true) {
+      // if five is not added previosly
       if (this.props.route.params.data.justification == undefined) {
         // create five why
         var obj = {
@@ -326,9 +328,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           date: moment().format('MM-DD-YYYY'),
         };
 
-        createApi.createApi().createFiveWhy(obj);
+        createApi.createApi().createFiveWhy((res: any) => console.log(res));
       } else {
-        // create justification
+        //update five why
         var updatefiveWhy = {
           id: this.props.route.params.data.justification,
           justification: {
@@ -339,7 +341,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           rootCauses: this.state.rootCauses,
         };
 
-        createApi.createApi().editFiveWhy(updatefiveWhy);
+        createApi
+          .createApi()
+          .editFiveWhy(updatefiveWhy)
+          .then((res) => console.log(res));
       }
 
       //   fiveWhyQuestion:
@@ -376,24 +381,81 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     };
 
     console.log(update);
-    // createApi
-    //   .createApi()
-    //   .updateSor(update)
-    //   .then((res) => {
-    //     this.setState({loading: false, errorModal: false});
-
-    //     if (res.status == 200) {
-    //       setTimeout(() => {
-    //         showMessage({
-    //           message: 'SOR Report is sucessfully submitted',
-    //           type: 'success',
-    //           position: 'bottom',
-    //         });
-    //       }, 3000);
-    //       this.props.navigation.goBack();
-    //     }
-    //   })
-    //   .catch((err) => {});
+    createApi
+      .createApi()
+      .updateSor(update)
+      .then((res) => {
+        //     this.setState({loading: false, errorModal: false});
+        //     if (res.status == 200) {
+        //       setTimeout(() => {
+        //         showMessage({
+        //           message: 'SOR Report is sucessfully submitted',
+        //           type: 'success',
+        //           position: 'bottom',
+        //         });
+        //       }, 3000);
+        //       this.props.navigation.goBack();
+        //     }
+        // if (this.state.fiveWhytoggle == true) {
+        //   this.setState({
+        //     loading: true,
+        //     errorModal: true,
+        //   });
+        //   var newObj = {
+        //     //    countributoryCauses: '',
+        //     // rootCauses: '',
+        //     justification: {
+        //       question: this.state.fiveWhyQuestion,
+        //       answer: this.state.fiveWhyAnswer,
+        //     },
+        //     project: this.state.projectid,
+        //     contributoryCauses: this.state
+        //       .countributoryCauses,
+        //     rootCauses: this.state.rootCauses,
+        //     report: this.state.reportIdInvestigation,
+        //     user: this.state.user._id,
+        //     date: moment().format('MM-DD-YYYY'),
+        //   };
+        //   console.log(newObj);
+        //   console.log('five why data ');
+        //   createApi
+        //     .createApi()
+        //     .createFiveWhy(newObj)
+        //     .then((res) => {
+        //       this.setState({
+        //         loading: false,
+        //         errorModal: false,
+        //       });
+        //       showMessage({
+        //         message: 'SOR sucessfully subitted',
+        //         type: 'success',
+        //         position: 'bottom',
+        //       });
+        //       setTimeout(() => {
+        //         this.props.navigation.navigate('Main');
+        //       }, 1000);
+        //       console.log('five why');
+        //       console.log(res);
+        //     })
+        //     .catch((err: any) => console.log(err));
+        //   // _id: ress.data.data.report_id,
+        // } else {
+        //   console.log(res);
+        //   this.setState({
+        //     loading: false,
+        //     errorModal: false,
+        //   });
+        //   showMessage({
+        //     message: 'SOR sucessfully subitted',
+        //     type: 'success',
+        //     position: 'bottom',
+        //   });
+        //   setTimeout(() => {
+        //     this.props.navigation.navigate('Main');
+        //   }, 1000);
+        // }
+      })
+      .catch((err) => {});
   };
 
   // delete comment through commentId
