@@ -15,7 +15,6 @@ import {
 import {createApi, Create_sor, submitted} from '@service';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors, fonts, animation, images, GlStyles} from '@theme';
-
 import {AllSorDTO} from '@dtos';
 import {connect} from 'react-redux';
 import styles from './styles';

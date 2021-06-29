@@ -28,7 +28,6 @@ import {route} from '@nav';
 import {PieChart} from 'react-native-svg-charts';
 import {createApi} from '@service';
 import Modal from 'react-native-modal';
-import {InAppBrowser} from 'react-native-inappbrowser-reborn';
 
 import {
   widthPercentageToDP as wp,
@@ -88,7 +87,7 @@ class Home extends React.Component<HomeProps, any> {
     // this.setState({name: 'sds'});
 
     // if (this.state.currentorg == null && this.state.currentProj == null) {
-    //   this.setState({newsorModal: true});
+    this.setState({newsorModal: true});
     // } else {
     //   this.setState({newsorModal: false});
     // }
@@ -311,7 +310,7 @@ class Home extends React.Component<HomeProps, any> {
           <View style={styles.content}>
             <View style={styles.menu}>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('ViewAllSOr')}
+                onPress={() => this.props.navigation.navigate('CreateSOR')}
                 style={{alignItems: 'center'}}>
                 <View style={styles.item}>
                   <Image
@@ -573,14 +572,13 @@ class Home extends React.Component<HomeProps, any> {
         {/* when you don't have any sors  */}
         {/* Modal Container */}
 
-        <Modal isVisible={this.state.newsorModal}>
+        {/* <Modal isVisible={this.state.newsorModal}>
           <View style={styles.modelContainer}>
             <View>
               <Text style={styles.errHeadPop}>
                 Select your Organization and Project
               </Text>
 
-              {/* Select Organization  */}
 
               {this.state.allOrganizations.length == 0 ? (
                 <TouchableOpacity
@@ -596,7 +594,6 @@ class Home extends React.Component<HomeProps, any> {
 
                     this.setState({newsorModal: false});
                   }}>
-                  {/* <Image source={images.} /> */}
                   <Icon
                     size={wp(5)}
                     name="add-outline"
@@ -649,13 +646,9 @@ class Home extends React.Component<HomeProps, any> {
                       showsVerticalScrollIndicator={false}
                       style={{
                         height: wp(50),
-                        // position: 'absolute',
                         backgroundColor: colors.secondary,
-                        // top: wp(10),
-                        // zIndex: wp(2),
                         borderWidth: wp(0.2),
                         alignSelf: 'center',
-                        // justifyContent: 'center',
                         width: wp(42),
                         borderRadius: wp(2),
                         borderColor: colors.textOpa,
@@ -682,12 +675,10 @@ class Home extends React.Component<HomeProps, any> {
                 </>
               )}
 
-              {/* Select Project  */}
               {this.state.allProjects.length == 0 ? (
                 <TouchableOpacity
                   style={{
                     flexDirection: 'row',
-                    // padding: wp(2),
                     marginTop: wp(3),
                     justifyContent: 'center',
                     alignItems: 'center',
@@ -699,7 +690,6 @@ class Home extends React.Component<HomeProps, any> {
 
                     this.setState({newsorModal: false});
                   }}>
-                  {/* <Image source={images.} /> */}
                   <Icon
                     size={wp(5)}
                     name="add-outline"
@@ -733,7 +723,6 @@ class Home extends React.Component<HomeProps, any> {
                     }}
                     onPress={() => {
                       this.setState({projSelection: !this.state.projSelection});
-                      // this.setState({newsorModal: false});
                     }}>
                     <Text
                       style={[
@@ -757,14 +746,9 @@ class Home extends React.Component<HomeProps, any> {
                     <ScrollView
                       showsVerticalScrollIndicator={false}
                       style={{
-                        // height: wp(50),
-                        // position: 'absolute',
                         backgroundColor: colors.secondary,
-                        // top: wp(10),
-                        // zIndex: wp(2),
                         borderWidth: wp(0.2),
                         alignSelf: 'center',
-                        // justifyContent: 'center',
                         width: wp(42),
                         borderRadius: wp(2),
                         borderColor: colors.textOpa,
@@ -792,7 +776,7 @@ class Home extends React.Component<HomeProps, any> {
               )}
             </View>
           </View>
-        </Modal>
+        </Modal> */}
 
         {/* validations error */}
         {/* Modal Container */}
