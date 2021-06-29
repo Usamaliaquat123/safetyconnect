@@ -422,10 +422,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     console.log(rec);
     // console.log(rec.map((d: any) => delete d['selected']));
 
-
-
-    if(rec != undefined){
-
+    if (rec != undefined) {
       var actions: Array<any> = [];
       for (let i = 0; i < rec.length; i++) {
         actions.push({
@@ -668,14 +665,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 ) {
                   if (this.state.submitToTags.length !== 0) {
                     this.setState({loading: true, errorModal: true});
-                    console.log('============================= ');
-                    console.log(this.state.exclateToTags);
-                    console.log('esclated to users ');
 
                     var rec = this.state.actionRecommendations.filter(
                       (d: any) => d.selected == true,
                     );
                     console.log(rec);
+                    console.log('==================Actions=');
                     // console.log(rec.map((d: any) => delete d['selected']));
 
                     var actions: Array<any> = [];

@@ -316,7 +316,6 @@ export default class SuggestionsPop extends React.Component<
                   </Text>
                 </TouchableOpacity>
               </View>
-
               {/* Add Justification */}
               {this.state.statuses != 'InProgress' && (
                 <>

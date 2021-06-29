@@ -385,17 +385,17 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .createApi()
       .updateSor(update)
       .then((res) => {
-        //     this.setState({loading: false, errorModal: false});
-        //     if (res.status == 200) {
-        //       setTimeout(() => {
-        //         showMessage({
-        //           message: 'SOR Report is sucessfully submitted',
-        //           type: 'success',
-        //           position: 'bottom',
-        //         });
-        //       }, 3000);
-        //       this.props.navigation.goBack();
-        //     }
+        this.setState({loading: false, errorModal: false});
+        if (res.status == 200) {
+          setTimeout(() => {
+            showMessage({
+              message: 'SOR Report is sucessfully submitted',
+              type: 'success',
+              position: 'bottom',
+            });
+          }, 3000);
+          this.props.navigation.goBack();
+        }
         // if (this.state.fiveWhytoggle == true) {
         //   this.setState({
         //     loading: true,
@@ -1849,8 +1849,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         content: this.state.actionsAndRecommendationText,
                         assigned_to: [],
                         date: moment().format('YYYY-MM-DD'),
-                        status: 0,
+                        status: 'InProgress',
                         category: 'Elimination',
+                        // actionsAndRecommendationText :"",
                       },
 
                       SuggestionPop: true,
