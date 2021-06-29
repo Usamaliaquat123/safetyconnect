@@ -1659,7 +1659,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             <View style={styles.lineheight} />
             {/* Actions / recommendations */}
 
-            {this.state.sor_type == 'positive' ? (
+            {this.state.sor_type != 'positive' ? (
               <View style={styles.actionContainer}>
                 <Text style={styles.actionText}>Action / Recommendation</Text>
                 {/* <Text style={styles.sugForYouText}>Suggested for you</Text> */}
@@ -3016,6 +3016,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             isOpen={this.state.SuggestionPop}
             suggestions={this.state.allActionsEdit}
             save={(d: any) => {
+
+              console.log(d)
               if (this.state.newActions == true) {
                 this.state.actionsAndRecommendations.push(d);
               } else {
