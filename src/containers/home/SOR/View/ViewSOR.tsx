@@ -1752,7 +1752,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     </View>
                   )}
                 </View>
-                {/* submit actions and recommendations  */}
+                // {/* submit actions and recommendations  */}
                 
                 :  null}
 

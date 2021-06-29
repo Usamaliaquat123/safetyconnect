@@ -252,30 +252,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     }
   };
 
-  // // Search Action / Recommendation Suggestions
-  // actionRecommendSuggestion = (str: string) => {
-  //   if (str == '') {
-  //     this.setState({
-  //       actionRecommendations: [],
-  //       actionRecommendationsText: str,
-  //     });
-  //   } else {
-  //     const form = new FormData();
-  //     this.setState({actionRecommendationsText: str});
-  //     form.append('q', str);
-  //     createApi
-  //       .createApi()
-  //       .suggestiosns(form)
-  //       .then((res: any) => {
-  //         console.log('eahhhoo');
-  //         console.log(res.data);
-  //         this.setState({
-  //           actionRecommendations: [...res.data.results],
-  //         });
-  //       });
-  //   }
-  // };
-
   // Getting files from the s3 storage
 
   // search in observatiosn
@@ -431,6 +407,75 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       useNativeDriver: false,
     }).start();
   };
+
+  // save as draft
+  onSaveAsDraft = (status: number) => {
+    var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
+    var severity = this.state.severity.filter((d: any) => d.selected == true);
+    var sorbtns = this.state.classifySorbtns.filter(
+      (d: any) => d.selected === true,
+    );
+
+    var rec = this.state.actionRecommendations.filter(
+      (d: any) => d.selected == true,
+    );
+    console.log(rec);
+    // console.log(rec.map((d: any) => delete d['selected']));
+
+
+
+    if(rec != undefined){
+
+      var actions: Array<any> = [];
+      for (let i = 0; i < rec.length; i++) {
+        actions.push({
+          assigned_to: rec[i].assigned_to,
+          category: rec[i].category,
+          content: rec[i].content,
+          date: rec[i].date,
+          is_complete: rec[i].is_complete,
+          is_selected: rec[i].is_selected,
+          justification: rec[i].justification,
+          action: 'low',
+        });
+        // if (rec[i].justification !== '') {
+        //   actions['justification'] = rec[i].justification;
+        // }
+      }
+    }
+
+    // sor
+    var sor = {
+      report: {
+        _id: '',
+        created_by: this.state.email,
+        details: this.state.observationT,
+        occured_at: this.state.currentTime,
+        involved_persons: this.state.involvePersonTags.map((d: any) => d._id),
+
+        sor_type: sorbtns[0].title == undefined ? 'concern' : sorbtns[0].title,
+        risk: {
+          severity: liklihood[0].value == undefined ? 5 : liklihood[0].value,
+          likelihood: severity[0].value == undefined ? 5 : severity[0].value,
+        },
+        action_required: [],
+
+        location: this.state.observation,
+        submit_to:
+          this.state.submitToTags.map((d: any) => d.email) == ''
+            ? this.state.submitToTags.map((d: any) => d.email)
+            : null,
+        esclate_to: this.state.exclateToTags.map((d: any) => d.email),
+        status: status,
+        attachments:
+          this.state.uploadedfiles.length == 0 ? [] : this.state.uploadedfiles,
+        comments: ' ',
+      },
+      organization: this.state.currentOrg,
+      project: this.state.projectid,
+    };
+  };
+
   onCreateSor = (status: number) => {
     var uploadedfiles = [];
     var sorbtns = this.state.classifySorbtns.filter(
@@ -866,7 +911,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
-                onPress={() => this.props.navigation.navigate("Main")}
+                onPress={() => this.props.navigation.navigate('Main')}
                 size={25}
                 name="arrow-back-outline"
                 type="ionicon"
@@ -1009,9 +1054,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       fontWeight: 'bold',
                       fontSize: wp(3),
                     }}
-                    onChange={(e) =>
-                      this.setState({observation: e.nativeEvent.text})
-                    }
+                    onChangeText={(e) => this.setState({observation: e})}
                     placeholder={'@Add Area'}
                   />
                   <Text style={styles.obText}> and it happend at</Text>
