@@ -61,14 +61,28 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
     console.log('this.props.countributoryCauses');
     console.log(this.props.countributoryCauses);
 
-    if (this.props.countributoryCauses == undefined) {
+    // if (this.props.countributoryCauses == undefined) {
+
+    //   this.setState({
+    //     // contributoryCauseArray: this.props.contributoryCauses[0].category,
+    //     // contributoryCauseArrayA: this.props.contributoryCauses[0]
+    //     //   .subCategory[0],
+    //     // rootCausesArray: this.props.rootCauses[0].category,
+    //     // rootCausesArrayA: this.props.rootCauses[0].subCategory[0],
+    //   });
+    // }
+
+    console.log(this.state.countributoryCauses);
+
+    if (this.props.contributoryCauses.length != 0) {
+      console.log(this.state.countributoryCauses[0].category);
       this.setState({
-        // contributoryCauseArray: this.props.contributoryCauses[0].category,
-        // contributoryCauseArrayA: this.props.contributoryCauses[0]
-        //   .subCategory[0],
-        // rootCausesArray: this.props.rootCauses[0].category,
-        // rootCausesArrayA: this.props.rootCauses[0].subCategory[0],
+        selectedContributoryCauseQ: this.state.countributoryCauses[0].category,
       });
+    }
+    if (this.props.rootCauses.length != 0) {
+      // console.log(this.state.rootcauses[0].category);
+      // this.setState({selectedrootCausesQ: this.state.rootCauses[0].category});
     }
 
     // for (let i = 0; i < this.props.fiveWhyQuestions.length; i++) {
@@ -321,19 +335,6 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
                 this.setState({contributoryCauseArray: FiveWhyMenus});
               }}
               style={[styles.involvePsuggCont, {borderBottomWidth: wp(0)}]}>
-              {/* <TextInput
-              editable={false}
-              underlineColorAndroid="transparent"
-              style={styles.rootCausesInput}
-              multiline={true}
-              value={this.state.countributoryCauses}
-              onChangeText={(e) => {
-                this.props.onChangeCountributory(e);
-                this.setState({countributoryCauses: e});
-              }}
-              placeholder={'Select Contributory causes'}
-            /> */}
-
               <View>
                 <Text
                   style={[

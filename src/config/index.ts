@@ -106,33 +106,31 @@ const urlOpener = async (url: any, redirectUrl: any) => {
 
   if (type === 'success') {
     console.log('adh');
-    // console.log(newUrl);
-    // AsyncStorage.setItem('googleToken', newUrl);
 
     try {
-      // Auth.currentSession()
-      //   .then((user: any) => {
-      //     console.log('session', user.accessToken);
-      //     var data = jwt_decode(user.accessToken.jwtToken);
-      //     console.log(data);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err)
-      //     console.log('there is error');
-      //   });
-      // Auth.currentAuthenticatedUser().then((user) => {
-      //   createApi
-      //     .createApi()
-      //     .getUser(user.signInUserSession.idToken.payload.email)
-      //     .then((data: any) => {
-      //       // if(data.success)
-      //       console.log(data.data.success);
-      //       if (data.data.success == false) {
-      //       } else {
-      //       }
-      //     })
-      //     .catch((err) => console.log(err));
-      // });
+      Auth.currentSession()
+        .then((user: any) => {
+          console.log('session', user.accessToken);
+          var data = jwt_decode(user.accessToken.jwtToken);
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+          console.log('there is error');
+        });
+      Auth.currentAuthenticatedUser().then((user) => {
+        createApi
+          .createApi()
+          .getUser(user.signInUserSession.idToken.payload.email)
+          .then((data: any) => {
+            // if(data.success)
+            console.log(data.data.success);
+            if (data.data.success == false) {
+            } else {
+            }
+          })
+          .catch((err) => console.log(err));
+      });
     } catch (error) {
       console.log('sasta');
       console.log(error);

@@ -171,6 +171,17 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     console.log(this.props.route.params.data.submit_to);
     console.log(this.props.route.params.data.involved_persons);
 
+    // AsyncStorage.getItem('involved_person').then((involved_person: any) => {
+    //   var paramas = this.props.route.params.data;
+    //   var rep = filterAndMappingPersons(paramas, JSON.parse(involved_person));
+
+    //   console.log('involved_person');
+    //   // console.log(involved_person);
+    //   console.log(rep);
+    // });
+
+    // consoe.
+
     // this.getFilesFromServer(this.props.route.params.data.attachments);
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
@@ -255,7 +266,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   // FIVE WHY
   getFiveWHY = () => {
     // Question map and them push
-
+    // console.log('five why')
+    console.log('simon');
+    console.log(this.props.route.params.data);
     if (this.props.route.params.data.justifications.length != 0) {
       this.props.route.params.data.justifications[0].justification.question.map(
         (d, i) => {
@@ -268,6 +281,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           this.state.fiveWHYdata[i]['answer'] = d;
         },
       );
+
+      this.setState({
+        countributoryCauses: this.props.route.params.data.justifications[0]
+          .contributoryCauses,
+        rootCauses: this.props.route.params.data.justifications[0].rootCauses,
+      });
+
+      console.log(this.props.route.params.data.justifications[0]);
+
       //   // If contributoryCauses exists
       // if (this.props.route.params.data.justifications[0].contributoryCauses) {
       //   this.setState({
@@ -310,47 +332,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
       .value;
 
-    // add five why
-    if (this.state.fiveWhytoggle == true) {
-      // if five is not added previosly
-      if (this.props.route.params.data.justification == undefined) {
-        // create five why
-        var obj = {
-          justification: {
-            question: this.state.fiveWhyQuestion,
-            answer: this.state.fiveWhyAnswer,
-            contributoryCauses: this.state.countributoryCauses,
-            rootCauses: this.state.rootCauses,
-          },
-          project: this.state.projectId,
-          report: this.props.route.params.data._id,
-          user: this.state.user._id,
-          date: moment().format('MM-DD-YYYY'),
-        };
-
-        createApi.createApi().createFiveWhy((res: any) => console.log(res));
-      } else {
-        //update five why
-        var updatefiveWhy = {
-          id: this.props.route.params.data.justification,
-          justification: {
-            question: this.state.fiveWhyQuestion,
-            answer: this.state.fiveWhyAnswer,
-          },
-          contributoryCauses: this.state.countributoryCauses,
-          rootCauses: this.state.rootCauses,
-        };
-
-        createApi
-          .createApi()
-          .editFiveWhy(updatefiveWhy)
-          .then((res) => console.log(res));
-      }
-
-      //   fiveWhyQuestion:
-      // fiveWhyAnswer:
-    }
-
+    // console.log(this.state.submitted_to);
     var update = {
       report: {
         _id: this.props.route.params.data._id /** done  */,
@@ -365,7 +347,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           /** done */ severity: severity,
           likelihood: liklihood,
         },
-
+        justification: this.props.route.params.data.justification,
         action_required: this.state.actionsAndRecommendations /** done */,
         location: this.props.route.params.data.location /** done */,
         submit_to: this.state.submitted_to.map((d: any) => d.email) /** done */,
@@ -388,73 +370,83 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .then((res) => {
         this.setState({loading: false, errorModal: false});
         if (res.status == 200) {
-          setTimeout(() => {
-            showMessage({
-              message: 'SOR Report is sucessfully submitted',
-              type: 'success',
-              position: 'bottom',
-            });
-          }, 3000);
-          this.props.navigation.goBack();
+          // add five why
+          if (this.state.fiveWhytoggle == true) {
+            // if five is not added previosly
+
+            if (this.props.route.params.data.justifications.length == 0) {
+              // create five why
+              var obj = {
+                justification: {
+                  question: this.state.fiveWhyQuestion,
+                  answer: this.state.fiveWhyAnswer,
+                  contributoryCauses: this.state.countributoryCauses,
+                  rootCauses: this.state.rootCauses,
+                },
+                project: this.state.projectId,
+                report: this.props.route.params.data._id,
+                user: this.state.user._id,
+                date: moment().format('MM-DD-YYYY'),
+              };
+
+              createApi
+                .createApi()
+                .createFiveWhy(obj)
+                .then((res: any) => {
+                  console.log(res);
+
+                  setTimeout(() => {
+                    this.props.navigation.goBack();
+                  }, 3000);
+                  showMessage({
+                    message: 'SOR Report is sucessfully updated',
+                    type: 'success',
+                    position: 'bottom',
+                  });
+                });
+            } else {
+              //update five why
+              var updatefiveWhy = {
+                id: this.props.route.params.data.justification,
+                justification: {
+                  question: this.state.fiveWhyQuestion,
+                  answer: this.state.fiveWhyAnswer,
+                },
+
+                contributoryCauses: [{category: 'sds', subCategory: ['sdsd']}],
+                rootCauses: [{category: 'sds', subCategory: ['sdsd']}],
+              };
+
+              console.log('updatefiveWhy');
+              console.log(updatefiveWhy);
+              createApi
+                .createApi()
+                .editFiveWhy(updatefiveWhy)
+                .then((res) => {
+                  showMessage({
+                    message: 'SOR Report is sucessfully updated',
+                    type: 'success',
+                    position: 'bottom',
+                  });
+                  setTimeout(() => {
+                    this.props.navigation.goBack();
+                  }, 3000);
+                });
+            }
+
+            //   fiveWhyQuestion:
+            // fiveWhyAnswer:
+          } else {
+            setTimeout(() => {
+              showMessage({
+                message: 'SOR Report is sucessfully updated',
+                type: 'success',
+                position: 'bottom',
+              });
+            }, 3000);
+            this.props.navigation.goBack();
+          }
         }
-        // if (this.state.fiveWhytoggle == true) {
-        //   this.setState({
-        //     loading: true,
-        //     errorModal: true,
-        //   });
-        //   var newObj = {
-        //     //    countributoryCauses: '',
-        //     // rootCauses: '',
-        //     justification: {
-        //       question: this.state.fiveWhyQuestion,
-        //       answer: this.state.fiveWhyAnswer,
-        //     },
-        //     project: this.state.projectid,
-        //     contributoryCauses: this.state
-        //       .countributoryCauses,
-        //     rootCauses: this.state.rootCauses,
-        //     report: this.state.reportIdInvestigation,
-        //     user: this.state.user._id,
-        //     date: moment().format('MM-DD-YYYY'),
-        //   };
-        //   console.log(newObj);
-        //   console.log('five why data ');
-        //   createApi
-        //     .createApi()
-        //     .createFiveWhy(newObj)
-        //     .then((res) => {
-        //       this.setState({
-        //         loading: false,
-        //         errorModal: false,
-        //       });
-        //       showMessage({
-        //         message: 'SOR sucessfully subitted',
-        //         type: 'success',
-        //         position: 'bottom',
-        //       });
-        //       setTimeout(() => {
-        //         this.props.navigation.navigate('Main');
-        //       }, 1000);
-        //       console.log('five why');
-        //       console.log(res);
-        //     })
-        //     .catch((err: any) => console.log(err));
-        //   // _id: ress.data.data.report_id,
-        // } else {
-        //   console.log(res);
-        //   this.setState({
-        //     loading: false,
-        //     errorModal: false,
-        //   });
-        //   showMessage({
-        //     message: 'SOR sucessfully subitted',
-        //     type: 'success',
-        //     position: 'bottom',
-        //   });
-        //   setTimeout(() => {
-        //     this.props.navigation.navigate('Main');
-        //   }, 1000);
-        // }
       })
       .catch((err) => {});
   };
@@ -530,7 +522,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           (a, b) => new Date(a.date) - new Date(b.date),
         );
 
-        console.log('all comments res.data.data.all_comment');
+        // console.log('all comments res.data.data.all_comment');
         console.log(res.data.data);
         this.setState({comments: sortedActivities});
 
@@ -1638,8 +1630,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       onChangeRiskCause={(e: any) =>
                         this.setState({rootCauses: e})
                       }
-                      contributoryCauses={this.state.countributoryCausesD}
-                      rootCauses={this.state.rootCausesD}
+                      contributoryCauses={this.state.countributoryCauses}
+                      rootCauses={this.state.rootCauses}
                       data={this.state.fiveWHYdata}
                       fiveWhyQuestions={(q: Array<string>) =>
                         this.setState({fiveWhyQuestion: q})
@@ -1662,20 +1654,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
             {this.state.sor_type != 'positive' ? (
               <>
-              <View style={styles.actionContainer}>
-                <Text style={styles.actionText}>Action / Recommendation</Text>
-                {/* <Text style={styles.sugForYouText}>Suggested for you</Text> */}
-                {this.props.route.params.data.action_required == undefined ? (
-                  <Text style={styles.nosuchActionsAndRecommendations}>
-                    No such Actions / Recommendations
-                  </Text>
-                ) : (
-                  <View>
-                    {/* {this.state.actionsAndRecommendations.map(
-                        (d: actions, i: number) => (
+                <View style={styles.actionContainer}>
+                  <Text style={styles.actionText}>Action / Recommendation</Text>
+                  {this.props.route.params.data.action_required == undefined ? (
+                    <Text style={styles.nosuchActionsAndRecommendations}>
+                      No such Actions / Recommendations
+                    </Text>
+                  ) : (
+                    <View>
+                      {this.state.actionsAndRecommendations.map(
+                        (d: any, i: number) => (
                           <TouchableOpacity
                             onPress={() => {
-                              var data = [...this.state.actionsAndRecommendations];
+                              var data = [
+                                ...this.state.actionsAndRecommendations,
+                              ];
                               if (d.is_complete == true) {
                                 data[i].is_complete = false;
                               } else {
@@ -1691,196 +1684,103 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 newActions: false,
                               });
                             }}
+                            key={i}
                             style={[
-                              styles.actionRecomCon,
+                              styles.suggestedActionsContainer,
                               d.is_complete == true
                                 ? {
-                                    borderWidth: wp(0.2),
                                     backgroundColor: colors.lightBlue,
-                                    borderColor: colors.primary,
+                                    borderWidth: wp(0),
                                   }
                                 : {
-                                    borderWidth: wp(0.3),
-                                    borderColor: colors.lightGrey,
+                                    backgroundColor: colors.secondary,
+                                    borderWidth: wp(0.2),
                                   },
                             ]}>
-                            <View>
-                              <View
-                                style={{
-                                  flexDirection: 'row',
-                                  alignItems: 'center',
-                                }}>
-                                <Icon
-                                  size={wp(3.5)}
-                                  name="checkcircle"
-                                  type="antdesign"
-                                  color={
-                                    d.is_complete == true
-                                      ? colors.green
-                                      : colors.lightGrey
-                                  }
-                                />
-                                <Text style={styles.statusARText}>
-                                  {d.is_complete == true ? 'Completed' : 'Status'}
+                            <View style={{flexDirection: 'row', width: wp(84)}}>
+                              <Text style={styles.actionType}>
+                                {d.category}:{' '}
+                                <Text style={styles.actionDesc}>
+                                  {d.content.substring(0, 50)}...
                                 </Text>
-                                <View style={{position: 'absolute', right: wp(3)}}>
-                                  <Text style={[styles.actionTypeElemAsdmin]}>
-                                    {d.category}
-                                  </Text>
-                                </View>
-                              </View>
-                              <Text
-                                style={[
-                                  styles.obvTextAction,
-                                  d.is_complete == true
-                                    ? {color: colors.text, opacity: 0.5}
-                                    : null,
-                                ]}>
-                                {d.content}
                               </Text>
                             </View>
-    
-                            <View style={styles.subAss}>
-                              <TouchableOpacity>
-                                <Text style={styles.subAssText}>
-                                  Assigned to:{' '}
-                                  <Text style={styles.subAssuser}>
-                                    {d.assigned_to}
-                                  </Text>
-                                </Text>
-                              </TouchableOpacity>
-    
-                              <Text style={styles.subAssText}>
-                                {moment(d.date).format('MMM DD YYYY')}
-                              </Text>
-                            </View>
+                            <Icon
+                              size={wp(6)}
+                              name="more-vertical"
+                              type="feather"
+                              color={'#686868'}
+                            />
                           </TouchableOpacity>
                         ),
-                      )} */}
+                      )}
+                    </View>
+                  )}
+                </View>
 
-                    {this.state.actionsAndRecommendations.map(
-                      (d: any, i: number) => (
-                        <TouchableOpacity
-                          onPress={() => {
-                            var data = [
-                              ...this.state.actionsAndRecommendations,
-                            ];
-                            if (d.is_complete == true) {
-                              data[i].is_complete = false;
-                            } else {
-                              data[i].is_complete = true;
-                            }
-                            this.setState({actionsAndRecommendations: data});
-                          }}
-                          onLongPress={() => {
-                            this.setState({
-                              allActionsEdit: d,
-                              SuggestionPop: true,
-                              allActionsEditIndex: i,
-                              newActions: false,
-                            });
-                          }}
-                          key={i}
-                          style={[
-                            styles.suggestedActionsContainer,
-                            d.is_complete == true
-                              ? {
-                                  backgroundColor: colors.lightBlue,
-                                  borderWidth: wp(0),
-                                }
-                              : {
-                                  backgroundColor: colors.secondary,
-                                  borderWidth: wp(0.2),
-                                },
-                          ]}>
-                          <View style={{flexDirection: 'row', width: wp(84)}}>
-                            <Text style={styles.actionType}>
-                              {d.category}:{' '}
-                              <Text style={styles.actionDesc}>
-                                {d.content.substring(0, 50)}...
-                              </Text>
-                            </Text>
-                          </View>
-                          <Icon
-                            size={wp(6)}
-                            name="more-vertical"
-                            type="feather"
-                            color={'#686868'}
-                          />
-                        </TouchableOpacity>
-                      ),
-                    )}
-                  </View>
-                )}
-              </View>
+                <View
+                  style={[
+                    styles.addActionAndRecommendation,
+                    this.state.notifiedAndInv == 3
+                      ? {borderColor: colors.green}
+                      : {borderColor: colors.lightGrey},
+                  ]}>
+                  <TextInput
+                    onFocus={() => this.setState({notifiedAndInv: 3})}
+                    maxLength={500}
+                    onChange={(e) =>
+                      this.setState({
+                        actionsAndRecommendationText: e.nativeEvent.text,
+                      })
+                    }
+                    value={this.state.actionsAndRecommendationText}
+                    multiline={true}
+                    style={styles.textaddActionContainer}
+                    placeholder={'Add action / recommendation here'}
+                  />
 
-            <View
-              style={[
-                styles.addActionAndRecommendation,
-                this.state.notifiedAndInv == 3
-                  ? {borderColor: colors.green}
-                  : {borderColor: colors.lightGrey},
-              ]}>
-              <TextInput
-                onFocus={() => this.setState({notifiedAndInv: 3})}
-                maxLength={500}
-                onChange={(e) =>
-                  this.setState({
-                    actionsAndRecommendationText: e.nativeEvent.text,
-                  })
-                }
-                value={this.state.actionsAndRecommendationText}
-                multiline={true}
-                style={styles.textaddActionContainer}
-                placeholder={'Add action / recommendation here'}
-              />
+                  <TouchableOpacity
+                    onPress={() => {
+                      // this.submitActionsAndRecommendations(
+                      //   this.state.actionsAndRecommendationText,
+                      // );
+                      if (this.state.actionsAndRecommendationText !== '') {
+                        this.setState({
+                          allActionsEdit: {
+                            is_complete: false,
+                            is_selected: false,
+                            content: this.state.actionsAndRecommendationText,
+                            assigned_to: [],
+                            date: moment().format('YYYY-MM-DD'),
+                            status: 'InProgress',
+                            category: 'Elimination',
+                            // actionsAndRecommendationText :"",
+                          },
 
-              <TouchableOpacity
-                onPress={() => {
-                  // this.submitActionsAndRecommendations(
-                  //   this.state.actionsAndRecommendationText,
-                  // );
-                  if (this.state.actionsAndRecommendationText !== '') {
-                    this.setState({
-                      allActionsEdit: {
-                        is_complete: false,
-                        is_selected: false,
-                        content: this.state.actionsAndRecommendationText,
-                        assigned_to: [],
-                        date: moment().format('YYYY-MM-DD'),
-                        status: 'InProgress',
-                        category: 'Elimination',
-                        // actionsAndRecommendationText :"",
-                      },
-
-                      SuggestionPop: true,
-                      newActions: true,
-                    });
-                  }
-                }}
-                style={{
-                  position: 'absolute',
-                  right: wp(3),
-                  padding: wp(2),
-                  borderRadius: wp(2),
-                  top: wp(2.7),
-                  backgroundColor: colors.lightGrey,
-                }}>
-                <Icon
-                  size={wp(4)}
-                  name="arrowright"
-                  type="antdesign"
-                  color={colors.primary}
-                />
-              </TouchableOpacity>
-            </View>
-          
+                          SuggestionPop: true,
+                          newActions: true,
+                        });
+                      }
+                    }}
+                    style={{
+                      position: 'absolute',
+                      right: wp(3),
+                      padding: wp(2),
+                      borderRadius: wp(2),
+                      top: wp(2.7),
+                      backgroundColor: colors.lightGrey,
+                    }}>
+                    <Icon
+                      size={wp(4)}
+                      name="arrowright"
+                      type="antdesign"
+                      color={colors.primary}
+                    />
+                  </TouchableOpacity>
+                </View>
               </>
-          
-          ) : null}
-          
-          
-          
+            ) : null}
+
             {/* Attachments / Images or docs */}
 
             {/* Line  */}

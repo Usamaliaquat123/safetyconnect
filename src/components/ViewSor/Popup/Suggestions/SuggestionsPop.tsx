@@ -4,16 +4,19 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  Image,
   TouchableOpacity,
 } from 'react-native';
 import {default as Model} from 'react-native-modal';
 import {Icon} from 'react-native-elements';
 import styles from './styles';
 import {Tags, Suggestions} from '@components';
-import {colors, fonts} from '@theme';
+import {colors, fonts, animation, GlStyles, images} from '@theme';
 import {Avatar} from 'react-native-elements';
-import {Create_sor} from '@service';
+import {createApi, Create_sor} from '@service';
+import LottieView from 'lottie-react-native';
 // import {searchInSuggestions} from '@utils';
+
 import {involved_persons} from '@typings';
 import moment from 'moment';
 
@@ -64,6 +67,13 @@ export default class SuggestionsPop extends React.Component<
       actionsText: '',
       selectedInput: 0,
       justificationT: '',
+      filename: [
+        {
+          type: 'image',
+          uri: 'https://avatars.githubusercontent.com/u/33973828?v=4',
+          name: 'hagd',
+        },
+      ],
       statuses: props.suggestions.status,
       addjustificationPop: true,
     };
@@ -75,11 +85,32 @@ export default class SuggestionsPop extends React.Component<
     console.log(this.props.suggestions);
     // console.log(this.props.suggestions.justification);
     if (this.props.suggestions.justification != undefined) {
+      if (this.props.suggestions.justification.attachment.length != 0) {
+        this.props.suggestions.justification.attachment.map(
+          (d: any) => (d = `old/${d}`),
+        );
+
+        var dataa = {
+          bucket: 'hns-codist',
+          report: this.props.suggestions.justification.attachment,
+        };
+
+        createApi
+          .createApi()
+          .getPublicPhotos(dataa)
+          .then((res) => {
+            this.setState({files: res.data});
+          });
+      }
       this.setState({
         addjustificationPop: false,
         justificationT: this.props.suggestions.justification.content,
       });
     }
+
+    // if(this.props.suggestions.justification.attachment){
+
+    // }
   };
 
   render() {
@@ -93,16 +124,6 @@ export default class SuggestionsPop extends React.Component<
         onBackdropPress={() => this.props.onClose()}>
         <View style={styles.containerPopup}>
           <View style={styles.containerText}>
-            {/* <Icon
-              style={{}}
-              size={wp(5)}
-              name="checkcircle"
-              onPress={() => this.setState({status: !this.state.status})}
-              type="antdesign"
-              color={
-                this.state.is_complete == true ? colors.green : colors.lightGrey
-              }
-            /> */}
             <Text style={styles.containerTextString}>
               Action / Recommendation
             </Text>
@@ -332,30 +353,169 @@ export default class SuggestionsPop extends React.Component<
                       </Text>
                     </TouchableOpacity>
                   ) : (
-                    <View>
-                      <Text style={styles.justificationHeadingText}>
-                        Justification:{'    '}
-                        <Text style={styles.justificationtextOptional}>
-                          (Optional)
+                    <>
+                      <View>
+                        <Text style={styles.justificationHeadingText}>
+                          Justification:{'    '}
+                          <Text style={styles.justificationtextOptional}>
+                            (Optional)
+                          </Text>
                         </Text>
-                      </Text>
-                      <View style={styles.commentTextInput}>
-                        <TextInput
-                          onChangeText={(e) =>
-                            this.setState({justificationT: e})
-                          }
-                          multiline={true}
-                          value={this.state.justificationT}
-                          style={styles.textInputPopup}
-                          placeholder={'Add your justification'}
-                        />
-                        <Icon
-                          name={'attachment'}
-                          type={'entypo'}
-                          size={wp(4)}
-                        />
+                        <View style={styles.commentTextInput}>
+                          <TextInput
+                            onChangeText={(e) =>
+                              this.setState({justificationT: e})
+                            }
+                            multiline={true}
+                            value={this.state.justificationT}
+                            style={styles.textInputPopup}
+                            placeholder={'Add your justification'}
+                          />
+                          <Icon
+                            name={'attachment'}
+                            type={'entypo'}
+                            size={wp(4)}
+                          />
+                        </View>
                       </View>
-                    </View>
+
+                      <View>
+                        {/* Attachments photos */}
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            flexWrap: 'wrap',
+                            alignSelf: 'center',
+                          }}>
+                          {/* File uploading */}
+
+                          {this.state.fileLoading == true ? (
+                            <View>
+                              <LottieView
+                                autoPlay={true}
+                                style={{width: wp(30)}}
+                                source={animation.imageLoading}
+                                loop={true}
+                              />
+                            </View>
+                          ) : (
+                            <>
+                              {this.state.filename.map((d: any, i: number) => {
+                                if (d.type == 'image') {
+                                  return (
+                                    <TouchableOpacity
+                                      onPress={() =>
+                                        this.setState({imageViewer: true})
+                                      }
+                                      style={styles.AttchimageContainer}>
+                                      <Image
+                                        source={{
+                                          uri: d.uri,
+                                        }}
+                                        style={[
+                                          GlStyles.images,
+                                          {borderRadius: wp(3)},
+                                        ]}
+                                        resizeMode={'cover'}
+                                      />
+                                      <TouchableOpacity
+                                        onPress={() => {}}
+                                        style={{
+                                          position: 'absolute',
+                                          right: wp(0),
+                                        }}>
+                                        <TouchableOpacity
+                                          onPress={() => {
+                                            var arr = [
+                                              ...this.state.filename,
+                                            ].filter((b) => b != d);
+                                            this.setState({filename: arr});
+                                          }}>
+                                          <Icon
+                                            containerStyle={{
+                                              marginRight: wp(2),
+                                              marginTop: wp(2),
+                                              opacity: 0.5,
+                                            }}
+                                            name="circle-with-cross"
+                                            size={wp(5)}
+                                            type="entypo"
+                                            color={colors.text}
+                                          />
+                                        </TouchableOpacity>
+                                      </TouchableOpacity>
+                                    </TouchableOpacity>
+                                  );
+                                } else {
+                                  return (
+                                    <TouchableOpacity
+                                      onPress={() =>
+                                        this.setState({imageViewer: true})
+                                      }
+                                      style={[
+                                        styles.AttchimageContainer,
+                                        {
+                                          borderWidth: wp(0.3),
+                                          borderColor: colors.textOpa,
+                                        },
+                                      ]}>
+                                      <Image
+                                        source={
+                                          d.type == 'pdf'
+                                            ? images.pdf
+                                            : d.type == 'docx'
+                                            ? images.doc
+                                            : d.type == 'xlsx'
+                                            ? images.excel
+                                            : null
+                                        }
+                                        style={[GlStyles.images]}
+                                        resizeMode={'contain'}
+                                      />
+                                      <Text
+                                        style={{
+                                          fontSize: wp(2.5),
+                                          marginTop: wp(1),
+                                          fontFamily: fonts.SFuiDisplayMedium,
+                                          textAlign: 'center',
+                                        }}>
+                                        {d.name}
+                                      </Text>
+                                      <TouchableOpacity
+                                        onPress={() => {}}
+                                        style={{
+                                          position: 'absolute',
+                                          right: wp(0),
+                                        }}>
+                                        <TouchableOpacity
+                                          onPress={() => {
+                                            var arr = [
+                                              ...this.state.filename,
+                                            ].filter((b) => b != d);
+                                            this.setState({filename: arr});
+                                          }}>
+                                          <Icon
+                                            containerStyle={{
+                                              marginRight: wp(2),
+                                              marginTop: wp(2),
+                                              opacity: 0.5,
+                                            }}
+                                            name="circle-with-cross"
+                                            size={wp(5)}
+                                            type="entypo"
+                                            color={colors.text}
+                                          />
+                                        </TouchableOpacity>
+                                      </TouchableOpacity>
+                                    </TouchableOpacity>
+                                  );
+                                }
+                              })}
+                            </>
+                          )}
+                        </View>
+                      </View>
+                    </>
                   )}
                 </>
               )}
