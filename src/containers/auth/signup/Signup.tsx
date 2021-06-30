@@ -57,31 +57,32 @@ class Signup extends React.Component<SignupProps, any> {
     };
   }
   handleOpenURL(navigation: any) {
+    console.log(navigation);
     this.setState({loading: true, errorModal: true});
     try {
-      Auth.currentAuthenticatedUser().then((user) => {
-        createApi
-          .createApi()
-          .getUser(user.signInUserSession.idToken.payload.email)
-          .then((data: any) => {
-            if (data.data.success == false) {
-              this.setState({loading: false, errorModal: false});
-              navigation.navigate('TellAboutYou', {
-                username: user.signInUserSession.idToken.payload.email,
-                isgoogle: true,
-              });
-              this.setState({loading: false, errorModal: false});
-            } else {
-              this.setState({loading: false, errorModal: false});
-              AsyncStorage.setItem(
-                'email',
-                user.signInUserSession.idToken.payload.email,
-              );
-              navigation.navigate('Main');
-            }
-          })
-          .catch((err) => console.log(err));
-      });
+      // Auth.currentAuthenticatedUser().then((user) => {
+      //   createApi
+      //     .createApi()
+      //     .getUser(user.signInUserSession.idToken.payload.email)
+      //     .then((data: any) => {
+      //       if (data.data.success == false) {
+      //         this.setState({loading: false, errorModal: false});
+      //         navigation.navigate('TellAboutYou', {
+      //           username: user.signInUserSession.idToken.payload.email,
+      //           isgoogle: true,
+      //         });
+      //         this.setState({loading: false, errorModal: false});
+      //       } else {
+      //         this.setState({loading: false, errorModal: false});
+      //         AsyncStorage.setItem(
+      //           'email',
+      //           user.signInUserSession.idToken.payload.email,
+      //         );
+      //         navigation.navigate('Main');
+      //       }
+      //     })
+      //     .catch((err) => console.log(err));
+      // });
     } catch (error) {
       console.log(error);
     }

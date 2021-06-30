@@ -102,38 +102,43 @@ const urlOpener = async (url: any, redirectUrl: any) => {
     enableDefaultShare: false,
     ephemeralWebSession: false,
   });
+  console.log(type, url, newUrl);
 
   if (type === 'success') {
-    // console.log('adh');
+    console.log('adh');
     // console.log(newUrl);
     // AsyncStorage.setItem('googleToken', newUrl);
 
     try {
-      Auth.currentSession().then((user: any) => {
-        // console.log('session', user.accessToken.);
-
-        var data = jwt_decode(user.accessToken.jwtToken);
-
-        console.log(data);
-      });
-
-      Auth.currentAuthenticatedUser().then((user) => {
-        createApi
-          .createApi()
-          .getUser(user.signInUserSession.idToken.payload.email)
-          .then((data: any) => {
-            // if(data.success)
-            console.log(data.data.success);
-            if (data.data.success == false) {
-            } else {
-            }
-          })
-          .catch((err) => console.log(err));
-      });
+      // Auth.currentSession()
+      //   .then((user: any) => {
+      //     console.log('session', user.accessToken);
+      //     var data = jwt_decode(user.accessToken.jwtToken);
+      //     console.log(data);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err)
+      //     console.log('there is error');
+      //   });
+      // Auth.currentAuthenticatedUser().then((user) => {
+      //   createApi
+      //     .createApi()
+      //     .getUser(user.signInUserSession.idToken.payload.email)
+      //     .then((data: any) => {
+      //       // if(data.success)
+      //       console.log(data.data.success);
+      //       if (data.data.success == false) {
+      //       } else {
+      //       }
+      //     })
+      //     .catch((err) => console.log(err));
+      // });
     } catch (error) {
+      console.log('sasta');
       console.log(error);
     }
     // Linking.openURL(newUrl);
+  } else {
   }
 };
 

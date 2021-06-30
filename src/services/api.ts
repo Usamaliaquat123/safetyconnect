@@ -15,7 +15,7 @@ const createApi = (
   obsbaseUrl: string = `${base_uri}:5003`,
   repBaseAi: string = `${base_uri}:5002/`,
   baseAi: string = `${base_uri}:5004/`,
-  // External Countries api
+  // External aws api
   // upload files
   getFile: string = `https://v7qm45ginh.execute-api.us-west-1.amazonaws.com/`,
   getFileUri: string = `https://64g95tsm4b.execute-api.us-west-1.amazonaws.com/`,
