@@ -60,6 +60,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
   componentDidMount() {
     console.log('this.props.countributoryCauses');
     console.log(this.props.countributoryCauses);
+    console.log(this.props.rootCauses);
 
     // if (this.props.countributoryCauses == undefined) {
 
@@ -78,11 +79,15 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
       console.log(this.state.countributoryCauses[0].category);
       this.setState({
         selectedContributoryCauseQ: this.state.countributoryCauses[0].category,
+        selectedContributoryCauseA: this.state.countributoryCauses[0].category,
       });
     }
     if (this.props.rootCauses.length != 0) {
-      // console.log(this.state.rootcauses[0].category);
-      // this.setState({selectedrootCausesQ: this.state.rootCauses[0].category});
+      console.log(this.state.rootcauses[0].category);
+      this.setState({selectedrootCausesQ: this.state.rootcauses[0].category});
+      this.setState({
+        selectedrootCausesA: this.state.rootcauses[0].subCategory,
+      });
     }
 
     // for (let i = 0; i < this.props.fiveWhyQuestions.length; i++) {
