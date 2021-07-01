@@ -511,7 +511,62 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         // AsyncStorage.getItem('involved_person').then((involveppl: any) => {
         // var involvedPersonss = JSON.parse(involveppl);
 
+        console.log('comments hai');
+        console.log(res.data.data.all_comments);
+
         for (let i = 0; i < res.data.data.all_comments.length; i++) {
+          var rs = res.data.data.all_comments[i].files.map(
+            (d) => (d = `old/${d}`),
+          );
+          console.log(rs);
+          var dta = {
+            bucket: 'hns-codist',
+            report: rs,
+          };
+
+          createApi
+            .createApi()
+            .getPublicPhotos(dta)
+            .then((imgUrl: any) => {
+              console.log(res.data.data.all_comments[i].files[0].split('.')[1]);
+
+              var types = res.data.data.all_comments[i].files.map(
+                (d: any) => (d = d.split('.')[1]),
+              );
+              console.log('types');
+              console.log(types);
+var obj = {}
+              for (let k = 0; k < res.data.data.all_comments[i].files.length; k++) {
+                
+
+
+
+              //     res.data.data.all_comments[i].files[k]
+
+              }
+
+              //  res.data.data.all_comments
+
+
+              if(types == "jpeg" ||types == "png"|| types == "jpg"  ){
+                obj = {
+                  name:  res.data.data.all_comments[i].files,
+                  type: "image"  ,
+                  uri: imgUrl[0]
+                 }
+              }else{
+                obj = {
+                  name:  res.data.data.all_comments[i].files,
+                  type: "image"  ,
+                  uri: imgUrl[0]
+                 }
+              }
+
+               var fileTypeData =
+
+              console.log(imgUrl);
+            });
+
           // for (let j = 0; j < involvedPersonss.length; j++) {
           // if (res.data.data.all_comments[i].user != null) {
           //   if (
@@ -608,6 +663,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           };
 
           // this.state.commentAttachment
+
+          console.log(comments);
           createApi
             .createApi()
             .createComment(comments)
@@ -626,6 +683,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 },
                 is_comment: true,
               });
+
+              console.log(map);
 
               this.setState({comments: map});
             });
@@ -859,14 +918,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     try {
       var res = await DocumentPicker.pick({
         type: [DocumentPicker.types.allFiles],
-        copyTo: 'cachesDirectory',
       });
       // DocType(res, this.state.attachments).then((res) => {
       //   this.setState({});
       // });
-
-      console.log('asdasd');
-      console.log(res);
 
       if (res.type == 'image/jpeg' || res.type == 'image/png') {
         res['orgType'] = res.type;
@@ -895,7 +950,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           uri: res.uri,
           type: res.type,
         };
-        // this.setState({fileLoading: true});
+        this.setState({fileLoading: true});
 
         fileuploader(res.orgType, res.orgType.split('/')[1], res.uri).then(
           (filename: any) => {
@@ -903,6 +958,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             imgData['name'] = filename;
             // this.setState({fileLoading: false});
             attach.splice(0, 0, imgData);
+            // console.log(attach)
             // this.state.uploadedfiles.push(filename);
             this.setState({});
 
@@ -2262,12 +2318,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         </Text>
                       </View>
                     </TouchableOpacity>
-                    {d.attachments != undefined ? (
+                    {d.files != undefined ? (
                       <ScrollView
                         style={{marginBottom: wp(3), marginLeft: wp(8)}}
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}>
-                        {d.attachments.map((f: any, i: number) => (
+                        {d.files.map((f: any, i: number) => (
                           <View
                             style={[
                               styles.AttchimageContainer,
@@ -2277,7 +2333,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 alignItems: 'center',
                               },
                             ]}>
-                            {d.type == 'image' ? (
+                            {f.type == 'image' ? (
                               <Image
                                 source={{
                                   uri: f.uri,
@@ -2488,11 +2544,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         marginTop: wp(3),
                         marginBottom: wp(5),
                       }}>
-                      {d.type == 'photo' ? (
+                      {d.type == 'image' ? (
                         <View style={styles.AttchimageContainer}>
                           <Image
                             source={{
-                              uri: d.url,
+                              uri: d.uri,
                             }}
                             style={[GlStyles.images, {borderRadius: wp(5)}]}
                             resizeMode={'cover'}
