@@ -124,7 +124,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
 
     this.setState({});
   };
-  keyFindings = () => {};
+  keyFindingsOnChange = (e) => {};
   onChangeAnswer = (e: any, i: number) => {
     this.state.fivewhy[i].answer = e;
     this.props.fiveWhyQuestions(this.state.fivewhy.map((d: any) => d.question));

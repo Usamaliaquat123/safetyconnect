@@ -80,35 +80,38 @@ export default class SuggestionsPop extends React.Component<
   }
 
   componentDidMount = () => {
-    // console.log(this.props.suggestions.justification);
-    if (this.props.suggestions.justification != undefined) {
-      if (this.props.suggestions.justification.attachment.length != 0) {
-        this.props.suggestions.justification.attachment.map(
-          (d: any) => (d = `old/${d}`),
-        );
+    console.log(this.props.suggestions.justification);
 
-        // var dataa = {
-        //   bucket: 'hns-codist',
-        //   report: this.props.suggestions.justification.attachment,
-        // };
-
-        // createApi
-        //   .createApi()
-        //   .getPublicPhotos(dataa)
-        //   .then((res) => {
-        //     this.setState({files: res.data});
-        //   });
-      }
-      this.setState({
-        addjustificationPop: false,
-        justificationT: this.props.suggestions.justification.content,
-      });
+    // if (this.props.suggestions.justification.attachments != undefined) {
+    if (this.props.suggestions.justification.attachment.length != 0) {
+      //   this.props.suggestions.justification.attachment.map(
+      //     (d: any) => (d = `old/${d}`),
+      //   );
+      // var dataa = {
+      //   bucket: 'hns-codist',
+      //   report: this.props.suggestions.justification.attachment,
+      // };
+      // createApi
+      //   .createApi()
+      //   .getPublicPhotos(dataa)
+      //   .then((res) => {
+      //     this.setState({files: res.data});
+      //   });
+    } else {
+      //   this.props.suggestions.justification.attachment.map(
+      //   (d: any) => (d = `old/${d}`),
+      // );
     }
-
-    // if(this.props.suggestions.justification.attachment){
-
-    // }
+    this.setState({
+      addjustificationPop: false,
+      justificationT: this.props.suggestions.justification.content,
+    });
   };
+
+  // if(this.props.suggestions.justification.attachment){
+
+  // }
+  // };
 
   render() {
     return (
@@ -376,8 +379,14 @@ export default class SuggestionsPop extends React.Component<
                         </View>
                       </View>
 
+                      {/* Justification attachments
+                      {this.props.suggestions.justification.attachment.length ==
+                      0 ? (
+                        <Text>attachment </Text>
+                      ) : (
+                        <Text>attachment isn't avail</Text>
+                      )} */}
                       <View>
-                        {/* Attachments photos */}
                         <View
                           style={{
                             flexDirection: 'row',
@@ -386,7 +395,7 @@ export default class SuggestionsPop extends React.Component<
                           }}>
                           {/* File uploading */}
 
-                          {this.state.fileLoading == true ? (
+                          {/* {this.state.fileLoading == true ? (
                             <View>
                               <LottieView
                                 autoPlay={true}
@@ -509,7 +518,7 @@ export default class SuggestionsPop extends React.Component<
                                 }
                               })}
                             </>
-                          )}
+                          )} */}
                         </View>
                       </View>
                     </>

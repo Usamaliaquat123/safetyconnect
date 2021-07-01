@@ -151,6 +151,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       countributoryCausesD: '',
       rootCauses: '',
       keyFindingss: '',
+      keyFindings: '',
       rootCausesD: '',
       // Reassign to
       reAssignToArr: [],
@@ -1635,6 +1636,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       onChangeRiskCause={(e: any) =>
                         this.setState({rootCauses: e})
                       }
+                      keyFindings={(e: any) => this.setState({keyFindings: e})}
                       keyFindingss={this.state.keyFindingss}
                       contributoryCauses={this.state.countributoryCauses}
                       rootCauses={this.state.rootCauses}
