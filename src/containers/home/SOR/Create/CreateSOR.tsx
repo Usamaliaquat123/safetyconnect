@@ -136,6 +136,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       countributoryCauses: '',
       rootCauses: '',
       fiveWHYdata: [],
+      keyFindings: '',
       // Involved person
       involvedToArr: [],
       involvedTotags: [],
@@ -558,6 +559,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           question: [this.state.fiveWhyQuestion],
                           answer: [this.state.fiveWhyAnswer],
                         },
+                        keyFindings: this.state.keyFindings,
                         contributoryCauses: this.state.countributoryCauses,
                         rootCauses: this.state.rootCauses,
                         project: this.state.projectid,
@@ -714,10 +716,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         submit_to: this.state.submitToTags.map(
                           (d: any) => d.email,
                         ),
-                        esclate_to: this.state.exclateToTags.length != 0 ?this.state.exclateToTags.map(
-                          (d: any) => d.email,
-                        ): [],
-                        status: this.state.exclateToTags.length == 0 ? status : 3,
+                        esclate_to:
+                          this.state.exclateToTags.length != 0
+                            ? this.state.exclateToTags.map((d: any) => d.email)
+                            : [],
+                        status:
+                          this.state.exclateToTags.length == 0 ? status : 3,
                         attachments:
                           this.state.uploadedfiles.length == 0
                             ? []
@@ -772,6 +776,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               contributoryCauses: this.state
                                 .countributoryCauses,
                               rootCauses: this.state.rootCauses,
+                              keyFindings: this.state.keyFindings,
                               report: this.state.reportIdInvestigation,
                               user: this.state.user._id,
                               date: moment().format('MM-DD-YYYY'),
@@ -1273,6 +1278,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     contributoryCauses={this.state.countributoryCauses}
                     rootCauses={this.state.rootCauses}
                     data={this.state.fiveWHYdata}
+                    keyFindings={(e: any) => this.setState({keyFindings: e})}
                     fiveWhyQuestions={(q: Array<string>) => {
                       this.setState({fiveWhyQuestion: q});
                     }}

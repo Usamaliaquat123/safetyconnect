@@ -80,9 +80,6 @@ export default class SuggestionsPop extends React.Component<
   }
 
   componentDidMount = () => {
-    console.log('this.props.suggestion on line 73s');
-    console.log(this.state.statuses);
-    console.log(this.props.suggestions);
     // console.log(this.props.suggestions.justification);
     if (this.props.suggestions.justification != undefined) {
       if (this.props.suggestions.justification.attachment.length != 0) {
@@ -90,17 +87,17 @@ export default class SuggestionsPop extends React.Component<
           (d: any) => (d = `old/${d}`),
         );
 
-        var dataa = {
-          bucket: 'hns-codist',
-          report: this.props.suggestions.justification.attachment,
-        };
+        // var dataa = {
+        //   bucket: 'hns-codist',
+        //   report: this.props.suggestions.justification.attachment,
+        // };
 
-        createApi
-          .createApi()
-          .getPublicPhotos(dataa)
-          .then((res) => {
-            this.setState({files: res.data});
-          });
+        // createApi
+        //   .createApi()
+        //   .getPublicPhotos(dataa)
+        //   .then((res) => {
+        //     this.setState({files: res.data});
+        //   });
       }
       this.setState({
         addjustificationPop: false,
@@ -136,7 +133,7 @@ export default class SuggestionsPop extends React.Component<
             style={[
               styles.commentTextInput,
               this.state.selectedInput == 1
-                ? {borderColor: colors.green, borderWidth: wp(0.3)}
+                ? {borderColor: colors.green, cborderWidth: wp(0.3)}
                 : {borderColor: colors.lightGrey},
             ]}>
             <TextInput

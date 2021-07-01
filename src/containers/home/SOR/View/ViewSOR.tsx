@@ -16,7 +16,7 @@ import {
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 import moment from 'moment';
 import {connect} from 'react-redux';
-import {Icon, Avatar, Card} from 'react-native-elements';
+import {Icon, Avatar, Card, ThemeConsumer} from 'react-native-elements';
 import {colors, GlStyles, animation, images, fonts} from '@theme';
 import RNFetchBlob from 'rn-fetch-blob';
 import Upload from 'react-native-background-upload';
@@ -150,6 +150,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       countributoryCauses: '',
       countributoryCausesD: '',
       rootCauses: '',
+      keyFindingss: '',
       rootCausesD: '',
       // Reassign to
       reAssignToArr: [],
@@ -286,9 +287,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         countributoryCauses: this.props.route.params.data.justifications[0]
           .contributoryCauses,
         rootCauses: this.props.route.params.data.justifications[0].rootCauses,
+        keyFindingss: this.props.route.params.data.justifications[0]
+          .keyFindings,
       });
 
-      console.log(this.props.route.params.data.justifications[0]);
+      // console.log(this.state.rootCauses);
+      // console.log(this.state.countributoryCauses);
+      // console.log(this.props.route.params.data.justifications[0]);
 
       //   // If contributoryCauses exists
       // if (this.props.route.params.data.justifications[0].contributoryCauses) {
@@ -1630,6 +1635,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       onChangeRiskCause={(e: any) =>
                         this.setState({rootCauses: e})
                       }
+                      keyFindingss={this.state.keyFindingss}
                       contributoryCauses={this.state.countributoryCauses}
                       rootCauses={this.state.rootCauses}
                       data={this.state.fiveWHYdata}

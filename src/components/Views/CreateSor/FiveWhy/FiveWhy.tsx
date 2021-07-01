@@ -27,8 +27,11 @@ export interface ViewAllProps {
   containerStyle?: ViewStyle;
   reportId: string;
   userId: string;
+  keyFindingss: '';
   data: any;
   fiveWhyQuestions: Function;
+  keyFindings?: Function;
+
   fiveWhyAnswer: Function;
   onChangeCountributory: Function;
   onChangeRiskCause: Function;
@@ -44,7 +47,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
       answer: '',
       rootcauses: this.props.rootCauses,
       countributoryCauses: this.props.contributoryCauses,
-
+      keyFindings: '',
       rootCausesArray: [],
       rootCausesArrayA: [],
       contributoryCauseArray: [],
@@ -59,10 +62,6 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
   }
   componentDidMount() {
     console.log('this.props.countributoryCauses');
-    console.log(this.props.countributoryCauses);
-    console.log(this.props.rootCauses);
-
-    // if (this.props.countributoryCauses == undefined) {
 
     //   this.setState({
     //     // contributoryCauseArray: this.props.contributoryCauses[0].category,
@@ -125,7 +124,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
 
     this.setState({});
   };
-
+  keyFindings = () => {};
   onChangeAnswer = (e: any, i: number) => {
     this.state.fivewhy[i].answer = e;
     this.props.fiveWhyQuestions(this.state.fivewhy.map((d: any) => d.question));
@@ -219,6 +218,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
           <Text style={styles.keyfindingsText}>Key Findings</Text>
           <View style={styles.keyfindingsInputContiner}>
             <TextInput
+              onChangeText={(e) => this.props.keyFindings(e)}
               underlineColorAndroid="transparent"
               style={styles.keyfindingsInput}
               multiline={true}
