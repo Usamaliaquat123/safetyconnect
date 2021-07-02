@@ -553,6 +553,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   };
 
                   res.data.data.all_comments[i].files[k] = data;
+                  this.setState({});
                 }
 
                 //     res.data.data.all_comments[i].files[k]
@@ -611,51 +612,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       commentAttachment: [],
     });
 
-    if (attachment.length != 0) {
-      // console.log(attachment);
-      // var data = {
-      //   bucket: 'hns-codist',
-      //   report: 'profile',
-      //   fileType: ['image/png'],
-      //   ext: ['png'],
-      // };
-      // var imgData = {
-      //   name: attachment.,
-      //   uri: res.uri,
-      //   type: res.type,
-      // };
-      // this.setState({fileLoading: true});
-      // fileuploader(res.orgType, res.orgType.split('/')[1], res.uri).then(
-      //   (filename: any) => {
-      //     console.log(filename);
-      //     imgData['name'] = filename;
-      //     // this.setState({fileLoading: false});
-      //     attach.splice(0, 0, imgData);
-      //     // this.state.uploadedfiles.push(filename);
-      //     this.setState({});
-      //     console.log(attach);
-      //   },
-      // );
-    } else {
-    }
-
-    // createApi
-    //   .createApi()
-    //   .getFilesUrl(data)
-    //   .then((res: any) => {
-    //     console.log();
-
-    //     createApi
-    //       .createApi('', '', '', '', '', '', res.data[0].url)
-    //       .uploadFile(attachment[0].base64, attachment[0].org)
-    //       .then((d: any) => {
-    //         console.log(d);
-    //       });
-
-    //   });
-
-    console.log('attachments ===============');
-    console.log(attachment);
     AsyncStorage.getItem('email').then((email: any) => {
       createApi
         .createApi()
@@ -674,7 +630,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
           // this.state.commentAttachment
 
-          console.log(comments);
           createApi
             .createApi()
             .createComment(comments)
@@ -693,8 +648,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 },
                 is_comment: true,
               });
-
-              console.log(map);
 
               this.setState({comments: map});
             });
@@ -848,8 +801,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .createApi()
       .getFileApi(data)
       .then((d: any) => {
-        console.log(d.data[0]);
+        // console.log(d.data[0]);
         for (let i = 0; i < d.data.length; i++) {
+          console.log('attachments');
           console.log(d.data[i]);
           if (
             attach[i].split('.')[1] == 'png' ||
@@ -1874,14 +1828,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       alignSelf: 'center',
                     }}>
                     {this.state.attachments.map((d: any, i: number) => {
-                      if (d.type == 'c') {
+                      if (d.type == 'image') {
                         return (
                           <TouchableOpacity
                             onPress={() => this.setState({imageViewer: true})}
                             style={styles.AttchimageContainer}>
                             <Image
                               source={{
-                                uri: d.url,
+                                uri: d.uri,
                               }}
                               style={[GlStyles.images, {borderRadius: wp(3)}]}
                               resizeMode={'cover'}
@@ -1890,7 +1844,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               onPress={() => {
                                 if (d.upload != 'self') {
                                   this.photoAnim.play();
-                                  downloadFile(d.url, d.type)
+                                  downloadFile(d.uri, d.type)
                                     .then((res: any) => {})
                                     .catch((err) => {});
                                 }
