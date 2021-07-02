@@ -90,6 +90,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: wp(2),
   },
+  AttchimageContainer: {
+    width: wp(43),
+    height: wp(30),
+
+    borderRadius: wp(3),
+    margin: wp(1),
+  },
   tagAssigners: {
     fontSize: wp(3),
     textAlign: 'left',

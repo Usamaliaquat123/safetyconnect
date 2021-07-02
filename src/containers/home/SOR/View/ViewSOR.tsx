@@ -814,8 +814,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               type: 'image',
               upload: '',
               name: attach[i],
-              url: d.data[i],
+              uri: d.data[i],
             });
+
+            console.log('this.state.attachments');
+            console.log(this.state.attachments);
 
             this.setState({});
           } else if (attach[i].split('.')[1] == 'pdf') {
@@ -823,7 +826,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               type: 'pdf',
               upload: '',
               name: attach[i],
-              url: d.data[i],
+              uri: d.data[i],
             });
             this.setState({});
           } else if (
@@ -834,7 +837,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               type: 'pdf',
               upload: '',
               name: attach[i],
-              url: d.data[i],
+              uri: d.data[i],
             });
             this.setState({});
           } else if (attach[i].split('.')[1] == 'xlsx') {
@@ -842,14 +845,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               type: 'xlsx',
               upload: '',
               name: attach[i],
-              url: d.data[i],
+              uri: d.data[i],
             });
             this.setState({});
           }
         }
       });
 
-    console.log(this.state.attach);
+    console.log('this.state.attach');
+    // console.log(this.state.attachments);
   };
 
   // getFilesFromServer = (attach?: any) => {};

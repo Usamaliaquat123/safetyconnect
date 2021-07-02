@@ -11,12 +11,13 @@ import {default as Model} from 'react-native-modal';
 import {Icon} from 'react-native-elements';
 import styles from './styles';
 import {Tags, Suggestions} from '@components';
+import {fileuploader} from '@utils';
 import {colors, fonts, animation, GlStyles, images} from '@theme';
 import {Avatar} from 'react-native-elements';
 import {createApi, Create_sor} from '@service';
 import LottieView from 'lottie-react-native';
 // import {searchInSuggestions} from '@utils';
-
+import DocumentPicker from 'react-native-document-picker';
 import {involved_persons} from '@typings';
 import moment from 'moment';
 
@@ -67,51 +68,115 @@ export default class SuggestionsPop extends React.Component<
       actionsText: '',
       selectedInput: 0,
       justificationT: '',
-      filename: [
-        {
-          type: 'image',
-          uri: 'https://avatars.githubusercontent.com/u/33973828?v=4',
-          name: 'hagd',
-        },
-      ],
+      files: [],
       statuses: props.suggestions.status,
+      attachments: [],
       addjustificationPop: true,
     };
   }
 
   componentDidMount = () => {
-    console.log(this.props.suggestions.justification);
+    console.log('five why justification');
+    console.log(this.props.suggestions);
 
-    // if (this.props.suggestions.justification.attachments != undefined) {
-    if (this.props.suggestions.justification.attachment.length != 0) {
-      //   this.props.suggestions.justification.attachment.map(
-      //     (d: any) => (d = `old/${d}`),
-      //   );
-      // var dataa = {
-      //   bucket: 'hns-codist',
-      //   report: this.props.suggestions.justification.attachment,
-      // };
-      // createApi
-      //   .createApi()
-      //   .getPublicPhotos(dataa)
-      //   .then((res) => {
-      //     this.setState({files: res.data});
-      //   });
-    } else {
-      //   this.props.suggestions.justification.attachment.map(
-      //   (d: any) => (d = `old/${d}`),
-      // );
+    if (this.props.suggestions.justification != undefined) {
+      if (this.props.suggestions.justification.attachments.length != 0) {
+        this.props.suggestions.justification.attachments.map(
+          (d: any) => (d = `old/${d}`),
+        );
+        var dataa = {
+          bucket: 'hns-codist',
+          report: this.props.suggestions.justification.attachments,
+        };
+        createApi
+          .createApi()
+          .getPublicPhotos(dataa)
+          .then((res) => {
+            console.log(res.data);
+            this.setState({files: res.data});
+          });
+      } else {
+        // this.props.suggestions.justification.attachment.map(
+        //   (d: any) => (d = `old/${d}`),
+        // );
+      }
+      this.setState({
+        justificationT: this.props.suggestions.justification.content,
+      });
     }
     this.setState({
       addjustificationPop: false,
-      justificationT: this.props.suggestions.justification.content,
+      // justificationT: 'his.props.suggestions.justification.content',
     });
+    // }
+
+    // if(this.props.suggestions.justification.attachment){
+
+    // }
   };
 
-  // if(this.props.suggestions.justification.attachment){
+  openDoc = async (attach: Array<Object>) => {
+    try {
+      var res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.allFiles],
+      });
+      // DocType(res, this.state.attachments).then((res) => {
+      //   this.setState({});
+      // });
 
-  // }
-  // };
+      if (res.type == 'image/jpeg' || res.type == 'image/png') {
+        res['orgType'] = res.type;
+        res.type = 'image';
+      } else {
+        if (res.name.split('.')[1] == 'docx') {
+          res['orgType'] = res.type;
+          res.type = 'docx';
+        } else if (res.name.split('.')[1] == 'pdf') {
+          res['orgType'] = res.type;
+          res.type = 'pdf';
+        } else if (res.name.split('.')[1] == 'xlsx') {
+          res['orgType'] = res.type;
+          res.type = 'xlsx';
+        }
+      }
+
+      if (
+        res.type == 'docx' ||
+        res.type == 'pdf' ||
+        res.type == 'xlsx' ||
+        res.type == 'image'
+      ) {
+        var imgData = {
+          name: res.name,
+          uri: res.uri,
+          type: res.type,
+        };
+
+        console.log(imgData);
+        this.setState({fileLoading: true});
+
+        fileuploader(res.orgType, res.orgType.split('/')[1], res.uri).then(
+          (filename: any) => {
+            console.log('filename hai');
+            console.log(filename);
+            imgData['name'] = filename;
+            this.setState({fileLoading: false});
+            attach.splice(0, 0, imgData);
+            this.setState({});
+          },
+        );
+        // this.state.filename.push(imgData);
+      }
+
+      this.setState({});
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        // User cancelled the picker, exit any dialogs or menus and move on
+      } else {
+        throw err;
+      }
+    }
+  };
 
   render() {
     return (
@@ -372,6 +437,7 @@ export default class SuggestionsPop extends React.Component<
                             placeholder={'Add your justification'}
                           />
                           <Icon
+                            onPress={() => this.openDoc(this.state.files)}
                             name={'attachment'}
                             type={'entypo'}
                             size={wp(4)}
@@ -395,7 +461,7 @@ export default class SuggestionsPop extends React.Component<
                           }}>
                           {/* File uploading */}
 
-                          {/* {this.state.fileLoading == true ? (
+                          {this.state.fileLoading == true ? (
                             <View>
                               <LottieView
                                 autoPlay={true}
@@ -406,7 +472,7 @@ export default class SuggestionsPop extends React.Component<
                             </View>
                           ) : (
                             <>
-                              {this.state.filename.map((d: any, i: number) => {
+                              {this.state.files.map((d: any, i: number) => {
                                 if (d.type == 'image') {
                                   return (
                                     <TouchableOpacity
@@ -433,9 +499,9 @@ export default class SuggestionsPop extends React.Component<
                                         <TouchableOpacity
                                           onPress={() => {
                                             var arr = [
-                                              ...this.state.filename,
+                                              ...this.state.files,
                                             ].filter((b) => b != d);
-                                            this.setState({filename: arr});
+                                            this.setState({files: arr});
                                           }}>
                                           <Icon
                                             containerStyle={{
@@ -518,7 +584,7 @@ export default class SuggestionsPop extends React.Component<
                                 }
                               })}
                             </>
-                          )} */}
+                          )}
                         </View>
                       </View>
                     </>
@@ -642,6 +708,10 @@ export default class SuggestionsPop extends React.Component<
                 <TouchableOpacity
                   onPress={() => {
                     if (this.state.AssignedTo.length != 0) {
+                      console.log('asdsad');
+                      console.log(
+                        this.state.files.map((d: any) => (d = d.name)),
+                      );
                       var sugg = {
                         // status: this.state.status,
                         content: this.state.observation,
@@ -656,7 +726,9 @@ export default class SuggestionsPop extends React.Component<
                       if (this.state.addjustificationPop == false) {
                         sugg['justification'] = {
                           content: this.state.justificationT,
-                          attachments: [],
+                          attachments: this.state.files.map(
+                            (d: any) => (d = d.name),
+                          ),
                         };
                       }
                       this.props.save(sugg);
