@@ -511,14 +511,20 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         // AsyncStorage.getItem('involved_person').then((involveppl: any) => {
         // var involvedPersonss = JSON.parse(involveppl);
 
-        console.log('comments hai');
-        console.log(res.data.data.all_comments);
-
         for (let i = 0; i < res.data.data.all_comments.length; i++) {
           var rs = res.data.data.all_comments[i].files.map(
-            (d) => (d = `old/${d}`),
+            (d) => (d = `report/${d}`),
           );
-          console.log(rs);
+
+          // console.log(rs);
+
+          // console.log(res.data.data.all_comments[i].files[0].split('.')[1]);
+
+          // var types = res.data.data.all_comments[i].files.map(
+          //   (d: any) => (d = d.split('.')[1]),
+          // );
+          // console.log('types');
+          // console.log(types);
           var dta = {
             bucket: 'hns-codist',
             report: rs,
@@ -528,44 +534,48 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             .createApi()
             .getPublicPhotos(dta)
             .then((imgUrl: any) => {
-              console.log(res.data.data.all_comments[i].files[0].split('.')[1]);
+              var obj = {};
+              for (
+                let k = 0;
+                k < res.data.data.all_comments[i].files.length;
+                k++
+              ) {
+                console.log(imgUrl);
+                if (
+                  res.data.data.all_comments[i].files[k].split('.')[1] ==
+                    'jpeg' ||
+                  res.data.data.all_comments[i].files[k].split('.')[1] == 'png'
+                ) {
+                  var data = {
+                    name: res.data.data.all_comments[i].files[k],
+                    type: 'image',
+                    uri: imgUrl.data[k],
+                  };
 
-              var types = res.data.data.all_comments[i].files.map(
-                (d: any) => (d = d.split('.')[1]),
-              );
-              console.log('types');
-              console.log(types);
-var obj = {}
-              for (let k = 0; k < res.data.data.all_comments[i].files.length; k++) {
-                
+                  res.data.data.all_comments[i].files[k] = data;
+                }
 
+                //     res.data.data.all_comments[i].files[k]
 
-
-              //     res.data.data.all_comments[i].files[k]
-
+                var fileTypeData = console.log(imgUrl);
               }
-
-              //  res.data.data.all_comments
-
-
-              if(types == "jpeg" ||types == "png"|| types == "jpg"  ){
-                obj = {
-                  name:  res.data.data.all_comments[i].files,
-                  type: "image"  ,
-                  uri: imgUrl[0]
-                 }
-              }else{
-                obj = {
-                  name:  res.data.data.all_comments[i].files,
-                  type: "image"  ,
-                  uri: imgUrl[0]
-                 }
-              }
-
-               var fileTypeData =
-
-              console.log(imgUrl);
             });
+
+          //  res.data.data.all_comments
+
+          // if (types == 'jpeg' || types == 'png' || types == 'jpg') {
+          //   obj = {
+          //     name: res.data.data.all_comments[i].files,
+          //     type: 'image',
+          //     uri: imgUrl[0],
+          //   };
+          // } else {
+          //   obj = {
+          //     name: res.data.data.all_comments[i].files,
+          //     type: 'image',
+          //     uri: imgUrl[0],
+          //   };
+          // }
 
           // for (let j = 0; j < involvedPersonss.length; j++) {
           // if (res.data.data.all_comments[i].user != null) {
@@ -584,8 +594,8 @@ var obj = {}
         );
 
         // console.log('all comments res.data.data.all_comment');
-        console.log(res.data.data);
         this.setState({comments: sortedActivities});
+        this.setState({});
 
         // this.state..sort(function(a, b){return a-b});
       });
@@ -2318,7 +2328,7 @@ var obj = {}
                         </Text>
                       </View>
                     </TouchableOpacity>
-                    {d.files != undefined ? (
+                    {d.files.length != 0 ? (
                       <ScrollView
                         style={{marginBottom: wp(3), marginLeft: wp(8)}}
                         horizontal={true}
