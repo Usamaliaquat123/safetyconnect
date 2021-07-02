@@ -81,20 +81,73 @@ export default class SuggestionsPop extends React.Component<
 
     if (this.props.suggestions.justification != undefined) {
       if (this.props.suggestions.justification.attachments.length != 0) {
-        this.props.suggestions.justification.attachments.map(
-          (d: any) => (d = `old/${d}`),
+        var slipiting = this.props.suggestions.justification.attachments.map(
+          (d: any) => (d = `report/${d}`),
         );
         var dataa = {
           bucket: 'hns-codist',
-          report: this.props.suggestions.justification.attachments,
+          report: slipiting,
         };
-        createApi
-          .createApi()
-          .getPublicPhotos(dataa)
-          .then((res) => {
-            console.log(res.data);
-            this.setState({files: res.data});
-          });
+
+        // console.log('sdsds');
+        console.log(
+          this.props.suggestions.justification.attachments.map(
+            (d) => d.split('.')[1],
+          ),
+        );
+        // var files = {
+        //   name: this.props.suggestions.justification.attachments.split('/')[1],
+        //   type: this.props.suggestions.justification.attachments
+        //     .split('/')[1]
+        //     .split('.')[1],
+        //   uri: '',
+
+        // };
+
+        for (
+          let j = 0;
+          j < this.props.suggestions.justification.attachments.length;
+          j++
+        ) {
+          // const element = this.props.suggestions.j[j];
+
+          // console.log(files);
+          createApi
+            .createApi()
+            .getPublicPhotos(dataa)
+            .then((res) => {
+              console.log(res.data);
+
+              this.state.files.push({
+                name: this.props.suggestions.justification.attachments[j],
+                type:
+                  this.props.suggestions.justification.attachments[j].split(
+                    '.',
+                  )[1] == 'jpeg'
+                    ? 'image'
+                    : this.props.suggestions.justification.attachments[j].split(
+                        '.',
+                      )[1] == 'png'
+                    ? 'image'
+                    : this.props.suggestions.justification.attachments[j].split(
+                        '.',
+                      )[1] == 'jpg'
+                    ? 'image'
+                    : this.props.suggestions.justification.attachments[j].split(
+                        '.',
+                      )[1],
+                uri: res.data[j],
+              });
+
+              console.log('this.state.files');
+              console.log(this.state.files);
+              this.setState({});
+
+              // this.setState({files: res.data});
+            });
+        }
+
+        console.log('old files');
       } else {
         // this.props.suggestions.justification.attachment.map(
         //   (d: any) => (d = `old/${d}`),
