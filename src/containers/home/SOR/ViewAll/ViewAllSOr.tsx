@@ -313,7 +313,11 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 type="material-community"
                 color={colors.primary}
               />
-              <Text style={styles.filerText}>Filters </Text>
+
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Filters')}>
+                <Text style={styles.filerText}>Filters </Text>
+              </TouchableOpacity>
             </View>
             <View style={styles.lineheight}></View>
             {this.state.loading == true ? (
