@@ -222,7 +222,7 @@ export class Filters extends React.Component<FiltersProps, any> {
               )}
             </View>
 
-            <Text style={styles.htitle}> Date </Text>
+            <Text style={[styles.htitle, {marginTop: wp(3)}]}> Date </Text>
             <View style={styles.dateContainer}>
               {/* Date  container  */}
               <View style={styles.fromDate}>
@@ -237,7 +237,12 @@ export class Filters extends React.Component<FiltersProps, any> {
               </View>
             </View>
 
-            <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+            <View
+              style={{
+                flexWrap: 'wrap',
+                flexDirection: 'row',
+                marginTop: wp(3),
+              }}>
               <Tags onClose={(e) => console.log(e)} tags={[{name: 'Today'}]} />
               <Tags
                 onClose={(e) => console.log(e)}
