@@ -222,10 +222,19 @@ export class Filters extends React.Component<FiltersProps, any> {
               )}
             </View>
 
+            <Text style={styles.htitle}> Date </Text>
             <View style={styles.dateContainer}>
               {/* Date  container  */}
-              <View style={styles.fromDate}></View>
-              <View style={styles.toDate}></View>
+              <View style={styles.fromDate}>
+                <View style={[styles.selectionContainer, {width: wp(45)}]}>
+                  <Text style={styles.selectedContent}>From</Text>
+                </View>
+              </View>
+              <View style={styles.toDate}>
+                <View style={[styles.selectionContainer, {width: wp(45)}]}>
+                  <Text style={styles.selectedContent}>to</Text>
+                </View>
+              </View>
             </View>
 
             <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
