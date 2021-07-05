@@ -49,16 +49,20 @@ export class Filters extends React.Component<FiltersProps, any> {
       obsType: ['Lsr', 'Concern', 'Positive', 'Near miss'],
       selectedObsType: '',
 
-      initiator: '',
+      selectedObserver: '',
       status: ['Draft', 'In Progress', 'Esclated', 'Pending Closure', 'Closed'],
+      selectedStatus: '',
       locations: [],
+      submittedSelected: '',
+
+      selectedLocations: '',
       risk: ['Low ', 'Medium', 'High'],
       // Selectors
       isRiskSelector: false,
-      isLocationSelected: false,
+      isSubmittedToSelected: false,
       isStatusSelected: false,
       isObservationSelected: false,
-      isInitiatorSelected: false,
+      isObserverSelected: false,
     };
   }
 
@@ -103,7 +107,13 @@ export class Filters extends React.Component<FiltersProps, any> {
               {this.state.isObservationSelected && (
                 <View style={styles.dataContainer}>
                   {this.state.obsType.map((d: any, i: number) => (
-                    <TouchableOpacity onPress={() => console.log(d)}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.setState({
+                          selectedObsType: d,
+                          isObservationSelected: false,
+                        });
+                      }}>
                       <Text style={styles.datacontainerText}>{d}</Text>
                     </TouchableOpacity>
                   ))}
@@ -112,11 +122,11 @@ export class Filters extends React.Component<FiltersProps, any> {
             </View>
             {/* created by selection container */}
             <View style={styles.initiator}>
-              <Text style={styles.htitle}>Initiator</Text>
+              <Text style={styles.htitle}>Observer</Text>
               <TouchableOpacity
                 onPress={() =>
                   this.setState({
-                    isInitiatorSelected: !this.state.isInitiatorSelected,
+                    isObserverSelected: !this.state.isObserverSelected,
                   })
                 }
                 style={styles.selectionContainer}>
@@ -128,10 +138,16 @@ export class Filters extends React.Component<FiltersProps, any> {
                   color={colors.text}
                 />
               </TouchableOpacity>
-              {this.state.isInitiatorSelected && (
+              {this.state.isObserverSelected && (
                 <View style={styles.dataContainer}>
                   {this.state.obsType.map((d: any, i: number) => (
-                    <TouchableOpacity onPress={() => console.log(d)}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        this.setState({
+                          isObserverSelected: false,
+                          selectedObserver: d,
+                        })
+                      }>
                       <Text style={styles.datacontainerText}>{d}</Text>
                     </TouchableOpacity>
                   ))}
@@ -159,20 +175,26 @@ export class Filters extends React.Component<FiltersProps, any> {
               {this.state.isStatusSelected && (
                 <View style={styles.dataContainer}>
                   {this.state.status.map((d: any, i: number) => (
-                    <TouchableOpacity onPress={() => console.log(d)}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.setState({
+                          selectedStatus: d,
+                          isStatusSelected: false,
+                        });
+                      }}>
                       <Text style={styles.datacontainerText}>{d}</Text>
                     </TouchableOpacity>
                   ))}
                 </View>
               )}
             </View>
-            {/* Location selection container */}
+            {/* submitted selection container */}
             <View style={styles.location}>
-              <Text style={styles.htitle}>Location</Text>
+              <Text style={styles.htitle}>Submitted To</Text>
               <TouchableOpacity
                 onPress={() =>
                   this.setState({
-                    isLocationSelected: !this.state.isLocationSelected,
+                    isSubmittedToSelected: !this.state.isSubmittedToSelected,
                   })
                 }
                 style={styles.selectionContainer}>
@@ -185,10 +207,16 @@ export class Filters extends React.Component<FiltersProps, any> {
                 />
               </TouchableOpacity>
 
-              {this.state.isLocationSelected && (
+              {this.state.isSubmittedToSelected && (
                 <View style={styles.dataContainer}>
                   {this.state.obsType.map((d: any, i: number) => (
-                    <TouchableOpacity onPress={() => console.log(d)}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.setState({
+                          isSubmittedToSelected: false,
+                          submittedSelected: false,
+                        });
+                      }}>
                       <Text style={styles.datacontainerText}>{d}</Text>
                     </TouchableOpacity>
                   ))}
