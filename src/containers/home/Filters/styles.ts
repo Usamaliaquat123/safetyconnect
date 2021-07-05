@@ -26,6 +26,37 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  closebtnContainer: {
+    padding: wp(3),
+    borderColor: colors.primary,
+    alignItems: 'center',
+    width: wp(45),
+    borderWidth: wp(0.2),
+    justifyContent: 'center',
+  },
+  applybtnContainer: {
+    width: wp(45),
+    padding: wp(3),
+    backgroundColor: colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  applyfilterText: {
+    fontSize: wp(3),
+    color: colors.secondary,
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  closeFilterText: {
+    color: colors.primary,
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  btnsContainer: {
+    marginTop: wp(5),
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+
   risk: {marginTop: wp(3)},
   location: {marginTop: wp(3)},
   status: {marginTop: wp(3)},

@@ -26,6 +26,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {Tags} from '@components';
 type ViewAllSOrNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'Filters'
@@ -46,10 +47,18 @@ export class Filters extends React.Component<FiltersProps, any> {
     super(props);
     this.state = {
       obsType: ['Lsr', 'Concern', 'Positive', 'Near miss'],
+      selectedObsType: '',
+
       initiator: '',
       status: ['Draft', 'In Progress', 'Esclated', 'Pending Closure', 'Closed'],
       locations: [],
       risk: ['Low ', 'Medium', 'High'],
+      // Selectors
+      isRiskSelector: false,
+      isLocationSelected: false,
+      isStatusSelected: false,
+      isObservationSelected: false,
+      isInitiatorSelected: false,
     };
   }
 
@@ -76,7 +85,13 @@ export class Filters extends React.Component<FiltersProps, any> {
             {/* select the observation type */}
             <View style={styles.observationType}>
               <Text style={styles.htitle}>Observation Type</Text>
-              <View style={styles.selectionContainer}>
+              <TouchableOpacity
+                onPress={() =>
+                  this.setState({
+                    isObservationSelected: !this.state.isObservationSelected,
+                  })
+                }
+                style={styles.selectionContainer}>
                 <Text style={styles.selectedContent}>Select Type </Text>
                 <Icon
                   name={'down'}
@@ -84,19 +99,27 @@ export class Filters extends React.Component<FiltersProps, any> {
                   size={wp(3)}
                   color={colors.text}
                 />
-              </View>
-              <View style={styles.dataContainer}>
-                {this.state.obsType.map((d: any, i: number) => (
-                  <TouchableOpacity onPress={() => console.log(d)}>
-                    <Text style={styles.datacontainerText}>{d}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+              </TouchableOpacity>
+              {this.state.isObservationSelected && (
+                <View style={styles.dataContainer}>
+                  {this.state.obsType.map((d: any, i: number) => (
+                    <TouchableOpacity onPress={() => console.log(d)}>
+                      <Text style={styles.datacontainerText}>{d}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              )}
             </View>
             {/* created by selection container */}
             <View style={styles.initiator}>
               <Text style={styles.htitle}>Initiator</Text>
-              <View style={styles.selectionContainer}>
+              <TouchableOpacity
+                onPress={() =>
+                  this.setState({
+                    isInitiatorSelected: !this.state.isInitiatorSelected,
+                  })
+                }
+                style={styles.selectionContainer}>
                 <Text style={styles.selectedContent}>Select Type </Text>
                 <Icon
                   name={'down'}
@@ -104,19 +127,27 @@ export class Filters extends React.Component<FiltersProps, any> {
                   size={wp(3)}
                   color={colors.text}
                 />
-              </View>
-              <View style={styles.dataContainer}>
-                {this.state.obsType.map((d: any, i: number) => (
-                  <TouchableOpacity onPress={() => console.log(d)}>
-                    <Text style={styles.datacontainerText}>{d}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+              </TouchableOpacity>
+              {this.state.isInitiatorSelected && (
+                <View style={styles.dataContainer}>
+                  {this.state.obsType.map((d: any, i: number) => (
+                    <TouchableOpacity onPress={() => console.log(d)}>
+                      <Text style={styles.datacontainerText}>{d}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              )}
             </View>
             {/* Status selection container */}
             <View style={styles.status}>
               <Text style={styles.htitle}>Status</Text>
-              <View style={styles.selectionContainer}>
+              <TouchableOpacity
+                onPress={() =>
+                  this.setState({
+                    isStatusSelected: !this.state.isStatusSelected,
+                  })
+                }
+                style={styles.selectionContainer}>
                 <Text style={styles.selectedContent}>Select Type </Text>
                 <Icon
                   name={'down'}
@@ -124,19 +155,27 @@ export class Filters extends React.Component<FiltersProps, any> {
                   size={wp(3)}
                   color={colors.text}
                 />
-              </View>
-              <View style={styles.dataContainer}>
-                {this.state.status.map((d: any, i: number) => (
-                  <TouchableOpacity onPress={() => console.log(d)}>
-                    <Text style={styles.datacontainerText}>{d}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+              </TouchableOpacity>
+              {this.state.isStatusSelected && (
+                <View style={styles.dataContainer}>
+                  {this.state.status.map((d: any, i: number) => (
+                    <TouchableOpacity onPress={() => console.log(d)}>
+                      <Text style={styles.datacontainerText}>{d}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              )}
             </View>
             {/* Location selection container */}
             <View style={styles.location}>
               <Text style={styles.htitle}>Location</Text>
-              <View style={styles.selectionContainer}>
+              <TouchableOpacity
+                onPress={() =>
+                  this.setState({
+                    isLocationSelected: !this.state.isLocationSelected,
+                  })
+                }
+                style={styles.selectionContainer}>
                 <Text style={styles.selectedContent}>Select Type </Text>
                 <Icon
                   name={'down'}
@@ -144,19 +183,26 @@ export class Filters extends React.Component<FiltersProps, any> {
                   size={wp(3)}
                   color={colors.text}
                 />
-              </View>
-              <View style={styles.dataContainer}>
-                {this.state.obsType.map((d: any, i: number) => (
-                  <TouchableOpacity onPress={() => console.log(d)}>
-                    <Text style={styles.datacontainerText}>{d}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+              </TouchableOpacity>
+
+              {this.state.isLocationSelected && (
+                <View style={styles.dataContainer}>
+                  {this.state.obsType.map((d: any, i: number) => (
+                    <TouchableOpacity onPress={() => console.log(d)}>
+                      <Text style={styles.datacontainerText}>{d}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              )}
             </View>
             {/* Risk sekection container */}
             <View style={styles.risk}>
               <Text style={styles.htitle}>Risk</Text>
-              <View style={styles.selectionContainer}>
+              <TouchableOpacity
+                onPress={() =>
+                  this.setState({isRiskSelector: !this.state.isRiskSelector})
+                }
+                style={styles.selectionContainer}>
                 <Text style={styles.selectedContent}>Select Type </Text>
                 <Icon
                   name={'down'}
@@ -164,20 +210,51 @@ export class Filters extends React.Component<FiltersProps, any> {
                   size={wp(3)}
                   color={colors.text}
                 />
-              </View>
-              <View style={styles.dataContainer}>
-                {this.state.risk.map((d: any, i: number) => (
-                  <TouchableOpacity onPress={() => console.log(d)}>
-                    <Text style={styles.datacontainerText}>{d}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
+              </TouchableOpacity>
+              {this.state.isRiskSelector && (
+                <View style={styles.dataContainer}>
+                  {this.state.risk.map((d: any, i: number) => (
+                    <TouchableOpacity onPress={() => console.log(d)}>
+                      <Text style={styles.datacontainerText}>{d}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              )}
             </View>
 
             <View style={styles.dateContainer}>
               {/* Date  container  */}
               <View style={styles.fromDate}></View>
               <View style={styles.toDate}></View>
+            </View>
+
+            <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+              <Tags onClose={(e) => console.log(e)} tags={[{name: 'Today'}]} />
+              <Tags
+                onClose={(e) => console.log(e)}
+                tags={[{name: 'this week'}]}
+              />
+              <Tags
+                onClose={(e) => console.log(e)}
+                tags={[{name: 'this month'}]}
+              />
+              <Tags
+                onClose={(e) => console.log(e)}
+                tags={[{name: 'this year'}]}
+              />
+            </View>
+
+            {/* close and apply */}
+
+            <View style={styles.btnsContainer}>
+              {/* Close button */}
+              <View style={styles.closebtnContainer}>
+                <Text style={styles.closeFilterText}>Close</Text>
+              </View>
+              {/* Apply button */}
+              <View style={styles.applybtnContainer}>
+                <Text style={styles.applyfilterText}>Apply Filters</Text>
+              </View>
             </View>
           </View>
         </ScrollView>
