@@ -148,75 +148,87 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           );
         });
 
-      var data = {
-        project: currentProj,
-        limit: 1000000,
-        page: 0,
-        query: {status: [1, 2, 3, 4, 5]},
-      };
-      // this.setState({loading: true});
+      AsyncStorage.getItem('filters').then((filtersObj) => {
+        console.log('filtersObj');
+        console.log(JSON.parse(filtersObj));
+        var dta = JSON.parse(filtersObj);
+        var data = {
+          project: currentProj,
+          limit: 1000000,
+          page: 0,
+          query: {status: [1, 2, 3, 4, 5]},
+        };
+        if (dta != null) {
+          if (Object.keys(dta).length !== 0) {
+            data['query'] = dta;
+          }
+        }
 
-      createApi
-        .createApi()
-        .filterSors(data)
-        .then((res: any) => {
-          console.log('reports  are not available');
-          console.log(res.data.data.report);
-          if (res.data.data.report == undefined) {
-            this.setState({loading: false});
-          } else {
-            res.data.data.report.sort(
-              (a: any, b: any) => new Date(b.createdAt) - new Date(a.createdAt),
-            );
-            for (let i = 0; i < res.data.data.report.length; i++) {
-              if (res.data.data.report[i].status == 1) {
-                var rep = filterAndMappingPersons(
-                  res.data.data.report[i],
-                  this.state.involvedPerson,
-                );
-                if (res.data.data.report[i].details != undefined) {
-                  this.state.draft.push(rep);
-                }
-              } else if (res.data.data.report[i].status == 2) {
-                var rep = filterAndMappingPersons(
-                  res.data.data.report[i],
-                  this.state.involvedPerson,
-                );
-                if (res.data.data.report[i].details != undefined) {
-                  this.state.inprogress.push(rep);
-                  // this.state.submitted.push(rep);
-                }
-              } else if (res.data.data.report[i].status == 3) {
-                var rep = filterAndMappingPersons(
-                  res.data.data.report[i],
-                  this.state.involvedPerson,
-                );
-                if (res.data.data.report[i].details != undefined) {
-                  this.state.exclated.push(rep);
-                }
-              } else if (res.data.data.report[i].status == 4) {
-                var rep = filterAndMappingPersons(
-                  res.data.data.report[i],
-                  this.state.involvedPerson,
-                );
-                if (res.data.data.report[i].details != undefined) {
-                  this.state.pendingClosure.push(rep);
-                }
-              } else if (res.data.data.report[i].status == 5) {
-                var rep = filterAndMappingPersons(
-                  res.data.data.report[i],
-                  this.state.involvedPerson,
-                );
-                if (res.data.data.report[i].details != undefined) {
-                  this.state.closed.push(rep);
+        // this.setState({loading: true});
+
+        createApi
+          .createApi()
+          .filterSors(data)
+          .then((res: any) => {
+            console.log('reports hai ya nai');
+            console.log(res);
+            if (res.data.data.report == undefined) {
+              this.setState({loading: false});
+            } else {
+              res.data.data.report.sort(
+                (a: any, b: any) =>
+                  new Date(b.createdAt) - new Date(a.createdAt),
+              );
+              for (let i = 0; i < res.data.data.report.length; i++) {
+                if (res.data.data.report[i].status == 1) {
+                  var rep = filterAndMappingPersons(
+                    res.data.data.report[i],
+                    this.state.involvedPerson,
+                  );
+                  if (res.data.data.report[i].details != undefined) {
+                    this.state.draft.push(rep);
+                  }
+                } else if (res.data.data.report[i].status == 2) {
+                  var rep = filterAndMappingPersons(
+                    res.data.data.report[i],
+                    this.state.involvedPerson,
+                  );
+                  if (res.data.data.report[i].details != undefined) {
+                    this.state.inprogress.push(rep);
+                    // this.state.submitted.push(rep);
+                  }
+                } else if (res.data.data.report[i].status == 3) {
+                  var rep = filterAndMappingPersons(
+                    res.data.data.report[i],
+                    this.state.involvedPerson,
+                  );
+                  if (res.data.data.report[i].details != undefined) {
+                    this.state.exclated.push(rep);
+                  }
+                } else if (res.data.data.report[i].status == 4) {
+                  var rep = filterAndMappingPersons(
+                    res.data.data.report[i],
+                    this.state.involvedPerson,
+                  );
+                  if (res.data.data.report[i].details != undefined) {
+                    this.state.pendingClosure.push(rep);
+                  }
+                } else if (res.data.data.report[i].status == 5) {
+                  var rep = filterAndMappingPersons(
+                    res.data.data.report[i],
+                    this.state.involvedPerson,
+                  );
+                  if (res.data.data.report[i].details != undefined) {
+                    this.state.closed.push(rep);
+                  }
                 }
               }
             }
-          }
 
-          this.setState({loading: false});
-        })
-        .catch((err) => console.log(err));
+            this.setState({loading: false});
+          })
+          .catch((err) => console.log(err));
+      });
     });
   };
   _onRefresh = () => {

@@ -12,6 +12,7 @@ import {
   Image,
   TextInput,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors, fonts, animation, images, GlStyles} from '@theme';
 import {AllSorDTO} from '@dtos';
@@ -21,12 +22,13 @@ import {bindActionCreators} from 'redux';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
-
+import {getCurrentProject} from '@utils';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Tags} from '@components';
+import {createApi} from '@service';
 type ViewAllSOrNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'Filters'
@@ -46,7 +48,7 @@ export class Filters extends React.Component<FiltersProps, any> {
   constructor(props: FiltersProps) {
     super(props);
     this.state = {
-      obsType: ['Lsr', 'Concern', 'Positive', 'Near miss'],
+      obsType: ['lsr', 'concern', 'positive', 'nearmiss'],
       selectedObsType: '',
 
       selectedObserver: '',
@@ -58,18 +60,37 @@ export class Filters extends React.Component<FiltersProps, any> {
       selectedLocations: '',
       risk: ['Low ', 'Medium', 'High'],
       // Selectors
+      allUsers: [],
       isRiskSelector: false,
       isSubmittedToSelected: false,
       isStatusSelected: false,
       isObservationSelected: false,
       isObserverSelected: false,
+
+      filterObject: {},
     };
   }
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    this.getAllUsers();
+  };
+  // submiti filters
+  submitFilters = (filterObject: any) => {
+    console.log('filterObject');
+    console.log(filterObject);
+    AsyncStorage.setItem('filters', JSON.stringify(filterObject));
+  };
 
-  //   get All users
-  getAllUsers = () => {};
+  //   get All userst
+  getAllUsers = () => {
+    // AsyncStorage.setItem(
+    //   'involved_person',
+    //   JSON.stringify(this.state.involvedPerson),
+    // );
+    AsyncStorage.getItem('involved_person').then((users: any) => {
+      this.setState({allUsers: JSON.parse(users)});
+    });
+  };
 
   //   get All locations
   getAllLocations = () => {};
@@ -117,6 +138,7 @@ export class Filters extends React.Component<FiltersProps, any> {
                           selectedObsType: d,
                           isObservationSelected: false,
                         });
+                        this.state.filterObject['sor_type'] = [d];
                       }}>
                       <Text style={styles.datacontainerText}>{d}</Text>
                     </TouchableOpacity>
@@ -137,7 +159,7 @@ export class Filters extends React.Component<FiltersProps, any> {
                 <Text style={styles.selectedContent}>
                   {' '}
                   {this.state.selectedObserver !== ''
-                    ? this.state.selectedObserver
+                    ? this.state.selectedObserver.email
                     : 'Select Type'}{' '}
                 </Text>
                 <Icon
@@ -149,21 +171,22 @@ export class Filters extends React.Component<FiltersProps, any> {
               </TouchableOpacity>
               {this.state.isObserverSelected && (
                 <View style={styles.dataContainer}>
-                  {this.state.obsType.map((d: any, i: number) => (
+                  {this.state.allUsers.map((d: any, i: number) => (
                     <TouchableOpacity
-                      onPress={() =>
+                      onPress={() => {
                         this.setState({
                           isObserverSelected: false,
                           selectedObserver: d,
-                        })
-                      }>
-                      <Text style={styles.datacontainerText}>{d}</Text>
+                        });
+                        this.state.filterObject['created_by'] = [d.email];
+                      }}>
+                      <Text style={styles.datacontainerText}>{d.email}</Text>
                     </TouchableOpacity>
                   ))}
                 </View>
               )}
             </View>
-            {/* Status selection container */}
+            {/* Status selection container
             <View style={styles.status}>
               <Text style={styles.htitle}>Status</Text>
               <TouchableOpacity
@@ -195,6 +218,8 @@ export class Filters extends React.Component<FiltersProps, any> {
                           selectedStatus: d,
                           isStatusSelected: false,
                         });
+                        this.state.filterObject['created_by'] = [d.email];
+                        
                       }}>
                       <Text style={styles.datacontainerText}>{d}</Text>
                     </TouchableOpacity>
@@ -202,6 +227,8 @@ export class Filters extends React.Component<FiltersProps, any> {
                 </View>
               )}
             </View>
+           */}
+
             {/* submitted selection container */}
             <View style={styles.location}>
               <Text style={styles.htitle}>Submitted To</Text>
@@ -215,7 +242,7 @@ export class Filters extends React.Component<FiltersProps, any> {
                 <Text style={styles.selectedContent}>
                   {' '}
                   {this.state.submittedSelected !== ''
-                    ? this.state.submittedSelected
+                    ? this.state.submittedSelected.email
                     : 'Select Type'}{' '}
                 </Text>
                 <Icon
@@ -228,15 +255,16 @@ export class Filters extends React.Component<FiltersProps, any> {
 
               {this.state.isSubmittedToSelected && (
                 <View style={styles.dataContainer}>
-                  {this.state.obsType.map((d: any, i: number) => (
+                  {this.state.allUsers.map((d: any, i: number) => (
                     <TouchableOpacity
                       onPress={() => {
                         this.setState({
                           isSubmittedToSelected: false,
                           submittedSelected: d,
                         });
+                        this.state.filterObject['submit_to'] = [d.email];
                       }}>
-                      <Text style={styles.datacontainerText}>{d}</Text>
+                      <Text style={styles.datacontainerText}>{d.email}</Text>
                     </TouchableOpacity>
                   ))}
                 </View>
@@ -313,9 +341,11 @@ export class Filters extends React.Component<FiltersProps, any> {
                 <Text style={styles.closeFilterText}>Close</Text>
               </View>
               {/* Apply button */}
-              <View style={styles.applybtnContainer}>
+              <TouchableOpacity
+                onPress={() => this.submitFilters(this.state.filterObject)}
+                style={styles.applybtnContainer}>
                 <Text style={styles.applyfilterText}>Apply Filters</Text>
-              </View>
+              </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
