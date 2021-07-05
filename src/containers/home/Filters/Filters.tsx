@@ -347,6 +347,25 @@ export class Filters extends React.Component<FiltersProps, any> {
                 <Text style={styles.applyfilterText}>Apply Filters</Text>
               </TouchableOpacity>
             </View>
+            <TouchableOpacity
+              onPress={() =>
+                this.setState({
+                  submittedSelected: '',
+                  selectedObserver: '',
+                  selectedObsType: '',
+                  filterObject: {},
+                })
+              }>
+              <Text
+                style={{
+                  marginTop: wp(10),
+                  textAlign: 'center',
+                  fontFamily: fonts.SFuiDisplaySemiBold,
+                  color: colors.primary,
+                }}>
+                Reset All filters{' '}
+              </Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </View>
