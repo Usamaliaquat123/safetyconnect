@@ -18,7 +18,6 @@ import {AllSorDTO} from '@dtos';
 import {connect} from 'react-redux';
 import styles from './styles';
 import {bindActionCreators} from 'redux';
-// import * as reduxActions from '../../../../store/actions/listSorActions';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
@@ -45,72 +44,149 @@ export interface FiltersProps {
 export class Filters extends React.Component<FiltersProps, any> {
   constructor(props: FiltersProps) {
     super(props);
-    this.state = {};
+    this.state = {
+      obsType: ['Lsr', 'Concern', 'Positive', 'Near miss'],
+      initiator: '',
+      status: ['Draft', 'In Progress', 'Esclated', 'Pending Closure', 'Closed'],
+      locations: [],
+      risk: ['Low ', 'Medium', 'High'],
+    };
   }
 
   componentDidMount = () => {};
 
+  //   get All users
+  getAllUsers = () => {};
+
+  //   get All locations
+  getAllLocations = () => {};
   render() {
     return (
       <View style={{backgroundColor: colors.secondary, flex: 1}}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
-              <Icon
-                size={25}
-                name="arrow-back-outline"
-                type="ionicon"
-                color={colors.secondary}
-              />
               <View>
-                <Text style={styles.title}>Observations and Feedback</Text>
-              </View>
-            </View>
-            <View style={styles.headerSelect}>
-              {/* Project selector */}
-              <View style={styles.leftSelector}>
-                <TouchableOpacity
-                  onPress={() => this.setState({project: 'List View'})}
-                  style={{width: wp(5), height: wp(5)}}>
-                  <Image
-                    source={images.listview}
-                    style={[
-                      GlStyles.images,
-                      this.state.project == 'List View'
-                        ? {tintColor: colors.green}
-                        : {tintColor: colors.lightGrey},
-                    ]}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => this.setState({project: 'Board View'})}
-                  style={{width: wp(5), height: wp(5), marginLeft: wp(5)}}>
-                  <Image
-                    source={images.boardView}
-                    style={[
-                      GlStyles.images,
-                      this.state.project != 'List View'
-                        ? {tintColor: colors.green}
-                        : {tintColor: colors.lightGrey},
-                    ]}
-                  />
-                </TouchableOpacity>
+                <Text style={styles.title}>Filters</Text>
               </View>
             </View>
           </View>
 
-          <View style={styles.content}></View>
+          <View style={styles.content}>
+            {/* select the observation type */}
+            <View style={styles.observationType}>
+              <Text style={styles.htitle}>Observation Type</Text>
+              <View style={styles.selectionContainer}>
+                <Text style={styles.selectedContent}>Select Type </Text>
+                <Icon
+                  name={'down'}
+                  type={'antdesign'}
+                  size={wp(3)}
+                  color={colors.text}
+                />
+              </View>
+              <View style={styles.dataContainer}>
+                {this.state.obsType.map((d: any, i: number) => (
+                  <TouchableOpacity onPress={() => console.log(d)}>
+                    <Text style={styles.datacontainerText}>{d}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+            {/* created by selection container */}
+            <View style={styles.initiator}>
+              <Text style={styles.htitle}>Initiator</Text>
+              <View style={styles.selectionContainer}>
+                <Text style={styles.selectedContent}>Select Type </Text>
+                <Icon
+                  name={'down'}
+                  type={'antdesign'}
+                  size={wp(3)}
+                  color={colors.text}
+                />
+              </View>
+              <View style={styles.dataContainer}>
+                {this.state.obsType.map((d: any, i: number) => (
+                  <TouchableOpacity onPress={() => console.log(d)}>
+                    <Text style={styles.datacontainerText}>{d}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+            {/* Status selection container */}
+            <View style={styles.status}>
+              <Text style={styles.htitle}>Status</Text>
+              <View style={styles.selectionContainer}>
+                <Text style={styles.selectedContent}>Select Type </Text>
+                <Icon
+                  name={'down'}
+                  type={'antdesign'}
+                  size={wp(3)}
+                  color={colors.text}
+                />
+              </View>
+              <View style={styles.dataContainer}>
+                {this.state.status.map((d: any, i: number) => (
+                  <TouchableOpacity onPress={() => console.log(d)}>
+                    <Text style={styles.datacontainerText}>{d}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+            {/* Location selection container */}
+            <View style={styles.location}>
+              <Text style={styles.htitle}>Location</Text>
+              <View style={styles.selectionContainer}>
+                <Text style={styles.selectedContent}>Select Type </Text>
+                <Icon
+                  name={'down'}
+                  type={'antdesign'}
+                  size={wp(3)}
+                  color={colors.text}
+                />
+              </View>
+              <View style={styles.dataContainer}>
+                {this.state.obsType.map((d: any, i: number) => (
+                  <TouchableOpacity onPress={() => console.log(d)}>
+                    <Text style={styles.datacontainerText}>{d}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+            {/* Risk sekection container */}
+            <View style={styles.risk}>
+              <Text style={styles.htitle}>Risk</Text>
+              <View style={styles.selectionContainer}>
+                <Text style={styles.selectedContent}>Select Type </Text>
+                <Icon
+                  name={'down'}
+                  type={'antdesign'}
+                  size={wp(3)}
+                  color={colors.text}
+                />
+              </View>
+              <View style={styles.dataContainer}>
+                {this.state.risk.map((d: any, i: number) => (
+                  <TouchableOpacity onPress={() => console.log(d)}>
+                    <Text style={styles.datacontainerText}>{d}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+
+            <View style={styles.dateContainer}>
+              {/* Date  container  */}
+              <View style={styles.fromDate}></View>
+              <View style={styles.toDate}></View>
+            </View>
+          </View>
         </ScrollView>
       </View>
     );
   }
 }
 
-const mapStateToProps = (state: AllSorDTO) => ({
-  reduxState: state.allSors,
-});
+const mapStateToProps = (state: AllSorDTO) => ({});
 
-const mapDispatchToProps = (dispatch: any) => ({
-  reduxActions: bindActionCreators(reduxActions, dispatch),
-});
+const mapDispatchToProps = (dispatch: any) => ({});
 export default connect(mapStateToProps, mapDispatchToProps)(Filters);
