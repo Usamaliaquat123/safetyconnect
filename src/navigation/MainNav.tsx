@@ -34,6 +34,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
 import {BottomTabNavigator} from './TabBar';
 import {StackNavigatorProps, route} from './typings';
+import Filters from '../containers/home/Filters/Filters';
 
 const Stack = createStackNavigator<StackNavigatorProps>();
 
@@ -135,6 +136,13 @@ export const MainStackNavigator = (screen: route) => {
         <Stack.Screen
           name="ForgotEmailSend"
           component={ForgotEmailSend}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Filters"
+          component={Filters}
           options={{
             headerShown: false,
           }}
