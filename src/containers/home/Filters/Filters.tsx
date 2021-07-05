@@ -96,7 +96,11 @@ export class Filters extends React.Component<FiltersProps, any> {
                   })
                 }
                 style={styles.selectionContainer}>
-                <Text style={styles.selectedContent}>Select Type </Text>
+                <Text style={styles.selectedContent}>
+                  {this.state.selectedObsType !== ''
+                    ? this.state.selectedObsType
+                    : 'Select Type'}
+                </Text>
                 <Icon
                   name={'down'}
                   type={'antdesign'}
@@ -130,7 +134,12 @@ export class Filters extends React.Component<FiltersProps, any> {
                   })
                 }
                 style={styles.selectionContainer}>
-                <Text style={styles.selectedContent}>Select Type </Text>
+                <Text style={styles.selectedContent}>
+                  {' '}
+                  {this.state.selectedObserver !== ''
+                    ? this.state.selectedObserver
+                    : 'Select Type'}{' '}
+                </Text>
                 <Icon
                   name={'down'}
                   type={'antdesign'}
@@ -164,7 +173,12 @@ export class Filters extends React.Component<FiltersProps, any> {
                   })
                 }
                 style={styles.selectionContainer}>
-                <Text style={styles.selectedContent}>Select Type </Text>
+                <Text style={styles.selectedContent}>
+                  {' '}
+                  {this.state.selectedStatus !== ''
+                    ? this.state.selectedStatus
+                    : 'Select Type'}{' '}
+                </Text>
                 <Icon
                   name={'down'}
                   type={'antdesign'}
@@ -198,7 +212,12 @@ export class Filters extends React.Component<FiltersProps, any> {
                   })
                 }
                 style={styles.selectionContainer}>
-                <Text style={styles.selectedContent}>Select Type </Text>
+                <Text style={styles.selectedContent}>
+                  {' '}
+                  {this.state.submittedSelected !== ''
+                    ? this.state.submittedSelected
+                    : 'Select Type'}{' '}
+                </Text>
                 <Icon
                   name={'down'}
                   type={'antdesign'}
@@ -214,7 +233,7 @@ export class Filters extends React.Component<FiltersProps, any> {
                       onPress={() => {
                         this.setState({
                           isSubmittedToSelected: false,
-                          submittedSelected: false,
+                          submittedSelected: d,
                         });
                       }}>
                       <Text style={styles.datacontainerText}>{d}</Text>
