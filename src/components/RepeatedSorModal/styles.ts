@@ -10,18 +10,18 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: wp(0),
     paddingBottom: wp(0),
-    borderRadius: wp(5),
+    borderRadius: wp(1),
     backgroundColor: colors.secondary,
   },
   headingContainer: {
     marginTop: wp(5),
     fontSize: wp(3.7),
     fontFamily: fonts.SFuiDisplayBold,
-    textAlign: 'center',
+    // textAlign: 'center',
     // ,        fontWeight: "bold"
   },
   containerCard: {
-    backgroundColor: colors.lightBlue,
+    // backgroundColor: colors.lightBlue,
     padding: wp(3),
     borderRadius: wp(5),
     marginBottom: wp(5),

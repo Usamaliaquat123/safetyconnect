@@ -108,7 +108,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       selectEsclateTo: false,
       esclateTo: '',
       // repeated sor modal
-      repeatedSorModal: false,
+      repeatedSorModal: true,
       repeatedSorData: [],
       submitToTags: [],
       exclateToTags: [],
