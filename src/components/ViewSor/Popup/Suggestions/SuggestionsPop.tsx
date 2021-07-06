@@ -5,6 +5,7 @@ import {
   Text,
   TextInput,
   Image,
+  ScrollView,
   TouchableOpacity,
 } from 'react-native';
 import {default as Model} from 'react-native-modal';
@@ -77,7 +78,10 @@ export default class SuggestionsPop extends React.Component<
 
   componentDidMount = () => {
     console.log('five why justification');
-    console.log(this.props.suggestions);
+
+    if (this.state.statuses == 0) {
+      this.setState({statuses: 'InProgress'});
+    }
 
     if (this.props.suggestions.justification != undefined) {
       if (this.props.suggestions.justification.attachments.length != 0) {
@@ -240,560 +244,572 @@ export default class SuggestionsPop extends React.Component<
         animationOutTiming={1000}
         isVisible={this.props.isOpen}
         onBackdropPress={() => this.props.onClose()}>
-        <View style={styles.containerPopup}>
-          <View style={styles.containerText}>
-            <Text style={styles.containerTextString}>
-              Action / Recommendation
-            </Text>
-          </View>
-          {/* Content */}
-          <View style={{alignSelf: 'flex-start', marginTop: wp(5)}}>
-            <Text style={styles.recommendationsHead}>Recommendations</Text>
-          </View>
-          <View
-            style={[
-              styles.commentTextInput,
-              this.state.selectedInput == 1
-                ? {borderColor: colors.green, cborderWidth: wp(0.3)}
-                : {borderColor: colors.lightGrey},
-            ]}>
-            <TextInput
-              onFocus={() => this.setState({selectedInput: 1})}
-              style={styles.textInputPopup}
-              multiline={true}
-              value={this.state.observation}
-              onChange={(e) => {
-                this.setState({observation: e.nativeEvent.text});
-              }}
-              placeholder={
-                this.state.observation === ''
-                  ? 'Type your recommendations here '
-                  : this.state.observation
-              }
-            />
-          </View>
-          {this.state.AssignedTo != undefined && (
-            <>
-              {this.state.AssignedTo.length >= 1 && (
-                <View style={{alignSelf: 'center'}}>
-                  <Text style={styles.assignersHead}>Assigners</Text>
-                </View>
-              )}
-              {this.state.AssignedTo.length < 1 && (
-                <View>
-                  {/* Assdigned to */}
-                  <View style={{alignSelf: 'flex-start'}}>
-                    <Text style={styles.tagAssigners}>Tag Assigners</Text>
-                  </View>
-                  {/* Assigners */}
-                  {this.state.AssignedTo.length < 1 && (
-                    <Text
-                      style={{
-                        fontSize: wp(3),
-                        marginBottom: wp(3),
-                        color: colors.error,
-                      }}>
-                      You have to assign someone..
-                    </Text>
-                  )}
-                  <View style={[styles.commentTextInput]}>
-                    <TextInput
-                      maxLength={500}
-                      onFocus={() => this.setState({selectedInput: 2})}
-                      style={styles.textInputPopup}
-                      multiline={true}
-                      value={this.state.actionsText}
-                      onChangeText={(e) => {
-                        if (e === '') {
-                          this.setState({suggestions: [], actionsText: e});
-                        } else {
-                          // this.state.suggestedUsers.filter((d : any) => d.email != )
-
-                          this.setState({
-                            suggestions: searchInSuggestions(
-                              e,
-                              this.state.suggestedUsers,
-                            ),
-                          });
-
-                          this.setState({actionsText: e});
-                        }
-                      }}
-                      placeholder={'Type assigner email address'}
-                    />
-
-                    <TouchableOpacity
-                      onPress={() => {
-                        this.state.AssignedTo.push(this.state.actionsText);
-                        this.setState({actionsText: ''});
-                      }}
-                      style={styles.arrowRightAssigners}>
-                      <Icon
-                        size={wp(5)}
-                        name="arrowright"
-                        type="antdesign"
-                        color={colors.primary}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  {/* Suggestions  */}
-                  {this.state.suggestions.length == 0 ? null : (
-                    // {this.state.involvePersonSuggestions.length != 0 ? (
-                    <View style={styles.involveSuggestCont}>
-                      {this.state.suggestions.map(
-                        (d: involved_persons, i: number) => (
-                          <TouchableOpacity
-                            key={i}
-                            onPress={() => {
-                              this.state.AssignedTo.push(d.email);
-                              this.setState({
-                                involvePersonText: '',
-                                suggestions: [],
-                              });
-                            }}
-                            style={[
-                              styles.involvePsuggCont,
-                              this.state.suggestions.length == i + 1
-                                ? {borderBottomWidth: wp(0)}
-                                : null,
-                            ]}>
-                            <Avatar
-                              containerStyle={{marginRight: wp(3)}}
-                              rounded
-                              source={{
-                                uri: d.img_url,
-                              }}
-                            />
-                            <View>
-                              <Text style={styles.involvePSt}>{d.name}</Text>
-                              <Text style={{fontSize: wp(2.5)}}>{d.email}</Text>
-                            </View>
-                          </TouchableOpacity>
-                        ),
-                      )}
-                    </View>
-                  )}
-                </View>
-              )}
-              <View style={styles.tagsContainer}>
-                {this.state.AssignedTo.length != 0 ? (
-                  <Tags
-                    type={'suggAndRecommendationsPopup'}
-                    onClose={(d: any) => {
-                      this.setState({
-                        AssignedTo: [],
-                      });
-                    }}
-                    tags={this.state.AssignedTo}
-                  />
-                ) : null}
-              </View>
-
-              {/* change statuses */}
-              <Text style={styles.selectYourElemination}>
-                Select your actions status
+        <ScrollView>
+          <View style={styles.containerPopup}>
+            <View style={styles.containerText}>
+              <Text style={styles.containerTextString}>
+                Action / Recommendation
               </Text>
-              <View style={styles.eleminationAndAdministrativeContainer}>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setState({statuses: 'InProgress'});
-                  }}
-                  style={{marginLeft: wp(2), marginRight: wp(2)}}>
-                  <Icon
-                    //@ts-ignore
-                    size={wp(7)}
-                    name="progress-clock"
-                    type="material-community"
-                    color={
-                      this.state.statuses == 'InProgress'
-                        ? colors.green
-                        : colors.lightGrey
-                    }
-                  />
-                  <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
-                    In Progress
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setState({statuses: 'Completed'});
-                  }}
-                  style={{marginLeft: wp(2), marginRight: wp(2)}}>
-                  <Icon
-                    //@ts-ignore
-                    size={wp(7)}
-                    name="progress-check"
-                    type="material-community"
-                    color={
-                      this.state.statuses == 'Completed'
-                        ? colors.green
-                        : colors.lightGrey
-                    }
-                  />
-                  <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
-                    Completed
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setState({statuses: 'Rejected'});
-                  }}
-                  style={{marginLeft: wp(2), marginRight: wp(2)}}>
-                  <Icon
-                    //@ts-ignore
-                    size={wp(7)}
-                    name="progress-alert"
-                    type="material-community"
-                    color={
-                      this.state.statuses == 'Rejected'
-                        ? colors.green
-                        : colors.lightGrey
-                    }
-                  />
-                  <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
-                    Rejected
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              {/* Add Justification */}
-              {this.state.statuses != 'InProgress' && (
-                <>
-                  {this.state.addjustificationPop == true ? (
-                    <TouchableOpacity
-                      onPress={() =>
-                        this.setState({
-                          addjustificationPop: !this.state.addjustificationPop,
-                        })
-                      }
-                      style={styles.justificationContainer}>
-                      <Text style={styles.justificationtext}>
-                        Add Justification
+            </View>
+            {/* Content */}
+            <View style={{alignSelf: 'flex-start', marginTop: wp(5)}}>
+              <Text style={styles.recommendationsHead}>Recommendations</Text>
+            </View>
+            <View
+              style={[
+                styles.commentTextInput,
+                this.state.selectedInput == 1
+                  ? {borderColor: colors.green, cborderWidth: wp(0.3)}
+                  : {borderColor: colors.lightGrey},
+              ]}>
+              <TextInput
+                onFocus={() => this.setState({selectedInput: 1})}
+                style={styles.textInputPopup}
+                multiline={true}
+                value={this.state.observation}
+                onChange={(e) => {
+                  this.setState({observation: e.nativeEvent.text});
+                }}
+                placeholder={
+                  this.state.observation === ''
+                    ? 'Type your recommendations here '
+                    : this.state.observation
+                }
+              />
+            </View>
+            {this.state.AssignedTo != undefined && (
+              <>
+                {this.state.AssignedTo.length >= 1 && (
+                  <View style={{alignSelf: 'center'}}>
+                    <Text style={styles.assignersHead}>Assigners</Text>
+                  </View>
+                )}
+                {this.state.AssignedTo.length < 1 && (
+                  <View>
+                    {/* Assdigned to */}
+                    <View style={{alignSelf: 'flex-start'}}>
+                      <Text style={styles.tagAssigners}>Tag Assigners</Text>
+                    </View>
+                    {/* Assigners */}
+                    {this.state.AssignedTo.length < 1 && (
+                      <Text
+                        style={{
+                          fontSize: wp(3),
+                          marginBottom: wp(3),
+                          color: colors.error,
+                        }}>
+                        You have to assign someone..
                       </Text>
-                    </TouchableOpacity>
-                  ) : (
-                    <>
-                      <View>
-                        <Text style={styles.justificationHeadingText}>
-                          Justification:{'    '}
-                          <Text style={styles.justificationtextOptional}>
-                            (Optional)
-                          </Text>
-                        </Text>
-                        <View style={styles.commentTextInput}>
-                          <TextInput
-                            onChangeText={(e) =>
-                              this.setState({justificationT: e})
-                            }
-                            multiline={true}
-                            value={this.state.justificationT}
-                            style={styles.textInputPopup}
-                            placeholder={'Add your justification'}
-                          />
-                          <Icon
-                            onPress={() => this.openDoc(this.state.files)}
-                            name={'attachment'}
-                            type={'entypo'}
-                            size={wp(4)}
-                          />
-                        </View>
-                      </View>
+                    )}
+                    <View style={[styles.commentTextInput]}>
+                      <TextInput
+                        maxLength={500}
+                        onFocus={() => this.setState({selectedInput: 2})}
+                        style={styles.textInputPopup}
+                        multiline={true}
+                        value={this.state.actionsText}
+                        onChangeText={(e) => {
+                          if (e === '') {
+                            this.setState({suggestions: [], actionsText: e});
+                          } else {
+                            // this.state.suggestedUsers.filter((d : any) => d.email != )
 
-                      {/* Justification attachments
+                            this.setState({
+                              suggestions: searchInSuggestions(
+                                e,
+                                this.state.suggestedUsers,
+                              ),
+                            });
+
+                            this.setState({actionsText: e});
+                          }
+                        }}
+                        placeholder={'Type assigner email address'}
+                      />
+
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.state.AssignedTo.push(this.state.actionsText);
+                          this.setState({actionsText: ''});
+                        }}
+                        style={styles.arrowRightAssigners}>
+                        <Icon
+                          size={wp(5)}
+                          name="arrowright"
+                          type="antdesign"
+                          color={colors.primary}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                    {/* Suggestions  */}
+                    {this.state.suggestions.length == 0 ? null : (
+                      // {this.state.involvePersonSuggestions.length != 0 ? (
+                      <View style={styles.involveSuggestCont}>
+                        {this.state.suggestions.map(
+                          (d: involved_persons, i: number) => (
+                            <TouchableOpacity
+                              key={i}
+                              onPress={() => {
+                                this.state.AssignedTo.push(d.email);
+                                this.setState({
+                                  involvePersonText: '',
+                                  suggestions: [],
+                                });
+                              }}
+                              style={[
+                                styles.involvePsuggCont,
+                                this.state.suggestions.length == i + 1
+                                  ? {borderBottomWidth: wp(0)}
+                                  : null,
+                              ]}>
+                              <Avatar
+                                containerStyle={{marginRight: wp(3)}}
+                                rounded
+                                source={{
+                                  uri: d.img_url,
+                                }}
+                              />
+                              <View>
+                                <Text style={styles.involvePSt}>{d.name}</Text>
+                                <Text style={{fontSize: wp(2.5)}}>
+                                  {d.email}
+                                </Text>
+                              </View>
+                            </TouchableOpacity>
+                          ),
+                        )}
+                      </View>
+                    )}
+                  </View>
+                )}
+                <View style={styles.tagsContainer}>
+                  {this.state.AssignedTo.length != 0 ? (
+                    <Tags
+                      type={'suggAndRecommendationsPopup'}
+                      onClose={(d: any) => {
+                        this.setState({
+                          AssignedTo: [],
+                        });
+                      }}
+                      tags={this.state.AssignedTo}
+                    />
+                  ) : null}
+                </View>
+
+                {/* change statuses */}
+                <Text style={styles.selectYourElemination}>
+                  Select your actions status
+                </Text>
+                <View style={styles.eleminationAndAdministrativeContainer}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({statuses: 'InProgress'});
+                    }}
+                    style={{marginLeft: wp(2), marginRight: wp(2)}}>
+                    <Icon
+                      //@ts-ignore
+                      size={wp(7)}
+                      name="progress-clock"
+                      type="material-community"
+                      color={
+                        this.state.statuses == 'InProgress'
+                          ? colors.green
+                          : colors.lightGrey
+                      }
+                    />
+                    <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                      In Progress
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({statuses: 'Completed'});
+                    }}
+                    style={{marginLeft: wp(2), marginRight: wp(2)}}>
+                    <Icon
+                      //@ts-ignore
+                      size={wp(7)}
+                      name="progress-check"
+                      type="material-community"
+                      color={
+                        this.state.statuses == 'Completed'
+                          ? colors.green
+                          : colors.lightGrey
+                      }
+                    />
+                    <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                      Completed
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({statuses: 'Rejected'});
+                    }}
+                    style={{marginLeft: wp(2), marginRight: wp(2)}}>
+                    <Icon
+                      //@ts-ignore
+                      size={wp(7)}
+                      name="progress-alert"
+                      type="material-community"
+                      color={
+                        this.state.statuses == 'Rejected'
+                          ? colors.green
+                          : colors.lightGrey
+                      }
+                    />
+                    <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                      Rejected
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                {/* Add Justification */}
+                {this.state.statuses != 'InProgress' && (
+                  <>
+                    {this.state.addjustificationPop == true ? (
+                      <TouchableOpacity
+                        onPress={() =>
+                          this.setState({
+                            addjustificationPop: !this.state
+                              .addjustificationPop,
+                          })
+                        }
+                        style={styles.justificationContainer}>
+                        <Text style={styles.justificationtext}>
+                          Add Justification
+                        </Text>
+                      </TouchableOpacity>
+                    ) : (
+                      <>
+                        <View>
+                          <Text style={styles.justificationHeadingText}>
+                            Justification:{'    '}
+                            <Text style={styles.justificationtextOptional}>
+                              (Optional)
+                            </Text>
+                          </Text>
+                          <View style={styles.commentTextInput}>
+                            <TextInput
+                              onChangeText={(e) =>
+                                this.setState({justificationT: e})
+                              }
+                              multiline={true}
+                              value={this.state.justificationT}
+                              style={styles.textInputPopup}
+                              placeholder={'Add your justification'}
+                            />
+                            <Icon
+                              onPress={() => this.openDoc(this.state.files)}
+                              name={'attachment'}
+                              type={'entypo'}
+                              size={wp(4)}
+                            />
+                          </View>
+                        </View>
+
+                        {/* Justification attachments
                       {this.props.suggestions.justification.attachment.length ==
                       0 ? (
                         <Text>attachment </Text>
                       ) : (
                         <Text>attachment isn't avail</Text>
                       )} */}
-                      <View>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            flexWrap: 'wrap',
-                            alignSelf: 'center',
-                          }}>
-                          {/* File uploading */}
+                        <View>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              flexWrap: 'wrap',
+                              alignSelf: 'center',
+                            }}>
+                            {/* File uploading */}
 
-                          {this.state.fileLoading == true ? (
-                            <View>
-                              <LottieView
-                                autoPlay={true}
-                                style={{width: wp(30)}}
-                                source={animation.imageLoading}
-                                loop={true}
-                              />
-                            </View>
-                          ) : (
-                            <>
-                              {this.state.files.map((d: any, i: number) => {
-                                if (d.type == 'image') {
-                                  return (
-                                    <TouchableOpacity
-                                      onPress={() =>
-                                        this.setState({imageViewer: true})
-                                      }
-                                      style={styles.AttchimageContainer}>
-                                      <Image
-                                        source={{
-                                          uri: d.uri,
-                                        }}
-                                        style={[
-                                          GlStyles.images,
-                                          {borderRadius: wp(3)},
-                                        ]}
-                                        resizeMode={'cover'}
-                                      />
-                                      <TouchableOpacity
-                                        onPress={() => {}}
-                                        style={{
-                                          position: 'absolute',
-                                          right: wp(0),
-                                        }}>
+                            {this.state.fileLoading == true ? (
+                              <View>
+                                <LottieView
+                                  autoPlay={true}
+                                  style={{width: wp(30)}}
+                                  source={animation.imageLoading}
+                                  loop={true}
+                                />
+                              </View>
+                            ) : (
+                              <>
+                                <View
+                                  style={{
+                                    flexWrap: 'wrap',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                  }}>
+                                  {this.state.files.map((d: any, i: number) => {
+                                    if (d.type == 'image') {
+                                      return (
                                         <TouchableOpacity
-                                          onPress={() => {
-                                            var arr = [
-                                              ...this.state.files,
-                                            ].filter((b) => b != d);
-                                            this.setState({files: arr});
-                                          }}>
-                                          <Icon
-                                            containerStyle={{
-                                              marginRight: wp(2),
-                                              marginTop: wp(2),
-                                              opacity: 0.5,
+                                          onPress={() =>
+                                            this.setState({imageViewer: true})
+                                          }
+                                          style={styles.AttchimageContainer}>
+                                          <Image
+                                            source={{
+                                              uri: d.uri,
                                             }}
-                                            name="circle-with-cross"
-                                            size={wp(5)}
-                                            type="entypo"
-                                            color={colors.text}
+                                            style={[
+                                              GlStyles.images,
+                                              {borderRadius: wp(3)},
+                                            ]}
+                                            resizeMode={'cover'}
                                           />
+                                          <TouchableOpacity
+                                            onPress={() => {}}
+                                            style={{
+                                              position: 'absolute',
+                                              right: wp(0),
+                                            }}>
+                                            <TouchableOpacity
+                                              onPress={() => {
+                                                var arr = [
+                                                  ...this.state.files,
+                                                ].filter((b) => b != d);
+                                                this.setState({files: arr});
+                                              }}>
+                                              <Icon
+                                                containerStyle={{
+                                                  marginRight: wp(2),
+                                                  marginTop: wp(2),
+                                                  opacity: 0.5,
+                                                }}
+                                                name="circle-with-cross"
+                                                size={wp(5)}
+                                                type="entypo"
+                                                color={colors.text}
+                                              />
+                                            </TouchableOpacity>
+                                          </TouchableOpacity>
                                         </TouchableOpacity>
-                                      </TouchableOpacity>
-                                    </TouchableOpacity>
-                                  );
-                                } else {
-                                  return (
-                                    <TouchableOpacity
-                                      onPress={() =>
-                                        this.setState({imageViewer: true})
-                                      }
-                                      style={[
-                                        styles.AttchimageContainer,
-                                        {
-                                          borderWidth: wp(0.3),
-                                          borderColor: colors.textOpa,
-                                        },
-                                      ]}>
-                                      <Image
-                                        source={
-                                          d.type == 'pdf'
-                                            ? images.pdf
-                                            : d.type == 'docx'
-                                            ? images.doc
-                                            : d.type == 'xlsx'
-                                            ? images.excel
-                                            : null
-                                        }
-                                        style={[GlStyles.images]}
-                                        resizeMode={'contain'}
-                                      />
-                                      <Text
-                                        style={{
-                                          fontSize: wp(2.5),
-                                          marginTop: wp(1),
-                                          fontFamily: fonts.SFuiDisplayMedium,
-                                          textAlign: 'center',
-                                        }}>
-                                        {d.name}
-                                      </Text>
-                                      <TouchableOpacity
-                                        onPress={() => {}}
-                                        style={{
-                                          position: 'absolute',
-                                          right: wp(0),
-                                        }}>
+                                      );
+                                    } else {
+                                      return (
                                         <TouchableOpacity
-                                          onPress={() => {
-                                            var arr = [
-                                              ...this.state.filename,
-                                            ].filter((b) => b != d);
-                                            this.setState({filename: arr});
-                                          }}>
-                                          <Icon
-                                            containerStyle={{
-                                              marginRight: wp(2),
-                                              marginTop: wp(2),
-                                              opacity: 0.5,
-                                            }}
-                                            name="circle-with-cross"
-                                            size={wp(5)}
-                                            type="entypo"
-                                            color={colors.text}
+                                          onPress={() =>
+                                            this.setState({imageViewer: true})
+                                          }
+                                          style={[
+                                            styles.AttchimageContainer,
+                                            {
+                                              borderWidth: wp(0.3),
+                                              borderColor: colors.textOpa,
+                                            },
+                                          ]}>
+                                          <Image
+                                            source={
+                                              d.type == 'pdf'
+                                                ? images.pdf
+                                                : d.type == 'docx'
+                                                ? images.doc
+                                                : d.type == 'xlsx'
+                                                ? images.excel
+                                                : null
+                                            }
+                                            style={[GlStyles.images]}
+                                            resizeMode={'contain'}
                                           />
+                                          <Text
+                                            style={{
+                                              fontSize: wp(2.5),
+                                              marginTop: wp(1),
+                                              marginBottom: wp(3),
+                                              fontFamily:
+                                                fonts.SFuiDisplayMedium,
+                                              textAlign: 'center',
+                                            }}>
+                                            {d.name.slice(0, 3)}
+                                          </Text>
+                                          <TouchableOpacity
+                                            onPress={() => {}}
+                                            style={{
+                                              position: 'absolute',
+                                              right: wp(0),
+                                            }}>
+                                            <TouchableOpacity
+                                              onPress={() => {
+                                                var arr = [
+                                                  ...this.state.files,
+                                                ].filter((b) => b != d);
+                                                this.setState({files: arr});
+                                              }}>
+                                              <Icon
+                                                containerStyle={{
+                                                  marginRight: wp(2),
+                                                  marginTop: wp(2),
+                                                  opacity: 0.5,
+                                                }}
+                                                name="circle-with-cross"
+                                                size={wp(5)}
+                                                type="entypo"
+                                                color={colors.text}
+                                              />
+                                            </TouchableOpacity>
+                                          </TouchableOpacity>
                                         </TouchableOpacity>
-                                      </TouchableOpacity>
-                                    </TouchableOpacity>
-                                  );
-                                }
-                              })}
-                            </>
-                          )}
+                                      );
+                                    }
+                                  })}
+                                </View>
+                              </>
+                            )}
+                          </View>
                         </View>
-                      </View>
-                    </>
-                  )}
-                </>
-              )}
+                      </>
+                    )}
+                  </>
+                )}
 
-              {/* Elimination / Administrative */}
-              <Text style={styles.selectYourElemination}>
-                Select your elimination / Administrative
-              </Text>
-              <View style={styles.eleminationAndAdministrativeContainer}>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setState({type: 'Elimination'});
-                  }}
-                  style={{marginLeft: wp(2), marginRight: wp(2)}}>
-                  <Icon
-                    //@ts-ignore
-                    size={wp(7)}
-                    name="team"
-                    type="antdesign"
-                    color={
-                      this.state.type == 'Elimination'
-                        ? colors.green
-                        : colors.lightGrey
-                    }
-                  />
-                  <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
-                    Elimination
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setState({type: 'Administrative'});
-                  }}
-                  style={{marginLeft: wp(2), marginRight: wp(2)}}>
-                  <Icon
-                    size={wp(7)}
-                    name="admin-panel-settings"
-                    type="material"
-                    color={
-                      this.state.type == 'Administrative'
-                        ? colors.green
-                        : colors.lightGrey
-                    }
-                  />
-                  <Text style={{fontSize: wp(2.5), opacity: 0.5}}>Admin</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setState({type: 'Substitution'});
-                  }}
-                  style={{marginLeft: wp(2), marginRight: wp(2)}}>
-                  <Icon
-                    size={wp(7)}
-                    name="unlink"
-                    type="font-awesome"
-                    color={
-                      this.state.type == 'Substitution'
-                        ? colors.green
-                        : colors.lightGrey
-                    }
-                  />
-                  <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
-                    Substitution
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setState({type: 'Engineering'});
-                  }}
-                  style={{marginLeft: wp(2), marginRight: wp(2)}}>
-                  <Icon
-                    size={wp(7)}
-                    name="engineering"
-                    type="material"
-                    color={
-                      this.state.type == 'Engineering'
-                        ? colors.green
-                        : colors.lightGrey
-                    }
-                  />
-                  <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
-                    Engineering
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setState({type: 'PPE'});
-                  }}
-                  style={{marginLeft: wp(2), marginRight: wp(2)}}>
-                  <Icon
-                    size={wp(7)}
-                    name="engineering"
-                    type="material"
-                    color={
-                      this.state.type == 'PPE' ? colors.green : colors.lightGrey
-                    }
-                  />
-                  <Text
-                    style={{
-                      fontSize: wp(2.5),
-                      opacity: 0.5,
-                      textAlign: 'center',
-                    }}>
-                    PPE
-                  </Text>
-                </TouchableOpacity>
-              </View>
-
-              {/* Discard and save buttons */}
-              <View style={styles.btnsContainer}>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.props.discard();
-                  }}
-                  style={styles.btnDiscard}>
-                  <Text style={styles.btnDiscardText}>Delete</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    if (this.state.AssignedTo.length != 0) {
-                      console.log('asdsad');
-                      console.log(
-                        this.state.files.map((d: any) => (d = d.name)),
-                      );
-                      var sugg = {
-                        // status: this.state.status,
-                        content: this.state.observation,
-                        assigned_to: this.state.AssignedTo[0],
-                        date: moment().format('YYYY-MM-DD'),
-                        is_complete: this.state.is_complete,
-                        is_selected: this.state.is_selected,
-                        category: this.state.type,
-                        status: this.state.statuses,
-                      };
-
-                      if (this.state.addjustificationPop == false) {
-                        sugg['justification'] = {
-                          content: this.state.justificationT,
-                          attachments: this.state.files.map(
-                            (d: any) => (d = d.name),
-                          ),
-                        };
+                {/* Elimination / Administrative */}
+                <Text style={styles.selectYourElemination}>
+                  Select your elimination / Administrative
+                </Text>
+                <View style={styles.eleminationAndAdministrativeContainer}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({type: 'Elimination'});
+                    }}
+                    style={{marginLeft: wp(2), marginRight: wp(2)}}>
+                    <Icon
+                      //@ts-ignore
+                      size={wp(7)}
+                      name="team"
+                      type="antdesign"
+                      color={
+                        this.state.type == 'Elimination'
+                          ? colors.green
+                          : colors.lightGrey
                       }
-                      this.props.save(sugg);
-                    }
-                  }}
-                  style={styles.saveBtn}>
-                  <Text style={styles.sveBtnText}>Save</Text>
-                </TouchableOpacity>
-              </View>
-            </>
-          )}
-        </View>
+                    />
+                    <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                      Elimination
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({type: 'Administrative'});
+                    }}
+                    style={{marginLeft: wp(2), marginRight: wp(2)}}>
+                    <Icon
+                      size={wp(7)}
+                      name="admin-panel-settings"
+                      type="material"
+                      color={
+                        this.state.type == 'Administrative'
+                          ? colors.green
+                          : colors.lightGrey
+                      }
+                    />
+                    <Text style={{fontSize: wp(2.5), opacity: 0.5}}>Admin</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({type: 'Substitution'});
+                    }}
+                    style={{marginLeft: wp(2), marginRight: wp(2)}}>
+                    <Icon
+                      size={wp(7)}
+                      name="unlink"
+                      type="font-awesome"
+                      color={
+                        this.state.type == 'Substitution'
+                          ? colors.green
+                          : colors.lightGrey
+                      }
+                    />
+                    <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                      Substitution
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({type: 'Engineering'});
+                    }}
+                    style={{marginLeft: wp(2), marginRight: wp(2)}}>
+                    <Icon
+                      size={wp(7)}
+                      name="engineering"
+                      type="material"
+                      color={
+                        this.state.type == 'Engineering'
+                          ? colors.green
+                          : colors.lightGrey
+                      }
+                    />
+                    <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                      Engineering
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.setState({type: 'PPE'});
+                    }}
+                    style={{marginLeft: wp(2), marginRight: wp(2)}}>
+                    <Icon
+                      size={wp(7)}
+                      name="engineering"
+                      type="material"
+                      color={
+                        this.state.type == 'PPE'
+                          ? colors.green
+                          : colors.lightGrey
+                      }
+                    />
+                    <Text
+                      style={{
+                        fontSize: wp(2.5),
+                        opacity: 0.5,
+                        textAlign: 'center',
+                      }}>
+                      PPE
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+
+                {/* Discard and save buttons */}
+                <View style={styles.btnsContainer}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.props.discard();
+                    }}
+                    style={styles.btnDiscard}>
+                    <Text style={styles.btnDiscardText}>Delete</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (this.state.AssignedTo.length != 0) {
+                        var sugg = {
+                          // status: this.state.status,
+                          content: this.state.observation,
+                          assigned_to: this.state.AssignedTo[0],
+                          date: moment().format('YYYY-MM-DD'),
+                          is_complete: this.state.is_complete,
+                          is_selected: this.state.is_selected,
+                          category: this.state.type,
+                          status: this.state.statuses,
+                        };
+
+                        if (this.state.addjustificationPop == false) {
+                          sugg['justification'] = {
+                            content: this.state.justificationT,
+                            attachments: this.state.files.map(
+                              (d: any) => (d = d.name),
+                            ),
+                          };
+                        }
+                        this.props.save(sugg);
+                      }
+                    }}
+                    style={styles.saveBtn}>
+                    <Text style={styles.sveBtnText}>Save</Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            )}
+          </View>
+        </ScrollView>
       </Model>
     );
   }

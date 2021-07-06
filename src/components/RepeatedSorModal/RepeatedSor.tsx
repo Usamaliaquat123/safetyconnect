@@ -37,9 +37,17 @@ export default class RepeatedModal extends React.Component<
     return (
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Text style={styles.headingContainer}>
-            Is your SOR same as these ?
-          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <Text style={styles.headingContainer}>
+              Is your SOR same as these ?
+            </Text>
+            <Icon name={'cross'} type={'entypo'} size={wp(7)} />
+          </View>
           {/* SUbmitted */}
           {/* <View style={[styles.containerCard, {marginTop: wp(2)}]}> */}
           {/* <View style={{flexDirection: 'row', paddingLeft: wp(2)}}> */}
@@ -52,6 +60,8 @@ export default class RepeatedModal extends React.Component<
               onPress={(d: Isor) => this.props.onViewSor(d)}
               date={res.date}
               risk={res.risk}
+              name={res.username}
+              selection={false}
               viewPortWidth={70}
               observation={res.observation}
               backgroundColor={colors.secondary}
@@ -60,7 +70,7 @@ export default class RepeatedModal extends React.Component<
               location={res.location}
               user1={res.user1}
               user2={res.user2}
-              style={[styles.cardConatiner, {marginTop: wp(2)}]}
+              style={[styles.cardConatiner]}
             />
           ))}
           {/* </View> */}
@@ -73,6 +83,8 @@ export default class RepeatedModal extends React.Component<
               onPress={(d: Isor) => this.props.onViewSor(d)}
               date={res.date}
               risk={res.risk}
+              name={res.username}
+              selection={false}
               viewPortWidth={70}
               observation={res.observation}
               backgroundColor={colors.secondary}
@@ -89,40 +101,14 @@ export default class RepeatedModal extends React.Component<
           {/* Cards containers */}
           {repeatedSor.draft.map((res, i) => (
             <>
-              {/* 
-<Card
-                            key={i}
-                            type={'all'}
-                            data={d}
-                            onPress={(d: Isor) =>
-                              this.props.navigation.navigate('ViewSOR', {
-                                data: d,
-                              })
-                            }
-                            name={d.created_by}
-                            date={d.occured_at}
-                            risk={d.risk.severity * d.risk.likelihood}
-                            viewPortWidth={80}
-                            observation={d.details}
-                            classify={d.sor_type}
-                            iconConf={classifySor.find(
-                              (e: any) => e.title == d.sor_type,
-                            )}
-                            location={d.location}
-                            style={[
-                              styles.draftCardContainer,
-                              // {marginBottom: wp()},
-                            ]}
-                            user1={d.user1}
-                            user2={d.user2}
-                          /> */}
-
               <Card
                 data={res}
-                type={'all'}
+                name={res.username}
+                // type={'all'}
                 onPress={(d: Isor) => this.props.onViewSor(d)}
                 date={res.date}
                 risk={res.risk}
+                selection={false}
                 viewPortWidth={70}
                 observation={res.observation}
                 backgroundColor={colors.secondary}

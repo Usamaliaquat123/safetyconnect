@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
   },
   headingContainer: {
-    marginTop: wp(5),
+    marginTop: wp(3),
     fontSize: wp(3.7),
     fontFamily: fonts.SFuiDisplayBold,
     // textAlign: 'center',
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   cardConatiner: {
     // marginLeft: wp(5),
     // backgroundColor: colors.secondary,
-    marginBottom: wp(5),
+    // marginBottom: wp(5),
     // marginRight: wp(1),
   },
   containerStyleOfFiledTick: {

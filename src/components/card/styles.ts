@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   cardBottom: {
     // justifyContent: ,
     // flexDirection: 'row',
-    width: wp(80) - wp(10),
+    width: wp(80) - wp(20),
     // marginTop: wp(10),
     position: 'absolute',
     bottom: wp(3),

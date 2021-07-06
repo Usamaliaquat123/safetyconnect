@@ -99,7 +99,9 @@ export default class More extends React.Component<MoreProps, any> {
               </TouchableOpacity>
             </View>
             {/*  content */}
-            <TouchableOpacity style={styles.containerOfItem}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('ViewAllSOr')}
+              style={styles.containerOfItem}>
               <View style={{flexDirection: 'row'}}>
                 <View>
                   <Image
@@ -113,7 +115,7 @@ export default class More extends React.Component<MoreProps, any> {
             <TouchableOpacity style={styles.containerOfItem}>
               <View style={{flexDirection: 'row'}}>
                 <View>
-                  <Image
+                  <Images
                     style={styles.itemIcon}
                     source={images.menuIcons.incident}
                   />

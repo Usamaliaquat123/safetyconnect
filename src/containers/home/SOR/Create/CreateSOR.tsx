@@ -108,7 +108,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       selectEsclateTo: false,
       esclateTo: '',
       // repeated sor modal
-      repeatedSorModal: true,
+      repeatedSorModal: false,
       repeatedSorData: [],
       submitToTags: [],
       exclateToTags: [],
@@ -2028,8 +2028,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             <RepeatedSor
               repeatedSor={this.state.repeatedSorData}
               onViewSor={(d: Isor) => {
-                this.setState({repeatedSorModald: false});
-                this.props.navigation.navigate('ViewSOR', {data: d});
+                // this.setState({repeatedSorModald: false});
+                // this.props.navigation.navigate('ViewSOR', {data: d});
               }}
               onSkip={() => {
                 this.setState({repeatedSorModal: false});
