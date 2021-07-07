@@ -411,7 +411,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       repeatedList: e.map((d) => d._id),
     };
 
-    createApi.createApi().linkRepeatedSugg();
+    createApi
+      .createApi()
+      .linkRepeatedSugg(data)
+      .then((res) => {});
 
     this.setState({repeatedSorModal: false});
     this.props.navigation.navigate('ViewAllSOr');
