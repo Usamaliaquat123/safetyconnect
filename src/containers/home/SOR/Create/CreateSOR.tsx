@@ -405,6 +405,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   };
 
   onlinksorRepeated = (e: any) => {
+    var data = {
+      project: '5fe9773d81a9ff2b90a14845',
+      report: '5fe9773d81a9ff2b90a14845',
+      repeatedList: e.map((d) => d._id),
+    };
+
+    createApi.createApi().linkRepeatedSugg();
+
     this.setState({repeatedSorModal: false});
     this.props.navigation.navigate('ViewAllSOr');
   };

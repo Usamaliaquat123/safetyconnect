@@ -72,6 +72,8 @@ const createApi = (
   const observationSuggestions = (data: any) => obsRepApi.get(`obs?q=${data}`);
   const getAllRepeatedSugg = (keyword: any, projectId: any) =>
     aiRepBaseApi.get(`rep?q=${keyword}&id=${projectId}`);
+  const linkRepeatedSugg = (data: any) =>
+    baseapi.post(`project/repeated`, data);
   // sor api
 
   /*
@@ -192,6 +194,7 @@ const createApi = (
     getFiveWhy,
     getAllNotifications,
     getAllComents,
+    linkRepeatedSugg,
     createComment,
     delComment,
     editComment,
