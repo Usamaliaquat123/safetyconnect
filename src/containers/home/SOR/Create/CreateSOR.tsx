@@ -705,7 +705,34 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
             // this
 
-            // createApi.createApi().
+            createApi
+              .createApi()
+              .getAllRepeatedSugg(
+                this.state.observationT,
+                '60550710489eba0e643dc4b7',
+              )
+              .then((sugg: any) => {
+                console.log('sugge data');
+                console.log(sugg.data.results);
+
+                var rep = sugg.data.results;
+
+                for (let i = 0; i < rep.length; i++) {
+                  createApi
+                    .createApi()
+                    .getUser(rep[i].created_by)
+                    .then((user: any) => {
+                      rep[i]['selected'] = false;
+                      rep[i]['user'] = {
+                        _id: user.data.data._id,
+                        email: user.data.data.email,
+                        name: user.data.data.name,
+                        img_url: user.data.data.img_url,
+                      };
+                    });
+                }
+                this.setState({repeatedSorData: rep, repeatedSorModal: true});
+              });
 
             if (severity.length !== 0) {
               if (
