@@ -108,7 +108,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       selectEsclateTo: false,
       esclateTo: '',
       // repeated sor modal
-      repeatedSorModal: true,
+      repeatedSorModal: false,
       repeatedSorData: [],
       submitToTags: [],
       exclateToTags: [],
@@ -290,35 +290,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   componentDidMount = () => {
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectid: currentProj});
-
-      createApi
-        .createApi()
-        .getAllRepeatedSugg(
-          'Damaged hammer was being used at workshop, which can be cause hard injury',
-          '60550710489eba0e643dc4b7',
-        )
-        .then((sugg: any) => {
-          console.log('sugge data');
-          console.log(sugg.data.results);
-
-          var rep = sugg.data.results;
-
-          for (let i = 0; i < rep.length; i++) {
-            createApi
-              .createApi()
-              .getUser(rep[i].created_by)
-              .then((user: any) => {
-                rep[i]['selected'] = false;
-                rep[i]['user'] = {
-                  _id: user.data.data._id,
-                  email: user.data.data.email,
-                  name: user.data.data.name,
-                  img_url: user.data.data.img_url,
-                };
-              });
-          }
-          this.setState({repeatedSorData: rep});
-        });
     });
     getCurrentOrganization().then((currentOrg: any) =>
       this.setState({currentOrg}),
@@ -405,19 +376,32 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   };
 
   onlinksorRepeated = (e: any) => {
+    console.log(e.map((d: any) => d._id));
     var data = {
-      project: '5fe9773d81a9ff2b90a14845',
-      report: '5fe9773d81a9ff2b90a14845',
-      repeatedList: e.map((d) => d._id),
+      project: this.state.projectid,
+      report: this.state.mainReportId,
+      repeatedList: e.map((d: any) => d._id),
     };
 
     createApi
       .createApi()
       .linkRepeatedSugg(data)
-      .then((res) => {});
+      .then((res) => {
+        console.log('res');
+        console.log(res);
+
+        // showMessage({
+        //   message: 'SOR sucessfully subitted',
+        //   type: 'success',
+        //   position: 'bottom',
+        // });
+        // setTimeout(() => {
+        //   this.props.navigation.navigate('Main');
+        // }, 1000);
+      });
 
     this.setState({repeatedSorModal: false});
-    this.props.navigation.navigate('ViewAllSOr');
+    // this.props.navigation.navigate('ViewAllSOr');
   };
   markAsComplete = () => {};
   preview = () => {};
@@ -617,40 +601,112 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         .createApi()
                         .createFiveWhy(obj)
                         .then((res) => {
-                          this.setState({
-                            loading: false,
-                            errorModal: false,
-                          });
-                          showMessage({
-                            message: 'SOR sucessfully subitted',
-                            type: 'success',
-                            position: 'bottom',
-                          });
+                          createApi
+                            .createApi()
+                            .getAllRepeatedSugg(
+                              this.state.observationT,
+                              this.state.projectid,
+                            )
+                            .then((sugg: any) => {
+                              this.setState({
+                                loading: false,
+                                errorModal: false,
+                              });
+                              console.log('sugge data');
+                              console.log(sugg.data);
 
-                          setTimeout(() => {
-                            this.props.navigation.navigate('Main');
-                          }, 1000);
+                              var rep = sugg.data.results;
 
+                              if (rep.length == 0) {
+                                showMessage({
+                                  message: 'SOR sucessfully subitted',
+                                  type: 'success',
+                                  position: 'bottom',
+                                });
+
+                                setTimeout(() => {
+                                  this.props.navigation.navigate('Main');
+                                }, 1000);
+                              } else {
+                                this.setState({mainReportId: sor.report._id});
+                                for (let i = 0; i < rep.length; i++) {
+                                  createApi
+                                    .createApi()
+                                    .getUser(rep[i].created_by)
+                                    .then((user: any) => {
+                                      rep[i]['selected'] = false;
+                                      rep[i]['user'] = {
+                                        _id: user.data.data._id,
+                                        email: user.data.data.email,
+                                        name: user.data.data.name,
+                                        img_url: user.data.data.img_url,
+                                      };
+                                    });
+                                  this.setState({
+                                    repeatedSorData: rep,
+                                  });
+                                }
+                                this.setState({
+                                  repeatedSorModal: true,
+                                });
+                              }
+                            });
                           console.log(res);
                         })
                         .catch((err: any) => console.log(err));
 
                       // _id: ress.data.data.report_id,
                     } else {
-                      this.setState({
-                        loading: false,
-                        errorModal: false,
-                      });
+                      createApi
+                        .createApi()
+                        .getAllRepeatedSugg(
+                          this.state.observationT,
+                          this.state.projectid,
+                        )
+                        .then((sugg: any) => {
+                          this.setState({
+                            loading: false,
+                            errorModal: false,
+                          });
+                          console.log('sugge data');
+                          console.log(sugg.data);
 
-                      showMessage({
-                        message: 'SOR sucessfully subitted',
-                        type: 'success',
-                        position: 'bottom',
-                      });
+                          var rep = sugg.data.results;
 
-                      setTimeout(() => {
-                        this.props.navigation.navigate('Main');
-                      }, 1000);
+                          if (rep.length == 0) {
+                            showMessage({
+                              message: 'SOR sucessfully subitted',
+                              type: 'success',
+                              position: 'bottom',
+                            });
+
+                            setTimeout(() => {
+                              this.props.navigation.navigate('Main');
+                            }, 1000);
+                          } else {
+                            this.setState({mainReportId: sor.report._id});
+                            for (let i = 0; i < rep.length; i++) {
+                              createApi
+                                .createApi()
+                                .getUser(rep[i].created_by)
+                                .then((user: any) => {
+                                  rep[i]['selected'] = false;
+                                  rep[i]['user'] = {
+                                    _id: user.data.data._id,
+                                    email: user.data.data.email,
+                                    name: user.data.data.name,
+                                    img_url: user.data.data.img_url,
+                                  };
+                                });
+                              this.setState({
+                                repeatedSorData: rep,
+                              });
+                            }
+                            this.setState({
+                              repeatedSorModal: true,
+                            });
+                          }
+                        });
                     }
 
                     if (res.status == 200) {
@@ -704,35 +760,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             // repeatedSorData
 
             // this
-
-            createApi
-              .createApi()
-              .getAllRepeatedSugg(
-                this.state.observationT,
-                '60550710489eba0e643dc4b7',
-              )
-              .then((sugg: any) => {
-                console.log('sugge data');
-                console.log(sugg.data.results);
-
-                var rep = sugg.data.results;
-
-                for (let i = 0; i < rep.length; i++) {
-                  createApi
-                    .createApi()
-                    .getUser(rep[i].created_by)
-                    .then((user: any) => {
-                      rep[i]['selected'] = false;
-                      rep[i]['user'] = {
-                        _id: user.data.data._id,
-                        email: user.data.data.email,
-                        name: user.data.data.name,
-                        img_url: user.data.data.img_url,
-                      };
-                    });
-                }
-                this.setState({repeatedSorData: rep, repeatedSorModal: true});
-              });
 
             if (severity.length !== 0) {
               if (
@@ -866,18 +893,54 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               .createApi()
                               .createFiveWhy(newObj)
                               .then((res) => {
-                                this.setState({
-                                  loading: false,
-                                  errorModal: false,
-                                });
-                                showMessage({
-                                  message: 'SOR sucessfully subitted',
-                                  type: 'success',
-                                  position: 'bottom',
-                                });
-                                setTimeout(() => {
-                                  this.props.navigation.navigate('Main');
-                                }, 1000);
+                                this.setState({mainReportId: sors.report._id});
+                                createApi
+                                  .createApi()
+                                  .getAllRepeatedSugg(
+                                    this.state.observationT,
+                                    this.state.projectid, //projectid
+                                  )
+                                  .then((sugg: any) => {
+                                    console.log('sugge data');
+                                    console.log(sugg.data);
+                                    this.setState({
+                                      loading: false,
+                                      errorModal: false,
+                                    });
+                                    var rep = sugg.data.results;
+                                    if (rep.length == 0) {
+                                      showMessage({
+                                        message: 'SOR sucessfully subitted',
+                                        type: 'success',
+                                        position: 'bottom',
+                                      });
+                                      setTimeout(() => {
+                                        this.props.navigation.navigate('Main');
+                                      }, 1000);
+                                    } else {
+                                      for (let i = 0; i < rep.length; i++) {
+                                        createApi
+                                          .createApi()
+                                          .getUser(rep[i].created_by)
+                                          .then((user: any) => {
+                                            rep[i]['selected'] = false;
+                                            rep[i]['user'] = {
+                                              _id: user.data.data._id,
+                                              email: user.data.data.email,
+                                              name: user.data.data.name,
+                                              img_url: user.data.data.img_url,
+                                            };
+                                          });
+                                        this.setState({
+                                          repeatedSorData: rep,
+                                        });
+                                      }
+                                      this.setState({
+                                        repeatedSorModal: true,
+                                      });
+                                    }
+                                  });
+
                                 console.log('five why');
                                 console.log(res);
                               })
@@ -886,19 +949,55 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             // _id: ress.data.data.report_id,
                           } else {
                             console.log(res);
-                            this.setState({
-                              loading: false,
-                              errorModal: false,
-                            });
 
-                            showMessage({
-                              message: 'SOR sucessfully subitted',
-                              type: 'success',
-                              position: 'bottom',
-                            });
-                            setTimeout(() => {
-                              this.props.navigation.navigate('Main');
-                            }, 1000);
+                            createApi
+                              .createApi()
+                              .getAllRepeatedSugg(
+                                this.state.observationT,
+                                this.state.projectid, //projectid
+                              )
+                              .then((sugg: any) => {
+                                this.setState({
+                                  loading: false,
+                                  errorModal: false,
+                                });
+
+                                console.log('sugge data');
+                                console.log(sugg.data.results);
+
+                                var rep = sugg.data.results;
+                                if (rep.length == 0) {
+                                  showMessage({
+                                    message: 'SOR sucessfully subitted',
+                                    type: 'success',
+                                    position: 'bottom',
+                                  });
+                                  setTimeout(() => {
+                                    this.props.navigation.navigate('Main');
+                                  }, 1000);
+                                } else {
+                                  for (let i = 0; i < rep.length; i++) {
+                                    createApi
+                                      .createApi()
+                                      .getUser(rep[i].created_by)
+                                      .then((user: any) => {
+                                        rep[i]['selected'] = false;
+                                        rep[i]['user'] = {
+                                          _id: user.data.data._id,
+                                          email: user.data.data.email,
+                                          name: user.data.data.name,
+                                          img_url: user.data.data.img_url,
+                                        };
+                                      });
+                                    this.setState({
+                                      repeatedSorData: rep,
+                                    });
+                                  }
+                                  this.setState({
+                                    repeatedSorModal: true,
+                                  });
+                                }
+                              });
                           }
                           // if (res.status == 200) {
                           //   console.log('sdsd');

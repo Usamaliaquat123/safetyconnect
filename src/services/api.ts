@@ -13,7 +13,7 @@ const base_uri = `https://dev.safetyconnect.ai`;
 const createApi = (
   baseURL: string = `${base_uri}:12222/`,
   obsbaseUrl: string = `${base_uri}:5003`,
-  repBaseAi: string = `${'https://stage.safetyconnect.ai:'}5002/`,
+  repBaseAi: string = `${'https://stage.safetyconnect.ai'}:5002/`,
   baseAi: string = `${base_uri}:5004/`,
   // External aws api
   // upload files

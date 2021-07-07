@@ -30,12 +30,12 @@ export default class RepeatedModal extends React.Component<
       completedSelected: false,
       draftSelected: false,
       submittedSelected: false,
-      repeatedSor: this.props.repeatedSor,
+      repeatedSor: [],
     };
   }
 
   componentDidMount() {
-    console.log(this.props.repeatedSor);
+    this.setState({repeatedSor: this.props.repeatedSor});
   }
 
   render() {
@@ -61,38 +61,42 @@ export default class RepeatedModal extends React.Component<
           {/* Cards containers */}
           {this.state.repeatedSor.length != 0 ? (
             <>
-              {this.state.repeatedSor.map((res: any, i: number) => (
-                <View style={{marginBottom: wp(3)}}>
-                  <Card
-                    data={res}
-                    onPress={(d: Isor) => {
-                      var data = [...this.state.repeatedSor];
-                      data[i].selected = !d.selected;
+              <>
+                {this.state.repeatedSor.map((res: any, i: number) => (
+                  <View style={{marginBottom: wp(3)}}>
+                    <Card
+                      data={res}
+                      onPress={(d: Isor) => {
+                        var data = [...this.state.repeatedSor];
+                        data[i].selected = !d.selected;
 
-                      this.setState({repeatedSor: data});
-                      this.props.onViewSor(
-                        this.state.repeatedSor.filter(
-                          (d) => d.selected == true,
-                        ),
-                      );
-                    }}
-                    date={res.occured_at}
-                    risk={res.risk.likelihood * res.risk.severity}
-                    name={res.user.name}
-                    selection={res.selected}
-                    viewPortWidth={70}
-                    observation={res.details}
-                    backgroundColor={colors.secondary}
-                    classify={res.sor_type}
-                    iconConf={classifySor.find(
-                      (e: any) => e.title == res.sor_type,
-                    )}
-                    location={res.location}
-                    user1={res.user.img_url}
-                    // style={{borderColor: colors.green, borderWidth: wp(0.2)}}
-                  />
-                </View>
-              ))}
+                        this.setState({repeatedSor: data});
+                        this.props.onViewSor(
+                          this.state.repeatedSor.filter(
+                            (d) => d.selected == true,
+                          ),
+                        );
+                      }}
+                      date={res.occured_at}
+                      risk={res.risk.likelihood * res.risk.severity}
+                      name={res?.user.name == undefined ? '' : res.user.name}
+                      selection={res.selected}
+                      viewPortWidth={70}
+                      observation={res.details}
+                      backgroundColor={colors.secondary}
+                      classify={res.sor_type}
+                      iconConf={classifySor.find(
+                        (e: any) => e.title == res.sor_type,
+                      )}
+                      location={res.location}
+                      user1={
+                        res?.user.img_url == undefined ? ' ' : res.user.img_url
+                      }
+                      // style={{borderColor: colors.green, borderWidth: wp(0.2)}}
+                    />
+                  </View>
+                ))}
+              </>
             </>
           ) : null}
           {/* </View> */}
