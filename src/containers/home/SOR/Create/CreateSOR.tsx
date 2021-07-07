@@ -108,7 +108,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       selectEsclateTo: false,
       esclateTo: '',
       // repeated sor modal
-      repeatedSorModal: false,
+      repeatedSorModal: true,
       repeatedSorData: [],
       submitToTags: [],
       exclateToTags: [],
@@ -290,6 +290,35 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   componentDidMount = () => {
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectid: currentProj});
+
+      createApi
+        .createApi()
+        .getAllRepeatedSugg(
+          'Damaged hammer was being used at workshop, which can be cause hard injury',
+          '60550710489eba0e643dc4b7',
+        )
+        .then((sugg: any) => {
+          console.log('sugge data');
+          console.log(sugg.data.results);
+
+          var rep = sugg.data.results;
+
+          for (let i = 0; i < rep.length; i++) {
+            createApi
+              .createApi()
+              .getUser(rep[i].created_by)
+              .then((user: any) => {
+                rep[i]['selected'] = false;
+                rep[i]['user'] = {
+                  _id: user.data.data._id,
+                  email: user.data.data.email,
+                  name: user.data.data.name,
+                  img_url: user.data.data.img_url,
+                };
+              });
+          }
+          this.setState({repeatedSorData: rep});
+        });
     });
     getCurrentOrganization().then((currentOrg: any) =>
       this.setState({currentOrg}),
@@ -373,6 +402,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     //       actionRecommendations: [...obj],
     //     });
     //   });
+  };
+
+  onlinksorRepeated = (e: any) => {
+    this.setState({repeatedSorModal: false});
+    this.props.navigation.navigate('ViewAllSOr');
   };
   markAsComplete = () => {};
   preview = () => {};
@@ -656,6 +690,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             //   // Error on actions and recommendations
             // }
           } else {
+            // repeatedSorData
+
+            // this
+
+            // createApi.createApi().
+
             if (severity.length !== 0) {
               if (
                 this.state.actionRecommendations.filter(
@@ -2035,9 +2075,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 this.setState({repeatedSorModal: false});
                 this.props.navigation.goBack();
               }}
-              onSubmit={() => {
-                this.setState({repeatedSorModal: false});
-                this.props.navigation.navigate('ViewAllSOr');
+              onSubmit={(e) => {
+                this.onlinksorRepeated(e);
               }}
             />
           </Modal>

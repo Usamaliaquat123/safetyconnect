@@ -13,7 +13,7 @@ const base_uri = `https://dev.safetyconnect.ai`;
 const createApi = (
   baseURL: string = `${base_uri}:12222/`,
   obsbaseUrl: string = `${base_uri}:5003`,
-  repBaseAi: string = `${base_uri}:5002/`,
+  repBaseAi: string = `${'https://stage.safetyconnect.ai:'}5002/`,
   baseAi: string = `${base_uri}:5004/`,
   // External aws api
   // upload files
@@ -32,6 +32,7 @@ const createApi = (
     // headers,
     timeout: 10000,
   });
+
   const obsRepApi = apisauce.create({
     baseURL: obsbaseUrl,
     // headers,
@@ -69,6 +70,8 @@ const createApi = (
   const repeatedsorsugg = (keyword: any) =>
     aiRepBaseApi.post(`repeatedsor`, keyword);
   const observationSuggestions = (data: any) => obsRepApi.get(`obs?q=${data}`);
+  const getAllRepeatedSugg = (keyword: any, projectId: any) =>
+    aiRepBaseApi.get(`rep?q=${keyword}&id=${projectId}`);
   // sor api
 
   /*
@@ -211,6 +214,7 @@ const createApi = (
     organization,
     setUserInfo,
     createUser,
+    getAllRepeatedSugg,
     getUser,
   };
 };

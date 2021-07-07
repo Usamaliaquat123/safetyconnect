@@ -26,7 +26,7 @@ export interface CardProps {
   even?: boolean;
   iconConf?: any;
   user1: string;
-  user2: string;
+  user2?: string;
   style?: Object;
   viewPortWidth?: number;
   isclassify?: boolean;
@@ -197,7 +197,12 @@ export default class Card extends React.Component<CardProps, any> {
           <View style={this.props.style}>
             <TouchableOpacity
               // activeOpacity={1}
-              style={[styles.slideInnerContainer, {width: wp(80)}]}
+              style={[
+                styles.slideInnerContainer,
+                {
+                  width: wp(80),
+                },
+              ]}
               onPress={() => {
                 this.props.onPress(this.props.data);
               }}>
@@ -205,7 +210,16 @@ export default class Card extends React.Component<CardProps, any> {
               <View
                 style={[
                   styles.imageContainer,
-                  {backgroundColor: this.props.backgroundColor},
+                  {
+                    backgroundColor: this.props.backgroundColor,
+                  },
+
+                  this.props.selection
+                    ? {
+                        borderWidth: wp(0.2),
+                        borderColor: colors.green,
+                      }
+                    : null,
                 ]}>
                 <View style={{flexDirection: 'column'}}>
                   <View style={styles.cardHeader}>
@@ -217,12 +231,13 @@ export default class Card extends React.Component<CardProps, any> {
                           : moment(this.props.date).format('LT, DD MMM YYYY')}
                       </Text>
                       <Icon
-                        containerStyle={{marginLeft: wp(7), opacity: 0.5}}
+                        containerStyle={{marginLeft: wp(7)}}
                         name={
                           this.props.selection ? 'checkcircle' : 'checkcircleo'
                         }
                         type={'antdesign'}
                         size={wp(5)}
+                        color={colors.green}
                       />
                     </View>
                     {this.props.isclassify == true ? (

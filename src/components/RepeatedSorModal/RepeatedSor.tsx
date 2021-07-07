@@ -5,7 +5,7 @@ import styles from './styles';
 import {Icon} from 'react-native-elements';
 import {Card} from '@components';
 import {colors} from '@theme';
-import {repeatedSor} from '@service';
+import {repeatedSor, createApi} from '@service';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -17,7 +17,7 @@ export interface RepeatedModalProps {
   onSubmit: Function;
   onSkip: Function;
   onViewSor: Function;
-  repeatedSor: Array<Isor>;
+  repeatedSor: Array<any>;
 }
 
 export default class RepeatedModal extends React.Component<
@@ -30,7 +30,12 @@ export default class RepeatedModal extends React.Component<
       completedSelected: false,
       draftSelected: false,
       submittedSelected: false,
+      repeatedSor: this.props.repeatedSor,
     };
+  }
+
+  componentDidMount() {
+    console.log(this.props.repeatedSor);
   }
 
   render() {
@@ -54,84 +59,59 @@ export default class RepeatedModal extends React.Component<
 
           {/* </View> */}
           {/* Cards containers */}
-          {repeatedSor.submitted.map((res, i) => (
-            <Card
-              data={res}
-              onPress={(d: Isor) => this.props.onViewSor(d)}
-              date={res.date}
-              risk={res.risk}
-              name={res.username}
-              selection={false}
-              viewPortWidth={70}
-              observation={res.observation}
-              backgroundColor={colors.secondary}
-              classify={res.classify}
-              iconConf={classifySor.find((e: any) => e.title == res.classify)}
-              location={res.location}
-              user1={res.user1}
-              user2={res.user2}
-              style={[styles.cardConatiner]}
-            />
-          ))}
+          {this.state.repeatedSor.length != 0 ? (
+            <>
+              {this.state.repeatedSor.map((res: any, i: number) => (
+                <View style={{marginBottom: wp(3)}}>
+                  <Card
+                    data={res}
+                    onPress={(d: Isor) => {
+                      var data = [...this.state.repeatedSor];
+                      data[i].selected = !d.selected;
+
+                      this.setState({repeatedSor: data});
+                      this.props.onViewSor(
+                        this.state.repeatedSor.filter(
+                          (d) => d.selected == true,
+                        ),
+                      );
+                    }}
+                    date={res.occured_at}
+                    risk={res.risk.likelihood * res.risk.severity}
+                    name={res.user.name}
+                    selection={res.selected}
+                    viewPortWidth={70}
+                    observation={res.details}
+                    backgroundColor={colors.secondary}
+                    classify={res.sor_type}
+                    iconConf={classifySor.find(
+                      (e: any) => e.title == res.sor_type,
+                    )}
+                    location={res.location}
+                    user1={res.user.img_url}
+                    // style={{borderColor: colors.green, borderWidth: wp(0.2)}}
+                  />
+                </View>
+              ))}
+            </>
+          ) : null}
           {/* </View> */}
           {/* completed  */}
 
-          {/* Cards containers */}
-          {repeatedSor.submitted.map((res, i) => (
-            <Card
-              data={res}
-              onPress={(d: Isor) => this.props.onViewSor(d)}
-              date={res.date}
-              risk={res.risk}
-              name={res.username}
-              selection={false}
-              viewPortWidth={70}
-              observation={res.observation}
-              backgroundColor={colors.secondary}
-              classify={res.classify}
-              iconConf={classifySor.find((e: any) => e.title == res.classify)}
-              location={res.location}
-              user1={res.user1}
-              user2={res.user2}
-              style={[styles.cardConatiner, {marginTop: wp(2)}]}
-            />
-          ))}
-          {/* Draft  */}
-
-          {/* Cards containers */}
-          {repeatedSor.draft.map((res, i) => (
-            <>
-              <Card
-                data={res}
-                name={res.username}
-                // type={'all'}
-                onPress={(d: Isor) => this.props.onViewSor(d)}
-                date={res.date}
-                risk={res.risk}
-                selection={false}
-                viewPortWidth={70}
-                observation={res.observation}
-                backgroundColor={colors.secondary}
-                classify={res.classify}
-                iconConf={classifySor.find((e: any) => e.title == res.classify)}
-                location={res.location}
-                user1={res.user1}
-                user2={res.user2}
-                style={[styles.cardConatiner, {marginTop: wp(2)}]}
-              />
-            </>
-          ))}
           <View style={styles.bottomBtns}>
             <TouchableOpacity onPress={() => this.props.onSkip()}>
               <Text style={styles.skipBtn}>Skip</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.onSubmit()}
+              onPress={() =>
+                this.props.onSubmit(
+                  this.state.repeatedSor.filter((d) => d.selected == true),
+                )
+              }
               style={[
                 styles.submitBtn,
-                this.state.draftSelected == false ||
-                this.state.completedSelected == false ||
-                this.state.submittedSelected == false
+                this.state.repeatedSor.filter((d) => d.selected == true)
+                  .length == 0
                   ? {backgroundColor: colors.lightGrey}
                   : {backgroundColor: colors.primary},
               ]}>
