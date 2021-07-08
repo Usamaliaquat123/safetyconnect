@@ -27,6 +27,7 @@ export interface ListCardProps {
   onPress: Function;
   location?: string;
   iconconf: any;
+  onPressRepeated: Function;
   classify: string;
   styles: StyleProp<ViewStyle>;
 }
@@ -35,10 +36,10 @@ export default class ListCard extends React.Component<ListCardProps, any> {
   componentDidMount = () => {};
   render() {
     return (
-      <TouchableOpacity
-        onPress={() => this.props.onPress()}
-        style={[styles.listVwCntent, this.props.styles]}>
-        <View style={{flexDirection: 'row'}}>
+      <View style={[styles.listVwCntent, this.props.styles]}>
+        <TouchableOpacity
+          onPress={() => this.props.onPress()}
+          style={{flexDirection: 'row'}}>
           {this.props.classify == 'lsr' ? (
             <Image
               source={images.lsr}
@@ -71,7 +72,7 @@ export default class ListCard extends React.Component<ListCardProps, any> {
               ? 'observation not found'
               : `${this.props.observation.slice(0, 40)}...`}
           </Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.listBottomView}>
           <Text style={styles.listUserTimeDate}>{this.props.location}</Text>
           <Text style={styles.listMomentLT}>
@@ -82,7 +83,8 @@ export default class ListCard extends React.Component<ListCardProps, any> {
           {/* Repeated */}
 
           {this.props.repeated.length != 0 && (
-            <View
+            <TouchableOpacity
+              onPress={() => this.props.onPressRepeated(this.props.repeated)}
               style={{
                 position: 'absolute',
                 right: wp(15),
@@ -102,7 +104,7 @@ export default class ListCard extends React.Component<ListCardProps, any> {
                 }}>
                 R
               </Text>
-            </View>
+            </TouchableOpacity>
           )}
           <View style={styles.listAvatars}>
             <Avatar
@@ -128,7 +130,7 @@ export default class ListCard extends React.Component<ListCardProps, any> {
             />
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
     );
   }
 }

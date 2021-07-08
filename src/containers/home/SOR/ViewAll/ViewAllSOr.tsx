@@ -101,6 +101,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       closed: [],
       inprogress: [],
       pendingClosure: [],
+      repeatedSorModal: true,
       isAuthenticated: false,
       slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
       bottomWidth: wp(100),
@@ -109,6 +110,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       newsorModal: false,
       refreshing: false,
       involvedPerson: [],
+      repeatedSors: [],
+
       loading: false,
       projectId: '',
     };
@@ -117,6 +120,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   componentDidMount = () => {
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
+      console.log('currentProj');
+      console.log(currentProj);
       createApi
         .createApi()
         .getProject({projectid: currentProj})
@@ -230,6 +235,21 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           .catch((err) => console.log(err));
       });
     });
+  };
+
+  getAllRepeatedSor = (e: any) => {
+    console.log(e);
+    this.setState({repeatedSors: []});
+    for (let i = 0; i < e.length; i++) {
+      createApi
+        .createApi()
+        .getSors(this.state.projectId, e[i])
+        .then((res) => {
+          this.state.repeatedSors.push(res.data.data.report[0]);
+          // console.log(res.data.data.report[0]);
+          this.setState({});
+        });
+    }
   };
   _onRefresh = () => {
     this.setState({
@@ -488,6 +508,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                       }
                                       location={d.location}
                                       date={d.occured_at}
+                                      onPressRepeated={(e) =>
+                                        this.getAllRepeatedSor(e)
+                                      }
                                     />
                                   ))}
                                 {this.state.draft.length > 3 && (
@@ -575,6 +598,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                     .slice(0, 3)
                                     .map((d: Isor, i: number) => (
                                       <ListCard
+                                        onPressRepeated={(e) =>
+                                          this.getAllRepeatedSor(e)
+                                        }
                                         key={i}
                                         classify={d.sor_type}
                                         styles={
@@ -719,6 +745,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                     .slice(0, 3)
                                     .map((d: Isor, i: number) => (
                                       <ListCard
+                                        onPressRepeated={(e) =>
+                                          this.getAllRepeatedSor(e)
+                                        }
                                         key={i}
                                         location={d.location}
                                         repeated={d.repeatedSor}
@@ -855,6 +884,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                     .slice(0, 3)
                                     .map((d: Isor, i: number) => (
                                       <ListCard
+                                        onPressRepeated={(e) =>
+                                          this.getAllRepeatedSor(e)
+                                        }
                                         key={i}
                                         location={d.location}
                                         repeated={d.repeatedSor}
@@ -982,6 +1014,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                     .slice(0, 3)
                                     .map((d: Isor, i: number) => (
                                       <ListCard
+                                        onPressRepeated={(e) =>
+                                          this.getAllRepeatedSor(e)
+                                        }
                                         key={i}
                                         location={d.location}
                                         classify={d.sor_type}
@@ -1147,6 +1182,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         .slice(0, 3)
                         .map((d: Isor, i: number) => (
                           <Card
+                            repeated={d.repeatedSor}
                             key={i}
                             type={'all'}
                             name={d.created_by}
@@ -1204,6 +1240,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         .map((d: Isor, i: number) => (
                           <Card
                             key={i}
+                            repeated={d.repeatedSor}
                             type={'all'}
                             data={d}
                             name={d.created_by}
@@ -1266,6 +1303,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         .map((d: Isor, i: number) => (
                           <Card
                             key={i}
+                            repeated={d.repeatedSor}
                             type={'all'}
                             name={d.created_by}
                             data={d}
@@ -1327,6 +1365,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           <Card
                             key={i}
                             type={'all'}
+                            repeated={d.repeatedSor}
                             data={d}
                             name={d.created_by}
                             onPress={(d: Isor) =>
@@ -1436,6 +1475,64 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
             </View>
           </Modal>
         </ScrollView>
+
+        {/* Repeated sor modal */}
+
+        <Modal
+          animationInTiming={1000}
+          animationIn={'bounceInUp'}
+          animationOut={'bounceOutDown'}
+          animationOutTiming={1000}
+          useNativeDriver={true}
+          isVisible={this.state.repeatedSorModal}>
+          <View
+            style={{
+              padding: wp(5),
+              backgroundColor: colors.secondary,
+              borderRadius: wp(2),
+            }}>
+{this.state.repeatedSors.map((d: Isor, i: number) =>(
+
+
+
+
+
+
+
+<Card
+                            key={i}
+                            type={'all'}
+                            data={d}
+                            onPress={(d: Isor) =>
+                              this.props.navigation.navigate('ViewSOR', {
+                                data: d,
+                              })
+                            }
+                            name={d.created_by}
+                            date={d.occured_at}
+                            risk={d.risk.severity * d.risk.likelihood}
+                            viewPortWidth={80}
+                            observation={d.details}
+                            classify={d.sor_type}
+                            iconConf={classifySor.find(
+                              (e: any) => e.title == d.sor_type,
+                            )}
+                            location={d.location}
+                            style={[
+                              styles.draftCardContainer,
+                              // {marginBottom: wp()},
+                            ]}
+                            user1={d.user1}
+                            user2={d.user2}
+                          />
+ ))}
+
+
+
+
+
+            </View>
+        </Modal>
       </View>
     );
   }

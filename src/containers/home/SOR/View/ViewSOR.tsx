@@ -1286,7 +1286,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   Involved Person:{' '}
                 </Text>
                 <Text style={{fontSize: wp(3.5)}}>
-                  {this.state.involved_person[0].name}
+                  {/* {this.state.involved_person[0].name} */}
                 </Text>
               </View>
             </View>

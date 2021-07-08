@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   slideInnerContainer: {
     width: itemWidth,
     height: slideHeight,
-    backgroundColor: '#F8F9FF',
+    // backgroundColor: '#F8F9FF',
     paddingHorizontal: itemHorizontalMargin,
     // backgroundColor: colors.secondary
     // paddingBottom: wp(10), // needed for shadow

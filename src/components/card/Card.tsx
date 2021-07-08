@@ -34,6 +34,7 @@ export interface CardProps {
   onPress: Function;
   type?: string;
   selection?: boolean;
+  repeated: Array<any>;
   name?: string;
 }
 function dp(percentage: any) {
@@ -66,7 +67,7 @@ export default class Card extends React.Component<CardProps, any> {
               // activeOpacity={1}
               style={[
                 styles.slideInnerContainer,
-                {width: this.state.itemWidth},
+                // {width: this.state.itemWidth},
               ]}
               onPress={() => {
                 this.props.onPress(this.props.data);
@@ -75,7 +76,7 @@ export default class Card extends React.Component<CardProps, any> {
               <View
                 style={[
                   styles.imageContainer,
-                  {backgroundColor: this.props.backgroundColor},
+                  // {backgroundColor: this.props.backgroundColor},
                 ]}>
                 <View style={{flexDirection: 'column'}}>
                   <View style={styles.cardHeader}>
@@ -109,12 +110,14 @@ export default class Card extends React.Component<CardProps, any> {
                 </View>
 
                 {/* Card Bottom view */}
-                <View style={[styles.cardBottom]}>
+                <View style={[styles.cardBottom, {width: wp(70)}]}>
                   <View
                     style={{
                       flexDirection: 'row',
                       justifyContent: 'space-between',
+                      alignItems: 'center',
                       // alignItems: 'center',
+                      marginBottom: wp(3),
                     }}>
                     <View style={styles.cardRisk}>
                       <Icon
@@ -174,6 +177,31 @@ export default class Card extends React.Component<CardProps, any> {
                         {this.props.name.split('@')[0]}
                       </Text>
                     </View>
+
+                    {this.props.repeated.length != 0 && (
+                      <View
+                        style={{
+                          // position: 'absolute',
+                          // right: wp(15),
+                          borderColor: colors.green,
+                          borderWidth: wp(0.5),
+                          backgroundColor: colors.lightGreen,
+                          padding: wp(1.5),
+                          paddingTop: wp(0.1),
+                          paddingBottom: wp(0.1),
+                          borderRadius: wp(1),
+                        }}>
+                        <Text
+                          style={{
+                            fontFamily: fonts.SfuiDisplayHeavy,
+                            color: colors.green,
+                            fontSize: wp(3),
+                          }}>
+                          R
+                        </Text>
+                      </View>
+                    )}
+
                     <View style={styles.cardLocation}>
                       <Icon
                         style={{paddingRight: 3, opacity: 0.5}}
