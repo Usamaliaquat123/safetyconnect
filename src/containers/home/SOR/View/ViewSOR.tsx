@@ -41,6 +41,7 @@ import {
   imageVideoDetector,
   DocType,
   imageAndVideoObjectMap,
+  classifySor,
   filterAndMappingPersons,
   downloadFile,
   filterLocation,
@@ -225,7 +226,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         })
         .catch((err) => {});
 
-      this.getAllRepeatedSors(res.data.data.repeatedSor);
+      this.getAllRepeatedSors(this.props.route.params.data.repeatedSor);
     });
 
     // Get user and save it on state
@@ -269,19 +270,24 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
 
   getAllRepeatedSors = (e: any) => {
-    console.log(e);
-    console.log(this.state.projectId);
     this.setState({repeatedSors: []});
+    var dta = [];
     for (let i = 0; i < e.length; i++) {
       createApi
         .createApi()
         .getSors(this.state.projectId, e[i])
         .then((res: any) => {
-          console.log(res.data.data.report[0]);
-          this.state.repeatedSors.push(res.data.data.report[0]);
-          this.setState({});
+          // console.log(res.data.data.report[0]);
+          dta.push(res.data.data.report[0]);
+          // this.state.repeatedSors.push(res.data.data.report[0]);
+          // this.setState({});
         });
     }
+    console.log('dta');
+    console.log(dta);
+    setTimeout(() => {
+      this.setState({repeatedSors: dta});
+    }, 1000);
   };
   // FIVE WHY
   getFiveWHY = () => {
@@ -2233,7 +2239,36 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               </View>
 
               {/* Repeated sors */}
-              <View></View>
+              <View>
+                {this.state.repeatedSors.map((d, i) => (
+                  <Card
+                    key={i}
+                    // type={'all'}
+                    data={d}
+                    onPress={(d: Isor) =>
+                      this.props.navigation.navigate('ViewSOR', {
+                        data: d,
+                      })
+                    }
+                    name={d.created_by}
+                    date={d.occured_at}
+                    risk={d.risk.severity * d.risk.likelihood}
+                    viewPortWidth={80}
+                    observation={d.details}
+                    classify={d.sor_type}
+                    iconConf={classifySor.find(
+                      (e: any) => e.title == d.sor_type,
+                    )}
+                    location={d.location}
+                    style={[
+                      styles.draftCardContainer,
+                      // {marginBottom: wp()},
+                    ]}
+                    user1={d.user1}
+                    user2={d.user2}
+                  />
+                ))}
+              </View>
             </View>
             {/* Line
             <View style={styles.lineheight} /> */}
