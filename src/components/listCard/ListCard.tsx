@@ -84,6 +84,8 @@ export default class ListCard extends React.Component<ListCardProps, any> {
           {this.props.repeated.length != 0 && (
             <View
               style={{
+                position: 'absolute',
+                right: wp(15),
                 borderColor: colors.green,
                 borderWidth: wp(0.5),
                 backgroundColor: colors.lightGreen,
@@ -94,7 +96,7 @@ export default class ListCard extends React.Component<ListCardProps, any> {
               }}>
               <Text
                 style={{
-                  fontFamily: fonts.SFuiDisplayBold,
+                  fontFamily: fonts.SfuiDisplayHeavy,
                   color: colors.green,
                   fontSize: wp(3),
                 }}>

@@ -17,14 +17,15 @@ const styles = StyleSheet.create({
     // marginTop: wp(-1),
     // top: wp(5),
     flexDirection: 'row',
-    // position: 'absolute',
+    position: 'absolute',
     right: wp(3),
   },
   listBottomView: {
     alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     fontWeight: 'bold',
+    marginTop: wp(1),
     marginLeft: wp(8),
   },
   listUserTimeDate: {
@@ -33,9 +34,13 @@ const styles = StyleSheet.create({
     fontFamily: 'SFuiDisplayLight',
   },
   listMomentLT: {
-    marginLeft: wp(3),
+    // marginLeft: wp(3),
     fontSize: wp(2.5),
     opacity: 0.5,
+    textAlign: 'center',
+    alignSelf: 'center',
+    marginLeft: wp(15),
+    // position: 'absolute',
     // position: 'absolute',
   },
   listMomentDate: {
