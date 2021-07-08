@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.error,
   },
   slideInnerContainer: {
+    alignSelf: 'center',
     width: itemWidth,
     height: slideHeight,
     // backgroundColor: '#F8F9FF',

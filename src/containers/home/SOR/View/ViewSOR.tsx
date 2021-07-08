@@ -16,11 +16,11 @@ import {
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 import moment from 'moment';
 import {connect} from 'react-redux';
-import {Icon, Avatar, Card, ThemeConsumer} from 'react-native-elements';
+import {Icon, Avatar, ThemeConsumer} from 'react-native-elements';
 import {colors, GlStyles, animation, images, fonts} from '@theme';
 import RNFetchBlob from 'rn-fetch-blob';
 import Upload from 'react-native-background-upload';
-
+import {Card, ListCard} from '@components';
 import {View_sor, notified, riskxSeverityxliklihood, createApi} from '@service';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -213,8 +213,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             involvedPerson: res.data.data.involved_persons,
           });
 
-          console.log('involved person on 181');
-          console.log(res.data.data.involved_persons);
           this.mappingInvolved(
             res.data.data.involved_persons,
             this.props.route.params.data.involved_persons[0],
@@ -272,21 +270,58 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     );
   };
 
-  getAllRepeatedSors = (e: any, projectid: any) => {
-    // this.setState({repeatedSors: []});
+  getAllRepeatedSors = async (e: any, projectid: any) => {
+    var data = [];
+    var iteration = e.length;
 
-    e.map((d: any, i: number) => {
-      createApi
-        .createApi()
-        .getSors(projectid, d)
-        .then((res: any) => {
-          this.state.repeatedSors.push(res.data.data.report[0]);
-          this.setState({});
-        });
-    });
+    for (let i = 0; i < e.length; i++) {
+      const {data} = await createApi.createApi().getSors(projectid, e[i]);
+      const {data: res} = data;
+      console.log('res hai bhai');
+      console.log(res);
+      this.setState(
+        (prevState) => {
+          return {
+            ...prevState,
+            repeatedSors: prevState.repeatedSors.concat(res.report[0]),
+          };
+        },
+        () => {
+          console.log(
+            'updated state = ',
+            this.state.repeatedSors,
+            this.state.repeatedSors.length,
+          );
+        },
+      );
+      console.log(res);
+      console.log('data ayaa hai');
+      console.log(data);
 
-    // console.log('this.state.repeatedSors');
-    // console.log(this.state.repeatedSors);
+      // .then((res: any) => {
+
+      //   data.push(res.data.data.report[0]);
+
+      //   // this.state.repeatedSors.push(res.data.data.report[0]);
+
+      //   if (e.length == i + 1) {
+      //     console.log('tada');
+      //     console.log(data);
+      //     this.setState({repeatedSors: data});
+      //   }
+      //   // this.state.repeatedSors.push();
+      //   // this.setState({});
+      // });
+    }
+
+    // console.log('e');
+    // console.log(e);
+    // setTimeout(() => {
+    // this.setState({repeatedSors: data});
+
+    console.log('this.props.route.params.data.repeatedSor');
+    console.log(this.state.repeatedSors);
+    // }, 1000);
   };
   // FIVE WHY
   getFiveWHY = () => {
@@ -518,10 +553,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   getAllComments = () => {
     // this.props.route.params.data.comments;
 
-    console.log('this.props.route.params.data');
-    console.log(this.props.route.params.data.comments);
-    console.log('ahdjsadh');
-    console.log(this.props.route.params.data._id);
     createApi
       .createApi()
       .getAllComents(
@@ -840,9 +871,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               uri: d.data[i],
             });
 
-            console.log('this.state.attachments');
-            console.log(this.state.attachments);
-
             this.setState({});
           } else if (attach[i].split('.')[1] == 'pdf') {
             this.state.attachments.push({
@@ -875,7 +903,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         }
       });
 
-    console.log('this.state.attach');
     // console.log(this.state.attachments);
   };
 
@@ -2249,32 +2276,31 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </Text>
 
                 {this.state.repeatedSors.map((d, i) => (
-                  <Card
-                    key={i}
-                    // type={'all'}
-                    data={d}
-                    onPress={(d: Isor) =>
-                      this.props.navigation.navigate('ViewSOR', {
-                        data: d,
-                      })
-                    }
-                    name={d.created_by}
-                    date={d.occured_at}
-                    risk={d.risk.severity * d.risk.likelihood}
-                    viewPortWidth={80}
-                    observation={d.details}
-                    classify={d.sor_type}
-                    iconConf={classifySor.find(
-                      (e: any) => e.title == d.sor_type,
-                    )}
-                    location={d.location}
-                    style={[
-                      styles.draftCardContainer,
-                      // {marginBottom: wp()},
-                    ]}
-                    user1={d.user1}
-                    user2={d.user2}
-                  />
+                  <View style={{marginBottom: wp(3), alignSelf: 'center'}}>
+                    <Card
+                      key={i}
+                      // type={'all'}
+                      data={d}
+                      onPress={(d: Isor) =>
+                        this.props.navigation.navigate('ViewSOR', {
+                          data: d,
+                        })
+                      }
+                      name={d.created_by}
+                      date={d.occured_at}
+                      risk={d.risk.severity * d.risk.likelihood}
+                      viewPortWidth={80}
+                      observation={d.details}
+                      classify={d.sor_type}
+                      iconConf={classifySor.find(
+                        (e: any) => e.title == d.sor_type,
+                      )}
+                      location={d.location}
+                      style={{ width : wp(80)}}
+                      user1={d.user1}
+                      user2={d.user2}
+                    />
+                  </View>
                 ))}
               </View>
             </View>

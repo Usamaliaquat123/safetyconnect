@@ -228,7 +228,7 @@ export default class Card extends React.Component<CardProps, any> {
               style={[
                 styles.slideInnerContainer,
                 {
-                  width: wp(80),
+                  width: wp(90),
                 },
               ]}
               onPress={() => {
@@ -292,12 +292,13 @@ export default class Card extends React.Component<CardProps, any> {
                 </View>
 
                 {/* Card Bottom view */}
-                <View style={[styles.cardBottom]}>
+                <View style={[styles.cardBottom, {width: wp(70)}]}>
                   <View
                     style={{
                       flexDirection: 'row',
+                      marginBottom: wp(3),
                       justifyContent: 'space-between',
-                      // alignItems: 'center',
+                      alignItems: 'center',
                     }}>
                     <View style={styles.cardRisk}>
                       <Icon
