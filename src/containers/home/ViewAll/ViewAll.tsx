@@ -240,6 +240,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                     }
                     observation={d.details}
                     username={d.created_by}
+                    repeated={d.repeatedSor}
                     iconconf={classifySor.find(
                       (e: any) => e.title == d.sor_type,
                     )}

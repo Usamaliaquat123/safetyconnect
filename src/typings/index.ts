@@ -19,6 +19,7 @@ export interface Isor {
     severity: number;
   };
   sor_type: string;
+  repeatedSor: Array<any>;
   color: string;
   type: string;
   esclate_to: Array<string>;

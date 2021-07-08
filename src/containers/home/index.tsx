@@ -421,6 +421,8 @@ class Home extends React.Component<HomeProps, any> {
                     {this.state.recentActivity.map((d: Isor, i: number) => (
                       <ListCard
                         classify={d.sor_type}
+                        repeated={d.repeatedSor}
+                        location={d.location}
                         styles={
                           this.state.recentActivity.length == i + 1
                             ? {borderBottomWidth: wp(0)}
