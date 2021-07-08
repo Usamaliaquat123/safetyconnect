@@ -14,13 +14,16 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.textOpa,
   },
   listAvatars: {
-    marginTop: wp(-1),
+    // marginTop: wp(-1),
+    // top: wp(5),
     flexDirection: 'row',
-    position: 'absolute',
+    // position: 'absolute',
     right: wp(3),
   },
   listBottomView: {
+    alignItems: 'center',
     flexDirection: 'row',
+    justifyContent: 'space-between',
     fontWeight: 'bold',
     marginLeft: wp(8),
   },
@@ -33,6 +36,7 @@ const styles = StyleSheet.create({
     marginLeft: wp(3),
     fontSize: wp(2.5),
     opacity: 0.5,
+    // position: 'absolute',
   },
   listMomentDate: {
     marginLeft: wp(1),

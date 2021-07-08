@@ -470,6 +470,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           : d.submit_to[0].img_url
                                       }
                                       observation={d.details}
+                                      repeated={d.repeatedSor}
                                       username={d.created_by}
                                       iconconf={classifySor.find(
                                         (e: any) =>
@@ -485,6 +486,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           )
                                         // this.props.navigation.navigate('home')
                                       }
+                                      location={d.location}
                                       date={d.occured_at}
                                     />
                                   ))}
@@ -594,6 +596,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                         }
                                         observation={d.details}
                                         username={d.created_by}
+                                        repeated={d.repeatedSor}
                                         iconconf={classifySor.find(
                                           (e: any) => e.title == d.sor_type,
                                         )}
@@ -605,6 +608,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                             },
                                           )
                                         }
+                                        location={d.location}
                                         date={d.occured_at}
                                       />
                                     ))}
@@ -716,6 +720,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                     .map((d: Isor, i: number) => (
                                       <ListCard
                                         key={i}
+                                        location={d.location}
+                                        repeated={d.repeatedSor}
                                         classify={d.sor_type}
                                         styles={
                                           this.state.exclated.slice(0, 3)
@@ -850,6 +856,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                     .map((d: Isor, i: number) => (
                                       <ListCard
                                         key={i}
+                                        location={d.location}
+                                        repeated={d.repeatedSor}
                                         classify={d.sor_type}
                                         styles={
                                           this.state.pendingClosure.slice(0, 3)
@@ -975,6 +983,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                     .map((d: Isor, i: number) => (
                                       <ListCard
                                         key={i}
+                                        location={d.location}
                                         classify={d.sor_type}
                                         styles={
                                           this.state.closed.slice(0, 3)
@@ -998,6 +1007,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                         iconconf={classifySor.find(
                                           (e: any) => e.title == d.sor_type,
                                         )}
+                                        repeated={d.repeatedSor}
                                         onPress={() => {
                                           this.props.navigation.navigate(
                                             'ViewSOR',

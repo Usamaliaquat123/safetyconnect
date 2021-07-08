@@ -11,7 +11,7 @@ import {
 import {connect} from 'react-redux';
 import {Icon, Avatar} from 'react-native-elements';
 import styles from './styles';
-import {images, colors} from '@theme';
+import {images, colors, fonts} from '@theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -21,9 +21,11 @@ export interface ListCardProps {
   observation: string;
   user1?: string;
   user2?: string;
+  repeated: Array<any>;
   username: string;
   date: number;
   onPress: Function;
+  location?: string;
   iconconf: any;
   classify: string;
   styles: StyleProp<ViewStyle>;
@@ -67,11 +69,42 @@ export default class ListCard extends React.Component<ListCardProps, any> {
           <Text style={styles.listObDesc}>
             {this.props.observation == undefined
               ? 'observation not found'
-              : `${this.props.observation.slice(0, 30)}...`}
+              : `${this.props.observation.slice(0, 40)}...`}
           </Text>
+        </View>
+        <View style={styles.listBottomView}>
+          <Text style={styles.listUserTimeDate}>{this.props.location}</Text>
+          <Text style={styles.listMomentLT}>
+            {this.props.date === undefined
+              ? ''
+              : moment(this.props.date).format('LT Do MMM, YYYY')}
+          </Text>
+          {/* Repeated */}
+
+          {this.props.repeated.length != 0 && (
+            <View
+              style={{
+                borderColor: colors.green,
+                borderWidth: wp(0.5),
+                backgroundColor: colors.lightGreen,
+                padding: wp(1.5),
+                paddingTop: wp(0.1),
+                paddingBottom: wp(0.1),
+                borderRadius: wp(1),
+              }}>
+              <Text
+                style={{
+                  fontFamily: fonts.SFuiDisplayBold,
+                  color: colors.green,
+                  fontSize: wp(3),
+                }}>
+                R
+              </Text>
+            </View>
+          )}
           <View style={styles.listAvatars}>
             <Avatar
-              size={wp(8)}
+              size={wp(5)}
               rounded
               source={{
                 uri:
@@ -82,7 +115,7 @@ export default class ListCard extends React.Component<ListCardProps, any> {
             />
             <Avatar
               containerStyle={styles.listAvatarLeft}
-              size={wp(8)}
+              size={wp(5)}
               rounded
               source={{
                 uri:
@@ -92,14 +125,6 @@ export default class ListCard extends React.Component<ListCardProps, any> {
               }}
             />
           </View>
-        </View>
-        <View style={styles.listBottomView}>
-          <Text style={styles.listUserTimeDate}>{this.props.username}</Text>
-          <Text style={styles.listMomentLT}>
-            {this.props.date === undefined
-              ? ''
-              : moment(this.props.date).format('LT Do MMM, YYYY')}
-          </Text>
         </View>
       </TouchableOpacity>
     );

@@ -96,6 +96,7 @@ class MyTasks extends React.Component<MyTasksProps, any> {
                 <View style={styles.recentlyContentItem}>
                   {myTasks.rercently.map((d, i) => (
                     <ListCard
+                      location={d.location}
                       classify={d.classify}
                       styles={
                         myTasks.rercently.length == i + 1
@@ -128,6 +129,7 @@ class MyTasks extends React.Component<MyTasksProps, any> {
                 <View style={styles.recentlyContentItem}>
                   {myTasks.CreatedByYou.map((d, i) => (
                     <ListCard
+                      location={d.location}
                       classify={d.classify}
                       styles={
                         myTasks.rercently.length == i + 1
@@ -160,6 +162,7 @@ class MyTasks extends React.Component<MyTasksProps, any> {
                 <View style={styles.recentlyContentItem}>
                   {myTasks.involved.map((d, i) => (
                     <ListCard
+                      location={d.location}
                       classify={d.classify}
                       styles={
                         myTasks.rercently.length == i + 1

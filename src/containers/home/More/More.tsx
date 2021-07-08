@@ -115,7 +115,7 @@ export default class More extends React.Component<MoreProps, any> {
             <TouchableOpacity style={styles.containerOfItem}>
               <View style={{flexDirection: 'row'}}>
                 <View>
-                  <Images
+                  <Image
                     style={styles.itemIcon}
                     source={images.menuIcons.incident}
                   />

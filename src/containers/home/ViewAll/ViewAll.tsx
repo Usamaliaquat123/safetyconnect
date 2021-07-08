@@ -223,6 +223,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                 {this.state.reports.map((d: any, i: number) => (
                   <ListCard
                     key={i}
+                    location={d.location}
                     classify={d.sor_type}
                     styles={
                       myTasks.rercently.length == i + 1
