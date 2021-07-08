@@ -2270,6 +2270,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 <Text
                   style={{
                     fontSize: wp(3.7),
+                    marginBottom: wp(3),
                     fontFamily: fonts.SFuiDisplayBold,
                   }}>
                   Similar Observations
@@ -2296,7 +2297,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         (e: any) => e.title == d.sor_type,
                       )}
                       location={d.location}
-                      style={{ width : wp(80)}}
+                      style={{width: wp(80)}}
                       user1={d.user1}
                       user2={d.user2}
                     />
