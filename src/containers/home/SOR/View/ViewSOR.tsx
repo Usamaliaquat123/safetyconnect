@@ -146,6 +146,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       exclateToArr: [],
       fiveWhyQuestion: [],
       fiveWhyAnswer: [],
+      repeatedSors: [],
       fiveWHYdata: [],
       countributoryCauses: '',
       countributoryCausesD: '',
@@ -223,6 +224,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           this.setState({involved_person: res.data.data.involved_persons});
         })
         .catch((err) => {});
+
+      this.getAllRepeatedSors(res.data.data.repeatedSor);
     });
 
     // Get user and save it on state
@@ -265,6 +268,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     );
   };
 
+  getAllRepeatedSors = (e: any) => {
+    console.log(e);
+    console.log(this.state.projectId);
+    this.setState({repeatedSors: []});
+    for (let i = 0; i < e.length; i++) {
+      createApi
+        .createApi()
+        .getSors(this.state.projectId, e[i])
+        .then((res: any) => {
+          console.log(res.data.data.report[0]);
+          this.state.repeatedSors.push(res.data.data.report[0]);
+          this.setState({});
+        });
+    }
+  };
   // FIVE WHY
   getFiveWHY = () => {
     // Question map and them push
@@ -2213,6 +2231,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   />
                 </View>
               </View>
+
+              {/* Repeated sors */}
+              <View></View>
             </View>
             {/* Line
             <View style={styles.lineheight} /> */}

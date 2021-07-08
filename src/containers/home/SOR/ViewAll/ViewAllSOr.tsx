@@ -101,7 +101,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       closed: [],
       inprogress: [],
       pendingClosure: [],
-      repeatedSorModal: true,
+      repeatedSorModal: false,
       isAuthenticated: false,
       slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
       bottomWidth: wp(100),
@@ -239,17 +239,22 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
   getAllRepeatedSor = (e: any) => {
     console.log(e);
+    console.log(this.state.projectId);
     this.setState({repeatedSors: []});
     for (let i = 0; i < e.length; i++) {
       createApi
         .createApi()
         .getSors(this.state.projectId, e[i])
-        .then((res) => {
+        .then((res: any) => {
+          console.log(res.data.data.report[0]);
           this.state.repeatedSors.push(res.data.data.report[0]);
-          // console.log(res.data.data.report[0]);
           this.setState({});
         });
     }
+
+    setTimeout(() => {
+      this.setState({repeatedSorModal: true});
+    }, 2000);
   };
   _onRefresh = () => {
     this.setState({
@@ -1484,6 +1489,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           animationOut={'bounceOutDown'}
           animationOutTiming={1000}
           useNativeDriver={true}
+          onBackdropPress={() => this.setState({repeatedSorModal: false})}
           isVisible={this.state.repeatedSorModal}>
           <View
             style={{
@@ -1491,47 +1497,50 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
               backgroundColor: colors.secondary,
               borderRadius: wp(2),
             }}>
-{this.state.repeatedSors.map((d: Isor, i: number) =>(
-
-
-
-
-
-
-
-<Card
-                            key={i}
-                            type={'all'}
-                            data={d}
-                            onPress={(d: Isor) =>
-                              this.props.navigation.navigate('ViewSOR', {
-                                data: d,
-                              })
-                            }
-                            name={d.created_by}
-                            date={d.occured_at}
-                            risk={d.risk.severity * d.risk.likelihood}
-                            viewPortWidth={80}
-                            observation={d.details}
-                            classify={d.sor_type}
-                            iconConf={classifySor.find(
-                              (e: any) => e.title == d.sor_type,
-                            )}
-                            location={d.location}
-                            style={[
-                              styles.draftCardContainer,
-                              // {marginBottom: wp()},
-                            ]}
-                            user1={d.user1}
-                            user2={d.user2}
-                          />
- ))}
-
-
-
-
-
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text
+                style={{
+                  fontSize: wp(4),
+                  fontFamily: fonts.SFuiDisplayBold,
+                  marginBottom: wp(3),
+                }}>
+                Repeated SOR
+              </Text>
+              <Icon
+                onPress={() => this.setState({repeatedSorModal: false})}
+                name={'cross'}
+                size={wp(5)}
+                type={'entypo'}
+              />
             </View>
+            {this.state.repeatedSors.map((d: Isor, i: number) => (
+              <Card
+                key={i}
+                // type={'all'}
+                data={d}
+                onPress={(d: Isor) =>
+                  this.props.navigation.navigate('ViewSOR', {
+                    data: d,
+                  })
+                }
+                name={d.created_by}
+                date={d.occured_at}
+                risk={d.risk.severity * d.risk.likelihood}
+                viewPortWidth={80}
+                observation={d.details}
+                classify={d.sor_type}
+                iconConf={classifySor.find((e: any) => e.title == d.sor_type)}
+                location={d.location}
+                style={[
+                  styles.draftCardContainer,
+                  // {marginBottom: wp()},
+                ]}
+                user1={d.user1}
+                user2={d.user2}
+              />
+            ))}
+          </View>
         </Modal>
       </View>
     );
