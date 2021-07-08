@@ -122,6 +122,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       this.setState({projectId: currentProj});
       console.log('currentProj');
       console.log(currentProj);
+
       createApi
         .createApi()
         .getProject({projectid: currentProj})
@@ -190,6 +191,26 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     res.data.data.report[i],
                     this.state.involvedPerson,
                   );
+                  // map repeated content
+                  for (
+                    let j = 0;
+                    j < res.data.data.report[i].repeatedSor.length;
+                    j++
+                  ) {
+                    createApi
+                      .createApi()
+                      .getSors(
+                        this.state.projectId,
+                        res.data.data.report[i].repeatedSor[j],
+                      )
+                      .then((res: any) => {
+                        console.log(res.data.data.report[0]);
+                        res.data.data.report[i].repeatedSor.push(
+                          res.data.data.report[0],
+                        );
+                        this.setState({});
+                      });
+                  }
                   if (res.data.data.report[i].details != undefined) {
                     this.state.draft.push(rep);
                   }
@@ -198,6 +219,26 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     res.data.data.report[i],
                     this.state.involvedPerson,
                   );
+                      // map repeated content
+                      for (
+                        let j = 0;
+                        j < res.data.data.report[i].repeatedSor.length;
+                        j++
+                      ) {
+                        createApi
+                          .createApi()
+                          .getSors(
+                            this.state.projectId,
+                            res.data.data.report[i].repeatedSor[j],
+                          )
+                          .then((res: any) => {
+                            console.log(res.data.data.report[0]);
+                            res.data.data.report[i].repeatedSor.push(
+                              res.data.data.report[0],
+                            );
+                            this.setState({});
+                          });
+                      }
                   if (res.data.data.report[i].details != undefined) {
                     this.state.inprogress.push(rep);
                     // this.state.submitted.push(rep);
@@ -207,6 +248,26 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     res.data.data.report[i],
                     this.state.involvedPerson,
                   );
+                      // map repeated content
+                      for (
+                        let j = 0;
+                        j < res.data.data.report[i].repeatedSor.length;
+                        j++
+                      ) {
+                        createApi
+                          .createApi()
+                          .getSors(
+                            this.state.projectId,
+                            res.data.data.report[i].repeatedSor[j],
+                          )
+                          .then((res: any) => {
+                            console.log(res.data.data.report[0]);
+                            res.data.data.report[i].repeatedSor.push(
+                              res.data.data.report[0],
+                            );
+                            this.setState({});
+                          });
+                      }
                   if (res.data.data.report[i].details != undefined) {
                     this.state.exclated.push(rep);
                   }
@@ -215,6 +276,26 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     res.data.data.report[i],
                     this.state.involvedPerson,
                   );
+                      // map repeated content
+                      for (
+                        let j = 0;
+                        j < res.data.data.report[i].repeatedSor.length;
+                        j++
+                      ) {
+                        createApi
+                          .createApi()
+                          .getSors(
+                            this.state.projectId,
+                            res.data.data.report[i].repeatedSor[j],
+                          )
+                          .then((res: any) => {
+                            console.log(res.data.data.report[0]);
+                            res.data.data.report[i].repeatedSor.push(
+                              res.data.data.report[0],
+                            );
+                            this.setState({});
+                          });
+                      }
                   if (res.data.data.report[i].details != undefined) {
                     this.state.pendingClosure.push(rep);
                   }
@@ -223,6 +304,26 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     res.data.data.report[i],
                     this.state.involvedPerson,
                   );
+                      // map repeated content
+                      for (
+                        let j = 0;
+                        j < res.data.data.report[i].repeatedSor.length;
+                        j++
+                      ) {
+                        createApi
+                          .createApi()
+                          .getSors(
+                            this.state.projectId,
+                            res.data.data.report[i].repeatedSor[j],
+                          )
+                          .then((res: any) => {
+                            console.log(res.data.data.report[0]);
+                            res.data.data.report[i].repeatedSor.push(
+                              res.data.data.report[0],
+                            );
+                            this.setState({});
+                          });
+                      }
                   if (res.data.data.report[i].details != undefined) {
                     this.state.closed.push(rep);
                   }

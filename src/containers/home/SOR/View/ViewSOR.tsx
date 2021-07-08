@@ -189,6 +189,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     // this.getFilesFromServer(this.props.route.params.data.attachments);
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
+
+      this.getAllRepeatedSors(
+        this.props.route.params.data.repeatedSor,
+        currentProj,
+      );
       // getSorData(this.props.route.params.data._id, currentProj).then(
       //   (sorData: any) => {
       //     console.log('sorData');
@@ -225,8 +230,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           this.setState({involved_person: res.data.data.involved_persons});
         })
         .catch((err) => {});
-
-      this.getAllRepeatedSors(this.props.route.params.data.repeatedSor);
     });
 
     // Get user and save it on state
@@ -269,25 +272,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     );
   };
 
-  getAllRepeatedSors = (e: any) => {
-    this.setState({repeatedSors: []});
-    var dta = [];
-    for (let i = 0; i < e.length; i++) {
+  getAllRepeatedSors = (e: any, projectid: any) => {
+    // this.setState({repeatedSors: []});
+
+    e.map((d: any, i: number) => {
       createApi
         .createApi()
-        .getSors(this.state.projectId, e[i])
+        .getSors(projectid, d)
         .then((res: any) => {
-          // console.log(res.data.data.report[0]);
-          dta.push(res.data.data.report[0]);
-          // this.state.repeatedSors.push(res.data.data.report[0]);
-          // this.setState({});
+          this.state.repeatedSors.push(res.data.data.report[0]);
+          this.setState({});
         });
-    }
-    console.log('dta');
-    console.log(dta);
-    setTimeout(() => {
-      this.setState({repeatedSors: dta});
-    }, 1000);
+    });
+
+    // console.log('this.state.repeatedSors');
+    // console.log(this.state.repeatedSors);
   };
   // FIVE WHY
   getFiveWHY = () => {
@@ -2239,7 +2238,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               </View>
 
               {/* Repeated sors */}
+
               <View>
+                <Text
+                  style={{
+                    fontSize: wp(3.7),
+                    fontFamily: fonts.SFuiDisplayBold,
+                  }}>
+                  Similar Observations
+                </Text>
+
                 {this.state.repeatedSors.map((d, i) => (
                   <Card
                     key={i}
