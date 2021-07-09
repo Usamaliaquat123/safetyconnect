@@ -67,11 +67,13 @@ class Home extends React.Component<HomeProps, any> {
       currentorg: '',
       allOrganizations: [],
       allProjects: [],
+      repeatedSors : [],
       selectedOrganization: {},
       projSelection: false,
       loading: false,
       selectedProject: {},
       refreshing: false,
+      repeatedSorModal:  false
     };
   }
 
@@ -163,7 +165,25 @@ class Home extends React.Component<HomeProps, any> {
     });
     this.componentDidMount();
   };
+  getAllRepeatedSor = (e: any) => {
+    console.log(e);
+    console.log(this.state.projectId);
+    this.setState({repeatedSors: []});
+    for (let i = 0; i < e.length; i++) {
+      createApi
+        .createApi()
+        .getSors(this.state.projectId, e[i])
+        .then((res: any) => {
+          console.log(res.data.data.report[0]);
+          this.state.repeatedSors.push(res.data.data.report[0]);
+          this.setState({});
+        });
+    }
 
+    setTimeout(() => {
+      this.setState({repeatedSorModal: true});
+    }, 2000);
+  };
   selectedOrg = async (d: any) => {
     this.setState({
       selectedOrganization: d,
@@ -438,6 +458,7 @@ class Home extends React.Component<HomeProps, any> {
                         onPress={() =>
                           this.props.navigation.navigate('ViewSOR', {data: d})
                         }
+                        onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                         date={d.occured_at}
                       />
                     ))}
@@ -570,6 +591,71 @@ class Home extends React.Component<HomeProps, any> {
               </Animated.View>
             </View>
           </View>
+
+
+
+        {/* Repeated sor modal */}
+
+        <Modal
+          animationInTiming={1000}
+          animationIn={'bounceInUp'}
+          animationOut={'bounceOutDown'}
+          animationOutTiming={1000}
+          useNativeDriver={true}
+          onBackdropPress={() => this.setState({repeatedSorModal: false})}
+          isVisible={this.state.repeatedSorModal}>
+          <View
+            style={{
+              padding: wp(5),
+              backgroundColor: colors.secondary,
+              borderRadius: wp(2),
+            }}>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text
+                style={{
+                  fontSize: wp(4),
+                  fontFamily: fonts.SFuiDisplayBold,
+                  marginBottom: wp(3),
+                }}>
+                Repeated SOR
+              </Text>
+              <Icon
+                onPress={() => this.setState({repeatedSorModal: false})}
+                name={'cross'}
+                size={wp(5)}
+                type={'entypo'}
+              />
+            </View>
+            {this.state.repeatedSors.map((d: Isor, i: number) => (
+              <Card
+                key={i}
+                // type={'all'}
+                data={d}
+                onPress={(d: Isor) =>
+                  this.props.navigation.navigate('ViewSOR', {
+                    data: d,
+                  })
+                }
+                onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                name={d.created_by}
+                date={d.occured_at}
+                risk={d.risk.severity * d.risk.likelihood}
+                viewPortWidth={80}
+                observation={d.details}
+                classify={d.sor_type}
+                iconConf={classifySor.find((e: any) => e.title == d.sor_type)}
+                location={d.location}
+                style={[
+                  styles.draftCardContainer,
+                  // {marginBottom: wp()},
+                ]}
+                user1={d.user1}
+                user2={d.user2}
+              />
+            ))}
+          </View>
+        </Modal>
         </ScrollView>
         {/* when you don't have any sors  */}
         {/* Modal Container */}
