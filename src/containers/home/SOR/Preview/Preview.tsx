@@ -313,6 +313,46 @@ export class Preview extends React.Component<ViewAllProps, any> {
                 style={{fontSize: wp(4), fontFamily: fonts.SFuiDisplayBold}}>
                 Observation Details
               </Text>
+              {/* Date  */}
+              <Text
+                style={{fontSize: wp(3), fontFamily: fonts.SFuiDisplayLight}}>
+                On {moment().format('MMMM Do YYYY, h:mm')}
+              </Text>
+              {/* Observation */}
+              <Text
+                style={{
+                  fontSize: wp(3),
+                  fontFamily: fonts.SFuiDisplayLight,
+                }}>
+                it was observed that
+              </Text>
+
+              {/*   Observation details */}
+              <View style={{marginTop: wp(2)}}>
+                {/* Observation type */}
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{fontSize: wp(3.4)}}>Observation Type</Text>
+                  {/* Obs type */}
+                  <View></View>
+                </View>
+                {/* Observation status */}
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{fontSize: wp(3.4)}}>Status</Text>
+                  <Text style={{fontSize: wp(3.4), opacity: 0.5}}>Draft</Text>
+                </View>
+                {/* potiential risk */}
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{fontSize: wp(3.4)}}>Potiential Risk</Text>
+                  {/* Potitential risk */}
+                  <View></View>
+                </View>
+                {/* Actual risk */}
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={{fontSize: wp(3.4)}}>Actual Risk</Text>
+                  {/* Actual Risk */}
+                  <View></View>
+                </View>
+              </View>
             </View>
           </View>
         </ScrollView>
