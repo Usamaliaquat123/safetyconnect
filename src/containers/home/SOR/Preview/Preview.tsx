@@ -30,6 +30,7 @@ import {
   filterAndMappingPersons,
   mapAllProjects,
   capitalizeFirstLetter,
+  getCurrentProject,
 } from '@utils';
 import {Card, ListCard} from '@components';
 import {
@@ -70,6 +71,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
         this.props.route.params.data.risk.likelihood *
         this.props.route.params.data.risk.severity,
       createdByName: '',
+      projectName: '',
     };
   }
 
@@ -78,12 +80,21 @@ export class Preview extends React.Component<ViewAllProps, any> {
     console.log('this.props.route.params.data');
     console.log(this.props.route.params.data);
 
-    AsyncStorage.getItem('email').then((email) => {
+    createApi
+      .createApi()
+      .getUser(this.props.route.params.data.created_by)
+      .then((user: any) => {
+        this.setState({createdByName: user.data.data.name});
+      });
+
+    getCurrentProject().then((currentProj: any) => {
       createApi
         .createApi()
-        .getUser(this.props.route.params.data.created_by)
-        .then((user: any) => {
-          this.setState({createdByName: user.data.data.name});
+        .getProject({projectid: currentProj})
+        .then((res: any) => {
+          this.setState({
+            projectName: res.data.data.project_name,
+          });
         });
     });
   };
@@ -110,7 +121,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
             {/* Observation Details */}
             <View
               style={{
-                // marginTop: wp(3),
+                marginTop: wp(3),
                 marginBottom: wp(3),
                 paddingLeft: wp(3),
                 paddingRight: wp(3),
@@ -126,8 +137,8 @@ export class Preview extends React.Component<ViewAllProps, any> {
                 }}>
                 <Text
                   style={{
-                    fontFamily: fonts.SFuiDisplayMedium,
-                    fontSize: wp(4),
+                    fontFamily: fonts.SFuiDisplayBold,
+                    fontSize: wp(3),
                     width: '50%',
                   }}>
                   Observation ID:
@@ -136,124 +147,13 @@ export class Preview extends React.Component<ViewAllProps, any> {
                   style={{
                     // marginLeft: wp(10),
                     width: '50%',
-                    fontFamily: fonts.SFuiDisplayLight,
+                    fontFamily: fonts.SFuiDisplayMedium,
                     fontSize: wp(3),
                   }}>
                   112233
                 </Text>
               </View>
-              {/* Observation Type */}
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
 
-                  alignItems: 'center',
-                }}>
-                <Text
-                  style={{
-                    width: '50%',
-                    fontFamily: fonts.SFuiDisplayMedium,
-                    fontSize: wp(4),
-                  }}>
-                  Observation Type:
-                </Text>
-
-                <View
-                  style={{
-                    width: '50%',
-                  }}>
-                  <TouchableOpacity style={styles.classittleicon}>
-                    {this.props.route.params.data.sor_type != 'lsr' ? (
-                      <View>
-                        {this.props.route.params.data.sor_type !=
-                        'near miss' ? (
-                          <Icon
-                            size={wp(3)}
-                            name={
-                              this.props.route.params.data.sor_type == 'lsr'
-                                ? 'aperture'
-                                : this.props.route.params.data.sor_type ==
-                                  'positive'
-                                ? 'check-circle'
-                                : this.props.route.params.data.sor_type ==
-                                  'concern'
-                                ? 'warning'
-                                : this.props.route.params.data.sor_type ==
-                                  'near miss'
-                                ? 'centercode'
-                                : 'frowno'
-                            }
-                            type={
-                              this.props.route.params.data.sor_type == 'lsr'
-                                ? 'ionicon'
-                                : this.props.route.params.data.sor_type ==
-                                  'positive'
-                                ? 'font-awesome-5'
-                                : this.props.route.params.data.sor_type ==
-                                  'concern'
-                                ? 'antdesign'
-                                : this.props.route.params.data.sor_type ==
-                                  'near miss'
-                                ? 'font-awesome-5'
-                                : 'antdesign'
-                            }
-                            color={
-                              this.props.route.params.data.sor_type == 'lsr'
-                                ? colors.classify_sor_btns.lsr
-                                : this.props.route.params.data.sor_type ==
-                                  'positive'
-                                ? colors.classify_sor_btns.positive
-                                : this.props.route.params.data.sor_type ==
-                                  'concern'
-                                ? colors.classify_sor_btns.concern
-                                : this.props.route.params.data.sor_type ==
-                                  'near miss'
-                                ? colors.classify_sor_btns.nearmiss
-                                : 'frowno'
-                            }
-                          />
-                        ) : null}
-                      </View>
-                    ) : null}
-
-                    {this.props.route.params.data.sor_type == 'lsr' ? (
-                      <View style={{width: wp(7), height: wp(7)}}>
-                        <Image
-                          source={images.lsr}
-                          style={[GlStyles.images, {tintColor: colors.text}]}
-                        />
-                      </View>
-                    ) : null}
-                    {this.props.route.params.data.sor_type == 'near miss' ? (
-                      <View style={{width: wp(8), height: wp(8)}}>
-                        <Image
-                          source={images.nearMiss}
-                          style={GlStyles.images}
-                        />
-                      </View>
-                    ) : null}
-                    <Text
-                      style={[
-                        styles.clasifyT,
-                        this.props.route.params.data.sor_type == 'lsr'
-                          ? {color: colors.classify_sor_btns.lsr}
-                          : this.props.route.params.data.sor_type == 'positive'
-                          ? {color: colors.classify_sor_btns.positive}
-                          : this.props.route.params.data.sor_type == 'concern'
-                          ? {color: colors.classify_sor_btns.concern}
-                          : this.props.route.params.data.sor_type == 'near miss'
-                          ? {color: colors.classify_sor_btns.nearmiss}
-                          : null,
-                      ]}>
-                      {capitalizeFirstLetter(
-                        this.props.route.params.data.sor_type,
-                      )}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
               {/* Reported on  */}
               <View
                 style={{
@@ -266,15 +166,15 @@ export class Preview extends React.Component<ViewAllProps, any> {
                 <Text
                   style={{
                     width: '50%',
-                    fontFamily: fonts.SFuiDisplayMedium,
-                    fontSize: wp(4),
+                    fontFamily: fonts.SFuiDisplayBold,
+                    fontSize: wp(3),
                   }}>
                   Reported on:
                 </Text>
                 <Text
                   style={{
                     width: '50%',
-                    fontFamily: fonts.SFuiDisplayLight,
+                    fontFamily: fonts.SFuiDisplayMedium,
                     fontSize: wp(3),
                   }}>
                   {moment(this.props.route.params.data.occured_at).format(
@@ -294,15 +194,15 @@ export class Preview extends React.Component<ViewAllProps, any> {
                 <Text
                   style={{
                     width: '50%',
-                    fontFamily: fonts.SFuiDisplayMedium,
-                    fontSize: wp(4),
+                    fontFamily: fonts.SFuiDisplayBold,
+                    fontSize: wp(3),
                   }}>
                   Project:
                 </Text>
                 <Text
                   style={{
                     width: '50%',
-                    fontFamily: fonts.SFuiDisplayLight,
+                    fontFamily: fonts.SFuiDisplayMedium,
                     fontSize: wp(3),
                   }}>
                   {this.state.projectName}
@@ -320,15 +220,15 @@ export class Preview extends React.Component<ViewAllProps, any> {
                 <Text
                   style={{
                     width: '50%',
-                    fontFamily: fonts.SFuiDisplayMedium,
-                    fontSize: wp(4),
+                    fontFamily: fonts.SFuiDisplayBold,
+                    fontSize: wp(3),
                   }}>
                   Location:
                 </Text>
                 <Text
                   style={{
                     width: '50%',
-                    fontFamily: fonts.SFuiDisplayLight,
+                    fontFamily: fonts.SFuiDisplayMedium,
                     fontSize: wp(3),
                   }}>
                   {this.props.route.params.data.location}
