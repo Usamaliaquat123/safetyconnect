@@ -2259,7 +2259,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   Similar Observations
                 </Text>
 
-                {this.state.repeatedSors.map((d, i) => (
+                {this.state.repeatedSors.slice(0, 3).map((d, i) => (
                   <View style={{marginBottom: wp(3), alignSelf: 'center'}}>
                     <Card
                       key={i}
