@@ -1527,11 +1527,12 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 key={i}
                 // type={'all'}
                 data={d}
-                onPress={(d: Isor) =>
+                onPress={(d: Isor) => {
                   this.props.navigation.navigate('ViewSOR', {
                     data: d,
-                  })
-                }
+                  });
+                  this.setState({repeatedSorModal: false});
+                }}
                 onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                 name={d.created_by}
                 date={d.occured_at}
