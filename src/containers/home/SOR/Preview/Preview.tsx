@@ -12,6 +12,7 @@ import {
   Image,
   TextInput,
 } from 'react-native';
+import moment from 'moment';
 import {createApi, Create_sor, submitted} from '@service';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors, fonts, animation, images, GlStyles} from '@theme';
@@ -32,8 +33,7 @@ import {
   classifySor,
   filterAndMappingPersons,
   mapAllProjects,
-  mapAllOrganizations,
-  getCurrentProject,
+  capitalizeFirstLetter,
 } from '@utils';
 import {Card, ListCard} from '@components';
 import {
@@ -64,7 +64,9 @@ export interface ViewAllProps {
 export class Preview extends React.Component<ViewAllProps, any> {
   constructor(props: ViewAllProps) {
     super(props);
-    this.state = {};
+    this.state = {
+      sor_type: 'concern',
+    };
   }
 
   componentDidMount = () => {};
@@ -82,12 +84,237 @@ export class Preview extends React.Component<ViewAllProps, any> {
                 color={colors.secondary}
               />
               <View>
-                <Text style={styles.title}>Observations and Feedback</Text>
+                <Text style={styles.title}>Observation Summary</Text>
               </View>
             </View>
           </View>
 
-          <View style={styles.content}></View>
+          <View style={styles.content}>
+            {/* Observation Details */}
+            <View
+              style={{
+                // marginTop: wp(3),
+                marginBottom: wp(3),
+                paddingLeft: wp(3),
+                paddingRight: wp(3),
+              }}>
+              {/* Observation ID */}
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    fontFamily: fonts.SFuiDisplayMedium,
+                    fontSize: wp(4),
+                    width: '50%',
+                  }}>
+                  Observation ID:
+                </Text>
+                <Text
+                  style={{
+                    // marginLeft: wp(10),
+                    width: '50%',
+                    fontFamily: fonts.SFuiDisplayLight,
+                    fontSize: wp(3),
+                  }}>
+                  112233
+                </Text>
+              </View>
+              {/* Observation Type */}
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    width: '50%',
+                    fontFamily: fonts.SFuiDisplayMedium,
+                    fontSize: wp(4),
+                  }}>
+                  Observation Type:
+                </Text>
+                <View
+                  style={{
+                    width: '50%',
+                  }}>
+                  <TouchableOpacity style={styles.classittleicon}>
+                    {this.state.sor_type != 'lsr' ? (
+                      <View>
+                        {this.state.sor_type != 'near miss' ? (
+                          <Icon
+                            size={wp(3)}
+                            name={
+                              this.state.sor_type == 'lsr'
+                                ? 'aperture'
+                                : this.state.sor_type == 'positive'
+                                ? 'check-circle'
+                                : this.state.sor_type == 'concern'
+                                ? 'warning'
+                                : this.state.sor_type == 'near miss'
+                                ? 'centercode'
+                                : 'frowno'
+                            }
+                            type={
+                              this.state.sor_type == 'lsr'
+                                ? 'ionicon'
+                                : this.state.sor_type == 'positive'
+                                ? 'font-awesome-5'
+                                : this.state.sor_type == 'concern'
+                                ? 'antdesign'
+                                : this.state.sor_type == 'near miss'
+                                ? 'font-awesome-5'
+                                : 'antdesign'
+                            }
+                            color={
+                              this.state.sor_type == 'lsr'
+                                ? colors.classify_sor_btns.lsr
+                                : this.state.sor_type == 'positive'
+                                ? colors.classify_sor_btns.positive
+                                : this.state.sor_type == 'concern'
+                                ? colors.classify_sor_btns.concern
+                                : this.state.sor_type == 'near miss'
+                                ? colors.classify_sor_btns.nearmiss
+                                : 'frowno'
+                            }
+                          />
+                        ) : null}
+                      </View>
+                    ) : null}
+
+                    {this.state.sor_type == 'lsr' ? (
+                      <View style={{width: wp(7), height: wp(7)}}>
+                        <Image
+                          source={images.lsr}
+                          style={[GlStyles.images, {tintColor: colors.text}]}
+                        />
+                      </View>
+                    ) : null}
+                    {this.state.sor_type == 'near miss' ? (
+                      <View style={{width: wp(8), height: wp(8)}}>
+                        <Image
+                          source={images.nearMiss}
+                          style={GlStyles.images}
+                        />
+                      </View>
+                    ) : null}
+                    <Text
+                      style={[
+                        styles.clasifyT,
+                        this.state.sor_type == 'lsr'
+                          ? {color: colors.classify_sor_btns.lsr}
+                          : this.state.sor_type == 'positive'
+                          ? {color: colors.classify_sor_btns.positive}
+                          : this.state.sor_type == 'concern'
+                          ? {color: colors.classify_sor_btns.concern}
+                          : this.state.sor_type == 'near miss'
+                          ? {color: colors.classify_sor_btns.nearmiss}
+                          : null,
+                      ]}>
+                      {capitalizeFirstLetter(this.state.sor_type)}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              {/* Reported on  */}
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    width: '50%',
+                    fontFamily: fonts.SFuiDisplayMedium,
+                    fontSize: wp(4),
+                  }}>
+                  Reported on:
+                </Text>
+                <Text
+                  style={{
+                    width: '50%',
+                    fontFamily: fonts.SFuiDisplayLight,
+                    fontSize: wp(3),
+                  }}>
+                  {/* {moment(this.state.time).format('MMM DD, YYYY LT')} */}
+                </Text>
+              </View>
+              {/* Project */}
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    width: '50%',
+                    fontFamily: fonts.SFuiDisplayMedium,
+                    fontSize: wp(4),
+                  }}>
+                  Project:
+                </Text>
+                <Text
+                  style={{
+                    width: '50%',
+                    fontFamily: fonts.SFuiDisplayLight,
+                    fontSize: wp(3),
+                  }}>
+                  {/* {this.state.projectName} */}
+                </Text>
+              </View>
+              {/* Location */}
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    width: '50%',
+                    fontFamily: fonts.SFuiDisplayMedium,
+                    fontSize: wp(4),
+                  }}>
+                  Location:
+                </Text>
+                <Text
+                  style={{
+                    width: '50%',
+                    fontFamily: fonts.SFuiDisplayLight,
+                    fontSize: wp(3),
+                  }}>
+                  {/* {this.props.route.params.data.location} */}
+                </Text>
+              </View>
+            </View>
+            {/* Line  */}
+
+            <View style={styles.lineheight} />
+
+            {/* Observation Details */}
+            <View style={{padding: wp(3)}}>
+              <Text
+                style={{fontSize: wp(4), fontFamily: fonts.SFuiDisplayBold}}>
+                Observation Details
+              </Text>
+            </View>
+          </View>
         </ScrollView>
       </View>
     );

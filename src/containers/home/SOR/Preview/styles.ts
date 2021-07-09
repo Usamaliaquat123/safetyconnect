@@ -12,6 +12,24 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.primary,
   },
+  clasifyT: {
+    fontSize: wp(3),
+    marginTop: wp(1),
+    marginLeft: wp(2),
+    color: colors.text,
+
+    fontFamily: fonts.SFuiDisplayLight,
+  },
+
+  classittleicon: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  lineheight: {
+    height: wp(0.5),
+    backgroundColor: colors.darkLightGrey,
+  },
+
   title: {
     fontSize: wp(4),
     marginLeft: wp(3.5),

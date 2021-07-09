@@ -2235,7 +2235,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 marginBottom: wp(10),
               }}>
               <TouchableOpacity
-                onPress={() => this.preview()}
+                onPress={() => this.props.navigation.navigate('Preview')}
                 style={[
                   styles.submitsorbtn,
                   {

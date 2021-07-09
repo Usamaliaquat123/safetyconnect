@@ -294,7 +294,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           );
         },
       );
-
     }
 
     // console.log('e');
@@ -1973,7 +1972,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           }}>
                           <LottieView
                             ref={(animation) => {
-                              this.animation = animation;
+                               this.animation = animation;
                             }}
                             style={{width: wp(15)}}
                             source={animation.download}
@@ -2717,7 +2716,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 marginTop: wp(3),
               }}>
               <TouchableOpacity
-                onPress={() => this.onSubmitUpdateSor(1)}
+                onPress={() => this.props.navigation.navigate("Preview")}
                 style={styles.saveAsDraftContainer}>
                 <Text style={styles.saveAsDraftText}>Preview</Text>
               </TouchableOpacity>
