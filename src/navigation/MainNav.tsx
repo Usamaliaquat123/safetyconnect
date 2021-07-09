@@ -24,6 +24,7 @@ import {
   ViewAll,
   InvitePeople,
   ViewSOR,
+  Preview,
   CreateSOR,
   Notification,
   AddLocation,
@@ -122,6 +123,13 @@ export const MainStackNavigator = (screen: route) => {
         <Stack.Screen
           name="MeetBefore"
           component={MeetBefore}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Preview"
+          component={Preview}
           options={{
             headerShown: false,
           }}

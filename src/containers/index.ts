@@ -26,6 +26,7 @@ import MeetBefore from './auth/MeetBefore/MeetBefore';
 import Notification from './home/Notification/Notifications';
 import ChangePassword from './auth/ChangePassword/ChangePassword';
 import InvitePeople from './home/InvitePeople/InvitePeople';
+import Preview from './home/SOR/Preview/Preview';
 import AddLocation from './home/AddLocation/AddLocation';
 import WelcomeHome from './home/WelcomeHome/WelcomeHome';
 export {
@@ -33,6 +34,7 @@ export {
   AddLocation,
   Chat,
   WelcomeHome,
+  Preview,
   InvitePeople,
   Login,
   ChangePassword,

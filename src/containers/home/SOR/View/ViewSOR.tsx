@@ -294,24 +294,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           );
         },
       );
-      console.log(res);
-      console.log('data ayaa hai');
-      console.log(data);
 
-      // .then((res: any) => {
-
-      //   data.push(res.data.data.report[0]);
-
-      //   // this.state.repeatedSors.push(res.data.data.report[0]);
-
-      //   if (e.length == i + 1) {
-      //     console.log('tada');
-      //     console.log(data);
-      //     this.setState({repeatedSors: data});
-      //   }
-      //   // this.state.repeatedSors.push();
-      //   // this.setState({});
-      // });
     }
 
     // console.log('e');

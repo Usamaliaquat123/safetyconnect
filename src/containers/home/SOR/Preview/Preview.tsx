@@ -46,89 +46,33 @@ import {
 // import jwtDecode from 'jwt-decode';
 import {Isor, involved_persons, orgnaization} from '@typings';
 // import {  } from "";
-type ViewAllSOrNavigationProp = StackNavigationProp<
+type PreviewNavigationProp = StackNavigationProp<
   StackNavigatorProps,
-  'ViewAllSOr'
+  'Preview'
 >;
-type ViewAllSOrRouteProp = RouteProp<StackNavigatorProps, 'ViewAllSOr'>;
+type PreviewRouteProp = RouteProp<StackNavigatorProps, 'Preview'>;
 // Project Id
 export interface ViewAllProps {
-  route: ViewAllSOrRouteProp;
-  navigation: ViewAllSOrNavigationProp;
+  route: PreviewRouteProp;
+  navigation: PreviewNavigationProp;
   reduxActions: any;
   reduxState: AllSorDTO;
   // initial: AllSorDTO;
   initialList: any;
 }
-const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
 
-function dp(percentage: any) {
-  const value = (percentage * viewportWidth) / 100;
-  return Math.round(value);
-}
-
-const slideWidth = dp(80);
-const itemHorizontalMargin = dp(2);
-
-export const sliderWidth = viewportWidth;
-export const itemWidth = slideWidth + itemHorizontalMargin * 2;
-
-const SLIDER_1_FIRST_ITEM = 1;
-export class ViewAllSOr extends React.Component<ViewAllProps, any> {
+export class Preview extends React.Component<ViewAllProps, any> {
   constructor(props: ViewAllProps) {
     super(props);
-    this.state = {
-      // animation of drafts
-      AnimatedDownDraft: new Animated.Value(0),
-      AnimatedOpacDraft: new Animated.Value(0),
-      // animation of notified
-      AnimatedDownNotify: new Animated.Value(0),
-      AnimatedOpacNotify: new Animated.Value(0),
-      // animation of submitted
-      AnimatedDownSubmitted: new Animated.Value(0),
-      AnimatedOpacSubmitted: new Animated.Value(0),
-      currentlocation: Create_sor.Observation.locations[0],
-      project: 'List View',
-      isInProgress: false,
-      isDraft: false,
-      isSubmited: false,
-      isExclated: false,
-      isCompleted: false,
-      selectP: false,
-      draft: [],
-      exclated: [],
-      submitted: [],
-      closed: [],
-      inprogress: [],
-      pendingClosure: [],
-      repeatedSorModal: false,
-      isAuthenticated: false,
-      slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
-      bottomWidth: wp(100),
-      setUser: '',
-      // New sor modal popup
-      newsorModal: false,
-      refreshing: false,
-      involvedPerson: [],
-      repeatedSors: [],
-
-      loading: false,
-      projectId: '',
-    };
+    this.state = {};
   }
 
-  componentDidMount = () => {
-  
-  };
-
-
+  componentDidMount = () => {};
 
   render() {
     return (
       <View style={{backgroundColor: colors.secondary, flex: 1}}>
-        <ScrollView
-        
-          showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
@@ -141,55 +85,10 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 <Text style={styles.title}>Observations and Feedback</Text>
               </View>
             </View>
-            <View style={styles.headerSelect}>
-              {/* Project selector */}
-              <View style={styles.leftSelector}>
-                <TouchableOpacity
-                  onPress={() => this.setState({project: 'List View'})}
-                  style={{width: wp(5), height: wp(5)}}>
-                  <Image
-                    source={images.listview}
-                    style={[
-                      GlStyles.images,
-                      this.state.project == 'List View'
-                        ? {tintColor: colors.green}
-                        : {tintColor: colors.lightGrey},
-                    ]}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => this.setState({project: 'Board View'})}
-                  style={{width: wp(5), height: wp(5), marginLeft: wp(5)}}>
-                  <Image
-                    source={images.boardView}
-                    style={[
-                      GlStyles.images,
-                      this.state.project != 'List View'
-                        ? {tintColor: colors.green}
-                        : {tintColor: colors.lightGrey},
-                    ]}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-         
-         
-         
-         
           </View>
 
-          <View style={styles.content}>
-         
-          </View>
-
-        
-      
+          <View style={styles.content}></View>
         </ScrollView>
-
-      
-     
-     
-     
       </View>
     );
   }
@@ -202,4 +101,4 @@ const mapStateToProps = (state: AllSorDTO) => ({
 const mapDispatchToProps = (dispatch: any) => ({
   reduxActions: bindActionCreators(reduxActions, dispatch),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(ViewAllSOr);
+export default connect(mapStateToProps, mapDispatchToProps)(Preview);
