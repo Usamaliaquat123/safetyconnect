@@ -19,15 +19,11 @@ import {colors, fonts, animation, images, GlStyles} from '@theme';
 import {AllSorDTO} from '@dtos';
 import {connect} from 'react-redux';
 import styles from './styles';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Auth} from 'aws-amplify';
-import LottieView from 'lottie-react-native';
-import Modal from 'react-native-modal';
 import {bindActionCreators} from 'redux';
-import OneSignal from 'react-native-onesignal';
 import * as reduxActions from '../../../../store/actions/listSorActions';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {RouteProp} from '@react-navigation/native';
 import {
   classifySor,
@@ -66,10 +62,31 @@ export class Preview extends React.Component<ViewAllProps, any> {
     super(props);
     this.state = {
       sor_type: 'concern',
+      prisk:
+        this.props.route.params.data.potential_risk?.likelihood *
+        this.props.route.params.data.potential_risk?.severity,
+
+      risk:
+        this.props.route.params.data.risk.likelihood *
+        this.props.route.params.data.risk.severity,
+      createdByName: '',
     };
   }
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    // this.props.route.
+    console.log('this.props.route.params.data');
+    console.log(this.props.route.params.data);
+
+    AsyncStorage.getItem('email').then((email) => {
+      createApi
+        .createApi()
+        .getUser(this.props.route.params.data.created_by)
+        .then((user: any) => {
+          this.setState({createdByName: user.data.data.name});
+        });
+    });
+  };
 
   render() {
     return (
@@ -142,46 +159,57 @@ export class Preview extends React.Component<ViewAllProps, any> {
                   }}>
                   Observation Type:
                 </Text>
+
                 <View
                   style={{
                     width: '50%',
                   }}>
                   <TouchableOpacity style={styles.classittleicon}>
-                    {this.state.sor_type != 'lsr' ? (
+                    {this.props.route.params.data.sor_type != 'lsr' ? (
                       <View>
-                        {this.state.sor_type != 'near miss' ? (
+                        {this.props.route.params.data.sor_type !=
+                        'near miss' ? (
                           <Icon
                             size={wp(3)}
                             name={
-                              this.state.sor_type == 'lsr'
+                              this.props.route.params.data.sor_type == 'lsr'
                                 ? 'aperture'
-                                : this.state.sor_type == 'positive'
+                                : this.props.route.params.data.sor_type ==
+                                  'positive'
                                 ? 'check-circle'
-                                : this.state.sor_type == 'concern'
+                                : this.props.route.params.data.sor_type ==
+                                  'concern'
                                 ? 'warning'
-                                : this.state.sor_type == 'near miss'
+                                : this.props.route.params.data.sor_type ==
+                                  'near miss'
                                 ? 'centercode'
                                 : 'frowno'
                             }
                             type={
-                              this.state.sor_type == 'lsr'
+                              this.props.route.params.data.sor_type == 'lsr'
                                 ? 'ionicon'
-                                : this.state.sor_type == 'positive'
+                                : this.props.route.params.data.sor_type ==
+                                  'positive'
                                 ? 'font-awesome-5'
-                                : this.state.sor_type == 'concern'
+                                : this.props.route.params.data.sor_type ==
+                                  'concern'
                                 ? 'antdesign'
-                                : this.state.sor_type == 'near miss'
+                                : this.props.route.params.data.sor_type ==
+                                  'near miss'
                                 ? 'font-awesome-5'
                                 : 'antdesign'
                             }
                             color={
-                              this.state.sor_type == 'lsr'
+                              this.props.route.params.data.sor_type == 'lsr'
                                 ? colors.classify_sor_btns.lsr
-                                : this.state.sor_type == 'positive'
+                                : this.props.route.params.data.sor_type ==
+                                  'positive'
                                 ? colors.classify_sor_btns.positive
-                                : this.state.sor_type == 'concern'
+                                : this.props.route.params.data.sor_type ==
+                                  'concern'
                                 ? colors.classify_sor_btns.concern
-                                : this.state.sor_type == 'near miss'
+                                : this.props.route.params.data.sor_type ==
+                                  'near miss'
                                 ? colors.classify_sor_btns.nearmiss
                                 : 'frowno'
                             }
@@ -190,7 +218,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
                       </View>
                     ) : null}
 
-                    {this.state.sor_type == 'lsr' ? (
+                    {this.props.route.params.data.sor_type == 'lsr' ? (
                       <View style={{width: wp(7), height: wp(7)}}>
                         <Image
                           source={images.lsr}
@@ -198,7 +226,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
                         />
                       </View>
                     ) : null}
-                    {this.state.sor_type == 'near miss' ? (
+                    {this.props.route.params.data.sor_type == 'near miss' ? (
                       <View style={{width: wp(8), height: wp(8)}}>
                         <Image
                           source={images.nearMiss}
@@ -209,17 +237,19 @@ export class Preview extends React.Component<ViewAllProps, any> {
                     <Text
                       style={[
                         styles.clasifyT,
-                        this.state.sor_type == 'lsr'
+                        this.props.route.params.data.sor_type == 'lsr'
                           ? {color: colors.classify_sor_btns.lsr}
-                          : this.state.sor_type == 'positive'
+                          : this.props.route.params.data.sor_type == 'positive'
                           ? {color: colors.classify_sor_btns.positive}
-                          : this.state.sor_type == 'concern'
+                          : this.props.route.params.data.sor_type == 'concern'
                           ? {color: colors.classify_sor_btns.concern}
-                          : this.state.sor_type == 'near miss'
+                          : this.props.route.params.data.sor_type == 'near miss'
                           ? {color: colors.classify_sor_btns.nearmiss}
                           : null,
                       ]}>
-                      {capitalizeFirstLetter(this.state.sor_type)}
+                      {capitalizeFirstLetter(
+                        this.props.route.params.data.sor_type,
+                      )}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -247,7 +277,9 @@ export class Preview extends React.Component<ViewAllProps, any> {
                     fontFamily: fonts.SFuiDisplayLight,
                     fontSize: wp(3),
                   }}>
-                  {/* {moment(this.state.time).format('MMM DD, YYYY LT')} */}
+                  {moment(this.props.route.params.data.occured_at).format(
+                    'MMM DD, YYYY LT',
+                  )}
                 </Text>
               </View>
               {/* Project */}
@@ -273,7 +305,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
                     fontFamily: fonts.SFuiDisplayLight,
                     fontSize: wp(3),
                   }}>
-                  {/* {this.state.projectName} */}
+                  {this.state.projectName}
                 </Text>
               </View>
               {/* Location */}
@@ -299,7 +331,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
                     fontFamily: fonts.SFuiDisplayLight,
                     fontSize: wp(3),
                   }}>
-                  {/* {this.props.route.params.data.location} */}
+                  {this.props.route.params.data.location}
                 </Text>
               </View>
             </View>
@@ -324,34 +356,345 @@ export class Preview extends React.Component<ViewAllProps, any> {
                   fontSize: wp(3),
                   fontFamily: fonts.SFuiDisplayLight,
                 }}>
-                it was observed that
+                {this.props.route.params.data.details}
               </Text>
 
               {/*   Observation details */}
               <View style={{marginTop: wp(2)}}>
                 {/* Observation type */}
                 <View style={{flexDirection: 'row'}}>
-                  <Text style={{fontSize: wp(3.4)}}>Observation Type</Text>
+                  <Text
+                    style={{
+                      width: '50%',
+                      fontSize: wp(3),
+                      fontFamily: fonts.SFuiDisplayBold,
+                    }}>
+                    Observation Type
+                  </Text>
                   {/* Obs type */}
-                  <View></View>
+
+                  <View
+                    style={{
+                      width: '50%',
+                    }}>
+                    <TouchableOpacity style={styles.classittleicon}>
+                      {this.props.route.params.data.sor_type != 'lsr' ? (
+                        <View>
+                          {this.props.route.params.data.sor_type !=
+                          'near miss' ? (
+                            <Icon
+                              size={wp(3)}
+                              name={
+                                this.props.route.params.data.sor_type == 'lsr'
+                                  ? 'aperture'
+                                  : this.props.route.params.data.sor_type ==
+                                    'positive'
+                                  ? 'check-circle'
+                                  : this.props.route.params.data.sor_type ==
+                                    'concern'
+                                  ? 'warning'
+                                  : this.props.route.params.data.sor_type ==
+                                    'near miss'
+                                  ? 'centercode'
+                                  : 'frowno'
+                              }
+                              type={
+                                this.props.route.params.data.sor_type == 'lsr'
+                                  ? 'ionicon'
+                                  : this.props.route.params.data.sor_type ==
+                                    'positive'
+                                  ? 'font-awesome-5'
+                                  : this.props.route.params.data.sor_type ==
+                                    'concern'
+                                  ? 'antdesign'
+                                  : this.props.route.params.data.sor_type ==
+                                    'near miss'
+                                  ? 'font-awesome-5'
+                                  : 'antdesign'
+                              }
+                              color={
+                                this.props.route.params.data.sor_type == 'lsr'
+                                  ? colors.classify_sor_btns.lsr
+                                  : this.props.route.params.data.sor_type ==
+                                    'positive'
+                                  ? colors.classify_sor_btns.positive
+                                  : this.props.route.params.data.sor_type ==
+                                    'concern'
+                                  ? colors.classify_sor_btns.concern
+                                  : this.props.route.params.data.sor_type ==
+                                    'near miss'
+                                  ? colors.classify_sor_btns.nearmiss
+                                  : 'frowno'
+                              }
+                            />
+                          ) : null}
+                        </View>
+                      ) : null}
+
+                      {this.props.route.params.data.sor_type == 'lsr' ? (
+                        <View style={{width: wp(7), height: wp(7)}}>
+                          <Image
+                            source={images.lsr}
+                            style={[GlStyles.images, {tintColor: colors.text}]}
+                          />
+                        </View>
+                      ) : null}
+                      {this.props.route.params.data.sor_type == 'near miss' ? (
+                        <View style={{width: wp(5), height: wp(5)}}>
+                          <Image
+                            source={images.nearMiss}
+                            style={GlStyles.images}
+                          />
+                        </View>
+                      ) : null}
+                      <Text
+                        style={[
+                          styles.clasifyT,
+                          this.props.route.params.data.sor_type == 'lsr'
+                            ? {color: colors.classify_sor_btns.lsr}
+                            : this.props.route.params.data.sor_type ==
+                              'positive'
+                            ? {color: colors.classify_sor_btns.positive}
+                            : this.props.route.params.data.sor_type == 'concern'
+                            ? {color: colors.classify_sor_btns.concern}
+                            : this.props.route.params.data.sor_type ==
+                              'near miss'
+                            ? {color: colors.classify_sor_btns.nearmiss}
+                            : null,
+                        ]}>
+                        {capitalizeFirstLetter(
+                          this.props.route.params.data.sor_type,
+                        )}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
                 {/* Observation status */}
-                <View style={{flexDirection: 'row'}}>
-                  <Text style={{fontSize: wp(3.4)}}>Status</Text>
-                  <Text style={{fontSize: wp(3.4), opacity: 0.5}}>Draft</Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: wp(1),
+                    marginBottom: wp(1),
+                  }}>
+                  <Text
+                    style={{
+                      width: '50%',
+
+                      fontSize: wp(3),
+                      fontFamily: fonts.SFuiDisplayBold,
+                    }}>
+                    Status
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: wp(2.7),
+                      opacity: 0.5,
+                      fontFamily: fonts.SFuiDisplayMedium,
+                    }}>
+                    {this.props.route.params.data.status == 1
+                      ? 'Draft'
+                      : this.props.route.params.data.status == 2
+                      ? 'In Progress'
+                      : this.props.route.params.data.status == 3
+                      ? 'Esclated To'
+                      : this.props.route.params.data.status == 4
+                      ? 'Pending Closure'
+                      : this.props.route.params.data.status == 5
+                      ? 'Closed'
+                      : '--'}
+                  </Text>
                 </View>
                 {/* potiential risk */}
-                <View style={{flexDirection: 'row'}}>
-                  <Text style={{fontSize: wp(3.4)}}>Potiential Risk</Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: wp(1),
+                    marginBottom: wp(1),
+                  }}>
+                  <Text
+                    style={{
+                      width: '50%',
+                      fontSize: wp(3),
+                      fontFamily: fonts.SFuiDisplayBold,
+                    }}>
+                    Potiential Risk
+                  </Text>
                   {/* Potitential risk */}
-                  <View></View>
+                  <View
+                    style={[
+                      styles.riskCapacity,
+                      this.state.prisk < 6
+                        ? {backgroundColor: colors.green}
+                        : this.state.prisk < 14
+                        ? {backgroundColor: colors.yellow}
+                        : {backgroundColor: colors.error},
+                    ]}>
+                    <Text style={styles.riskCapacityText}>
+                      {this.state.prisk < 6
+                        ? `${this.state.prisk}-low`
+                        : this.state.prisk < 14
+                        ? `${this.state.prisk}-Medium`
+                        : `${this.state.prisk}-High`}
+                    </Text>
+                  </View>
                 </View>
                 {/* Actual risk */}
-                <View style={{flexDirection: 'row'}}>
-                  <Text style={{fontSize: wp(3.4)}}>Actual Risk</Text>
+                <View style={{flexDirection: 'row', marginBottom: wp(3)}}>
+                  <Text
+                    style={{
+                      fontSize: wp(3),
+                      width: '50%',
+                      fontFamily: fonts.SFuiDisplayBold,
+                    }}>
+                    Actual Risk
+                  </Text>
                   {/* Actual Risk */}
-                  <View></View>
+                  <View
+                    style={[
+                      styles.riskCapacity,
+                      this.state.risk < 6
+                        ? {backgroundColor: colors.green}
+                        : this.state.risk < 14
+                        ? {backgroundColor: colors.yellow}
+                        : {backgroundColor: colors.error},
+                    ]}>
+                    <Text style={styles.riskCapacityText}>
+                      {this.state.risk < 6
+                        ? `${this.state.risk}-low`
+                        : this.state.risk < 14
+                        ? `${this.state.risk}-Medium`
+                        : `${this.state.risk}-High`}
+                    </Text>
+                  </View>
                 </View>
+                <View style={styles.lineheight} />
+                {/* Actions and recommendations */}
+                <View style={{marginTop: wp(3), marginBottom: wp(3)}}>
+                  <Text
+                    style={{
+                      fontSize: wp(4),
+                      fontFamily: fonts.SFuiDisplayBold,
+                    }}>
+                    Actions and Recommendations{' '}
+                  </Text>
+
+                  {this.props.route.params.data.action_required.map((d, i) => (
+                    <Text
+                      style={{
+                        fontSize: wp(3),
+                        fontFamily: fonts.SFuiDisplayMedium,
+                      }}>
+                      {i + 1}. {d.content}
+                    </Text>
+                  ))}
+                </View>
+                {/* Line  */}
+
+                <View style={styles.lineheight} />
+                {/* Line  */}
+
+                {/* People */}
+                <View style={{marginTop: wp(3), marginBottom: wp(3)}}>
+                  <Text
+                    style={{
+                      fontSize: wp(4),
+                      fontFamily: fonts.SFuiDisplayBold,
+                    }}>
+                    People
+                  </Text>
+                  <View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: wp(3),
+                          fontFamily: fonts.SFuiDisplayBold,
+                          marginRight: wp(30),
+                        }}>
+                        Initiated By :{' '}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: wp(3),
+                          fontFamily: fonts.SFuiDisplayMedium,
+                        }}>
+                        {' '}
+                        {this.state.createdByName}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: wp(3),
+                          fontFamily: fonts.SFuiDisplayBold,
+                          marginRight: wp(23),
+                        }}>
+                        Area Supervisor :{' '}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: wp(3),
+                          fontFamily: fonts.SFuiDisplayMedium,
+                        }}>
+                        {' '}
+                        --
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: wp(3),
+                          fontFamily: fonts.SFuiDisplayBold,
+                          marginRight: wp(21),
+                        }}>
+                        Involved Persons :{' '}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: wp(3),
+                          fontFamily: fonts.SFuiDisplayMedium,
+                        }}>
+                        {' '}
+                        {this.props.route.params.data.involved_persons[0].name}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+
+                <View style={styles.lineheight} />
+                <View style={{marginTop: wp(3), marginBottom: wp(3)}}>
+                  <Text
+                    style={{
+                      fontSize: wp(4),
+                      fontFamily: fonts.SFuiDisplayBold,
+                    }}>
+                    Attachments
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  style={{
+                    padding: wp(4),
+                    backgroundColor: colors.green,
+                    borderRadius: wp(3),
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: wp(3.4),
+                      fontFamily: fonts.SFuiDisplayBold,
+                      color: colors.secondary,
+                      textAlign: 'center',
+                    }}>
+                    Print
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>

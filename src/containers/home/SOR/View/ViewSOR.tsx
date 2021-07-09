@@ -2716,7 +2716,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 marginTop: wp(3),
               }}>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate("Preview")}
+                onPress={() => this.props.navigation.navigate("Preview", {data:  this.props.route.params.data})}
                 style={styles.saveAsDraftContainer}>
                 <Text style={styles.saveAsDraftText}>Preview</Text>
               </TouchableOpacity>

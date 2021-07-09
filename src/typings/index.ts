@@ -32,6 +32,8 @@ export interface Isor {
   attachments: Array<string>;
   created_by: string;
   comments?: string;
+  status?: number;
+  potential_risk?: {likelihood: number; severity: number};
 }
 
 /*

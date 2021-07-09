@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
   },
   clasifyT: {
-    fontSize: wp(3),
+    fontSize: wp(2.7),
     marginTop: wp(1),
     marginLeft: wp(2),
     color: colors.text,
@@ -28,6 +28,17 @@ const styles = StyleSheet.create({
   lineheight: {
     height: wp(0.5),
     backgroundColor: colors.darkLightGrey,
+  },
+  riskCapacity: {
+    borderRadius: wp(4),
+    padding: wp(1),
+    width: wp(20),
+    alignItems: 'center',
+    backgroundColor: colors.error,
+  },
+  riskCapacityText: {
+    fontSize: wp(2.7),
+    color: colors.secondary,
   },
 
   title: {
