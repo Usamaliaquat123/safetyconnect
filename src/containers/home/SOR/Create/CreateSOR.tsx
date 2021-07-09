@@ -383,6 +383,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       repeatedList: e.map((d: any) => d._id),
     };
 
+    console.log(data);
+
     createApi
       .createApi()
       .linkRepeatedSugg(data)
@@ -390,14 +392,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         console.log('res');
         console.log(res);
 
-        // showMessage({
-        //   message: 'SOR sucessfully subitted',
-        //   type: 'success',
-        //   position: 'bottom',
-        // });
-        // setTimeout(() => {
-        //   this.props.navigation.navigate('Main');
-        // }, 1000);
+        showMessage({
+          message: 'SOR sucessfully subitted',
+          type: 'success',
+          position: 'bottom',
+        });
+        setTimeout(() => {
+          this.props.navigation.navigate('Main');
+        }, 1000);
       });
 
     this.setState({repeatedSorModal: false});
@@ -607,7 +609,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               this.state.observationT,
                               this.state.projectid,
                             )
-                            .then((sugg: any) => {
+                            .then(async (sugg: any) => {
                               this.setState({
                                 loading: false,
                                 errorModal: false,
@@ -628,24 +630,45 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   this.props.navigation.navigate('Main');
                                 }, 1000);
                               } else {
+                                console.log('this.state.reportIdInvestigation');
+                                console.log(this.state.reportIdInvestigation);
                                 this.setState({mainReportId: sor.report._id});
+
                                 for (let i = 0; i < rep.length; i++) {
-                                  createApi
+                                  const {
+                                    data,
+                                  } = await createApi
                                     .createApi()
-                                    .getUser(rep[i].created_by)
-                                    .then((user: any) => {
-                                      rep[i]['selected'] = false;
-                                      rep[i]['user'] = {
-                                        _id: user.data.data._id,
-                                        email: user.data.data.email,
-                                        name: user.data.data.name,
-                                        img_url: user.data.data.img_url,
+                                    .getUser(rep[i].created_by);
+                                  const {data: res} = data;
+                                  console.log('res hai bhai');
+                                  console.log(res);
+
+                                  rep[i]['selected'] = false;
+                                  rep[i]['user'] = {
+                                    _id: res._id,
+                                    email: res.email,
+                                    name: res.name,
+                                    img_url: res.img_url,
+                                  };
+
+                                  this.setState(
+                                    (prevState) => {
+                                      return {
+                                        ...prevState,
+                                        repeatedSorData: rep,
                                       };
-                                    });
-                                  this.setState({
-                                    repeatedSorData: rep,
-                                  });
+                                    },
+                                    () => {
+                                      console.log(
+                                        'updated state = ',
+                                        this.state.repeatedSorData,
+                                        this.state.repeatedSorData.length,
+                                      );
+                                    },
+                                  );
                                 }
+
                                 this.setState({
                                   repeatedSorModal: true,
                                 });
@@ -663,7 +686,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           this.state.observationT,
                           this.state.projectid,
                         )
-                        .then((sugg: any) => {
+                        .then(async (sugg: any) => {
                           this.setState({
                             loading: false,
                             errorModal: false,
@@ -684,23 +707,59 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               this.props.navigation.navigate('Main');
                             }, 1000);
                           } else {
+                            console.log('this.state.reportIdInvestigation');
+                            console.log(this.state.reportIdInvestigation);
                             this.setState({mainReportId: sor.report._id});
+
                             for (let i = 0; i < rep.length; i++) {
-                              createApi
+                              const {
+                                data,
+                              } = await createApi
                                 .createApi()
-                                .getUser(rep[i].created_by)
-                                .then((user: any) => {
-                                  rep[i]['selected'] = false;
-                                  rep[i]['user'] = {
-                                    _id: user.data.data._id,
-                                    email: user.data.data.email,
-                                    name: user.data.data.name,
-                                    img_url: user.data.data.img_url,
+                                .getUser(rep[i].created_by);
+                              const {data: res} = data;
+                              console.log('res hai bhai');
+                              console.log(res);
+
+                              rep[i]['selected'] = false;
+                              rep[i]['user'] = {
+                                _id: res._id,
+                                email: res.email,
+                                name: res.name,
+                                img_url: res.img_url,
+                              };
+
+                              this.setState(
+                                (prevState) => {
+                                  return {
+                                    ...prevState,
+                                    repeatedSorData: rep,
                                   };
-                                });
-                              this.setState({
-                                repeatedSorData: rep,
-                              });
+                                },
+                                () => {
+                                  console.log(
+                                    'updated state = ',
+                                    this.state.repeatedSorData,
+                                    this.state.repeatedSorData.length,
+                                  );
+                                },
+                              );
+
+                              // createApi
+                              //   .createApi()
+                              //   .getUser(rep[i].created_by)
+                              //   .then((user: any) => {
+                              //     rep[i]['selected'] = false;
+                              //     rep[i]['user'] = {
+                              //       _id: user.data.data._id,
+                              //       email: user.data.data.email,
+                              //       name: user.data.data.name,
+                              //       img_url: user.data.data.img_url,
+                              //     };
+                              //   });
+                              // this.setState({
+                              //   repeatedSorData: rep,
+                              // });
                             }
                             this.setState({
                               repeatedSorModal: true,
@@ -712,32 +771,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     if (res.status == 200) {
                     } else {
                       console.log(res);
-                      // this.setState({
-                      //   errorModal: false,
-                      //   errHeadingText: `CreateSor api returns ${res.data.status}.`,
-                      //   errDesText: res.data.message,
-                      // });
                     }
                   })
                   .catch(() =>
                     this.setState({loading: false, errorModal: false}),
                   );
               }, 3000);
-
-              // })
-              // .catch(() => {
-              //   this.setState({loading: false, errorModal: false});
-              // });
-              // }
-              //  else {
-              //   this.setState({
-              //     errorModal: true,
-
-              //     errHeadingText: 'You didnt esclated anyone.',
-              //     errDesText: 'you are not selected esclated users.',
-              //   });
-              //   // Error on esclated to
-              // }
             } else {
               this.setState({
                 errorModal: true,
@@ -893,6 +932,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               .createApi()
                               .createFiveWhy(newObj)
                               .then((res) => {
+                                console.log('this.state.reportIdInvestigation');
+                                console.log(this.state.reportIdInvestigation);
                                 this.setState({mainReportId: sors.report._id});
                                 createApi
                                   .createApi()
@@ -900,7 +941,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                     this.state.observationT,
                                     this.state.projectid, //projectid
                                   )
-                                  .then((sugg: any) => {
+                                  .then(async (sugg: any) => {
                                     console.log('sugge data');
                                     console.log(sugg.data);
                                     this.setState({
@@ -919,21 +960,55 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                       }, 1000);
                                     } else {
                                       for (let i = 0; i < rep.length; i++) {
-                                        createApi
+                                        const {
+                                          data,
+                                        } = await createApi
                                           .createApi()
-                                          .getUser(rep[i].created_by)
-                                          .then((user: any) => {
-                                            rep[i]['selected'] = false;
-                                            rep[i]['user'] = {
-                                              _id: user.data.data._id,
-                                              email: user.data.data.email,
-                                              name: user.data.data.name,
-                                              img_url: user.data.data.img_url,
+                                          .getUser(rep[i].created_by);
+                                        const {data: res} = data;
+                                        console.log('res hai bhai');
+                                        console.log(res);
+
+                                        rep[i]['selected'] = false;
+                                        rep[i]['user'] = {
+                                          _id: res._id,
+                                          email: res.email,
+                                          name: res.name,
+                                          img_url: res.img_url,
+                                        };
+
+                                        this.setState(
+                                          (prevState) => {
+                                            return {
+                                              ...prevState,
+                                              repeatedSorData: rep,
                                             };
-                                          });
-                                        this.setState({
-                                          repeatedSorData: rep,
-                                        });
+                                          },
+                                          () => {
+                                            console.log(
+                                              'updated state = ',
+                                              this.state.repeatedSorData,
+                                              this.state.repeatedSorData.length,
+                                            );
+                                          },
+                                        );
+
+                                        // createApi
+                                        //   .createApi()
+                                        //   .getUser(rep[i].created_by)
+                                        //   .then((user: any) => {
+                                        //     rep[i]['selected'] = false;
+                                        //     rep[i]['user'] = {
+                                        //       _id: user.data.data._id,
+                                        //       email: user.data.data.email,
+                                        //       name: user.data.data.name,
+                                        //       img_url: user.data.data.img_url,
+                                        //     };
+                                        //   });
+
+                                        // this.setState({
+                                        //   repeatedSorData: rep,
+                                        // });
                                       }
                                       this.setState({
                                         repeatedSorModal: true,
@@ -949,14 +1024,16 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             // _id: ress.data.data.report_id,
                           } else {
                             console.log(res);
-
+                            console.log('this.state.reportIdInvestigation');
+                            console.log(this.state.reportIdInvestigation);
+                            this.setState({mainReportId: sors.report._id});
                             createApi
                               .createApi()
                               .getAllRepeatedSugg(
                                 this.state.observationT,
                                 this.state.projectid, //projectid
                               )
-                              .then((sugg: any) => {
+                              .then(async (sugg: any) => {
                                 this.setState({
                                   loading: false,
                                   errorModal: false,
@@ -977,21 +1054,54 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   }, 1000);
                                 } else {
                                   for (let i = 0; i < rep.length; i++) {
-                                    createApi
+                                    const {
+                                      data,
+                                    } = await createApi
                                       .createApi()
-                                      .getUser(rep[i].created_by)
-                                      .then((user: any) => {
-                                        rep[i]['selected'] = false;
-                                        rep[i]['user'] = {
-                                          _id: user.data.data._id,
-                                          email: user.data.data.email,
-                                          name: user.data.data.name,
-                                          img_url: user.data.data.img_url,
+                                      .getUser(rep[i].created_by);
+                                    const {data: res} = data;
+                                    console.log('res hai bhai');
+                                    console.log(res);
+
+                                    rep[i]['selected'] = false;
+                                    rep[i]['user'] = {
+                                      _id: res._id,
+                                      email: res.email,
+                                      name: res.name,
+                                      img_url: res.img_url,
+                                    };
+
+                                    this.setState(
+                                      (prevState) => {
+                                        return {
+                                          ...prevState,
+                                          repeatedSorData: rep,
                                         };
-                                      });
-                                    this.setState({
-                                      repeatedSorData: rep,
-                                    });
+                                      },
+                                      () => {
+                                        console.log(
+                                          'updated state = ',
+                                          this.state.repeatedSorData,
+                                          this.state.repeatedSorData.length,
+                                        );
+                                      },
+                                    );
+
+                                    // createApi
+                                    //   .createApi()
+                                    //   .getUser(rep[i].created_by)
+                                    //   .then((user: any) => {
+                                    //     rep[i]['selected'] = false;
+                                    //     rep[i]['user'] = {
+                                    //       _id: user.data.data._id,
+                                    //       email: user.data.data.email,
+                                    //       name: user.data.data.name,
+                                    //       img_url: user.data.data.img_url,
+                                    //     };
+                                    //   });
+                                    // this.setState({
+                                    //   repeatedSorData: rep,
+                                    // });
                                   }
                                   this.setState({
                                     repeatedSorModal: true,

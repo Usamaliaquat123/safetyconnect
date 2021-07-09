@@ -33,6 +33,7 @@ export interface CardProps {
   backgroundColor?: string;
   onPress: Function;
   type?: string;
+  containerStyle?: any;
   selection?: boolean;
   repeated: Array<any>;
   name?: string;
@@ -227,9 +228,12 @@ export default class Card extends React.Component<CardProps, any> {
               // activeOpacity={1}
               style={[
                 styles.slideInnerContainer,
-                {
-                  width: wp(90),
-                },
+
+                this.props.containerStyle
+                  ? this.props.containerStyle
+                  : {
+                      width: wp(90),
+                    },
               ]}
               onPress={() => {
                 this.props.onPress(this.props.data);

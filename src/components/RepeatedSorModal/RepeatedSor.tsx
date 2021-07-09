@@ -93,6 +93,7 @@ export default class RepeatedModal extends React.Component<
                       user1={
                         res?.user.img_url == undefined ? ' ' : res.user.img_url
                       }
+                      containerStyle={{width: wp(80)}}
                       // style={{borderColor: colors.green, borderWidth: wp(0.2)}}
                     />
                   </View>
