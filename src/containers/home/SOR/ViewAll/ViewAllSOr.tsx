@@ -1153,6 +1153,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             viewPortWidth={80}
                             observation={d.details}
                             classify={d.sor_type}
+                            // repeatedSor={d.repeatedSor}
                             iconConf={classifySor.find(
                               (e: any) => e.title == d.sor_type,
                             )}
@@ -1163,6 +1164,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             ]}
                             user1={d.user1}
                             user2={d.user2}
+                            onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                           />
                         ))}
                       {this.state.draft.length > 3 && (
@@ -1211,6 +1213,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             style={[styles.draftCardContainer]}
                             user1={d.user1}
                             user2={d.user2}
+                            onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                           />
                         ))}
                       {this.state.inprogress.length > 3 && (
@@ -1268,6 +1271,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             )}
                             location={d.location}
                             style={[styles.submitCardContainer]}
+                            onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                           />
                         ))}
                       {this.state.submitted.length > 3 && (
@@ -1324,6 +1328,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             viewPortWidth={80}
                             observation={d.details}
                             classify={d.sor_type}
+                            onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                             iconConf={classifySor.find(
                               (e: any) => e.title == d.sor_type,
                             )}
@@ -1392,6 +1397,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             style={[styles.draftCardContainer]}
                             user1={d.user1}
                             user2={d.user2}
+                            onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                           />
                         ))}
                       {this.state.closed.length > 3 && (
@@ -1526,6 +1532,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     data: d,
                   })
                 }
+                onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                 name={d.created_by}
                 date={d.occured_at}
                 risk={d.risk.severity * d.risk.likelihood}

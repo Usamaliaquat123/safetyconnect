@@ -36,6 +36,7 @@ export interface CardProps {
   containerStyle?: any;
   selection?: boolean;
   repeated: Array<any>;
+  onPressRepeated?: Function;
   name?: string;
 }
 function dp(percentage: any) {
@@ -64,22 +65,23 @@ export default class Card extends React.Component<CardProps, any> {
       <>
         {this.props.type == 'all' ? (
           <View style={this.props.style}>
-            <TouchableOpacity
+            <View
               // activeOpacity={1}
               style={[
                 styles.slideInnerContainer,
                 // {width: this.state.itemWidth},
-              ]}
-              onPress={() => {
-                this.props.onPress(this.props.data);
-              }}>
+              ]}>
               {/* <View style={styles.shadow} /> */}
               <View
                 style={[
                   styles.imageContainer,
                   // {backgroundColor: this.props.backgroundColor},
                 ]}>
-                <View style={{flexDirection: 'column'}}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.onPress(this.props.data);
+                  }}
+                  style={{flexDirection: 'column'}}>
                   <View style={styles.cardHeader}>
                     <Text style={styles.cardtime}>
                       Reported at{' '}
@@ -108,7 +110,7 @@ export default class Card extends React.Component<CardProps, any> {
                       {this.props.observation}
                     </Text>
                   </View>
-                </View>
+                </TouchableOpacity>
 
                 {/* Card Bottom view */}
                 <View style={[styles.cardBottom, {width: wp(70)}]}>
@@ -180,7 +182,10 @@ export default class Card extends React.Component<CardProps, any> {
                     </View>
 
                     {this.props.repeated.length != 0 && (
-                      <View
+                      <TouchableOpacity
+                        onPress={() =>
+                          this.props.onPressRepeated(this.props.repeated)
+                        }
                         style={{
                           // position: 'absolute',
                           // right: wp(15),
@@ -200,7 +205,7 @@ export default class Card extends React.Component<CardProps, any> {
                           }}>
                           R
                         </Text>
-                      </View>
+                      </TouchableOpacity>
                     )}
 
                     <View style={styles.cardLocation}>
@@ -220,7 +225,7 @@ export default class Card extends React.Component<CardProps, any> {
 
                 <View style={[this.props.even ? styles.radiusMaskEven : {}]} />
               </View>
-            </TouchableOpacity>
+            </View>
           </View>
         ) : (
           <View style={this.props.style}>

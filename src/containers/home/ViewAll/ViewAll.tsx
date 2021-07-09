@@ -22,13 +22,15 @@ import {classifySor, filterAndMappingPersons, getCurrentProject} from '@utils';
 import {Avatar, Icon} from 'react-native-elements';
 import {bindActionCreators} from 'redux';
 import {View_sor, myTasks, recentActivity} from '@service';
-import {ListCard} from '@components';
+import {ListCard, Card} from '@components';
 // import {colors} from '@theme';
 import {route} from '@nav';
 import {PieChart} from 'react-native-svg-charts';
 import {AllSorDTO} from '@dtos';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {animation} from '@theme';
+import Modal from 'react-native-modal';
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -60,7 +62,9 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       searchValue: '',
       refreshing: false,
       user: {},
+      repeatedSors: [],
       involvedPerson: [],
+      repeatedSorModal: false,
       projectId: '',
       bottomWidth: wp(100),
     };
@@ -141,6 +145,23 @@ class ViewAll extends React.Component<ViewAllProps, any> {
       completed: [],
     });
     this.componentDidMount();
+  };
+  getAllRepeatedSor = (e: any) => {
+    this.setState({repeatedSors: []});
+    for (let i = 0; i < e.length; i++) {
+      createApi
+        .createApi()
+        .getSors(this.state.projectId, e[i])
+        .then((res: any) => {
+          console.log(res.data.data.report[0]);
+          this.state.repeatedSors.push(res.data.data.report[0]);
+          this.setState({});
+        });
+    }
+
+    setTimeout(() => {
+      this.setState({repeatedSorModal: true});
+    }, 2000);
   };
   render() {
     return (
@@ -248,12 +269,72 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       this.props.navigation.navigate('ViewSOR', {data: d})
                     }
                     date={d.occured_at}
+                    onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                   />
                 ))}
               </View>
             )}
           </View>
         </ScrollView>
+        <Modal
+          animationInTiming={1000}
+          animationIn={'bounceInUp'}
+          animationOut={'bounceOutDown'}
+          animationOutTiming={1000}
+          useNativeDriver={true}
+          onBackdropPress={() => this.setState({repeatedSorModal: false})}
+          isVisible={this.state.repeatedSorModal}>
+          <View
+            style={{
+              padding: wp(5),
+              backgroundColor: colors.secondary,
+              borderRadius: wp(2),
+            }}>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text
+                style={{
+                  fontSize: wp(4),
+                  fontFamily: fonts.SFuiDisplayBold,
+                  marginBottom: wp(3),
+                }}>
+                Repeated SOR
+              </Text>
+              <Icon
+                onPress={() => this.setState({repeatedSorModal: false})}
+                name={'cross'}
+                size={wp(5)}
+                type={'entypo'}
+              />
+            </View>
+            {this.state.repeatedSors.map((d: Isor, i: number) => (
+              <Card
+                key={i}
+                // type={'all'}
+                data={d}
+                onPress={(d: Isor) =>
+                  this.props.navigation.navigate('ViewSOR', {
+                    data: d,
+                  })
+                }
+                name={d.created_by}
+                date={d.occured_at}
+                risk={d.risk.severity * d.risk.likelihood}
+                viewPortWidth={80}
+                observation={d.details}
+                classify={d.sor_type}
+                iconConf={classifySor.find((e: any) => e.title == d.sor_type)}
+                location={d.location}
+                style={[
+                  styles.draftCardContainer,
+                  // {marginBottom: wp()},
+                ]}
+                user1={d.user1}
+                user2={d.user2}
+              />
+            ))}
+          </View>
+        </Modal>
       </View>
     );
   }
