@@ -482,27 +482,38 @@ export class Preview extends React.Component<ViewAllProps, any> {
                     </Text>
                   </View>
                 </View>
-                <View style={styles.lineheight} />
-                {/* Actions and recommendations */}
-                <View style={{marginTop: wp(3), marginBottom: wp(3)}}>
-                  <Text
-                    style={{
-                      fontSize: wp(4),
-                      fontFamily: fonts.SFuiDisplayBold,
-                    }}>
-                    Actions and Recommendations{' '}
-                  </Text>
 
-                  {this.props.route.params.data.action_required.map((d, i) => (
-                    <Text
-                      style={{
-                        fontSize: wp(3),
-                        fontFamily: fonts.SFuiDisplayMedium,
-                      }}>
-                      {i + 1}. {d.content}
-                    </Text>
-                  ))}
-                </View>
+                {/* Actions and recommendations */}
+                {this.props.route.params.data.action_required.length != 0 && (
+                  <View style={styles.lineheight} />
+                )}
+
+                {this.props.route.params.data.action_required.length != 0 && (
+                  <>
+                    <View style={{marginTop: wp(3), marginBottom: wp(3)}}>
+                      <Text
+                        style={{
+                          fontSize: wp(4),
+                          fontFamily: fonts.SFuiDisplayBold,
+                        }}>
+                        Actions and Recommendations{' '}
+                      </Text>
+
+                      {this.props.route.params.data.action_required.map(
+                        (d, i) => (
+                          <Text
+                            style={{
+                              fontSize: wp(3),
+                              fontFamily: fonts.SFuiDisplayMedium,
+                            }}>
+                            {i + 1}. {d.content}
+                          </Text>
+                        ),
+                      )}
+                    </View>
+                  </>
+                )}
+
                 {/* Line  */}
 
                 <View style={styles.lineheight} />
@@ -578,81 +589,88 @@ export class Preview extends React.Component<ViewAllProps, any> {
                           fontFamily: fonts.SFuiDisplayMedium,
                         }}>
                         {' '}
-                        {this.state.name}
+                        {this.state.involvedperson}
                       </Text>
                     </View>
                   </View>
                 </View>
 
-                <View style={styles.lineheight} />
-                <View style={{marginTop: wp(3), marginBottom: wp(3)}}>
-                  <Text
-                    style={{
-                      fontSize: wp(4),
-                      fontFamily: fonts.SFuiDisplayBold,
-                    }}>
-                    Attachments
-                  </Text>
-                </View>
-                {/* All Attachments */}
-                <View style={{marginTop: wp(3)}}>
-                  {this.state.attachments.map((d: any, i: number) => {
-                    if (d.type == 'image') {
-                      return (
-                        <TouchableOpacity
-                          onPress={() => this.setState({imageViewer: true})}
-                          style={styles.AttchimageContainer}>
-                          <Image
-                            source={{
-                              uri: d.uri,
-                            }}
-                            style={[GlStyles.images, {borderRadius: wp(3)}]}
-                            resizeMode={'cover'}
-                          />
-                          <TouchableOpacity
-                            onPress={() => {
-                              if (d.upload != 'self') {
-                                // this.photoAnim.play();
-                                // downloadFile(d.uri, d.type)
-                                //   .then((res: any) => {})
-                                //   .catch((err) => {});
-                              }
-                            }}
-                            style={styles.lottieDownloadContainer}>
-                            <Icon
-                              name={'clouddownload'}
-                              type={'antdesign'}
-                              color={colors.primary}
-                            />
+                {this.state.attachments.length != 0 && (
+                  <View style={styles.lineheight} />
+                )}
 
-                            {d.upload == 'self' ? (
+                {this.state.attachments.length != 0 && (
+                  <View>
+                    <View style={{marginTop: wp(3), marginBottom: wp(3)}}>
+                      <Text
+                        style={{
+                          fontSize: wp(4),
+                          fontFamily: fonts.SFuiDisplayBold,
+                        }}>
+                        Attachments
+                      </Text>
+                    </View>
+                    {/* All Attachments */}
+                    <View style={{marginTop: wp(3)}}>
+                      {this.state.attachments.map((d: any, i: number) => {
+                        if (d.type == 'image') {
+                          return (
+                            <TouchableOpacity
+                              onPress={() => this.setState({imageViewer: true})}
+                              style={styles.AttchimageContainer}>
+                              <Image
+                                source={{
+                                  uri: d.uri,
+                                }}
+                                style={[GlStyles.images, {borderRadius: wp(3)}]}
+                                resizeMode={'cover'}
+                              />
                               <TouchableOpacity
-                                style={{marginRight: wp(3)}}
                                 onPress={() => {
-                                  var arr = [...this.state.attachments].filter(
-                                    (b) => b != d,
-                                  );
-                                  this.setState({attachments: arr});
-                                }}>
+                                  if (d.upload != 'self') {
+                                    // this.photoAnim.play();
+                                    // downloadFile(d.uri, d.type)
+                                    //   .then((res: any) => {})
+                                    //   .catch((err) => {});
+                                  }
+                                }}
+                                style={styles.lottieDownloadContainer}>
                                 <Icon
-                                  containerStyle={{
-                                    marginRight: wp(2),
-                                    marginTop: wp(2),
-                                    opacity: 0.5,
-                                  }}
-                                  name="circle-with-cross"
-                                  size={wp(5)}
-                                  type="entypo"
-                                  color={colors.text}
+                                  name={'clouddownload'}
+                                  type={'antdesign'}
+                                  color={colors.primary}
                                 />
+
+                                {d.upload == 'self' ? (
+                                  <TouchableOpacity
+                                    style={{marginRight: wp(3)}}
+                                    onPress={() => {
+                                      var arr = [
+                                        ...this.state.attachments,
+                                      ].filter((b) => b != d);
+                                      this.setState({attachments: arr});
+                                    }}>
+                                    <Icon
+                                      containerStyle={{
+                                        marginRight: wp(2),
+                                        marginTop: wp(2),
+                                        opacity: 0.5,
+                                      }}
+                                      name="circle-with-cross"
+                                      size={wp(5)}
+                                      type="entypo"
+                                      color={colors.text}
+                                    />
+                                  </TouchableOpacity>
+                                ) : null}
                               </TouchableOpacity>
-                            ) : null}
-                          </TouchableOpacity>
-                        </TouchableOpacity>
-                      );
-                    }
-                  })}
-                </View>
+                            </TouchableOpacity>
+                          );
+                        }
+                      })}
+                    </View>
+                  </View>
+                )}
 
                 <TouchableOpacity
                   onPress={() => this.printSor()}
