@@ -72,6 +72,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
         this.props.route.params.data.risk.severity,
       createdByName: '',
       projectName: '',
+      involvedperson: [],
     };
   }
 
@@ -98,6 +99,9 @@ export class Preview extends React.Component<ViewAllProps, any> {
             projectName: res.data.data.project_name,
           });
 
+          this.setState({
+            involvedperson: this.props.route.params.data.involved_persons[0].name,
+          });
           this.getAllAttachments(this.props.route.params.data.attachments);
         });
     });
