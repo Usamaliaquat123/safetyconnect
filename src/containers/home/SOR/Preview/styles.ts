@@ -21,6 +21,20 @@ const styles = StyleSheet.create({
     fontFamily: fonts.SFuiDisplayLight,
   },
 
+  AttchimageContainer: {
+    width: wp(43),
+    height: wp(30),
+    borderRadius: wp(3),
+    margin: wp(1),
+  },
+  lottieDownloadContainer: {
+    flexDirection: 'row',
+    position: 'absolute',
+    right: wp(-2),
+    top: wp(2),
+    zIndex: wp(1),
+  },
+
   classittleicon: {
     alignItems: 'center',
     flexDirection: 'row',

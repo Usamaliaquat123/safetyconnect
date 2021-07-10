@@ -72,6 +72,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
         this.props.route.params.data.risk.severity,
       createdByName: '',
       projectName: '',
+      attachments: [],
       involvedperson: [],
     };
   }
@@ -100,7 +101,8 @@ export class Preview extends React.Component<ViewAllProps, any> {
           });
 
           this.setState({
-            involvedperson: this.props.route.params.data.involved_persons[0].name,
+            involvedperson: this.props.route.params.data.involved_persons[0]
+              .name,
           });
           this.getAllAttachments(this.props.route.params.data.attachments);
         });
@@ -576,7 +578,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
                           fontFamily: fonts.SFuiDisplayMedium,
                         }}>
                         {' '}
-                        {this.props.route.params.data.involved_persons[0].name}
+                        {this.state.name}
                       </Text>
                     </View>
                   </View>
@@ -594,18 +596,62 @@ export class Preview extends React.Component<ViewAllProps, any> {
                 </View>
                 {/* All Attachments */}
                 <View style={{marginTop: wp(3)}}>
-                  {/* {this.state.attachments.map((d  :any, i : number) => (
-                     <>
-        
+                  {this.state.attachments.map((d: any, i: number) => {
+                    if (d.type == 'image') {
+                      return (
+                        <TouchableOpacity
+                          onPress={() => this.setState({imageViewer: true})}
+                          style={styles.AttchimageContainer}>
+                          <Image
+                            source={{
+                              uri: d.uri,
+                            }}
+                            style={[GlStyles.images, {borderRadius: wp(3)}]}
+                            resizeMode={'cover'}
+                          />
+                          <TouchableOpacity
+                            onPress={() => {
+                              if (d.upload != 'self') {
+                                // this.photoAnim.play();
+                                // downloadFile(d.uri, d.type)
+                                //   .then((res: any) => {})
+                                //   .catch((err) => {});
+                              }
+                            }}
+                            style={styles.lottieDownloadContainer}>
+                            <Icon
+                              name={'clouddownload'}
+                              type={'antdesign'}
+                              color={colors.primary}
+                            />
 
-
-
-
-                     </>
-
-
-
-                    ))} */}
+                            {d.upload == 'self' ? (
+                              <TouchableOpacity
+                                style={{marginRight: wp(3)}}
+                                onPress={() => {
+                                  var arr = [...this.state.attachments].filter(
+                                    (b) => b != d,
+                                  );
+                                  this.setState({attachments: arr});
+                                }}>
+                                <Icon
+                                  containerStyle={{
+                                    marginRight: wp(2),
+                                    marginTop: wp(2),
+                                    opacity: 0.5,
+                                  }}
+                                  name="circle-with-cross"
+                                  size={wp(5)}
+                                  type="entypo"
+                                  color={colors.text}
+                                />
+                              </TouchableOpacity>
+                            ) : null}
+                          </TouchableOpacity>
+                        </TouchableOpacity>
+                      );
+                    }
+                  })}
                 </View>
 
                 <TouchableOpacity
