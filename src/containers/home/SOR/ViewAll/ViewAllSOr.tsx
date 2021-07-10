@@ -1153,7 +1153,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             viewPortWidth={80}
                             observation={d.details}
                             classify={d.sor_type}
-                            // repeatedSor={d.repeatedSor}
+                            repeated={d.repeatedSor}
                             iconConf={classifySor.find(
                               (e: any) => e.title == d.sor_type,
                             )}
