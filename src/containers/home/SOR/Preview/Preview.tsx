@@ -30,6 +30,7 @@ import {
   filterAndMappingPersons,
   mapAllProjects,
   capitalizeFirstLetter,
+  downloadFile,
   getCurrentProject,
 } from '@utils';
 import {Card, ListCard} from '@components';
@@ -111,7 +112,61 @@ export class Preview extends React.Component<ViewAllProps, any> {
 
   // get All Attachments
   getAllAttachments = (attach: any) => {
-    console.log(attach);
+    var dta = attach.map((d) => `report/${d}`);
+
+    var data = {
+      bucket: 'hns-codist',
+      report: dta,
+    };
+
+    createApi
+      .createApi()
+      .getFileApi(data)
+      .then((d: any) => {
+        for (let i = 0; i < d.data.length; i++) {
+          if (
+            attach[i].split('.')[1] == 'png' ||
+            attach[i].split('.')[1] == 'jpeg' ||
+            attach[i].split('.')[1] == 'jpg'
+          ) {
+            this.state.attachments.push({
+              type: 'image',
+              upload: '',
+              name: attach[i],
+              uri: d.data[i],
+            });
+
+            this.setState({});
+          } else if (attach[i].split('.')[1] == 'pdf') {
+            this.state.attachments.push({
+              type: 'pdf',
+              upload: '',
+              name: attach[i],
+              uri: d.data[i],
+            });
+            this.setState({});
+          } else if (
+            attach[i].split('.')[1] == 'docx' ||
+            attach[i].split('.')[1] == 'doc'
+          ) {
+            this.state.attachments.push({
+              type: 'pdf',
+              upload: '',
+              name: attach[i],
+              uri: d.data[i],
+            });
+            this.setState({});
+          } else if (attach[i].split('.')[1] == 'xlsx') {
+            this.state.attachments.push({
+              type: 'xlsx',
+              upload: '',
+              name: attach[i],
+              uri: d.data[i],
+            });
+            this.setState({});
+          }
+        }
+      });
   };
 
   render() {
@@ -611,63 +666,89 @@ export class Preview extends React.Component<ViewAllProps, any> {
                       </Text>
                     </View>
                     {/* All Attachments */}
-                    <View style={{marginTop: wp(3)}}>
-                      {this.state.attachments.map((d: any, i: number) => {
-                        if (d.type == 'image') {
-                          return (
-                            <TouchableOpacity
-                              onPress={() => this.setState({imageViewer: true})}
-                              style={styles.AttchimageContainer}>
+                    <View style={{marginTop: wp(1), marginBottom: wp(5)}}>
+                      {this.state.attachments.map((d: any, i: number) => (
+                        <View>
+                          {/* {d.type != 'image' ? ( */}
+                          <View style={styles.attachFileContainer}>
+                            <View>
                               <Image
-                                source={{
-                                  uri: d.uri,
-                                }}
-                                style={[GlStyles.images, {borderRadius: wp(3)}]}
-                                resizeMode={'cover'}
+                                source={
+                                  d.type == 'pdf'
+                                    ? images.pdf
+                                    : d.type == 'doc'
+                                    ? images.doc
+                                    : d.type == 'text'
+                                    ? images.text
+                                    : d.type == 'doc'
+                                    ? images.doc
+                                    : d.type == 'image'
+                                    ? images.imageIcon
+                                    : null
+                                }
+                                style={{width: wp(7), height: wp(7)}}
                               />
+                            </View>
+                            <Text style={styles.attchFileText}>
+                              {d.name.substring(0, 10)}.../.{d.type}
+                            </Text>
+                            <View
+                              style={{
+                                position: 'absolute',
+                                right: wp(1),
+                                top: wp(1.5),
+                                alignItems: 'center',
+                                flexDirection: 'row',
+                              }}>
                               <TouchableOpacity
                                 onPress={() => {
                                   if (d.upload != 'self') {
                                     // this.photoAnim.play();
-                                    // downloadFile(d.uri, d.type)
-                                    //   .then((res: any) => {})
-                                    //   .catch((err) => {});
+                                    downloadFile(d.uri, d.type)
+                                      .then((res: any) => {
+                                        console.log(res);
+                                      })
+                                      .catch((err) => {});
                                   }
-                                }}
-                                style={styles.lottieDownloadContainer}>
+                                }}>
                                 <Icon
                                   name={'clouddownload'}
                                   type={'antdesign'}
-                                  color={colors.primary}
+                                  color={colors.text}
+                                  containerStyle={{
+                                    opacity: 0.5,
+                                    marginTop: wp(3),
+                                    marginRight: wp(3),
+                                  }}
                                 />
-
-                                {d.upload == 'self' ? (
-                                  <TouchableOpacity
-                                    style={{marginRight: wp(3)}}
-                                    onPress={() => {
-                                      var arr = [
-                                        ...this.state.attachments,
-                                      ].filter((b) => b != d);
-                                      this.setState({attachments: arr});
-                                    }}>
-                                    <Icon
-                                      containerStyle={{
-                                        marginRight: wp(2),
-                                        marginTop: wp(2),
-                                        opacity: 0.5,
-                                      }}
-                                      name="circle-with-cross"
-                                      size={wp(5)}
-                                      type="entypo"
-                                      color={colors.text}
-                                    />
-                                  </TouchableOpacity>
-                                ) : null}
                               </TouchableOpacity>
-                            </TouchableOpacity>
-                          );
-                        }
-                      })}
+
+                              {d.upload == 'self' ? (
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    var arr = [
+                                      ...this.state.attachments,
+                                    ].filter((b) => b != d);
+                                    this.setState({attachments: arr});
+                                  }}>
+                                  <Icon
+                                    containerStyle={{
+                                      marginRight: wp(2),
+                                      marginTop: wp(2),
+                                      opacity: 0.5,
+                                    }}
+                                    name="circle-with-cross"
+                                    size={wp(5)}
+                                    type="entypo"
+                                    color={colors.text}
+                                  />
+                                </TouchableOpacity>
+                              ) : null}
+                            </View>
+                          </View>
+                          {/* // ) : null} */}
+                        </View>
+                      ))}
                     </View>
                   </View>
                 )}

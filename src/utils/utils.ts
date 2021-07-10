@@ -341,7 +341,7 @@ const options = {
   fileCache: true,
   addAndroidDownloads: {
     useDownloadManager: true,
-    notification: false,
+    notification: true,
     path: PictureDir + '/me_' + Math.floor(d.getMinutes() + d.getSeconds() / 2),
     description: 'Downloading File',
   },

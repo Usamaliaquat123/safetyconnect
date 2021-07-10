@@ -27,6 +27,23 @@ const styles = StyleSheet.create({
     borderRadius: wp(3),
     margin: wp(1),
   },
+  attchFileText: {
+    fontSize: wp(2.7),
+    fontStyle: 'italic',
+    color: colors.text,
+    opacity: 0.7,
+    marginLeft: wp(5),
+    marginTop: wp(2),
+  },
+  attachFileContainer: {
+    padding: wp(5),
+    borderRadius: wp(3),
+    marginTop: wp(3),
+    alignItems: 'center',
+    backgroundColor: colors.lightBlue,
+    // justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
   lottieDownloadContainer: {
     flexDirection: 'row',
     position: 'absolute',
