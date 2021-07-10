@@ -75,6 +75,8 @@ export class Preview extends React.Component<ViewAllProps, any> {
     };
   }
 
+  // Print sor
+  printSor = () => {};
   componentDidMount = () => {
     // this.props.route.
     console.log('this.props.route.params.data');
@@ -95,8 +97,15 @@ export class Preview extends React.Component<ViewAllProps, any> {
           this.setState({
             projectName: res.data.data.project_name,
           });
+
+          this.getAllAttachments(this.props.route.params.data.attachments);
         });
     });
+  };
+
+  // get All Attachments
+  getAllAttachments = (attach: any) => {
+    console.log(attach);
   };
 
   render() {
@@ -579,7 +588,24 @@ export class Preview extends React.Component<ViewAllProps, any> {
                     Attachments
                   </Text>
                 </View>
+                {/* All Attachments */}
+                <View style={{marginTop: wp(3)}}>
+                  {/* {this.state.attachments.map((d  :any, i : number) => (
+                     <>
+        
+
+
+
+
+                     </>
+
+
+
+                    ))} */}
+                </View>
+
                 <TouchableOpacity
+                  onPress={() => this.printSor()}
                   style={{
                     padding: wp(4),
                     backgroundColor: colors.green,
