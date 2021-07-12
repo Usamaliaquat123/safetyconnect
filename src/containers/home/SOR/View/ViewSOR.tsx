@@ -393,6 +393,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           /** done */ severity: severity,
           likelihood: liklihood,
         },
+        repeatedSor: this.props.route.params.data.repeatedSor,
         justification: this.props.route.params.data.justification,
         action_required: this.state.actionsAndRecommendations /** done */,
         location: this.props.route.params.data.location /** done */,
@@ -1972,7 +1973,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           }}>
                           <LottieView
                             ref={(animation) => {
-                               this.animation = animation;
+                              this.animation = animation;
                             }}
                             style={{width: wp(15)}}
                             source={animation.download}
@@ -2006,6 +2007,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   ) : null}
                 </View>
               ))}
+
               {this.state.attachments.length < 6 && (
                 <TouchableOpacity
                   onPress={() => {
@@ -2716,7 +2718,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 marginTop: wp(3),
               }}>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate("Preview", {data:  this.props.route.params.data})}
+                onPress={() =>
+                  this.props.navigation.navigate('Preview', {
+                    data: this.props.route.params.data,
+                  })
+                }
                 style={styles.saveAsDraftContainer}>
                 <Text style={styles.saveAsDraftText}>Preview</Text>
               </TouchableOpacity>
