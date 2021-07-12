@@ -15,6 +15,7 @@ import {involved_persons, report, orgnaization} from '@typings';
 import Amplify, {Storage} from 'aws-amplify';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export const mainPass: string = 'Safety_Connect1';
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import {Buffer} from 'buffer';
 export const classifySor: Array<Object> = [
   {
@@ -400,6 +401,26 @@ const checkPermission = async (type: string) => {
     }
   });
 };
+
+export const writeHtmlToPdf = (pdf: string, docName: string) => {
+  let options = {
+    html: pdf,
+    fileName: docName,
+    directory: 'Documents',
+  };
+
+  return new Promise((resolve, reject) => {
+    checkPermission('pdf').then((res) => {
+      try {
+        let file = RNHTMLtoPDF.convert(options);
+        resolve(file);
+      } catch (e) {
+        reject(e);
+      }
+    });
+  });
+};
+
 export const downloadFile = (file: string, typee: string) => {
   return new Promise((resolve, reject) => {
     checkPermission(typee)

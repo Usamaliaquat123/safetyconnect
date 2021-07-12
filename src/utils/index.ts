@@ -39,6 +39,7 @@ import {
   capitalizeFirstLetter,
   savedCurrentProject,
   savedCurrentOrganization,
+  writeHtmlToPdf,
   getAllProjects,
   FiveWhySubMenus,
 } from './utils';
@@ -50,6 +51,7 @@ export {
   savedCurrentOrganization,
   redirectDynamiclink,
   fileuploader,
+  writeHtmlToPdf,
   savedCurrentProject,
   getCurrentOrganization,
   savedCurrentProjectAndOrganizations,

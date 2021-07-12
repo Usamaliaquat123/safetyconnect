@@ -9633,6 +9633,11 @@ react-native-gifted-chat@^0.16.3:
     react-native-typing-animation "^0.1.7"
     uuid "3.4.0"
 
+react-native-html-to-pdf@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/react-native-html-to-pdf/-/react-native-html-to-pdf-0.10.0.tgz#9d272a6d48378dfc7ae66c2cf99baf9cc5edf50a"
+  integrity sha512-d7QWTXOAK0u/LX+qzIDFnNhHi/u0wYoo72p11xwq/REIt1iJo9cFoAyGTFL3PIrmAlXO7xYqG+gW5guGA/Y2/w==
+
 react-native-image-pan-zoom@^2.1.12:
   version "2.1.12"
   resolved "https://registry.yarnpkg.com/react-native-image-pan-zoom/-/react-native-image-pan-zoom-2.1.12.tgz#eb98bf56fb5610379bdbfdb63219cc1baca98fd2"

@@ -13,6 +13,7 @@ import {
   TextInput,
 } from 'react-native';
 import moment from 'moment';
+
 import {createApi, Create_sor, submitted} from '@service';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors, fonts, animation, images, GlStyles} from '@theme';
@@ -30,9 +31,11 @@ import {
   filterAndMappingPersons,
   mapAllProjects,
   capitalizeFirstLetter,
+  writeHtmlToPdf,
   downloadFile,
   getCurrentProject,
 } from '@utils';
+
 import {Card, ListCard} from '@components';
 import {
   widthPercentageToDP as wp,
@@ -79,7 +82,65 @@ export class Preview extends React.Component<ViewAllProps, any> {
   }
 
   // Print sor
-  printSor = () => {};
+  printSor = async () => {
+    let options = {
+      html: `<h1>PDF TEST</h1>`,
+      fileName: 'test',
+      directory: 'Documents',
+    };
+
+    var pdf = `
+    <div style="position:absolute;left:50%;margin-left:-420px;top:0px;width:841px;height:1191px;border-style:outset;overflow:hidden">
+    <div style="position:absolute;left:0px;top:0px">
+    <img src="https://user-images.githubusercontent.com/33973828/125269731-6e120500-e322-11eb-9940-96bc5c63925a.jpg" width=841 height=1191></div>
+    <div style="position:absolute;left:658.33px;top:35.00px;font-family:Arial,serif;font-size:14.5px;color:rgb(17,37,101);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:14.5px;color:rgb(17,37,101);font-weight:normal;font-style:normal;text-decoration: none;"> </span><A HREF="https://safety.connect.ai/">https://safety.connect.ai</A> </div>
+    <div style="position:absolute;left:6.00px;top:97.08px;font-family:Arial,serif;font-size:8.1px;color:rgb(17,37,101);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:8.1px;color:rgb(17,37,101);font-weight:normal;font-style:normal;text-decoration: none;">Observation Summary</span></div>
+    <div style="position:absolute;left:6.00px;top:139.46px;font-family:Arial,serif;font-size:10.6px;color:rgb(32,37,41);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:10.6px;color:rgb(32,37,41);font-weight:normal;font-style:normal;text-decoration: none;">Project ID: 60dc521af1493b8369afddee</span></div>
+    <div style="position:absolute;left:7.80px;top:188.99px;font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;">Project:</span></div>
+    <div style="position:absolute;left:320.22px;top:188.99px;font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;">Location:</span></div>
+    <div style="position:absolute;left:136.53px;top:193.49px; font-family:Arial,serif;font-size:10.6px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:10.6px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;">test4</span></div>
+    <div style="position:absolute;left:448.95px;top:193.49px;font-family:Arial,serif;font-size:10.6px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:10.6px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;">karachi</span></div>
+    <div style="position:absolute;left:7.80px;top:221.26px;font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;">Occurred On:</span></div>
+    <div style="position:absolute;left:320.22px;top:221.26px;font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none"><span style="font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;">Reported On:</span></div>
+    <div style="position:absolute;left:136.53px;top:225.76px;font-family:Arial,serif;font-size:10.6px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:10.6px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;">Wed, Jun 30, 2021 4:51 PM</span></div>
+    <div style="position:absolute;left:448.95px;top:225.76px;font-family:Arial,serif;font-size:10.6px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none"><span style="font-family:Arial,serif;font-size:10.6px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;">Wed, Jun 30, 2021 4:51 PM</span></div>
+    <div style="position:absolute;left:7.80px;top:269.36px;font-family:Arial,serif;font-size:8.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none"><span style="font-family:Arial,serif;font-size:8.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;">Observation Details</span></div>
+    <div style="position:absolute;left:7.80px;top:292.55px;font-family:Arial,serif;font-size:12.1px;color:rgb(84,84,84);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:12.1px;color:rgb(84,84,84);font-weight:normal;font-style:normal;text-decoration: none;">On Wed, Jun 30, 2021 4:51 PM It was observed that Damaged hammer was being used at workshop, which can cause hand injury.</span></div>
+    <div style="position:absolute;left:7.80px;top:320.32px;font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;">Observation Type:</span></div>
+    <div style="position:absolute;left:320.22px;top:320.32px;font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;">Status:</span></div>
+    <div style="position:absolute;left:157.55px;top:324.82px;font-family:Arial,serif;font-size:10.6px;color:rgb(51,152,218);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:10.6px;color:rgb(51,152,218);font-weight:normal;font-style:normal;text-decoration: none;">Concern</span></div>
+    <div style="position:absolute;left:448.95px;top:324.82px;font-family:Arial,serif;font-size:10.6px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:10.6px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;">Pending Closure</span></div>
+    <div style="position:absolute;left:7.80px;top:353.34px;font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;">Potential Risk:</span></div>
+    <div style="position:absolute;left:320.22px;top:353.34px;font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;">Actual Risk:</span></div>
+    <div style="position:absolute;left:144.98px;top:358.46px;font-family:Arial,serif;font-size:8.1px;color:rgb(255,255,255);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:8.1px;color:rgb(255,255,255);font-weight:normal;font-style:normal;text-decoration: none;">9-Medium</span></div>
+    <div style="position:absolute;left:462.78px;top:360.29px;font-family:Arial,serif;font-size:8.1px;color:rgb(255,255,255);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:8.1px;color:rgb(255,255,255);font-weight:normal;font-style:normal;text-decoration: none;">16-High</span></div>
+    <div style="position:absolute;left:7.80px;top:400.01px;font-family:Arial,serif;font-size:8.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:8.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;">Actions & Recommendations</span></div>
+    <div style="position:absolute;left:7.80px;top:425.38px;font-family:Arial,serif;font-size:10.6px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:10.6px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;">No actions added.</span></div>
+    <div style="position:absolute;left:10.80px;top:468.81px;font-family:Arial,serif;font-size:8.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:8.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;">People</span></div>
+    <div style="position:absolute;left:10.80px;top:497.83px;font-family:Arial,serif;font-size:8.1px;color:rgb(32,37,41);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:8.1px;color:rgb(32,37,41);font-weight:normal;font-style:normal;text-decoration: none;">Initiated By:</span></div>
+    <div style="position:absolute;left:138.54px;top:498.45px;font-family:Arial,serif;font-size:8.1px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:8.1px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;">talha</span></div>
+    <div style="position:absolute;left:322.08px;top:497.28px;font-family:Arial,serif;font-size:8.1px;color:rgb(32,37,41);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:8.1px;color:rgb(32,37,41);font-weight:normal;font-style:normal;text-decoration: none;">Area Supervisor:</span></div>
+    <div style="position:absolute;left:449.82px;top:498.45px;font-family:Arial,serif;font-size:8.1px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none"><span style="font-family:Arial,serif;font-size:8.1px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;">talha</span></div>
+    <div style="position:absolute;left:11.55px;top:525.02px;font-family:Arial,serif;font-size:8.1px;color:rgb(32,37,41);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:8.1px;color:rgb(32,37,41);font-weight:normal;font-style:normal;text-decoration: none;">Involved Persons:</span></div>
+    <div style="position:absolute;left:139.76px;top:522.19px;font-family:Arial,serif;font-size:10.6px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:10.6px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;">talha  talha</span></div>
+    <div style="position:absolute;left:10.80px;top:561.36px;font-family:Arial,serif;font-size:8.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:8.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;">Attachments</span></div>
+    <div style="position:absolute;left:10.80px;top:586.73px;font-family:Arial,serif;font-size:10.6px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:10.6px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;">No files uploaded yet</span></div>
+    <div style="position:absolute;left:0.00px;top:1137.41px;font-family:Arial,serif;font-size:8.1px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:8.1px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;">Contact us at:</span><span style="font-family:Arial,serif;font-size:14.5px;color:rgb(17,37,101);font-weight:normal;font-style:normal;text-decoration: none;">  <A HREF="https://safety.connect.ai/">https://safety.connect.ai</A> </span></div>
+    </div>
+    <div style="position:absolute;left:50%;margin-left:-420px;top:1201px;width:841px;height:1191px;border-style:outset;overflow:hidden">
+    <div style="position:absolute;left:0px;top:0px">
+    <img src="https://user-images.githubusercontent.com/33973828/125269843-87b34c80-e322-11eb-9d42-dc099a36333c.jpg" width=841 height=1191></div>
+    <div style="position:absolute;left:658.33px;top:35.00px;font-family:Arial,serif;font-size:14.5px;color:rgb(17,37,101);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:14.5px;color:rgb(17,37,101);font-weight:normal;font-style:normal;text-decoration: none;"> </span><A HREF="https://safety.connect.ai/">https://safety.connect.ai</A> </div>
+    <div style="position:absolute;left:0.00px;top:1137.41px;font-family:Arial,serif;font-size:8.1px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:8.1px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;">Contact us at:</span><span style="font-family:Arial,serif;font-size:14.5px;color:rgb(17,37,101);font-weight:normal;font-style:normal;text-decoration: none;">  <A HREF="https://safety.connect.ai/">https://safety.connect.ai</A> </span></div>
+    </div>
+    `;
+
+    writeHtmlToPdf(pdf, 'test').then((res) => {
+      console.log(res);
+    });
+    // console.log(file.filePath);
+    // alert(file.filePath);
+  };
   componentDidMount = () => {
     // this.props.route.
     console.log('this.props.route.params.data');
