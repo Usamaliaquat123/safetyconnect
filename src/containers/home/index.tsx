@@ -721,7 +721,6 @@ class Home extends React.Component<HomeProps, any> {
               )}
             </View>
             {/* latest incidents */}
-
             <View
               style={{
                 marginTop: wp(1.5),
@@ -800,7 +799,6 @@ class Home extends React.Component<HomeProps, any> {
                 </ScrollView>
               )}
             </View>
-
             {/* open audits  */}
             <View
               style={{
@@ -965,80 +963,82 @@ class Home extends React.Component<HomeProps, any> {
               <View style={styles.recentlyHead}>
                 <Text style={styles.actHeading}>Performance Statistics</Text>
                 <Text style={styles.viewAll}>View All</Text>
-              </View>
-              <View style={styles.tabs}>
-                <TouchableOpacity
-                  onPress={() => this.setState({selectedStats: 1})}
-                  style={[
-                    styles.tab,
-                    {
-                      borderRightWidth: wp(0),
-                      borderTopLeftRadius: wp(2.2),
-                      borderBottomLeftRadius: wp(2.2),
-                    },
-                    this.state.selectedStats == 1 && {
-                      backgroundColor: colors.darkLightGrey,
-                    },
-                  ]}>
-                  <Text
-                    style={[
-                      styles.tabText,
-                      this.state.selectedStats == 1 && {
-                        color: colors.green,
-                        opacity: 1,
-                        fontWeight: 'bold',
-                      },
-                    ]}>
-                    SOR
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => this.setState({selectedStats: 2})}
-                  style={[
-                    styles.tab,
-                    this.state.selectedStats == 2 && {
-                      backgroundColor: colors.darkLightGrey,
-                    },
-                  ]}>
-                  <Text
-                    style={[
-                      styles.tabText,
-                      this.state.selectedStats == 2 && {
-                        color: colors.green,
-                        opacity: 1,
-                        fontWeight: 'bold',
-                      },
-                    ]}>
-                    Accidents
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => this.setState({selectedStats: 3})}
-                  style={[
-                    styles.tab,
-                    {
-                      borderLeftWidth: wp(0),
-                      borderTopRightRadius: wp(2.2),
-                      borderBottomRightRadius: wp(2.2),
-                    },
 
-                    this.state.selectedStats == 3 && {
-                      backgroundColor: colors.darkLightGrey,
-                    },
-                  ]}>
-                  <Text
+                <View style={styles.tabs}>
+                  <TouchableOpacity
+                    onPress={() => this.setState({selectedStats: 1})}
                     style={[
-                      styles.tabText,
-                      this.state.selectedStats == 3 && {
-                        color: colors.green,
-                        opacity: 1,
-                        fontWeight: 'bold',
+                      styles.tab,
+                      {
+                        borderRightWidth: wp(0),
+                        borderTopLeftRadius: wp(2.2),
+                        borderBottomLeftRadius: wp(2.2),
+                      },
+                      this.state.selectedStats == 1 && {
+                        backgroundColor: colors.darkLightGrey,
                       },
                     ]}>
-                    Incidents
-                  </Text>
-                </TouchableOpacity>
+                    <Text
+                      style={[
+                        styles.tabText,
+                        this.state.selectedStats == 1 && {
+                          color: colors.green,
+                          opacity: 1,
+                          fontWeight: 'bold',
+                        },
+                      ]}>
+                      SOR
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => this.setState({selectedStats: 2})}
+                    style={[
+                      styles.tab,
+                      this.state.selectedStats == 2 && {
+                        backgroundColor: colors.darkLightGrey,
+                      },
+                    ]}>
+                    <Text
+                      style={[
+                        styles.tabText,
+                        this.state.selectedStats == 2 && {
+                          color: colors.green,
+                          opacity: 1,
+                          fontWeight: 'bold',
+                        },
+                      ]}>
+                      Accidents
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => this.setState({selectedStats: 3})}
+                    style={[
+                      styles.tab,
+                      {
+                        borderLeftWidth: wp(0),
+                        borderTopRightRadius: wp(2.2),
+                        borderBottomRightRadius: wp(2.2),
+                      },
+
+                      this.state.selectedStats == 3 && {
+                        backgroundColor: colors.darkLightGrey,
+                      },
+                    ]}>
+                    <Text
+                      style={[
+                        styles.tabText,
+                        this.state.selectedStats == 3 && {
+                          color: colors.green,
+                          opacity: 1,
+                          fontWeight: 'bold',
+                        },
+                      ]}>
+                      Incidents
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
+
               {/* Tabs Content */}
               <Animated.View style={styles.tabsContent}>
                 <PieChart

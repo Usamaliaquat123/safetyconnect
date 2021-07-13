@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     right: wp(0),
   },
   tabs: {
-    justifyContent: 'center',
+    // justifyContent: 'center',
     marginTop: wp(5),
     flexDirection: 'row',
   },
