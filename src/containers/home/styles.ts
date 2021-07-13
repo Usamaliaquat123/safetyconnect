@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   perfStats: {
     marginTop: wp(1.5),
     paddingBottom: wp(10),
-    padding: wp(5),
+    // padding: wp(5),
     backgroundColor: colors.secondary,
   },
   actHeading: {
