@@ -128,7 +128,8 @@ const styles = StyleSheet.create({
   recentlyHead: {
     alignItems: 'center',
     // padding: wp(3),
-    paddingLeft: wp(3),
+    paddingLeft: wp(5),
+    paddingRight: wp(5),
     paddingBottom: wp(1),
     backgroundColor: '#F6F6F6',
     flexDirection: 'row',

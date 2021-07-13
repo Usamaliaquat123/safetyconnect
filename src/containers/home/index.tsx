@@ -82,8 +82,10 @@ class Home extends React.Component<HomeProps, any> {
     getCurrentProject().then((currentProj: any) => {
       // console.log(currentProj)
       getCurrentOrganization().then((currentorg: any) => {
-        // console.log(currentorg);
-        // console.log(currentProj);
+        console.log('currentorg');
+        console.log('currentProj');
+        console.log(currentorg);
+        console.log(currentProj);
         this.setState({projectId: currentProj});
         this.setState({currentorg});
       });
