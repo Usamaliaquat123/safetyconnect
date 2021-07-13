@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   cardBorderText: {
     fontSize: wp(3),
     color: colors.text,
-    opacity: 0.5,
+    // opacity: 0.5,
     fontFamily: fonts.SFuiDisplayMedium,
   },
   cardRisk: {

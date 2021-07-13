@@ -78,6 +78,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
       projectName: '',
       attachments: [],
       involvedperson: [],
+      projectId :"",
     };
   }
 
@@ -95,7 +96,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
     <img src="https://user-images.githubusercontent.com/33973828/125269731-6e120500-e322-11eb-9940-96bc5c63925a.jpg" width=841 height=1191></div>
     <div style="position:absolute;left:658.33px;top:35.00px;font-family:Arial,serif;font-size:14.5px;color:rgb(17,37,101);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:14.5px;color:rgb(17,37,101);font-weight:normal;font-style:normal;text-decoration: none;"> </span><A HREF="https://safety.connect.ai/">https://safety.connect.ai</A> </div>
     <div style="position:absolute;left:6.00px;top:97.08px;font-family:Arial,serif;font-size:8.1px;color:rgb(17,37,101);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:8.1px;color:rgb(17,37,101);font-weight:normal;font-style:normal;text-decoration: none;">Observation Summary</span></div>
-    <div style="position:absolute;left:6.00px;top:139.46px;font-family:Arial,serif;font-size:10.6px;color:rgb(32,37,41);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:10.6px;color:rgb(32,37,41);font-weight:normal;font-style:normal;text-decoration: none;">Project ID: 60dc521af1493b8369afddee</span></div>
+    <div style="position:absolute;left:6.00px;top:139.46px;font-family:Arial,serif;font-size:10.6px;color:rgb(32,37,41);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:10.6px;color:rgb(32,37,41);font-weight:normal;font-style:normal;text-decoration: none;">Project ID: ${this.state.projectid}</span></div>
     <div style="position:absolute;left:7.80px;top:188.99px;font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;">Project:</span></div>
     <div style="position:absolute;left:320.22px;top:188.99px;font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:12.1px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none;">Location:</span></div>
     <div style="position:absolute;left:136.53px;top:193.49px; font-family:Arial,serif;font-size:10.6px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;"><span style="font-family:Arial,serif;font-size:10.6px;color:rgb(157,157,157);font-weight:normal;font-style:normal;text-decoration: none;">test4</span></div>
@@ -154,6 +155,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
       });
 
     getCurrentProject().then((currentProj: any) => {
+      this.setState({projectid : currentProj})
       createApi
         .createApi()
         .getProject({projectid: currentProj})

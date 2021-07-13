@@ -34,6 +34,8 @@ import {
   mapAllProjects,
   mapAllOrganizations,
   getCurrentProject,
+  getAllProjects,
+  getCurrentOrganization,
 } from '@utils';
 import {Card, ListCard} from '@components';
 import {
@@ -113,11 +115,20 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       repeatedSors: [],
 
       loading: false,
+      projects: [],
       projectId: '',
     };
   }
 
   componentDidMount = () => {
+    getCurrentOrganization().then((orgId: any) => {
+      createApi
+        .createApi()
+        .getOrganization(orgId)
+        .then((org: any) => {
+          this.setState({projects: org.data.data.projects});
+        });
+    });
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
       console.log('currentProj');
@@ -170,7 +181,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           }
         }
 
-        // this.setState({loading: true});
 
         createApi
           .createApi()

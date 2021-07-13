@@ -89,7 +89,7 @@ const createApi = (
   const organization = (data: orgnaization) =>
     baseapi.post('organization', data);
   const getOrganization = (data: orgnaization) =>
-    baseapi.get('organization', data);
+    baseapi.get(`organization?organization_id=${data}`);
   const updateOrganization = (data: orgnaization) =>
     baseapi.put('organization', data);
 

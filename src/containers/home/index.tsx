@@ -67,96 +67,92 @@ class Home extends React.Component<HomeProps, any> {
       currentorg: '',
       allOrganizations: [],
       allProjects: [],
-      repeatedSors : [],
+      repeatedSors: [],
       selectedOrganization: {},
       projSelection: false,
       loading: false,
       selectedProject: {},
       refreshing: false,
-      repeatedSorModal:  false
+      repeatedSorModal: false,
     };
   }
 
   componentDidMount = () => {
-    this.setState({loading: true});
-    getCurrentProject().then((currentProj: any) => {
-      this.setState({projectId: currentProj});
-    });
-
-    getCurrentOrganization().then((currentorg: any) => {
-      this.setState({currentorg});
-    });
-    // this.setState({name: 'sds'});
-
-    // if (this.state.currentorg == null && this.state.currentProj == null) {
-    this.setState({newsorModal: true});
-    // } else {
-    //   this.setState({newsorModal: false});
-    // }
-
-    AsyncStorage.getItem('email').then((email: any) => {
-      createApi
-        .createApi()
-        .getAllNotifications(email, '[0,1]')
-        .then((notify: any) => {
-          console.log(notify.data.data.notifications);
-          this.setState({
-            notificationsData: notify.data.data.notifications,
-            count: notify.data.data.notifications.filter(
-              (n: any) => n.status == 0,
-            ).length,
-          });
-        });
-      createApi
-        .createApi()
-        .getUser(email)
-        .then((res: any) => {
-          this.setState({name: res.data.data.name});
-          this.setState({image: res.data.data.img_url});
-          this.setState({user: res.data.data});
-          this.setState({allOrganizations: res.data.data.organizations});
-          // var data = {
-          //   bucket: 'hns-codist',
-          //   report: [`profile/${res.data.data.img_url}`],
-          // };
-          // createApi
-          //   .createApi()
-          //   .getFileApi(data)
-          //   .then((file: any) => {
-          //     this.setState({image: file.data[0]});
-          //   });
-          if (
-            res.data.data.organizations.filter(
-              (d: any) => d._id == this.state.currentorg,
-            )[0].projects.length != 0
-          ) {
-            this.setState({
-              allProjects: res.data.data.organizations.filter(
-                (d: any) => d._id == this.state.currentorg,
-              )[0].projects,
-            });
-          } else {
-            this.setState({allProjects: []});
-          }
-          this.setState({
-            selectedOrganization: res.data.data.organizations.filter(
-              (d: any) => d._id == this.state.currentorg,
-            )[0],
-          });
-        });
-    });
-
-    // var data = {
-    //   bucket: 'hns-codist',
-    //   report: 'profile/1621937387877.jpeg',
-    // };
-    // createApi
-    //   .createApi()
-    //   .getFileApi(data)
-    //   .then((file: any) => {
-    //     // this.setState({image: file.data});
-    //   });
-    this.setState({loading: false});
+    // this.setState({loading: true});
+    // getCurrentProject().then((currentProj: any) => {
+    //   this.setState({projectId: currentProj});
+    // });
+    // getCurrentOrganization().then((currentorg: any) => {
+    //   this.setState({currentorg});
+    // });
+    // // this.setState({name: 'sds'});
+    // // if (this.state.currentorg == null && this.state.currentProj == null) {
+    // this.setState({newsorModal: true});
+    // // } else {
+    // //   this.setState({newsorModal: false});
+    // // }
+    // AsyncStorage.getItem('email').then((email: any) => {
+    //   createApi
+    //     .createApi()
+    //     .getAllNotifications(email, '[0,1]')
+    //     .then((notify: any) => {
+    //       console.log(notify.data.data.notifications);
+    //       this.setState({
+    //         notificationsData: notify.data.data.notifications,
+    //         count: notify.data.data.notifications.filter(
+    //           (n: any) => n.status == 0,
+    //         ).length,
+    //       });
+    //     });
+    //   createApi
+    //     .createApi()
+    //     .getUser(email)
+    //     .then((res: any) => {
+    //       this.setState({name: res.data.data.name});
+    //       this.setState({image: res.data.data.img_url});
+    //       this.setState({user: res.data.data});
+    //       this.setState({allOrganizations: res.data.data.organizations});
+    //       // var data = {
+    //       //   bucket: 'hns-codist',
+    //       //   report: [`profile/${res.data.data.img_url}`],
+    //       // };
+    //       // createApi
+    //       //   .createApi()
+    //       //   .getFileApi(data)
+    //       //   .then((file: any) => {
+    //       //     this.setState({image: file.data[0]});
+    //       //   });
+    //       if (
+    //         res.data.data.organizations.filter(
+    //           (d: any) => d._id == this.state.currentorg,
+    //         )[0].projects.length != 0
+    //       ) {
+    //         this.setState({
+    //           allProjects: res.data.data.organizations.filter(
+    //             (d: any) => d._id == this.state.currentorg,
+    //           )[0].projects,
+    //         });
+    //       } else {
+    //         this.setState({allProjects: []});
+    //       }
+    //       this.setState({
+    //         selectedOrganization: res.data.data.organizations.filter(
+    //           (d: any) => d._id == this.state.currentorg,
+    //         )[0],
+    //       });
+    //     });
+    // });
+    // // var data = {
+    // //   bucket: 'hns-codist',
+    // //   report: 'profile/1621937387877.jpeg',
+    // // };
+    // // createApi
+    // //   .createApi()
+    // //   .getFileApi(data)
+    // //   .then((file: any) => {
+    // //     // this.setState({image: file.data});
+    // //   });
+    // this.setState({loading: false});
   };
 
   _onRefresh = () => {
@@ -396,14 +392,26 @@ class Home extends React.Component<HomeProps, any> {
                 <Text style={{fontSize: wp(3)}}>Analytics</Text>
               </View>
             </View>
+            {/* Tasks Assigned to you */}
             <View style={styles.recentActivity}>
               <View style={styles.recentlyHead}>
-                <Text style={styles.actHeading}>Recently Activity</Text>
+                <Text style={styles.actHeading}>Your Recent Activities</Text>
                 {this.state.recentActivity.length > 3 ? (
                   <TouchableOpacity>
                     <Text style={styles.viewAll}>View All</Text>
                   </TouchableOpacity>
                 ) : null}
+              </View>
+              <View style={{marginTop: wp(3), paddingLeft: wp(3)}}>
+                <Text
+                  style={{
+                    fontSize: wp(3.2),
+                    fontFamily: fonts.SFuiDisplayBold,
+                    color: colors.primary,
+                  }}>
+                  {' '}
+                  Tasks Assigned to you
+                </Text>
               </View>
               {this.state.recentActivity.length == 0 ? (
                 <View
@@ -466,6 +474,493 @@ class Home extends React.Component<HomeProps, any> {
                 </ScrollView>
               )}
             </View>
+            {/* Tasks assigned by you */}
+            <View
+              style={{
+                marginTop: wp(1.5),
+                paddingBottom: wp(3),
+                backgroundColor: colors.secondary,
+              }}>
+              <View style={{marginTop: wp(3), paddingLeft: wp(3)}}>
+                <Text
+                  style={{
+                    fontSize: wp(3.2),
+                    fontFamily: fonts.SFuiDisplayBold,
+                    color: colors.primary,
+                  }}>
+                  {' '}
+                  Tasks Assigned by you
+                </Text>
+              </View>
+
+              {this.state.recentActivity.length == 0 ? (
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    paddingTop: wp(10),
+                    paddingBottom: wp(10),
+                  }}>
+                  <Text style={styles.nonReportText}>
+                    You don't have any reports yet...
+                  </Text>
+                  <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+                    <Text style={styles.noncreate}>
+                      Would you like to create the
+                    </Text>
+                    <Text
+                      onPress={() =>
+                        this.props.navigation.navigate('CreateSOR')
+                      }
+                      style={styles.noneCreatetext}>
+                      {' '}
+                      new one
+                    </Text>
+                  </View>
+                </View>
+              ) : (
+                <ScrollView
+                  refreshControl={
+                    <RefreshControl
+                      onRefresh={() => this._onRefresh()}
+                      refreshing={this.state.refreshing}
+                    />
+                  }>
+                  <View style={{marginTop: wp(3)}}>
+                    {this.state.recentActivity.map((d: Isor, i: number) => (
+                      <ListCard
+                        classify={d.sor_type}
+                        repeated={d.repeatedSor}
+                        location={d.location}
+                        styles={
+                          this.state.recentActivity.length == i + 1
+                            ? {borderBottomWidth: wp(0)}
+                            : null
+                        }
+                        user1={d.user1}
+                        user2={d.user2}
+                        observation={d.details}
+                        username={d.created_by}
+                        iconconf={classifySor.find(
+                          (e: any) => e.title == d.sor_type,
+                        )}
+                        onPress={() =>
+                          this.props.navigation.navigate('ViewSOR', {data: d})
+                        }
+                        onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                        date={d.occured_at}
+                      />
+                    ))}
+                  </View>
+                </ScrollView>
+              )}
+            </View>
+            {/* Tasks that you are involved in */}
+            <View
+              style={{
+                marginTop: wp(1.5),
+                paddingBottom: wp(3),
+                backgroundColor: colors.secondary,
+              }}>
+              <View style={{marginTop: wp(3), paddingLeft: wp(3)}}>
+                <Text
+                  style={{
+                    fontSize: wp(3.2),
+                    fontFamily: fonts.SFuiDisplayBold,
+                    color: colors.primary,
+                  }}>
+                  {' '}
+                  Tasks you are involved in
+                </Text>
+              </View>
+
+              {this.state.recentActivity.length == 0 ? (
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    paddingTop: wp(10),
+                    paddingBottom: wp(10),
+                  }}>
+                  <Text style={styles.nonReportText}>
+                    You don't have any reports yet...
+                  </Text>
+                  <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+                    <Text style={styles.noncreate}>
+                      Would you like to create the
+                    </Text>
+                    <Text
+                      onPress={() =>
+                        this.props.navigation.navigate('CreateSOR')
+                      }
+                      style={styles.noneCreatetext}>
+                      {' '}
+                      new one
+                    </Text>
+                  </View>
+                </View>
+              ) : (
+                <ScrollView
+                  refreshControl={
+                    <RefreshControl
+                      onRefresh={() => this._onRefresh()}
+                      refreshing={this.state.refreshing}
+                    />
+                  }>
+                  <View style={{marginTop: wp(3)}}>
+                    {this.state.recentActivity.map((d: Isor, i: number) => (
+                      <ListCard
+                        classify={d.sor_type}
+                        repeated={d.repeatedSor}
+                        location={d.location}
+                        styles={
+                          this.state.recentActivity.length == i + 1
+                            ? {borderBottomWidth: wp(0)}
+                            : null
+                        }
+                        user1={d.user1}
+                        user2={d.user2}
+                        observation={d.details}
+                        username={d.created_by}
+                        iconconf={classifySor.find(
+                          (e: any) => e.title == d.sor_type,
+                        )}
+                        onPress={() =>
+                          this.props.navigation.navigate('ViewSOR', {data: d})
+                        }
+                        onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                        date={d.occured_at}
+                      />
+                    ))}
+                  </View>
+                </ScrollView>
+              )}
+            </View>
+            {/*
+             * Overall Summary
+             *
+             */}
+            <View style={styles.recentActivity}>
+              <View style={styles.recentlyHead}>
+                <Text style={styles.actHeading}>Overall Summary</Text>
+                {this.state.recentActivity.length > 3 ? (
+                  <TouchableOpacity>
+                    <Text style={styles.viewAll}>View All</Text>
+                  </TouchableOpacity>
+                ) : null}
+              </View>
+              <View style={{marginTop: wp(3), paddingLeft: wp(3)}}>
+                <Text
+                  style={{
+                    fontSize: wp(3.2),
+                    fontFamily: fonts.SFuiDisplayBold,
+                    color: colors.primary,
+                  }}>
+                  {' '}
+                  Recent Observation
+                </Text>
+              </View>
+
+              {this.state.recentActivity.length == 0 ? (
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    paddingTop: wp(10),
+                    paddingBottom: wp(10),
+                  }}>
+                  <Text style={styles.nonReportText}>
+                    You don't have any reports yet...
+                  </Text>
+                  <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+                    <Text style={styles.noncreate}>
+                      Would you like to create the
+                    </Text>
+                    <Text
+                      onPress={() =>
+                        this.props.navigation.navigate('CreateSOR')
+                      }
+                      style={styles.noneCreatetext}>
+                      {' '}
+                      new one
+                    </Text>
+                  </View>
+                </View>
+              ) : (
+                <ScrollView
+                  refreshControl={
+                    <RefreshControl
+                      onRefresh={() => this._onRefresh()}
+                      refreshing={this.state.refreshing}
+                    />
+                  }>
+                  <View style={{marginTop: wp(3)}}>
+                    {this.state.recentActivity.map((d: Isor, i: number) => (
+                      <ListCard
+                        classify={d.sor_type}
+                        repeated={d.repeatedSor}
+                        location={d.location}
+                        styles={
+                          this.state.recentActivity.length == i + 1
+                            ? {borderBottomWidth: wp(0)}
+                            : null
+                        }
+                        user1={d.user1}
+                        user2={d.user2}
+                        observation={d.details}
+                        username={d.created_by}
+                        iconconf={classifySor.find(
+                          (e: any) => e.title == d.sor_type,
+                        )}
+                        onPress={() =>
+                          this.props.navigation.navigate('ViewSOR', {data: d})
+                        }
+                        onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                        date={d.occured_at}
+                      />
+                    ))}
+                  </View>
+                </ScrollView>
+              )}
+            </View>
+            {/* latest incidents */}
+
+            <View
+              style={{
+                marginTop: wp(1.5),
+                paddingBottom: wp(3),
+                backgroundColor: colors.secondary,
+              }}>
+              <View style={{marginTop: wp(3), paddingLeft: wp(3)}}>
+                <Text
+                  style={{
+                    fontSize: wp(3.2),
+                    fontFamily: fonts.SFuiDisplayBold,
+                    color: colors.primary,
+                  }}>
+                  {' '}
+                  latest Incidents
+                </Text>
+              </View>
+              {this.state.recentActivity.length == 0 ? (
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    paddingTop: wp(10),
+                    paddingBottom: wp(10),
+                  }}>
+                  <Text style={styles.nonReportText}>
+                    You don't have any reports yet...
+                  </Text>
+                  <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+                    <Text style={styles.noncreate}>
+                      Would you like to create the
+                    </Text>
+                    <Text
+                      onPress={() =>
+                        this.props.navigation.navigate('CreateSOR')
+                      }
+                      style={styles.noneCreatetext}>
+                      {' '}
+                      new one
+                    </Text>
+                  </View>
+                </View>
+              ) : (
+                <ScrollView
+                  refreshControl={
+                    <RefreshControl
+                      onRefresh={() => this._onRefresh()}
+                      refreshing={this.state.refreshing}
+                    />
+                  }>
+                  <View style={{marginTop: wp(3)}}>
+                    {this.state.recentActivity.map((d: Isor, i: number) => (
+                      <ListCard
+                        classify={d.sor_type}
+                        repeated={d.repeatedSor}
+                        location={d.location}
+                        styles={
+                          this.state.recentActivity.length == i + 1
+                            ? {borderBottomWidth: wp(0)}
+                            : null
+                        }
+                        user1={d.user1}
+                        user2={d.user2}
+                        observation={d.details}
+                        username={d.created_by}
+                        iconconf={classifySor.find(
+                          (e: any) => e.title == d.sor_type,
+                        )}
+                        onPress={() =>
+                          this.props.navigation.navigate('ViewSOR', {data: d})
+                        }
+                        onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                        date={d.occured_at}
+                      />
+                    ))}
+                  </View>
+                </ScrollView>
+              )}
+            </View>
+
+            {/* open audits  */}
+            <View
+              style={{
+                marginTop: wp(1.5),
+                paddingBottom: wp(3),
+                backgroundColor: colors.secondary,
+              }}>
+              <View style={{marginTop: wp(3), paddingLeft: wp(3)}}>
+                <Text
+                  style={{
+                    fontSize: wp(3.2),
+                    fontFamily: fonts.SFuiDisplayBold,
+                    color: colors.primary,
+                  }}>
+                  {' '}
+                  Open Audits
+                </Text>
+              </View>
+              {this.state.recentActivity.length == 0 ? (
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    paddingTop: wp(10),
+                    paddingBottom: wp(10),
+                  }}>
+                  <Text style={styles.nonReportText}>
+                    You don't have any reports yet...
+                  </Text>
+                  <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+                    <Text style={styles.noncreate}>
+                      Would you like to create the
+                    </Text>
+                    <Text
+                      onPress={() =>
+                        this.props.navigation.navigate('CreateSOR')
+                      }
+                      style={styles.noneCreatetext}>
+                      {' '}
+                      new one
+                    </Text>
+                  </View>
+                </View>
+              ) : (
+                <ScrollView
+                  refreshControl={
+                    <RefreshControl
+                      onRefresh={() => this._onRefresh()}
+                      refreshing={this.state.refreshing}
+                    />
+                  }>
+                  <View style={{marginTop: wp(3)}}>
+                    {this.state.recentActivity.map((d: Isor, i: number) => (
+                      <ListCard
+                        classify={d.sor_type}
+                        repeated={d.repeatedSor}
+                        location={d.location}
+                        styles={
+                          this.state.recentActivity.length == i + 1
+                            ? {borderBottomWidth: wp(0)}
+                            : null
+                        }
+                        user1={d.user1}
+                        user2={d.user2}
+                        observation={d.details}
+                        username={d.created_by}
+                        iconconf={classifySor.find(
+                          (e: any) => e.title == d.sor_type,
+                        )}
+                        onPress={() =>
+                          this.props.navigation.navigate('ViewSOR', {data: d})
+                        }
+                        onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                        date={d.occured_at}
+                      />
+                    ))}
+                  </View>
+                </ScrollView>
+              )}
+            </View>
+            {/* upcomming trainings  */}
+            <View
+              style={{
+                marginTop: wp(1.5),
+                paddingBottom: wp(3),
+                backgroundColor: colors.secondary,
+              }}>
+              <View style={{marginTop: wp(3), paddingLeft: wp(3)}}>
+                <Text
+                  style={{
+                    fontSize: wp(3.2),
+                    fontFamily: fonts.SFuiDisplayBold,
+                    color: colors.primary,
+                  }}>
+                  {' '}
+                  Upcomming Trainings
+                </Text>
+              </View>
+              {this.state.recentActivity.length == 0 ? (
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    paddingTop: wp(10),
+                    paddingBottom: wp(10),
+                  }}>
+                  <Text style={styles.nonReportText}>
+                    You don't have any reports yet...
+                  </Text>
+                  <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+                    <Text style={styles.noncreate}>
+                      Would you like to create the
+                    </Text>
+                    <Text
+                      onPress={() =>
+                        this.props.navigation.navigate('CreateSOR')
+                      }
+                      style={styles.noneCreatetext}>
+                      {' '}
+                      new one
+                    </Text>
+                  </View>
+                </View>
+              ) : (
+                <ScrollView
+                  refreshControl={
+                    <RefreshControl
+                      onRefresh={() => this._onRefresh()}
+                      refreshing={this.state.refreshing}
+                    />
+                  }>
+                  <View style={{marginTop: wp(3)}}>
+                    {this.state.recentActivity.map((d: Isor, i: number) => (
+                      <ListCard
+                        classify={d.sor_type}
+                        repeated={d.repeatedSor}
+                        location={d.location}
+                        styles={
+                          this.state.recentActivity.length == i + 1
+                            ? {borderBottomWidth: wp(0)}
+                            : null
+                        }
+                        user1={d.user1}
+                        user2={d.user2}
+                        observation={d.details}
+                        username={d.created_by}
+                        iconconf={classifySor.find(
+                          (e: any) => e.title == d.sor_type,
+                        )}
+                        onPress={() =>
+                          this.props.navigation.navigate('ViewSOR', {data: d})
+                        }
+                        onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                        date={d.occured_at}
+                      />
+                    ))}
+                  </View>
+                </ScrollView>
+              )}
+            </View>
+
+            {/* Performace stats */}
             <View style={styles.perfStats}>
               <View style={styles.recentlyHead}>
                 <Text style={styles.actHeading}>Performance Statistics</Text>
@@ -544,6 +1039,24 @@ class Home extends React.Component<HomeProps, any> {
                   </Text>
                 </TouchableOpacity>
               </View>
+              {/* Tabs Content */}
+              <Animated.View style={styles.tabsContent}>
+                <PieChart
+                  padAngle={0}
+                  animate={true}
+                  innerRadius={'80%'}
+                  style={{height: wp(50), width: wp(50)}}
+                  data={pieData}>
+                  <View
+                    style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={styles.chartContent}>Total</Text>
+                    <Text style={styles.chartContent}>Observations</Text>
+                    <Text style={styles.chartContent}>
+                      {this.state.totalObservations}
+                    </Text>
+                  </View>
+                </PieChart>
+              </Animated.View>
               {/* colors guide */}
               <View style={styles.guideColors}>
                 <View style={styles.guideitem}>
@@ -571,91 +1084,71 @@ class Home extends React.Component<HomeProps, any> {
                   <Text style={styles.guideText}>Dismissed</Text>
                 </View>
               </View>
-              {/* Tabs Content */}
-              <Animated.View style={styles.tabsContent}>
-                <PieChart
-                  padAngle={0}
-                  animate={true}
-                  innerRadius={'80%'}
-                  style={{height: wp(50), width: wp(50)}}
-                  data={pieData}>
-                  <View
-                    style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={styles.chartContent}>Total</Text>
-                    <Text style={styles.chartContent}>Observations</Text>
-                    <Text style={styles.chartContent}>
-                      {this.state.totalObservations}
-                    </Text>
-                  </View>
-                </PieChart>
-              </Animated.View>
             </View>
           </View>
 
+          {/* Repeated sor modal */}
 
-
-        {/* Repeated sor modal */}
-
-        <Modal
-          animationInTiming={1000}
-          animationIn={'bounceInUp'}
-          animationOut={'bounceOutDown'}
-          animationOutTiming={1000}
-          useNativeDriver={true}
-          onBackdropPress={() => this.setState({repeatedSorModal: false})}
-          isVisible={this.state.repeatedSorModal}>
-          <View
-            style={{
-              padding: wp(5),
-              backgroundColor: colors.secondary,
-              borderRadius: wp(2),
-            }}>
+          <Modal
+            animationInTiming={1000}
+            animationIn={'bounceInUp'}
+            animationOut={'bounceOutDown'}
+            animationOutTiming={1000}
+            useNativeDriver={true}
+            onBackdropPress={() => this.setState({repeatedSorModal: false})}
+            isVisible={this.state.repeatedSorModal}>
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text
-                style={{
-                  fontSize: wp(4),
-                  fontFamily: fonts.SFuiDisplayBold,
-                  marginBottom: wp(3),
-                }}>
-                Repeated SOR
-              </Text>
-              <Icon
-                onPress={() => this.setState({repeatedSorModal: false})}
-                name={'cross'}
-                size={wp(5)}
-                type={'entypo'}
-              />
+              style={{
+                padding: wp(5),
+                backgroundColor: colors.secondary,
+                borderRadius: wp(2),
+              }}>
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Text
+                  style={{
+                    fontSize: wp(4),
+                    fontFamily: fonts.SFuiDisplayBold,
+                    marginBottom: wp(3),
+                  }}>
+                  Repeated SOR
+                </Text>
+                <Icon
+                  onPress={() => this.setState({repeatedSorModal: false})}
+                  name={'cross'}
+                  size={wp(5)}
+                  type={'entypo'}
+                />
+              </View>
+              {this.state.repeatedSors.map((d: Isor, i: number) => (
+                <Card
+                  key={i}
+                  // type={'all'}
+                  data={d}
+                  onPress={(d: Isor) =>
+                    this.props.navigation.navigate('ViewSOR', {
+                      data: d,
+                    })
+                  }
+                  onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                  name={d.created_by}
+                  date={d.occured_at}
+                  risk={d.risk.severity * d.risk.likelihood}
+                  viewPortWidth={80}
+                  observation={d.details}
+                  classify={d.sor_type}
+                  iconConf={classifySor.find((e: any) => e.title == d.sor_type)}
+                  location={d.location}
+                  style={[
+                    styles.draftCardContainer,
+                    // {marginBottom: wp()},
+                  ]}
+                  user1={d.user1}
+                  user2={d.user2}
+                />
+              ))}
             </View>
-            {this.state.repeatedSors.map((d: Isor, i: number) => (
-              <Card
-                key={i}
-                // type={'all'}
-                data={d}
-                onPress={(d: Isor) =>
-                  this.props.navigation.navigate('ViewSOR', {
-                    data: d,
-                  })
-                }
-                onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                name={d.created_by}
-                date={d.occured_at}
-                risk={d.risk.severity * d.risk.likelihood}
-                viewPortWidth={80}
-                observation={d.details}
-                classify={d.sor_type}
-                iconConf={classifySor.find((e: any) => e.title == d.sor_type)}
-                location={d.location}
-                style={[
-                  styles.draftCardContainer,
-                  // {marginBottom: wp()},
-                ]}
-                user1={d.user1}
-                user2={d.user2}
-              />
-            ))}
-          </View>
-        </Modal>
+          </Modal>
         </ScrollView>
         {/* when you don't have any sors  */}
         {/* Modal Container */}

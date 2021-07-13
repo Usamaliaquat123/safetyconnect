@@ -2319,8 +2319,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 // this.props.navigation.navigate('ViewSOR', {data: d});
               }}
               onSkip={() => {
-                this.setState({repeatedSorModal: false});
-                this.props.navigation.goBack();
+                showMessage({
+                  message: 'SOR sucessfully subitted',
+                  type: 'success',
+                  position: 'bottom',
+                });
+                setTimeout(() => {
+                  this.props.navigation.navigate('Main');
+                }, 1000);
               }}
               onSubmit={(e) => {
                 this.onlinksorRepeated(e);
