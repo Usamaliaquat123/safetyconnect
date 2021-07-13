@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
 
   content: {
     // padding: wp(5),
-    backgroundColor: colors.darkLightGrey,
-
+    // backgroundColor: colors.darkLightGrey,
+    backgroundColor: '#F6F6F6',
     // flex: 2,
 
     // marginTop: wp(80),
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     // padding: wp(3),
     paddingLeft: wp(3),
     paddingBottom: wp(1),
-    backgroundColor: colors.darkLightGrey,
+    backgroundColor: '#F6F6F6',
     flexDirection: 'row',
   },
   viewAll: {
@@ -140,11 +140,12 @@ const styles = StyleSheet.create({
   },
   tabs: {
     // justifyContent: 'center',
-    marginTop: wp(5),
+    marginTop: wp(2),
+    marginBottom: wp(2),
     flexDirection: 'row',
   },
   tab: {
-    borderWidth: wp(0.4),
+    borderWidth: wp(0.1),
     // borderRadius: wp(2.2),÷
     // paddingTop: wp(2),
     // paddingBottom: wp(2),

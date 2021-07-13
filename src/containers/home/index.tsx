@@ -960,11 +960,23 @@ class Home extends React.Component<HomeProps, any> {
 
             {/* Performace stats */}
             <View style={styles.perfStats}>
-              <View style={styles.recentlyHead}>
-                <Text style={styles.actHeading}>Performance Statistics</Text>
-                <Text style={styles.viewAll}>View All</Text>
-
-                <View style={styles.tabs}>
+              <View
+                style={{
+                  // alignItems: 'center',
+                  // padding: wp(3),
+                  paddingLeft: wp(3),
+                  paddingBottom: wp(1),
+                  backgroundColor: '#F6F6F6',
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text style={styles.actHeading}>Performance Statistics</Text>
+                  <Text style={[styles.viewAll, {right: wp(3)}]}>View All</Text>
+                </View>
+                <View style={[styles.tabs, {alignSelf: 'center'}]}>
                   <TouchableOpacity
                     onPress={() => this.setState({selectedStats: 1})}
                     style={[
@@ -975,7 +987,7 @@ class Home extends React.Component<HomeProps, any> {
                         borderBottomLeftRadius: wp(2.2),
                       },
                       this.state.selectedStats == 1 && {
-                        backgroundColor: colors.darkLightGrey,
+                        backgroundColor: '#E6E6E6',
                       },
                     ]}>
                     <Text
@@ -995,7 +1007,7 @@ class Home extends React.Component<HomeProps, any> {
                     style={[
                       styles.tab,
                       this.state.selectedStats == 2 && {
-                        backgroundColor: colors.darkLightGrey,
+                        backgroundColor: '#E6E6E6',
                       },
                     ]}>
                     <Text
@@ -1021,7 +1033,7 @@ class Home extends React.Component<HomeProps, any> {
                       },
 
                       this.state.selectedStats == 3 && {
-                        backgroundColor: colors.darkLightGrey,
+                        backgroundColor: '#E6E6E6',
                       },
                     ]}>
                     <Text
