@@ -74,6 +74,7 @@ const createApi = (
     aiRepBaseApi.get(`rep?q=${keyword}&id=${projectId}`);
   const linkRepeatedSugg = (data: any) =>
     baseapi.post(`project/repeated`, data);
+  // const dashboardApi = () => baseapi.get('/dashboard')
   // sor api
 
   /*

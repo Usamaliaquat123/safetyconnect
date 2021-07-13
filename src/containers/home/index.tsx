@@ -25,7 +25,7 @@ import {Avatar, Icon} from 'react-native-elements';
 import {View_sor, recentActivity} from '@service';
 import {ListCard} from '@components';
 import {route} from '@nav';
-import {PieChart} from 'react-native-svg-charts';
+import {PieChart, ProgressCircle} from 'react-native-svg-charts';
 import {createApi} from '@service';
 import Modal from 'react-native-modal';
 
@@ -79,12 +79,15 @@ class Home extends React.Component<HomeProps, any> {
 
   componentDidMount = () => {
     // this.setState({loading: true});
-    // getCurrentProject().then((currentProj: any) => {
-    //   this.setState({projectId: currentProj});
-    // });
-    // getCurrentOrganization().then((currentorg: any) => {
-    //   this.setState({currentorg});
-    // });
+    getCurrentProject().then((currentProj: any) => {
+      // console.log(currentProj)
+      getCurrentOrganization().then((currentorg: any) => {
+        // console.log(currentorg);
+        // console.log(currentProj);
+        this.setState({projectId: currentProj});
+        this.setState({currentorg});
+      });
+    });
     // // this.setState({name: 'sds'});
     // // if (this.state.currentorg == null && this.state.currentProj == null) {
     // this.setState({newsorModal: true});
@@ -1052,48 +1055,351 @@ class Home extends React.Component<HomeProps, any> {
               </View>
 
               {/* Tabs Content */}
-              <Animated.View style={styles.tabsContent}>
-                <PieChart
-                  padAngle={0}
-                  animate={true}
-                  innerRadius={'80%'}
-                  style={{height: wp(50), width: wp(50)}}
-                  data={pieData}>
-                  <View
-                    style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={styles.chartContent}>Total</Text>
-                    <Text style={styles.chartContent}>Observations</Text>
-                    <Text style={styles.chartContent}>
-                      {this.state.totalObservations}
-                    </Text>
+
+              {/* observation and feedback */}
+              <View style={{marginBottom: wp(3), padding: wp(3)}}>
+                <Text
+                  style={{
+                    fontSize: wp(3.5),
+                    color: 'black',
+                    fontFamily: fonts.SFuiDisplayBold,
+                  }}>
+                  Observation and Feedback
+                </Text>
+                <Animated.View style={styles.tabsContent}>
+                  <PieChart
+                    padAngle={0}
+                    animate={true}
+                    innerRadius={'80%'}
+                    style={{height: wp(50), width: wp(50)}}
+                    data={pieData}>
+                    <View
+                      style={{justifyContent: 'center', alignItems: 'center'}}>
+                      <Text style={styles.chartContent}>Total</Text>
+                      <Text style={styles.chartContent}>Observations</Text>
+                      <Text style={styles.chartContent}>
+                        {this.state.totalObservations}
+                      </Text>
+                    </View>
+                  </PieChart>
+                </Animated.View>
+                {/* colors guide */}
+                <View style={styles.guideColors}>
+                  <View style={styles.guideitem}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(4), backgroundColor: '#8DCF7F'},
+                      ]}></View>
+                    <Text style={styles.guideText}>Report Resolved</Text>
                   </View>
-                </PieChart>
-              </Animated.View>
-              {/* colors guide */}
-              <View style={styles.guideColors}>
-                <View style={styles.guideitem}>
-                  <View
-                    style={[
-                      styles.swatch,
-                      {marginLeft: wp(4), backgroundColor: '#8DCF7F'},
-                    ]}></View>
-                  <Text style={styles.guideText}>Report Resolved</Text>
+                  <View style={[styles.guideitem]}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(3), backgroundColor: '#FED888'},
+                      ]}></View>
+                    <Text style={styles.guideText}>Reports Pending</Text>
+                  </View>
+                  <View style={styles.guideitem}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(3), backgroundColor: '#5BD8FC'},
+                      ]}></View>
+
+                    <Text style={styles.guideText}>Dismissed</Text>
+                  </View>
                 </View>
-                <View style={[styles.guideitem]}>
-                  <View
-                    style={[
-                      styles.swatch,
-                      {marginLeft: wp(3), backgroundColor: '#FED888'},
-                    ]}></View>
-                  <Text style={styles.guideText}>Reports Pending</Text>
+              </View>
+
+              {/* line height */}
+              <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} />
+              {/* incidents */}
+              <View style={{marginBottom: wp(3), padding: wp(3)}}>
+                <Text
+                  style={{
+                    fontSize: wp(3.5),
+                    color: 'black',
+                    fontFamily: fonts.SFuiDisplayBold,
+                  }}>
+                  Incidents
+                </Text>
+
+                <Animated.View style={styles.tabsContent}>
+                  {/* <PieChart
+                    padAngle={0}
+                    animate={true}
+                    innerRadius={'80%'}
+                    style={{height: wp(50), width: wp(50)}}
+                    data={pieData}>
+                    <View
+                      style={{justifyContent: 'center', alignItems: 'center'}}>
+                      <Text style={styles.chartContent}>Total</Text>
+                      <Text style={styles.chartContent}>Observations</Text>
+                      <Text style={styles.chartContent}>
+                        {this.state.totalObservations}
+                      </Text>
+                    </View>
+                  </PieChart> */}
+                  <ProgressCircle
+                    style={{height: wp(50), width: wp(50)}}
+                    progress={0.7}
+                    strokeWidth={wp(3)}
+                    progressColor={'rgb(134, 65, 244)'}
+                  />
+                </Animated.View>
+                {/* colors guide */}
+                <View style={styles.guideColors}>
+                  <View style={styles.guideitem}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(4), backgroundColor: '#8DCF7F'},
+                      ]}></View>
+                    <Text style={styles.guideText}>Report Resolved</Text>
+                  </View>
+                  <View style={[styles.guideitem]}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(3), backgroundColor: '#FED888'},
+                      ]}></View>
+                    <Text style={styles.guideText}>Reports Pending</Text>
+                  </View>
+                  <View style={styles.guideitem}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(3), backgroundColor: '#5BD8FC'},
+                      ]}></View>
+
+                    <Text style={styles.guideText}>Dismissed</Text>
+                  </View>
                 </View>
-                <View style={styles.guideitem}>
-                  <View
-                    style={[
-                      styles.swatch,
-                      {marginLeft: wp(3), backgroundColor: '#5BD8FC'},
-                    ]}></View>
-                  <Text style={styles.guideText}>Dismissed</Text>
+              </View>
+              {/* line height */}
+              <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} />
+              {/* inspection */}
+              <View style={{marginBottom: wp(3), padding: wp(3)}}>
+                <Text
+                  style={{
+                    fontSize: wp(3.5),
+                    color: 'black',
+                    fontFamily: fonts.SFuiDisplayBold,
+                  }}>
+                  Inspections
+                </Text>
+                <Animated.View style={styles.tabsContent}>
+                  <PieChart
+                    padAngle={0.1}
+                    animate={true}
+                    innerRadius={'10%'}
+                    style={{height: wp(50), width: wp(50)}}
+                    data={pieData}>
+                    <View
+                      style={{justifyContent: 'center', alignItems: 'center'}}>
+                      <Text style={styles.chartContent}>Total</Text>
+                      <Text style={styles.chartContent}>Observations</Text>
+                      <Text style={styles.chartContent}>
+                        {this.state.totalObservations}
+                      </Text>
+                    </View>
+                  </PieChart>
+                </Animated.View>
+                {/* colors guide */}
+                <View style={styles.guideColors}>
+                  <View style={styles.guideitem}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(4), backgroundColor: '#8DCF7F'},
+                      ]}></View>
+                    <Text style={styles.guideText}>Report Resolved</Text>
+                  </View>
+                  <View style={[styles.guideitem]}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(3), backgroundColor: '#FED888'},
+                      ]}></View>
+                    <Text style={styles.guideText}>Reports Pending</Text>
+                  </View>
+                  <View style={styles.guideitem}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(3), backgroundColor: '#5BD8FC'},
+                      ]}></View>
+
+                    <Text style={styles.guideText}>Dismissed</Text>
+                  </View>
+                </View>
+              </View>
+              {/* line height */}
+              <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} />
+              {/* risk assessments */}
+              <View style={{marginBottom: wp(3), padding: wp(3)}}>
+                <Text
+                  style={{
+                    fontSize: wp(3.5),
+                    color: 'black',
+                    fontFamily: fonts.SFuiDisplayBold,
+                  }}>
+                  Risk Assessments
+                </Text>
+                <Animated.View style={styles.tabsContent}>
+                  <PieChart
+                    padAngle={0.2}
+                    animate={true}
+                    innerRadius={'10%'}
+                    style={{height: wp(50), width: wp(50)}}
+                    data={pieData}>
+                    <View
+                      style={{justifyContent: 'center', alignItems: 'center'}}>
+                      <Text style={styles.chartContent}>Total</Text>
+                      <Text style={styles.chartContent}>Observations</Text>
+                      <Text style={styles.chartContent}>
+                        {this.state.totalObservations}
+                      </Text>
+                    </View>
+                  </PieChart>
+                </Animated.View>
+                {/* colors guide */}
+                <View style={styles.guideColors}>
+                  <View style={styles.guideitem}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(4), backgroundColor: '#8DCF7F'},
+                      ]}></View>
+                    <Text style={styles.guideText}>Report Resolved</Text>
+                  </View>
+                  <View style={[styles.guideitem]}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(3), backgroundColor: '#FED888'},
+                      ]}></View>
+                    <Text style={styles.guideText}>Reports Pending</Text>
+                  </View>
+                  <View style={styles.guideitem}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(3), backgroundColor: '#5BD8FC'},
+                      ]}></View>
+
+                    <Text style={styles.guideText}>Dismissed</Text>
+                  </View>
+                </View>
+              </View>
+              {/* line height */}
+              <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} />
+              {/* learning management */}
+              <View style={{marginBottom: wp(3), padding: wp(3)}}>
+                <Text
+                  style={{
+                    fontSize: wp(3.5),
+                    color: 'black',
+                    fontFamily: fonts.SFuiDisplayBold,
+                  }}>
+                  Learning Management
+                </Text>
+                <Animated.View style={styles.tabsContent}>
+                  <PieChart
+                    padAngle={0}
+                    animate={true}
+                    innerRadius={'70%'}
+                    style={{height: wp(50), width: wp(50)}}
+                    data={pieData}>
+                    <View
+                      style={{justifyContent: 'center', alignItems: 'center'}}>
+                      <Text style={styles.chartContent}>Total</Text>
+                      <Text style={styles.chartContent}>Observations</Text>
+                      <Text style={styles.chartContent}>
+                        {this.state.totalObservations}
+                      </Text>
+                    </View>
+                  </PieChart>
+                </Animated.View>
+                {/* colors guide */}
+                <View style={styles.guideColors}>
+                  <View style={styles.guideitem}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(4), backgroundColor: '#8DCF7F'},
+                      ]}></View>
+                    <Text style={styles.guideText}>Report Resolved</Text>
+                  </View>
+                  <View style={[styles.guideitem]}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(3), backgroundColor: '#FED888'},
+                      ]}></View>
+                    <Text style={styles.guideText}>Reports Pending</Text>
+                  </View>
+                  <View style={styles.guideitem}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(3), backgroundColor: '#5BD8FC'},
+                      ]}></View>
+
+                    <Text style={styles.guideText}>Dismissed</Text>
+                  </View>
+                </View>
+              </View>
+
+              {/* line height */}
+              <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} />
+              {/* Audits */}
+              <View style={{marginBottom: wp(3), padding: wp(3)}}>
+                <Text
+                  style={{
+                    fontSize: wp(3.5),
+                    color: 'black',
+                    fontFamily: fonts.SFuiDisplayBold,
+                  }}>
+                  Audits
+                </Text>
+                <Animated.View style={styles.tabsContent}>
+                  <ProgressCircle
+                    style={{height: wp(50), width: wp(50)}}
+                    progress={0.7}
+                    strokeWidth={wp(3)}
+                    progressColor={'rgb(134, 65, 244)'}
+                  />
+                </Animated.View>
+                {/* colors guide */}
+                <View style={styles.guideColors}>
+                  <View style={styles.guideitem}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(4), backgroundColor: '#8DCF7F'},
+                      ]}></View>
+                    <Text style={styles.guideText}>Report Resolved</Text>
+                  </View>
+                  <View style={[styles.guideitem]}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(3), backgroundColor: '#FED888'},
+                      ]}></View>
+                    <Text style={styles.guideText}>Reports Pending</Text>
+                  </View>
+                  <View style={styles.guideitem}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(3), backgroundColor: '#5BD8FC'},
+                      ]}></View>
+
+                    <Text style={styles.guideText}>Dismissed</Text>
+                  </View>
                 </View>
               </View>
             </View>
