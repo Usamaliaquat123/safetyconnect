@@ -74,6 +74,9 @@ class Home extends React.Component<HomeProps, any> {
       selectedProject: {},
       refreshing: false,
       repeatedSorModal: false,
+      // main data
+
+      totalObs: 0,
     };
   }
 
@@ -88,6 +91,20 @@ class Home extends React.Component<HomeProps, any> {
         console.log(currentProj);
         this.setState({projectId: currentProj});
         this.setState({currentorg});
+
+        createApi
+          .createApi()
+          .dashboardApi(currentProj, currentorg)
+          .then((dash: any) => {
+            console.log('dash');
+            //  console.log)
+            this.setState({
+              totalObs:
+                dash.data.noOfCompleted +
+                dash.data.noOfDrafts +
+                dash.data.noOfPublished,
+            });
+          });
       });
     });
     // // this.setState({name: 'sds'});
@@ -1080,7 +1097,7 @@ class Home extends React.Component<HomeProps, any> {
                       <Text style={styles.chartContent}>Total</Text>
                       <Text style={styles.chartContent}>Observations</Text>
                       <Text style={styles.chartContent}>
-                        {this.state.totalObservations}
+                        {this.state.totalObs}
                       </Text>
                     </View>
                   </PieChart>

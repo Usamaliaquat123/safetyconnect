@@ -74,7 +74,8 @@ const createApi = (
     aiRepBaseApi.get(`rep?q=${keyword}&id=${projectId}`);
   const linkRepeatedSugg = (data: any) =>
     baseapi.post(`project/repeated`, data);
-  // const dashboardApi = () => baseapi.get('/dashboard')
+  const dashboardApi = (project: string, orgnaization: string) =>
+    baseapi.get(`dashboard?project=${project}&organization=${orgnaization}`);
   // sor api
 
   /*
@@ -213,6 +214,7 @@ const createApi = (
     Postproject,
     getPublicPhotos,
     createSorInit,
+    dashboardApi,
     updateOrganization,
     getOrganization,
     organization,
