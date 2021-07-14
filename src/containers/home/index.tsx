@@ -77,6 +77,9 @@ class Home extends React.Component<HomeProps, any> {
       // main data
 
       totalObs: 0,
+      noOfCompleted: 0,
+      noOfDrafts: 0,
+      noOfPublished: 0,
     };
   }
 
@@ -104,77 +107,83 @@ class Home extends React.Component<HomeProps, any> {
                 dash.data.noOfDrafts +
                 dash.data.noOfPublished,
             });
+
+            this.setState({
+              noOfCompleted: dash.data.noOfCompleted,
+              noOfDrafts: dash.data.noOfDrafts,
+              noOfPublished: dash.data.noOfPublished,
+            });
           });
       });
     });
-    // // this.setState({name: 'sds'});
-    // // if (this.state.currentorg == null && this.state.currentProj == null) {
-    // this.setState({newsorModal: true});
-    // // } else {
-    // //   this.setState({newsorModal: false});
-    // // }
-    // AsyncStorage.getItem('email').then((email: any) => {
-    //   createApi
-    //     .createApi()
-    //     .getAllNotifications(email, '[0,1]')
-    //     .then((notify: any) => {
-    //       console.log(notify.data.data.notifications);
-    //       this.setState({
-    //         notificationsData: notify.data.data.notifications,
-    //         count: notify.data.data.notifications.filter(
-    //           (n: any) => n.status == 0,
-    //         ).length,
-    //       });
-    //     });
-    //   createApi
-    //     .createApi()
-    //     .getUser(email)
-    //     .then((res: any) => {
-    //       this.setState({name: res.data.data.name});
-    //       this.setState({image: res.data.data.img_url});
-    //       this.setState({user: res.data.data});
-    //       this.setState({allOrganizations: res.data.data.organizations});
-    //       // var data = {
-    //       //   bucket: 'hns-codist',
-    //       //   report: [`profile/${res.data.data.img_url}`],
-    //       // };
-    //       // createApi
-    //       //   .createApi()
-    //       //   .getFileApi(data)
-    //       //   .then((file: any) => {
-    //       //     this.setState({image: file.data[0]});
-    //       //   });
-    //       if (
-    //         res.data.data.organizations.filter(
-    //           (d: any) => d._id == this.state.currentorg,
-    //         )[0].projects.length != 0
-    //       ) {
-    //         this.setState({
-    //           allProjects: res.data.data.organizations.filter(
-    //             (d: any) => d._id == this.state.currentorg,
-    //           )[0].projects,
-    //         });
-    //       } else {
-    //         this.setState({allProjects: []});
-    //       }
-    //       this.setState({
-    //         selectedOrganization: res.data.data.organizations.filter(
-    //           (d: any) => d._id == this.state.currentorg,
-    //         )[0],
-    //       });
-    //     });
-    // });
-    // // var data = {
-    // //   bucket: 'hns-codist',
-    // //   report: 'profile/1621937387877.jpeg',
-    // // };
-    // // createApi
-    // //   .createApi()
-    // //   .getFileApi(data)
-    // //   .then((file: any) => {
-    // //     // this.setState({image: file.data});
-    // //   });
-    // this.setState({loading: false});
+    // this.setState({name: 'sds'});
+    // if (this.state.currentorg == null && this.state.currentProj == null) {
+    this.setState({newsorModal: true});
+    // } else {
+    //   this.setState({newsorModal: false});
+    // }
+    AsyncStorage.getItem('email').then((email: any) => {
+      createApi
+        .createApi()
+        .getAllNotifications(email, '[0,1]')
+        .then((notify: any) => {
+          console.log(notify.data.data.notifications);
+          this.setState({
+            notificationsData: notify.data.data.notifications,
+            count: notify.data.data.notifications.filter(
+              (n: any) => n.status == 0,
+            ).length,
+          });
+        });
+      createApi
+        .createApi()
+        .getUser(email)
+        .then((res: any) => {
+          this.setState({name: res.data.data.name});
+          this.setState({image: res.data.data.img_url});
+          this.setState({user: res.data.data});
+          this.setState({allOrganizations: res.data.data.organizations});
+          // var data = {
+          //   bucket: 'hns-codist',
+          //   report: [`profile/${res.data.data.img_url}`],
+          // };
+          // createApi
+          //   .createApi()
+          //   .getFileApi(data)
+          //   .then((file: any) => {
+          //     this.setState({image: file.data[0]});
+          //   });
+          if (
+            res.data.data.organizations.filter(
+              (d: any) => d._id == this.state.currentorg,
+            )[0].projects.length != 0
+          ) {
+            this.setState({
+              allProjects: res.data.data.organizations.filter(
+                (d: any) => d._id == this.state.currentorg,
+              )[0].projects,
+            });
+          } else {
+            this.setState({allProjects: []});
+          }
+          this.setState({
+            selectedOrganization: res.data.data.organizations.filter(
+              (d: any) => d._id == this.state.currentorg,
+            )[0],
+          });
+        });
+    });
+    // var data = {
+    //   bucket: 'hns-codist',
+    //   report: 'profile/1621937387877.jpeg',
+    // };
+    // createApi
+    //   .createApi()
+    //   .getFileApi(data)
+    //   .then((file: any) => {
+    //     // this.setState({image: file.data});
+    //   });
+    this.setState({loading: false});
   };
 
   _onRefresh = () => {
@@ -259,9 +268,9 @@ class Home extends React.Component<HomeProps, any> {
     }
 
     const data = [
-      {val: 40, color: '#8DCF7F'},
-      {val: 20, color: '#FED888'},
-      {val: 20, color: '#5BD8FC'},
+      {val: this.state.noOfCompleted, color: '#3867D6'},
+      {val: this.state.noOfDrafts, color: '#3498DB'},
+      {val: this.state.noOfPublished, color: '#55D8FE'},
     ];
 
     const pieData = data
@@ -1108,26 +1117,26 @@ class Home extends React.Component<HomeProps, any> {
                     <View
                       style={[
                         styles.swatch,
-                        {marginLeft: wp(4), backgroundColor: '#8DCF7F'},
+                        {marginLeft: wp(4), backgroundColor: '#3867D6'},
                       ]}></View>
-                    <Text style={styles.guideText}>Report Resolved</Text>
+                    <Text style={styles.guideText}>Completed</Text>
                   </View>
                   <View style={[styles.guideitem]}>
                     <View
                       style={[
                         styles.swatch,
-                        {marginLeft: wp(3), backgroundColor: '#FED888'},
+                        {marginLeft: wp(3), backgroundColor: '#3498DB'},
                       ]}></View>
-                    <Text style={styles.guideText}>Reports Pending</Text>
+                    <Text style={styles.guideText}>Drafts</Text>
                   </View>
                   <View style={styles.guideitem}>
                     <View
                       style={[
                         styles.swatch,
-                        {marginLeft: wp(3), backgroundColor: '#5BD8FC'},
+                        {marginLeft: wp(3), backgroundColor: '#55D8FE'},
                       ]}></View>
 
-                    <Text style={styles.guideText}>Dismissed</Text>
+                    <Text style={styles.guideText}>Published</Text>
                   </View>
                 </View>
               </View>
@@ -1162,6 +1171,7 @@ class Home extends React.Component<HomeProps, any> {
                     </View>
                   </PieChart> */}
                   <ProgressCircle
+                    backgroundColor={'#C080FF'}
                     style={{height: wp(50), width: wp(50)}}
                     progress={0.7}
                     strokeWidth={wp(3)}

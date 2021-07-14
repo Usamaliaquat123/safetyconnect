@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
   guideColors: {
     flexDirection: 'row',
     marginTop: wp(5),
+    alignSelf: 'center',
     // justifyContent: 'center',
     alignItems: 'center',
   },
