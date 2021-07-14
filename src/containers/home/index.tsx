@@ -12,7 +12,7 @@ import {colors, GlStyles, images, fonts, animation} from '@theme';
 import {connect} from 'react-redux';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
-import {RouteProp} from '@react-navigation/native';
+import {PrivateValueStore, RouteProp} from '@react-navigation/native';
 import styles from './styles';
 import {
   classifySor,
@@ -93,7 +93,7 @@ class Home extends React.Component<HomeProps, any> {
         console.log(currentorg);
         console.log(currentProj);
         this.setState({projectId: currentProj});
-        this.setState({currentorg});
+        this.setState({currentorg: currentorg});
 
         createApi
           .createApi()
@@ -247,6 +247,27 @@ class Home extends React.Component<HomeProps, any> {
           query: {status: [1, 2, 3, 4, 5]},
         })
         .then((res: any) => {
+          createApi
+            .createApi()
+            .dashboardApi(this.state.projectId, this.state.currentorg)
+            .then((dash: any) => {
+              console.log('dash');
+              //  console.log)
+              this.setState({
+                totalObs:
+                  dash.data.noOfCompleted +
+                  dash.data.noOfDrafts +
+                  dash.data.noOfPublished,
+              });
+
+              this.setState({
+                noOfCompleted: dash.data.noOfCompleted,
+                noOfDrafts: dash.data.noOfDrafts,
+                noOfPublished: dash.data.noOfPublished,
+              });
+              this.setState({});
+            });
+
           if (res.data.data.report.length > 3) {
             for (let i = 0; i < res.data.data.report.length; i++) {
               if (res.data.data.report[i].details != undefined) {
@@ -284,6 +305,18 @@ class Home extends React.Component<HomeProps, any> {
         key: `pie-${index}`,
       }));
 
+    // const inspectionData = data.filter((value) => )
+
+    const inspectionData = data
+      .filter((value) => value.val > 0)
+      .map((value, index) => ({
+        value: value.val,
+        svg: {
+          fill: value.color,
+          onPress: () => {},
+        },
+        key: `pie-${index}`,
+      }));
     return (
       <View style={{flex: 1, backgroundColor: colors.primary}}>
         <ScrollView
@@ -1225,7 +1258,7 @@ class Home extends React.Component<HomeProps, any> {
                     animate={true}
                     innerRadius={'10%'}
                     style={{height: wp(50), width: wp(50)}}
-                    data={pieData}>
+                    data={inspectionData}>
                     <View
                       style={{justifyContent: 'center', alignItems: 'center'}}>
                       <Text style={styles.chartContent}>Total</Text>
@@ -1242,26 +1275,35 @@ class Home extends React.Component<HomeProps, any> {
                     <View
                       style={[
                         styles.swatch,
-                        {marginLeft: wp(4), backgroundColor: '#8DCF7F'},
+                        {marginLeft: wp(4), backgroundColor: '#FA8231'},
                       ]}></View>
-                    <Text style={styles.guideText}>Report Resolved</Text>
+                    <Text style={styles.guideText}>Completed</Text>
                   </View>
                   <View style={[styles.guideitem]}>
                     <View
                       style={[
                         styles.swatch,
-                        {marginLeft: wp(3), backgroundColor: '#FED888'},
+                        {marginLeft: wp(3), backgroundColor: '#FD9644'},
                       ]}></View>
-                    <Text style={styles.guideText}>Reports Pending</Text>
+                    <Text style={styles.guideText}>In Progress</Text>
                   </View>
                   <View style={styles.guideitem}>
                     <View
                       style={[
                         styles.swatch,
-                        {marginLeft: wp(3), backgroundColor: '#5BD8FC'},
+                        {marginLeft: wp(3), backgroundColor: '#F14031'},
                       ]}></View>
 
-                    <Text style={styles.guideText}>Dismissed</Text>
+                    <Text style={styles.guideText}>Scheduled</Text>
+                  </View>
+                  <View style={styles.guideitem}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(3), backgroundColor: '#FED330'},
+                      ]}></View>
+
+                    <Text style={styles.guideText}>Draft</Text>
                   </View>
                 </View>
               </View>
