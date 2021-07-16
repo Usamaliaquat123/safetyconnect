@@ -151,7 +151,7 @@ const createApi = (
   const getAllNotifications = (email: string, status: string) =>
     baseapi.get(`notification/?email=${email}&status=${status}`);
   const readSpecificNotification = (email: string, notificationId: string) =>
-    baseapi.get(`notification/?email=${email}&notification=${notificationId}`);
+    baseapi.put(`notification/?email=${email}&notification=${notificationId}`);
 
   /*
    * @Invite Users
