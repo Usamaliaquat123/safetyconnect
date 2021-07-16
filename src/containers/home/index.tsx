@@ -85,94 +85,92 @@ class Home extends React.Component<HomeProps, any> {
 
   componentDidMount = () => {
     // this.setState({loading: true});
-    getCurrentProject().then((currentProj: any) => {
-      // console.log(currentProj)
-      getCurrentOrganization().then((currentorg: any) => {
-        console.log('currentorg');
-        console.log('currentProj');
-        console.log(currentorg);
-        console.log(currentProj);
-        this.setState({projectId: currentProj});
-        this.setState({currentorg: currentorg});
-
-        createApi
-          .createApi()
-          .dashboardApi(currentProj, currentorg)
-          .then((dash: any) => {
-            console.log('dash');
-            //  console.log)
-            this.setState({
-              totalObs:
-                dash.data.noOfCompleted +
-                dash.data.noOfDrafts +
-                dash.data.noOfPublished,
-            });
-
-            this.setState({
-              noOfCompleted: dash.data.noOfCompleted,
-              noOfDrafts: dash.data.noOfDrafts,
-              noOfPublished: dash.data.noOfPublished,
-            });
-          });
-      });
-    });
+    // getCurrentProject().then((currentProj: any) => {
+    //   // console.log(currentProj)
+    //   getCurrentOrganization().then((currentorg: any) => {
+    //     console.log('currentorg');
+    //     console.log('currentProj');
+    //     console.log(currentorg);
+    //     console.log(currentProj);
+    //     this.setState({projectId: currentProj});
+    //     this.setState({currentorg: currentorg});
+    //     createApi
+    //       .createApi()
+    //       .dashboardApi(currentProj, currentorg)
+    //       .then((dash: any) => {
+    //         console.log('dash');
+    //         //  console.log)
+    //         this.setState({
+    //           totalObs:
+    //             dash.data.noOfCompleted +
+    //             dash.data.noOfDrafts +
+    //             dash.data.noOfPublished,
+    //         });
+    //         this.setState({
+    //           noOfCompleted: dash.data.noOfCompleted,
+    //           noOfDrafts: dash.data.noOfDrafts,
+    //           noOfPublished: dash.data.noOfPublished,
+    //         });
+    //       });
+    //   });
+    // });
     // this.setState({name: 'sds'});
     // if (this.state.currentorg == null && this.state.currentProj == null) {
-    this.setState({newsorModal: true});
+    // this.setState({newsorModal: true});
     // } else {
     //   this.setState({newsorModal: false});
     // }
-    AsyncStorage.getItem('email').then((email: any) => {
-      createApi
-        .createApi()
-        .getAllNotifications(email, '[0,1]')
-        .then((notify: any) => {
-          console.log(notify.data.data.notifications);
-          this.setState({
-            notificationsData: notify.data.data.notifications,
-            count: notify.data.data.notifications.filter(
-              (n: any) => n.status == 0,
-            ).length,
-          });
-        });
-      createApi
-        .createApi()
-        .getUser(email)
-        .then((res: any) => {
-          this.setState({name: res.data.data.name});
-          this.setState({image: res.data.data.img_url});
-          this.setState({user: res.data.data});
-          this.setState({allOrganizations: res.data.data.organizations});
-          // var data = {
-          //   bucket: 'hns-codist',
-          //   report: [`profile/${res.data.data.img_url}`],
-          // };
-          // createApi
-          //   .createApi()
-          //   .getFileApi(data)
-          //   .then((file: any) => {
-          //     this.setState({image: file.data[0]});
-          //   });
-          if (
-            res.data.data.organizations.filter(
-              (d: any) => d._id == this.state.currentorg,
-            )[0].projects.length != 0
-          ) {
-            this.setState({
-              allProjects: res.data.data.organizations.filter(
-                (d: any) => d._id == this.state.currentorg,
-              )[0].projects,
-            });
-          } else {
-            this.setState({allProjects: []});
-          }
-          this.setState({
-            selectedOrganization: res.data.data.organizations.filter(
-              (d: any) => d._id == this.state.currentorg,
-            )[0],
-          });
-        });
-    });
+    // AsyncStorage.getItem('email').then((email: any) => {
+    //   createApi
+    //     .createApi()
+    //     .getAllNotifications(email, '[0,1]')
+    //     .then((notify: any) => {
+    //       console.log(notify.data.data.notifications);
+    //       this.setState({
+    //         notificationsData: notify.data.data.notifications,
+    //         count: notify.data.data.notifications.filter(
+    //           (n: any) => n.status == 0,
+    //         ).length,
+    //       });
+    //     });
+    //   createApi
+    //     .createApi()
+    //     .getUser(email)
+    //     .then((res: any) => {
+    //       this.setState({name: res.data.data.name});
+    //       this.setState({image: res.data.data.img_url});
+    //       this.setState({user: res.data.data});
+    //       this.setState({allOrganizations: res.data.data.organizations});
+    //       // var data = {
+    //       //   bucket: 'hns-codist',
+    //       //   report: [`profile/${res.data.data.img_url}`],
+    //       // };
+    //       // createApi
+    //       //   .createApi()
+    //       //   .getFileApi(data)
+    //       //   .then((file: any) => {
+    //       //     this.setState({image: file.data[0]});
+    //       //   });
+    //       if (
+    //         res.data.data.organizations.filter(
+    //           (d: any) => d._id == this.state.currentorg,
+    //         )[0].projects.length != 0
+    //       ) {
+    //         this.setState({
+    //           allProjects: res.data.data.organizations.filter(
+    //             (d: any) => d._id == this.state.currentorg,
+    //           )[0].projects,
+    //         });
+    //       } else {
+    //         this.setState({allProjects: []});
+    //       }
+    //       this.setState({
+    //         selectedOrganization: res.data.data.organizations.filter(
+    //           (d: any) => d._id == this.state.currentorg,
+    //         )[0],
+    //       });
+    //     });
+    // });
     // var data = {
     //   bucket: 'hns-codist',
     //   report: 'profile/1621937387877.jpeg',
@@ -183,7 +181,7 @@ class Home extends React.Component<HomeProps, any> {
     //   .then((file: any) => {
     //     // this.setState({image: file.data});
     //   });
-    this.setState({loading: false});
+    // this.setState({loading: false});
   };
 
   _onRefresh = () => {
