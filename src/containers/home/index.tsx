@@ -85,92 +85,94 @@ class Home extends React.Component<HomeProps, any> {
 
   componentDidMount = () => {
     // this.setState({loading: true});
-    // getCurrentProject().then((currentProj: any) => {
-    //   // console.log(currentProj)
-    //   getCurrentOrganization().then((currentorg: any) => {
-    //     console.log('currentorg');
-    //     console.log('currentProj');
-    //     console.log(currentorg);
-    //     console.log(currentProj);
-    //     this.setState({projectId: currentProj});
-    //     this.setState({currentorg: currentorg});
-    //     createApi
-    //       .createApi()
-    //       .dashboardApi(currentProj, currentorg)
-    //       .then((dash: any) => {
-    //         console.log('dash');
-    //         //  console.log)
-    //         this.setState({
-    //           totalObs:
-    //             dash.data.noOfCompleted +
-    //             dash.data.noOfDrafts +
-    //             dash.data.noOfPublished,
-    //         });
-    //         this.setState({
-    //           noOfCompleted: dash.data.noOfCompleted,
-    //           noOfDrafts: dash.data.noOfDrafts,
-    //           noOfPublished: dash.data.noOfPublished,
-    //         });
-    //       });
-    //   });
-    // });
+    getCurrentProject().then((currentProj: any) => {
+      // console.log(currentProj)
+      getCurrentOrganization().then((currentorg: any) => {
+        console.log('currentorg');
+        console.log('currentProj');
+        console.log(currentorg);
+        console.log(currentProj);
+        this.setState({projectId: currentProj});
+        this.setState({currentorg: currentorg});
+
+        createApi
+          .createApi()
+          .dashboardApi(currentProj, currentorg)
+          .then((dash: any) => {
+            console.log('dash');
+            //  console.log)
+            this.setState({
+              totalObs:
+                dash.data.noOfCompleted +
+                dash.data.noOfDrafts +
+                dash.data.noOfPublished,
+            });
+
+            this.setState({
+              noOfCompleted: dash.data.noOfCompleted,
+              noOfDrafts: dash.data.noOfDrafts,
+              noOfPublished: dash.data.noOfPublished,
+            });
+          });
+      });
+    });
     // this.setState({name: 'sds'});
     // if (this.state.currentorg == null && this.state.currentProj == null) {
-    // this.setState({newsorModal: true});
+    this.setState({newsorModal: true});
     // } else {
     //   this.setState({newsorModal: false});
     // }
-    // AsyncStorage.getItem('email').then((email: any) => {
-    //   createApi
-    //     .createApi()
-    //     .getAllNotifications(email, '[0,1]')
-    //     .then((notify: any) => {
-    //       console.log(notify.data.data.notifications);
-    //       this.setState({
-    //         notificationsData: notify.data.data.notifications,
-    //         count: notify.data.data.notifications.filter(
-    //           (n: any) => n.status == 0,
-    //         ).length,
-    //       });
-    //     });
-    //   createApi
-    //     .createApi()
-    //     .getUser(email)
-    //     .then((res: any) => {
-    //       this.setState({name: res.data.data.name});
-    //       this.setState({image: res.data.data.img_url});
-    //       this.setState({user: res.data.data});
-    //       this.setState({allOrganizations: res.data.data.organizations});
-    //       // var data = {
-    //       //   bucket: 'hns-codist',
-    //       //   report: [`profile/${res.data.data.img_url}`],
-    //       // };
-    //       // createApi
-    //       //   .createApi()
-    //       //   .getFileApi(data)
-    //       //   .then((file: any) => {
-    //       //     this.setState({image: file.data[0]});
-    //       //   });
-    //       if (
-    //         res.data.data.organizations.filter(
-    //           (d: any) => d._id == this.state.currentorg,
-    //         )[0].projects.length != 0
-    //       ) {
-    //         this.setState({
-    //           allProjects: res.data.data.organizations.filter(
-    //             (d: any) => d._id == this.state.currentorg,
-    //           )[0].projects,
-    //         });
-    //       } else {
-    //         this.setState({allProjects: []});
-    //       }
-    //       this.setState({
-    //         selectedOrganization: res.data.data.organizations.filter(
-    //           (d: any) => d._id == this.state.currentorg,
-    //         )[0],
-    //       });
-    //     });
-    // });
+    AsyncStorage.getItem('email').then((email: any) => {
+      createApi
+        .createApi()
+        .getAllNotifications(email, '[0,1]')
+        .then((notify: any) => {
+          console.log(notify.data.data.notifications);
+          this.setState({
+            notificationsData: notify.data.data.notifications,
+            count: notify.data.data.notifications.filter(
+              (n: any) => n.status == 0,
+            ).length,
+          });
+        });
+      createApi
+        .createApi()
+        .getUser(email)
+        .then((res: any) => {
+          this.setState({name: res.data.data.name});
+          this.setState({image: res.data.data.img_url});
+          this.setState({user: res.data.data});
+          this.setState({allOrganizations: res.data.data.organizations});
+          // var data = {
+          //   bucket: 'hns-codist',
+          //   report: [`profile/${res.data.data.img_url}`],
+          // };
+          // createApi
+          //   .createApi()
+          //   .getFileApi(data)
+          //   .then((file: any) => {
+          //     this.setState({image: file.data[0]});
+          //   });
+          if (
+            res.data.data.organizations.filter(
+              (d: any) => d._id == this.state.currentorg,
+            )[0].projects.length != 0
+          ) {
+            this.setState({
+              allProjects: res.data.data.organizations.filter(
+                (d: any) => d._id == this.state.currentorg,
+              )[0].projects,
+            });
+          } else {
+            this.setState({allProjects: []});
+          }
+          this.setState({
+            selectedOrganization: res.data.data.organizations.filter(
+              (d: any) => d._id == this.state.currentorg,
+            )[0],
+          });
+        });
+    });
     // var data = {
     //   bucket: 'hns-codist',
     //   report: 'profile/1621937387877.jpeg',
@@ -181,7 +183,7 @@ class Home extends React.Component<HomeProps, any> {
     //   .then((file: any) => {
     //     // this.setState({image: file.data});
     //   });
-    // this.setState({loading: false});
+    this.setState({loading: false});
   };
 
   _onRefresh = () => {
@@ -305,7 +307,14 @@ class Home extends React.Component<HomeProps, any> {
 
     // const inspectionData = data.filter((value) => )
 
-    const inspectionData = data
+    // Inspection data
+    const inspectionD = [
+      {val: 28, color: '#F14031'},
+      {val: 25, color: '#FED330'},
+      {val: 20, color: '#FA8231'},
+      {val: 80, color: '#FD9644'},
+    ];
+    const inspectionData = inspectionD
       .filter((value) => value.val > 0)
       .map((value, index) => ({
         value: value.val,
@@ -315,6 +324,55 @@ class Home extends React.Component<HomeProps, any> {
         },
         key: `pie-${index}`,
       }));
+    // Risk Assesments data
+    const riskAssesmentsD = [
+      {val: 28, color: '#778CA3'},
+      {val: 25, color: '#A5B1C2'},
+      {val: 20, color: '#C3C9DB'},
+      {val: 80, color: '#4B6584'},
+    ];
+    const riskAssesments = riskAssesmentsD
+      .filter((value) => value.val > 0)
+      .map((value, index) => ({
+        value: value.val,
+        svg: {
+          fill: value.color,
+          onPress: () => {},
+        },
+        key: `pie-${index}`,
+      }));
+    // Learning management data
+    const learningManagementD = [
+      {val: 28, color: '#0B8F88'},
+      {val: 25, color: '#04BDA9'},
+      {val: 20, color: '#35E2D0'},
+    ];
+    const learnigManagement = learningManagementD
+      .filter((value) => value.val > 0)
+      .map((value, index) => ({
+        value: value.val,
+        svg: {
+          fill: value.color,
+          onPress: () => {},
+        },
+        key: `pie-${index}`,
+      }));
+    // Audits data
+    const auditData = [
+      {val: 28, color: '#F14031'},
+      {val: 25, color: '#FED330'},
+    ];
+    const AuditManagement = auditData
+      .filter((value) => value.val > 0)
+      .map((value, index) => ({
+        value: value.val,
+        svg: {
+          fill: value.color,
+          onPress: () => {},
+        },
+        key: `pie-${index}`,
+      }));
+
     return (
       <View style={{flex: 1, backgroundColor: colors.primary}}>
         <ScrollView
@@ -1257,14 +1315,7 @@ class Home extends React.Component<HomeProps, any> {
                     innerRadius={'10%'}
                     style={{height: wp(50), width: wp(50)}}
                     data={inspectionData}>
-                    <View
-                      style={{justifyContent: 'center', alignItems: 'center'}}>
-                      <Text style={styles.chartContent}>Total</Text>
-                      <Text style={styles.chartContent}>Observations</Text>
-                      <Text style={styles.chartContent}>
-                        {this.state.totalObservations}
-                      </Text>
-                    </View>
+                    {' '}
                   </PieChart>
                 </Animated.View>
                 {/* colors guide */}
@@ -1323,16 +1374,7 @@ class Home extends React.Component<HomeProps, any> {
                     animate={true}
                     innerRadius={'10%'}
                     style={{height: wp(50), width: wp(50)}}
-                    data={pieData}>
-                    <View
-                      style={{justifyContent: 'center', alignItems: 'center'}}>
-                      <Text style={styles.chartContent}>Total</Text>
-                      <Text style={styles.chartContent}>Observations</Text>
-                      <Text style={styles.chartContent}>
-                        {this.state.totalObservations}
-                      </Text>
-                    </View>
-                  </PieChart>
+                    data={riskAssesments}></PieChart>
                 </Animated.View>
                 {/* colors guide */}
                 <View style={styles.guideColors}>
@@ -1340,26 +1382,35 @@ class Home extends React.Component<HomeProps, any> {
                     <View
                       style={[
                         styles.swatch,
-                        {marginLeft: wp(4), backgroundColor: '#8DCF7F'},
+                        {marginLeft: wp(4), backgroundColor: '#4B6584'},
                       ]}></View>
-                    <Text style={styles.guideText}>Report Resolved</Text>
+                    <Text style={styles.guideText}>Completed</Text>
                   </View>
                   <View style={[styles.guideitem]}>
                     <View
                       style={[
                         styles.swatch,
-                        {marginLeft: wp(3), backgroundColor: '#FED888'},
+                        {marginLeft: wp(3), backgroundColor: '#778CA3'},
                       ]}></View>
-                    <Text style={styles.guideText}>Reports Pending</Text>
+                    <Text style={styles.guideText}>In Progress</Text>
                   </View>
                   <View style={styles.guideitem}>
                     <View
                       style={[
                         styles.swatch,
-                        {marginLeft: wp(3), backgroundColor: '#5BD8FC'},
+                        {marginLeft: wp(3), backgroundColor: '#A5B1C2'},
                       ]}></View>
 
-                    <Text style={styles.guideText}>Dismissed</Text>
+                    <Text style={styles.guideText}>Scheduled</Text>
+                  </View>
+                  <View style={styles.guideitem}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(3), backgroundColor: '#C3C9DB'},
+                      ]}></View>
+
+                    <Text style={styles.guideText}>Draft</Text>
                   </View>
                 </View>
               </View>
@@ -1381,11 +1432,11 @@ class Home extends React.Component<HomeProps, any> {
                     animate={true}
                     innerRadius={'70%'}
                     style={{height: wp(50), width: wp(50)}}
-                    data={pieData}>
+                    data={learnigManagement}>
                     <View
                       style={{justifyContent: 'center', alignItems: 'center'}}>
                       <Text style={styles.chartContent}>Total</Text>
-                      <Text style={styles.chartContent}>Observations</Text>
+                      <Text style={styles.chartContent}>Trainings</Text>
                       <Text style={styles.chartContent}>
                         {this.state.totalObservations}
                       </Text>
@@ -1398,26 +1449,26 @@ class Home extends React.Component<HomeProps, any> {
                     <View
                       style={[
                         styles.swatch,
-                        {marginLeft: wp(4), backgroundColor: '#8DCF7F'},
+                        {marginLeft: wp(4), backgroundColor: '#0B8F88'},
                       ]}></View>
-                    <Text style={styles.guideText}>Report Resolved</Text>
+                    <Text style={styles.guideText}>Closed</Text>
                   </View>
                   <View style={[styles.guideitem]}>
                     <View
                       style={[
                         styles.swatch,
-                        {marginLeft: wp(3), backgroundColor: '#FED888'},
+                        {marginLeft: wp(3), backgroundColor: '#04BDA9'},
                       ]}></View>
-                    <Text style={styles.guideText}>Reports Pending</Text>
+                    <Text style={styles.guideText}>In Progress</Text>
                   </View>
                   <View style={styles.guideitem}>
                     <View
                       style={[
                         styles.swatch,
-                        {marginLeft: wp(3), backgroundColor: '#5BD8FC'},
+                        {marginLeft: wp(3), backgroundColor: '#35E2D0'},
                       ]}></View>
 
-                    <Text style={styles.guideText}>Dismissed</Text>
+                    <Text style={styles.guideText}>Inverted</Text>
                   </View>
                 </View>
               </View>
@@ -1438,6 +1489,7 @@ class Home extends React.Component<HomeProps, any> {
                   <ProgressCircle
                     style={{height: wp(50), width: wp(50)}}
                     progress={0.7}
+                    backgroundColor={'#A995FF'}
                     strokeWidth={wp(3)}
                     progressColor={'rgb(134, 65, 244)'}
                   />
@@ -1448,26 +1500,17 @@ class Home extends React.Component<HomeProps, any> {
                     <View
                       style={[
                         styles.swatch,
-                        {marginLeft: wp(4), backgroundColor: '#8DCF7F'},
+                        {marginLeft: wp(4), backgroundColor: '#A995FF'},
                       ]}></View>
-                    <Text style={styles.guideText}>Report Resolved</Text>
+                    <Text style={styles.guideText}>In Progress</Text>
                   </View>
                   <View style={[styles.guideitem]}>
                     <View
                       style={[
                         styles.swatch,
-                        {marginLeft: wp(3), backgroundColor: '#FED888'},
+                        {marginLeft: wp(3), backgroundColor: '#7158E2'},
                       ]}></View>
-                    <Text style={styles.guideText}>Reports Pending</Text>
-                  </View>
-                  <View style={styles.guideitem}>
-                    <View
-                      style={[
-                        styles.swatch,
-                        {marginLeft: wp(3), backgroundColor: '#5BD8FC'},
-                      ]}></View>
-
-                    <Text style={styles.guideText}>Dismissed</Text>
+                    <Text style={styles.guideText}>Closed</Text>
                   </View>
                 </View>
               </View>
