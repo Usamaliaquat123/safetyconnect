@@ -55,6 +55,10 @@ class Home extends React.Component<HomeProps, any> {
     this.state = {
       selectedStats: 1,
       recentActivity: [],
+
+      taskAssignedToYou: [],
+      taskAssignedByYou: [],
+      taskYouAreInvolvedIn: [],
       user: {},
       name: '',
       image: '',
@@ -76,13 +80,17 @@ class Home extends React.Component<HomeProps, any> {
       repeatedSorModal: false,
       // main data
 
+      latestIncidents: [],
+      openAudits: [],
+      upCommingTrainings: [],
+
       totalObs: 0,
       noOfCompleted: 0,
       noOfDrafts: 0,
       noOfPublished: 0,
     };
   }
-
+  componentWillUnmount = () => {};
   componentDidMount = () => {
     // this.setState({loading: true});
     getCurrentProject().then((currentProj: any) => {
@@ -91,15 +99,17 @@ class Home extends React.Component<HomeProps, any> {
         createApi
           .createApi()
           .filterSors({
-            project: this.state.projectId,
+            project: currentProj,
             limit: 10,
             page: 0,
             query: {status: [1, 2, 3, 4, 5]},
           })
           .then((res: any) => {
+            console.log(res);
+            console.log('res aaya');
             createApi
               .createApi()
-              .dashboardApi(this.state.projectId, this.state.currentorg)
+              .dashboardApi(currentProj, currentorg)
               .then((dash: any) => {
                 // console.log('dash');
                 //  console.log)
@@ -121,27 +131,47 @@ class Home extends React.Component<HomeProps, any> {
             if (res.data.data.report.length > 3) {
               for (let i = 0; i < res.data.data.report.length; i++) {
                 if (res.data.data.report[i].details != undefined) {
-                  this.setState({
-                    recentActivity: res.data.data.report.slice(0, 3),
+                  AsyncStorage.getItem('email').then((email) => {
+                    this.setState({
+                      recentActivity: res.data.data.report.slice(0, 3),
+                      taskAssignedToYou: res.data.data.report.filter((d) =>
+                        d.submit_to.filter((d) => d == email),
+                      ),
+                      taskAssignedByYou: res.data.data.report.filter(
+                        (d) => d.created_by == email,
+                      ),
+                      taskYouAreInvolvedIn: res.data.data.report.filter((d) =>
+                        d.involved_persons.filter((d) => d == email),
+                      ),
+                    });
                   });
-                  this.setState({});
 
-                  // this.recentActivity.push(res.data.data.report[])
+                  this.setState({});
                 }
               }
             } else {
               for (let i = 0; i < res.data.data.report.length; i++) {
                 if (res.data.data.report[i].details != undefined) {
-                  this.setState({recentActivity: res.data.data.report});
+                  AsyncStorage.getItem('email').then((email) => {
+                    this.setState({
+                      recentActivity: res.data.data.report.slice(0, 3),
+                      taskAssignedToYou: res.data.data.report.filter((d) =>
+                        d.submit_to.filter((d) => d == email),
+                      ),
+                      taskAssignedByYou: res.data.data.report.filter(
+                        (d) => d.created_by == email,
+                      ),
+                      taskYouAreInvolvedIn: res.data.data.report.filter((d) =>
+                        d.involved_persons.filter((d) => d == email),
+                      ),
+                    });
+                  });
+
                   this.setState({});
                 }
               }
             }
           });
-        console.log('currentorg');
-        console.log('currentProj');
-        console.log(currentorg);
-        console.log(currentProj);
         this.setState({projectId: currentProj});
         this.setState({currentorg: currentorg});
 
@@ -149,8 +179,6 @@ class Home extends React.Component<HomeProps, any> {
           .createApi()
           .dashboardApi(currentProj, currentorg)
           .then((dash: any) => {
-            console.log('dash');
-            //  console.log)
             this.setState({
               totalObs:
                 dash.data.noOfCompleted +
@@ -242,8 +270,10 @@ class Home extends React.Component<HomeProps, any> {
 
   _onRefresh = () => {
     this.setState({
+      loading: false,
       recentActivity: [],
     });
+
     this.componentDidMount();
   };
   getAllRepeatedSor = (e: any) => {
@@ -379,13 +409,12 @@ class Home extends React.Component<HomeProps, any> {
       <View style={{flex: 1, backgroundColor: colors.primary}}>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          // refreshControl={
-          //   <RefreshControl
-          //     refreshing={this.state.loading}
-          //     onRefresh={this._onRefresh}
-          //   />
-          // }
-        >
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.loading}
+              onRefresh={this._onRefresh}
+            />
+          }>
           <View style={styles.header}>
             <View style={styles.headertle}>
               <View style={styles.orgLogo}>
@@ -535,7 +564,7 @@ class Home extends React.Component<HomeProps, any> {
                   Tasks Assigned to you
                 </Text>
               </View>
-              {this.state.recentActivity.length == 0 ? (
+              {this.state.taskAssignedToYou.length == 0 ? (
                 <View
                   style={{
                     justifyContent: 'center',
@@ -567,32 +596,40 @@ class Home extends React.Component<HomeProps, any> {
                       refreshing={this.state.refreshing}
                     />
                   }>
-                  <View style={{marginTop: wp(3)}}>
-                    {this.state.recentActivity.map((d: Isor, i: number) => (
-                      <ListCard
-                        key={i}
-                        classify={d.sor_type}
-                        repeated={d.repeatedSor}
-                        location={d.location}
-                        styles={
-                          this.state.recentActivity.length == i + 1
-                            ? {borderBottomWidth: wp(0)}
-                            : null
-                        }
-                        user1={d.user1}
-                        user2={d.user2}
-                        observation={d.details}
-                        username={d.created_by}
-                        iconconf={classifySor.find(
-                          (e: any) => e.title == d.sor_type,
-                        )}
-                        onPress={() =>
-                          this.props.navigation.navigate('ViewSOR', {data: d})
-                        }
-                        onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                        date={d.occured_at}
-                      />
-                    ))}
+                  <View
+                    style={{
+                      marginTop: wp(3),
+                      marginLeft: wp(3),
+                      marginRight: wp(3),
+                    }}>
+                    {this.state.taskAssignedToYou
+                      .slice(0, 3)
+                      .map((d: Isor, i: number) => (
+                        <ListCard
+                          key={i}
+                          classify={d.sor_type}
+                          repeated={d.repeatedSor}
+                          location={d.location}
+                          styles={
+                            this.state.taskAssignedToYou.slice(0, 3).length ==
+                            i + 1
+                              ? {borderBottomWidth: wp(0)}
+                              : null
+                          }
+                          user1={d.user1}
+                          user2={d.user2}
+                          observation={d.details}
+                          username={d.created_by}
+                          iconconf={classifySor.find(
+                            (e: any) => e.title == d.sor_type,
+                          )}
+                          onPress={() =>
+                            this.props.navigation.navigate('ViewSOR', {data: d})
+                          }
+                          onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                          date={d.occured_at}
+                        />
+                      ))}
                   </View>
                 </ScrollView>
               )}
@@ -616,7 +653,7 @@ class Home extends React.Component<HomeProps, any> {
                 </Text>
               </View>
 
-              {this.state.recentActivity.length == 0 ? (
+              {this.state.taskAssignedByYou.length == 0 ? (
                 <View
                   style={{
                     justifyContent: 'center',
@@ -648,32 +685,40 @@ class Home extends React.Component<HomeProps, any> {
                       refreshing={this.state.refreshing}
                     />
                   }>
-                  <View style={{marginTop: wp(3)}}>
-                    {this.state.recentActivity.map((d: Isor, i: number) => (
-                      <ListCard
-                        classify={d.sor_type}
-                        key={i}
-                        repeated={d.repeatedSor}
-                        location={d.location}
-                        styles={
-                          this.state.recentActivity.length == i + 1
-                            ? {borderBottomWidth: wp(0)}
-                            : null
-                        }
-                        user1={d.user1}
-                        user2={d.user2}
-                        observation={d.details}
-                        username={d.created_by}
-                        iconconf={classifySor.find(
-                          (e: any) => e.title == d.sor_type,
-                        )}
-                        onPress={() =>
-                          this.props.navigation.navigate('ViewSOR', {data: d})
-                        }
-                        onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                        date={d.occured_at}
-                      />
-                    ))}
+                  <View
+                    style={{
+                      marginTop: wp(3),
+                      marginLeft: wp(3),
+                      marginRight: wp(3),
+                    }}>
+                    {this.state.taskAssignedByYou
+                      .slice(0, 3)
+                      .map((d: Isor, i: number) => (
+                        <ListCard
+                          classify={d.sor_type}
+                          key={i}
+                          repeated={d.repeatedSor}
+                          location={d.location}
+                          styles={
+                            this.state.taskAssignedByYou.slice(0, 3).length ==
+                            i + 1
+                              ? {borderBottomWidth: wp(0)}
+                              : null
+                          }
+                          user1={d.user1}
+                          user2={d.user2}
+                          observation={d.details}
+                          username={d.created_by}
+                          iconconf={classifySor.find(
+                            (e: any) => e.title == d.sor_type,
+                          )}
+                          onPress={() =>
+                            this.props.navigation.navigate('ViewSOR', {data: d})
+                          }
+                          onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                          date={d.occured_at}
+                        />
+                      ))}
                   </View>
                 </ScrollView>
               )}
@@ -697,7 +742,7 @@ class Home extends React.Component<HomeProps, any> {
                 </Text>
               </View>
 
-              {this.state.recentActivity.length == 0 ? (
+              {this.state.taskYouAreInvolvedIn.length == 0 ? (
                 <View
                   style={{
                     justifyContent: 'center',
@@ -729,32 +774,41 @@ class Home extends React.Component<HomeProps, any> {
                       refreshing={this.state.refreshing}
                     />
                   }>
-                  <View style={{marginTop: wp(3)}}>
-                    {this.state.recentActivity.map((d: Isor, i: number) => (
-                      <ListCard
-                        key={i}
-                        classify={d.sor_type}
-                        repeated={d.repeatedSor}
-                        location={d.location}
-                        styles={
-                          this.state.recentActivity.length == i + 1
-                            ? {borderBottomWidth: wp(0)}
-                            : null
-                        }
-                        user1={d.user1}
-                        user2={d.user2}
-                        observation={d.details}
-                        username={d.created_by}
-                        iconconf={classifySor.find(
-                          (e: any) => e.title == d.sor_type,
-                        )}
-                        onPress={() =>
-                          this.props.navigation.navigate('ViewSOR', {data: d})
-                        }
-                        onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                        date={d.occured_at}
-                      />
-                    ))}
+                  <View
+                    style={{
+                      marginTop: wp(3),
+                      marginLeft: wp(3),
+                      marginRight: wp(3),
+                    }}>
+                    {this.state.taskYouAreInvolvedIn
+                      .slice(0, 3)
+                      .map((d: Isor, i: number) => (
+                        <ListCard
+                          key={i}
+                          classify={d.sor_type}
+                          repeated={d.repeatedSor}
+                          location={d.location}
+                          styles={
+                            this.state.taskYouAreInvolvedIn.slice(0, 3)
+                              .length ==
+                            i + 1
+                              ? {borderBottomWidth: wp(0)}
+                              : null
+                          }
+                          user1={d.user1}
+                          user2={d.user2}
+                          observation={d.details}
+                          username={d.created_by}
+                          iconconf={classifySor.find(
+                            (e: any) => e.title == d.sor_type,
+                          )}
+                          onPress={() =>
+                            this.props.navigation.navigate('ViewSOR', {data: d})
+                          }
+                          onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                          date={d.occured_at}
+                        />
+                      ))}
                   </View>
                 </ScrollView>
               )}
@@ -816,7 +870,12 @@ class Home extends React.Component<HomeProps, any> {
                       refreshing={this.state.refreshing}
                     />
                   }>
-                  <View style={{marginTop: wp(3)}}>
+                  <View
+                    style={{
+                      marginTop: wp(3),
+                      marginLeft: wp(3),
+                      marginRight: wp(3),
+                    }}>
                     {this.state.recentActivity.map((d: Isor, i: number) => (
                       <ListCard
                         key={i}
@@ -864,7 +923,7 @@ class Home extends React.Component<HomeProps, any> {
                   latest Incidents
                 </Text>
               </View>
-              {this.state.recentActivity.length == 0 ? (
+              {this.state.latestIncidents.length == 0 ? (
                 <View
                   style={{
                     justifyContent: 'center',
@@ -896,15 +955,20 @@ class Home extends React.Component<HomeProps, any> {
                       refreshing={this.state.refreshing}
                     />
                   }>
-                  <View style={{marginTop: wp(3)}}>
-                    {this.state.recentActivity.map((d: Isor, i: number) => (
+                  <View
+                    style={{
+                      marginTop: wp(3),
+                      marginLeft: wp(3),
+                      marginRight: wp(3),
+                    }}>
+                    {this.state.latestIncidents.map((d: Isor, i: number) => (
                       <ListCard
                         key={i}
                         classify={d.sor_type}
                         repeated={d.repeatedSor}
                         location={d.location}
                         styles={
-                          this.state.recentActivity.length == i + 1
+                          this.state.latestIncidents.length == i + 1
                             ? {borderBottomWidth: wp(0)}
                             : null
                         }
@@ -944,7 +1008,7 @@ class Home extends React.Component<HomeProps, any> {
                   Open Audits
                 </Text>
               </View>
-              {this.state.recentActivity.length == 0 ? (
+              {this.state.openAudits.length == 0 ? (
                 <View
                   style={{
                     justifyContent: 'center',
@@ -976,15 +1040,20 @@ class Home extends React.Component<HomeProps, any> {
                       refreshing={this.state.refreshing}
                     />
                   }>
-                  <View style={{marginTop: wp(3)}}>
-                    {this.state.recentActivity.map((d: Isor, i: number) => (
+                  <View
+                    style={{
+                      marginTop: wp(3),
+                      marginLeft: wp(3),
+                      marginRight: wp(3),
+                    }}>
+                    {this.state.openAudits.map((d: Isor, i: number) => (
                       <ListCard
                         key={i}
                         classify={d.sor_type}
                         repeated={d.repeatedSor}
                         location={d.location}
                         styles={
-                          this.state.recentActivity.length == i + 1
+                          this.state.openAudits.length == i + 1
                             ? {borderBottomWidth: wp(0)}
                             : null
                         }
@@ -1024,7 +1093,7 @@ class Home extends React.Component<HomeProps, any> {
                   Upcomming Trainings
                 </Text>
               </View>
-              {this.state.recentActivity.length == 0 ? (
+              {this.state.upCommingTrainings.length == 0 ? (
                 <View
                   style={{
                     justifyContent: 'center',
@@ -1056,15 +1125,20 @@ class Home extends React.Component<HomeProps, any> {
                       refreshing={this.state.refreshing}
                     />
                   }>
-                  <View style={{marginTop: wp(3)}}>
-                    {this.state.recentActivity.map((d: Isor, i: number) => (
+                  <View
+                    style={{
+                      marginTop: wp(3),
+                      marginLeft: wp(3),
+                      marginRight: wp(3),
+                    }}>
+                    {this.state.upCommingTrainings.map((d: Isor, i: number) => (
                       <ListCard
                         key={i}
                         classify={d.sor_type}
                         repeated={d.repeatedSor}
                         location={d.location}
                         styles={
-                          this.state.recentActivity.length == i + 1
+                          this.state.upCommingTrainings.length == i + 1
                             ? {borderBottomWidth: wp(0)}
                             : null
                         }
