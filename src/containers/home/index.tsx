@@ -1315,7 +1315,14 @@ class Home extends React.Component<HomeProps, any> {
                     innerRadius={'10%'}
                     style={{height: wp(50), width: wp(50)}}
                     data={inspectionData}>
-                    {' '}
+                    <View
+                      style={{justifyContent: 'center', alignItems: 'center'}}>
+                      {/* <Text style={styles.chartContent}>Total</Text> */}
+                      {/* <Text style={styles.chartContent}>Observations</Text> */}
+                      {/* <Text style={styles.chartContent}>
+                        {this.state.totalObservations}
+                      </Text> */}
+                    </View>
                   </PieChart>
                 </Animated.View>
                 {/* colors guide */}
