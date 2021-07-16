@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {colors, GlStyles, images, fonts, animation} from '@theme';
 import {connect} from 'react-redux';
+import LottieView from 'lottie-react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {PrivateValueStore, RouteProp} from '@react-navigation/native';
@@ -22,7 +23,6 @@ import {
   savedCurrentOrganization,
 } from '@utils';
 import {Avatar, Icon} from 'react-native-elements';
-import {View_sor, recentActivity} from '@service';
 import {ListCard} from '@components';
 import {route} from '@nav';
 import {PieChart, ProgressCircle} from 'react-native-svg-charts';
@@ -184,6 +184,58 @@ class Home extends React.Component<HomeProps, any> {
     //     // this.setState({image: file.data});
     //   });
     this.setState({loading: false});
+
+    if (this.state.projectId == '') {
+    } else {
+      createApi
+        .createApi()
+        .filterSors({
+          project: this.state.projectId,
+          limit: 10,
+          page: 0,
+          query: {status: [1, 2, 3, 4, 5]},
+        })
+        .then((res: any) => {
+          createApi
+            .createApi()
+            .dashboardApi(this.state.projectId, this.state.currentorg)
+            .then((dash: any) => {
+              // console.log('dash');
+              //  console.log)
+              this.setState({
+                totalObs:
+                  dash.data.noOfCompleted +
+                  dash.data.noOfDrafts +
+                  dash.data.noOfPublished,
+              });
+
+              this.setState({
+                noOfCompleted: dash.data.noOfCompleted,
+                noOfDrafts: dash.data.noOfDrafts,
+                noOfPublished: dash.data.noOfPublished,
+              });
+              this.setState({});
+            });
+
+          if (res.data.data.report.length > 3) {
+            for (let i = 0; i < res.data.data.report.length; i++) {
+              if (res.data.data.report[i].details != undefined) {
+                this.setState({
+                  recentActivity: res.data.data.report.slice(0, 3),
+                });
+
+                // this.recentActivity.push(res.data.data.report[])
+              }
+            }
+          } else {
+            for (let i = 0; i < res.data.data.report.length; i++) {
+              if (res.data.data.report[i].details != undefined) {
+                this.setState({recentActivity: res.data.data.report});
+              }
+            }
+          }
+        });
+    }
   };
 
   _onRefresh = () => {
@@ -236,58 +288,6 @@ class Home extends React.Component<HomeProps, any> {
   };
 
   render() {
-    if (this.state.projectId == '') {
-    } else {
-      createApi
-        .createApi()
-        .filterSors({
-          project: this.state.projectId,
-          limit: 10,
-          page: 0,
-          query: {status: [1, 2, 3, 4, 5]},
-        })
-        .then((res: any) => {
-          createApi
-            .createApi()
-            .dashboardApi(this.state.projectId, this.state.currentorg)
-            .then((dash: any) => {
-              console.log('dash');
-              //  console.log)
-              this.setState({
-                totalObs:
-                  dash.data.noOfCompleted +
-                  dash.data.noOfDrafts +
-                  dash.data.noOfPublished,
-              });
-
-              this.setState({
-                noOfCompleted: dash.data.noOfCompleted,
-                noOfDrafts: dash.data.noOfDrafts,
-                noOfPublished: dash.data.noOfPublished,
-              });
-              this.setState({});
-            });
-
-          if (res.data.data.report.length > 3) {
-            for (let i = 0; i < res.data.data.report.length; i++) {
-              if (res.data.data.report[i].details != undefined) {
-                this.setState({
-                  recentActivity: res.data.data.report.slice(0, 3),
-                });
-
-                // this.recentActivity.push(res.data.data.report[])
-              }
-            }
-          } else {
-            for (let i = 0; i < res.data.data.report.length; i++) {
-              if (res.data.data.report[i].details != undefined) {
-                this.setState({recentActivity: res.data.data.report});
-              }
-            }
-          }
-        });
-    }
-
     const data = [
       {val: this.state.noOfCompleted, color: '#3867D6'},
       {val: this.state.noOfDrafts, color: '#3498DB'},
@@ -568,6 +568,7 @@ class Home extends React.Component<HomeProps, any> {
                   <View style={{marginTop: wp(3)}}>
                     {this.state.recentActivity.map((d: Isor, i: number) => (
                       <ListCard
+                        key={i}
                         classify={d.sor_type}
                         repeated={d.repeatedSor}
                         location={d.location}
@@ -649,6 +650,7 @@ class Home extends React.Component<HomeProps, any> {
                     {this.state.recentActivity.map((d: Isor, i: number) => (
                       <ListCard
                         classify={d.sor_type}
+                        key={i}
                         repeated={d.repeatedSor}
                         location={d.location}
                         styles={
@@ -728,6 +730,7 @@ class Home extends React.Component<HomeProps, any> {
                   <View style={{marginTop: wp(3)}}>
                     {this.state.recentActivity.map((d: Isor, i: number) => (
                       <ListCard
+                        key={i}
                         classify={d.sor_type}
                         repeated={d.repeatedSor}
                         location={d.location}
@@ -814,6 +817,7 @@ class Home extends React.Component<HomeProps, any> {
                   <View style={{marginTop: wp(3)}}>
                     {this.state.recentActivity.map((d: Isor, i: number) => (
                       <ListCard
+                        key={i}
                         classify={d.sor_type}
                         repeated={d.repeatedSor}
                         location={d.location}
@@ -893,6 +897,7 @@ class Home extends React.Component<HomeProps, any> {
                   <View style={{marginTop: wp(3)}}>
                     {this.state.recentActivity.map((d: Isor, i: number) => (
                       <ListCard
+                        key={i}
                         classify={d.sor_type}
                         repeated={d.repeatedSor}
                         location={d.location}
@@ -972,6 +977,7 @@ class Home extends React.Component<HomeProps, any> {
                   <View style={{marginTop: wp(3)}}>
                     {this.state.recentActivity.map((d: Isor, i: number) => (
                       <ListCard
+                        key={i}
                         classify={d.sor_type}
                         repeated={d.repeatedSor}
                         location={d.location}
@@ -1051,6 +1057,7 @@ class Home extends React.Component<HomeProps, any> {
                   <View style={{marginTop: wp(3)}}>
                     {this.state.recentActivity.map((d: Isor, i: number) => (
                       <ListCard
+                        key={i}
                         classify={d.sor_type}
                         repeated={d.repeatedSor}
                         location={d.location}
