@@ -273,7 +273,20 @@ class Home extends React.Component<HomeProps, any> {
       loading: false,
       recentActivity: [],
     });
-
+    AsyncStorage.getItem('email').then((email) => {
+      createApi
+        .createApi()
+        .getAllNotifications(email, '[0,1]')
+        .then((notify: any) => {
+          console.log(notify.data.data.notifications);
+          this.setState({
+            notificationsData: notify.data.data.notifications,
+            count: notify.data.data.notifications.filter(
+              (n: any) => n.status == 0,
+            ).length,
+          });
+        });
+    });
     this.componentDidMount();
   };
   getAllRepeatedSor = (e: any) => {
