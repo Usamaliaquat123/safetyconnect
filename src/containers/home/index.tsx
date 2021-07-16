@@ -88,6 +88,56 @@ class Home extends React.Component<HomeProps, any> {
     getCurrentProject().then((currentProj: any) => {
       // console.log(currentProj)
       getCurrentOrganization().then((currentorg: any) => {
+        createApi
+          .createApi()
+          .filterSors({
+            project: this.state.projectId,
+            limit: 10,
+            page: 0,
+            query: {status: [1, 2, 3, 4, 5]},
+          })
+          .then((res: any) => {
+            createApi
+              .createApi()
+              .dashboardApi(this.state.projectId, this.state.currentorg)
+              .then((dash: any) => {
+                // console.log('dash');
+                //  console.log)
+                this.setState({
+                  totalObs:
+                    dash.data.noOfCompleted +
+                    dash.data.noOfDrafts +
+                    dash.data.noOfPublished,
+                });
+
+                this.setState({
+                  noOfCompleted: dash.data.noOfCompleted,
+                  noOfDrafts: dash.data.noOfDrafts,
+                  noOfPublished: dash.data.noOfPublished,
+                });
+                this.setState({});
+              });
+
+            if (res.data.data.report.length > 3) {
+              for (let i = 0; i < res.data.data.report.length; i++) {
+                if (res.data.data.report[i].details != undefined) {
+                  this.setState({
+                    recentActivity: res.data.data.report.slice(0, 3),
+                  });
+                  this.setState({});
+
+                  // this.recentActivity.push(res.data.data.report[])
+                }
+              }
+            } else {
+              for (let i = 0; i < res.data.data.report.length; i++) {
+                if (res.data.data.report[i].details != undefined) {
+                  this.setState({recentActivity: res.data.data.report});
+                  this.setState({});
+                }
+              }
+            }
+          });
         console.log('currentorg');
         console.log('currentProj');
         console.log(currentorg);
@@ -187,54 +237,6 @@ class Home extends React.Component<HomeProps, any> {
 
     if (this.state.projectId == '') {
     } else {
-      createApi
-        .createApi()
-        .filterSors({
-          project: this.state.projectId,
-          limit: 10,
-          page: 0,
-          query: {status: [1, 2, 3, 4, 5]},
-        })
-        .then((res: any) => {
-          createApi
-            .createApi()
-            .dashboardApi(this.state.projectId, this.state.currentorg)
-            .then((dash: any) => {
-              // console.log('dash');
-              //  console.log)
-              this.setState({
-                totalObs:
-                  dash.data.noOfCompleted +
-                  dash.data.noOfDrafts +
-                  dash.data.noOfPublished,
-              });
-
-              this.setState({
-                noOfCompleted: dash.data.noOfCompleted,
-                noOfDrafts: dash.data.noOfDrafts,
-                noOfPublished: dash.data.noOfPublished,
-              });
-              this.setState({});
-            });
-
-          if (res.data.data.report.length > 3) {
-            for (let i = 0; i < res.data.data.report.length; i++) {
-              if (res.data.data.report[i].details != undefined) {
-                this.setState({
-                  recentActivity: res.data.data.report.slice(0, 3),
-                });
-
-                // this.recentActivity.push(res.data.data.report[])
-              }
-            }
-          } else {
-            for (let i = 0; i < res.data.data.report.length; i++) {
-              if (res.data.data.report[i].details != undefined) {
-                this.setState({recentActivity: res.data.data.report});
-              }
-            }
-          }
-        });
     }
   };
 
