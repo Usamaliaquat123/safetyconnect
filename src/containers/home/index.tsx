@@ -560,13 +560,15 @@ class Home extends React.Component<HomeProps, any> {
             <View style={styles.recentActivity}>
               <View style={styles.recentlyHead}>
                 <Text style={styles.actHeading}>Your Recent Activities</Text>
-                {this.state.recentActivity.length > 3 ? (
-                  <TouchableOpacity>
-                    <Text style={styles.viewAll}>View All</Text>
-                  </TouchableOpacity>
-                ) : null}
               </View>
-              <View style={{marginTop: wp(3), paddingLeft: wp(3)}}>
+              <View
+                style={{
+                  marginTop: wp(3),
+                  paddingLeft: wp(3),
+                  flexDirection: 'row',
+                  paddingRight: wp(3),
+                  justifyContent: 'space-between',
+                }}>
                 <Text
                   style={{
                     fontSize: wp(3.2),
@@ -576,6 +578,11 @@ class Home extends React.Component<HomeProps, any> {
                   {' '}
                   Tasks Assigned to you
                 </Text>
+                {this.state.taskAssignedToYou.length > 3 ? (
+                  <TouchableOpacity>
+                    <Text style={styles.viewAll}>View All</Text>
+                  </TouchableOpacity>
+                ) : null}
               </View>
               {this.state.taskAssignedToYou.length == 0 ? (
                 <View
@@ -654,7 +661,14 @@ class Home extends React.Component<HomeProps, any> {
                 paddingBottom: wp(3),
                 backgroundColor: colors.secondary,
               }}>
-              <View style={{marginTop: wp(3), paddingLeft: wp(3)}}>
+              <View
+                style={{
+                  marginTop: wp(3),
+                  paddingLeft: wp(3),
+                  flexDirection: 'row',
+                  paddingRight: wp(3),
+                  justifyContent: 'space-between',
+                }}>
                 <Text
                   style={{
                     fontSize: wp(3.2),
@@ -664,6 +678,11 @@ class Home extends React.Component<HomeProps, any> {
                   {' '}
                   Tasks Assigned by you
                 </Text>
+                {this.state.taskAssignedByYou.length > 3 ? (
+                  <TouchableOpacity>
+                    <Text style={styles.viewAll}>View All</Text>
+                  </TouchableOpacity>
+                ) : null}
               </View>
 
               {this.state.taskAssignedByYou.length == 0 ? (
@@ -743,7 +762,14 @@ class Home extends React.Component<HomeProps, any> {
                 paddingBottom: wp(3),
                 backgroundColor: colors.secondary,
               }}>
-              <View style={{marginTop: wp(3), paddingLeft: wp(3)}}>
+              <View
+                style={{
+                  marginTop: wp(3),
+                  paddingLeft: wp(3),
+                  flexDirection: 'row',
+                  paddingRight: wp(3),
+                  justifyContent: 'space-between',
+                }}>
                 <Text
                   style={{
                     fontSize: wp(3.2),
@@ -753,6 +779,11 @@ class Home extends React.Component<HomeProps, any> {
                   {' '}
                   Tasks you are involved in
                 </Text>
+                {this.state.taskYouAreInvolvedIn.length > 3 ? (
+                  <TouchableOpacity>
+                    <Text style={styles.viewAll}>View All</Text>
+                  </TouchableOpacity>
+                ) : null}
               </View>
 
               {this.state.taskYouAreInvolvedIn.length == 0 ? (
@@ -833,13 +864,15 @@ class Home extends React.Component<HomeProps, any> {
             <View style={styles.recentActivity}>
               <View style={styles.recentlyHead}>
                 <Text style={styles.actHeading}>Overall Summary</Text>
-                {this.state.recentActivity.length > 3 ? (
-                  <TouchableOpacity>
-                    <Text style={styles.viewAll}>View All</Text>
-                  </TouchableOpacity>
-                ) : null}
               </View>
-              <View style={{marginTop: wp(3), paddingLeft: wp(3)}}>
+              <View
+                style={{
+                  marginTop: wp(3),
+                  paddingLeft: wp(3),
+                  flexDirection: 'row',
+                  paddingRight: wp(3),
+                  justifyContent: 'space-between',
+                }}>
                 <Text
                   style={{
                     fontSize: wp(3.2),
@@ -847,8 +880,13 @@ class Home extends React.Component<HomeProps, any> {
                     color: colors.primary,
                   }}>
                   {' '}
-                  Recent Observation
+                  Recent Observations
                 </Text>
+                {this.state.taskYouAreInvolvedIn.length > 3 ? (
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('ViewAll',[1,2,3,4,5])}>
+                    <Text style={styles.viewAll}>View All</Text>
+                  </TouchableOpacity>
+                ) : null}
               </View>
 
               {this.state.recentActivity.length == 0 ? (

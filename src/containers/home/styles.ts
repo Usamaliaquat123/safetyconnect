@@ -135,8 +135,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   viewAll: {
-    fontSize: wp(3.3),
+    fontSize: wp(2.5),
     position: 'absolute',
+    fontFamily: fonts.SFuiDisplayMedium,
     right: wp(0),
   },
   tabs: {
