@@ -79,7 +79,7 @@ class Home extends React.Component<HomeProps, any> {
       refreshing: false,
       repeatedSorModal: false,
       // main data
-
+      orgImage: '',
       latestIncidents: [],
       openAudits: [],
       upCommingTrainings: [],
@@ -98,6 +98,16 @@ class Home extends React.Component<HomeProps, any> {
       getCurrentOrganization().then((currentorg: any) => {
         createApi
           .createApi()
+          .getOrganization(currentorg)
+          .then((org) => {
+            console.log('org.data');
+            console.log();
+            this.setState({orgImage: org.data.data.img_url});
+          });
+
+        // Filter sors
+        createApi
+          .createApi()
           .filterSors({
             project: currentProj,
             limit: 10,
@@ -105,8 +115,6 @@ class Home extends React.Component<HomeProps, any> {
             query: {status: [1, 2, 3, 4, 5]},
           })
           .then((res: any) => {
-            console.log(res);
-            console.log('res aaya');
             createApi
               .createApi()
               .dashboardApi(currentProj, currentorg)
@@ -432,7 +440,7 @@ class Home extends React.Component<HomeProps, any> {
             <View style={styles.headertle}>
               <View style={styles.orgLogo}>
                 <Image
-                  source={images.organizationLogo}
+                  source={{uri: this.state.orgImage}}
                   style={styles.orgLogoPng}
                 />
               </View>
@@ -883,7 +891,7 @@ class Home extends React.Component<HomeProps, any> {
                   Recent Observations
                 </Text>
                 {this.state.taskYouAreInvolvedIn.length > 3 ? (
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate('ViewAll',[1,2,3,4,5])}>
+                  <TouchableOpacity>
                     <Text style={styles.viewAll}>View All</Text>
                   </TouchableOpacity>
                 ) : null}

@@ -15,13 +15,13 @@ const styles = StyleSheet.create({
     height: wp(12),
   },
   orgLogo: {
-    backgroundColor: colors.secondary,
+    // backgroundColor: "transparent",
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: wp(3),
-    padding: wp(2),
+    // padding: wp(2),
   },
-  orgLogoPng: {width: wp(10), height: wp(10)},
+  orgLogoPng: {width: wp(15), height: wp(15)},
 
   headertle: {flexDirection: 'row'},
   underScrore: {
