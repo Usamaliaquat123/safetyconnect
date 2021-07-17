@@ -123,6 +123,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
   componentDidMount = () => {
     getCurrentOrganization().then((orgId: any) => {
+      console.log('orgId');
+      console.log(orgId);
       createApi
         .createApi()
         .getOrganization(orgId)
