@@ -33,6 +33,7 @@ import {
   filterAndMappingPersons,
   mapAllProjects,
   mapAllOrganizations,
+  savedCurrentProject,
   getCurrentProject,
   getAllProjects,
   getCurrentOrganization,
@@ -113,7 +114,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       refreshing: false,
       involvedPerson: [],
       repeatedSors: [],
-
+      projectSelectors: false,
       loading: false,
       projects: [],
       projectId: '',
@@ -181,7 +182,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           }
         }
 
-
         createApi
           .createApi()
           .filterSors(data)
@@ -248,6 +248,18 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       });
     });
   };
+  selecteProj = async (d: any) => {
+    this.setState({
+      selectedProject: d,
+      projectSelectors: false,
+    });
+
+    // console.log('d');
+    // console.log(d);
+
+    await savedCurrentProject(d._id);
+    this.componentDidMount();
+  };
 
   getAllRepeatedSor = (e: any) => {
     console.log(e);
@@ -304,7 +316,32 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
               </View>
             </View>
             <View style={styles.headerSelect}>
-              {/* Project selector */}
+              <TouchableOpacity
+                onPress={() => this.setState({projectSelectors: true})}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <Text
+                  style={{
+                    fontSize: wp(3),
+                    marginRight: wp(3),
+                    color: colors.secondary,
+
+                    fontFamily: fonts.SFuiDisplayMedium,
+                  }}>
+                  Select Project
+                </Text>
+                <Icon
+                  name={'down'}
+                  type={'antdesign'}
+                  size={wp(3)}
+                  color={colors.secondary}
+                />
+              </TouchableOpacity>
+
+              {/* list viw and board view */}
               <View style={styles.leftSelector}>
                 <TouchableOpacity
                   onPress={() => this.setState({project: 'List View'})}
@@ -1560,6 +1597,45 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 user2={d.user2}
               />
             ))}
+          </View>
+        </Modal>
+
+        <Modal isVisible={this.state.projectSelectors}>
+          <View style={styles.modelContainer}>
+            <View>
+              <Text style={styles.errHeadPop}>Select your Project</Text>
+
+              <>
+                <ScrollView
+                  showsVerticalScrollIndicator={false}
+                  style={{
+                    backgroundColor: colors.secondary,
+                    borderWidth: wp(0.2),
+                    alignSelf: 'center',
+                    width: wp(50),
+                    borderRadius: wp(2),
+                    borderColor: colors.textOpa,
+                  }}>
+                  <>
+                    {this.state.projects.map((d: any) => (
+                      <TouchableOpacity
+                        onPress={() => this.selecteProj(d)}
+                        style={{padding: wp(3), flexDirection: 'row'}}>
+                        <Icon
+                          name={'stats-chart-sharp'}
+                          type={'ionicon'}
+                          size={wp(3)}
+                          color={colors.text}
+                        />
+                        <Text style={{fontSize: wp(3), marginLeft: wp(3)}}>
+                          {d.project_name}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </>
+                </ScrollView>
+              </>
+            </View>
           </View>
         </Modal>
       </View>

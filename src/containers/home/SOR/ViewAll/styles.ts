@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // alignContent: 'stretch',
     justifyContent: 'space-between',
-    width: wp(100),
+    // width: wp(100),
   },
   plzTryAgain: {
     textAlign: 'center',

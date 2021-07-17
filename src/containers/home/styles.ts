@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     borderRadius: wp(3),
     // padding: wp(2),
   },
-  orgLogoPng: {width: wp(15), height: wp(15)},
+  orgLogoPng: {width: wp(15), height: wp(15), borderRadius: 10},
 
   headertle: {flexDirection: 'row'},
   underScrore: {
