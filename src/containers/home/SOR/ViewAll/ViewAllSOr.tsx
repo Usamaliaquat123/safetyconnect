@@ -259,7 +259,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     // console.log('d');
     // console.log(d);
 
-    await savedCurrentProject(d._id);
+    await savedCurrentProject(d.project_id._id);
     this.componentDidMount();
   };
 
