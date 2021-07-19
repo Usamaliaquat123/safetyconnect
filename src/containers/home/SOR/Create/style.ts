@@ -465,7 +465,7 @@ const styles = StyleSheet.create({
     padding: wp(5),
     width: wp(45),
     borderColor: colors.green,
-    marginTop: wp(6),
+    marginTop: wp(8),
     alignItems: 'center',
     backgroundColor: colors.primary,
     borderWidth: wp(0.1),
