@@ -173,12 +173,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   componentDidMount = () => {
     console.log('line 173');
     console.log(this.props.route.params.data);
-    console.log(this.props.route.params.data.involved_persons);
-
-
-
-
-
 
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
@@ -187,7 +181,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         this.props.route.params.data.repeatedSor,
         currentProj,
       );
-  
+
       createApi
         .createApi()
         .getProject({projectid: currentProj})
@@ -196,6 +190,24 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             projectName: res.data.data.project_name,
             involvedPerson: res.data.data.involved_persons,
           });
+          // filterAndMappingPersons(
+          //   this.props.route.params.data,
+          //   res.data.data.involved_persons,
+          // );
+          console.log('this.props.route.params.data.involved_persons');
+          console.log(this.props.route.params.data.involved_persons);
+          console.log(res.data.data.involved_persons);
+
+          this.props.route.params.data.involved_persons.map((d) => {
+            this.setState({
+              involvedPerson: res.data.data.involved_persons.filter(
+                (i) => i.id == d,
+              ),
+            });
+          });
+
+          // console.log('this.state.involvedPerson --- yahoooooooooo');
+          // console.log(this.state.involvedPerson);
 
           this.mappingInvolved(
             res.data.data.involved_persons,
@@ -1303,7 +1315,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   Involved Person:{' '}
                 </Text>
                 <Text style={{fontSize: wp(3.5)}}>
-                  {/* {this.state.involved_person[0].name} */}
+                  {/* {this.state.involvedPerson[0].name} */}
                 </Text>
               </View>
             </View>

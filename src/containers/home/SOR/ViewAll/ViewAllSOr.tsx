@@ -200,46 +200,46 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
               );
               for (let i = 0; i < res.data.data.report.length; i++) {
                 if (res.data.data.report[i].status == 1) {
-                  var rep = filterAndMappingPersons(
-                    res.data.data.report[i],
-                    this.state.involvedPerson,
-                  );
+                  // var rep = filterAndMappingPersons(
+                  //   res.data.data.report[i],
+                  //   this.state.involvedPerson,
+                  // );
 
                   if (res.data.data.report[i].details != undefined) {
-                    this.state.draft.push(rep);
+                    this.state.draft.push(res.data.data.report[i]);
                   }
                 } else if (res.data.data.report[i].status == 2) {
-                  var rep = filterAndMappingPersons(
-                    res.data.data.report[i],
-                    this.state.involvedPerson,
-                  );
+                  // var rep = filterAndMappingPersons(
+                  //   res.data.data.report[i],
+                  //   this.state.involvedPerson,
+                  // );
                   if (res.data.data.report[i].details != undefined) {
-                    this.state.inprogress.push(rep);
+                    this.state.inprogress.push(res.data.data.report[i]);
                     // this.state.submitted.push(rep);
                   }
                 } else if (res.data.data.report[i].status == 3) {
-                  var rep = filterAndMappingPersons(
-                    res.data.data.report[i],
-                    this.state.involvedPerson,
-                  );
+                  // var rep = filterAndMappingPersons(
+                  //   res.data.data.report[i],
+                  //   this.state.involvedPerson,
+                  // );
                   if (res.data.data.report[i].details != undefined) {
-                    this.state.exclated.push(rep);
+                    this.state.exclated.push(res.data.data.report[i]);
                   }
                 } else if (res.data.data.report[i].status == 4) {
-                  var rep = filterAndMappingPersons(
-                    res.data.data.report[i],
-                    this.state.involvedPerson,
-                  );
+                  // var rep = filterAndMappingPersons(
+                  //   res.data.data.report[i],
+                  //   this.state.involvedPerson,
+                  // );
                   if (res.data.data.report[i].details != undefined) {
-                    this.state.pendingClosure.push(rep);
+                    this.state.pendingClosure.push(res.data.data.report[i]);
                   }
                 } else if (res.data.data.report[i].status == 5) {
-                  var rep = filterAndMappingPersons(
-                    res.data.data.report[i],
-                    this.state.involvedPerson,
-                  );
+                  // var rep = filterAndMappingPersons(
+                  //   res.data.data.report[i],
+                  //   this.state.involvedPerson,
+                  // );
                   if (res.data.data.report[i].details != undefined) {
-                    this.state.closed.push(rep);
+                    this.state.closed.push(res.data.data.report[i]);
                   }
                 }
               }
@@ -260,14 +260,13 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     // console.log('d');
     // console.log(d);
 
-
     this.setState({
-      draft : [],
-inprogress : [],
-exclated : [],
-pendingClosure : [],
-closed : [],
-    })
+      draft: [],
+      inprogress: [],
+      exclated: [],
+      pendingClosure: [],
+      closed: [],
+    });
 
     await savedCurrentProject(d.project_id._id);
     this.componentDidMount();

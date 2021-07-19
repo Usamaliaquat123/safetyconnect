@@ -263,17 +263,56 @@ export const mapAllOrganizations = (
 // filtering and mapping involved persons data
 export const filterAndMappingPersons = (
   report: report,
-  persons: Array<any>,
+  persons?: Array<any>,
 ): Object => {
-  report.submit_to?.map;
+  // report.submit_to?.map;
   report.submit_to?.map((emails: any, i: number) => {
-    report.submit_to = persons.filter((d: any) => d.email == emails);
+    createApi
+      .createApi()
+      .getUser(emails)
+      .then((user: any) => {
+        report.submit_to = [
+          {
+            name: user.data.data.name,
+            email: user.data.data.email,
+            img_url: user.data.data.img_url,
+          },
+        ];
+      });
+
+    // report.submit_to = persons.filter((d: any) => d.email == emails);
   });
   report.esclate_to?.map((emails: any, i: number) => {
-    report.esclate_to = persons.filter((d: any) => d.email == emails);
+    createApi
+      .createApi()
+      .getUser(emails)
+      .then((user: any) => {
+        report.esclate_to = [
+          {
+            name: user.data.data.name,
+            email: user.data.data.email,
+            img_url: user.data.data.img_url,
+          },
+        ];
+      });
+    // report.esclate_to = persons.filter((d: any) => d.email == emails);
   });
   report.involved_persons?.map((id: any, i: number) => {
-    report.involved_persons = persons.filter((d: any) => d._id == id);
+    console.log('involved -------------persons');
+    console.log(persons);
+    // createApi
+    //   .createApi()
+    //   .getUser(id)
+    //   .then((user: any) => {
+    //     report.involved_persons = [
+    //       {
+    //         name: user.data.data.name,
+    //         email: user.data.data.email,
+    //         img_url: user.data.data.img_url,
+    //       },
+    //     ];
+    //   });
+    // report.involved_persons = persons.filter((d: any) => d._id == id);
   });
 
   return report;

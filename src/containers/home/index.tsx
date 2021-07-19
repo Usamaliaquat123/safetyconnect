@@ -20,6 +20,7 @@ import {
   getCurrentOrganization,
   getCurrentProject,
   savedCurrentProject,
+  filterAndMappingPersons,
   savedCurrentOrganization,
 } from '@utils';
 import {Avatar, Icon} from 'react-native-elements';
@@ -141,6 +142,7 @@ class Home extends React.Component<HomeProps, any> {
                 (a: any, b: any) =>
                   new Date(b.createdAt) - new Date(a.createdAt),
               );
+
               for (let i = 0; i < res.data.data.report.length; i++) {
                 if (res.data.data.report[i].details != undefined) {
                   AsyncStorage.getItem('email').then((email) => {
