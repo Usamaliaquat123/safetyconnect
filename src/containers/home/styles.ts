@@ -136,9 +136,10 @@ const styles = StyleSheet.create({
   },
   viewAll: {
     fontSize: wp(2.5),
-    position: 'absolute',
+    // position: 'absolute',
+    // zIndex: wp(2),
     fontFamily: fonts.SFuiDisplayMedium,
-    right: wp(0),
+    // right: wp(0),
   },
   tabs: {
     // justifyContent: 'center',
