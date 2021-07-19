@@ -118,6 +118,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       loading: false,
       projects: [],
       projectId: '',
+      projectName: '',
     };
   }
 
@@ -134,14 +135,14 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     });
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
-      console.log('currentProj');
-      console.log(currentProj);
 
       createApi
         .createApi()
         .getProject({projectid: currentProj})
         .then((involvedPerson: any) => {
-          console.log(involvedPerson.data);
+          console.log('involvedPerson.data');
+          console.log();
+          this.setState({projectName: involvedPerson.data.data.project_name});
           var j = {};
           var arr = [];
           for (
@@ -333,7 +334,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
                     fontFamily: fonts.SFuiDisplayMedium,
                   }}>
-                  Select Project
+                  {this.state.projectName}
                 </Text>
                 <Icon
                   name={'down'}

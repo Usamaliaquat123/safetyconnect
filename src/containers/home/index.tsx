@@ -587,7 +587,13 @@ class Home extends React.Component<HomeProps, any> {
                   Tasks Assigned to you
                 </Text>
                 {this.state.taskAssignedToYou.length > 3 ? (
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('ViewAll', {
+                        data: this.state.taskAssignedByYou,
+                        title: 'Tasks Assigned to you',
+                      })
+                    }>
                     <Text style={styles.viewAll}>View All</Text>
                   </TouchableOpacity>
                 ) : null}
@@ -687,7 +693,13 @@ class Home extends React.Component<HomeProps, any> {
                   Tasks Assigned by you
                 </Text>
                 {this.state.taskAssignedByYou.length > 3 ? (
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('ViewAll', {
+                        data: this.state.taskAssignedByYou,
+                        title: 'Tasks Assigned by you',
+                      })
+                    }>
                     <Text style={styles.viewAll}>View All</Text>
                   </TouchableOpacity>
                 ) : null}
@@ -788,7 +800,13 @@ class Home extends React.Component<HomeProps, any> {
                   Tasks you are involved in
                 </Text>
                 {this.state.taskYouAreInvolvedIn.length > 3 ? (
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('ViewAll', {
+                        data: this.state.taskAssignedByYou,
+                        title: 'Tasks you are involved in',
+                      })
+                    }>
                     <Text style={styles.viewAll}>View All</Text>
                   </TouchableOpacity>
                 ) : null}
@@ -891,7 +909,13 @@ class Home extends React.Component<HomeProps, any> {
                   Recent Observations
                 </Text>
                 {this.state.taskYouAreInvolvedIn.length > 3 ? (
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('ViewAll', {
+                        data: this.state.taskAssignedByYou,
+                        title: 'Recent Observations',
+                      })
+                    }>
                     <Text style={styles.viewAll}>View All</Text>
                   </TouchableOpacity>
                 ) : null}
@@ -1236,7 +1260,7 @@ class Home extends React.Component<HomeProps, any> {
                     justifyContent: 'space-between',
                   }}>
                   <Text style={styles.actHeading}>Performance Statistics</Text>
-                  <Text style={[styles.viewAll, {right: wp(3)}]}>View All</Text>
+                  {/* <Text style={[styles.viewAll, {right: wp(3)}]}>View All</Text> */}
                 </View>
                 <View style={[styles.tabs, {alignSelf: 'center'}]}>
                   <TouchableOpacity

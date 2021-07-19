@@ -79,61 +79,65 @@ class ViewAll extends React.Component<ViewAllProps, any> {
         });
     });
 
-    getCurrentProject().then((currentProj: any) => {
-      console.log(currentProj);
-      this.setState({projectId: currentProj});
+    if (typeof this.props.route.params.data == 'number') {
+      getCurrentProject().then((currentProj: any) => {
+        console.log(currentProj);
+        this.setState({projectId: currentProj});
 
-      createApi
-        .createApi()
-        .getProject({projectid: currentProj})
-        .then((currentProj: any) => {
-          var data = {
-            project: currentProj.data.data._id,
-            limit: 100000,
-            page: 0,
-            query: {status: [this.props.route.params.data]},
-          };
+        createApi
+          .createApi()
+          .getProject({projectid: currentProj})
+          .then((currentProj: any) => {
+            var data = {
+              project: currentProj.data.data._id,
+              limit: 100000,
+              page: 0,
+              query: {status: [this.props.route.params.data]},
+            };
 
-          console.log(currentProj.data.data.involved_persons);
+            console.log(currentProj.data.data.involved_persons);
 
-          // AsyncStorage.setItem(
-          //   'involved_person',
-          //   JSON.stringify(this.state.involvedPerson),
-          // );
-          // });
+            // AsyncStorage.setItem(
+            //   'involved_person',
+            //   JSON.stringify(this.state.involvedPerson),
+            // );
+            // });
 
-          createApi
-            .createApi()
-            .filterSors(data)
-            .then((res: any) => {
-              console.log(res);
-              // console.log(currentProj.data.data.);
-              var sors = [];
-              for (let i = 0; i < res.data.data.report.length; i++) {
-                console.log(res.data.data.report[i]);
+            createApi
+              .createApi()
+              .filterSors(data)
+              .then((res: any) => {
+                console.log(res);
+                // console.log(currentProj.data.data.);
+                var sors = [];
+                for (let i = 0; i < res.data.data.report.length; i++) {
+                  console.log(res.data.data.report[i]);
 
-                var rep = filterAndMappingPersons(
-                  res.data.data.report[i],
-                  currentProj.data.data.involved_persons,
-                );
+                  var rep = filterAndMappingPersons(
+                    res.data.data.report[i],
+                    currentProj.data.data.involved_persons,
+                  );
 
-                console.log(res.data.data.report[i]);
-                sors.push(rep);
-              }
-              console.log('sors');
-              console.log(sors);
+                  console.log(res.data.data.report[i]);
+                  sors.push(rep);
+                }
+                console.log('sors');
+                console.log(sors);
 
-              this.setState({loading: false});
+                this.setState({loading: false});
 
-              this.setState({reports: sors});
-            })
-            .catch((err) => {
-              this.setState({loading: false});
-            });
-        });
+                this.setState({reports: sors});
+              })
+              .catch((err) => {
+                this.setState({loading: false});
+              });
+          });
 
-      this.setState({loading: true});
-    });
+        this.setState({loading: true});
+      });
+    } else {
+      this.setState({reports: this.props.route.params.data});
+    }
   }
 
   _onRefresh = () => {
