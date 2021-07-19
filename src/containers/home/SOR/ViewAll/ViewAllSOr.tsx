@@ -260,6 +260,15 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     // console.log('d');
     // console.log(d);
 
+
+    this.setState({
+      draft : [],
+inprogress : [],
+exclated : [],
+pendingClosure : [],
+closed : [],
+    })
+
     await savedCurrentProject(d.project_id._id);
     this.componentDidMount();
   };
