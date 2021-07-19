@@ -52,8 +52,9 @@ class Settings extends React.Component<SettingsProps, any> {
       industry: '',
       role: '',
       img_url: '',
-      type: "",
-      profileupload : false,
+
+      type: '',
+      profileupload: false,
       loading: false,
     };
   }
@@ -67,7 +68,6 @@ class Settings extends React.Component<SettingsProps, any> {
       industry: this.props.route.params.data.industry,
       img_url: this.props.route.params.data.img_url,
     });
-
   }
 
   updateUser = () => {
@@ -79,28 +79,21 @@ class Settings extends React.Component<SettingsProps, any> {
           role: this.state.role,
           department: this.state.department,
           industry: this.state.industry,
-          img_url: this.props.route.params.data.img_url
+          img_url: this.props.route.params.data.img_url,
         };
 
-
-
-
-
-
-        if(this.state.type !== ' '){
-
-          profileUploader(this.state.type, this.state.type.split('/')[1], this.state.base64)
-          .then((uploadUri : any) => {
-
-            data['img_url'] = uploadUri[0]
-
-  
-          })
-          .catch((err) => console.log(err));
-        }else{
-
-
-          data['img_url'] = this.state.img_url
+        if (this.state.type !== ' ') {
+          profileUploader(
+            this.state.type,
+            this.state.type.split('/')[1],
+            this.state.base64,
+          )
+            .then((uploadUri: any) => {
+              data['img_url'] = uploadUri[0];
+            })
+            .catch((err) => console.log(err));
+        } else {
+          data['img_url'] = this.state.img_url;
         }
         api
           .createApi()
@@ -136,13 +129,12 @@ class Settings extends React.Component<SettingsProps, any> {
               ext: [res.type.split('/')[1]],
             };
 
-
-            this.setState( {img_url : res.uri })
-
             profileUploader(res.type, res.type.split('/')[1], res.base64)
-              .then((uploadUri : any) => {
-
-                this.setState({ uploadedImage : uploadUri[0] })
+              .then((uploadUri: any) => {
+                this.setState({img_url: uploadUri[0]});
+                console.log('uploaded image');
+                console.log(uploadUri[0]);
+                // this.setState({uploadedImage:});
               })
               .catch((err) => console.log(err));
 
@@ -150,29 +142,6 @@ class Settings extends React.Component<SettingsProps, any> {
             this.setState({});
 
             console.log(res);
-            // this.setState({
-            //   photoModal: false,
-            //   uploadedImage: res.uri,
-            //   photofileType: res.type,
-            //   fileType: res.type.split('/')[1],
-            // });
-          }
-        })
-        .catch((err) => {
-          this.setState({photoModal: false, uploadedImage: ''});
-        });
-    } else {
-      cameraCapture()
-        .then((res: any) => {
-          if (res.didCancel == true) {
-            this.setState({photoModal: false, uploadedImage: ''});
-          } else {
-            this.setState({
-              photoModal: false,
-              uploadedImage: res.uri,
-              photofileType: res.type,
-              fileType: res.type.split('/')[1],
-            });
           }
         })
         .catch((err) => {
@@ -215,9 +184,8 @@ class Settings extends React.Component<SettingsProps, any> {
 
             <TouchableOpacity
               onPress={() => {
-                
-                
-                this.imgCap('upload')}}
+                this.imgCap('upload');
+              }}
               style={{width: wp(50), alignSelf: 'center'}}>
               <Avatar
                 containerStyle={{alignSelf: 'center', marginTop: wp(3)}}
@@ -226,8 +194,8 @@ class Settings extends React.Component<SettingsProps, any> {
                 source={{
                   uri:
                     this.state.img_url === ' '
-                    ? 'https://via.placeholder.com/150'
-                      : this.state.img_url
+                      ? 'https://via.placeholder.com/150'
+                      : this.state.img_url,
                 }}
               />
 

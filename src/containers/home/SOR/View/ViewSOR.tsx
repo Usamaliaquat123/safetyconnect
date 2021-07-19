@@ -172,21 +172,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
   componentDidMount = () => {
     console.log('line 173');
-    console.log(this.props.route.params.data.submit_to);
+    console.log(this.props.route.params.data);
     console.log(this.props.route.params.data.involved_persons);
 
-    // AsyncStorage.getItem('involved_person').then((involved_person: any) => {
-    //   var paramas = this.props.route.params.data;
-    //   var rep = filterAndMappingPersons(paramas, JSON.parse(involved_person));
 
-    //   console.log('involved_person');
-    //   // console.log(involved_person);
-    //   console.log(rep);
-    // });
 
-    // consoe.
 
-    // this.getFilesFromServer(this.props.route.params.data.attachments);
+
+
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
 
@@ -194,16 +187,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         this.props.route.params.data.repeatedSor,
         currentProj,
       );
-      // getSorData(this.props.route.params.data._id, currentProj).then(
-      //   (sorData: any) => {
-      //     console.log('sorData');
-
-      //     this.setState({sor: sorData[0]});
-      //     console.log(sorData);
-
-      //   },
-      // );
-
+  
       createApi
         .createApi()
         .getProject({projectid: currentProj})
