@@ -1075,61 +1075,18 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           <Animated.View
             style={[styles.content, {marginTop: this.state.contentAnim}]}>
             {/* Observation Details */}
-            <View
-              style={{
-                // marginTop: wp(3),
-                marginBottom: wp(3),
-                paddingLeft: wp(3),
-                paddingRight: wp(3),
-              }}>
+            <View style={styles.observationDcontent}>
               {/* Observation ID */}
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-
-                  alignItems: 'center',
-                }}>
-                <Text
-                  style={{
-                    fontFamily: fonts.SFuiDisplayMedium,
-                    fontSize: wp(4),
-                    width: '50%',
-                  }}>
-                  Observation ID:
-                </Text>
-                <Text
-                  style={{
-                    // marginLeft: wp(10),
-                    width: '50%',
-                    fontFamily: fonts.SFuiDisplayLight,
-                    fontSize: wp(3),
-                  }}>
-                  112233
-                </Text>
+              <View style={styles.observationIdContainer}>
+                <Text style={styles.observationIDText}>Observation ID:</Text>
+                <Text style={styles.observationIDAns}>112233</Text>
               </View>
               {/* Observation Type */}
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-
-                  alignItems: 'center',
-                }}>
-                <Text
-                  style={{
-                    width: '50%',
-                    fontFamily: fonts.SFuiDisplayMedium,
-                    fontSize: wp(4),
-                  }}>
+              <View style={styles.observationTypeContainer}>
+                <Text style={styles.observationTypeText}>
                   Observation Type:
                 </Text>
-                <View
-                  style={{
-                    width: '50%',
-                  }}>
+                <View style={styles.observationTypeAns}>
                   <TouchableOpacity style={styles.classittleicon}>
                     {this.state.sor_type != 'lsr' ? (
                       <View>
@@ -1209,80 +1166,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </View>
               </View>
               {/* Reported on  */}
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-
-                  alignItems: 'center',
-                }}>
-                <Text
-                  style={{
-                    width: '50%',
-                    fontFamily: fonts.SFuiDisplayMedium,
-                    fontSize: wp(4),
-                  }}>
-                  Reported on:
-                </Text>
-                <Text
-                  style={{
-                    width: '50%',
-                    fontFamily: fonts.SFuiDisplayLight,
-                    fontSize: wp(3),
-                  }}>
+              <View style={styles.reportedOnContainer}>
+                <Text style={styles.reportedOnText}>Reported on:</Text>
+                <Text style={styles.reportedOnAns}>
                   {moment(this.state.time).format('MMM DD, YYYY LT')}
                 </Text>
               </View>
               {/* Project */}
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-
-                  alignItems: 'center',
-                }}>
-                <Text
-                  style={{
-                    width: '50%',
-                    fontFamily: fonts.SFuiDisplayMedium,
-                    fontSize: wp(4),
-                  }}>
-                  Project:
-                </Text>
-                <Text
-                  style={{
-                    width: '50%',
-                    fontFamily: fonts.SFuiDisplayLight,
-                    fontSize: wp(3),
-                  }}>
-                  {this.state.projectName}
-                </Text>
+              <View style={styles.projectContainer}>
+                <Text style={styles.projectText}>Project:</Text>
+                <Text style={styles.projectAns}>{this.state.projectName}</Text>
               </View>
               {/* Location */}
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-
-                  alignItems: 'center',
-                }}>
-                <Text
-                  style={{
-                    width: '50%',
-                    fontFamily: fonts.SFuiDisplayMedium,
-                    fontSize: wp(4),
-                  }}>
-                  Location:
-                </Text>
-                <Text
-                  style={{
-                    width: '50%',
-                    fontFamily: fonts.SFuiDisplayLight,
-                    fontSize: wp(3),
-                  }}>
+              <View style={styles.locationContainer}>
+                <Text style={styles.locationText}>Location:</Text>
+                <Text style={styles.locationAns}>
                   {this.props.route.params.data.location}
                 </Text>
               </View>

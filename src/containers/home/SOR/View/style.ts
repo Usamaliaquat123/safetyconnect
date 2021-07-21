@@ -53,6 +53,103 @@ const styles = StyleSheet.create({
     paddingBottom: wp(8),
     // height: wp(150),
   },
+  observationDcontent: {
+    // marginTop: wp(3),
+    marginBottom: wp(3),
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+  },
+
+  // Observation id
+  observationIdContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+
+    alignItems: 'center',
+  },
+  observationIDText: {
+    fontFamily: fonts.SFuiDisplayMedium,
+    fontSize: wp(4),
+    width: '50%',
+  },
+  observationIDAns: {
+    // marginLeft: wp(10),
+    width: '50%',
+    fontFamily: fonts.SFuiDisplayLight,
+    fontSize: wp(3),
+  },
+  // Observation Type
+  observationTypeContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+
+    alignItems: 'center',
+  },
+  observationTypeText: {
+    width: '50%',
+    fontFamily: fonts.SFuiDisplayMedium,
+    fontSize: wp(4),
+  },
+  observationTypeAns: {
+    width: '50%',
+  },
+  // Reported on
+  reportedOnContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+
+    alignItems: 'center',
+  },
+  reportedOnText: {
+    width: '50%',
+    fontFamily: fonts.SFuiDisplayMedium,
+    fontSize: wp(4),
+  },
+  reportedOnAns: {
+    width: '50%',
+    fontFamily: fonts.SFuiDisplayLight,
+    fontSize: wp(3),
+  },
+  //Project
+  projectContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+
+    alignItems: 'center',
+  },
+  projectText: {
+    width: '50%',
+    fontFamily: fonts.SFuiDisplayMedium,
+    fontSize: wp(4),
+  },
+  projectAns: {
+    width: '50%',
+    fontFamily: fonts.SFuiDisplayLight,
+    fontSize: wp(3),
+  },
+  // Location
+  locationContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+
+    alignItems: 'center',
+  },
+  locationText: {
+    width: '50%',
+    fontFamily: fonts.SFuiDisplayMedium,
+    fontSize: wp(4),
+  },
+  locationAns: {
+    width: '50%',
+    fontFamily: fonts.SFuiDisplayLight,
+    fontSize: wp(3),
+  },
+
   clasifyT: {
     fontSize: wp(3),
     marginTop: wp(1),
