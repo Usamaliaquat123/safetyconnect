@@ -149,7 +149,48 @@ const styles = StyleSheet.create({
     fontFamily: fonts.SFuiDisplayLight,
     fontSize: wp(3),
   },
+  // //////////////////////
 
+  involvedPersonContainertext: {
+    fontSize: wp(3.5),
+    fontFamily: fonts.SFuiDisplayLight,
+  },
+  involvedPersonText: {
+    fontSize: wp(3.5),
+  },
+  arrowRightActionsAndRecommendations: {
+    position: 'absolute',
+    right: wp(3),
+    padding: wp(2),
+    borderRadius: wp(2),
+    top: wp(2.7),
+    backgroundColor: colors.lightGrey,
+  },
+  attachmentDownloadContainer: {
+    position: 'absolute',
+    right: wp(1),
+    top: wp(1.5),
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  aaddNewAttachmentText: {
+    fontSize: wp(3),
+    fontWeight: 'bold',
+    opacity: 0.5,
+    color: colors.primary,
+  },
+  saveAsDraftAndSubmitBtns: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: wp(5),
+  },
+
+  previewAndMarkAsCompleteBtns: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: wp(10),
+    marginTop: wp(3),
+  },
   clasifyT: {
     fontSize: wp(3),
     marginTop: wp(1),

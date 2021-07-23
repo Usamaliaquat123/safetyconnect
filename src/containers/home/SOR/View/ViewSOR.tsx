@@ -1205,14 +1205,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 />
               </View>
               <View style={{flexDirection: 'row'}}>
-                <Text
-                  style={{
-                    fontSize: wp(3.5),
-                    fontFamily: fonts.SFuiDisplayLight,
-                  }}>
+                <Text style={styles.involvedPersonContainertext}>
                   Involved Person:{' '}
                 </Text>
-                <Text style={{fontSize: wp(3.5)}}>
+                <Text style={styles.involvedPersonText}>
                   {/* {this.state.involvedPerson[0].name} */}
                 </Text>
               </View>
@@ -1413,13 +1409,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               ) : (
                 <TouchableOpacity
                   onPress={() => this.setState({selectedRisk: false})}>
-                  {/* <View style={styles.riskIcon}>
-                    <Text style={styles.riskIconText}>
-                      {this.props.route.params.data.risk.likelihood *
-                        this.props.route.params.data.risk.severity}
-                    </Text>
-                  </View> */}
-
                   <View
                     style={[styles.potentialRiskContainer, {marginTop: wp(3)}]}>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -1577,8 +1566,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       </View>
                     </TouchableOpacity>
                   </View>
-                  {/* countributoryCauses : "",
-      rootCauses : "" */}
                   {this.state.fiveWhytoggle == true ? (
                     <FiveWhy
                       onChangeCountributory={(e: any) =>
@@ -1721,14 +1708,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         });
                       }
                     }}
-                    style={{
-                      position: 'absolute',
-                      right: wp(3),
-                      padding: wp(2),
-                      borderRadius: wp(2),
-                      top: wp(2.7),
-                      backgroundColor: colors.lightGrey,
-                    }}>
+                    style={styles.arrowRightActionsAndRecommendations}>
                     <Icon
                       size={wp(4)}
                       name="arrowright"
@@ -1848,14 +1828,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       <Text style={styles.attchFileText}>
                         {d.name.substring(0, 10)}.../.{d.type}
                       </Text>
-                      <View
-                        style={{
-                          position: 'absolute',
-                          right: wp(1),
-                          top: wp(1.5),
-                          alignItems: 'center',
-                          flexDirection: 'row',
-                        }}>
+                      <View style={styles.attachmentDownloadContainer}>
                         <TouchableOpacity
                           onPress={() => {
                             if (d.upload != 'self') {
@@ -1917,13 +1890,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     type="antdesign"
                     color={colors.primary}
                   />
-                  <Text
-                    style={{
-                      fontSize: wp(3),
-                      fontWeight: 'bold',
-                      opacity: 0.5,
-                      color: colors.primary,
-                    }}>
+                  <Text style={styles.aaddNewAttachmentText}>
                     Add New Attachments
                   </Text>
                 </TouchableOpacity>
@@ -1956,15 +1923,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 <Text style={styles.sbBtnText}>Re-assign to </Text>
                 {this.state.reAssignToArrTags.length < 1 ? (
                   <>
-                    <View
-                      style={[
-                        styles.optnselector,
-                        // this.state.selectedInputIndex == 5
-                        //   ? {borderColor: colors.green}
-                        //   : null,
-                      ]}>
+                    <View style={[styles.optnselector]}>
                       <TextInput
-                        // onFocus={() => this.setState({selectedInputIndex: 5})}
                         underlineColorAndroid="transparent"
                         onChangeText={(v: any) => {
                           if (v === '') {
@@ -2144,44 +2104,46 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
               {/* Repeated sors */}
 
-              <View>
-                <Text
-                  style={{
-                    fontSize: wp(3.7),
-                    marginBottom: wp(3),
-                    fontFamily: fonts.SFuiDisplayBold,
-                  }}>
-                  Similar Observations
-                </Text>
+              {this.state.repeatedSors.length != 0 && (
+                <View>
+                  <Text
+                    style={{
+                      fontSize: wp(3.7),
+                      marginBottom: wp(3),
+                      fontFamily: fonts.SFuiDisplayBold,
+                    }}>
+                    Similar Observations
+                  </Text>
 
-                {this.state.repeatedSors.slice(0, 3).map((d, i) => (
-                  <View style={{marginBottom: wp(3), alignSelf: 'center'}}>
-                    <Card
-                      key={i}
-                      // type={'all'}
-                      data={d}
-                      onPress={(d: Isor) =>
-                        this.props.navigation.navigate('ViewSOR', {
-                          data: d,
-                        })
-                      }
-                      name={d.created_by}
-                      date={d.occured_at}
-                      risk={d.risk.severity * d.risk.likelihood}
-                      viewPortWidth={80}
-                      observation={d.details}
-                      classify={d.sor_type}
-                      iconConf={classifySor.find(
-                        (e: any) => e.title == d.sor_type,
-                      )}
-                      location={d.location}
-                      style={{width: wp(80)}}
-                      user1={d.user1}
-                      user2={d.user2}
-                    />
-                  </View>
-                ))}
-              </View>
+                  {this.state.repeatedSors.slice(0, 3).map((d, i) => (
+                    <View style={{marginBottom: wp(3), alignSelf: 'center'}}>
+                      <Card
+                        key={i}
+                        // type={'all'}
+                        data={d}
+                        onPress={(d: Isor) =>
+                          this.props.navigation.navigate('ViewSOR', {
+                            data: d,
+                          })
+                        }
+                        name={d.created_by}
+                        date={d.occured_at}
+                        risk={d.risk.severity * d.risk.likelihood}
+                        viewPortWidth={80}
+                        observation={d.details}
+                        classify={d.sor_type}
+                        iconConf={classifySor.find(
+                          (e: any) => e.title == d.sor_type,
+                        )}
+                        location={d.location}
+                        style={{width: wp(80)}}
+                        user1={d.user1}
+                        user2={d.user2}
+                      />
+                    </View>
+                  ))}
+                </View>
+              )}
             </View>
             {/* Line
             <View style={styles.lineheight} /> */}
@@ -2587,12 +2549,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               )}
             </View>
             {/* Submit btns  */}
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                marginTop: wp(5),
-              }}>
+            <View style={styles.saveAsDraftAndSubmitBtns}>
               <TouchableOpacity
                 onPress={() => this.onSubmitUpdateSor(1)}
                 style={styles.saveAsDraftContainer}>
@@ -2604,13 +2561,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 <Text style={styles.saveAsSubmitText}>Submit</Text>
               </TouchableOpacity>
             </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                marginBottom: wp(10),
-                marginTop: wp(3),
-              }}>
+            <View style={styles.previewAndMarkAsCompleteBtns}>
               <TouchableOpacity
                 onPress={() =>
                   this.props.navigation.navigate('Preview', {
@@ -2640,6 +2591,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           </Animated.View>
         </ScrollView>
 
+        {/* Edit Assigners modal */}
         <Model
           animationIn={'bounceInUp'}
           animationOut={'bounceOutDown'}
@@ -2742,7 +2694,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             </View>
           </View>
         </Model>
-        {/* Add Involved and Submitted to Users  */}
+        {/* Edit Involved and Submitted to Users  */}
 
         <Model
           animationIn={'bounceInUp'}
@@ -2894,11 +2846,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             </View>
           </View>
         </Model>
-        {/*
-         *
-         * @ Edit Actions and Recommendations :Options *
-         * desc: Acrions popup that allow us to edit or delete actions
-         */}
+
+        {/* Image Viewer Modal */}
         <Modal visible={this.state.imageViewer} transparent={true}>
           <TouchableOpacity
             onPress={() => this.setState({imageViewer: false})}
@@ -2918,6 +2867,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             imageUrls={this.state.images}
           />
         </Modal>
+        {/*
+         *
+         * @ Edit Actions and Recommendations :Options *
+         * desc: Acrions popup that allow us to edit or delete actions
+         */}
         {this.state.SuggestionPop == true && (
           <SuggestionsPop
             suggestedUsers={this.state.involvedPerson}
@@ -3032,19 +2986,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             )}
           </Model>
         ) : null}
-
-        {/* 
-        <Model
-          animationIn={'bounceInUp'}
-          animationOut={'bounceOutDown'}
-          animationInTiming={1000}
-          animationOutTiming={1000}
-          isVisible={this.state.loading}
-          onBackdropPress={() => this.setState({loading: false})}>
-
-
-
-        </Model> */}
       </Animated.View>
     );
   }
