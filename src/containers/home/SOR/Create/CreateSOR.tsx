@@ -1336,14 +1336,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   </Text>
                   <TextInput
                     value={this.state.observation}
-                    style={{
-                      marginTop: wp(-4.5),
-                      width: wp(20),
-                      borderBottomWidth: 0,
-                      color: colors.primary,
-                      fontWeight: 'bold',
-                      fontSize: wp(3),
-                    }}
+                    style={styles.textInputOfArea}
                     onChangeText={(e) => this.setState({observation: e})}
                     placeholder={'@Add Area'}
                   />
@@ -1351,13 +1344,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 </View>
 
                 <View style={{flexDirection: 'row', marginTop: wp(-7)}}>
-                  <Text
-                    style={{
-                      fontSize: wp(3),
-                      opacity: 0.5,
-                      marginTop: wp(3),
-                      marginLeft: wp(1),
-                    }}>
+                  <Text style={styles.textinputItHappenAt}>
                     <Text style={{fontWeight: 'bold'}}>
                       {moment(this.state.todayDateCallender).format(
                         'MMMM DD, YYYY',
@@ -1366,12 +1353,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     at about{' '}
                   </Text>
 
-                  <Text
-                    style={{
-                      fontFamily: fonts.SFuiDisplayBold,
-                      marginTop: wp(3),
-                      fontSize: wp(3),
-                    }}>
+                  <Text style={styles.textInputTime}>
                     {moment().format('LT')}
                   </Text>
                 </View>

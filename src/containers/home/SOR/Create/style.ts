@@ -722,6 +722,26 @@ const styles = StyleSheet.create({
     paddingLeft: wp(3),
     paddingRight: wp(3),
   },
+
+  textInputOfArea: {
+    marginTop: wp(-4.5),
+    width: wp(20),
+    borderBottomWidth: 0,
+    color: colors.primary,
+    fontWeight: 'bold',
+    fontSize: wp(3),
+  },
+  textinputItHappenAt: {
+    fontSize: wp(3),
+    opacity: 0.5,
+    marginTop: wp(3),
+    marginLeft: wp(1),
+  },
+  textInputTime: {
+    fontFamily: fonts.SFuiDisplayBold,
+    marginTop: wp(3),
+    fontSize: wp(3),
+  },
 });
 
 export default styles;
