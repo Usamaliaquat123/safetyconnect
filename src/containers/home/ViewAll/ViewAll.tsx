@@ -81,7 +81,6 @@ class ViewAll extends React.Component<ViewAllProps, any> {
 
     if (typeof this.props.route.params.data == 'number') {
       getCurrentProject().then((currentProj: any) => {
-        console.log(currentProj);
         this.setState({projectId: currentProj});
 
         createApi
@@ -95,8 +94,6 @@ class ViewAll extends React.Component<ViewAllProps, any> {
               query: {status: [this.props.route.params.data]},
             };
 
-            console.log(currentProj.data.data.involved_persons);
-
             // AsyncStorage.setItem(
             //   'involved_person',
             //   JSON.stringify(this.state.involvedPerson),
@@ -107,22 +104,10 @@ class ViewAll extends React.Component<ViewAllProps, any> {
               .createApi()
               .filterSors(data)
               .then((res: any) => {
-                console.log(res);
-                // console.log(currentProj.data.data.);
                 var sors = [];
                 for (let i = 0; i < res.data.data.report.length; i++) {
-                  console.log(res.data.data.report[i]);
-
-                  // var rep = filterAndMappingPersons(
-                  //   res.data.data.report[i],
-                  //   currentProj.data.data.involved_persons,
-                  // );
-
-                  console.log(res.data.data.report[i]);
                   sors.push(res.data.data.report[i]);
                 }
-                // console.log('sors');
-                // console.log(res.data.data.report[i]);
 
                 this.setState({loading: false});
 
@@ -157,7 +142,6 @@ class ViewAll extends React.Component<ViewAllProps, any> {
         .createApi()
         .getSors(this.state.projectId, e[i])
         .then((res: any) => {
-          console.log(res.data.data.report[0]);
           this.state.repeatedSors.push(res.data.data.report[0]);
           this.setState({});
         });
