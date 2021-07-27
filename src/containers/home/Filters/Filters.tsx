@@ -76,9 +76,8 @@ export class Filters extends React.Component<FiltersProps, any> {
   };
   // submiti filters
   submitFilters = (filterObject: any) => {
-    console.log('filterObject');
-    console.log(filterObject);
     AsyncStorage.setItem('filters', JSON.stringify(filterObject));
+    this.props.navigation.navigate('Home');
   };
 
   //   get All userst
@@ -348,14 +347,16 @@ export class Filters extends React.Component<FiltersProps, any> {
               </TouchableOpacity>
             </View>
             <TouchableOpacity
-              onPress={() =>
+              onPress={() => {
                 this.setState({
                   submittedSelected: '',
                   selectedObserver: '',
                   selectedObsType: '',
                   filterObject: {},
-                })
-              }>
+                });
+                AsyncStorage.setItem('filters', JSON.stringify({}));
+                this.props.navigation.navigate('Home');
+              }}>
               <Text
                 style={{
                   marginTop: wp(10),

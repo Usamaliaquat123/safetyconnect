@@ -301,7 +301,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           .keyFindings,
       });
 
-
       //   // If contributoryCauses exists
       // if (this.props.route.params.data.justifications[0].contributoryCauses) {
       //   this.setState({
@@ -368,7 +367,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             ? this.state.esclate_to.map((d: any) => d.email)
             : this.state.reAssignToArrTags.map((d: any) => d.email) /** done */,
         status: this.state.esclate_to.length == 0 ? status : 3 /** done */,
-        attachments: this.state.attachments.map(d => d.name) /** done */,
+        attachments: this.state.attachments.map((d) => d.name) /** done */,
         comments: this.props.route.params.data.comments /** done */,
         updatedAt: Date.now() /** done */,
       },
@@ -514,7 +513,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             (d) => (d = `report/${d}`),
           );
 
-
           // var types = res.data.data.all_comments[i].files.map(
           //   (d: any) => (d = d.split('.')[1]),
           // );
@@ -549,7 +547,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 }
 
                 //     res.data.data.all_comments[i].files[k]
-
               }
             });
 
@@ -774,9 +771,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
     // var mapped = imageAndVideoObjectMap(attachments);
 
-
     var dta = attach.map((d) => `report/${d}`);
-
 
     var data = {
       bucket: 'hns-codist',
@@ -831,7 +826,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           }
         }
       });
-
   };
 
   // getFilesFromServer = (attach?: any) => {};
@@ -918,7 +912,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             attach.splice(0, 0, imgData);
             // this.state.uploadedfiles.push(filename);
             this.setState({});
-
           },
         );
         // this.state.filename.push(imgData);
