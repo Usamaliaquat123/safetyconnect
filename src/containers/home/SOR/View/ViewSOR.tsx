@@ -368,6 +368,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   onSubmitUpdateSor = async (status?: number) => {
     this.setState({loading: true, errorModal: true});
 
+    console.log('this.state.attachment');
+    console.log(this.state.attachment);
     var liklihood = this.state.liklihood.filter(
       (d: any) => d.selected == true,
     )[0].value;
@@ -436,8 +438,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 .createApi()
                 .createFiveWhy(obj)
                 .then((res: any) => {
-                  console.log(res);
-
                   setTimeout(() => {
                     this.props.navigation.goBack();
                   }, 3000);
@@ -460,8 +460,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 rootCauses: [{category: 'sds', subCategory: ['sdsd']}],
               };
 
-              console.log('updatefiveWhy');
-              console.log(updatefiveWhy);
               createApi
                 .createApi()
                 .editFiveWhy(updatefiveWhy)
@@ -491,7 +489,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           }
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // delete comment through commentId
@@ -945,6 +945,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         var imgData = {
           name: res.name,
           uri: res.uri,
+          upload: '',
           type: res.type,
         };
         this.setState({fileLoading: true});
@@ -953,6 +954,20 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           (filename: any) => {
             console.log(filename);
             imgData['name'] = filename;
+
+            var data = {
+              bucket: 'hns-codist',
+              report: [`report/${filename}`],
+            };
+
+            console.log(data);
+            createApi
+              .createApi()
+              .getFileApi(data)
+              .then((d: any) => {
+                console.log(d);
+                imgData['uri'] = d.data[0];
+              });
             // this.setState({fileLoading: false});
             attach.splice(0, 0, imgData);
             // console.log(attach)
