@@ -368,7 +368,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             ? this.state.esclate_to.map((d: any) => d.email)
             : this.state.reAssignToArrTags.map((d: any) => d.email) /** done */,
         status: this.state.esclate_to.length == 0 ? status : 3 /** done */,
-        attachments: this.state.attachments /** done */,
+        attachments: this.state.attachments.map(d => d.name) /** done */,
         comments: this.props.route.params.data.comments /** done */,
         updatedAt: Date.now() /** done */,
       },

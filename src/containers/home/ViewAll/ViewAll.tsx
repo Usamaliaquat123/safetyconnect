@@ -113,16 +113,16 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                 for (let i = 0; i < res.data.data.report.length; i++) {
                   console.log(res.data.data.report[i]);
 
-                  var rep = filterAndMappingPersons(
-                    res.data.data.report[i],
-                    currentProj.data.data.involved_persons,
-                  );
+                  // var rep = filterAndMappingPersons(
+                  //   res.data.data.report[i],
+                  //   currentProj.data.data.involved_persons,
+                  // );
 
                   console.log(res.data.data.report[i]);
-                  sors.push(rep);
+                  sors.push(res.data.data.report[i]);
                 }
-                console.log('sors');
-                console.log(sors);
+                // console.log('sors');
+                // console.log(res.data.data.report[i]);
 
                 this.setState({loading: false});
 
