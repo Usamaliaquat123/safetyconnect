@@ -190,29 +190,37 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             projectName: res.data.data.project_name,
             involvedPerson: res.data.data.involved_persons,
           });
+
+          // res.data.data.involved_persons.map((item: any) => {
+
+          // })
+
+          console.log('real big boys');
+          console.log(res.data.data.involved_persons);
+
           // filterAndMappingPersons(
           //   this.props.route.params.data,
           //   res.data.data.involved_persons,
           // );
-          console.log('this.props.route.params.data.involved_persons');
-          console.log(this.props.route.params.data.involved_persons);
-          console.log(res.data.data.involved_persons);
+          // console.log('this.props.route.params.data.involved_persons');
+          // console.log(this.props.route.params.data.involved_persons);
+          // console.log(res.data.data.involved_persons);
 
           this.props.route.params.data.involved_persons.map((d) => {
             this.setState({
               involvedPerson: res.data.data.involved_persons.filter(
-                (i) => i.id == d,
+                (i) => i._id == d,
               ),
             });
           });
 
-          // console.log('this.state.involvedPerson --- yahoooooooooo');
-          // console.log(this.state.involvedPerson);
+          console.log('this.state.involvedPerson --- yahoooooooooo');
+          console.log(this.state.involvedPerson.map((d) => d.name));
 
-          this.mappingInvolved(
-            res.data.data.involved_persons,
-            this.props.route.params.data.involved_persons[0],
-          );
+          // this.mappingInvolved(
+          //   res.data.data.involved_persons,
+          //   this.props.route.params.data.involved_persons[0],
+          // );
 
           // console.log('on line 189');
           // console.log(this.props.route.params.data.involved_persons[0]);
@@ -395,7 +403,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         justification: this.props.route.params.data.justification,
         action_required: this.state.actionsAndRecommendations /** done */,
         location: this.props.route.params.data.location /** done */,
-        submit_to: this.state.submitted_to.map((d: any) => d.email) /** done */,
+        submit_to: this.state.submitted_to /** done */,
         esclate_to:
           this.state.reAssignToArrTags.length == 0
             ? this.state.esclate_to.map((d: any) => d.email)
@@ -1224,7 +1232,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   Involved Person:{' '}
                 </Text>
                 <Text style={styles.involvedPersonText}>
-                  {/* {this.state.involvedPerson[0].name} */}
+                  {this.state.involvedPerson.map((d) => d.name).join(',')}
                 </Text>
               </View>
             </View>
@@ -1930,7 +1938,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   Submitted To:
                 </Text>
                 <Text style={styles.initializeByAndSubmitedToAnswer}>
-                  {this.state.submitted_to[0].name}
+                  {this.state.submitted_to[0]}
                 </Text>
               </View>
               {/* REASSIGNED to  */}
