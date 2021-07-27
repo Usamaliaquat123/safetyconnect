@@ -171,9 +171,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
-    console.log('line 173');
-    console.log(this.props.route.params.data);
-
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
 
@@ -195,16 +192,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
           // })
 
-          console.log('real big boys');
-          console.log(res.data.data.involved_persons);
-
           // filterAndMappingPersons(
           //   this.props.route.params.data,
           //   res.data.data.involved_persons,
           // );
-          // console.log('this.props.route.params.data.involved_persons');
-          // console.log(this.props.route.params.data.involved_persons);
-          // console.log(res.data.data.involved_persons);
 
           this.props.route.params.data.involved_persons.map((d) => {
             this.setState({
@@ -214,16 +205,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             });
           });
 
-          console.log('this.state.involvedPerson --- yahoooooooooo');
-          console.log(this.state.involvedPerson.map((d) => d.name));
-
           // this.mappingInvolved(
           //   res.data.data.involved_persons,
           //   this.props.route.params.data.involved_persons[0],
           // );
-
-          // console.log('on line 189');
-          // console.log(this.props.route.params.data.involved_persons[0]);
 
           for (let i = 0; i < res.data.data.involved_persons.length; i++) {
             res.data.data.involved_persons[i]['selected'] = false;
@@ -281,8 +266,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     for (let i = 0; i < e.length; i++) {
       const {data} = await createApi.createApi().getSors(projectid, e[i]);
       const {data: res} = data;
-      console.log('res hai bhai');
-      console.log(res);
       this.setState(
         (prevState) => {
           return {
@@ -290,31 +273,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             repeatedSors: prevState.repeatedSors.concat(res.report[0]),
           };
         },
-        () => {
-          console.log(
-            'updated state = ',
-            this.state.repeatedSors,
-            this.state.repeatedSors.length,
-          );
-        },
+        () => {},
       );
     }
-
-    // console.log('e');
-    // console.log(e);
-    // setTimeout(() => {
-    // this.setState({repeatedSors: data});
-
-    console.log('this.props.route.params.data.repeatedSor');
-    console.log(this.state.repeatedSors);
-    // }, 1000);
   };
   // FIVE WHY
   getFiveWHY = () => {
     // Question map and them push
-    // console.log('five why')
-    console.log('simon');
-    console.log(this.props.route.params.data);
     if (this.props.route.params.data.justifications.length != 0) {
       this.props.route.params.data.justifications[0].justification.question.map(
         (d, i) => {
@@ -336,9 +301,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           .keyFindings,
       });
 
-      // console.log(this.state.rootCauses);
-      // console.log(this.state.countributoryCauses);
-      // console.log(this.props.route.params.data.justifications[0]);
 
       //   // If contributoryCauses exists
       // if (this.props.route.params.data.justifications[0].contributoryCauses) {
@@ -376,15 +338,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   onSubmitUpdateSor = async (status?: number) => {
     this.setState({loading: true, errorModal: true});
 
-    console.log('this.state.attachment');
-    console.log(this.state.attachment);
     var liklihood = this.state.liklihood.filter(
       (d: any) => d.selected == true,
     )[0].value;
     var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
       .value;
 
-    // console.log(this.state.submitted_to);
     var update = {
       report: {
         _id: this.props.route.params.data._id /** done  */,
@@ -547,8 +506,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         this.props.route.params.data._id,
       )
       .then((res: any) => {
-        // console.log('comments ');
-        // console.log(res.data);
         // AsyncStorage.getItem('involved_person').then((involveppl: any) => {
         // var involvedPersonss = JSON.parse(involveppl);
 
@@ -557,15 +514,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             (d) => (d = `report/${d}`),
           );
 
-          // console.log(rs);
-
-          // console.log(res.data.data.all_comments[i].files[0].split('.')[1]);
 
           // var types = res.data.data.all_comments[i].files.map(
           //   (d: any) => (d = d.split('.')[1]),
           // );
-          // console.log('types');
-          // console.log(types);
           var dta = {
             bucket: 'hns-codist',
             report: rs,
@@ -581,7 +533,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 k < res.data.data.all_comments[i].files.length;
                 k++
               ) {
-                console.log(imgUrl);
                 if (
                   res.data.data.all_comments[i].files[k].split('.')[1] ==
                     'jpeg' ||
@@ -599,7 +550,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
                 //     res.data.data.all_comments[i].files[k]
 
-                var fileTypeData = console.log(imgUrl);
               }
             });
 
@@ -625,7 +575,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           //     res.data.data.all_comments[i].user.email ==
           //     involvedPersonss[j].email
           //   ) {
-          //     console.log(involvedPersonss[i]);
           //     res.data.data.all_comments[i].user = involvedPersonss[j];
           //   }
           // }
@@ -635,7 +584,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           (a, b) => new Date(a.date) - new Date(b.date),
         );
 
-        // console.log('all comments res.data.data.all_comment');
         this.setState({comments: sortedActivities});
         this.setState({});
 
@@ -824,14 +772,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
      *      url: d.uri,
      */
 
-    // console.log(attachments)
     // var mapped = imageAndVideoObjectMap(attachments);
 
-    console.log(attach);
 
     var dta = attach.map((d) => `report/${d}`);
 
-    console.log(dta);
 
     var data = {
       bucket: 'hns-codist',
@@ -842,10 +787,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .createApi()
       .getFileApi(data)
       .then((d: any) => {
-        // console.log(d.data[0]);
         for (let i = 0; i < d.data.length; i++) {
-          console.log('attachments');
-          console.log(d.data[i]);
           if (
             attach[i].split('.')[1] == 'png' ||
             attach[i].split('.')[1] == 'jpeg' ||
@@ -890,7 +832,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         }
       });
 
-    // console.log(this.state.attachments);
   };
 
   // getFilesFromServer = (attach?: any) => {};
@@ -960,7 +901,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
         fileuploader(res.orgType, res.orgType.split('/')[1], res.uri).then(
           (filename: any) => {
-            console.log(filename);
             imgData['name'] = filename;
 
             var data = {
@@ -968,21 +908,17 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               report: [`report/${filename}`],
             };
 
-            console.log(data);
             createApi
               .createApi()
               .getFileApi(data)
               .then((d: any) => {
-                console.log(d);
                 imgData['uri'] = d.data[0];
               });
             // this.setState({fileLoading: false});
             attach.splice(0, 0, imgData);
-            // console.log(attach)
             // this.state.uploadedfiles.push(filename);
             this.setState({});
 
-            console.log(attach);
           },
         );
         // this.state.filename.push(imgData);
@@ -990,7 +926,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
       // res.map((d, i) => {
       //   if (d.type.split('/')[0] == 'image') {
-      //     console.log('imagesdasds');
       //     attach.splice(0, 0, {
       //       type: 'photo',
       //       orgType: d.type,
@@ -2905,7 +2840,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             isOpen={this.state.SuggestionPop}
             suggestions={this.state.allActionsEdit}
             save={(d: any) => {
-              console.log(d);
               if (this.state.newActions == true) {
                 this.state.actionsAndRecommendations.push(d);
               } else {
