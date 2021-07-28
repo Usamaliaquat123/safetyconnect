@@ -1189,7 +1189,24 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   Involved Person:{' '}
                 </Text>
                 <Text style={styles.involvedPersonText}>
-                  {this.state.involvedPerson.map((d) => d.name).join(',')}
+                  {this.state.involvedPerson.length > 1 ? (
+                    <Text>
+                      {' '}
+                      {this.state.involvedPerson.slice(0, 1)[0].name}
+                      {'   '}
+                      <Text
+                        style={{
+                          marginLeft: wp(1),
+                          fontWeight: 'bold',
+                          fontSize: wp(3),
+                        }}>
+                        {this.state.involvedPerson.length - 1} more
+                      </Text>
+                    </Text>
+                  ) : (
+                    this.state.involvedPerson.map((d) => d.name).join(',')
+                  )}
+                  {/* {this.state.involvedPerson.map((d) => d.name).join(',')} */}
                 </Text>
               </View>
             </View>
