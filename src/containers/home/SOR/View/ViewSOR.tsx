@@ -217,13 +217,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               });
             }
 
-            if (this.props.route.params.data.submit_to[0] == d.email) {
+            if (d.email == this.props.route.params.data.submit_to[0]) {
               notifiedToAndInvolved.slice(i);
             }
-          });
 
-          console.log('notifiedToAndInvolved');
-          console.log(notifiedToAndInvolved);
+            console.log('notifiedToAndInvolved');
+            console.log(notifiedToAndInvolved);
+          });
 
           // this.mappingInvolved(
           //   res.data.data.involved_persons,
@@ -382,10 +382,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         action_required: this.state.actionsAndRecommendations /** done */,
         location: this.props.route.params.data.location /** done */,
         submit_to: this.state.submitted_to /** done */,
-        esclate_to:
-          this.state.reAssignToArrTags.length == 0
-            ? this.state.esclate_to.map((d: any) => d.email)
-            : this.state.reAssignToArrTags.map((d: any) => d.email) /** done */,
+        esclate_to: this.state.esclate_to,
+        // this.state.reAssignToArrTags.length == 0
+        // : this.state.reAssignToArrTags.map((d: any) => d.email) /** done */,
         status: this.state.esclate_to.length == 0 ? status : 3 /** done */,
         attachments: this.state.attachments.map((d) => d.name) /** done */,
         comments: this.props.route.params.data.comments /** done */,
@@ -2031,7 +2030,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                   (v: involved_persons) => v == d,
                                 ).length != 0
                               ) {
-                                this.state.esclate_to.push(d);
+                                this.state.esclate_to.push(d.email);
                               } else {
                                 return null;
                               }
@@ -2061,6 +2060,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 ) : null}
                 <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
                   <Tags
+                    type={'esclatedTotags'}
                     onClose={(d: any) => {
                       this.setState({
                         esclate_to: this.state.esclate_to.filter(
@@ -2097,9 +2097,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             data: d,
                           })
                         }
-                        // onPress={(d: Isor) => {
-
-                        // }}
                         name={d.created_by}
                         date={d.occured_at}
                         risk={d.risk.severity * d.risk.likelihood}
@@ -2523,52 +2520,52 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               )}
             </View>
 
-            {this.state.allBtnsEnabled ? (
-              <>
-                {/* Submit btns  */}
-                <View style={styles.saveAsDraftAndSubmitBtns}>
-                  <TouchableOpacity
-                    onPress={() => this.onSubmitUpdateSor(1)}
-                    style={styles.saveAsDraftContainer}>
-                    <Text style={styles.saveAsDraftText}>Save as Draft</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => this.onSubmitUpdateSor(2)}
-                    style={styles.saveAsSubmitContainer}>
-                    <Text style={styles.saveAsSubmitText}>Submit</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.previewAndMarkAsCompleteBtns}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      this.props.navigation.navigate('Preview', {
-                        data: this.props.route.params.data,
-                      })
-                    }
-                    style={styles.saveAsDraftContainer}>
-                    <Text style={styles.saveAsDraftText}>Preview</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => {
-                      AsyncStorage.getItem('email').then((email) => {
-                        if (email == this.props.route.params.data.created_by) {
-                          this.onSubmitUpdateSor(5);
-                        } else {
-                          this.onSubmitUpdateSor(3);
-                        }
-                      });
-                    }}
-                    style={[
-                      styles.saveAsSubmitContainer,
-                      {backgroundColor: colors.green},
-                    ]}>
-                    <Text style={[styles.saveAsSubmitText]}>
-                      Mark as Complete
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </>
-            ) : null}
+            {/* {this.state.allBtnsEnabled ? ( */}
+            <>
+              {/* Submit btns  */}
+              <View style={styles.saveAsDraftAndSubmitBtns}>
+                <TouchableOpacity
+                  onPress={() => this.onSubmitUpdateSor(1)}
+                  style={styles.saveAsDraftContainer}>
+                  <Text style={styles.saveAsDraftText}>Save as Draft</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.onSubmitUpdateSor(2)}
+                  style={styles.saveAsSubmitContainer}>
+                  <Text style={styles.saveAsSubmitText}>Submit</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.previewAndMarkAsCompleteBtns}>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate('Preview', {
+                      data: this.props.route.params.data,
+                    })
+                  }
+                  style={styles.saveAsDraftContainer}>
+                  <Text style={styles.saveAsDraftText}>Preview</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    AsyncStorage.getItem('email').then((email) => {
+                      if (email == this.props.route.params.data.created_by) {
+                        this.onSubmitUpdateSor(5);
+                      } else {
+                        this.onSubmitUpdateSor(3);
+                      }
+                    });
+                  }}
+                  style={[
+                    styles.saveAsSubmitContainer,
+                    {backgroundColor: colors.green},
+                  ]}>
+                  <Text style={[styles.saveAsSubmitText]}>
+                    Mark as Complete
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </>
+            {/* // ) : null} */}
           </Animated.View>
         </ScrollView>
 
