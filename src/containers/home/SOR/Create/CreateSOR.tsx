@@ -514,6 +514,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   };
 
   onCreateSor = (status: number) => {
+    console.log(this.state.involvePersonTags);
     var uploadedfiles = [];
     var sorbtns = this.state.classifySorbtns.filter(
       (d: any) => d.selected === true,

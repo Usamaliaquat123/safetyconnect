@@ -189,41 +189,32 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             involvedPerson: res.data.data.involved_persons,
           });
 
-          // res.data.data.involved_persons.map((item: any) => {
-
-          // })
-
-          // filterAndMappingPersons(
-          //   this.props.route.params.data,
-          //   res.data.data.involved_persons,
-          // );
+          var data: Array<any> = [];
 
           this.props.route.params.data.involved_persons.map((d) => {
-            this.setState({
-              involvedPerson: res.data.data.involved_persons.filter(
-                (i) => i._id == d,
-              ),
-            });
+            data.push(
+              res.data.data.involved_persons.filter((i: any) => i._id == d)[0],
+            );
           });
 
-          var notifiedToAndInvolved = this.state.involvedPerson;
+          this.setState({involvedPerson: data});
 
-          notifiedToAndInvolved.map((d: any, i: number) => {
-            if (this.props.route.params.data.esclate_to.length) {
-              this.props.route.params.data.esclate_to.map((e: any) => {
-                if (e.email == d.email) {
-                  notifiedToAndInvolved.slice(i);
-                }
-              });
-            }
+          // notifiedToAndInvolved.map((d: any, i: number) => {
+          //   if (this.props.route.params.data.esclate_to.length) {
+          //     this.props.route.params.data.esclate_to.map((e: any) => {
+          //       if (e.email == d.email) {
+          //         notifiedToAndInvolved.slice(i);
+          //       }
+          //     });
+          //   }
 
-            if (d.email == this.props.route.params.data.submit_to[0]) {
-              notifiedToAndInvolved.slice(i);
-            }
+          //   if (d.email == this.props.route.params.data.submit_to[0]) {
+          //     notifiedToAndInvolved.slice(i);
+          //   }
 
-            console.log('notifiedToAndInvolved');
-            console.log(notifiedToAndInvolved);
-          });
+          //   console.log('notifiedToAndInvolved');
+          //   console.log(notifiedToAndInvolved);
+          // });
 
           // this.mappingInvolved(
           //   res.data.data.involved_persons,
@@ -779,8 +770,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
 
   fileAndImageCapturer = (attach: Array<string>) => {
-    console.log('attach');
-    console.log(attach);
     /*
     /*
      * Image object Map to this
@@ -923,7 +912,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         this.setState({fileLoading: true});
 
         // console.log('res.orgType.split(' / ')[1]');
-        console.log(res.orgType);
+        // console.log(res.orgType);
 
         fileuploader(
           res.orgType,
