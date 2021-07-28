@@ -87,35 +87,39 @@ class ViewAll extends React.Component<ViewAllProps, any> {
           .createApi()
           .getProject({projectid: currentProj})
           .then((currentProj: any) => {
-            var data = {
-              project: currentProj.data.data._id,
-              limit: 100000,
-              page: 0,
-              query: {status: [this.props.route.params.data]},
-            };
-
-            // AsyncStorage.setItem(
-            //   'involved_person',
-            //   JSON.stringify(this.state.involvedPerson),
-            // );
-            // });
-
-            createApi
-              .createApi()
-              .filterSors(data)
-              .then((res: any) => {
-                var sors = [];
-                for (let i = 0; i < res.data.data.report.length; i++) {
-                  sors.push(res.data.data.report[i]);
+            AsyncStorage.getItem('filters').then((filtersObj: any) => {
+              console.log('filtersObj');
+              var dta = JSON.parse(filtersObj);
+              var data = {
+                project: currentProj.data.data._id,
+                limit: 100000,
+                page: 0,
+                query: {status: [this.props.route.params.data]},
+              };
+              if (dta != null) {
+                if (Object.keys(dta).length !== 0) {
+                  data['query'] = dta;
+                  data['query']['status'] = [this.props.route.params.data];
                 }
+              }
 
-                this.setState({loading: false});
+              createApi
+                .createApi()
+                .filterSors(data)
+                .then((res: any) => {
+                  var sors = [];
+                  for (let i = 0; i < res.data.data.report.length; i++) {
+                    sors.push(res.data.data.report[i]);
+                  }
 
-                this.setState({reports: sors});
-              })
-              .catch((err) => {
-                this.setState({loading: false});
-              });
+                  this.setState({loading: false});
+
+                  this.setState({reports: sors});
+                })
+                .catch((err) => {
+                  this.setState({loading: false});
+                });
+            });
           });
 
         this.setState({loading: true});
@@ -313,10 +317,9 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                 classify={d.sor_type}
                 iconConf={classifySor.find((e: any) => e.title == d.sor_type)}
                 location={d.location}
-                style={[
-                  styles.draftCardContainer,
-                  // {marginBottom: wp()},
-                ]}
+                style={{
+                  marginBottom: wp(5),
+                }}
                 user1={d.user1}
                 user2={d.user2}
               />
