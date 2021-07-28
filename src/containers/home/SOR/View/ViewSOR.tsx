@@ -94,7 +94,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
       commentsSugg: [],
       attachments: [],
-
+      allBtnsEnabled: false,
       actionsAndRecommendations: this.props.route.params.data.action_required,
       // popup Assigners
       addAssigners: false,
@@ -171,6 +171,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
+    console.log(this.props.route.params.data);
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
 
@@ -204,6 +205,25 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               ),
             });
           });
+
+          var notifiedToAndInvolved = this.state.involvedPerson;
+
+          notifiedToAndInvolved.map((d: any, i: number) => {
+            if (this.props.route.params.data.esclate_to.length) {
+              this.props.route.params.data.esclate_to.map((e: any) => {
+                if (e.email == d.email) {
+                  notifiedToAndInvolved.slice(i);
+                }
+              });
+            }
+
+            if (this.props.route.params.data.submit_to[0] == d.email) {
+              notifiedToAndInvolved.slice(i);
+            }
+          });
+
+          console.log('notifiedToAndInvolved');
+          console.log(notifiedToAndInvolved);
 
           // this.mappingInvolved(
           //   res.data.data.involved_persons,
@@ -2077,6 +2097,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             data: d,
                           })
                         }
+                        // onPress={(d: Isor) => {
+
+                        // }}
                         name={d.created_by}
                         date={d.occured_at}
                         risk={d.risk.severity * d.risk.likelihood}
@@ -2499,46 +2522,53 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </View>
               )}
             </View>
-            {/* Submit btns  */}
-            <View style={styles.saveAsDraftAndSubmitBtns}>
-              <TouchableOpacity
-                onPress={() => this.onSubmitUpdateSor(1)}
-                style={styles.saveAsDraftContainer}>
-                <Text style={styles.saveAsDraftText}>Save as Draft</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => this.onSubmitUpdateSor(2)}
-                style={styles.saveAsSubmitContainer}>
-                <Text style={styles.saveAsSubmitText}>Submit</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.previewAndMarkAsCompleteBtns}>
-              <TouchableOpacity
-                onPress={() =>
-                  this.props.navigation.navigate('Preview', {
-                    data: this.props.route.params.data,
-                  })
-                }
-                style={styles.saveAsDraftContainer}>
-                <Text style={styles.saveAsDraftText}>Preview</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  AsyncStorage.getItem('email').then((email) => {
-                    if (email == this.props.route.params.data.created_by) {
-                      this.onSubmitUpdateSor(5);
-                    } else {
-                      this.onSubmitUpdateSor(3);
+
+            {this.state.allBtnsEnabled ? (
+              <>
+                {/* Submit btns  */}
+                <View style={styles.saveAsDraftAndSubmitBtns}>
+                  <TouchableOpacity
+                    onPress={() => this.onSubmitUpdateSor(1)}
+                    style={styles.saveAsDraftContainer}>
+                    <Text style={styles.saveAsDraftText}>Save as Draft</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => this.onSubmitUpdateSor(2)}
+                    style={styles.saveAsSubmitContainer}>
+                    <Text style={styles.saveAsSubmitText}>Submit</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.previewAndMarkAsCompleteBtns}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('Preview', {
+                        data: this.props.route.params.data,
+                      })
                     }
-                  });
-                }}
-                style={[
-                  styles.saveAsSubmitContainer,
-                  {backgroundColor: colors.green},
-                ]}>
-                <Text style={[styles.saveAsSubmitText]}>Mark as Complete</Text>
-              </TouchableOpacity>
-            </View>
+                    style={styles.saveAsDraftContainer}>
+                    <Text style={styles.saveAsDraftText}>Preview</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      AsyncStorage.getItem('email').then((email) => {
+                        if (email == this.props.route.params.data.created_by) {
+                          this.onSubmitUpdateSor(5);
+                        } else {
+                          this.onSubmitUpdateSor(3);
+                        }
+                      });
+                    }}
+                    style={[
+                      styles.saveAsSubmitContainer,
+                      {backgroundColor: colors.green},
+                    ]}>
+                    <Text style={[styles.saveAsSubmitText]}>
+                      Mark as Complete
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            ) : null}
           </Animated.View>
         </ScrollView>
 

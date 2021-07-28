@@ -77,7 +77,7 @@ export class Filters extends React.Component<FiltersProps, any> {
   // submiti filters
   submitFilters = (filterObject: any) => {
     AsyncStorage.setItem('filters', JSON.stringify(filterObject));
-    this.props.navigation.navigate('Home');
+    this.props.navigation.navigate('Main');
   };
 
   //   get All userst
@@ -355,7 +355,7 @@ export class Filters extends React.Component<FiltersProps, any> {
                   filterObject: {},
                 });
                 AsyncStorage.setItem('filters', JSON.stringify({}));
-                this.props.navigation.navigate('Home');
+                this.props.navigation.navigate('Main');
               }}>
               <Text
                 style={{
