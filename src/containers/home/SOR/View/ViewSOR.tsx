@@ -779,6 +779,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
 
   fileAndImageCapturer = (attach: Array<string>) => {
+    console.log('attach');
+    console.log(attach);
+    /*
     /*
      * Image object Map to this
      *
@@ -828,7 +831,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             attach[i].split('.')[1] == 'doc'
           ) {
             this.state.attachments.push({
-              type: 'pdf',
+              type: 'doc',
               upload: '',
               name: attach[i],
               uri: d.data[i],
@@ -882,24 +885,31 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       //   this.setState({});
       // });
 
+      console.log('res');
+      console.log(res);
+
       if (res.type == 'image/jpeg' || res.type == 'image/png') {
         res['orgType'] = res.type;
         res.type = 'image';
       } else {
-        if (res.name.split('.')[1] == 'docx') {
-          res['orgType'] = res.type;
-          res.type = 'docx';
+        if (
+          res.name.split('.')[1] == 'docx' ||
+          res.name.split('.')[1] == 'doc'
+        ) {
+          res['orgType'] = res.name.split('.')[1];
+          res.type = 'doc';
         } else if (res.name.split('.')[1] == 'pdf') {
-          res['orgType'] = res.type;
+          res['orgType'] = res.name.split('.')[1];
           res.type = 'pdf';
         } else if (res.name.split('.')[1] == 'xlsx') {
-          res['orgType'] = res.type;
+          res['orgType'] = res.name.split('.')[1];
           res.type = 'xlsx';
         }
       }
 
       if (
         res.type == 'docx' ||
+        res.type == 'doc' ||
         res.type == 'pdf' ||
         res.type == 'xlsx' ||
         res.type == 'image'
@@ -912,27 +922,38 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         };
         this.setState({fileLoading: true});
 
-        fileuploader(res.orgType, res.orgType.split('/')[1], res.uri).then(
-          (filename: any) => {
-            imgData['name'] = filename;
+        // console.log('res.orgType.split(' / ')[1]');
+        console.log(res.orgType);
 
-            var data = {
-              bucket: 'hns-codist',
-              report: [`report/${filename}`],
-            };
+        fileuploader(
+          res.orgType,
+          res.type == 'doc' || res.type == 'docx'
+            ? res.orgType
+            : res.orgType.split('/')[1],
+          res.uri,
+        ).then((filename: any) => {
+          imgData['name'] = filename;
 
-            createApi
-              .createApi()
-              .getFileApi(data)
-              .then((d: any) => {
-                imgData['uri'] = d.data[0];
-              });
-            // this.setState({fileLoading: false});
-            attach.splice(0, 0, imgData);
-            // this.state.uploadedfiles.push(filename);
-            this.setState({});
-          },
-        );
+          var data = {
+            bucket: 'hns-codist',
+            report: [`report/${filename}`],
+          };
+
+          // console.log('data');
+          createApi
+            .createApi()
+            .getFileApi(data)
+            .then((d: any) => {
+              imgData['uri'] = d.data[0];
+            });
+          // this.setState({fileLoading: false});
+          attach.splice(0, 0, imgData);
+
+          // this.state.uploadedfiles.push(filename);
+          this.setState({});
+
+          console.log(attach);
+        });
         // this.state.filename.push(imgData);
       }
 

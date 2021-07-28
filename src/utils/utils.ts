@@ -575,6 +575,7 @@ export const fileuploader = (types: string, ext: string, uri: string) => {
     fileType: [types],
     ext: [ext],
   };
+
   return new Promise((resolve, reject) => {
     api
       .createApi()

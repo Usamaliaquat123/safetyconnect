@@ -1921,7 +1921,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   fontFamily: fonts.SFuiDisplayMedium,
                                   textAlign: 'center',
                                 }}>
-                                {d.name}
+                                {d.name.slice(0,5)}
                               </Text>
                               <TouchableOpacity
                                 onPress={() => {}}
