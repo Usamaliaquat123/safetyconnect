@@ -1748,10 +1748,10 @@ class Home extends React.Component<HomeProps, any> {
                   classify={d.sor_type}
                   iconConf={classifySor.find((e: any) => e.title == d.sor_type)}
                   location={d.location}
-                  style={[
-                    styles.draftCardContainer,
-                    // {marginBottom: wp()},
-                  ]}
+                  style={{
+                    // styles.draftCardContainer,
+                    marginBottom: wp(5),
+                  }}
                   user1={d.user1}
                   user2={d.user2}
                 />
