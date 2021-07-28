@@ -167,9 +167,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         res['orgType'] = res.type;
         res.type = 'image';
       } else {
-        if (res.name.split('.')[1] == 'docx') {
-          res['orgType'] = res.type;
-          res.type = 'docx';
+        if (
+          res.name.split('.')[1] == 'docx' ||
+          res.name.split('.')[1] == 'doc'
+        ) {
+          res['orgType'] = res.name.split('.')[1];
+          res.type = res.name.split('.')[1];
         } else if (res.name.split('.')[1] == 'pdf') {
           res['orgType'] = res.type;
           res.type = 'pdf';
@@ -181,6 +184,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
       if (
         res.type == 'docx' ||
+        res.type == 'doc' ||
         res.type == 'pdf' ||
         res.type == 'xlsx' ||
         res.type == 'image'
@@ -192,13 +196,17 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         };
         this.setState({fileLoading: true});
 
-        fileuploader(res.orgType, res.orgType.split('/')[1], res.uri).then(
-          (filename: any) => {
-            imgData['name'] = filename;
-            this.setState({fileLoading: false});
-            this.state.uploadedfiles.push(filename);
-          },
-        );
+        fileuploader(
+          res.orgType,
+          res.type == 'doc' || res.type == 'docx'
+            ? res.orgType
+            : res.orgType.split('/')[1],
+          res.uri,
+        ).then((filename: any) => {
+          imgData['name'] = filename;
+          this.setState({fileLoading: false});
+          this.state.uploadedfiles.push(filename);
+        });
 
         this.state.filename.push(imgData);
 
@@ -1905,7 +1913,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 source={
                                   d.type == 'pdf'
                                     ? images.pdf
-                                    : d.type == 'docx'
+                                    : d.type == 'doc' || d.type == 'docx'
                                     ? images.doc
                                     : d.type == 'xlsx'
                                     ? images.excel
@@ -1921,7 +1929,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   fontFamily: fonts.SFuiDisplayMedium,
                                   textAlign: 'center',
                                 }}>
-                                {d.name.slice(0,5)}
+                                {d.name.slice(0, 5)}
                               </Text>
                               <TouchableOpacity
                                 onPress={() => {}}
