@@ -24,7 +24,7 @@ import {
   savedCurrentOrganization,
 } from '@utils';
 import {Avatar, Icon} from 'react-native-elements';
-import {ListCard} from '@components';
+import {ListCard, Card} from '@components';
 import {route} from '@nav';
 import {PieChart, ProgressCircle} from 'react-native-svg-charts';
 import {createApi} from '@service';
