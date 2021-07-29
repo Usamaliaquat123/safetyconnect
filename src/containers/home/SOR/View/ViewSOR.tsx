@@ -222,6 +222,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               // });
             }
 
+
+            if(d.email == this.props.route.params.data.created_by){
+              notifiedToAndInvolved.splice(i, 1);
+
+            }
             if (d.email == this.props.route.params.data.submit_to[0]) {
               notifiedToAndInvolved.splice(i, 1);
             }
