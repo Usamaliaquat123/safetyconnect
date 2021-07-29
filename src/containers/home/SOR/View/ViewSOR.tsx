@@ -94,7 +94,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
       commentsSugg: [],
       attachments: [],
-      allBtnsEnabled: false,
+      allBtnsEnabled: true,
       actionsAndRecommendations: this.props.route.params.data.action_required,
       // popup Assigners
       addAssigners: false,
@@ -162,6 +162,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       projectName: '',
       commentMentionReplace: '',
       projectId: '',
+      excludingSubmitCreatedByUsers: [],
     };
 
     this.animation = React.createRef();
@@ -172,6 +173,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
   componentDidMount = () => {
     console.log(this.props.route.params.data);
+    // var excludingSubmitCreatedByUsers = [];
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
 
@@ -201,49 +203,37 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           // console.log('data');
           // console.log(data);
           this.setState({involvedPerson: data});
+          this.setState({
+            excludingSubmitCreatedByUsers: this.state.involvedPerson,
+          });
+          AsyncStorage.getItem('email').then((email: any) => {
+            this.state.excludingSubmitCreatedByUsers.map(
+              (d: any, i: number) => {
+                // const element = notifiedToAndInvolved[i];
 
-          var notifiedToAndInvolved = this.state.involvedPerson;
+                if (d.email == this.props.route.params.data.created_by) {
+                  this.state.excludingSubmitCreatedByUsers.splice(i, 1);
+                }
+                if (d.email == this.props.route.params.data.submit_to[0]) {
+                  this.state.excludingSubmitCreatedByUsers.splice(i, 1);
+                }
 
-          notifiedToAndInvolved.map((d: any, i: number) => {
-            // const element = notifiedToAndInvolved[i];
-            if (this.props.route.params.data.esclate_to.length) {
-              if (
-                this.props.route.params.data.esclate_to.filter(
-                  (e) => e == d.email,
-                )
-              ) {
-                notifiedToAndInvolved.splice(i, 1);
-              }
-
-              // this.props.route.params.data.esclate_to.map((e: any) => {
-              //   if (e == d.email) {
-              //     console.log(e);
-              //   }
-              // });
-            }
-
-
-            if(d.email == this.props.route.params.data.created_by){
-              notifiedToAndInvolved.splice(i, 1);
-
-            }
-            if (d.email == this.props.route.params.data.submit_to[0]) {
-              notifiedToAndInvolved.splice(i, 1);
-            }
-            // if(d.email == this.props.)
+                if (d.email == email) {
+                  this.state.excludingSubmitCreatedByUsers.splice(i, 1);
+                }
+              },
+            );
           });
 
-          console.log('notifiedToAndInvolved');
-          console.log(notifiedToAndInvolved);
+          if (this.state.excludingSubmitCreatedByUsers)
+            // this.mappingInvolved(
+            //   res.data.data.involved_persons,
+            //   this.props.route.params.data.involved_persons[0],
+            // );
 
-          // this.mappingInvolved(
-          //   res.data.data.involved_persons,
-          //   this.props.route.params.data.involved_persons[0],
-          // );
-
-          for (let i = 0; i < res.data.data.involved_persons.length; i++) {
-            res.data.data.involved_persons[i]['selected'] = false;
-          }
+            for (let i = 0; i < res.data.data.involved_persons.length; i++) {
+              res.data.data.involved_persons[i]['selected'] = false;
+            }
 
           this.setState({involved_person: res.data.data.involved_persons});
         })
@@ -256,6 +246,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         .createApi()
         .getUser(email)
         .then((user: any) => {
+          // if (this.state.excludingSubmitCreatedByUsers.filter((d) => d.email == email)) {
+          //   this.state.excludingSubmitCreatedByUsers.splice(i, 1);
+          // }
           this.setState({user: user.data.data});
         });
     });
@@ -2570,52 +2563,52 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               )}
             </View>
 
-            {/* {this.state.allBtnsEnabled ? ( */}
-            <>
-              {/* Submit btns  */}
-              <View style={styles.saveAsDraftAndSubmitBtns}>
-                <TouchableOpacity
-                  onPress={() => this.onSubmitUpdateSor(1)}
-                  style={styles.saveAsDraftContainer}>
-                  <Text style={styles.saveAsDraftText}>Save as Draft</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => this.onSubmitUpdateSor(2)}
-                  style={styles.saveAsSubmitContainer}>
-                  <Text style={styles.saveAsSubmitText}>Submit</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.previewAndMarkAsCompleteBtns}>
-                <TouchableOpacity
-                  onPress={() =>
-                    this.props.navigation.navigate('Preview', {
-                      data: this.props.route.params.data,
-                    })
-                  }
-                  style={styles.saveAsDraftContainer}>
-                  <Text style={styles.saveAsDraftText}>Preview</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    AsyncStorage.getItem('email').then((email) => {
-                      if (email == this.props.route.params.data.created_by) {
-                        this.onSubmitUpdateSor(5);
-                      } else {
-                        this.onSubmitUpdateSor(3);
-                      }
-                    });
-                  }}
-                  style={[
-                    styles.saveAsSubmitContainer,
-                    {backgroundColor: colors.green},
-                  ]}>
-                  <Text style={[styles.saveAsSubmitText]}>
-                    Mark as Complete
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </>
-            {/* // ) : null} */}
+            {this.state.allBtnsEnabled ? (
+              <>
+                {/* Submit btns  */}
+                <View style={styles.saveAsDraftAndSubmitBtns}>
+                  <TouchableOpacity
+                    onPress={() => this.onSubmitUpdateSor(1)}
+                    style={styles.saveAsDraftContainer}>
+                    <Text style={styles.saveAsDraftText}>Save as Draft</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => this.onSubmitUpdateSor(2)}
+                    style={styles.saveAsSubmitContainer}>
+                    <Text style={styles.saveAsSubmitText}>Submit</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.previewAndMarkAsCompleteBtns}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('Preview', {
+                        data: this.props.route.params.data,
+                      })
+                    }
+                    style={styles.saveAsDraftContainer}>
+                    <Text style={styles.saveAsDraftText}>Preview</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      AsyncStorage.getItem('email').then((email) => {
+                        if (email == this.props.route.params.data.created_by) {
+                          this.onSubmitUpdateSor(5);
+                        } else {
+                          this.onSubmitUpdateSor(3);
+                        }
+                      });
+                    }}
+                    style={[
+                      styles.saveAsSubmitContainer,
+                      {backgroundColor: colors.green},
+                    ]}>
+                    <Text style={[styles.saveAsSubmitText]}>
+                      Mark as Complete
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            ) : null}
           </Animated.View>
         </ScrollView>
 
