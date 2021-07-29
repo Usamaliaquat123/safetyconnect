@@ -198,26 +198,38 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             );
           });
 
-          console.log('data');
-          console.log(data);
+          // console.log('data');
+          // console.log(data);
           this.setState({involvedPerson: data});
 
-          // notifiedToAndInvolved.map((d: any, i: number) => {
-          //   if (this.props.route.params.data.esclate_to.length) {
-          //     this.props.route.params.data.esclate_to.map((e: any) => {
-          //       if (e.email == d.email) {
-          //         notifiedToAndInvolved.slice(i);
-          //       }
-          //     });
-          //   }
+          var notifiedToAndInvolved = this.state.involvedPerson;
 
-          //   if (d.email == this.props.route.params.data.submit_to[0]) {
-          //     notifiedToAndInvolved.slice(i);
-          //   }
+          notifiedToAndInvolved.map((d: any, i: number) => {
+            // const element = notifiedToAndInvolved[i];
+            if (this.props.route.params.data.esclate_to.length) {
+              if (
+                this.props.route.params.data.esclate_to.filter(
+                  (e) => e == d.email,
+                )
+              ) {
+                notifiedToAndInvolved.splice(i, 1);
+              }
 
-          //   console.log('notifiedToAndInvolved');
-          //   console.log(notifiedToAndInvolved);
-          // });
+              // this.props.route.params.data.esclate_to.map((e: any) => {
+              //   if (e == d.email) {
+              //     console.log(e);
+              //   }
+              // });
+            }
+
+            if (d.email == this.props.route.params.data.submit_to[0]) {
+              notifiedToAndInvolved.splice(i, 1);
+            }
+            // if(d.email == this.props.)
+          });
+
+          console.log('notifiedToAndInvolved');
+          console.log(notifiedToAndInvolved);
 
           // this.mappingInvolved(
           //   res.data.data.involved_persons,

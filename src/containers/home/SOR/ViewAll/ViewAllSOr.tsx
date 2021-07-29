@@ -197,7 +197,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
             } else {
               res.data.data.report.sort(
                 (a: any, b: any) =>
-                  new Date(b.createdAt) - new Date(a.createdAt),
+                  new Date(a.createdAt) - new Date(b.createdAt),
               );
               for (let i = 0; i < res.data.data.report.length; i++) {
                 if (res.data.data.report[i].status == 1) {
@@ -214,6 +214,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   //   res.data.data.report[i],
                   //   this.state.involvedPerson,
                   // );
+
                   if (res.data.data.report[i].details != undefined) {
                     this.state.inprogress.push(res.data.data.report[i]);
                     // this.state.submitted.push(rep);
@@ -223,6 +224,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   //   res.data.data.report[i],
                   //   this.state.involvedPerson,
                   // );
+
                   if (res.data.data.report[i].details != undefined) {
                     this.state.exclated.push(res.data.data.report[i]);
                   }
@@ -231,6 +233,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   //   res.data.data.report[i],
                   //   this.state.involvedPerson,
                   // );
+
                   if (res.data.data.report[i].details != undefined) {
                     this.state.pendingClosure.push(res.data.data.report[i]);
                   }
@@ -239,6 +242,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   //   res.data.data.report[i],
                   //   this.state.involvedPerson,
                   // );
+
                   if (res.data.data.report[i].details != undefined) {
                     this.state.closed.push(res.data.data.report[i]);
                   }
@@ -545,16 +549,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           ? {borderBottomWidth: wp(0)}
                                           : null
                                       }
-                                      user1={
-                                        d.involved_persons.length == 0
-                                          ? ''
-                                          : d.involved_persons[0].img_url
-                                      }
-                                      user2={
-                                        d.submit_to.length == 0
-                                          ? ''
-                                          : d.submit_to[0].img_url
-                                      }
+                                      user1={undefined}
+                                      user2={undefined}
                                       observation={d.details}
                                       repeated={d.repeatedSor}
                                       username={d.created_by}
@@ -676,16 +672,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                             ? {borderBottomWidth: wp(0)}
                                             : null
                                         }
-                                        user1={
-                                          d.involved_persons.length == 0
-                                            ? ''
-                                            : d.involved_persons[0].img_url
-                                        }
-                                        user2={
-                                          d.submit_to.length == 0
-                                            ? ''
-                                            : d.submit_to[0].img_url
-                                        }
+                                        user1={undefined}
+                                        user2={undefined}
                                         observation={d.details}
                                         username={d.created_by}
                                         repeated={d.repeatedSor}
@@ -825,16 +813,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                             ? {borderBottomWidth: wp(0)}
                                             : null
                                         }
-                                        user1={
-                                          d.involved_persons.length == 0
-                                            ? ''
-                                            : d.involved_persons[0].img_url
-                                        }
-                                        user2={
-                                          d.submit_to.length == 0
-                                            ? ''
-                                            : d.submit_to[0].img_url
-                                        }
+                                        user1={undefined}
+                                        user2={undefined}
                                         observation={d.details}
                                         username={d.created_by}
                                         iconconf={classifySor.find(
@@ -964,16 +944,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                             ? {borderBottomWidth: wp(0)}
                                             : null
                                         }
-                                        user1={
-                                          d.involved_persons.length == 0
-                                            ? ''
-                                            : d.involved_persons[0].img_url
-                                        }
-                                        user2={
-                                          d.submit_to.length == 0
-                                            ? ''
-                                            : d.submit_to[0].img_url
-                                        }
+                                        user1={undefined}
+                                        user2={undefined}
                                         observation={d.details}
                                         username={d.created_by}
                                         iconconf={classifySor.find(
@@ -1093,16 +1065,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                             ? {borderBottomWidth: wp(0)}
                                             : null
                                         }
-                                        user1={
-                                          d.involved_persons.length == 0
-                                            ? ''
-                                            : d.involved_persons[0].img_url
-                                        }
-                                        user2={
-                                          d.submit_to.length == 0
-                                            ? ''
-                                            : d.submit_to[0].img_url
-                                        }
+                                        user1={undefined}
+                                        user2={undefined}
                                         observation={d.details}
                                         username={d.created_by}
                                         iconconf={classifySor.find(
