@@ -1643,14 +1643,31 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               this.setState({actionsAndRecommendations: data});
                             }}
                             onLongPress={() => {
-                              if (this.state.user.email == d.assigned_to) {
-                                this.setState({
-                                  allActionsEdit: d,
-                                  SuggestionPop: true,
-                                  allActionsEditIndex: i,
-                                  newActions: false,
-                                });
-                              }
+                              var submitto = this.props.route.params.data
+                                .submit_to;
+                              var created_by = this.props.route.params.data
+                                .created_by;
+                              var esclate_to = this.props.route.params.data
+                                .esclate_to;
+
+                              console.log('///////////////////');
+                              console.log('///////////////////');
+                              console.log(
+                                submitto.concat(created_by, ['asds']),
+                              );
+                              console.log(created_by);
+                              console.log(esclate_to);
+                              console.log('///////////////////');
+                              // if (this.state.user.email == d.assigned_to) {
+                              // this.setState({
+                              //   allActionsEdit: d,
+
+                              //   SuggestionPop: true,
+                              //   allActionsEditIndex: i,
+                              //   newActions: false,
+                              //   submitToAndObserverEmails : []
+                              // });
+                              // }
 
                               // console.log(d);
                             }}

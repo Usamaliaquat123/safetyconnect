@@ -13,6 +13,8 @@ import {Icon} from 'react-native-elements';
 import styles from './styles';
 import {Tags, Suggestions} from '@components';
 import {fileuploader} from '@utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {colors, fonts, animation, GlStyles, images} from '@theme';
 import {Avatar} from 'react-native-elements';
 import {createApi, Create_sor} from '@service';
@@ -31,6 +33,7 @@ export interface SuggestionsPopProps {
   discard: Function;
   suggestedUsers: Array<involved_persons>;
   allSuggestions: Array<any>;
+  submitToAndObserverEmails?: Array<string>;
 }
 
 export const searchInSuggestions = (
@@ -73,11 +76,17 @@ export default class SuggestionsPop extends React.Component<
       statuses: props.suggestions.status,
       attachments: [],
       addjustificationPop: true,
+      submitToAndObserverEmailsLocal: props.submitToAndObserverEmails,
     };
   }
 
   componentDidMount = () => {
     console.log('five why justification');
+
+    AsyncStorage.getItem('email').then((e) => {
+      this.state.submitToAndObserverEmailsLocal.concat(e);
+      this.setState({});
+    });
 
     if (this.state.statuses == 0) {
       this.setState({statuses: 'InProgress'});
