@@ -84,8 +84,11 @@ export default class SuggestionsPop extends React.Component<
     console.log('five why justification');
 
     AsyncStorage.getItem('email').then((e) => {
-      this.state.submitToAndObserverEmailsLocal.concat(e);
+      // this.state.submitToAndObserverEmailsLocal.concat(e);
       this.setState({});
+
+      console.log('this.state.submitToAndObserverEmailsLocal');
+      console.log(this.state.submitToAndObserverEmailsLocal);
     });
 
     if (this.state.statuses == 0) {

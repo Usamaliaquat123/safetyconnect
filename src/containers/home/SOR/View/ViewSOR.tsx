@@ -1650,23 +1650,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               var esclate_to = this.props.route.params.data
                                 .esclate_to;
 
-                              console.log('///////////////////');
-                              console.log('///////////////////');
-                              console.log(
-                                submitto.concat(created_by, ['asds']),
-                              );
-                              console.log(created_by);
-                              console.log(esclate_to);
-                              console.log('///////////////////');
                               // if (this.state.user.email == d.assigned_to) {
-                              // this.setState({
-                              //   allActionsEdit: d,
+                              this.setState({
+                                allActionsEdit: d,
 
-                              //   SuggestionPop: true,
-                              //   allActionsEditIndex: i,
-                              //   newActions: false,
-                              //   submitToAndObserverEmails : []
-                              // });
+                                SuggestionPop: true,
+                                allActionsEditIndex: i,
+                                newActions: false,
+                                submitToAndObserverEmails: submitto,
+                              });
                               // }
 
                               // console.log(d);
@@ -2928,6 +2920,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               this.setState({SuggestionPop: !this.state.SuggestionPop})
             }
             allSuggestions={this.state.actionsAndRecommendations}
+            submitToAndObserverEmails={this.state.submitToAndObserverEmails}
             isOpen={this.state.SuggestionPop}
             suggestions={this.state.allActionsEdit}
             save={(d: any) => {
