@@ -217,10 +217,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 if (d.email == this.props.route.params.data.submit_to[0]) {
                   this.state.excludingSubmitCreatedByUsers.splice(i, 1);
                 }
-
-                // if (d.email == email) {
-                //   this.state.excludingSubmitCreatedByUsers.splice(i, 1);
-                // }
               },
             );
 
@@ -1643,15 +1639,20 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               } else {
                                 data[i].is_complete = true;
                               }
+
                               this.setState({actionsAndRecommendations: data});
                             }}
                             onLongPress={() => {
-                              this.setState({
-                                allActionsEdit: d,
-                                SuggestionPop: true,
-                                allActionsEditIndex: i,
-                                newActions: false,
-                              });
+                              if (this.state.user.email == d.assigned_to) {
+                                this.setState({
+                                  allActionsEdit: d,
+                                  SuggestionPop: true,
+                                  allActionsEditIndex: i,
+                                  newActions: false,
+                                });
+                              }
+
+                              // console.log(d);
                             }}
                             key={i}
                             style={[
