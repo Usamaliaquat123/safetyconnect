@@ -191,12 +191,17 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
           var data: Array<any> = [];
 
+          console.log(this.props.route.params.data.involved_persons);
           this.props.route.params.data.involved_persons.map((d) => {
             data.push(
-              res.data.data.involved_persons.filter((i: any) => i._id == d)[0],
+              res.data.data.involved_persons.filter(
+                (i: any) => i.email == d,
+              )[0],
             );
           });
 
+          console.log('data');
+          console.log(data);
           this.setState({involvedPerson: data});
 
           // notifiedToAndInvolved.map((d: any, i: number) => {
@@ -347,7 +352,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
   onSubmitUpdateSor = async (status?: number) => {
     this.setState({loading: true, errorModal: true});
-
+    // console.log(this.props.route.params.data.involved_persons);
     var liklihood = this.state.liklihood.filter(
       (d: any) => d.selected == true,
     )[0].value;
@@ -362,8 +367,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         details: this.state.observation /** done */,
         createdAt: Date.now() /** done */,
         occured_at: Date.now() /** done */,
-        involved_persons: this.props.route.params.data
-          .involved_persons /** done */,
+        involved_persons: this.props.route.params.data.involved_persons.map(
+          (d) => d._id,
+        ) /** done */,
         risk: {
           /** done */ severity: severity,
           likelihood: liklihood,
@@ -1189,7 +1195,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   Involved Person:{' '}
                 </Text>
                 <Text style={styles.involvedPersonText}>
-                  {this.state.involvedPerson.length > 1 ? (
+                  {/* {this.state.involvedPerson.length > 1 ? (
                     <Text>
                       {' '}
                       {this.state.involvedPerson.slice(0, 1)[0].name}
@@ -1205,7 +1211,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     </Text>
                   ) : (
                     this.state.involvedPerson.map((d) => d.name).join(',')
-                  )}
+                  )} */}
                   {/* {this.state.involvedPerson.map((d) => d.name).join(',')} */}
                 </Text>
               </View>

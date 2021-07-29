@@ -243,14 +243,8 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                         ? {borderBottomWidth: wp(0)}
                         : null
                     }
-                    user1={
-                      d.involved_persons.length == 0
-                        ? ''
-                        : d.involved_persons[0].img_url
-                    }
-                    user2={
-                      d.submit_to.length == 0 ? '' : d.submit_to[0].img_url
-                    }
+                    user1={undefined}
+                    user2={undefined}
                     observation={d.details}
                     username={d.created_by}
                     repeated={d.repeatedSor}

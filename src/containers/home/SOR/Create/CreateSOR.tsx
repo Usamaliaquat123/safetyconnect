@@ -537,7 +537,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   details: this.state.observationT,
                   occured_at: this.state.currentTime,
                   involved_persons: this.state.involvePersonTags.map(
-                    (d: any) => d._id,
+                    (d: any) => d.email,
                   ),
 
                   sor_type: sorbtns[0].title,
