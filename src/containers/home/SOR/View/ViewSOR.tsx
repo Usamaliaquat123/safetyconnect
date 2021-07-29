@@ -194,9 +194,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           console.log(this.props.route.params.data.involved_persons);
           this.props.route.params.data.involved_persons.map((d) => {
             data.push(
-              res.data.data.involved_persons.filter(
-                (i: any) => i.email == d,
-              )[0],
+              res.data.data.involved_persons.filter((i: any) => i._id == d)[0],
             );
           });
 
@@ -367,9 +365,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         details: this.state.observation /** done */,
         createdAt: Date.now() /** done */,
         occured_at: Date.now() /** done */,
-        involved_persons: this.props.route.params.data.involved_persons.map(
-          (d) => d._id,
-        ) /** done */,
+        involved_persons: this.props.route.params.data
+          .involved_persons /** done */,
         risk: {
           /** done */ severity: severity,
           likelihood: liklihood,
@@ -378,7 +375,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         justification: this.props.route.params.data.justification,
         action_required: this.state.actionsAndRecommendations /** done */,
         location: this.props.route.params.data.location /** done */,
-        submit_to: this.state.submitted_to /** done */,
+        submit_to:
+          this.state.reAssignToArrTags.lendgth == 0
+            ? this.state.submitted_to
+            : this.state.reAssignToArrTags.map((d) => d.email) /** done */,
         esclate_to: this.state.esclate_to,
         // this.state.reAssignToArrTags.length == 0
         // : this.state.reAssignToArrTags.map((d: any) => d.email) /** done */,
@@ -1195,7 +1195,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   Involved Person:{' '}
                 </Text>
                 <Text style={styles.involvedPersonText}>
-                  {/* {this.state.involvedPerson.length > 1 ? (
+                  {this.state.involvedPerson.length > 1 ? (
                     <Text>
                       {' '}
                       {this.state.involvedPerson.slice(0, 1)[0].name}
@@ -1211,7 +1211,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     </Text>
                   ) : (
                     this.state.involvedPerson.map((d) => d.name).join(',')
-                  )} */}
+                  )}
                   {/* {this.state.involvedPerson.map((d) => d.name).join(',')} */}
                 </Text>
               </View>
