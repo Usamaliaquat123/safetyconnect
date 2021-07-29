@@ -218,22 +218,32 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   this.state.excludingSubmitCreatedByUsers.splice(i, 1);
                 }
 
-                if (d.email == email) {
-                  this.state.excludingSubmitCreatedByUsers.splice(i, 1);
-                }
+                // if (d.email == email) {
+                //   this.state.excludingSubmitCreatedByUsers.splice(i, 1);
+                // }
               },
             );
+
+            // console.log(this.state.excludingSubmitCreatedByUsers);
+            if (
+              this.state.excludingSubmitCreatedByUsers.filter(
+                (d) => d.email == email,
+              )
+            ) {
+              this.setState({allBtnsEnabled: true});
+            } else {
+              this.setState({allBtnsEnabled: false});
+            }
           });
 
-          if (this.state.excludingSubmitCreatedByUsers)
-            // this.mappingInvolved(
-            //   res.data.data.involved_persons,
-            //   this.props.route.params.data.involved_persons[0],
-            // );
+          // this.mappingInvolved(
+          //   res.data.data.involved_persons,
+          //   this.props.route.params.data.involved_persons[0],
+          // );
 
-            for (let i = 0; i < res.data.data.involved_persons.length; i++) {
-              res.data.data.involved_persons[i]['selected'] = false;
-            }
+          for (let i = 0; i < res.data.data.involved_persons.length; i++) {
+            res.data.data.involved_persons[i]['selected'] = false;
+          }
 
           this.setState({involved_person: res.data.data.involved_persons});
         })
