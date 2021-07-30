@@ -54,6 +54,7 @@
     "react-native": "0.63.4",
     "react-native-background-upload": "^6.2.4",
     "react-native-calendars": "^1.1129.0",
+    "react-native-copilot": "^2.5.1",
     "react-native-document-picker": "^4.2.0",
     "react-native-elements": "^3.0.1",
     "react-native-email-link": "^1.11.3",

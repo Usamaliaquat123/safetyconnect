@@ -195,10 +195,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
             if (res.data.data.report == undefined) {
               this.setState({loading: false});
             } else {
-              res.data.data.report.sort(
-                (a: any, b: any) =>
-                  new Date(a.createdAt) - new Date(b.createdAt),
-              );
+              res.data.data.report.reverse();
               for (let i = 0; i < res.data.data.report.length; i++) {
                 if (res.data.data.report[i].status == 1) {
                   // var rep = filterAndMappingPersons(
