@@ -252,9 +252,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         .createApi()
         .getUser(email)
         .then((user: any) => {
-          // if (this.state.excludingSubmitCreatedByUsers.filter((d) => d.email == email)) {
-          //   this.state.excludingSubmitCreatedByUsers.splice(i, 1);
-          // }
           this.setState({user: user.data.data});
         });
     });
@@ -380,7 +377,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         sor_type: this.state.sor_type,
         details: this.state.observation /** done */,
         createdAt: Date.now() /** done */,
-        occured_at: Date.now() /** done */,
+        occurred_at: Date.now() /** done */,
         involved_persons: this.props.route.params.data
           .involved_persons /** done */,
         risk: {
@@ -395,7 +392,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           this.state.reAssignToArrTags.lendgth == 0
             ? this.state.submitted_to
             : this.state.reAssignToArrTags.map((d) => d.email) /** done */,
-        esclate_to: this.state.esclate_to,
+        escalate_to: this.state.esclate_to,
         // this.state.reAssignToArrTags.length == 0
         // : this.state.reAssignToArrTags.map((d: any) => d.email) /** done */,
         status: this.state.esclate_to.length == 0 ? status : 3 /** done */,
@@ -404,6 +401,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         updatedAt: Date.now() /** done */,
       },
       project: this.state.projectId,
+      updated_by: this.state.user,
     };
 
     console.log(update);

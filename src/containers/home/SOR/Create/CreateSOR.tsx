@@ -319,7 +319,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         .createApi()
         .getUser(email)
         .then((user: any) => {
-          var dta = user.data.data;
           this.setState({user: user.data.data});
         });
     });
@@ -337,17 +336,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           projectid: currentProj,
         })
         .then((res: any) => {
-          // res.data.data.involved_persons.map((d, i) => )
           this.setState({involved_persons: res.data.data.involved_persons});
-
-          // var dups = res.data.data.involved_persons;
-
-          // console.log(
-          //   res.data.data.involved_persons.filter(
-          //     (item, index) =>
-          //       res.data.data.involved_persons.indexOf(item) === index,
-          //   ),
-          // );
         });
     });
     // Time Update on every seconds
@@ -433,21 +422,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     this.setState({});
   };
 
-  AnimatedViews = () => {
-    Animated.timing(this.state.contentAnim, {
-      toValue: wp(0),
-      duration: 1500,
-      easing: Easing.elastic(3),
-      useNativeDriver: false,
-    }).start();
-
-    Animated.timing(this.state.initAnim, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: false,
-    }).start();
-  };
-
   // save as draft
   onSaveAsDraft = (status: number) => {
     var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
@@ -487,29 +461,30 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         _id: '',
         created_by: this.state.email,
         details: this.state.observationT,
-        occured_at: this.state.currentTime,
-        involved_persons: this.state.involvePersonTags.map((d: any) => d._id),
+        occurred_at: this.state.currentTime,
+        involved_persons: this.state.involvePersonTags.map((d: any) => d.email),
 
-        sor_type: sorbtns[0].title == undefined ? 'concern' : sorbtns[0].title,
+        sor_type: sorbtns[0].title,
         risk: {
-          severity: liklihood[0].value == undefined ? 5 : liklihood[0].value,
-          likelihood: severity[0].value == undefined ? 5 : severity[0].value,
+          severity: 5,
+          likelihood: 5,
         },
         action_required: [],
 
         location: this.state.observation,
-        submit_to:
-          this.state.submitToTags.map((d: any) => d.email) == ''
-            ? this.state.submitToTags.map((d: any) => d.email)
-            : null,
-        esclate_to: this.state.exclateToTags.map((d: any) => d.email),
-        status: status,
+        submit_to: this.state.submitToTags.map((d: any) => d.email),
+        escalate_to:
+          this.state.exclateToTags.length != 0
+            ? this.state.exclateToTags.map((d: any) => d.email)
+            : [],
+        status: this.state.exclateToTags.length == 0 ? status : 3,
         attachments:
           this.state.uploadedfiles.length == 0 ? [] : this.state.uploadedfiles,
         comments: ' ',
       },
       organization: this.state.currentOrg,
       project: this.state.projectid,
+      updated_by: this.state.user.email,
     };
   };
 
@@ -535,7 +510,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   _id: '',
                   created_by: this.state.email,
                   details: this.state.observationT,
-                  occured_at: this.state.currentTime,
+                  occurred_at: this.state.currentTime,
                   involved_persons: this.state.involvePersonTags.map(
                     (d: any) => d.email,
                   ),
@@ -549,7 +524,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                   location: this.state.observation,
                   submit_to: this.state.submitToTags.map((d: any) => d.email),
-                  esclate_to:
+                  escalate_to:
                     this.state.exclateToTags.length != 0
                       ? this.state.exclateToTags.map((d: any) => d.email)
                       : [],
@@ -562,6 +537,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 },
                 organization: this.state.currentOrg,
                 project: this.state.projectid,
+                updated_by: this.state.user.email,
               };
 
               var bodyInitial = {

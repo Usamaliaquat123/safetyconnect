@@ -651,6 +651,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                   <Text style={styles.filterText}>Filter</Text>
                                 </TouchableOpacity>
                               </View>
+                              {/* <View style={{width:120,height:125}, item.status==='1' ?{display: "block"}: {display:'none'}}> */}
                               {this.state.isInProgress == true ? (
                                 <View style={styles.listViewContent}>
                                   {this.state.inprogress
