@@ -172,7 +172,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
-    console.log(this.props.route.params.data);
     // var excludingSubmitCreatedByUsers = [];
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
@@ -193,15 +192,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
           var data: Array<any> = [];
 
-          console.log(this.props.route.params.data.involved_persons);
           this.props.route.params.data.involved_persons.map((d) => {
             data.push(
               res.data.data.involved_persons.filter((i: any) => i._id == d)[0],
             );
           });
 
-          // console.log('data');
-          // console.log(data);
           this.setState({involvedPerson: data});
           this.setState({
             excludingSubmitCreatedByUsers: this.state.involvedPerson,
@@ -220,7 +216,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               },
             );
 
-            // console.log(this.state.excludingSubmitCreatedByUsers);
             if (
               this.state.excludingSubmitCreatedByUsers.filter(
                 (d) => d.email == email,
@@ -279,7 +274,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
     this.fileAndImageCapturer(this.props.route.params.data.attachments);
     this.mapViewSorPhoto();
-    this.AnimatedViews();
     this.mappingMapping(
       this.props.route.params.data.risk.severity,
       this.props.route.params.data.risk.likelihood,
@@ -363,7 +357,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
   onSubmitUpdateSor = async (status?: number) => {
     this.setState({loading: true, errorModal: true});
-    // console.log(this.props.route.params.data.involved_persons);
     var liklihood = this.state.liklihood.filter(
       (d: any) => d.selected == true,
     )[0].value;
@@ -404,7 +397,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       updated_by: this.state.user,
     };
 
-    console.log(update);
     createApi
       .createApi()
       .updateSor(update)
@@ -670,116 +662,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         });
     });
   };
-  // // Save aas draft
-  // saveAsDraft = () => {
-  //   this.setState({loading: true});
-
-  //   var liklihood = this.state.liklihood.filter(
-  //     (d: any) => d.selected == true,
-  //   )[0].value;
-  //   var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
-  //     .value;
-
-  //   if (this.state.fiveWhytoggle == true) {
-  //     if (this.props.route.params.data.justification == undefined) {
-  //       // create five why
-  //       var obj = {
-  //         justification: {
-  //           question: this.state.fiveWhyQuestion,
-  //           answer: this.state.fiveWhyAnswer,
-  //           contributoryCauses: this.state.countributoryCauses,
-  //           rootCauses: this.state.rootCauses,
-  //         },
-  //         project: this.state.projectId,
-  //         report: this.props.route.params.data._id,
-  //         user: this.state.user._id,
-  //         date: moment().format('MM-DD-YYYY'),
-  //       };
-
-  //       createApi.createApi().createFiveWhy(obj);
-  //     } else {
-  //       // create justification
-  //       var updatefiveWhy = {
-  //         id: this.props.route.params.data.justification,
-  //         justification: {
-  //           question: this.state.fiveWhyQuestion,
-  //           answer: this.state.fiveWhyAnswer,
-  //         },
-  //         contributoryCauses: this.state.countributoryCauses,
-  //         rootCauses: this.state.rootCauses,
-  //       };
-
-  //       createApi.createApi().editFiveWhy(updatefiveWhy);
-  //     }
-
-  //     //   fiveWhyQuestion:
-  //     // fiveWhyAnswer:
-  //   }
-
-  //   var update = {
-  //     report: {
-  //       _id: this.props.route.params.data._id /** done  */,
-  //       created_by: this.props.route.params.data.created_by /** done */,
-  //       details: this.state.observation /** done */,
-  //       createdAt: Date.now() /** done */,
-  //       occured_at: moment().format('YYYY-MM-DD') /** done */,
-  //       involved_persons: this.props.route.params.data
-  //         .involved_persons /** done */,
-  //       risk: {
-  //         /** done */ severity: severity,
-  //         likelihood: liklihood,
-  //       },
-  //       action_required: this.state.actionsAndRecommendations /** done */,
-  //       location: this.props.route.params.data.location /** done */,
-  //       submit_to: this.state.submitted_to.map((d: any) => d.email) /** done */,
-  //       esclate_to:
-  //         this.state.reAssignToArrTags.length == 0
-  //           ? this.state.esclate_to.map((d: any) => d.email)
-  //           : this.state.reAssignToArrTags.map((d: any) => d.email) /** done */,
-  //       status: 1 /** done */,
-  //       attachments: [] /** done */,
-  //       comments: this.props.route.params.data.comments /** done */,
-  //       updatedAt: Date.now() /** done */,
-  //     },
-  //     project: this.state.projectId,
-  //   };
-
-  //   createApi
-  //     .createApi()
-  //     .updateSor(update)
-  //     .then((res) => {
-  //       this.setState({loading: false});
-  //       if (res.status == 200) {
-  //         this.props.navigation.goBack();
-  //       }
-  //       // this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
-  //       //   1,
-  //       //   2,
-  //       //   3,
-  //       //   4,
-  //       //   5,
-  //       // ]);
-  //       // this.props.navigation.navigate('ViewAllSOr');
-  //     })
-  //     .catch((err) => {});
-  // };
-
-  // Submitted To
-
-  AnimatedViews = () => {
-    Animated.timing(this.state.contentAnim, {
-      toValue: wp(0),
-      duration: 1500,
-      easing: Easing.elastic(3),
-      useNativeDriver: false,
-    }).start();
-
-    Animated.timing(this.state.initAnim, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: false,
-    }).start();
-  };
 
   mapViewSorPhoto = () => {
     View_sor.user.Attachments.map((d, i) => {
@@ -894,9 +776,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       //   this.setState({});
       // });
 
-      console.log('res');
-      console.log(res);
-
       if (res.type == 'image/jpeg' || res.type == 'image/png') {
         res['orgType'] = res.type;
         res.type = 'image';
@@ -931,9 +810,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         };
         this.setState({fileLoading: true});
 
-        // console.log('res.orgType.split(' / ')[1]');
-        // console.log(res.orgType);
-
         fileuploader(
           res.orgType,
           res.type == 'doc' || res.type == 'docx'
@@ -948,82 +824,17 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             report: [`report/${filename}`],
           };
 
-          // console.log('data');
           createApi
             .createApi()
             .getFileApi(data)
             .then((d: any) => {
               imgData['uri'] = d.data[0];
             });
-          // this.setState({fileLoading: false});
           attach.splice(0, 0, imgData);
 
-          // this.state.uploadedfiles.push(filename);
           this.setState({});
-
-          console.log(attach);
         });
-        // this.state.filename.push(imgData);
       }
-
-      // res.map((d, i) => {
-      //   if (d.type.split('/')[0] == 'image') {
-      //     attach.splice(0, 0, {
-      //       type: 'photo',
-      //       orgType: d.type,
-      //       upload: 'self',
-      //       name: d.name,
-      //       url: d.uri,
-      //     });
-
-      //     // ifstream.bufferSize;
-      //   } else if (d.type.split('/')[1] == 'pdf') {
-      //     attach.splice(0, 0, {
-      //       type: 'pdf',
-      //       upload: 'self',
-      //       orgType: d.type,
-      //       name: d.name,
-      //       url: d.uri,
-      //     });
-      //   } else if (
-      //     d.type.split('.').pop() == 'document' ||
-      //     d.type.split('/')[1] == 'msword'
-      //   ) {
-      //     attach.splice(0, 0, {
-      //       type: 'doc',
-      //       upload: 'self',
-      //       name: d.name,
-      //       orgType: d.type,
-      //       url: d.uri,
-      //     });
-      //   } else if (
-      //     d.type.split('/')[1] == 'vnd.ms-excel' ||
-      //     d.type.split('.').pop() == 'sheet'
-      //   ) {
-      //     // attach.splice(0, 0, {
-      //     //   type: 'excel',
-      //     //   upload: 'self',
-      //     //   name: d.name,
-      //     //   url: d.uri,
-      //     // });
-      //   } else if (
-      //     d.type.split('/')[1] == 'vnd.ms-powerpoint' ||
-      //     d.type.split('.').pop() == 'presentation'
-      //   ) {
-      //     // attach.splice(0, 0, {
-      //     //   type: 'powerpoint',
-      //     //   upload: 'self',
-      //     //   name: d.name,
-      //     //   url: d.uri,
-      //     // });
-      //   } else {
-      //     showMessage({
-      //       message: 'File not supported',
-      //       type: 'danger',
-      //       position: 'bottom',
-      //     });
-      //   }
-      // });
 
       this.setState({});
     } catch (err) {
@@ -1658,8 +1469,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 submitToAndObserverEmails: submitto,
                               });
                               // }
-
-                              // console.log(d);
                             }}
                             key={i}
                             style={[
