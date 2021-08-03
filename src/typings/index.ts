@@ -37,6 +37,22 @@ export interface Isor {
 }
 
 /*
+ * @actions
+ */
+
+export interface actionsDashboard {
+  projectId: string;
+  reportId: string;
+  details: string;
+  assignedTo: any;
+  createdBy: any;
+  location: any;
+  createdAt?: any;
+  data?: any;
+  sorType?: string;
+}
+
+/*
  * @comments
  */
 export interface comments {

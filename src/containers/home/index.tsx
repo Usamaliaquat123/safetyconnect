@@ -36,7 +36,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {Isor, orgnaization} from '@typings';
+import {actionsDashboard, Isor, orgnaization} from '@typings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // import {connect} from '../../decorators/index';
@@ -116,6 +116,8 @@ class Home extends React.Component<HomeProps, any> {
                   assignBy.data.data[0].projects.forEach((assignBye: any) => {
                     const element = assignBye.reports.action_required;
                     const row = {
+                      data: assignBye.reports,
+                      sorType: assignBye.reports.sor_type,
                       projectId: assignBye._id,
                       reportId: assignBye.reports._id,
                       details: element.content,
@@ -124,9 +126,7 @@ class Home extends React.Component<HomeProps, any> {
                       location: assignBye.reports.location,
                     };
                     if (assignBye.reports.createdAt) {
-                      row.createdAt = assignBye.reports.createdAt
-                        .toString()
-                        .substring(0, 11);
+                      row.createdAt = assignBye.reports.createdAt;
                     }
                     this.state.taskAssignedByYou.push(row);
                     this.setState({});
@@ -140,6 +140,8 @@ class Home extends React.Component<HomeProps, any> {
                   assignTo.data.data[0].projects.forEach((assigndTot: any) => {
                     const element = assigndTot.reports.action_required;
                     const row = {
+                      data: assigndTot.reports,
+                      sorType: assigndTot.reports.sor_type,
                       projectId: assigndTot._id,
                       reportId: assigndTot.reports._id,
                       details: element.content,
@@ -148,12 +150,11 @@ class Home extends React.Component<HomeProps, any> {
                       location: assigndTot.reports.location,
                     };
                     if (assigndTot.reports.createdAt) {
-                      row.createdAt = assigndTot.reports.createdAt
-                        .toString()
-                        .substring(0, 11);
+                      row.createdAt = assigndTot.reports.createdAt;
                     }
 
                     this.state.taskAssignedToYou.push(row);
+                    this.setState({});
                     // this.setState({taskAssignedToYou: row});
                   });
                 });
@@ -726,11 +727,11 @@ class Home extends React.Component<HomeProps, any> {
                     }}>
                     {this.state.taskAssignedToYou
                       .slice(0, 3)
-                      .map((d: Isor, i: number) => (
+                      .map((d: actionsDashboard, i: number) => (
                         <ListCard
                           key={i}
-                          classify={d.sor_type}
-                          repeated={d.repeatedSor}
+                          classify={d.sorType}
+                          repeated={[]}
                           location={d.location}
                           styles={
                             this.state.taskAssignedToYou.slice(0, 3).length ==
@@ -738,18 +739,22 @@ class Home extends React.Component<HomeProps, any> {
                               ? {borderBottomWidth: wp(0)}
                               : null
                           }
-                          user1={d.user1}
-                          user2={d.user2}
+                          user1={undefined}
+                          user2={undefined}
                           observation={d.details}
-                          username={d.created_by}
+                          username={d.createdBy}
                           iconconf={classifySor.find(
-                            (e: any) => e.title == d.sor_type,
+                            (e: any) => e.title == d.sorType,
                           )}
-                          onPress={() =>
-                            this.props.navigation.navigate('ViewSOR', {data: d})
-                          }
+                          onPress={() => {
+                            // createApi.createApi()
+
+                            this.props.navigation.navigate('ViewSOR', {
+                              data: d.data,
+                            });
+                          }}
                           onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                          date={d.occured_at}
+                          date={d.createdAt}
                         />
                       ))}
                   </View>
@@ -833,32 +838,34 @@ class Home extends React.Component<HomeProps, any> {
                     }}>
                     {this.state.taskAssignedByYou
                       .slice(0, 3)
-                      .map((d: Isor, i: number) => (
-                        <Text>{d.detail}</Text>
-                        // <ListCard
-                        //   classify={d.sor_type}
-                        //   key={i}
-                        //   repeated={d.repeatedSor}
-                        //   location={d.location}
-                        //   styles={
-                        //     this.state.taskAssignedByYou.slice(0, 3).length ==
-                        //     i + 1
-                        //       ? {borderBottomWidth: wp(0)}
-                        //       : null
-                        //   }
-                        //   user1={d.user1}
-                        //   user2={d.user2}
-                        //   observation={d.details}
-                        //   username={d.created_by}
-                        //   iconconf={classifySor.find(
-                        //     (e: any) => e.title == d.sor_type,
-                        //   )}
-                        //   onPress={() =>
-                        //     this.props.navigation.navigate('ViewSOR', {data: d})
-                        //   }
-                        //   onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                        //   date={d.occured_at}
-                        // />
+                      .map((d: actionsDashboard, i: number) => (
+                        // <Text>{d.details}</Text>
+                        <ListCard
+                          classify={d.sorType}
+                          key={i}
+                          repeated={[]}
+                          location={d.location}
+                          styles={
+                            this.state.taskAssignedByYou.slice(0, 3).length ==
+                            i + 1
+                              ? {borderBottomWidth: wp(0)}
+                              : null
+                          }
+                          user1={undefined}
+                          user2={undefined}
+                          observation={d.details}
+                          username={d.createdBy}
+                          iconconf={classifySor.find(
+                            (e: any) => e.title == d.sorType,
+                          )}
+                          onPress={() => {
+                            this.props.navigation.navigate('ViewSOR', {
+                              data: d.data,
+                            });
+                          }}
+                          onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                          date={d.createdAt}
+                        />
                       ))}
                   </View>
                 </ScrollView>
