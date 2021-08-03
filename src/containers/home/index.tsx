@@ -51,7 +51,7 @@ export interface HomeProps {
   reduxActions: any;
   reduxState: any;
 }
-const CopilotText = walkthroughable(Text);
+// const CopilotText = walkthroughable(Text);
 
 class Home extends React.Component<HomeProps, any> {
   constructor(props: any) {
@@ -103,92 +103,165 @@ class Home extends React.Component<HomeProps, any> {
         createApi
           .createApi()
           .getOrganization(currentorg)
-          .then((org) => {
+          .then((org: any) => {
             console.log('org.data');
-            console.log();
+            // console.log(org.data.);
             this.setState({orgImage: org.data.data.img_url});
+
+            AsyncStorage.getItem('email').then((email: any) => {
+              createApi
+                .createApi()
+                .taskAssignedBy(org.data.data._id, email)
+                .then((assignBy: any) => {
+                  assignBy.data.data[0].projects.forEach((assignBye: any) => {
+                    const element = assignBye.reports.action_required;
+                    const row = {
+                      projectId: assignBye._id,
+                      reportId: assignBye.reports._id,
+                      details: element.content,
+                      assignedTo: element.assignTo,
+                      createdBy: element.createdBy,
+                      location: assignBye.reports.location,
+                    };
+                    if (assignBye.reports.createdAt) {
+                      row.createdAt = assignBye.reports.createdAt
+                        .toString()
+                        .substring(0, 11);
+                    }
+                    console.log('elemenata');
+                    console.log(row);
+                  });
+                });
+              createApi
+                .createApi()
+                .taskAssignedTo(org.data.data._id, email)
+                .then((assignTo: any) => {
+                  assignTo.data.data[0].projects.forEach((assigndTot: any) => {
+                    const element = assigndTot.reports.action_required;
+                    const row = {
+                      projectId: assigndTot._id,
+                      reportId: assigndTot.reports._id,
+                      details: element.content,
+                      assignedTo: element.assignTo,
+                      createdBy: element.createdBy,
+                      location: assigndTot.reports.location,
+                    };
+                    if (assigndTot.reports.createdAt) {
+                      row.createdAt = assigndTot.reports.createdAt
+                        .toString()
+                        .substring(0, 11);
+                    }
+                    console.log('elemenata');
+                    console.log(row);
+                  });
+                });
+              createApi
+                .createApi()
+                .tableData(org.data.data._id, email)
+                .then((tblData: any) => {
+                  tblData.data.data[0].projects.forEach((tblDataa: any) => {
+                    const element = tblDataa.reports.action_required;
+                    const row = {
+                      projectId: tblDataa._id,
+                      reportId: tblDataa.reports._id,
+                      details: element.content,
+                      assignedTo: element.assignTo,
+                      createdBy: element.createdBy,
+                      location: tblDataa.reports.location,
+                    };
+                    if (tblDataa.reports.createdAt) {
+                      row.createdAt = tblDataa.reports.createdAt
+                        .toString()
+                        .substring(0, 11);
+                    }
+                    console.log('elemenata');
+                    console.log(row);
+                  });
+                });
+            });
           });
 
-        // Filter sors
-        createApi
-          .createApi()
-          .filterSors({
-            project: currentProj,
-            limit: 10,
-            page: 0,
-            query: {status: [1, 2, 3, 4, 5]},
-          })
-          .then((res: any) => {
-            createApi
-              .createApi()
-              .dashboardApi(currentProj, currentorg)
-              .then((dash: any) => {
-                // console.log('dash');
-                //  console.log)
-                this.setState({
-                  totalObs:
-                    dash.data.noOfCompleted +
-                    dash.data.noOfDrafts +
-                    dash.data.noOfPublished,
-                });
+        // // Filter sors
+        // createApi
+        //   .createApi()
+        //   .filterSors({
+        //     project: currentProj,
+        //     limit: 10,
+        //     page: 0,
+        //     query: {status: [1, 2, 3, 4, 5]},
+        //   })
+        //   .then((res: any) => {
+        //     createApi
+        //       .createApi()
+        //       .dashboardApi(currentProj, currentorg)
+        //       .then((dash: any) => {
+        //         // console.log('dash');
+        //         //  console.log)
+        //         this.setState({
+        //           totalObs:
+        //             dash.data.noOfCompleted +
+        //             dash.data.noOfDrafts +
+        //             dash.data.noOfPublished,
+        //         });
 
-                this.setState({
-                  noOfCompleted: dash.data.noOfCompleted,
-                  noOfDrafts: dash.data.noOfDrafts,
-                  noOfPublished: dash.data.noOfPublished,
-                });
-                this.setState({});
-              });
+        //         this.setState({
+        //           noOfCompleted: dash.data.noOfCompleted,
+        //           noOfDrafts: dash.data.noOfDrafts,
+        //           noOfPublished: dash.data.noOfPublished,
+        //         });
+        //         this.setState({});
+        //       });
 
-            if (res.data.data.report.length > 3) {
-              res.data.data.report.sort(
-                (a: any, b: any) =>
-                  new Date(b.createdAt) - new Date(a.createdAt),
-              );
+        //     if (res.data.data.report.length > 3) {
+        //       res.data.data.report.sort(
+        //         (a: any, b: any) =>
+        //           new Date(b.createdAt) - new Date(a.createdAt),
+        //       );
 
-              for (let i = 0; i < res.data.data.report.length; i++) {
-                if (res.data.data.report[i].details != undefined) {
-                  AsyncStorage.getItem('email').then((email) => {
-                    this.setState({
-                      recentActivity: res.data.data.report.slice(0, 3),
-                      taskAssignedToYou: res.data.data.report.filter((d) =>
-                        d.submit_to.filter((d) => d == email),
-                      ),
-                      taskAssignedByYou: res.data.data.report.filter(
-                        (d) => d.created_by == email,
-                      ),
-                      taskYouAreInvolvedIn: res.data.data.report.filter((d) =>
-                        d.involved_persons.filter((d) => d == email),
-                      ),
-                    });
-                  });
+        //       for (let i = 0; i < res.data.data.report.length; i++) {
+        //         if (res.data.data.report[i].details != undefined) {
+        //           AsyncStorage.getItem('email').then((email) => {
+        //             this.setState({
+        //               recentActivity: res.data.data.report.slice(0, 3),
+        //               taskAssignedToYou: res.data.data.report.filter((d) =>
+        //                 d.submit_to.filter((d) => d == email),
+        //               ),
+        //               taskAssignedByYou: res.data.data.report.filter(
+        //                 (d) => d.created_by == email,
+        //               ),
+        //               taskYouAreInvolvedIn: res.data.data.report.filter((d) =>
+        //                 d.involved_persons.filter((d) => d == email),
+        //               ),
+        //             });
+        //           });
 
-                  this.setState({});
-                }
-              }
-            } else {
-              for (let i = 0; i < res.data.data.report.length; i++) {
-                if (res.data.data.report[i].details != undefined) {
-                  AsyncStorage.getItem('email').then((email) => {
-                    this.setState({
-                      recentActivity: res.data.data.report.slice(0, 3),
-                      taskAssignedToYou: res.data.data.report.filter((d) =>
-                        d.submit_to.filter((d) => d == email),
-                      ),
-                      taskAssignedByYou: res.data.data.report.filter(
-                        (d) => d.created_by == email,
-                      ),
-                      taskYouAreInvolvedIn: res.data.data.report.filter((d) =>
-                        d.involved_persons.filter((d) => d == email),
-                      ),
-                    });
-                  });
+        //           this.setState({});
+        //         }
+        //       }
+        //     } else {
+        //       for (let i = 0; i < res.data.data.report.length; i++) {
+        //         if (res.data.data.report[i].details != undefined) {
+        //           AsyncStorage.getItem('email').then((email) => {
+        //             this.setState({
+        //               recentActivity: res.data.data.report.slice(0, 3),
+        //               taskAssignedToYou: res.data.data.report.filter((d) =>
+        //                 d.submit_to.filter((d) => d == email),
+        //               ),
+        //               taskAssignedByYou: res.data.data.report.filter(
+        //                 (d) => d.created_by == email,
+        //               ),
+        //               taskYouAreInvolvedIn: res.data.data.report.filter((d) =>
+        //                 d.involved_persons.filter((d) => d == email),
+        //               ),
+        //             });
+        //           });
 
-                  this.setState({});
-                }
-              }
-            }
-          });
+        //           this.setState({});
+        //         }
+        //       }
+        //     }
+        //   });
+
         this.setState({projectId: currentProj});
         this.setState({currentorg: currentorg});
 
@@ -453,7 +526,7 @@ class Home extends React.Component<HomeProps, any> {
                   style={styles.orgLogoPng}
                 />
               </View>
-            
+
               <View style={{alignSelf: 'center'}}>
                 <Text style={styles.title}>Welcome</Text>
                 <Text style={styles.orgTitle}>{this.state.name}</Text>

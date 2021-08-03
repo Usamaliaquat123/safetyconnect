@@ -184,8 +184,29 @@ const createApi = (
       query: data.query,
     });
 
+  /*
+   * @Dashboard
+   */
+
+  const taskAssignedTo = (orgnaization: any, email: any) =>
+    baseapi.get(
+      `/dashboard/taskAssigned/?organization=${orgnaization}&email=${email}&page=0&limit=20`,
+    );
+  const taskAssignedBy = (orgnaization: any, email: any) =>
+    baseapi.get(
+      `/dashboard/taskAssigned/?organization=${orgnaization}&email=${email}&page=0&limit=20`,
+    );
+  const tableData = (orgnaization: any, email: any) =>
+    baseapi.get(
+      `/dashboard/taskAssigned/?organization=${orgnaization}&email=${email}&page=0&limit=20`,
+    );
+
   return {
     searchApi,
+
+    taskAssignedTo,
+    taskAssignedBy,
+    tableData,
     createFiveWhy,
     logs,
     getFileApi,
