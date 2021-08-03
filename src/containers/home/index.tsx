@@ -128,8 +128,9 @@ class Home extends React.Component<HomeProps, any> {
                         .toString()
                         .substring(0, 11);
                     }
-
-                    this.setState({taskAssignedByYou: row});
+                    this.state.taskAssignedByYou.push(row);
+                    this.setState({});
+                    // this.setState({taskAssignedByYou: row});
                   });
                 });
               createApi
@@ -151,7 +152,9 @@ class Home extends React.Component<HomeProps, any> {
                         .toString()
                         .substring(0, 11);
                     }
-                    this.setState({taskAssignedToYou: row});
+
+                    this.state.taskAssignedToYou.push(row);
+                    // this.setState({taskAssignedToYou: row});
                   });
                 });
               // createApi
@@ -178,6 +181,9 @@ class Home extends React.Component<HomeProps, any> {
               //   });
               // });
             });
+
+            console.log('this.state.taskAssignedToYou');
+            console.log(this.state.taskAssignedToYou);
           });
 
         // // Filter sors
@@ -672,7 +678,7 @@ class Home extends React.Component<HomeProps, any> {
                   <TouchableOpacity
                     onPress={() =>
                       this.props.navigation.navigate('ViewAll', {
-                        data: this.state.taskAssignedByYou,
+                        data: this.state.taskAssignedToYou,
                         title: 'Tasks Assigned to you',
                       })
                     }>
@@ -828,30 +834,31 @@ class Home extends React.Component<HomeProps, any> {
                     {this.state.taskAssignedByYou
                       .slice(0, 3)
                       .map((d: Isor, i: number) => (
-                        <ListCard
-                          classify={d.sor_type}
-                          key={i}
-                          repeated={d.repeatedSor}
-                          location={d.location}
-                          styles={
-                            this.state.taskAssignedByYou.slice(0, 3).length ==
-                            i + 1
-                              ? {borderBottomWidth: wp(0)}
-                              : null
-                          }
-                          user1={d.user1}
-                          user2={d.user2}
-                          observation={d.details}
-                          username={d.created_by}
-                          iconconf={classifySor.find(
-                            (e: any) => e.title == d.sor_type,
-                          )}
-                          onPress={() =>
-                            this.props.navigation.navigate('ViewSOR', {data: d})
-                          }
-                          onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                          date={d.occured_at}
-                        />
+                        <Text>{d.detail}</Text>
+                        // <ListCard
+                        //   classify={d.sor_type}
+                        //   key={i}
+                        //   repeated={d.repeatedSor}
+                        //   location={d.location}
+                        //   styles={
+                        //     this.state.taskAssignedByYou.slice(0, 3).length ==
+                        //     i + 1
+                        //       ? {borderBottomWidth: wp(0)}
+                        //       : null
+                        //   }
+                        //   user1={d.user1}
+                        //   user2={d.user2}
+                        //   observation={d.details}
+                        //   username={d.created_by}
+                        //   iconconf={classifySor.find(
+                        //     (e: any) => e.title == d.sor_type,
+                        //   )}
+                        //   onPress={() =>
+                        //     this.props.navigation.navigate('ViewSOR', {data: d})
+                        //   }
+                        //   onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                        //   date={d.occured_at}
+                        // />
                       ))}
                   </View>
                 </ScrollView>
