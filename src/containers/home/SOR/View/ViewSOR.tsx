@@ -278,6 +278,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.props.route.params.data.risk.severity,
       this.props.route.params.data.risk.likelihood,
     );
+
+    console.log(this.state.esclate_to);
   };
 
   getAllRepeatedSors = async (e: any, projectid: any) => {

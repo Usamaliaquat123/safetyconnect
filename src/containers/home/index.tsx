@@ -138,8 +138,11 @@ class Home extends React.Component<HomeProps, any> {
                 .taskAssignedTo(org.data.data._id, email)
                 .then((assignTo: any) => {
                   assignTo.data.data[0].projects.forEach((assigndTot: any) => {
+                    console.log('assigndTot');
+                    console.log(assigndTot);
                     const element = assigndTot.reports.action_required;
                     const row = {
+                      // projectId: assigndTot._id,
                       data: assigndTot.reports,
                       sorType: assigndTot.reports.sor_type,
                       projectId: assigndTot._id,
@@ -747,11 +750,15 @@ class Home extends React.Component<HomeProps, any> {
                             (e: any) => e.title == d.sorType,
                           )}
                           onPress={() => {
-                            // createApi.createApi()
-
-                            this.props.navigation.navigate('ViewSOR', {
-                              data: d.data,
-                            });
+                            createApi
+                              .createApi()
+                              .getSors(d.projectId, d.data._id)
+                              .then((rep) => {
+                                console.log(rep);
+                                this.props.navigation.navigate('ViewSOR', {
+                                  data: rep.data.data.report[0],
+                                });
+                              });
                           }}
                           onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                           date={d.createdAt}
@@ -859,9 +866,15 @@ class Home extends React.Component<HomeProps, any> {
                             (e: any) => e.title == d.sorType,
                           )}
                           onPress={() => {
-                            this.props.navigation.navigate('ViewSOR', {
-                              data: d.data,
-                            });
+                            createApi
+                              .createApi()
+                              .getSors(d.projectId, d.data._id)
+                              .then((rep) => {
+                                console.log(rep);
+                                this.props.navigation.navigate('ViewSOR', {
+                                  data: rep.data.data.report[0],
+                                });
+                              });
                           }}
                           onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                           date={d.createdAt}
