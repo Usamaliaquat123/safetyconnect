@@ -829,7 +829,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         _id: '',
                         created_by: this.state.email,
                         details: this.state.observationT,
-                        occured_at: this.state.currentTime,
+                        occurred_at: this.state.currentTime,
                         involved_persons: this.state.involvePersonTags.map(
                           (d: any) => d._id,
                         ),
