@@ -23,6 +23,8 @@ import {
   filterAndMappingPersons,
   savedCurrentOrganization,
 } from '@utils';
+import {copilot, CopilotStep, walkthroughable} from 'react-native-copilot';
+
 import {Avatar, Icon} from 'react-native-elements';
 import {ListCard, Card} from '@components';
 import {route} from '@nav';
@@ -49,6 +51,7 @@ export interface HomeProps {
   reduxActions: any;
   reduxState: any;
 }
+const CopilotText = walkthroughable(Text);
 
 class Home extends React.Component<HomeProps, any> {
   constructor(props: any) {
@@ -450,6 +453,7 @@ class Home extends React.Component<HomeProps, any> {
                   style={styles.orgLogoPng}
                 />
               </View>
+            
               <View style={{alignSelf: 'center'}}>
                 <Text style={styles.title}>Welcome</Text>
                 <Text style={styles.orgTitle}>{this.state.name}</Text>
@@ -2003,4 +2007,4 @@ const mapDispatchToProps = (dispatch: any) => {
     // reduxActions: bindActionCreators(reduxActions.default, dispatch),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default copilot()(Home);
