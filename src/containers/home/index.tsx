@@ -128,8 +128,8 @@ class Home extends React.Component<HomeProps, any> {
                         .toString()
                         .substring(0, 11);
                     }
-                    console.log('elemenata');
-                    console.log(row);
+
+                    this.setState({taskAssignedByYou: row});
                   });
                 });
               createApi
@@ -151,33 +151,32 @@ class Home extends React.Component<HomeProps, any> {
                         .toString()
                         .substring(0, 11);
                     }
-                    console.log('elemenata');
-                    console.log(row);
+                    this.setState({taskAssignedToYou: row});
                   });
                 });
-              createApi
-                .createApi()
-                .tableData(org.data.data._id, email)
-                .then((tblData: any) => {
-                  tblData.data.data[0].projects.forEach((tblDataa: any) => {
-                    const element = tblDataa.reports.action_required;
-                    const row = {
-                      projectId: tblDataa._id,
-                      reportId: tblDataa.reports._id,
-                      details: element.content,
-                      assignedTo: element.assignTo,
-                      createdBy: element.createdBy,
-                      location: tblDataa.reports.location,
-                    };
-                    if (tblDataa.reports.createdAt) {
-                      row.createdAt = tblDataa.reports.createdAt
-                        .toString()
-                        .substring(0, 11);
-                    }
-                    console.log('elemenata');
-                    console.log(row);
-                  });
-                });
+              // createApi
+              // .createApi()
+              // .tableData(org.data.data._id, email)
+              // .then((tblData: any) => {
+              //   tblData.data.data[0].projects.forEach((tblDataa: any) => {
+              //     const element = tblDataa.reports.action_required;
+              //     const row = {
+              //       projectId: tblDataa._id,
+              //       reportId: tblDataa.reports._id,
+              //       details: element.content,
+              //       assignedTo: element.assignTo,
+              //       createdBy: element.createdBy,
+              //       location: tblDataa.reports.location,
+              //     };
+              //     if (tblDataa.reports.createdAt) {
+              //       row.createdAt = tblDataa.reports.createdAt
+              //         .toString()
+              //         .substring(0, 11);
+              //     }
+              //     console.log('elemenata');
+              //     console.log(row);
+              //   });
+              // });
             });
           });
 
