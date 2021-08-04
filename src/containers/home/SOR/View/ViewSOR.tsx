@@ -99,6 +99,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       involveAndNotifiedUsersName: '',
       IsaddInvAndNotifiedUser: false,
       involvedAndNotifiedUserType: 'involved',
+      fileloading: false,
       commentAttachment: [],
       addInvolvedandNotifiedUsers: [],
       errorModal: false,
@@ -152,6 +153,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       rootCauses: '',
       keyFindingss: '',
       keyFindings: '',
+      commentAttachmentLoading: false,
       rootCausesD: '',
       // Reassign to
       reAssignToArr: [],
@@ -549,7 +551,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .then((res: any) => {
         // AsyncStorage.getItem('involved_person').then((involveppl: any) => {
         // var involvedPersonss = JSON.parse(involveppl);
-
+        console.log(res);
         for (let i = 0; i < res.data.data.all_comments.length; i++) {
           var rs = res.data.data.all_comments[i].files.map(
             (d) => (d = `report/${d}`),
@@ -563,10 +565,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             report: rs,
           };
 
+          console.log(dta);
+
           createApi
             .createApi()
             .getPublicPhotos(dta)
             .then((imgUrl: any) => {
+              console.log('imgUrl');
+              console.log(imgUrl);
               var obj = {};
               for (
                 let k = 0;
@@ -624,8 +630,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         );
 
         this.setState({comments: sortedActivities});
-        this.setState({});
-
+        // this.setState({});
+        console.log('comments');
+        console.log(this.state.comments);
         // this.state..sort(function(a, b){return a-b});
       });
     // })
@@ -787,7 +794,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   //   }
   // };
   // Document Attachments
-  openDoc = async (attach: Array<Object>) => {
+  openDoc = async (attach: Array<Object>, commentAttach? = false) => {
     try {
       var res = await DocumentPicker.pick({
         type: [DocumentPicker.types.allFiles],
@@ -828,7 +835,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           upload: '',
           type: res.type,
         };
-        this.setState({fileLoading: true});
+        if (commentAttach == true) {
+          this.setState({commentAttachmentLoading: true});
+        } else {
+          this.setState({fileLoading: true});
+        }
 
         fileuploader(
           res.orgType,
@@ -838,7 +849,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           res.uri,
         ).then((filename: any) => {
           imgData['name'] = filename;
-
+          if (commentAttach == true) {
+            this.setState({commentAttachmentLoading: false});
+          } else {
+            this.setState({fileLoading: false});
+          }
           var data = {
             bucket: 'hns-codist',
             report: [`report/${filename}`],
@@ -851,7 +866,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               imgData['uri'] = d.data[0];
             });
           attach.splice(0, 0, imgData);
-
+            console.log(attach)
           this.setState({});
         });
       }
@@ -1607,133 +1622,69 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             <View style={styles.lineheight} />
             <View style={styles.attachmentsContainer}>
               <Text style={styles.attachmentsFont}>Attachments</Text>
-              {this.state.attachments.length == 0 ? (
-                <Text style={styles.youdonthaveAnyAttachments}>
-                  You don't have any attachments
-                </Text>
+              {this.state.fileLoading == true ? (
+                <View style={{alignSelf: 'center'}}>
+                  <LottieView
+                    autoPlay={true}
+                    style={{width: wp(30)}}
+                    source={animation.profileimage}
+                    loop={true}
+                  />
+                </View>
               ) : (
                 <View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      flexWrap: 'wrap',
-                      alignSelf: 'center',
-                    }}>
-                    {this.state.attachments.map((d: any, i: number) => {
-                      if (d.type == 'image') {
-                        return (
-                          <TouchableOpacity
-                            onPress={() => this.setState({imageViewer: true})}
-                            style={styles.AttchimageContainer}>
-                            <Image
-                              source={{
-                                uri: d.uri,
-                              }}
-                              style={[GlStyles.images, {borderRadius: wp(3)}]}
-                              resizeMode={'cover'}
-                            />
-                            <TouchableOpacity
-                              onPress={() => {
-                                if (d.upload != 'self') {
-                                  this.photoAnim.play();
-                                  downloadFile(d.uri, d.type)
-                                    .then((res: any) => {})
-                                    .catch((err) => {});
+                  {this.state.attachments.length == 0 ? (
+                    <Text style={styles.youdonthaveAnyAttachments}>
+                      You don't have any attachments
+                    </Text>
+                  ) : (
+                    <View>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          flexWrap: 'wrap',
+                          alignSelf: 'center',
+                        }}>
+                        {this.state.attachments.map((d: any, i: number) => {
+                          if (d.type == 'image') {
+                            return (
+                              <TouchableOpacity
+                                onPress={() =>
+                                  this.setState({imageViewer: true})
                                 }
-                              }}
-                              style={styles.lottieDownloadContainer}>
-                              <LottieView
-                                ref={(animation) => {
-                                  this.photoAnim = animation;
-                                }}
-                                style={{width: wp(11)}}
-                                source={animation.download}
-                                loop={false}
-                              />
-
-                              {d.upload == 'self' ? (
+                                style={styles.AttchimageContainer}>
+                                <Image
+                                  source={{
+                                    uri: d.uri,
+                                  }}
+                                  style={[
+                                    GlStyles.images,
+                                    {borderRadius: wp(3)},
+                                  ]}
+                                  resizeMode={'cover'}
+                                />
                                 <TouchableOpacity
-                                  style={{marginRight: wp(3)}}
                                   onPress={() => {
-                                    var arr = [
-                                      ...this.state.attachments,
-                                    ].filter((b) => b != d);
-                                    this.setState({attachments: arr});
-                                  }}>
-                                  <Icon
-                                    containerStyle={{
-                                      marginRight: wp(2),
-                                      marginTop: wp(2),
-                                      opacity: 0.5,
-                                    }}
-                                    name="circle-with-cross"
-                                    size={wp(5)}
-                                    type="entypo"
-                                    color={colors.text}
-                                  />
-                                </TouchableOpacity>
-                              ) : null}
-                            </TouchableOpacity>
-                          </TouchableOpacity>
-                        );
-                      } else {
-                        return (
-                          <View>
-                            {d.type != 'image' ? (
-                              <View style={styles.attachFileContainer}>
-                                <View
-                                  style={{
-                                    width: '60%',
-                                    height: '60%',
-                                    alignSelf: 'center',
-                                    marginTop: wp(4),
-                                  }}>
-                                  <Image
-                                    source={
-                                      d.type == 'pdf'
-                                        ? images.pdf
-                                        : d.type == 'doc'
-                                        ? images.doc
-                                        : d.type == 'text'
-                                        ? images.text
-                                        : d.type == 'doc'
-                                        ? images.doc
-                                        : // : d.type == 'excel'
-                                          // ? images.excel
-                                          // : d.type == 'powerpoint'
-                                          // ? images.powerpoint
-                                          null
+                                    if (d.upload != 'self') {
+                                      this.photoAnim.play();
+                                      downloadFile(d.uri, d.type)
+                                        .then((res: any) => {})
+                                        .catch((err) => {});
                                     }
-                                    style={[GlStyles.images]}
-                                    resizeMode={'contain'}
+                                  }}
+                                  style={styles.lottieDownloadContainer}>
+                                  <LottieView
+                                    ref={(animation) => {
+                                      this.photoAnim = animation;
+                                    }}
+                                    style={{width: wp(11)}}
+                                    source={animation.download}
+                                    loop={false}
                                   />
-                                </View>
-                                <Text style={styles.attchFileText}>
-                                  {d.name.substring(0, 10)}.../.{d.type}
-                                </Text>
-                                <View
-                                  style={styles.attachmentDownloadContainer}>
-                                  <TouchableOpacity
-                                    onPress={() => {
-                                      if (d.upload != 'self') {
-                                        this.photoAnim.play();
-                                        downloadFile(d.url, d.type)
-                                          .then((res: any) => {})
-                                          .catch((err) => {});
-                                      }
-                                    }}>
-                                    <LottieView
-                                      ref={(animation) => {
-                                        this.animation = animation;
-                                      }}
-                                      style={{width: wp(15)}}
-                                      source={animation.download}
-                                      loop={false}
-                                    />
-                                  </TouchableOpacity>
 
                                   {d.upload == 'self' ? (
                                     <TouchableOpacity
+                                      style={{marginRight: wp(3)}}
                                       onPress={() => {
                                         var arr = [
                                           ...this.state.attachments,
@@ -1753,38 +1704,106 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                       />
                                     </TouchableOpacity>
                                   ) : null}
-                                </View>
+                                </TouchableOpacity>
+                              </TouchableOpacity>
+                            );
+                          } else {
+                            return (
+                              <View>
+                                {d.type != 'image' ? (
+                                  <View style={styles.attachFileContainer}>
+                                    <View
+                                      style={{
+                                        width: '60%',
+                                        height: '60%',
+                                        alignSelf: 'center',
+                                        marginTop: wp(4),
+                                      }}>
+                                      <Image
+                                        source={
+                                          d.type == 'pdf'
+                                            ? images.pdf
+                                            : d.type == 'doc'
+                                            ? images.doc
+                                            : d.type == 'text'
+                                            ? images.text
+                                            : d.type == 'doc'
+                                            ? images.doc
+                                            : // : d.type == 'excel'
+                                              // ? images.excel
+                                              // : d.type == 'powerpoint'
+                                              // ? images.powerpoint
+                                              null
+                                        }
+                                        style={[GlStyles.images]}
+                                        resizeMode={'contain'}
+                                      />
+                                    </View>
+                                    <Text style={styles.attchFileText}>
+                                      {d.name.substring(0, 10)}.../.{d.type}
+                                    </Text>
+                                    <View
+                                      style={
+                                        styles.attachmentDownloadContainer
+                                      }>
+                                      <TouchableOpacity
+                                        onPress={() => {
+                                          if (d.upload != 'self') {
+                                            this.photoAnim.play();
+                                            downloadFile(d.url, d.type)
+                                              .then((res: any) => {})
+                                              .catch((err) => {});
+                                          }
+                                        }}>
+                                        <LottieView
+                                          ref={(animation) => {
+                                            this.animation = animation;
+                                          }}
+                                          style={{width: wp(15)}}
+                                          source={animation.download}
+                                          loop={false}
+                                        />
+                                      </TouchableOpacity>
+
+                                      {d.upload == 'self' ? (
+                                        <TouchableOpacity
+                                          onPress={() => {
+                                            var arr = [
+                                              ...this.state.attachments,
+                                            ].filter((b) => b != d);
+                                            this.setState({attachments: arr});
+                                          }}>
+                                          <Icon
+                                            containerStyle={{
+                                              marginRight: wp(2),
+                                              marginTop: wp(2),
+                                              opacity: 0.5,
+                                            }}
+                                            name="circle-with-cross"
+                                            size={wp(5)}
+                                            type="entypo"
+                                            color={colors.text}
+                                          />
+                                        </TouchableOpacity>
+                                      ) : null}
+                                    </View>
+                                  </View>
+                                ) : null}
                               </View>
-                            ) : null}
-                          </View>
-                        );
-                      }
-                    })}
-                  </View>
+                            );
+                          }
+                        })}
+                      </View>
+                    </View>
+                  )}
                 </View>
               )}
-
-              {/* <View style={{ flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    alignSelf: 'center',}}>
-
-
-
-
-        </View>
-
-              {this.state.attachments.map((d: any, i: number) => (
-          
-             
-             
-             
-             ))} */}
 
               {this.state.attachments.length < 6 && (
                 <TouchableOpacity
                   onPress={() => {
                     if (this.state.attachments.length < 6) {
-                      this.openDoc(this.state.attachments);
+                      this.openDoc(this.state.attachments, false);
                     }
                   }}
                   style={{marginTop: wp(3), flexDirection: 'row'}}>
@@ -2273,7 +2292,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       flexDirection: 'row',
                     }}>
                     <TouchableOpacity
-                      onPress={() => this.openDoc(this.state.commentAttachment)}
+                      onPress={() =>
+                        this.openDoc(this.state.commentAttachment, true)
+                      }
                       style={{
                         backgroundColor: colors.lightBlue,
                         padding: wp(2),
@@ -2363,114 +2384,134 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
               {/* Comments Attachments */}
               {this.state.commentAttachment.length != 0 ? (
-                <ScrollView
-                  horizontal={true}
-                  style={{marginLeft: wp(6.7)}}
-                  showsHorizontalScrollIndicator={false}>
-                  {this.state.commentAttachment.map((d: any, i: number) => (
-                    <View
-                      style={{
-                        marginLeft: wp(2),
-                        marginTop: wp(3),
-                        marginBottom: wp(5),
-                      }}>
-                      {d.type == 'image' ? (
-                        <View style={styles.AttchimageContainer}>
-                          <Image
-                            source={{
-                              uri: d.uri,
-                            }}
-                            style={[GlStyles.images, {borderRadius: wp(5)}]}
-                            resizeMode={'cover'}
-                          />
-                          <TouchableOpacity
-                            onPress={() => {
-                              var arr = [
-                                ...this.state.commentAttachment,
-                              ].filter((j) => j != d);
-                              this.setState({commentAttachment: arr});
-                            }}
-                            style={{
-                              position: 'absolute',
-                              right: wp(2),
-                              top: wp(2),
-                              zIndex: wp(1),
-                            }}>
-                            <Icon
-                              size={wp(5)}
-                              name="circle-with-cross"
-                              type="entypo"
-                              color={colors.text}
-                            />
-                          </TouchableOpacity>
-                        </View>
-                      ) : (
-                        <View>
-                          <View
-                            style={[
-                              styles.AttchimageContainer,
-                              {
-                                backgroundColor: colors.secondary,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                              },
-                            ]}>
-                            <Image
-                              source={
-                                d.type == 'pdf'
-                                  ? images.pdf
-                                  : d.type == 'doc'
-                                  ? images.doc
-                                  : d.type == 'text'
-                                  ? images.text
-                                  : d.type == 'doc'
-                                  ? images.doc
-                                  : // : d.type == 'excel'
-                                    // ? images.excel
-                                    // : d.type == 'powerpoint'
-                                    // ? images.powerpoint
-                                    null
-                              }
-                              style={{width: wp(10), height: wp(10)}}
-                            />
-
-                            <Text
-                              style={{
-                                fontSize: wp(2.5),
-
-                                color: colors.text,
-                                marginTop: wp(2),
-                              }}>
-                              {d.name.split('.')[0].substring(0, 10)}...{' '}
-                              {d.name.split('.')[1]}
-                            </Text>
-
-                            <TouchableOpacity
-                              onPress={() => {
-                                var arr = [
-                                  ...this.state.commentAttachment,
-                                ].filter((j) => j != d);
-                                this.setState({commentAttachment: arr});
-                              }}
-                              style={{
-                                position: 'absolute',
-                                right: wp(2),
-                                top: wp(2),
-                                zIndex: wp(1),
-                              }}>
-                              <Icon
-                                size={wp(5)}
-                                name="circle-with-cross"
-                                type="entypo"
-                                color={colors.text}
-                              />
-                            </TouchableOpacity>
-                          </View>
-                        </View>
-                      )}
+                <View>
+                  {this.state.commentAttachmentLoading == true ? (
+                    <View style={{alignSelf: 'center'}}>
+                      <LottieView
+                        autoPlay={true}
+                        style={{width: wp(30)}}
+                        source={animation.profileimage}
+                        loop={true}
+                      />
                     </View>
-                  ))}
-                </ScrollView>
+                  ) : (
+                    <>
+                      <ScrollView
+                        horizontal={true}
+                        style={{marginLeft: wp(6.7)}}
+                        showsHorizontalScrollIndicator={false}>
+                        {this.state.commentAttachment.map(
+                          (d: any, i: number) => (
+                            <View
+                              style={{
+                                marginLeft: wp(2),
+                                marginTop: wp(3),
+                                marginBottom: wp(5),
+                              }}>
+                              {d.type == 'image' ? (
+                                <View style={styles.AttchimageContainer}>
+                                  <Image
+                                    source={{
+                                      uri: d.uri,
+                                    }}
+                                    style={[
+                                      GlStyles.images,
+                                      {borderRadius: wp(5)},
+                                    ]}
+                                    resizeMode={'cover'}
+                                  />
+                                  <TouchableOpacity
+                                    onPress={() => {
+                                      var arr = [
+                                        ...this.state.commentAttachment,
+                                      ].filter((j) => j != d);
+                                      this.setState({commentAttachment: arr});
+                                    }}
+                                    style={{
+                                      position: 'absolute',
+                                      right: wp(2),
+                                      top: wp(2),
+                                      zIndex: wp(1),
+                                    }}>
+                                    <Icon
+                                      size={wp(5)}
+                                      name="circle-with-cross"
+                                      type="entypo"
+                                      color={colors.text}
+                                    />
+                                  </TouchableOpacity>
+                                </View>
+                              ) : (
+                                <View>
+                                  <View
+                                    style={[
+                                      styles.AttchimageContainer,
+                                      {
+                                        backgroundColor: colors.secondary,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                      },
+                                    ]}>
+                                    <Image
+                                      source={
+                                        d.type == 'pdf'
+                                          ? images.pdf
+                                          : d.type == 'doc'
+                                          ? images.doc
+                                          : d.type == 'text'
+                                          ? images.text
+                                          : d.type == 'doc'
+                                          ? images.doc
+                                          : // : d.type == 'excel'
+                                            // ? images.excel
+                                            // : d.type == 'powerpoint'
+                                            // ? images.powerpoint
+                                            null
+                                      }
+                                      style={{width: wp(10), height: wp(10)}}
+                                    />
+
+                                    <Text
+                                      style={{
+                                        fontSize: wp(2.5),
+
+                                        color: colors.text,
+                                        marginTop: wp(2),
+                                      }}>
+                                      {d.name.split('.')[0].substring(0, 10)}...{' '}
+                                      {d.name.split('.')[1]}
+                                    </Text>
+
+                                    <TouchableOpacity
+                                      onPress={() => {
+                                        var arr = [
+                                          ...this.state.commentAttachment,
+                                        ].filter((j) => j != d);
+                                        this.setState({commentAttachment: arr});
+                                      }}
+                                      style={{
+                                        position: 'absolute',
+                                        right: wp(2),
+                                        top: wp(2),
+                                        zIndex: wp(1),
+                                      }}>
+                                      <Icon
+                                        size={wp(5)}
+                                        name="circle-with-cross"
+                                        type="entypo"
+                                        color={colors.text}
+                                      />
+                                    </TouchableOpacity>
+                                  </View>
+                                </View>
+                              )}
+                            </View>
+                          ),
+                        )}
+                      </ScrollView>
+                    </>
+                  )}
+                </View>
               ) : (
                 <View style={{marginLeft: wp(5)}}>
                   <Text style={[styles.attchFileText]}>
@@ -2905,7 +2946,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           editDiscardComment={this.state.editDiscardComment}
           commentIndex={this.state.editDiscardCommentIndex}
           isOpen={this.state.editDelComment}
-          openDoc={() => this.openDoc(this.state.editAttachedCommentArr)}
+          openDoc={() => this.openDoc(this.state.editAttachedCommentArr, false)}
           attachments={this.state.editAttachedCommentArr}
           comments={this.state.comments}
           commentTextString={this.state.EditcommentText}

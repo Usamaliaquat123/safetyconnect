@@ -547,7 +547,7 @@ export default class SuggestionsPop extends React.Component<
                                 <LottieView
                                   autoPlay={true}
                                   style={{width: wp(30)}}
-                                  source={animation.imageLoading}
+                                  source={animation.profileimage}
                                   loop={true}
                                 />
                               </View>

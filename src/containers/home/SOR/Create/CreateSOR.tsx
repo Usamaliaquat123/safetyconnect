@@ -1029,12 +1029,76 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   loading: false,
                                   errorModal: false,
                                 });
+                                if (sugg.status == 200) {
+                                  console.log('sugge data');
+                                  console.log(sugg.data.results);
 
-                                console.log('sugge data');
-                                console.log(sugg.data.results);
+                                  var rep = sugg.data.results;
+                                  if (rep.length == 0) {
+                                    showMessage({
+                                      message: 'SOR sucessfully subitted',
+                                      type: 'success',
+                                      position: 'bottom',
+                                    });
+                                    setTimeout(() => {
+                                      this.props.navigation.navigate('Main');
+                                    }, 1000);
+                                  } else {
+                                    for (let i = 0; i < rep.length; i++) {
+                                      const {
+                                        data,
+                                      } = await createApi
+                                        .createApi()
+                                        .getUser(rep[i].created_by);
+                                      const {data: res} = data;
+                                      console.log('res hai bhai');
+                                      console.log(res);
 
-                                var rep = sugg.data.results;
-                                if (rep.length == 0) {
+                                      rep[i]['selected'] = false;
+                                      rep[i]['user'] = {
+                                        _id: res._id,
+                                        email: res.email,
+                                        name: res.name,
+                                        img_url: res.img_url,
+                                      };
+
+                                      this.setState(
+                                        (prevState) => {
+                                          return {
+                                            ...prevState,
+                                            repeatedSorData: rep,
+                                          };
+                                        },
+                                        () => {
+                                          console.log(
+                                            'updated state = ',
+                                            this.state.repeatedSorData,
+                                            this.state.repeatedSorData.length,
+                                          );
+                                        },
+                                      );
+
+                                      // createApi
+                                      //   .createApi()
+                                      //   .getUser(rep[i].created_by)
+                                      //   .then((user: any) => {
+                                      //     rep[i]['selected'] = false;
+                                      //     rep[i]['user'] = {
+                                      //       _id: user.data.data._id,
+                                      //       email: user.data.data.email,
+                                      //       name: user.data.data.name,
+                                      //       img_url: user.data.data.img_url,
+                                      //     };
+                                      //   });
+                                      // this.setState({
+                                      //   repeatedSorData: rep,
+                                      // });
+                                    }
+                                    this.setState({
+                                      repeatedSorModal: true,
+                                    });
+                                  }
+                                } else {
                                   showMessage({
                                     message: 'SOR sucessfully subitted',
                                     type: 'success',
@@ -1043,60 +1107,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   setTimeout(() => {
                                     this.props.navigation.navigate('Main');
                                   }, 1000);
-                                } else {
-                                  for (let i = 0; i < rep.length; i++) {
-                                    const {
-                                      data,
-                                    } = await createApi
-                                      .createApi()
-                                      .getUser(rep[i].created_by);
-                                    const {data: res} = data;
-                                    console.log('res hai bhai');
-                                    console.log(res);
-
-                                    rep[i]['selected'] = false;
-                                    rep[i]['user'] = {
-                                      _id: res._id,
-                                      email: res.email,
-                                      name: res.name,
-                                      img_url: res.img_url,
-                                    };
-
-                                    this.setState(
-                                      (prevState) => {
-                                        return {
-                                          ...prevState,
-                                          repeatedSorData: rep,
-                                        };
-                                      },
-                                      () => {
-                                        console.log(
-                                          'updated state = ',
-                                          this.state.repeatedSorData,
-                                          this.state.repeatedSorData.length,
-                                        );
-                                      },
-                                    );
-
-                                    // createApi
-                                    //   .createApi()
-                                    //   .getUser(rep[i].created_by)
-                                    //   .then((user: any) => {
-                                    //     rep[i]['selected'] = false;
-                                    //     rep[i]['user'] = {
-                                    //       _id: user.data.data._id,
-                                    //       email: user.data.data.email,
-                                    //       name: user.data.data.name,
-                                    //       img_url: user.data.data.img_url,
-                                    //     };
-                                    //   });
-                                    // this.setState({
-                                    //   repeatedSorData: rep,
-                                    // });
-                                  }
-                                  this.setState({
-                                    repeatedSorModal: true,
-                                  });
                                 }
                               });
                           }
@@ -1850,7 +1860,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       <LottieView
                         autoPlay={true}
                         style={{width: wp(30)}}
-                        source={animation.imageLoading}
+                        source={animation.profileimage}
                         loop={true}
                       />
                     </View>
