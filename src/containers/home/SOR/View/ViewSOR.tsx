@@ -189,6 +189,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             involvedPerson: res.data.data.involved_persons,
           });
 
+          console.log('res.data.data.involved_persons');
+          console.log(res.data.data.involved_persons);
+
           var data: Array<any> = [];
 
           this.props.route.params.data.involved_persons.map((d) => {
@@ -196,6 +199,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               res.data.data.involved_persons.filter((i: any) => i._id == d)[0],
             );
           });
+
+          console.log('data');
+          console.log(data);
 
           this.setState({involvedPerson: data});
           this.setState({
@@ -401,14 +407,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       updated_by: this.state.user,
     };
 
-
-    consoe.log(update)
+    consoe.log(update);
 
     createApi
       .createApi()
       .updateSor(update)
       .then((res) => {
-        console.log(res)
+        console.log(res);
         this.setState({loading: false, errorModal: false});
         if (res.status == 200) {
           // add five why
@@ -434,7 +439,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 .createApi()
                 .createFiveWhy(obj)
                 .then((res: any) => {
-                  console.log()
+                  console.log();
                   setTimeout(() => {
                     this.props.navigation.goBack();
                   }, 3000);
@@ -1032,7 +1037,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     {this.state.involvedPerson.length > 1 ? (
                       <Text>
                         {' '}
-                        {this.state.involvedPerson.slice(0, 1)[0].name} 
+                        {this.state.involvedPerson.slice(0, 1)[0].name}
                         {'   '}
                         <Text
                           style={{
@@ -1777,18 +1782,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     <View style={[styles.optnselector]}>
                       <TextInput
                         onFocus={() => {
-                         
-
-                          this.setState(
-                            {
-                              reAssignToArr: searchInSuggestions(
-                                '',
-                                this.state.involvedPerson,
-                              ),
-                            }
-                          )
-
-
+                          this.setState({
+                            reAssignToArr: searchInSuggestions(
+                              '',
+                              this.state.involvedPerson,
+                            ),
+                          });
                         }}
                         underlineColorAndroid="transparent"
                         onChangeText={(v: any) => {
@@ -1890,14 +1889,19 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       : null,
                   ]}>
                   <TextInput
-                    onFocus={() => this.setState({selectedInputIndex: 5, exclateToArr: searchInSuggestions(
-                      '',
-                      this.state.involvedPerson,
-                    ),})}
+                    onFocus={() =>
+                      this.setState({
+                        selectedInputIndex: 5,
+                        exclateToArr: searchInSuggestions(
+                          '',
+                          this.state.involvedPerson,
+                        ),
+                      })
+                    }
                     underlineColorAndroid="transparent"
                     onChangeText={(v: any) => {
                       if (v === '') {
-                        this.setState({esclateTo: v, exclateToArr: [], });
+                        this.setState({esclateTo: v, exclateToArr: []});
                       } else {
                         this.setState({
                           exclateToArr: searchInSuggestions(
