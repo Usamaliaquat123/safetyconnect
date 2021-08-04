@@ -764,65 +764,74 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         iconStyle={{opacity: 0.5}}
                       />
                     </View>
-                    <View style={[styles.inputContainer]}>
-                      <TextInput
-                        onFocus={() => {
-                          this.setState({
-                            locationSuppervisorsSugg: searchInSuggestions(
-                              '',
-                              this.state.allAssignLeaders,
-                            ),
-                          });
-                        }}
-                        value={this.state.locationSupervisor}
-                        style={styles.authInputs}
-                        onChangeText={(e) => {
-                          if (e !== '') {
-                            var arr = searchInSuggestions(
-                              e.toLowerCase(),
-                              this.state.allAssignLeaders,
-                            );
-                            this.setState({locationSuppervisorsSugg: arr});
-                          } else {
-                            this.setState({locationSuppervisorsSugg: []});
-                          }
 
-                          this.setState({locationSupervisor: e});
-                        }}
-                        placeholder={'Enter Name'}
-                      />
-                    </View>
+                    {this.state.locationSuppervisorsTags.length == 0 && (
+                      <>
+                        <View style={[styles.inputContainer]}>
+                          <TextInput
+                            onFocus={() => {
+                              this.setState({
+                                locationSuppervisorsSugg: searchInSuggestions(
+                                  '',
+                                  this.state.allAssignLeaders,
+                                ),
+                              });
+                            }}
+                            value={this.state.locationSupervisor}
+                            style={styles.authInputs}
+                            onChangeText={(e) => {
+                              if (e !== '') {
+                                var arr = searchInSuggestions(
+                                  e.toLowerCase(),
+                                  this.state.allAssignLeaders,
+                                );
+                                this.setState({locationSuppervisorsSugg: arr});
+                              } else {
+                                this.setState({locationSuppervisorsSugg: []});
+                              }
 
-                    {/* Suggestions of projectEmail  */}
-                    {this.state.locationSuppervisorsSugg.length != 0 ? (
-                      <View style={styles.involveSuggestCont}>
-                        {this.state.locationSuppervisorsSugg.map(
-                          (d: any, i: number) => (
-                            <TouchableOpacity
-                              key={i}
-                              onPress={() => {
-                                this.setState({
-                                  locationSupervisor: '',
-                                  locationSuppervisorsSugg: this.state.locationSuppervisorsSugg.filter(
-                                    (b: any) => b != d,
-                                  ),
-                                });
+                              this.setState({locationSupervisor: e});
+                            }}
+                            placeholder={'Enter Name'}
+                          />
+                        </View>
 
-                                this.state.locationSuppervisorsTags.push(d);
-                              }}
-                              style={[
-                                styles.involvePsuggCont,
-                                this.state.locationSuppervisorsSugg.length ==
-                                i + 1
-                                  ? {borderBottomWidth: wp(0)}
-                                  : null,
-                              ]}>
-                              <Text style={styles.involvePSt}>{d.email}</Text>
-                            </TouchableOpacity>
-                          ),
-                        )}
-                      </View>
-                    ) : null}
+                        {/* Suggestions of projectEmail  */}
+                        {this.state.locationSuppervisorsSugg.length != 0 ? (
+                          <View style={styles.involveSuggestCont}>
+                            {this.state.locationSuppervisorsSugg.map(
+                              (d: any, i: number) => (
+                                <TouchableOpacity
+                                  key={i}
+                                  onPress={() => {
+                                    this.setState({
+                                      locationSupervisor: '',
+                                      locationSuppervisorsSugg: this.state.locationSuppervisorsSugg.filter(
+                                        (b: any) => b != d,
+                                      ),
+                                    });
+
+                                    this.state.locationSuppervisorsTags.push(d);
+                                  }}
+                                  style={[
+                                    styles.involvePsuggCont,
+                                    this.state.locationSuppervisorsSugg
+                                      .length ==
+                                    i + 1
+                                      ? {borderBottomWidth: wp(0)}
+                                      : null,
+                                  ]}>
+                                  <Text style={styles.involvePSt}>
+                                    {d.email}
+                                  </Text>
+                                </TouchableOpacity>
+                              ),
+                            )}
+                          </View>
+                        ) : null}
+                      </>
+                    )}
+
                     {/* Tags or project leaders */}
                     <View
                       style={{
@@ -864,64 +873,76 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         iconStyle={{opacity: 0.5}}
                       />
                     </View>
-                    <View style={[styles.inputContainer]}>
-                      <TextInput
-                        onFocus={() => {
-                          this.setState({
-                            additionalSuppervisorsSugg: searchInSuggestions(
-                              '',
-                              this.state.allAssignLeaders,
-                            ),
-                          });
-                        }}
-                        value={this.state.additionalSuppervisors}
-                        style={styles.authInputs}
-                        onChangeText={(e) => {
-                          if (e !== '') {
-                            var arr = searchInSuggestions(
-                              e.toLowerCase(),
-                              this.state.allAssignLeaders,
-                            );
-                            this.setState({additionalSuppervisorsSugg: arr});
-                          } else {
-                            this.setState({additionalSuppervisorsSugg: []});
-                          }
-                          this.setState({additionalSuppervisors: e});
-                        }}
-                        placeholder={'Enter name'}
-                      />
-                    </View>
-
-                    {/* Suggestions of projectEmail  */}
-                    {this.state.additionalSuppervisorsSugg.length != 0 ? (
-                      <View style={styles.involveSuggestCont}>
-                        {this.state.additionalSuppervisorsSugg.map(
-                          (d: any, i: number) => (
-                            <TouchableOpacity
-                              key={i}
-                              onPress={() => {
+                    {this.state.additionalSuppervisorsTags.length == 0 && (
+                      <>
+                        <View style={[styles.inputContainer]}>
+                          <TextInput
+                            onFocus={() => {
+                              this.setState({
+                                additionalSuppervisorsSugg: searchInSuggestions(
+                                  '',
+                                  this.state.allAssignLeaders,
+                                ),
+                              });
+                            }}
+                            value={this.state.additionalSuppervisors}
+                            style={styles.authInputs}
+                            onChangeText={(e) => {
+                              if (e !== '') {
+                                var arr = searchInSuggestions(
+                                  e.toLowerCase(),
+                                  this.state.allAssignLeaders,
+                                );
                                 this.setState({
-                                  additionalSuppervisors: '',
-                                  additionalSuppervisorsSugg: this.state.additionalSuppervisorsSugg.filter(
-                                    (b: any) => b != d,
-                                  ),
+                                  additionalSuppervisorsSugg: arr,
                                 });
+                              } else {
+                                this.setState({additionalSuppervisorsSugg: []});
+                              }
+                              this.setState({additionalSuppervisors: e});
+                            }}
+                            placeholder={'Enter name'}
+                          />
+                        </View>
 
-                                this.state.additionalSuppervisorsTags.push(d);
-                              }}
-                              style={[
-                                styles.involvePsuggCont,
-                                this.state.additionalSuppervisorsSugg.length ==
-                                i + 1
-                                  ? {borderBottomWidth: wp(0)}
-                                  : null,
-                              ]}>
-                              <Text style={styles.involvePSt}>{d.email}</Text>
-                            </TouchableOpacity>
-                          ),
-                        )}
-                      </View>
-                    ) : null}
+                        {/* Suggestions of projectEmail  */}
+                        {this.state.additionalSuppervisorsSugg.length != 0 ? (
+                          <View style={styles.involveSuggestCont}>
+                            {this.state.additionalSuppervisorsSugg.map(
+                              (d: any, i: number) => (
+                                <TouchableOpacity
+                                  key={i}
+                                  onPress={() => {
+                                    this.setState({
+                                      additionalSuppervisors: '',
+                                      additionalSuppervisorsSugg: this.state.additionalSuppervisorsSugg.filter(
+                                        (b: any) => b != d,
+                                      ),
+                                    });
+
+                                    this.state.additionalSuppervisorsTags.push(
+                                      d,
+                                    );
+                                  }}
+                                  style={[
+                                    styles.involvePsuggCont,
+                                    this.state.additionalSuppervisorsSugg
+                                      .length ==
+                                    i + 1
+                                      ? {borderBottomWidth: wp(0)}
+                                      : null,
+                                  ]}>
+                                  <Text style={styles.involvePSt}>
+                                    {d.email}
+                                  </Text>
+                                </TouchableOpacity>
+                              ),
+                            )}
+                          </View>
+                        ) : null}
+                      </>
+                    )}
+
                     {/* Tags or project leaders */}
                     <View
                       style={{
