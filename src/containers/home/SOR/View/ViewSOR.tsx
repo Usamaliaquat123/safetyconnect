@@ -134,7 +134,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       loading: false,
 
       AllUsers: [],
-
+      isCounterInvolved: false,
       // Five WHY
       fiveWhytoggle: true,
       reportIdInvestigation: '',
@@ -197,16 +197,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           var data: Array<any> = [];
 
           this.props.route.params.data.involved_persons.map((d) => {
-           this.state.involvedPerson.push(
+            this.state.involvedPerson.push(
               res.data.data.involved_persons.filter((i: any) => i._id == d)[0],
             );
 
-            this.setState({})
+            this.setState({});
           });
 
-
-          console.log(this.state.involvedPerson)
-
+          console.log(this.state.involvedPerson);
 
           // this.setState({involvedPerson: data});
           this.setState({
@@ -1041,19 +1039,38 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </Text>
                   <Text style={styles.involvedPersonText}>
                     {this.state.involvedPerson.length > 1 ? (
-                      <Text>
-                        {' '}
-                        {this.state.involvedPerson.slice(0, 1)[0].name}
-                        {'   '}
-                        <Text
-                          style={{
-                            marginLeft: wp(1),
-                            fontWeight: 'bold',
-                            fontSize: wp(3),
-                          }}>
-                          {this.state.involvedPerson.length - 1} more
-                        </Text>
-                      </Text>
+                      <>
+                        {this.state.isCounterInvolved ? (
+                          <>
+                            {this.state.involvedPerson
+                              .map((d) => d.name)
+                              .join(',')}
+                          </>
+                        ) : (
+                          <Text>
+                            {' '}
+                            {this.state.involvedPerson.slice(0, 1)[0].name}
+                            {'   '}
+                            <TouchableOpacity
+                              onPress={() =>
+                                this.setState({
+                                  isCounterInvolved: !this.state
+                                    .isCounterInvolved,
+                                })
+                              }>
+                              <Text
+                                style={{
+                                  marginLeft: wp(1),
+                                  fontWeight: 'bold',
+                                  color: colors.primary,
+                                  fontSize: wp(3),
+                                }}>
+                                {this.state.involvedPerson.length - 1} more
+                              </Text>
+                            </TouchableOpacity>
+                          </Text>
+                        )}
+                      </>
                     ) : (
                       <></>
                       // this.state.involvedPerson.map((d) => d.name).join(',')
