@@ -19,7 +19,7 @@ export type StackNavigatorProps = {
   MyTasks: undefined;
   Preview: {data: Isor};
   ViewAll: {data: number | any; title: string};
-  createProject: {organization: string; suggestedUsers?: Array<any>};
+  createProject: undefined;
   CreateOrganization: undefined;
   Menu: undefined;
   NothingFound: undefined;

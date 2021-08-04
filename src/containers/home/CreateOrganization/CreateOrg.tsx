@@ -152,10 +152,14 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
               img_url: this.state.uploadedImage,
               projects: [],
             };
+
+            console.log(data);
             api
               .createApi()
               .organization(data)
               .then((res: any) => {
+                console.log('res');
+                console.log(res);
                 if (res.status == 200) {
                   if (this.state.selectedEmails.length != 0) {
                     var emails = this.state.selectedEmails;
@@ -170,60 +174,18 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                       .createApi()
                       .inviteBulk(inviteData)
                       .then((invited) => {
-                        var invitedPP = {
-                          users: emails,
-                          orgnaizationId: res.data.data.organization_id,
-                          organizationName: this.state.org,
-                        };
-
-                        api
-                          .createApi()
-                          .getUser(email)
-                          .then((checkingMem: any) => {
-                            var memeberId = checkingMem.data.data.organizations.filter(
-                              (d: any) =>
-                                d._id == res.data.data.organization_id,
-                            )[0].members;
-
-                            var members = [];
-                            var indexes = [];
-                            for (let j = 0; j < emails.length; j++) {
-                              indexes.push(j);
-                              // const element = this.state.selectedEmails[j];
-                              members.push({
-                                email: emails[j],
-                              });
-                            }
-
-                            for (let f = 0; f < indexes.length; f++) {
-                              for (let i = 0; i < memeberId.length; i++) {
-                                // if(members.)
-                                // members.filter((d : any) => d.email == emails[j])[0]['']
-                                if (indexes[f] == i) {
-                                  members[f]['_id'] = memeberId[i];
-                                }
-                              }
-                            }
-
-                            AsyncStorage.setItem(
-                              'invitedUsersEmails',
-                              JSON.stringify(members),
-                            );
-                            this.setState({members});
-
-                            this.setState({loading: false, errorModal: false});
-
-                            this.props.navigation.navigate('createProject', {
-                              organization: res.data.data.organization_id,
-                              suggestedUsers: members,
-                            });
-                          });
+                        this.setState({loading: false, errorModal: false});
+                        AsyncStorage.setItem(
+                          'invitedUsers',
+                          JSON.stringify(emails),
+                        );
+                        this.props.navigation.navigate('createProject');
                       });
                   } else {
                     this.setState({loading: false, errorModal: false});
-                    this.props.navigation.navigate('createProject', {
-                      organization: res.data.data.organization_id,
-                    });
+                    // this.props.navigation.navigate('createProject', {
+                    //   organization: res.data.data.organization_id,
+                    // });
                   }
                 } else {
                   this.setState({loading: false, errorModal: false});
@@ -506,8 +468,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
               </View>
               {/* )} */}
             </View>
-            {/* validations error */}
-            {/* Modal Container */}
           </View>
         </ScrollView>
 
@@ -530,25 +490,10 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
             </View>
           )}
         </Modal>
-
-        {/* Project */}
-        <Model
-          isVisible={this.state.createNewProject}
-          onBackdropPress={() => {
-            this.setState({createNewProject: false, loading: false});
-          }}></Model>
       </View>
     );
   }
 }
-
-// const mapStateToProps = (state: any) => {
-//   return {};
-// };
-
-// const mapDispatchToProps = (dispatch: any) => {
-//   return {};
-// };
 
 const mapStateToProps = (state: AllSorDTO) => ({
   reduxState: state.allSors,
