@@ -170,7 +170,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
-    this.setState({esclate_to: this.props.route.params.data.esclate_to});
+    if (this.state.esclate_to != undefined) {
+      this.setState({esclate_to: this.props.route.params.data.esclate_to});
+    }
     // var excludingSubmitCreatedByUsers = [];
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
@@ -373,6 +375,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
       .value;
 
+    console.log('sdsds');
     var update = {
       report: {
         _id: this.props.route.params.data._id /** done  */,
@@ -398,7 +401,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         escalate_to: this.state.esclate_to,
         // this.state.reAssignToArrTags.length == 0
         // : this.state.reAssignToArrTags.map((d: any) => d.email) /** done */,
-        status: this.state.esclate_to.length == 0 ? status : 3 /** done */,
+        // status: this.state.esclate_to.length == 0 ? status : 3 /** done */,
         attachments: this.state.attachments.map((d) => d.name) /** done */,
         comments: this.props.route.params.data.comments /** done */,
         updatedAt: Date.now() /** done */,
@@ -407,7 +410,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       updated_by: this.state.user,
     };
 
-    consoe.log(update);
+    console.log(update);
 
     createApi
       .createApi()
@@ -1785,7 +1788,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           this.setState({
                             reAssignToArr: searchInSuggestions(
                               '',
-                              this.state.involvedPerson,
+                              this.state.involved_person,
                             ),
                           });
                         }}
@@ -1800,7 +1803,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             this.setState({
                               reAssignToArr: searchInSuggestions(
                                 v.toLowerCase(),
-                                this.state.involvedPerson,
+                                this.state.involved_person,
                               ),
                               reassignToText: v,
                             });
@@ -1894,7 +1897,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         selectedInputIndex: 5,
                         exclateToArr: searchInSuggestions(
                           '',
-                          this.state.involvedPerson,
+                          this.state.involved_person,
                         ),
                       })
                     }
@@ -1906,7 +1909,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         this.setState({
                           exclateToArr: searchInSuggestions(
                             v.toLowerCase(),
-                            this.state.involvedPerson,
+                            this.state.involved_person,
                           ),
                           esclateTo: v,
                         });
@@ -1926,12 +1929,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           <TouchableOpacity
                             key={i}
                             onPress={() => {
-                              this.setState({esclateTo: '', exclateToArr: []});
+                              this.setState({
+                                esclateTo: '',
+                                exclateToArr: this.state.exclateToArr.filter(
+                                  (item: any) => {
+                                    return item !== d;
+                                  },
+                                ),
+                              });
                               if (
                                 this.state.exclateToArr.filter(
                                   (v: involved_persons) => v == d,
                                 ).length != 0
                               ) {
+                                console.log(d);
+                                // console.log(this.state.esclate_to);
                                 this.state.esclate_to.push(d.email);
                               } else {
                                 return null;
