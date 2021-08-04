@@ -1027,7 +1027,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     {this.state.involvedPerson.length > 1 ? (
                       <Text>
                         {' '}
-                        {this.state.involvedPerson.slice(0, 1)[0].name}
+                        {this.state.involvedPerson.slice(0, 1)[0].name} 
                         {'   '}
                         <Text
                           style={{
