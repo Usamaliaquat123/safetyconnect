@@ -979,7 +979,7 @@ class Home extends React.Component<HomeProps, any> {
                             this.props.navigation.navigate('ViewSOR', {data: d})
                           }
                           onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                          date={d.occured_at}
+                          date={d.occurred_at}
                         />
                       ))}
                   </View>
@@ -1084,7 +1084,7 @@ class Home extends React.Component<HomeProps, any> {
                           this.props.navigation.navigate('ViewSOR', {data: d})
                         }
                         onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                        date={d.occured_at}
+                        date={d.occurred_at}
                       />
                     ))}
                   </View>
@@ -1169,7 +1169,7 @@ class Home extends React.Component<HomeProps, any> {
                           this.props.navigation.navigate('ViewSOR', {data: d})
                         }
                         onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                        date={d.occured_at}
+                        date={d.occurred_at}
                       />
                     ))}
                   </View>
@@ -1254,7 +1254,7 @@ class Home extends React.Component<HomeProps, any> {
                           this.props.navigation.navigate('ViewSOR', {data: d})
                         }
                         onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                        date={d.occured_at}
+                        date={d.occurred_at}
                       />
                     ))}
                   </View>

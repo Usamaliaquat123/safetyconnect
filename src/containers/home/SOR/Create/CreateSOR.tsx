@@ -911,6 +911,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               date: moment().format('MM-DD-YYYY'),
                             };
 
+
+
+                            
                             console.log(newObj);
                             console.log('five why data ');
                             createApi
@@ -1987,48 +1990,50 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             <View style={styles.optnToggleContainer}>
               <View>
                 <Text style={styles.sbBtnText}>Submitted to</Text>
-                <View
-                  style={[
-                    styles.optnselector,
-                    this.state.selectedInputIndex == 4
-                      ? {borderColor: colors.primary}
-                      : null,
-                  ]}>
-                  <TextInput
-                    onFocus={() => {
-                      this.setState({
-                        selectedInputIndex: 4,
-                        submitToArr: searchInSuggestions(
-                          '',
-                          this.state.involved_persons,
-                        ),
-                      });
-
-                      // if (this.state.actionsTags.length == 0) {
-                      //   this.state.actionsTags.push(
-                      //     this.state.actionRecommendations[0],
-                      //   );
-                      // }
-                    }}
-                    style={styles.optnselectorText}
-                    placeholder={'Select or Type Name'}
-                    underlineColorAndroid="transparent"
-                    onChangeText={(v: any) => {
-                      if (v === '') {
-                        this.setState({submitToArr: [], submitTo: v});
-                      } else {
+                {this.state.submitToTags.length == 0 && (
+                  <View
+                    style={[
+                      styles.optnselector,
+                      this.state.selectedInputIndex == 4
+                        ? {borderColor: colors.primary}
+                        : null,
+                    ]}>
+                    <TextInput
+                      onFocus={() => {
                         this.setState({
+                          selectedInputIndex: 4,
                           submitToArr: searchInSuggestions(
-                            v.toLowerCase(),
+                            '',
                             this.state.involved_persons,
                           ),
-                          submitTo: v,
                         });
-                      }
-                    }}
-                    value={this.state.submitTo}
-                  />
-                </View>
+
+                        // if (this.state.actionsTags.length == 0) {
+                        //   this.state.actionsTags.push(
+                        //     this.state.actionRecommendations[0],
+                        //   );
+                        // }
+                      }}
+                      style={styles.optnselectorText}
+                      placeholder={'Select or Type Name'}
+                      underlineColorAndroid="transparent"
+                      onChangeText={(v: any) => {
+                        if (v === '') {
+                          this.setState({submitToArr: [], submitTo: v});
+                        } else {
+                          this.setState({
+                            submitToArr: searchInSuggestions(
+                              v.toLowerCase(),
+                              this.state.involved_persons,
+                            ),
+                            submitTo: v,
+                          });
+                        }
+                      }}
+                      value={this.state.submitTo}
+                    />
+                  </View>
+                )}
 
                 {this.state.submitToArr.length != 0 ? (
                   <View style={styles.involveSuggestCont}>
@@ -2038,14 +2043,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           key={i}
                           onPress={() => {
                             this.setState({
+                              submitToArr: [],
                               submitTo: '',
                             });
 
-                            this.setState({
-                              submitToArr: this.state.submitToArr.filter(
-                                (b: any) => b != d,
-                              ),
-                            });
+                            
 
                             if (
                               this.state.submitToTags.filter(
