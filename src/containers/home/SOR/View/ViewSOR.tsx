@@ -1776,6 +1776,20 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   <>
                     <View style={[styles.optnselector]}>
                       <TextInput
+                        onFocus={() => {
+                         
+
+                          this.setState(
+                            {
+                              reAssignToArr: searchInSuggestions(
+                                '',
+                                this.state.involvedPerson,
+                              ),
+                            }
+                          )
+
+
+                        }}
                         underlineColorAndroid="transparent"
                         onChangeText={(v: any) => {
                           if (v === '') {
@@ -1876,11 +1890,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       : null,
                   ]}>
                   <TextInput
-                    onFocus={() => this.setState({selectedInputIndex: 5})}
+                    onFocus={() => this.setState({selectedInputIndex: 5, exclateToArr: searchInSuggestions(
+                      '',
+                      this.state.involvedPerson,
+                    ),})}
                     underlineColorAndroid="transparent"
                     onChangeText={(v: any) => {
                       if (v === '') {
-                        this.setState({esclateTo: v, exclateToArr: []});
+                        this.setState({esclateTo: v, exclateToArr: [], });
                       } else {
                         this.setState({
                           exclateToArr: searchInSuggestions(
