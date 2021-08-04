@@ -221,27 +221,20 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
 
     // api
 
-    AsyncStorage.getItem('email').then((email: any) => {
-      for (let i = 0; i < this.props.route.params.suggestedUsers.length; i++) {
-        api
-          .createApi()
-          .getUser(this.props.route.params.suggestedUsers[i].email)
-          .then((res: any) => {
-            this.state.allAssignSuppervisorText.push({
-              email: res.data.data.email,
-              _id: res.data.data._id,
-            });
-            this.state.allAssignLeaders.push({
-              email: res.data.data.email,
-              _id: res.data.data._id,
-            });
-          });
-      }
+    getCurrentOrganization().then((orgid: any) => {
+      // console.log('this.props.route.params.organization');
+      console.log(orgid);
 
-      // this.setState({
-      //   allAssignSuppervisorText: this.props.route.params.suggestedUsers,
-      //   allAssignLeaders: this.props.route.params.suggestedUsers,
-      // });
+      api
+        .createApi()
+        .getOrganization(orgid)
+        .then((orgData: any) => {
+          console.log(orgData.data.data.members);
+          this.setState({
+            allAssignSuppervisorText: orgData.data.data.members,
+            allAssignLeaders: orgData.data.data.members,
+          });
+        });
     });
 
     AsyncStorage.getItem('locations').then((locations: any) => {
@@ -461,6 +454,14 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                   <View style={[styles.inputContainer]}>
                     {this.state.assignLeaderss.length < 15 ? (
                       <TextInput
+                        onFocus={() => {
+                          this.setState({
+                            assignLeaderssText: searchInSuggestions(
+                              '',
+                              this.state.allAssignLeaders,
+                            ),
+                          });
+                        }}
                         placeholder={'Add Leaders that you already invited'}
                         style={styles.authInputs}
                         value={this.state.assignLeaderssT}
@@ -496,7 +497,9 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                             onPress={() => {
                               this.setState({
                                 assignLeaderssT: '',
-                                assignLeaderssText: [],
+                                assignLeaderssText: this.state.assignLeaderssText.filter(
+                                  (b: any) => b !== d,
+                                ),
                               });
 
                               this.state.assignLeaderss.push(d);
@@ -556,13 +559,21 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         <TextInput
                           style={styles.authInputs}
                           placeholder={'Enter name'}
+                          onFocus={() => {
+                            this.setState({
+                              allAssignLeaders: searchInSuggestions(
+                                '',
+                                this.state.allAssignLeaders,
+                              ),
+                            });
+                          }}
                           value={this.state.assignSuppervisorT}
                           onChangeText={(e) => {
                             if (e !== '') {
                               this.setState({
                                 assignSuppervisorText: searchInSuggestions(
                                   e.toLowerCase(),
-                                  this.state.allAssignLeaders,
+                                  this.state.allAssignSuppervisorText,
                                 ),
                                 assignSuppervisorT: e,
                               });
@@ -599,9 +610,12 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                               onPress={() => {
                                 this.setState({
                                   assignSuppervisorT: '',
-                                  assignSuppervisorText: [],
                                 });
-
+                                this.setState({
+                                  assignSuppervisorText: this.state.assignSuppervisorText.filter(
+                                    (b: any) => b != d,
+                                  ),
+                                });
                                 this.state.assignSuppervisor.push(d);
                               }}
                               style={[
