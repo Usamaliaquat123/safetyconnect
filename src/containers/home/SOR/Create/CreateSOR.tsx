@@ -890,6 +890,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         .createSor(sors)
                         .then((res: any) => {
                           if (this.state.fiveWhytoggle == true) {
+                            // if(this.state.fiveWhyQuestion.length < 5){
+
+                            // }else{
+
+                            // }
+
                             this.setState({
                               loading: true,
                               errorModal: true,
@@ -911,9 +917,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               date: moment().format('MM-DD-YYYY'),
                             };
 
-
-
-                            
                             console.log(newObj);
                             console.log('five why data ');
                             createApi
@@ -2047,8 +2050,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               submitTo: '',
                             });
 
-                            
-
                             if (
                               this.state.submitToTags.filter(
                                 (v: involved_persons) => v == d,
@@ -2206,7 +2207,22 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 justifyContent: 'center',
               }}>
               <TouchableOpacity
-                onPress={() => this.onCreateSor(1)}
+                onPress={() => {
+                  if (this.state.fiveWhytoggle == true) {
+                    console.log(this.state.fiveWhyQuestion);
+                    if (this.state.fiveWhyQuestion.length == 5) {
+                      this.onCreateSor(1);
+                    } else {
+                      this.setState({
+                        errorModal: true,
+                        errHeadingText: 'Minimum 5 why ',
+                        errDesText: 'minimum 5 why should be added..!',
+                      });
+                    }
+                  } else {
+                    this.onCreateSor(1);
+                  }
+                }}
                 style={[
                   styles.submitsorbtn,
                   {
@@ -2219,7 +2235,22 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </TouchableOpacity>
               <TouchableOpacity
                 // this.setState({repeatedSorModal: true})
-                onPress={() => this.onCreateSor(2)}
+                onPress={() => {
+                  if (this.state.fiveWhytoggle == true) {
+                    console.log(this.state.fiveWhyQuestion);
+                    if (this.state.fiveWhyQuestion.length == 5) {
+                      this.onCreateSor(2);
+                    } else {
+                      this.setState({
+                        errorModal: true,
+                        errHeadingText: 'Minimum 5 why ',
+                        errDesText: 'minimum 5 why should be added..!',
+                      });
+                    }
+                  } else {
+                    this.onCreateSor(2);
+                  }
+                }}
                 style={[
                   styles.submitsorbtn,
                   {backgroundColor: colors.primary},
@@ -2252,7 +2283,22 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </TouchableOpacity>
               <TouchableOpacity
                 // this.setState({repeatedSorModal: true})
-                onPress={() => this.onCreateSor(5)}
+                onPress={() => {
+                  if (this.state.fiveWhytoggle == true) {
+                    console.log(this.state.fiveWhyQuestion);
+                    if (this.state.fiveWhyQuestion.length == 5) {
+                      this.onCreateSor(5);
+                    } else {
+                      this.setState({
+                        errorModal: true,
+                        errHeadingText: 'Minimum 5 why ',
+                        errDesText: 'minimum 5 why should be added..!',
+                      });
+                    }
+                  } else {
+                    this.onCreateSor(5);
+                  }
+                }}
                 style={[
                   styles.submitsorbtnSb,
                   {backgroundColor: colors.green},
