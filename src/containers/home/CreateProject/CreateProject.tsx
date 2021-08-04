@@ -90,7 +90,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       // Location : suggestion
       locationSuppervisorsTags: [],
       locationSuppervisorsSugg: [],
-
+      organizationId: '',
       additionalSuppervisorsSugg: [],
       additionalSuppervisorsTags: [],
     };
@@ -139,11 +139,11 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
 
                   p_locations: {
                     name: this.state.locationName,
-                    supervisor: this.state.locationSuppervisorsTags[0].email,
+                    supervisor: this.state.locationSuppervisorsTags[0]._id,
                     additional_supervisor: this.state
-                      .additionalSuppervisorsTags[0].email,
+                      .additionalSuppervisorsTags[0]._id,
                   },
-                  organization: this.props.route.params.organization,
+                  organization: this.state.organizationId,
                 })
 
                 .then((res: any) => {
@@ -151,39 +151,26 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                   console.log('created project');
 
                   if (res.status == 200) {
-                    api
-                      .createApi()
-                      .getUser(email)
-                      .then((userdata: any) => {
-                        AsyncStorage.setItem(
-                          'organization',
-                          this.props.route.params.organization,
-                        );
+                    savedCurrentProjectAndOrganizations(
+                      res.data.data.project_id,
+                      this.state.organizationId,
+                    );
+                    this.setState({loading: false});
+                    // AsyncStorage.setItem('email', email);
 
-                        savedCurrentProjectAndOrganizations(
-                          res.data.data.project_id,
-                          this.props.route.params.organization,
-                        );
-                        this.setState({loading: false});
-                        // AsyncStorage.setItem('email', email);
-
-                        this.props.navigation.dispatch(
-                          CommonActions.reset({
-                            index: 1,
-                            routes: [
-                              {
-                                name: 'Main',
-                              },
-                            ],
-                          }),
-                        );
-                        // this.props.navigation.navigate('Main');
-                        //  AsyncStorage.setItem('token', res.)
-                      });
+                    this.props.navigation.dispatch(
+                      CommonActions.reset({
+                        index: 1,
+                        routes: [
+                          {
+                            name: 'Main',
+                          },
+                        ],
+                      }),
+                    );
                   }
                 })
                 .catch((err) => {});
-              // this.props.navigation.pop();
             })
             .catch((err) => {});
         } else {
@@ -216,14 +203,11 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     }
   };
   componentDidMount = async () => {
-    console.log(this.props.route.params.organization);
-    console.log(this.props.route.params.suggestedUsers);
-
     // api
 
     getCurrentOrganization().then((orgid: any) => {
       // console.log('this.props.route.params.organization');
-      console.log(orgid);
+      this.setState({organizationId: orgid});
 
       api
         .createApi()
@@ -782,6 +766,14 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     </View>
                     <View style={[styles.inputContainer]}>
                       <TextInput
+                        onFocus={() => {
+                          this.setState({
+                            locationSuppervisorsSugg: searchInSuggestions(
+                              '',
+                              this.state.allAssignLeaders,
+                            ),
+                          });
+                        }}
                         value={this.state.locationSupervisor}
                         style={styles.authInputs}
                         onChangeText={(e) => {
@@ -811,7 +803,9 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                               onPress={() => {
                                 this.setState({
                                   locationSupervisor: '',
-                                  locationSuppervisorsSugg: [],
+                                  locationSuppervisorsSugg: this.state.locationSuppervisorsSugg.filter(
+                                    (b: any) => b != d,
+                                  ),
                                 });
 
                                 this.state.locationSuppervisorsTags.push(d);
@@ -872,6 +866,14 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     </View>
                     <View style={[styles.inputContainer]}>
                       <TextInput
+                        onFocus={() => {
+                          this.setState({
+                            additionalSuppervisorsSugg: searchInSuggestions(
+                              '',
+                              this.state.allAssignLeaders,
+                            ),
+                          });
+                        }}
                         value={this.state.additionalSuppervisors}
                         style={styles.authInputs}
                         onChangeText={(e) => {
@@ -900,7 +902,9 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                               onPress={() => {
                                 this.setState({
                                   additionalSuppervisors: '',
-                                  additionalSuppervisorsSugg: [],
+                                  additionalSuppervisorsSugg: this.state.additionalSuppervisorsSugg.filter(
+                                    (b: any) => b != d,
+                                  ),
                                 });
 
                                 this.state.additionalSuppervisorsTags.push(d);
