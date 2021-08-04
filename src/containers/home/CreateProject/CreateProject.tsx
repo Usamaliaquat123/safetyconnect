@@ -561,9 +561,9 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                           placeholder={'Enter name'}
                           onFocus={() => {
                             this.setState({
-                              allAssignLeaders: searchInSuggestions(
+                              assignSuppervisorText: searchInSuggestions(
                                 '',
-                                this.state.allAssignLeaders,
+                                this.state.allAssignSuppervisorText,
                               ),
                             });
                           }}
