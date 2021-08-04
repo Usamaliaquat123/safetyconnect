@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
     marginBottom: wp(2),
   },
   AttchimageContainer: {
-    width: wp(30),
-    height: wp(20),
+    width: wp(40),
+    height: wp(30),
 
     borderRadius: wp(3),
     margin: wp(1),

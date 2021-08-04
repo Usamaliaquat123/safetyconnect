@@ -628,8 +628,11 @@ export default class SuggestionsPop extends React.Component<
                                                 ? images.excel
                                                 : null
                                             }
-                                            style={[GlStyles.images]}
-                                            resizeMode={'contain'}
+                                            style={{
+                                              width: '50%',
+                                              height: '50%',
+                                            }}
+                                            resizeMode={'center'}
                                           />
                                           <Text
                                             style={{
