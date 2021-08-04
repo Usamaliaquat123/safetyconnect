@@ -198,7 +198,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
           this.props.route.params.data.involved_persons.map((d) => {
             this.state.involvedPerson.push(
-              res.data.data.involved_persons.filter((i: any) => i.email == d)[0],
+              res.data.data.involved_persons.filter(
+                (i: any) => i.email == d,
+              )[0],
             );
 
             this.setState({});
@@ -2459,12 +2461,40 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 {/* Submit btns  */}
                 <View style={styles.saveAsDraftAndSubmitBtns}>
                   <TouchableOpacity
-                    onPress={() => this.onSubmitUpdateSor(1)}
+                    onPress={() => {
+                      if (this.state.fiveWhytoggle == true) {
+                        if (this.state.fiveWhyQuestion.length == 5) {
+                          this.onSubmitUpdateSor(1);
+                        } else {
+                          this.setState({
+                            errorModal: true,
+                            errHeadingText: 'Minimum 5 why ',
+                            errDesText: 'minimum 5 why should be added..!',
+                          });
+                        }
+                      } else {
+                        this.onSubmitUpdateSor(1);
+                      }
+                    }}
                     style={styles.saveAsDraftContainer}>
                     <Text style={styles.saveAsDraftText}>Save as Draft</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={() => this.onSubmitUpdateSor(2)}
+                    onPress={() => {
+                      if (this.state.fiveWhytoggle == true) {
+                        if (this.state.fiveWhyQuestion.length == 5) {
+                          this.onSubmitUpdateSor(2);
+                        } else {
+                          this.setState({
+                            errorModal: true,
+                            errHeadingText: 'Minimum 5 why ',
+                            errDesText: 'minimum 5 why should be added..!',
+                          });
+                        }
+                      } else {
+                        this.onSubmitUpdateSor(2);
+                      }
+                    }}
                     style={styles.saveAsSubmitContainer}>
                     <Text style={styles.saveAsSubmitText}>Submit</Text>
                   </TouchableOpacity>
@@ -2483,9 +2513,33 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     onPress={() => {
                       AsyncStorage.getItem('email').then((email) => {
                         if (email == this.props.route.params.data.created_by) {
-                          this.onSubmitUpdateSor(5);
+                          if (this.state.fiveWhytoggle == true) {
+                            if (this.state.fiveWhyQuestion.length == 5) {
+                              this.onSubmitUpdateSor(5);
+                            } else {
+                              this.setState({
+                                errorModal: true,
+                                errHeadingText: 'Minimum 5 why ',
+                                errDesText: 'minimum 5 why should be added..!',
+                              });
+                            }
+                          } else {
+                            this.onSubmitUpdateSor(5);
+                          }
                         } else {
-                          this.onSubmitUpdateSor(3);
+                          if (this.state.fiveWhytoggle == true) {
+                            if (this.state.fiveWhyQuestion.length == 5) {
+                              this.onSubmitUpdateSor(3);
+                            } else {
+                              this.setState({
+                                errorModal: true,
+                                errHeadingText: 'Minimum 5 why ',
+                                errDesText: 'minimum 5 why should be added..!',
+                              });
+                            }
+                          } else {
+                            this.onSubmitUpdateSor(3);
+                          }
                         }
                       });
                     }}
