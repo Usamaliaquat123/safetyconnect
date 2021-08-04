@@ -316,7 +316,15 @@ export default class SuggestionsPop extends React.Component<
                     <View style={[styles.commentTextInput]}>
                       <TextInput
                         maxLength={500}
-                        onFocus={() => this.setState({selectedInput: 2})}
+                        onFocus={() =>
+                          this.setState({
+                            selectedInput: 2,
+                            suggestions: searchInSuggestions(
+                              '',
+                              this.state.suggestedUsers,
+                            ),
+                          })
+                        }
                         style={styles.textInputPopup}
                         multiline={true}
                         value={this.state.actionsText}
