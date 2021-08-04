@@ -566,7 +566,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                         // this.props.navigation.navigate('home')
                                       }
                                       location={d.location}
-                                      date={d.occured_at}
+                                      date={d.occurred_at}
                                       onPressRepeated={(e) =>
                                         this.getAllRepeatedSor(e)
                                       }
@@ -830,7 +830,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                             );
                                           }
                                         }
-                                        date={d.occured_at}
+                                        date={d.occurred_at}
                                       />
                                     ))}
                                   {this.state.exclated.length > 3 && (
@@ -957,7 +957,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                             },
                                           )
                                         }
-                                        date={d.occured_at}
+                                        date={d.occurred_at}
                                       />
                                     ))}
                                   {this.state.pendingClosure.length > 3 && (
@@ -1079,7 +1079,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                             },
                                           );
                                         }}
-                                        date={d.occured_at}
+                                        date={d.occurred_at}
                                       />
                                     ))}
                                   {this.state.closed.length > 5 && (
