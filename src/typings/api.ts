@@ -54,12 +54,14 @@ export interface project {
   _id?: string;
   email?: string;
   project_id?: string;
+  project_leader?: Array<string>;
   created_by?: string;
   project_name?: string;
   locations?: Array<string>;
   involved_persons?: Array<string>;
   organization?: string;
   project?: string;
+  secondary_leader?: Array<string>;
   p_locations?: location;
   projectid?: string;
 }
