@@ -96,9 +96,10 @@ class Tags extends React.Component<TagsProps, any> {
         </View>
       ));
     } else if (this.props.type == 'location') {
+      console.log(this.props.type);
       return this.props.tags.map((d: any, i: number) => (
         <View key={i} style={[styles.container, this.props.style]}>
-          <Text style={styles.tagsText}>{d}</Text>
+          <Text style={styles.tagsText}>{d.name}</Text>
           <TouchableOpacity
             onPress={() => this.props.onClose(d)}
             style={styles.containerIcon}>

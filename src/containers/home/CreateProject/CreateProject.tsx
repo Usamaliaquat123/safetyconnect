@@ -121,30 +121,24 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               var members = this.state.assignLeaderss.concat(
                 this.state.assignSuppervisor,
               );
-              console.log(members.map((d: any) => d._id));
 
-              console.log('members');
-              console.log(members);
-              console.log('members');
-
+              var data = {
+                created_by: email,
+                project_name: this.state.projectName,
+                // involved_persons: members.map((d: any) => d._id),
+                locations: this.state.assignLocations.map((d) => d.name),
+                project_leader: this.state.assignLeaderss.map((d) => d.email),
+                secondary_leader: this.state.assignSuppervisor.map(
+                  (d) => d.email,
+                ),
+                description: this.state.projectDescription,
+                p_locations: this.state.assignLocations,
+                organization: this.state.organizationId,
+              };
+              console.log(data);
               api
                 .createApi()
-                .Postproject({
-                  created_by: email,
-                  project_name: this.state.projectName,
-                  involved_persons: members.map((d: any) => d._id),
-                  locations: this.state.assignLocations,
-                  project_leader: this.state.assignLeaderss,
-                  secondary_leader: this.state.assignSuppervisor,
-
-                  p_locations: {
-                    name: this.state.locationName,
-                    supervisor: this.state.locationSuppervisorsTags[0]._id,
-                    additional_supervisor: this.state
-                      .additionalSuppervisorsTags[0]._id,
-                  },
-                  organization: this.state.organizationId,
-                })
+                .Postproject(data)
 
                 .then((res: any) => {
                   console.log(res);
@@ -188,14 +182,24 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   addLocation = async () => {
     if (this.state.locationName !== '') {
       // var loca = JSON.parse(location);
-      this.state.locations.push(this.state.locationName);
+      // this.state.locations.push();
       this.setState({createModal: false});
-      // this.setState({
-      //   locationName: '',
-      //   locationSupervisor: '',
-      //   additionalSuppervisors: '',
-      // });
-      this.state.assignLocations.push(this.state.locationName);
+      this.setState({
+        locationName: '',
+        locationSuppervisorsTags: [],
+        additionalSuppervisorsTags: [],
+        additionalSuppervisorsSugg: [],
+        locationSuppervisorsSugg: [],
+      });
+      this.state.assignLocations.push({
+        name: this.state.locationName,
+        supervisor: this.state.locationSuppervisorsTags.map(
+          (d: any) => d._id,
+        )[0],
+        additional_supervisor: this.state.additionalSuppervisorsTags.map(
+          (d: any) => d._id,
+        )[0],
+      });
       // await AsyncStorage.setItem('locations', this.state.locationName);
       // this.props.navigation.goBack();
     } else {
@@ -206,27 +210,17 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     // api
 
     getCurrentOrganization().then((orgid: any) => {
-      // console.log('this.props.route.params.organization');
       this.setState({organizationId: orgid});
 
       api
         .createApi()
         .getOrganization(orgid)
         .then((orgData: any) => {
-          console.log(orgData.data.data.members);
           this.setState({
             allAssignSuppervisorText: orgData.data.data.members,
             allAssignLeaders: orgData.data.data.members,
           });
         });
-    });
-
-    AsyncStorage.getItem('locations').then((locations: any) => {
-      console.log(locations);
-      var location = JSON.parse(locations);
-      if (location != null) {
-        this.setState({locationSugg: location});
-      }
     });
   };
 
@@ -286,8 +280,8 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                     <TextInput
                       style={styles.authInputs}
                       value={this.state.projectName}
-                      onChange={(e) => {
-                        this.setState({projectName: e.nativeEvent.text});
+                      onChangeText={(e) => {
+                        this.setState({projectName: e});
                       }}
                       placeholder={'Enter Project Name'}
                     />
