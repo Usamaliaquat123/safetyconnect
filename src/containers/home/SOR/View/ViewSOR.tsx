@@ -170,7 +170,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
-    if (this.state.esclate_to != undefined) {
+    if (this.props.route.params.data.esclate_to != undefined) {
       this.setState({esclate_to: this.props.route.params.data.esclate_to});
     }
     // var excludingSubmitCreatedByUsers = [];
@@ -2766,7 +2766,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
          */}
         {this.state.SuggestionPop == true && (
           <SuggestionsPop
-            suggestedUsers={this.state.involvedPerson}
+            suggestedUsers={this.state.involved_person}
             onClose={() =>
               this.setState({SuggestionPop: !this.state.SuggestionPop})
             }
