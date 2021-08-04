@@ -1174,7 +1174,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     }
   };
 
-  componentWillUnmount = () => {};
+  componentWillUnmount = () => {}; 
 
   render() {
     // this.state.liklihood[0].selected = true;
