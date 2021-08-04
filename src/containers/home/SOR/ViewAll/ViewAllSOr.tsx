@@ -1574,7 +1574,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           </View>
         </Modal>
 
-        <Modal isVisible={this.state.projectSelectors}>
+        <Modal onBackdropPress={() => {
+            this.setState({projectSelectors : this.state.projectSelectors} )
+        }} isVisible={this.state.projectSelectors}>
           <View style={styles.modelContainer}>
             <View>
               <Text style={styles.errHeadPop}>Select your Project</Text>
