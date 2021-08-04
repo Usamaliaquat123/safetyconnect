@@ -614,6 +614,8 @@ export default class SuggestionsPop extends React.Component<
                                           style={[
                                             styles.AttchimageContainer,
                                             {
+                                              justifyContent : "center",
+                                              alignItems  :"center",
                                               borderWidth: wp(0.3),
                                               borderColor: colors.textOpa,
                                             },
