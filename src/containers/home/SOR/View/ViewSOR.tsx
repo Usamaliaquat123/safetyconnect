@@ -277,7 +277,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.props.route.params.data.risk.likelihood,
     );
 
+    console.log('this.state.esclate_to');
     console.log(this.state.esclate_to);
+    console.log('this.state.involved ');
+    console.log(this.state.involved_persons);
   };
 
   getAllRepeatedSors = async (e: any, projectid: any) => {
@@ -1034,7 +1037,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       </Text>
                     </Text>
                   ) : (
-                    this.state.involvedPerson.map((d) => d.name).join(',')
+                    <></>
+                    // this.state.involvedPerson.map((d) => d.name).join(',')
                   )}
                   {/* {this.state.involvedPerson.map((d) => d.name).join(',')} */}
                 </Text>
@@ -1928,8 +1932,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </View>
                 ) : null}
                 <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                  <Tags
-                    type={'esclatedTotags'}
+                  {/* <Tags
+                    type={'esclatedTotags'} 
                     onClose={(d: any) => {
                       this.setState({
                         esclate_to: this.state.esclate_to.filter(
@@ -1938,7 +1942,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       });
                     }}
                     tags={this.state.esclate_to}
-                  />
+                  /> */}
                 </View>
               </View>
 

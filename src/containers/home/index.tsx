@@ -138,8 +138,6 @@ class Home extends React.Component<HomeProps, any> {
                 .taskAssignedTo(org.data.data._id, email)
                 .then((assignTo: any) => {
                   assignTo.data.data[0].projects.forEach((assigndTot: any) => {
-                    console.log('assigndTot');
-                    console.log(assigndTot);
                     const element = assigndTot.reports.action_required;
                     const row = {
                       // projectId: assigndTot._id,
