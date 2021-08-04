@@ -197,15 +197,18 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           var data: Array<any> = [];
 
           this.props.route.params.data.involved_persons.map((d) => {
-            data.push(
+           this.state.involvedPerson.push(
               res.data.data.involved_persons.filter((i: any) => i._id == d)[0],
             );
+
+            this.setState({})
           });
 
-          console.log('data');
-          console.log(data);
 
-          this.setState({involvedPerson: data});
+          console.log(this.state.involvedPerson)
+
+
+          // this.setState({involvedPerson: data});
           this.setState({
             excludingSubmitCreatedByUsers: this.state.involvedPerson,
           });

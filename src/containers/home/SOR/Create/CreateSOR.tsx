@@ -2039,7 +2039,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           onPress={() => {
                             this.setState({
                               submitTo: '',
-                              // submitToArr: [],
                             });
 
                             this.setState({
