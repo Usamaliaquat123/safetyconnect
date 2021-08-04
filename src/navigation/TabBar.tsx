@@ -44,7 +44,7 @@ export const BottomTabNavigator = () => {
           component={Home}
           options={{}}
         />
-        <Tab.Screen name="My Tasks" component={ViewAllSOr} />
+        <Tab.Screen name="MyTasks" component={ViewAllSOr} />
         <Tab.Screen name="addNew" component={Menu} />
         <Tab.Screen name="Inbox" component={ViewAllSOr} options={{}} />
         <Tab.Screen name="More" component={More} options={{}} />
@@ -90,7 +90,7 @@ export default class TabBar extends React.Component<TabBarProps, any> {
     this.props.state.routes.map((d: any, i: number) => {
       if (d.name == 'home') {
         d['icon'] = images.bottomTab.home;
-      } else if (d.name == 'My Tasks') {
+      } else if (d.name == 'MyTasks') {
         d['icon'] = images.bottomTab.sors;
       } else if (d.name == 'Inbox') {
         d['icon'] = images.bottomTab.message;

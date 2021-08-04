@@ -401,10 +401,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       updated_by: this.state.user,
     };
 
+
+    consoe.log(update)
+
     createApi
       .createApi()
       .updateSor(update)
       .then((res) => {
+        console.log(res)
         this.setState({loading: false, errorModal: false});
         if (res.status == 200) {
           // add five why
@@ -430,6 +434,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 .createApi()
                 .createFiveWhy(obj)
                 .then((res: any) => {
+                  console.log()
                   setTimeout(() => {
                     this.props.navigation.goBack();
                   }, 3000);

@@ -588,7 +588,7 @@ class Home extends React.Component<HomeProps, any> {
           <View style={styles.content}>
             <View style={styles.menu}>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('CreateSOR')}
+                onPress={() => this.props.navigation.navigate('MyTasks')}
                 style={{alignItems: 'center'}}>
                 <View style={styles.item}>
                   <Image
