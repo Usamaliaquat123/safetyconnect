@@ -125,7 +125,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       actionsAndRecommendationText: '',
       // Submited to
       submitted_to: this.props.route.params.data.submit_to,
-      esclate_to: this.props.route.params.data.esclate_to,
+      esclate_to: [],
 
       editInvolvedAndEsclatedPersons: false,
       involvePersonsSelected: false,
@@ -170,6 +170,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
+    this.setState({esclate_to: this.props.route.params.data.esclate_to});
     // var excludingSubmitCreatedByUsers = [];
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
@@ -280,7 +281,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     console.log('this.state.esclate_to');
     console.log(this.state.esclate_to);
     console.log('this.state.involved ');
-    console.log(this.state.involved_persons);
+    console.log(this.state.involvedPerson);
   };
 
   getAllRepeatedSors = async (e: any, projectid: any) => {
@@ -1932,8 +1933,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </View>
                 ) : null}
                 <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                  {/* <Tags
-                    type={'esclatedTotags'} 
+                  <Tags
+                    type={'esclatedTotags'}
                     onClose={(d: any) => {
                       this.setState({
                         esclate_to: this.state.esclate_to.filter(
@@ -1942,7 +1943,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       });
                     }}
                     tags={this.state.esclate_to}
-                  /> */}
+                  />
                 </View>
               </View>
 
