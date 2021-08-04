@@ -254,7 +254,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                     onPress={() =>
                       this.props.navigation.navigate('ViewSOR', {data: d})
                     }
-                    date={d.occured_at}
+                    date={d.occurred_at}
                     onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                   />
                 ))}
