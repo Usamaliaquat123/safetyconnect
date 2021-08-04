@@ -14,6 +14,7 @@ import {
   imagePicker,
   cameraCapture,
   suggestInActionsRecommendations,
+  savedCurrentOrganization,
 } from '@utils';
 import RNFetchBlob from 'rn-fetch-blob';
 import {
@@ -179,6 +180,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                           'invitedUsers',
                           JSON.stringify(emails),
                         );
+                        savedCurrentOrganization(res.data.data.organization_id);
                         this.props.navigation.navigate('createProject');
                       });
                   } else {
