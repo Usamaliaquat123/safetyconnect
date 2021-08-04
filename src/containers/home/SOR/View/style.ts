@@ -411,19 +411,26 @@ const styles = StyleSheet.create({
   },
 
   attachFileContainer: {
-    padding: wp(5),
-    borderRadius: wp(3),
-    marginTop: wp(3),
+    // padding: wp(5),
+    // borderRadius: wp(3),
+    // marginTop: wp(3),
     backgroundColor: colors.lightBlue,
-    // justifyContent: 'space-between',
-    flexDirection: 'row',
+    // // justifyContent: 'space-between',
+    // flexDirection: 'row',
+
+    // borderColor: colors.textOpa,
+    width: wp(43),
+    height: wp(30),
+    borderRadius: wp(3),
+    margin: wp(1),
   },
   attchFileText: {
     fontSize: wp(2.7),
     fontStyle: 'italic',
     color: colors.text,
     opacity: 0.7,
-    marginLeft: wp(5),
+    textAlign: 'center',
+    // marginLeft: wp(5),
     marginTop: wp(2),
   },
   actionTypeElemAsdmin: {

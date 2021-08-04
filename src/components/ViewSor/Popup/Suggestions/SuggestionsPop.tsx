@@ -614,28 +614,35 @@ export default class SuggestionsPop extends React.Component<
                                           style={[
                                             styles.AttchimageContainer,
                                             {
-                                              justifyContent : "center",
-                                              alignItems  :"center",
+                                              // justifyContent : "center",
+                                              alignItems: 'center',
                                               borderWidth: wp(0.3),
                                               borderColor: colors.textOpa,
                                             },
                                           ]}>
-                                          <Image
-                                            source={
-                                              d.type == 'pdf'
-                                                ? images.pdf
-                                                : d.type == 'docx'
-                                                ? images.doc
-                                                : d.type == 'xlsx'
-                                                ? images.excel
-                                                : null
-                                            }
+                                          <View
                                             style={{
-                                              width: '50%',
-                                              height: '50%',
-                                            }}
-                                            resizeMode={'center'}
-                                          />
+                                              width: '60%',
+                                              height: '60%',
+                                              marginTop: wp(4),
+                                            }}>
+                                            <Image
+                                              source={
+                                                d.type == 'pdf'
+                                                  ? images.pdf
+                                                  : d.type == 'docx'
+                                                  ? images.doc
+                                                  : d.type == 'xlsx'
+                                                  ? images.excel
+                                                  : null
+                                              }
+                                              style={{
+                                                width: '100%',
+                                                height: '100%',
+                                              }}
+                                              resizeMode={'contain'}
+                                            />
+                                          </View>
                                           <Text
                                             style={{
                                               fontSize: wp(2.5),

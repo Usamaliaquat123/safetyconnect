@@ -1905,19 +1905,27 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   borderColor: colors.textOpa,
                                 },
                               ]}>
-                              <Image
-                                source={
-                                  d.type == 'pdf'
-                                    ? images.pdf
-                                    : d.type == 'doc' || d.type == 'docx'
-                                    ? images.doc
-                                    : d.type == 'xlsx'
-                                    ? images.excel
-                                    : null
-                                }
-                                style={[GlStyles.images]}
-                                resizeMode={'contain'}
-                              />
+                              <View
+                                style={{
+                                  width: '60%',
+                                  height: '60%',
+                                  marginTop: wp(4),
+                                  alignSelf: 'center',
+                                }}>
+                                <Image
+                                  source={
+                                    d.type == 'pdf'
+                                      ? images.pdf
+                                      : d.type == 'doc' || d.type == 'docx'
+                                      ? images.doc
+                                      : d.type == 'xlsx'
+                                      ? images.excel
+                                      : null
+                                  }
+                                  style={[GlStyles.images]}
+                                  resizeMode={'contain'}
+                                />
+                              </View>
                               <Text
                                 style={{
                                   fontSize: wp(2.5),
