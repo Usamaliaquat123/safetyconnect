@@ -90,7 +90,25 @@ class Notifications extends React.Component<NotificationsProps, any> {
 
   //   Refreshing Scrollview
   _onRefresh = () => {
-    // this.componentDidMount();
+    AsyncStorage.getItem('email').then((email: any) => {
+      api
+        .createApi()
+        .getAllNotifications(email, '[0,1]')
+        .then((res: any) => {
+          res.data.data.notifications;
+
+          this.setState({
+            count: res.data.data.notifications.filter((n: any) => n.status == 0)
+              .length,
+            newNotify: res.data.data.notifications
+              .filter((n: any) => n.status == 0)
+              .sort((a: any, b: any) => new Date(b.date) - new Date(a.date)),
+            oldNotify: res.data.data.notifications.filter(
+              (n: any) => n.status == 1,
+            ),
+          });
+        });
+    });
     this.setState({refreshing: false});
     // ths
   };
