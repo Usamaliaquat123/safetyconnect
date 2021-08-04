@@ -567,7 +567,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     this.setState({loading: false, errorModal: false});
                     console.log(res);
 
-                    if (this.state.fiveWhytoggle) {
+                    if (this.state.fiveWhytoggle == true) {
                       // sor.report['_id'] = this.state.reportIdInvestigation;
                       this.setState({loading: true, errorModal: true});
                       var obj = {
@@ -1764,7 +1764,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           onPress={() => {
                             this.setState({
                               involveToText: '',
-                              involvedToArr: [],
+                            });
+
+                            this.setState({
+                              involvedToArr: this.state.involvedToArr.filter(
+                                (b: any) => b != d,
+                              ),
                             });
                             if (
                               this.state.involvePersonTags.filter(
@@ -1991,12 +1996,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   ]}>
                   <TextInput
                     onFocus={() => {
-                      this.setState({selectedInputIndex: 4,  submitToArr: searchInSuggestions(
-                       '',
-                        this.state.involved_persons,
-                      ),});
-
-
+                      this.setState({
+                        selectedInputIndex: 4,
+                        submitToArr: searchInSuggestions(
+                          '',
+                          this.state.involved_persons,
+                        ),
+                      });
 
                       // if (this.state.actionsTags.length == 0) {
                       //   this.state.actionsTags.push(
@@ -2033,7 +2039,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           onPress={() => {
                             this.setState({
                               submitTo: '',
-                              submitToArr: [],
+                              // submitToArr: [],
+                            });
+
+                            this.setState({
+                              submitToArr: this.state.submitToArr.filter(
+                                (b: any) => b != d,
+                              ),
                             });
 
                             if (
@@ -2095,9 +2107,15 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       : null,
                   ]}>
                   <TextInput
-                    onFocus={() => this.setState({selectedInputIndex: 5,   exclateToArr: searchInSuggestions('',
-                      this.state.involved_persons,
-                    ),})}
+                    onFocus={() =>
+                      this.setState({
+                        selectedInputIndex: 5,
+                        exclateToArr: searchInSuggestions(
+                          '',
+                          this.state.involved_persons,
+                        ),
+                      })
+                    }
                     underlineColorAndroid="transparent"
                     onChangeText={(v: any) => {
                       if (v === '') {
