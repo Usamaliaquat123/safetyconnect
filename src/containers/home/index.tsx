@@ -114,6 +114,8 @@ class Home extends React.Component<HomeProps, any> {
                 .taskAssignedBy(org.data.data._id, email)
                 .then((assignBy: any) => {
                   assignBy.data.data[0].projects.forEach((assignBye: any) => {
+                    console.log('assignBye');
+                    console.log(assignBye);
                     const element = assignBye.reports.action_required;
                     const row = {
                       data: assignBye.reports,
@@ -124,10 +126,12 @@ class Home extends React.Component<HomeProps, any> {
                       assignedTo: element.assignTo,
                       createdBy: element.createdBy,
                       location: assignBye.reports.location,
+                      createdAt: assignBye.reports.action_required.dueDate,
                     };
-                    if (assignBye.reports.createdAt) {
-                      row.createdAt = assignBye.reports.createdAt;
-                    }
+                    // if (assignBye.reports.createdAt) {
+                    //   row.createdAt =
+                    //     assignBye.reports.action_required.createdAt.dueDate;
+                    // }
                     this.state.taskAssignedByYou.push(row);
                     this.setState({});
                     // this.setState({taskAssignedByYou: row});
@@ -139,6 +143,8 @@ class Home extends React.Component<HomeProps, any> {
                 .then((assignTo: any) => {
                   assignTo.data.data[0].projects.forEach((assigndTot: any) => {
                     const element = assigndTot.reports.action_required;
+                    console.log('assigndTot');
+                    console.log(assigndTot);
                     const row = {
                       // projectId: assigndTot._id,
                       data: assigndTot.reports,
@@ -149,10 +155,11 @@ class Home extends React.Component<HomeProps, any> {
                       assignedTo: element.assignTo,
                       createdBy: element.createdBy,
                       location: assigndTot.reports.location,
+                      createdAt: assigndTot.reports.action_required.dueDate,
                     };
-                    if (assigndTot.reports.createdAt) {
-                      row.createdAt = assigndTot.reports.createdAt;
-                    }
+                    // if (assigndTot.reports.createdAt) {
+                    //   row.createdAt =assigndTot.reports.action_required.createdAt.dueDate;
+                    // }
 
                     this.state.taskAssignedToYou.push(row);
                     this.setState({});

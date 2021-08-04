@@ -687,7 +687,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           )
                                         }
                                         location={d.location}
-                                        date={d.occured_at}
+                                        date={d.occurred_at}
                                       />
                                     ))}
                                   {this.state.inprogress.length > 3 && (
