@@ -97,23 +97,21 @@ class Notifications extends React.Component<NotificationsProps, any> {
 
   // redirecting to view sor
   onViewSor = (projectId: string, reportId: string, notificationId: any) => {
+    console.log(projectId, reportId, notificationId);
     this.setState({loading: true});
     api
       .createApi()
       .getSors(projectId, reportId)
       .then((userD: any) => {
+        console.log(userD);
         api
           .createApi()
           .readSpecificNotification(this.state.user.email, notificationId)
           .then((res: any) => {
             this.setState({loading: false});
-
-            console.log(res);
-            if (userD.status == 200) {
-              this.props.navigation.navigate('ViewSOR', {
-                data: userD.data.data.report[0],
-              });
-            }
+            this.props.navigation.navigate('ViewSOR', {
+              data: userD.data.data.report[0],
+            });
           });
       })
       .catch((err) => console.log(err));
@@ -134,6 +132,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
             <View style={styles.headertle}>
               <View style={styles.arrowTtleContainer}>
                 <Icon
+                  onPress={() => this.props.navigation.goBack()}
                   size={wp(7)}
                   name="arrow-back-outline"
                   type="ionicon"

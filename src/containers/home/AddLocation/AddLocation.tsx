@@ -182,6 +182,7 @@ class AddLocation extends React.Component<AddLocationProps, any> {
                   </View>
                   <View style={[styles.inputContainer]}>
                     <TextInput
+                      
                       value={this.state.additionalSuppervisors}
                       style={styles.authInputs}
                       onChangeText={(e) =>
