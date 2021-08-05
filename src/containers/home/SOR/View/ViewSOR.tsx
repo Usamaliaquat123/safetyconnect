@@ -866,7 +866,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               imgData['uri'] = d.data[0];
             });
           attach.splice(0, 0, imgData);
-            console.log(attach)
+          console.log('attach');
+          console.log(attach);
           this.setState({});
         });
       }
