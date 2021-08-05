@@ -59,6 +59,18 @@ const styles = StyleSheet.create({
     // marginTop: wp(80),
     // borderTopLeftRadius: wp(8),
     // borderTopRightRadius: wp(8),
+  }, // Lottie files loading container
+  lottiefilesLoading: {
+    alignSelf: 'center',
+    marginTop: wp(40),
+    marginBottom: wp(40),
+  },
+  // loading text
+  loadingtext: {
+    fontSize: wp(3),
+    opacity: 0.5,
+    textAlign: 'center',
+    marginTop: wp(-5),
   },
   authInputs: {
     fontSize: wp(3),

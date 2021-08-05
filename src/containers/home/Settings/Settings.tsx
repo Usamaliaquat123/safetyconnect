@@ -76,31 +76,34 @@ class Settings extends React.Component<SettingsProps, any> {
         this.setState({loading: true});
         var data = {
           email: this.state.email,
+          name: this.state.username,
           role: this.state.role,
           department: this.state.department,
           industry: this.state.industry,
-          img_url: this.props.route.params.data.img_url,
+          img_url:
+            this.state.type !== ' '
+              ? this.state.img_url
+              : this.props.route.params.data.img_url,
         };
 
-        if (this.state.type !== ' ') {
-          profileUploader(
-            this.state.type,
-            this.state.type.split('/')[1],
-            this.state.base64,
-          )
-            .then((uploadUri: any) => {
-              data['img_url'] = uploadUri[0];
-            })
-            .catch((err) => console.log(err));
-        } else {
-          data['img_url'] = this.state.img_url;
-        }
+        console.log(data);
+
         api
           .createApi()
           .setUserInfo(data)
           .then((res: any) => {
+            this.props.navigation.dispatch(
+              CommonActions.reset({
+                index: 1,
+                routes: [
+                  {
+                    name: 'Home',
+                  },
+                ],
+              }),
+            );
             this.setState({loading: false});
-            this.props.navigation.goBack();
+            // this.props.navigation.goBack();
           })
           .catch((err) => {
             console.log(err);
@@ -170,171 +173,188 @@ class Settings extends React.Component<SettingsProps, any> {
             </View>
           </View>
           <View style={styles.content}>
-            <Text
-              style={{
-                fontSize: wp(4),
-                fontFamily: fonts.SFuiDisplayBold,
-                textAlign: 'center',
-                marginTop: wp(3),
-                color: colors.primary,
-              }}>
-              {' '}
-              Edit Your Profile
-            </Text>
-
-            <TouchableOpacity
-              onPress={() => {
-                this.imgCap('upload');
-              }}
-              style={{width: wp(50), alignSelf: 'center'}}>
-              <Avatar
-                containerStyle={{alignSelf: 'center', marginTop: wp(3)}}
-                size={wp(30)}
-                rounded
-                source={{
-                  uri:
-                    this.state.img_url === ' '
-                      ? 'https://via.placeholder.com/150'
-                      : this.state.img_url,
-                }}
-              />
-
-              <View
-                style={{
-                  backgroundColor: colors.green,
-                  width: wp(8),
-                  padding: wp(2.2),
-                  right: wp(7),
-                  top: wp(5),
-                  position: 'absolute',
-                  borderRadius: wp(10),
-                }}>
-                <Icon
-                  name={'pencil'}
-                  type={'entypo'}
-                  size={wp(3.5)}
-                  color={colors.secondary}
+            {this.state.loading == true ? (
+              <View style={styles.lottiefilesLoading}>
+                <LottieView
+                  // ref={(animation) => {
+                  //   this.photoAnim = animation;
+                  // }}
+                  autoPlay={true}
+                  style={{width: wp(90)}}
+                  source={animation.loading}
+                  loop={true}
                 />
+                <Text style={styles.loadingtext}>loading...</Text>
               </View>
-            </TouchableOpacity>
-            <View style={{marginTop: wp(5)}}>
-              <View>
+            ) : (
+              <>
                 <Text
                   style={{
-                    fontSize: wp(3.2),
-                    fontFamily: fonts.SFuiDisplaySemiBold,
+                    fontSize: wp(4),
+                    fontFamily: fonts.SFuiDisplayBold,
+                    textAlign: 'center',
+                    marginTop: wp(3),
+                    color: colors.primary,
                   }}>
-                  Full Name
+                  {' '}
+                  Edit Your Profile
                 </Text>
-                <View style={[styles.inputContainer]}>
-                  <TextInput
-                    style={styles.authInputs}
-                    value={this.state.username}
-                    onChangeText={(e) => {
-                      this.setState({username: e});
-                    }}
-                    placeholder={'Your Full Name'}
-                  />
-                </View>
-              </View>
 
-              {/* Email Address */}
-              <View>
-                <Text
-                  style={{
-                    fontSize: wp(3.2),
-                    marginTop: wp(3),
-                    fontFamily: fonts.SFuiDisplaySemiBold,
-                  }}>
-                  Email Address
-                </Text>
-                <View style={[styles.inputContainer]}>
-                  <TextInput
-                    editable={false}
-                    style={styles.authInputs}
-                    value={this.state.email}
-                    onChangeText={(e) => {
-                      this.setState({email: e});
+                <TouchableOpacity
+                  onPress={() => {
+                    this.imgCap('upload');
+                  }}
+                  style={{width: wp(50), alignSelf: 'center'}}>
+                  <Avatar
+                    containerStyle={{alignSelf: 'center', marginTop: wp(3)}}
+                    size={wp(30)}
+                    rounded
+                    source={{
+                      uri:
+                        this.state.img_url === ' '
+                          ? 'https://via.placeholder.com/150'
+                          : this.state.img_url,
                     }}
-                    placeholder={'johndoe@email.com'}
                   />
-                </View>
-              </View>
-              {/* Your Role */}
-              <View>
-                <Text
-                  style={{
-                    fontSize: wp(3.2),
-                    marginTop: wp(3),
-                    fontFamily: fonts.SFuiDisplaySemiBold,
-                  }}>
-                  Your Role
-                </Text>
-                <View style={[styles.inputContainer]}>
-                  <TextInput
-                    style={styles.authInputs}
-                    value={this.state.role}
-                    onChangeText={(e) => {
-                      this.setState({role: e});
-                    }}
-                    placeholder={'Role'}
-                  />
-                </View>
-              </View>
-              {/* Your Department */}
-              <View>
-                <Text
-                  style={{
-                    fontSize: wp(3.2),
-                    marginTop: wp(3),
-                    fontFamily: fonts.SFuiDisplaySemiBold,
-                  }}>
-                  Your Department
-                </Text>
-                <View style={[styles.inputContainer]}>
-                  <TextInput
-                    style={styles.authInputs}
-                    value={this.state.department}
-                    onChangeText={(e) => {
-                      this.setState({department: e});
-                    }}
-                    placeholder={'Department'}
-                  />
-                </View>
-              </View>
-              {/* Your Industry */}
-              <View>
-                <Text
-                  style={{
-                    fontSize: wp(3.2),
-                    marginTop: wp(3),
-                    fontFamily: fonts.SFuiDisplaySemiBold,
-                  }}>
-                  Your Industry
-                </Text>
-                <View style={[styles.inputContainer]}>
-                  <TextInput
-                    style={styles.authInputs}
-                    value={this.state.industry}
-                    onChangeText={(e) => {
-                      this.setState({industry: e});
-                    }}
-                    placeholder={'Industry'}
-                  />
-                </View>
-              </View>
-              {/* Save  */}
 
-              <TouchableOpacity
-                // this.setState({repeatedSorModal: true})
-                onPress={() => this.updateUser()}
-                style={[
-                  styles.submitsorbtnSb,
-                  // {backgroundColor: colors.green},
-                ]}>
-                <Text style={[styles.submitsorbtnSbtxt]}>Update </Text>
-              </TouchableOpacity>
-            </View>
+                  <View
+                    style={{
+                      backgroundColor: colors.green,
+                      width: wp(8),
+                      padding: wp(2.2),
+                      right: wp(7),
+                      top: wp(5),
+                      position: 'absolute',
+                      borderRadius: wp(10),
+                    }}>
+                    <Icon
+                      name={'pencil'}
+                      type={'entypo'}
+                      size={wp(3.5)}
+                      color={colors.secondary}
+                    />
+                  </View>
+                </TouchableOpacity>
+                <View style={{marginTop: wp(5)}}>
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: wp(3.2),
+                        fontFamily: fonts.SFuiDisplaySemiBold,
+                      }}>
+                      Full Name
+                    </Text>
+                    <View style={[styles.inputContainer]}>
+                      <TextInput
+                        style={styles.authInputs}
+                        value={this.state.username}
+                        onChangeText={(e) => {
+                          this.setState({username: e});
+                        }}
+                        placeholder={'Your Full Name'}
+                      />
+                    </View>
+                  </View>
+
+                  {/* Email Address */}
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: wp(3.2),
+                        marginTop: wp(3),
+                        fontFamily: fonts.SFuiDisplaySemiBold,
+                      }}>
+                      Email Address
+                    </Text>
+                    <View style={[styles.inputContainer]}>
+                      <TextInput
+                        editable={false}
+                        style={styles.authInputs}
+                        value={this.state.email}
+                        onChangeText={(e) => {
+                          this.setState({email: e});
+                        }}
+                        placeholder={'johndoe@email.com'}
+                      />
+                    </View>
+                  </View>
+                  {/* Your Role */}
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: wp(3.2),
+                        marginTop: wp(3),
+                        fontFamily: fonts.SFuiDisplaySemiBold,
+                      }}>
+                      Your Role
+                    </Text>
+                    <View style={[styles.inputContainer]}>
+                      <TextInput
+                        style={styles.authInputs}
+                        value={this.state.role}
+                        onChangeText={(e) => {
+                          this.setState({role: e});
+                        }}
+                        placeholder={'Role'}
+                      />
+                    </View>
+                  </View>
+                  {/* Your Department */}
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: wp(3.2),
+                        marginTop: wp(3),
+                        fontFamily: fonts.SFuiDisplaySemiBold,
+                      }}>
+                      Your Department
+                    </Text>
+                    <View style={[styles.inputContainer]}>
+                      <TextInput
+                        style={styles.authInputs}
+                        value={this.state.department}
+                        onChangeText={(e) => {
+                          this.setState({department: e});
+                        }}
+                        placeholder={'Department'}
+                      />
+                    </View>
+                  </View>
+                  {/* Your Industry */}
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: wp(3.2),
+                        marginTop: wp(3),
+                        fontFamily: fonts.SFuiDisplaySemiBold,
+                      }}>
+                      Your Industry
+                    </Text>
+                    <View style={[styles.inputContainer]}>
+                      <TextInput
+                        style={styles.authInputs}
+                        value={this.state.industry}
+                        onChangeText={(e) => {
+                          this.setState({industry: e});
+                        }}
+                        placeholder={'Industry'}
+                      />
+                    </View>
+                  </View>
+                  {/* Save  */}
+
+                  <TouchableOpacity
+                    // this.setState({repeatedSorModal: true})
+                    onPress={() => this.updateUser()}
+                    style={[
+                      styles.submitsorbtnSb,
+                      // {backgroundColor: colors.green},
+                    ]}>
+                    <Text style={[styles.submitsorbtnSbtxt]}>Update </Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            )}
           </View>
         </ScrollView>
 
