@@ -57,6 +57,7 @@ import {createApi, submitted} from '@service';
 import {AllSorDTO} from '@dtos';
 // import QuickReplies from 'react-native-gifted-chat/lib/QuickReplies';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {validateEmail} from '../../../../utils/utils';
 
 type CreateSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -139,6 +140,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       keyFindings: '',
       // Involved person
       involvedToArr: [],
+      suggestedAddEmail: false,
       involvedTotags: [],
       involveToText: '',
       projectid: '',
@@ -1037,7 +1039,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             console.log(this.state.reportIdInvestigation);
                             this.setState({mainReportId: sors.report._id});
                             createApi
-                              .createApi()  
+                              .createApi()
                               .getAllRepeatedSugg(
                                 this.state.observationT,
                                 this.state.projectid, //projectid
@@ -1774,13 +1776,20 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     if (v === '') {
                       this.setState({involvedToArr: [], involveToText: v});
                     } else {
-                      this.setState({
-                        involvedToArr: searchInSuggestions(
-                          v.toLowerCase(),
-                          this.state.involved_persons,
-                        ),
-                        involveToText: v,
-                      });
+                      if (validateEmail(v)) {
+                        this.setState({
+                          suggestedAddEmail: true,
+                          involveToText: v,
+                        });
+                      } else {
+                        this.setState({
+                          involvedToArr: searchInSuggestions(
+                            v.toLowerCase(),
+                            this.state.involved_persons,
+                          ),
+                          involveToText: v,
+                        });
+                      }
                     }
                   }}
                   placeholder={'Select or Type Name'}
@@ -1841,6 +1850,53 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   </View>
                 </View>
               ) : null}
+
+              {/* Peoples email suggestion */}
+
+              <View>
+                {this.state.suggestedAddEmail == true && (
+                  <View style={styles.involveSuggestCont}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        console.log(this.state.involveToText);
+                        this.state.involvePersonTags.push({
+                          email: this.state.involveToText,
+                          img_url: '',
+                          name: this.state.involveToText,
+                        });
+                        this.state.involved_persons.push({
+                          email: this.state.involveToText,
+                          img_url:
+                            'https://dummyimage.com/600x400/ffffff/000000&text=@',
+                          name: this.state.involveToText,
+                        });
+
+                        this.setState({
+                          involveToText: '',
+                          suggestedAddEmail: false,
+                        });
+                      }}
+                      style={[styles.involvePsuggCont, {borderBottomWidth: 0}]}>
+                      <Icon
+                        name={'send'}
+                        type={'feather'}
+                        size={wp(5)}
+                        containerStyle={{opacity: 0.5}}
+                      />
+                      <View style={{alignItems: 'center'}}>
+                        <Text
+                          style={{
+                            opacity: 0.5,
+                            fontSize: wp(3),
+                            marginLeft: wp(4),
+                          }}>
+                          Invite {this.state.involveToText}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </View>
 
               <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
                 <Tags
