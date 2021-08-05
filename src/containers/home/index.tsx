@@ -223,7 +223,7 @@ class Home extends React.Component<HomeProps, any> {
                 if (res.data.data.report[i].details != undefined) {
                   AsyncStorage.getItem('email').then((email) => {
                     this.setState({
-                      recentActivity: res.data.data.report.slice(0, 3),
+                      recentActivity: res.data.data.report
                     });
                   });
 
@@ -235,16 +235,7 @@ class Home extends React.Component<HomeProps, any> {
                 if (res.data.data.report[i].details != undefined) {
                   AsyncStorage.getItem('email').then((email) => {
                     this.setState({
-                      recentActivity: res.data.data.report.slice(0, 3),
-                      taskAssignedToYou: res.data.data.report.filter((d) =>
-                        d.submit_to.filter((d) => d == email),
-                      ),
-                      taskAssignedByYou: res.data.data.report.filter(
-                        (d) => d.created_by == email,
-                      ),
-                      taskYouAreInvolvedIn: res.data.data.report.filter((d) =>
-                        d.involved_persons.filter((d) => d == email),
-                      ),
+                      recentActivity: res.data.data.report,
                     });
                   });
 
@@ -1059,7 +1050,7 @@ class Home extends React.Component<HomeProps, any> {
                       marginLeft: wp(3),
                       marginRight: wp(3),
                     }}>
-                    {this.state.recentActivity.map((d: Isor, i: number) => (
+                    {this.state.recentActivity.slice(0, 3).map((d: Isor, i: number) => (
                       <ListCard
                         key={i}
                         classify={d.sor_type}
