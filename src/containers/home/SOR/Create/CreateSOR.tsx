@@ -355,7 +355,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           projectid: currentProj,
         })
         .then((res: any) => {
-          this.setState({involved_persons: res.data.data.involved_persons});
+          this.setState({involved_persons: res.data.data[0].involved_persons});
+          console.log('this.state.involved_persons');
+          console.log(res.data);
         });
     });
     // Time Update on every seconds

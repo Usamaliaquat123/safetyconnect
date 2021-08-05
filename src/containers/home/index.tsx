@@ -1001,12 +1001,7 @@ class Home extends React.Component<HomeProps, any> {
                 </Text>
                 {this.state.recentActivity.length > 3 ? (
                   <TouchableOpacity
-                    onPress={() =>
-                      this.props.navigation.navigate('ViewAll', {
-                        data: this.state.recentActivity,
-                        title: 'Recent Observations',
-                      })
-                    }>
+                    onPress={() => this.props.navigation.navigate('MyTasks')}>
                     <Text style={styles.viewAll}>View All</Text>
                   </TouchableOpacity>
                 ) : null}
