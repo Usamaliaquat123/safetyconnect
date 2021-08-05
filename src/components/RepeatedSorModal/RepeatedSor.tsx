@@ -77,7 +77,7 @@ export default class RepeatedModal extends React.Component<
                           ),
                         );
                       }}
-                      date={res.occured_at}
+                      date={res.occurred_at}
                       // repeated={res.}
                       risk={res.risk.likelihood * res.risk.severity}
                       name={res?.user.name == undefined ? '' : res.user.name}
