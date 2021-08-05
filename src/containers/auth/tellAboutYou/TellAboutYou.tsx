@@ -67,16 +67,13 @@ const typeofRole = [
 ];
 
 const yourRole = [
-  'Figurehead',
-  'Leader',
-  'Liaison',
-  'Monitor',
-  'Disseminator',
-  'Spokesperson',
-  'Entrepreneur',
-  'Disturbance Handler',
-  'Resource Allocator',
-  'Negotiator',
+  'CEO',
+  'Director',
+  'General Manager',
+  'Corporate Manager',
+  'Advisor',
+  'Executive',
+  'Other',
 ];
 
 export interface TellAboutYouProps {
