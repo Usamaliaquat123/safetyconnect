@@ -90,7 +90,7 @@ const createApi = (
    */
   const organization = (data: orgnaization) =>
     baseapi.post('organization', data);
-  const getOrganization = (data: orgnaization) =>
+  const getOrganization = (data: string) =>
     baseapi.get(`organization?organization_id=${data}`);
   const updateOrganization = (data: orgnaization) =>
     baseapi.put('organization', data);
@@ -200,10 +200,15 @@ const createApi = (
     baseapi.get(
       `/dashboard/taskAssigned/?organization=${orgnaization}&email=${email}&page=0&limit=20`,
     );
+  /*
+   * @Locations
+   */
+
+  const getLocations = (data: any) => baseapi.get('/project/location', data);
 
   return {
     searchApi,
-
+    getLocations,
     taskAssignedTo,
     taskAssignedBy,
     tableData,

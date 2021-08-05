@@ -26,38 +26,19 @@ const Selector = (props: Props) => {
 
   // user
 
-  AsyncStorage.getItem('email').then((email: any) => {
+  AsyncStorage.getItem('getCurrentProject').then((projId: any) => {
     createApi
       .createApi()
-      .getUser(email)
-      .then((usr: any) => {
-        console.log('selected organization');
-        // console.log();
-        setallproj(
-          usr.data.data.organizations.filter(
-            (d: any) => d._id == props.orgnaization,
-          )[0].projects,
-        );
+      .getProject({projectid: projId})
+      .then((resp: any) => {
+        console.log(resp);
+        // setselectedProj(resp )
 
-        console.log(
-          usr.data.data.organizations
-            .filter((d: any) => d._id == props.orgnaization)[0]
-            .projects.filter(
-              (d: any) => d.project_id == props.selectedProject,
-            )[0],
-        );
-        setselectedProj(
-          usr.data.data.organizations
-            .filter((d: any) => d._id == props.orgnaization)[0]
-            .projects.filter(
-              (d: any) => d.project_id == props.selectedProject,
-            )[0],
-        );
+        // setselectionProj()
+        // console.log(resp);
       });
-
-    // var usr = JSON.parse(user);
-    // setallOrg(usr.organizations);
   });
+
   return (
     <View style={styles.selectProjectLocationContainer}>
       {/* Select Project */}

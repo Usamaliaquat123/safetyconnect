@@ -143,6 +143,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       involveToText: '',
       projectid: '',
       currentOrg: '',
+      allProjects: [],
 
       uploadedfiles: [],
       // Select date and time
@@ -298,10 +299,23 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   componentDidMount = () => {
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectid: currentProj});
+      
+      createApi.createApi().getLocations(currentProj).then((res: any) => {
+        this.setState({allLocations: res.data.data.p_locations});
+      
+      })
+
     });
-    getCurrentOrganization().then((currentOrg: any) =>
+    getCurrentOrganization().then((currentOrg: any) => {
       this.setState({currentOrg}),
-    );
+        createApi
+          .createApi()
+          .getOrganization(currentOrg)
+          .then((res: any) => {
+            this.setState({allProjects: res.data.data.projects, });
+            console.log(res.data.data.projects);
+          });
+    });
     // {key: "test.txt"} .catch(err => conso.le.log(err)});
     // const result = Storage.put('test.txt', 'Hello');
     // this.upoadFiles('602b81d95878d33f1081800e');
@@ -1216,13 +1230,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           {/* content */}
           <Animated.View style={[styles.content]}>
             {/* Select Project  / Select location */}
-            {/* <Selector
+            <Selector
               orgnaization={this.state.currentOrg}
-              projects={this.state.projectid}
+              projects={this.state.allProjects}
               selectedLocation={'Assembly Line'}
               selectedProject={this.state.projectid}
               navigation={this.props.navigation}
-            /> */}
+            />
             {/* Line  */}
             <View style={styles.lineheight} />
             {/* Classify SOR */}
