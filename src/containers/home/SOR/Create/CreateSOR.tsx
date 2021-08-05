@@ -608,6 +608,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             .getAllRepeatedSugg(
                               this.state.observationT,
                               this.state.projectid,
+                              sor.report._id,
                             )
                             .then(async (sugg: any) => {
                               this.setState({
@@ -685,6 +686,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         .getAllRepeatedSugg(
                           this.state.observationT,
                           this.state.projectid,
+                          sor.report._id,
                         )
                         .then(async (sugg: any) => {
                           this.setState({
@@ -946,6 +948,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   .getAllRepeatedSugg(
                                     this.state.observationT,
                                     this.state.projectid, //projectid
+                                    sor.report._id,
                                   )
                                   .then(async (sugg: any) => {
                                     console.log('sugge data');
@@ -1038,6 +1041,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               .getAllRepeatedSugg(
                                 this.state.observationT,
                                 this.state.projectid, //projectid
+                                sor.report._id,
                               )
                               .then(async (sugg: any) => {
                                 this.setState({

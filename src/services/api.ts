@@ -70,8 +70,11 @@ const createApi = (
   const repeatedsorsugg = (keyword: any) =>
     aiRepBaseApi.post(`repeatedsor`, keyword);
   const observationSuggestions = (data: any) => obsRepApi.get(`obs?q=${data}`);
-  const getAllRepeatedSugg = (keyword: any, projectId: any) =>
-    aiRepBaseApi.get(`rep?q=${keyword}&id=${projectId}`);
+  const getAllRepeatedSugg = (
+    keyword: string,
+    projectId: string,
+    sor: string,
+  ) => aiRepBaseApi.get(`rep?q=${keyword}&id=${projectId}&sor=${sor}`);
   const linkRepeatedSugg = (data: any) =>
     baseapi.post(`project/repeated`, data);
   const dashboardApi = (project: string, orgnaization: string) =>
