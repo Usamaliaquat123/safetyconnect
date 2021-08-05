@@ -144,7 +144,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       projectid: '',
       currentOrg: '',
       allProjects: [],
-
+      allLocations: [],
       uploadedfiles: [],
       // Select date and time
       setDateModal: false,
@@ -299,12 +299,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   componentDidMount = () => {
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectid: currentProj});
-      
-      createApi.createApi().getLocations(currentProj).then((res: any) => {
-        this.setState({allLocations: res.data.data.p_locations});
-      
-      })
 
+      createApi
+        .createApi()
+        .getLocations(currentProj)
+        .then((res: any) => {
+          this.setState({allLocations: res.data.data.p_locations});
+        });
     });
     getCurrentOrganization().then((currentOrg: any) => {
       this.setState({currentOrg}),
@@ -312,8 +313,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           .createApi()
           .getOrganization(currentOrg)
           .then((res: any) => {
-            this.setState({allProjects: res.data.data.projects, });
-            console.log(res.data.data.projects);
+            this.setState({allProjects: res.data.data.projects});
+            // console.log(res.data.data.projects);
           });
     });
     // {key: "test.txt"} .catch(err => conso.le.log(err)});
@@ -1233,7 +1234,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             <Selector
               orgnaization={this.state.currentOrg}
               projects={this.state.allProjects}
-              selectedLocation={'Assembly Line'}
+              selectedLocation={this.state.allLocations}
               selectedProject={this.state.projectid}
               navigation={this.props.navigation}
             />

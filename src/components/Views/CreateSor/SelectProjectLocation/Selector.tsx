@@ -10,8 +10,8 @@ import {createApi, submitted} from '@service';
 interface Props {
   navigation: any;
   selectedProject: string;
-  selectedLocation: string;
-  projects?: string;
+  selectedLocation: Array<any>;
+  projects?: Array<any>;
   orgnaization?: string;
 }
 
