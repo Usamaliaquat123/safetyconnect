@@ -17,15 +17,16 @@ interface Props {
 
 const Selector = (props: Props) => {
   const [selectionProj, setselectionProj] = React.useState(false);
-  const [selectionOrg, setselectionOrg] = React.useState(false);
+  const [selectionLocation, setselectionLocation] = React.useState(false);
   // all projects and organizations
   const [selectedProj, setselectedProj] = React.useState();
-  const [selectedorg, setselectedorg] = React.useState([]);
-  const [allproj, setallproj] = React.useState([]);
-  const [allOrg, setallOrg] = React.useState([]);
+  const [allproj, setallproj] = React.useState(props.projects);
+  const [allLocations, setAllLocations] = React.useState(
+    props.selectedLocation,
+  );
 
+  console.log(props.projects);
   // user
-
   // AsyncStorage.getItem('getCurrentProject').then((projId: any) => {
   //   createApi
   //     .createApi()
@@ -73,12 +74,25 @@ const Selector = (props: Props) => {
               backgroundColor: colors.secondary,
               maxHeight: wp(40),
             }}>
-            {allproj.map((d: any) => (
+            {props.projects.map((d: any) => (
               <TouchableOpacity
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
                   padding: wp(3),
+                }}
+                onPress={() => {
+                  setselectedProj(d.project_id._id);
+
+                  console.log(d);
+
+                  createApi
+                    .createApi()
+                    .getLocations({projectid: d.project_id._id})
+                    .then((resp: any) => {
+                      setAllLocations(resp.data.data.p_locations);
+                      setselectionProj(false);
+                    });
                 }}>
                 <Icon
                   name={'stats-chart-sharp'}
@@ -103,7 +117,9 @@ const Selector = (props: Props) => {
       {/* Select location */}
       <View style={styles.selectLocationContainer}>
         <Text style={styles.selectlocationHead}>Select Location :</Text>
-        <TouchableOpacity style={styles.selectLocation}>
+        <TouchableOpacity
+          onPress={() => setselectionLocation(!selectionLocation)}
+          style={styles.selectLocation}>
           <Text style={styles.locaName}>{props.selectedLocation}</Text>
           <Icon
             onPress={() => props.navigation.goBack()}
@@ -114,6 +130,59 @@ const Selector = (props: Props) => {
             // color={colo}
           />
         </TouchableOpacity>
+        {selectionLocation == true && (
+          <ScrollView
+            style={{
+              // top: wp(20),
+              borderRadius: wp(1),
+              borderColor: colors.textOpa,
+              width: wp(42),
+              borderWidth: wp(0.2),
+              // position: 'absolute',
+              // paddingTop: 60,
+              // marginTop: 0,
+
+              backgroundColor: colors.secondary,
+              maxHeight: wp(40),
+            }}>
+            {props.selectedLocation.map((d: any) => (
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  padding: wp(3),
+                }}
+                onPress={() => {
+                  setselectedProj(d.project_id._id);
+
+                  console.log(d);
+
+                  createApi
+                    .createApi()
+                    .getLocations({projectid: d.project_id._id})
+                    .then((resp: any) => {
+                      setAllLocations(resp.data.data.p_locations);
+                      setselectionProj(false);
+                    });
+                }}>
+                <Icon
+                  name={'stats-chart-sharp'}
+                  type={'ionicon'}
+                  color={colors.text}
+                  size={wp(3)}
+                  containerStyle={{marginRight: wp(3)}}
+                />
+                <Text
+                  style={{
+                    fontSize: wp(3),
+                    fontFamily: fonts.SFuiDisplayMedium,
+                  }}>
+                  {d.project_name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        )}
       </View>
     </View>
   );

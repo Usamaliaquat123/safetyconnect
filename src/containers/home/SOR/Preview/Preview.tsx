@@ -78,7 +78,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
       projectName: '',
       attachments: [],
       involvedperson: [],
-      projectId :"",
+      projectId: '',
     };
   }
 
@@ -155,7 +155,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
       });
 
     getCurrentProject().then((currentProj: any) => {
-      this.setState({projectid : currentProj})
+      this.setState({projectid: currentProj});
       createApi
         .createApi()
         .getProject({projectid: currentProj})
@@ -165,9 +165,19 @@ export class Preview extends React.Component<ViewAllProps, any> {
           });
 
           this.setState({
-            involvedperson: this.props.route.params.data.involved_persons[0]
-              .name,
+            involvedperson: res.data.data.involved_persons,
           });
+
+          // this.props.route.params.data.involved_persons.map((d) => {
+          //   this.state.involvedperson.push(
+          //     res.data.data.involved_persons.filter(
+          //       (i: any) => i.email == d,
+          //     )[0],
+          //   );
+
+          //   this.setState({});
+          // });
+
           this.getAllAttachments(this.props.route.params.data.attachments);
         });
     });
@@ -698,6 +708,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
                           fontSize: wp(3),
                           fontFamily: fonts.SFuiDisplayBold,
                           marginRight: wp(21),
+                          flexWrap: 'wrap',
                         }}>
                         Involved Persons :{' '}
                       </Text>
@@ -707,7 +718,9 @@ export class Preview extends React.Component<ViewAllProps, any> {
                           fontFamily: fonts.SFuiDisplayMedium,
                         }}>
                         {' '}
-                        {this.state.involvedperson}
+                        {this.state.involvedperson
+                          .map((d) => d.email)
+                          .join(',')}
                       </Text>
                     </View>
                   </View>
