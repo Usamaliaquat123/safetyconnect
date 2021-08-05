@@ -223,7 +223,7 @@ class Home extends React.Component<HomeProps, any> {
                 if (res.data.data.report[i].details != undefined) {
                   AsyncStorage.getItem('email').then((email) => {
                     this.setState({
-                      recentActivity: res.data.data.report
+                      recentActivity: res.data.data.report,
                     });
                   });
 
@@ -1050,31 +1050,33 @@ class Home extends React.Component<HomeProps, any> {
                       marginLeft: wp(3),
                       marginRight: wp(3),
                     }}>
-                    {this.state.recentActivity.slice(0, 3).map((d: Isor, i: number) => (
-                      <ListCard
-                        key={i}
-                        classify={d.sor_type}
-                        repeated={d.repeatedSor}
-                        location={d.location}
-                        styles={
-                          this.state.recentActivity.length == i + 1
-                            ? {borderBottomWidth: wp(0)}
-                            : null
-                        }
-                        user1={d.user1}
-                        user2={d.user2}
-                        observation={d.details}
-                        username={d.created_by}
-                        iconconf={classifySor.find(
-                          (e: any) => e.title == d.sor_type,
-                        )}
-                        onPress={() =>
-                          this.props.navigation.navigate('ViewSOR', {data: d})
-                        }
-                        onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                        date={d.occurred_at}
-                      />
-                    ))}
+                    {this.state.recentActivity
+                      .slice(0, 3)
+                      .map((d: Isor, i: number) => (
+                        <ListCard
+                          key={i}
+                          classify={d.sor_type}
+                          repeated={d.repeatedSor}
+                          location={d.location}
+                          styles={
+                            this.state.recentActivity.length == i + 1
+                              ? {borderBottomWidth: wp(0)}
+                              : null
+                          }
+                          user1={d.user1}
+                          user2={d.user2}
+                          observation={d.details}
+                          username={d.created_by}
+                          iconconf={classifySor.find(
+                            (e: any) => e.title == d.sor_type,
+                          )}
+                          onPress={() =>
+                            this.props.navigation.navigate('ViewSOR', {data: d})
+                          }
+                          onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                          date={d.occurred_at}
+                        />
+                      ))}
                   </View>
                 </ScrollView>
               )}

@@ -124,11 +124,21 @@ class ViewAll extends React.Component<ViewAllProps, any> {
 
         this.setState({loading: true});
       });
-    } else {
-      // console.log(this.props.route.params.data);
+    } else if (
+      this.props.route.params.title == 'Tasks you are involved in' ||
+      this.props.route.params.title == 'Tasks Assigned by you' ||
+      this.props.route.params.title == 'Tasks Assigned to you'
+    ) {
+      console.log('this.props.route.params.title');
+      console.log(this.props.route.params.data);
+      this.setState({reports: this.props.route.params.data});
+    } else if (this.props.route.params.title == 'All recent activity') {
       this.setState({reports: this.props.route.params.data});
     }
+    // console.log(this.props.route.params.data);
   }
+
+  // }
 
   _onRefresh = () => {
     this.setState({
@@ -234,7 +244,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                   borderTopLeftRadius: wp(4),
                   borderTopRightRadius: wp(4),
                 }}>
-                {typeof this.props.route.params.data == 'number' ? (
+                {typeof this.props.route.params.data == 'number' && (
                   <>
                     <>
                       {this.state.reports.map((d: any, i: number) => (
@@ -264,35 +274,41 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                       ))}
                     </>
                   </>
-                ) : (
-                  <>
-                    {this.state.reports.map((d: any, i: number) => (
-                      <ListCard
-                        key={i}
-                        location={d.location}
-                        classify={d.sorType}
-                        styles={
-                          myTasks.rercently.length == i + 1
-                            ? {borderBottomWidth: wp(0)}
-                            : null
-                        }
-                        user1={undefined}
-                        user2={undefined}
-                        observation={d.details}
-                        username={d.createdBy}
-                        repeated={[]}
-                        iconconf={classifySor.find(
-                          (e: any) => e.title == d.data.sor_type,
-                        )}
-                        onPress={() =>
-                          this.props.navigation.navigate('ViewSOR', {data: d})
-                        }
-                        date={d.createdAt}
-                        onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                      />
-                    ))}
-                  </>
                 )}
+
+                {this.props.route.params.title == 'Tasks you are involved in' ||
+                  this.props.route.params.title == 'Tasks Assigned by you' ||
+                  (this.props.route.params.title == 'Tasks Assigned to you' && (
+                    <>
+                      {this.state.reports.map((d: any, i: number) => (
+                        <ListCard
+                          key={i}
+                          location={d.location}
+                          classify={d.sorType}
+                          styles={
+                            myTasks.rercently.length == i + 1
+                              ? {borderBottomWidth: wp(0)}
+                              : null
+                          }
+                          user1={undefined}
+                          user2={undefined}
+                          observation={d.details}
+                          username={d.createdBy}
+                          repeated={[]}
+                          iconconf={classifySor.find(
+                            (e: any) => e.title == d.data.sor_type,
+                          )}
+                          onPress={() =>
+                            this.props.navigation.navigate('ViewSOR', {
+                              data: d,
+                            })
+                          }
+                          date={d.createdAt}
+                          onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                        />
+                      ))}
+                    </>
+                  ))}
               </View>
             )}
           </View>
