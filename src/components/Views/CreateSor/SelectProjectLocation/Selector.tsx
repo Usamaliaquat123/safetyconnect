@@ -26,18 +26,18 @@ const Selector = (props: Props) => {
 
   // user
 
-  AsyncStorage.getItem('getCurrentProject').then((projId: any) => {
-    createApi
-      .createApi()
-      .getProject({projectid: projId})
-      .then((resp: any) => {
-        console.log(resp);
-        // setselectedProj(resp )
+  // AsyncStorage.getItem('getCurrentProject').then((projId: any) => {
+  //   createApi
+  //     .createApi()
+  //     .getProject({projectid: projId})
+  //     .then((resp: any) => {
+  //       console.log(resp);
+  //       // setselectedProj(resp )
 
-        // setselectionProj()
-        // console.log(resp);
-      });
-  });
+  //       // setselectionProj()
+  //       // console.log(resp);
+  //     });
+  // });
 
   return (
     <View style={styles.selectProjectLocationContainer}>
@@ -102,7 +102,7 @@ const Selector = (props: Props) => {
 
       {/* Select location */}
       <View style={styles.selectLocationContainer}>
-        <Text style={styles.selectlocationHead}>Select Project :</Text>
+        <Text style={styles.selectlocationHead}>Select Location :</Text>
         <TouchableOpacity style={styles.selectLocation}>
           <Text style={styles.locaName}>{props.selectedLocation}</Text>
           <Icon
