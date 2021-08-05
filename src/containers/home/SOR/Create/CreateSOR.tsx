@@ -315,8 +315,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           .createApi()
           .getOrganization(currentOrg)
           .then((res: any) => {
-            this.setState({allProjects: res.data.data.projects});
-            // console.log(res.data.data.projects);
+            this.setState({
+              allProjects: res.data.data.projects,
+              currentOrgName: res.data.data.name,
+            });
           });
     });
     // {key: "test.txt"} .catch(err => conso.le.log(err)});
@@ -390,22 +392,16 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   };
 
   onlinksorRepeated = (e: any) => {
-    console.log(e.map((d: any) => d._id));
     var data = {
       project: this.state.projectid,
       report: this.state.mainReportId,
       repeatedList: e.map((d: any) => d._id),
     };
 
-    console.log(data);
-
     createApi
       .createApi()
       .linkRepeatedSugg(data)
       .then((res) => {
-        console.log('res');
-        console.log(res);
-
         showMessage({
           message: 'SOR sucessfully subitted',
           type: 'success',
@@ -450,7 +446,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     var rec = this.state.actionRecommendations.filter(
       (d: any) => d.selected == true,
     );
-    console.log(rec);
     // console.log(rec.map((d: any) => delete d['selected']));
 
     if (rec != undefined) {
@@ -506,7 +501,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   };
 
   onCreateSor = (status: number) => {
-    console.log(this.state.involvePersonTags);
     var uploadedfiles = [];
     var sorbtns = this.state.classifySorbtns.filter(
       (d: any) => d.selected === true,
@@ -1211,11 +1205,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     }
   };
 
-  componentWillUnmount = () => {};
-
   render() {
-    // this.state.liklihood[0].selected = true;
-    // this.state.severity[0].selected = true;
     return (
       <Animated.View style={[styles.container]}>
         {/* Header */}
@@ -1234,16 +1224,15 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </View>
             </View>
           </View>
-          {/* content */}
           <Animated.View style={[styles.content]}>
             {/* Select Project  / Select location */}
-            <Selector
+            {/* <Selector
               orgnaization={this.state.currentOrg}
               projects={this.state.allProjects}
               selectedLocation={this.state.allLocations}
               selectedProject={this.state.projectid}
               navigation={this.props.navigation}
-            />
+            /> */}
             {/* Line  */}
             <View style={styles.lineheight} />
             {/* Classify SOR */}
@@ -1870,6 +1859,19 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             'https://dummyimage.com/600x400/ffffff/000000&text=@',
                           name: this.state.involveToText,
                         });
+
+                        var data = {
+                          emails: [this.state.involveToText],
+                          organization: this.state.currentOrg,
+                          invitedBy: this.state.user.email,
+                          organizationName: this.state.currentOrgName,
+                        };
+                        createApi
+                          .createApi()
+                          .inviteBulk(data)
+                          .then((inviteBulk) => {
+                            console.log(inviteBulk);
+                          });
 
                         this.setState({
                           involveToText: '',

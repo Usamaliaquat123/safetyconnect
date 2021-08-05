@@ -152,6 +152,7 @@ class Home extends React.Component<HomeProps, any> {
                     };
 
                     this.state.taskAssignedToYou.push(row);
+                    this.state.taskYouAreInvolvedIn.push(row);
                     this.setState({});
                   });
                 });
@@ -185,85 +186,73 @@ class Home extends React.Component<HomeProps, any> {
           });
 
         // // Filter sors
-        // createApi
-        //   .createApi()
-        //   .filterSors({
-        //     project: currentProj,
-        //     limit: 10,
-        //     page: 0,
-        //     query: {status: [1, 2, 3, 4, 5]},
-        //   })
-        //   .then((res: any) => {
-        //     createApi
-        //       .createApi()
-        //       .dashboardApi(currentProj, currentorg)
-        //       .then((dash: any) => {
-        //         // console.log('dash');
-        //         //  console.log)
-        //         this.setState({
-        //           totalObs:
-        //             dash.data.noOfCompleted +
-        //             dash.data.noOfDrafts +
-        //             dash.data.noOfPublished,
-        //         });
+        createApi
+          .createApi()
+          .filterSors({
+            project: currentProj,
+            limit: 10,
+            page: 0,
+            query: {status: [1, 2, 3, 4, 5]},
+          })
+          .then((res: any) => {
+            createApi
+              .createApi()
+              .dashboardApi(currentProj, currentorg)
+              .then((dash: any) => {
+                // console.log('dash');
+                //  console.log)
+                this.setState({
+                  totalObs:
+                    dash.data.noOfCompleted +
+                    dash.data.noOfDrafts +
+                    dash.data.noOfPublished,
+                });
 
-        //         this.setState({
-        //           noOfCompleted: dash.data.noOfCompleted,
-        //           noOfDrafts: dash.data.noOfDrafts,
-        //           noOfPublished: dash.data.noOfPublished,
-        //         });
-        //         this.setState({});
-        //       });
+                this.setState({
+                  noOfCompleted: dash.data.noOfCompleted,
+                  noOfDrafts: dash.data.noOfDrafts,
+                  noOfPublished: dash.data.noOfPublished,
+                });
+                this.setState({});
+              });
 
-        //     if (res.data.data.report.length > 3) {
-        //       res.data.data.report.sort(
-        //         (a: any, b: any) =>
-        //           new Date(b.createdAt) - new Date(a.createdAt),
-        //       );
+            if (res.data.data.report.length > 3) {
+              res.data.data.report.reverse();
 
-        //       for (let i = 0; i < res.data.data.report.length; i++) {
-        //         if (res.data.data.report[i].details != undefined) {
-        //           AsyncStorage.getItem('email').then((email) => {
-        //             this.setState({
-        //               recentActivity: res.data.data.report.slice(0, 3),
-        //               taskAssignedToYou: res.data.data.report.filter((d) =>
-        //                 d.submit_to.filter((d) => d == email),
-        //               ),
-        //               taskAssignedByYou: res.data.data.report.filter(
-        //                 (d) => d.created_by == email,
-        //               ),
-        //               taskYouAreInvolvedIn: res.data.data.report.filter((d) =>
-        //                 d.involved_persons.filter((d) => d == email),
-        //               ),
-        //             });
-        //           });
+              for (let i = 0; i < res.data.data.report.length; i++) {
+                if (res.data.data.report[i].details != undefined) {
+                  AsyncStorage.getItem('email').then((email) => {
+                    this.setState({
+                      recentActivity: res.data.data.report.slice(0, 3),
+                    });
+                  });
 
-        //           this.setState({});
-        //         }
-        //       }
-        //     } else {
-        //       for (let i = 0; i < res.data.data.report.length; i++) {
-        //         if (res.data.data.report[i].details != undefined) {
-        //           AsyncStorage.getItem('email').then((email) => {
-        //             this.setState({
-        //               recentActivity: res.data.data.report.slice(0, 3),
-        //               taskAssignedToYou: res.data.data.report.filter((d) =>
-        //                 d.submit_to.filter((d) => d == email),
-        //               ),
-        //               taskAssignedByYou: res.data.data.report.filter(
-        //                 (d) => d.created_by == email,
-        //               ),
-        //               taskYouAreInvolvedIn: res.data.data.report.filter((d) =>
-        //                 d.involved_persons.filter((d) => d == email),
-        //               ),
-        //             });
-        //           });
+                  this.setState({});
+                }
+              }
+            } else {
+              for (let i = 0; i < res.data.data.report.length; i++) {
+                if (res.data.data.report[i].details != undefined) {
+                  AsyncStorage.getItem('email').then((email) => {
+                    this.setState({
+                      recentActivity: res.data.data.report.slice(0, 3),
+                      taskAssignedToYou: res.data.data.report.filter((d) =>
+                        d.submit_to.filter((d) => d == email),
+                      ),
+                      taskAssignedByYou: res.data.data.report.filter(
+                        (d) => d.created_by == email,
+                      ),
+                      taskYouAreInvolvedIn: res.data.data.report.filter((d) =>
+                        d.involved_persons.filter((d) => d == email),
+                      ),
+                    });
+                  });
 
-        //           this.setState({});
-        //         }
-        //       }
-        //     }
-        //   });
+                  this.setState({});
+                }
+              }
+            }
+          });
 
         this.setState({projectId: currentProj});
         this.setState({currentorg: currentorg});
@@ -955,11 +944,11 @@ class Home extends React.Component<HomeProps, any> {
                     }}>
                     {this.state.taskYouAreInvolvedIn
                       .slice(0, 3)
-                      .map((d: Isor, i: number) => (
+                      .map((d: actionsDashboard, i: number) => (
                         <ListCard
+                          classify={d.sorType}
                           key={i}
-                          classify={d.sor_type}
-                          repeated={d.repeatedSor}
+                          repeated={[]}
                           location={d.location}
                           styles={
                             this.state.taskYouAreInvolvedIn.slice(0, 3)
@@ -968,18 +957,26 @@ class Home extends React.Component<HomeProps, any> {
                               ? {borderBottomWidth: wp(0)}
                               : null
                           }
-                          user1={d.user1}
-                          user2={d.user2}
+                          user1={undefined}
+                          user2={undefined}
                           observation={d.details}
-                          username={d.created_by}
+                          username={d.createdBy}
                           iconconf={classifySor.find(
-                            (e: any) => e.title == d.sor_type,
+                            (e: any) => e.title == d.sorType,
                           )}
-                          onPress={() =>
-                            this.props.navigation.navigate('ViewSOR', {data: d})
-                          }
+                          onPress={() => {
+                            createApi
+                              .createApi()
+                              .getSors(d.projectId, d.data._id)
+                              .then((rep) => {
+                                console.log(rep);
+                                this.props.navigation.navigate('ViewSOR', {
+                                  data: rep.data.data.report[0],
+                                });
+                              });
+                          }}
                           onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                          date={d.occurred_at}
+                          date={d.createdAt}
                         />
                       ))}
                   </View>
@@ -1011,11 +1008,11 @@ class Home extends React.Component<HomeProps, any> {
                   {' '}
                   Recent Observations
                 </Text>
-                {this.state.taskYouAreInvolvedIn.length > 3 ? (
+                {this.state.recentActivity.length > 3 ? (
                   <TouchableOpacity
                     onPress={() =>
                       this.props.navigation.navigate('ViewAll', {
-                        data: this.state.taskAssignedByYou,
+                        data: this.state.recentActivity,
                         title: 'Recent Observations',
                       })
                     }>
