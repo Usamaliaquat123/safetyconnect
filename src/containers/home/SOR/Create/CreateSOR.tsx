@@ -1037,7 +1037,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             console.log(this.state.reportIdInvestigation);
                             this.setState({mainReportId: sors.report._id});
                             createApi
-                              .createApi()
+                              .createApi()  
                               .getAllRepeatedSugg(
                                 this.state.observationT,
                                 this.state.projectid, //projectid

@@ -130,6 +130,7 @@ const Selector = (props: Props) => {
             // color={colo}
           />
         </TouchableOpacity>
+
         {selectionLocation == true && (
           <ScrollView
             style={{
