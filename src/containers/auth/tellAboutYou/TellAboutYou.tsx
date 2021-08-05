@@ -618,7 +618,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                           this.setState({
                             arrayOfYourRole: suggestInActionsRecommendations(
                               e.toLowerCase(),
-                              typeofRole,
+                              yourRole,
                             ),
                           });
                         } else {
