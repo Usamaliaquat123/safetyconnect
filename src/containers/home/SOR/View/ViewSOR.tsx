@@ -409,6 +409,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         // status: this.state.esclate_to.length == 0 ? status : 3 /** done */,
         attachments: this.state.attachments.map((d) => d.name) /** done */,
         comments: this.props.route.params.data.comments /** done */,
+        status: this.state.esclate_to.length == 0 ? status : 3,
         updatedAt: Date.now() /** done */,
       },
       project: this.state.projectId,

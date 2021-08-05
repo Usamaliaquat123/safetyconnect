@@ -719,7 +719,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
                         }}>
                         {' '}
                         {this.state.involvedperson
-                          .map((d) => d.email)
+                          .map((d) => d.name)
                           .join(',')}
                       </Text>
                     </View>
