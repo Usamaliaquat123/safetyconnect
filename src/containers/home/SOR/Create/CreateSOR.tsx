@@ -554,7 +554,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 },
                 organization: this.state.currentOrg,
                 project: this.state.projectid,
-                // updated_by: this.state.user.email,
+                updated_by: {
+                  email: this.state.user.email,
+                  _id: this.state.user._id,
+                },
               };
 
               var bodyInitial = {
@@ -879,6 +882,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       },
                       organization: this.state.currentOrg,
                       project: this.state.projectid,
+                      updated_by: {
+                        email: this.state.user.email,
+                        _id: this.state.user._id,
+                      },
                     };
 
                     console.log('sors of actions ');

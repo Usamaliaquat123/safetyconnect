@@ -473,7 +473,7 @@ class Settings extends React.Component<SettingsProps, any> {
                               key={i}
                               onPress={() => {
                                 this.setState({
-                                  role: d,
+                                  department: d,
                                   arrayofDepartment: [],
                                 });
                               }}
@@ -538,7 +538,7 @@ class Settings extends React.Component<SettingsProps, any> {
                         }}
                         onPress={() => {
                           if (this.state.arrayofIndustry.length == 0) {
-                            this.setState({arrayofIndustry: industry});
+                            this.setState({arrayofIndustry: industries});
                           } else {
                             this.setState({arrayofIndustry: []});
                           }
@@ -560,7 +560,7 @@ class Settings extends React.Component<SettingsProps, any> {
                               key={i}
                               onPress={() => {
                                 this.setState({
-                                  role: d,
+                                  industry: d,
                                   arrayofIndustry: [],
                                 });
                               }}

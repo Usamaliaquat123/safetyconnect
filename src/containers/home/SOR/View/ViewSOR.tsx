@@ -808,6 +808,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       //   this.setState({});
       // });
 
+      console.log(res);
+
       if (res.type == 'image/jpeg' || res.type == 'image/png') {
         res['orgType'] = res.type;
         res.type = 'image';
@@ -846,35 +848,31 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           this.setState({fileLoading: true});
         }
 
-        fileuploader(
-          res.orgType,
-          res.type == 'doc' || res.type == 'docx'
-            ? res.orgType
-            : res.orgType.split('/')[1],
-          res.uri,
-        ).then((filename: any) => {
-          imgData['name'] = filename;
-          if (commentAttach == true) {
-            this.setState({commentAttachmentLoading: false});
-          } else {
-            this.setState({fileLoading: false});
-          }
-          var data = {
-            bucket: 'hns-codist',
-            report: [`report/${filename}`],
-          };
+        fileuploader(res.orgType, res.orgType, res.uri).then(
+          (filename: any) => {
+            imgData['name'] = filename;
+            if (commentAttach == true) {
+              this.setState({commentAttachmentLoading: false});
+            } else {
+              this.setState({fileLoading: false});
+            }
+            var data = {
+              bucket: 'hns-codist',
+              report: [`report/${filename}`],
+            };
 
-          createApi
-            .createApi()
-            .getFileApi(data)
-            .then((d: any) => {
-              imgData['uri'] = d.data[0];
-            });
-          attach.splice(0, 0, imgData);
-          console.log('attach');
-          console.log(attach);
-          this.setState({});
-        });
+            createApi
+              .createApi()
+              .getFileApi(data)
+              .then((d: any) => {
+                imgData['uri'] = d.data[0];
+              });
+            attach.splice(0, 0, imgData);
+            console.log('attach');
+            console.log(attach);
+            this.setState({});
+          },
+        );
       }
 
       this.setState({});
