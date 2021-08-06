@@ -362,7 +362,7 @@ class Settings extends React.Component<SettingsProps, any> {
                         }}
                         onPress={() => {
                           if (this.state.arrayOfYourRole.length == 0) {
-                            this.setState({arrayOfYourRole: typeofRole});
+                            this.setState({arrayOfYourRole: yourRole});
                           } else {
                             this.setState({arrayOfYourRole: []});
                           }
@@ -415,13 +415,80 @@ class Settings extends React.Component<SettingsProps, any> {
                     <View style={[styles.inputContainer]}>
                       <TextInput
                         style={styles.authInputs}
+                        onFocus={() => {
+                          this.setState({
+                            arrayofDepartment: suggestInActionsRecommendations(
+                              '',
+                              industries,
+                            ),
+                          });
+                        }}
                         value={this.state.department}
                         onChangeText={(e) => {
+                          if (e !== '') {
+                            this.setState({
+                              arrayofDepartment: suggestInActionsRecommendations(
+                                e.toLowerCase(),
+                                typeofRole,
+                              ),
+                            });
+                          } else {
+                            this.setState({arrayofDepartment: []});
+                          }
                           this.setState({department: e});
                         }}
                         placeholder={'Department'}
                       />
+                      <TouchableOpacity
+                        style={{
+                          // marginRight: wp(),
+                          paddingRight: wp(6),
+                          width: wp(10),
+                          height: wp(10),
+                          justifyContent: 'center',
+                          alignSelf: 'center',
+                        }}
+                        onPress={() => {
+                          if (this.state.arrayofDepartment.length == 0) {
+                            this.setState({arrayofDepartment: typeofRole});
+                          } else {
+                            this.setState({arrayofDepartment: []});
+                          }
+                        }}>
+                        <Icon
+                          // containerStyle={{marginRight: wp(8)}}
+                          name={'down'}
+                          type={'antdesign'}
+                          size={wp(3)}
+                          color={colors.text}
+                        />
+                      </TouchableOpacity>
                     </View>
+
+                    {this.state.arrayofDepartment.length != 0 ? (
+                      <View style={styles.involveSuggestCont}>
+                        {this.state.arrayofDepartment.map(
+                          (d: string, i: number) => (
+                            <TouchableOpacity
+                              key={i}
+                              onPress={() => {
+                                this.setState({
+                                  role: d,
+                                  arrayofDepartment: [],
+                                });
+                              }}
+                              style={[
+                                styles.involvePsuggCont,
+                                this.state.arrayofDepartment.length == i + 1
+                                  ? {borderBottomWidth: wp(0)}
+                                  : null,
+                              ]}>
+                              <Text style={styles.involvePSt}>{d}</Text>
+                            </TouchableOpacity>
+                          ),
+                        )}
+                      </View>
+                    ) : null}
                   </View>
                   {/* Your Industry */}
                   <View>
@@ -437,12 +504,78 @@ class Settings extends React.Component<SettingsProps, any> {
                       <TextInput
                         style={styles.authInputs}
                         value={this.state.industry}
+                        onFocus={() => {
+                          this.setState({
+                            arrayofIndustry: suggestInActionsRecommendations(
+                              '',
+                              industries,
+                            ),
+                          });
+                        }}
                         onChangeText={(e) => {
+                          if (e !== '') {
+                            this.setState({
+                              arrayofIndustry: suggestInActionsRecommendations(
+                                e.toLowerCase(),
+                                industries,
+                              ),
+                            });
+                          } else {
+                            this.setState({arrayofIndustry: []});
+                          }
                           this.setState({industry: e});
                         }}
                         placeholder={'Industry'}
                       />
+                      <TouchableOpacity
+                        style={{
+                          // marginRight: wp(),
+                          paddingRight: wp(6),
+                          width: wp(10),
+                          height: wp(10),
+                          justifyContent: 'center',
+                          alignSelf: 'center',
+                        }}
+                        onPress={() => {
+                          if (this.state.arrayofIndustry.length == 0) {
+                            this.setState({arrayofIndustry: industry});
+                          } else {
+                            this.setState({arrayofIndustry: []});
+                          }
+                        }}>
+                        <Icon
+                          // containerStyle={{marginRight: wp(8)}}
+                          name={'down'}
+                          type={'antdesign'}
+                          size={wp(3)}
+                          color={colors.text}
+                        />
+                      </TouchableOpacity>
                     </View>
+                    {this.state.arrayofIndustry.length != 0 ? (
+                      <View style={styles.involveSuggestCont}>
+                        {this.state.arrayofIndustry.map(
+                          (d: string, i: number) => (
+                            <TouchableOpacity
+                              key={i}
+                              onPress={() => {
+                                this.setState({
+                                  role: d,
+                                  arrayofIndustry: [],
+                                });
+                              }}
+                              style={[
+                                styles.involvePsuggCont,
+                                this.state.arrayofIndustry.length == i + 1
+                                  ? {borderBottomWidth: wp(0)}
+                                  : null,
+                              ]}>
+                              <Text style={styles.involvePSt}>{d}</Text>
+                            </TouchableOpacity>
+                          ),
+                        )}
+                      </View>
+                    ) : null}
                   </View>
                   {/* Save  */}
 
