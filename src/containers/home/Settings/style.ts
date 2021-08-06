@@ -65,6 +65,26 @@ const styles = StyleSheet.create({
     marginTop: wp(40),
     marginBottom: wp(40),
   },
+  involvePSt: {
+    fontSize: wp(2.7),
+    opacity: 0.5,
+    fontFamily: fonts.SFuiDisplayLight,
+  },
+  involvePsuggCont: {
+    borderColor: colors.textOpa,
+    borderBottomWidth: wp(0.1),
+    paddingTop: wp(3),
+    paddingBottom: wp(3),
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  involveSuggestCont: {
+    borderColor: colors.text,
+    borderRadius: wp(3),
+    padding: wp(3),
+    borderWidth: wp(0.2),
+    marginTop: wp(1),
+  },
   // loading text
   loadingtext: {
     fontSize: wp(3),
