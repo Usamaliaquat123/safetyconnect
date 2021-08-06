@@ -414,7 +414,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       },
       project: this.state.projectId,
       // user:
-      updated_by:  {
+      updated_by: {
         email: this.state.user.email,
         _id: this.state.user._id,
       },
