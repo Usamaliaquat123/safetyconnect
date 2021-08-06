@@ -548,13 +548,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       : this.state.uploadedfiles,
                   comments: ' ',
                 },
-                user : {
+                updated_by: {
                   email: this.state.user.email,
-                  _id : this.state.user._id,
+                  _id: this.state.user._id,
                 },
                 organization: this.state.currentOrg,
                 project: this.state.projectid,
-                updated_by: this.state.user.email,
+                // updated_by: this.state.user.email,
               };
 
               var bodyInitial = {
