@@ -582,6 +582,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   .createSor(sor)
                   .then((res: any) => {
                     this.setState({loading: false, errorModal: false});
+                    console.log('res');
                     console.log(res);
 
                     if (this.state.fiveWhytoggle == true) {
