@@ -51,7 +51,7 @@ import {
 } from '@utils';
 import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {involved_persons, actions} from '@typings';
+import {involved_persons, actions, actionsDashboard} from '@typings';
 import * as reduxActions from '../../../../store/actions/listSorActions';
 
 type ViewSORNavigationProp = StackNavigationProp<
@@ -2075,13 +2075,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         key={i}
                         // type={'all'}
                         data={d}
-                        onPress={(d: Isor) =>
+                        onPress={(d: actionsDashboard) =>
                           this.props.navigation.navigate('ViewSOR', {
                             data: d,
                           })
                         }
                         name={d.created_by}
-                        date={d.occured_at}
+                        date={d.occurred_on}
                         risk={d.risk.severity * d.risk.likelihood}
                         viewPortWidth={80}
                         observation={d.details}
