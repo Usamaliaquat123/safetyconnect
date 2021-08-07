@@ -188,6 +188,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         .createApi()
         .getProject({projectid: currentProj})
         .then((res: any) => {
+          console.log(res);
           this.setState({
             projectName: res.data.data.project_name,
             involvedPerson: res.data.data.involved_persons,

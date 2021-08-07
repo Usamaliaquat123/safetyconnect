@@ -193,20 +193,16 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           .then((res: any) => {
             if (res.data.message == 'no sor found') {
               if (dta != null) {
-                console.log('----------------------');
                 this.setState({
                   nosorOrSorMessage: 'try the different filter or create the',
                 });
               } else {
-                console.log('----------------------');
                 this.setState({
                   nosorOrSorMessage: 'would you like to create the ',
                 });
               }
             }
 
-            console.log('reports hai ya nai');
-            console.log(res);
             if (res.data.data.report == undefined) {
               this.setState({loading: false});
             } else {
