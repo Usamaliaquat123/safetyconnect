@@ -42,11 +42,13 @@ import {
   writeHtmlToPdf,
   getAllProjects,
   FiveWhySubMenus,
+  filterInvolvedPerson,
 } from './utils';
 export {
   classifySor,
   validatePassword,
   getAllProjects,
+  filterInvolvedPerson,
   getLinkParam,
   savedCurrentOrganization,
   redirectDynamiclink,

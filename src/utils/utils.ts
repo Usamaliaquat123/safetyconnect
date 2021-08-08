@@ -638,6 +638,49 @@ export const profileUploader = (types: string, ext: string, base64: string) => {
   });
 };
 
+// filter involved person if not exists will trigger the dummu data
+export const filterInvolvedPerson = (
+  sorinvolvedP: any,
+  projectInvolvedP: any,
+  involvedUsers: any,
+) => {
+  return new Promise((resolve, reject) => {
+    try {
+      sorinvolvedP.map((d: any) => {
+        if (projectInvolvedP.filter((i: any) => i.email == d).length == 0) {
+          createApi
+            .createApi()
+            .getUser(d)
+            .then((res: any) => {
+              if (res.data.message === 'no user exists') {
+                involvedUsers.push({
+                  name: d,
+                  email: d,
+                  img_url:
+                    'https://dummyimage.com/600x400/ffffff/000000&text=@',  
+                });
+              } else {
+                involvedUsers.push({
+                  name: res.data.data.name,
+                  img_url: res.data.data.img_url,
+                  email: res.data.data.email,
+                });
+              }
+            })
+            .catch((err: any) => {});
+        } else {
+          involvedUsers.push(
+            projectInvolvedP.filter((i: any) => i.email == d)[0],
+          );
+        }
+      });
+      resolve(involvedUsers);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 // get  sor report data
 export const getSorData = (id: string, projectid: string) => {
   return new Promise((resolve, reject) => {
