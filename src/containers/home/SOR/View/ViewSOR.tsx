@@ -377,14 +377,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       //       .rootCauses[0],
       //   });
       // }
+      console.log(this.props.route.params.data);
       //   // Set the state of 5 whys Questions /Answers
-      //   this.setState({
-      //     fiveWhyQuestion: this.props.route.params.data.justifications[0]
-      //       .justification[0].question,
-      //     fiveWhyAnswer: this.props.route.params.data.justifications[0]
-      //       .justification[0].answer,
-      //     fiveWhytoggle: true,
-      //   });
+      this.setState({
+        fiveWhyQuestion: this.props.route.params.data.justifications[0]
+          .justification.question,
+        fiveWhyAnswer: this.props.route.params.data.justifications[0]
+          .justification.answer,
+        fiveWhytoggle: true,
+      });
       // } else {
       //   this.setState({fiveWhytoggle: false});
     } else {
@@ -402,6 +403,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
   };
   onSubmitUpdateSor = async (status?: number) => {
+    console.log(status);
     this.setState({loading: true, errorModal: true});
     var liklihood = this.state.liklihood.filter(
       (d: any) => d.selected == true,
@@ -2560,10 +2562,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 <View style={styles.saveAsDraftAndSubmitBtns}>
                   <TouchableOpacity
                     onPress={() => {
+                      console.log('submit');
                       if (this.state.fiveWhytoggle == true) {
+                        console.log('line 2566');
+                        console.log(this.state.fiveWhyQuestion);
                         if (this.state.fiveWhyQuestion.length == 5) {
                           this.onSubmitUpdateSor(1);
+                          console.log('line 2570');
                         } else {
+                          console.log('line 2572');
                           this.setState({
                             errorModal: true,
                             errHeadingText: 'Minimum 5 why ',
@@ -2571,6 +2578,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           });
                         }
                       } else {
+                        console.log('line 2580');
                         this.onSubmitUpdateSor(1);
                       }
                     }}
