@@ -516,7 +516,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       if (this.state.observation != '') {
         if (sorbtns.length != 0) {
           if (sorbtns[0].title == 'positive') {
-            if (status == 1 ? this.state.submitToTags.length !== 0 : true) {
+            if (status == 1 ? true : this.state.submitToTags.length !== 0) {
               // if (this.state.exclateToTags.length !== 0) {
               this.setState({loading: true, errorModal: true});
 
@@ -722,7 +722,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     .filter((d: any) => d.selected == true)
                     .filter((d: any) => d.assigned_to.length != 0).length != 0
                 ) {
-                  if (this.state.submitToTags.length !== 0) {
+                  if (
+                    status == 1 ? true : this.state.submitToTags.length !== 0
+                  ) {
                     this.setState({loading: true, errorModal: true});
 
                     var rec = this.state.actionRecommendations.filter(
