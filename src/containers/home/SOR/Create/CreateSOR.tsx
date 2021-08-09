@@ -355,9 +355,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           projectid: currentProj,
         })
         .then((res: any) => {
+          console.log('res');
+          console.log(res);
           this.setState({involved_persons: res.data.data.involved_persons});
-          console.log('this.state.involved_persons');
-          console.log(res.data);
         });
     });
     // Time Update on every seconds
@@ -448,7 +448,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     var rec = this.state.actionRecommendations.filter(
       (d: any) => d.selected == true,
     );
-    // console.log(rec.map((d: any) => delete d['selected']));
 
     if (rec != undefined) {
       var actions: Array<any> = [];
@@ -576,7 +575,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   });
                   sor.report['_id'] = res.data.data.report_id;
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => {
+                  console.log(err);
+                });
 
               setTimeout(() => {
                 createApi
@@ -584,8 +585,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   .createSor(sor)
                   .then((res: any) => {
                     this.setState({loading: false, errorModal: false});
-                    console.log('resjhjhjhjhj');
-                    console.log(res);
                     showMessage({
                       message: 'SOR sucessfully subitted',
                       type: 'success',
@@ -607,8 +606,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           loading: false,
                           errorModal: false,
                         });
-                        console.log('sugge data');
-                        console.log(sugg.data);
 
                         var rep = sugg.data.results;
 
@@ -1768,7 +1765,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   <View style={styles.involveSuggestCont}>
                     <TouchableOpacity
                       onPress={() => {
-                        console.log(this.state.involveToText);
                         this.state.involvePersonTags.push({
                           email: this.state.involveToText,
                           img_url: '',
@@ -1790,9 +1786,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         createApi
                           .createApi()
                           .inviteBulk(data)
-                          .then((inviteBulk) => {
-                            console.log(inviteBulk);
-                          });
+                          .then((inviteBulk) => {});
 
                         this.setState({
                           involveToText: '',
@@ -2253,7 +2247,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 // this.setState({repeatedSorModal: true})
                 onPress={() => {
                   if (this.state.fiveWhytoggle == true) {
-                    console.log(this.state.fiveWhyQuestion);
                     if (this.state.fiveWhyQuestion.length == 5) {
                       this.onCreateSor(2);
                     } else {
@@ -2301,7 +2294,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 // this.setState({repeatedSorModal: true})
                 onPress={() => {
                   if (this.state.fiveWhytoggle == true) {
-                    console.log(this.state.fiveWhyQuestion);
                     if (this.state.fiveWhyQuestion.length == 5) {
                       this.onCreateSor(5);
                     } else {

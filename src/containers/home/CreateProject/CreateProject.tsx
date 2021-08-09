@@ -37,6 +37,7 @@ import {
 } from '@utils';
 import {loadingSceneName} from 'aws-amplify';
 import {DEFAULT_HEADERS} from 'apisauce';
+import {involved_persons} from '@typings';
 type CreateProjectNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'createProject'
@@ -131,10 +132,12 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                 secondary_leader: this.state.assignSuppervisor.map(
                   (d) => d.email,
                 ),
+                involved_persons: members.map((d) => d._id),
                 description: this.state.projectDescription,
                 p_locations: this.state.assignLocations,
                 organization: this.state.organizationId,
               };
+              console.log('data');
               console.log(data);
               api
                 .createApi()
@@ -429,8 +432,9 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       color={colors.textOpa}
                     />
                   </View>
-                  <View style={[styles.inputContainer]}>
-                    {this.state.assignLeaderss.length < 15 ? (
+                  {/* {} */}
+                  {this.state.assignLeaderss.length < 1 ? (
+                    <View style={[styles.inputContainer]}>
                       <TextInput
                         onFocus={() => {
                           this.setState({
@@ -462,8 +466,8 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                           }
                         }}
                       />
-                    ) : null}
-                  </View>
+                    </View>
+                  ) : null}
 
                   {/* Suggestions of projectEmail  */}
                   {this.state.assignLeaderssText.length != 0 ? (
@@ -475,9 +479,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                             onPress={() => {
                               this.setState({
                                 assignLeaderssT: '',
-                                assignLeaderssText: this.state.assignLeaderssText.filter(
-                                  (b: any) => b !== d,
-                                ),
+                                assignLeaderssText: [],
                               });
 
                               this.state.assignLeaderss.push(d);
