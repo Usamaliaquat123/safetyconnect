@@ -31,7 +31,7 @@ export interface ViewAllProps {
   data: any;
   fiveWhyQuestions: Function;
   keyFindings?: Function;
-
+  isViewSor?: boolean;
   fiveWhyAnswer: Function;
   onChangeCountributory: Function;
   onChangeRiskCause: Function;
@@ -46,7 +46,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
       question: '',
       answer: '',
       rootcauses: this.props.rootCauses,
-      countributoryCauses: this.props.contributoryCauses,
+      contributoryCauses: this.props.contributoryCauses,
       keyFindings: '',
       rootCausesArray: [],
       rootCausesArrayA: [],
@@ -62,6 +62,16 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
   }
   componentDidMount() {
     console.log('this.props.countributoryCauses');
+    // this.setState({});
+
+    if (this.props.isViewSor) {
+      console.log(this.props.contributoryCauses);
+      // this.setState({
+      //   selectedContributoryCauseQ: this.props.contributoryCauses[0].category,
+      //   selectedContributoryCauseA: this.props.contributoryCauses[0]
+      //     .subCategory,
+      // });
+    }
 
     //   this.setState({
     //     // contributoryCauseArray: this.props.contributoryCauses[0].category,
@@ -72,22 +82,20 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
     //   });
     // }
 
-    console.log(this.state.countributoryCauses);
-
-    if (this.props.contributoryCauses.length != 0) {
-      console.log(this.state.countributoryCauses[0].category);
-      this.setState({
-        selectedContributoryCauseQ: this.state.countributoryCauses[0].category,
-        selectedContributoryCauseA: this.state.countributoryCauses[0].category,
-      });
-    }
-    if (this.props.rootCauses.length != 0) {
-      console.log(this.state.rootcauses[0].category);
-      this.setState({selectedrootCausesQ: this.state.rootcauses[0].category});
-      this.setState({
-        selectedrootCausesA: this.state.rootcauses[0].subCategory,
-      });
-    }
+    // if (this.props.contributoryCauses.length != 0) {
+    //   console.log(this.state.countributoryCauses[0].category);
+    //   this.setState({
+    //     selectedContributoryCauseQ: this.state.countributoryCauses[0].category,
+    //     selectedContributoryCauseA: this.state.countributoryCauses[0].category,
+    //   });
+    // }
+    // if (this.props.rootCauses.length != 0) {
+    //   console.log(this.state.rootcauses[0].category);
+    //   this.setState({selectedrootCausesQ: this.state.rootcauses[0].category});
+    //   this.setState({
+    //     selectedrootCausesA: this.state.rootcauses[0].subCategory,
+    //   });
+    // }
 
     // for (let i = 0; i < this.props.fiveWhyQuestions.length; i++) {
     //   for (let j = 0; j < this.props.fiveWhyAnswer.length; j++) {
@@ -125,7 +133,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
     this.setState({});
   };
   keyFindingsOnChange = (e) => {
-    this.props.keyFindings()
+    this.props.keyFindings();
   };
   onChangeAnswer = (e: any, i: number) => {
     this.state.fivewhy[i].answer = e;

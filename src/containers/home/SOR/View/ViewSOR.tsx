@@ -360,18 +360,23 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         },
       );
 
+      // console.log('sdsdsds');
+      // console.log(
+      //   this.props.route.params.data.justifications[0].contributoryCauses,
+      // );
       this.setState({
-        countributoryCauses: this.props.route.params.data.justifications[0]
+        contributoryCauses: this.props.route.params.data.justifications[0]
           .contributoryCauses,
         rootCauses: this.props.route.params.data.justifications[0].rootCauses,
         keyFindingss: this.props.route.params.data.justifications[0]
           .keyFindings,
-        contributoryCauses: this.props.route.params.data.justifications[0]
-          .contributoryCauses,
-        rootCauses: this.props.route.params.data.justifications[0].rootCauses,
+        // contributoryCauses: this.props.route.params.data.justifications[0]
+        //   .contributoryCauses,
+        // rootCauses: this.props.route.params.data.justifications[0].rootCauses,
         // rootCauses: this.state.rootCauses,
       });
 
+      this.setState({});
       //   // If contributoryCauses exists
       // if (this.props.route.params.data.justifications[0].contributoryCauses) {
       //   this.setState({
@@ -474,7 +479,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 justification: {
                   question: this.state.fiveWhyQuestion,
                   answer: this.state.fiveWhyAnswer,
-                  contributoryCauses: this.state.countributoryCauses,
+                  contributoryCauses: this.state.contributoryCauses,
                   rootCauses: this.state.rootCauses,
                 },
                 project: this.state.projectId,
@@ -1494,8 +1499,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   {this.state.fiveWhytoggle == true ? (
                     <FiveWhy
                       onChangeCountributory={(e: any) =>
-                        this.setState({countributoryCauses: e})
+                        this.setState({contributoryCauses: e})
                       }
+                      isViewSor={true}
                       onChangeRiskCause={(e: any) =>
                         this.setState({rootCauses: e})
                       }
@@ -1505,7 +1511,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         this.setState({keyFindings: e});
                       }}
                       keyFindingss={this.state.keyFindingss}
-                      contributoryCauses={this.state.countributoryCauses}
+                      contributoryCauses={this.state.contributoryCauses}
                       rootCauses={this.state.rootCauses}
                       data={this.state.fiveWHYdata}
                       fiveWhyQuestions={(q: Array<string>) => {
