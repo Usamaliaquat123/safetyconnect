@@ -54,6 +54,16 @@ const industries = [
 ];
 
 const typeofRole = [
+  'CEO',
+  'Director',
+  'General Manager',
+  'Corporate Manager',
+  'Advisor',
+  'Executive',
+  'Other',
+];
+
+const yourRole = [
   'Figurehead',
   'Leader',
   'Liaison',
@@ -64,16 +74,6 @@ const typeofRole = [
   'Disturbance Handler',
   'Resource Allocator',
   'Negotiator',
-];
-
-const yourRole = [
-  'CEO',
-  'Director',
-  'General Manager',
-  'Corporate Manager',
-  'Advisor',
-  'Executive',
-  'Other',
 ];
 
 export interface TellAboutYouProps {

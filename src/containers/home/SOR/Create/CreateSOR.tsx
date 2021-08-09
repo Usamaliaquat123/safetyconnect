@@ -516,7 +516,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       if (this.state.observation != '') {
         if (sorbtns.length != 0) {
           if (sorbtns[0].title == 'positive') {
-            if (this.state.submitToTags.length !== 0) {
+            if (status == 1 ? this.state.submitToTags.length !== 0 : true) {
               // if (this.state.exclateToTags.length !== 0) {
               this.setState({loading: true, errorModal: true});
 
