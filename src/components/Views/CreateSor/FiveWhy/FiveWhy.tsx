@@ -27,6 +27,8 @@ export interface ViewAllProps {
   containerStyle?: ViewStyle;
   reportId: string;
   userId: string;
+  contributoryCausesD?: any;
+  rootCausesD: any;
   keyFindingss: '';
   data: any;
   fiveWhyQuestions: Function;
@@ -65,12 +67,15 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
     // this.setState({});
 
     if (this.props.isViewSor) {
-      console.log(this.props.contributoryCauses);
-      // this.setState({
-      //   selectedContributoryCauseQ: this.props.contributoryCauses[0].category,
-      //   selectedContributoryCauseA: this.props.contributoryCauses[0]
-      //     .subCategory,
-      // });
+      console.log(this.props.contributoryCausesD);
+      console.log(this.props.rootCausesD);
+      this.setState({
+        selectedContributoryCauseQ: this.props.contributoryCausesD[0].category,
+        selectedContributoryCauseA: this.props.contributoryCausesD[0]
+          .subCategory,
+        selectedrootCausesQ: this.props.rootCausesD[0].category,
+        selectedrootCausesA: this.props.rootCausesD[0].subCategory,
+      });
     }
 
     //   this.setState({

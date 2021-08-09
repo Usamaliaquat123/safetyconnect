@@ -149,13 +149,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       fiveWhyAnswer: [],
       repeatedSors: [],
       fiveWHYdata: [],
-      countributoryCauses: '',
-      countributoryCausesD: '',
+      contributoryCauses: '',
       rootCauses: '',
       keyFindingss: '',
       keyFindings: '',
       commentAttachmentLoading: false,
-      rootCausesD: '',
       // Reassign to
       reAssignToArr: [],
       exclateToTags: [],
@@ -364,6 +362,17 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       // console.log(
       //   this.props.route.params.data.justifications[0].contributoryCauses,
       // );
+      this.setState({
+        contributoryCauses: this.props.route.params.data.justifications[0]
+          .contributoryCauses,
+        rootCauses: this.props.route.params.data.justifications[0].rootCauses,
+        keyFindingss: this.props.route.params.data.justifications[0]
+          .keyFindings,
+        // contributoryCauses: this.props.route.params.data.justifications[0]
+        //   .contributoryCauses,
+        // rootCauses: this.props.route.params.data.justifications[0].rootCauses,
+        // rootCauses: this.state.rootCauses,
+      });
       this.setState({
         contributoryCauses: this.props.route.params.data.justifications[0]
           .contributoryCauses,
@@ -1512,6 +1521,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       }}
                       keyFindingss={this.state.keyFindingss}
                       contributoryCauses={this.state.contributoryCauses}
+                      contributoryCausesD={this.props.route.params.data.justifications[0].contributoryCauses}
+
+                      rootCausesD={this.props.route.params.data.justifications[0].rootCauses}
                       rootCauses={this.state.rootCauses}
                       data={this.state.fiveWHYdata}
                       fiveWhyQuestions={(q: Array<string>) => {
