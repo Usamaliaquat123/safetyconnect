@@ -12,7 +12,7 @@ import {
 const base_uri = `https://dev.safetyconnect.ai`;
 const createApi = (
   baseURL: string = `${base_uri}:12222/`,
-  obsbaseUrl: string = `${base_uri}:5003`,
+  obsbaseUrl: string = `${base_uri}:5004`,
   repBaseAi: string = `${'https://dev.safetyconnect.ai'}:5002/`,
   baseAi: string = `${base_uri}:5004/`,
   // External aws api
@@ -69,7 +69,8 @@ const createApi = (
   const suggestiosns = (data: any) => aiBaseAi.post(`act`, data);
   const repeatedsorsugg = (keyword: any) =>
     aiRepBaseApi.post(`repeatedsor`, keyword);
-  const observationSuggestions = (data: any, projectId : any) => obsRepApi.get(`obs?q=${data}?pid=${projectId}`);
+  const observationSuggestions = (data: any, projectId: any) =>
+    obsRepApi.get(`obs?q=${data}?pid=${projectId}`);
   const getAllRepeatedSugg = (
     keyword: string,
     projectId: string,
