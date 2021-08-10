@@ -1310,10 +1310,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           obj[i]['is_selected'] = false;
                           obj[i]['is_complete'] = false;
                           (obj[i]['date'] = moment().format('YYYY-MM-DD')),
-                          (obj[i]['assigned_to'] = []);
+                            (obj[i]['assigned_to'] = []);
                         }
                         this.setState({
-                          potientialRisk: d.risk.total_risk,
+                          potientialRisk: d.risk.severity * d.risk.likelihood,
                           actionRecommendations: [...obj],
                         });
 
@@ -1591,6 +1591,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             assigned_to: [],
                             date: moment().format('YYYY-MM-DD'),
                             status: 'InProgress',
+
+                            actionsChangeable: false,
+
                             category: 'Elimination',
                           },
 
