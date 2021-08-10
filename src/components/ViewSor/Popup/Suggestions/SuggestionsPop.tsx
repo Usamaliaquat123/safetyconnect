@@ -258,10 +258,19 @@ export default class SuggestionsPop extends React.Component<
         onBackdropPress={() => this.props.onClose()}>
         <ScrollView>
           <View style={styles.containerPopup}>
-            <View style={styles.containerText}>
-              <Text style={styles.containerTextString}>
-                Action / Recommendation
-              </Text>
+            <View style={{flexDirection: 'row'}}>
+              <View style={styles.containerText}>
+                <Text style={styles.containerTextString}>
+                  Action / Recommendation
+                </Text>
+              </View>
+              <Icon
+                style={{marginLeft: wp(10), marginTop: wp(2)}}
+                onPress={() => this.props.onClose()}
+                name={'cross'}
+                type={'entypo'}
+                color={'black'}
+              />
             </View>
             {/* Content */}
             <View style={{alignSelf: 'flex-start', marginTop: wp(5)}}>
