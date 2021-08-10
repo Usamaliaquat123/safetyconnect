@@ -476,10 +476,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .updateSor(update)
       .then((res) => {
         console.log(res);
-        this.setState({loading: false, errorModal: false});
+        console.log(this.state.fiveWhytoggle);
+
         if (res.status == 200) {
           // add five why
           if (this.state.fiveWhytoggle == true) {
+            this.setState({loading: false, errorModal: false});
             // if five is not added previosly
 
             if (this.props.route.params.data.justifications.length == 0) {
@@ -501,7 +503,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 .createApi()
                 .createFiveWhy(obj)
                 .then((res: any) => {
-                  console.log();
+                  console.log('updated five why');
+                  console.log(res);
                   setTimeout(() => {
                     this.props.navigation.goBack();
                   }, 3000);
@@ -514,19 +517,25 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             } else {
               //update five why
               var updatefiveWhy = {
-                id: this.props.route.params.data.justification,
                 justification: {
                   question: this.state.fiveWhyQuestion,
                   answer: this.state.fiveWhyAnswer,
                 },
-
+                project: this.state.projectid,
                 contributoryCauses: this.state.contributoryCauses,
                 rootCauses: this.state.rootCauses,
+                keyFindings: this.state.keyFindings,
+                report: this.props.route.params.data._id,
+                user: this.state.user._id,
+                date: moment().format('MM-DD-YYYY'),
               };
+
+              console.log('updatefiveWhy');
+              console.log(updatefiveWhy);
 
               createApi
                 .createApi()
-                .editFiveWhy(updatefiveWhy)
+                .createFiveWhy(updatefiveWhy)
                 .then((res) => {
                   showMessage({
                     message: 'SOR Report is sucessfully updated',
@@ -542,6 +551,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             //   fiveWhyQuestion:
             // fiveWhyAnswer:
           } else {
+            this.setState({loading: false, errorModal: false});
             setTimeout(() => {
               showMessage({
                 message: 'SOR Report is sucessfully updated',
@@ -1521,9 +1531,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       }}
                       keyFindingss={this.state.keyFindingss}
                       contributoryCauses={this.state.contributoryCauses}
-                      contributoryCausesD={this.props.route.params.data.justifications[0].contributoryCauses}
-
-                      rootCausesD={this.props.route.params.data.justifications[0].rootCauses}
+                      contributoryCausesD={
+                        this.props.route.params.data.justifications[0]
+                          .contributoryCauses
+                      }
+                      rootCausesD={
+                        this.props.route.params.data.justifications[0]
+                          .rootCauses
+                      }
                       rootCauses={this.state.rootCauses}
                       data={this.state.fiveWHYdata}
                       fiveWhyQuestions={(q: Array<string>) => {

@@ -69,7 +69,7 @@ const createApi = (
   const suggestiosns = (data: any) => aiBaseAi.post(`act`, data);
   const repeatedsorsugg = (keyword: any) =>
     aiRepBaseApi.post(`repeatedsor`, keyword);
-  const observationSuggestions = (data: any) => obsRepApi.get(`obs?q=${data}`);
+  const observationSuggestions = (data: any, projectId : any) => obsRepApi.get(`obs?q=${data}?pid=${projectId}`);
   const getAllRepeatedSugg = (
     keyword: string,
     projectId: string,

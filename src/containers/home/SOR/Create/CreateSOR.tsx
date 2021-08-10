@@ -272,7 +272,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     form.append('q', str);
     createApi
       .createApi()
-      .observationSuggestions(str)
+      .observationSuggestions(str, this.state.projectid)
       .then((res: any) => {
         if (res.status == 200) {
           this.setState({suggestions: res.data.results});
@@ -453,7 +453,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       var actions: Array<any> = [];
       for (let i = 0; i < rec.length; i++) {
         actions.push({
-          assigned_to: rec[i].assigned_to,
+          assigned_to: rec[i].asobservationSuggestionssigned_to,
           category: rec[i].category,
           content: rec[i].content,
           date: rec[i].date,
