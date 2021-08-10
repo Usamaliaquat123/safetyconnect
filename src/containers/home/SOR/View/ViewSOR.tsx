@@ -1596,6 +1596,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 .created_by;
                               var esclate_to = this.props.route.params.data
                                 .esclate_to;
+                              // var members = this.state.submitto.concat(
+                              //   this.state.assignSuppervisor,
+                              // );
+
+                              var members = [];
+
+                              console.log(
+                                '44448372871837218371283721837128371283712837218371',
+                              );
+                              console.log(this.props.route.params.data);
+                              members.push(
+                                this.props.route.params.data.submit_to[0],
+                              );
+
+                              members.push(created_by);
 
                               // if (this.state.user.email == d.assigned_to) {
                               this.setState({
@@ -1604,7 +1619,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 SuggestionPop: true,
                                 allActionsEditIndex: i,
                                 newActions: false,
-                                submitToAndObserverEmails: submitto,
+                                submitToAndObserverEmails: members,
                               });
                               // }
                             }}
@@ -2997,6 +3012,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             onClose={() =>
               this.setState({SuggestionPop: !this.state.SuggestionPop})
             }
+            currentUser={this.state.user}
             allSuggestions={this.state.actionsAndRecommendations}
             submitToAndObserverEmails={this.state.submitToAndObserverEmails}
             isOpen={this.state.SuggestionPop}

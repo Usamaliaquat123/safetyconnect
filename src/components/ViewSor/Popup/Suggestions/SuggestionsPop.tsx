@@ -29,6 +29,7 @@ export interface SuggestionsPopProps {
   onClose: Function;
   isOpen: boolean;
   suggestions: Array<any>;
+  submitTo: string;
   currentUser: any;
   save: Function;
   discard: Function;
@@ -64,6 +65,7 @@ export default class SuggestionsPop extends React.Component<
       type: props.suggestions.category,
       status: props.suggestions.status,
       suggestions: [],
+
       actionsChangeable: false,
       is_complete: props.suggestions.is_complete,
       is_selected: props.suggestions.is_selected,
@@ -84,7 +86,17 @@ export default class SuggestionsPop extends React.Component<
 
   componentDidMount = () => {
     console.log('five why justification');
-    console.log(this.state.AssignedTo);
+    console.log(this.state.AssignedTo[0]);
+    console.log(
+      this.props.submitToAndObserverEmails?.filter(
+        (d) => d == this.props.currentUser.email,
+      ),
+    );
+    if (this.state.AssignedTo[0] == this.props.currentUser.email) {
+      this.setState({actionsChangeable: true});
+    } else {
+      this.setState({actionsChangeable: false});
+    }
 
     AsyncStorage.getItem('email').then((e) => {
       // this.state.submitToAndObserverEmailsLocal.concat(e);
@@ -315,112 +327,118 @@ export default class SuggestionsPop extends React.Component<
                     <Text style={styles.assignersHead}>Assigners</Text>
                   </View>
                 )}
-                {this.state.AssignedTo.length < 1 && (
-                  <View>
-                    {/* Assdigned to */}
-                    <View style={{alignSelf: 'flex-start'}}>
-                      <Text style={styles.tagAssigners}>Tag Assigners</Text>
-                    </View>
-                    {/* Assigners */}
-                    {this.state.AssignedTo.length < 1 && (
-                      <Text
-                        style={{
-                          fontSize: wp(3),
-                          marginBottom: wp(3),
-                          color: colors.error,
-                        }}>
-                        You have to assign someone..
-                      </Text>
-                    )}
-                    <View style={[styles.commentTextInput]}>
-                      <TextInput
-                        maxLength={500}
-                        onFocus={() =>
-                          this.setState({
-                            selectedInput: 2,
-                            suggestions: searchInSuggestions(
-                              '',
-                              this.state.suggestedUsers,
-                            ),
-                          })
-                        }
-                        style={styles.textInputPopup}
-                        multiline={true}
-                        value={this.state.actionsText}
-                        onChangeText={(e) => {
-                          if (e === '') {
-                            this.setState({suggestions: [], actionsText: e});
-                          } else {
-                            // this.state.suggestedUsers.filter((d : any) => d.email != )
 
+                <>
+                  {this.state.AssignedTo.length < 1 && (
+                    <View>
+                      {/* Assdigned to */}
+                      <View style={{alignSelf: 'flex-start'}}>
+                        <Text style={styles.tagAssigners}>Tag Assigners</Text>
+                      </View>
+                      {/* Assigners */}
+                      {this.state.AssignedTo.length < 1 && (
+                        <Text
+                          style={{
+                            fontSize: wp(3),
+                            marginBottom: wp(3),
+                            color: colors.error,
+                          }}>
+                          You have to assign someone..
+                        </Text>
+                      )}
+                      <View style={[styles.commentTextInput]}>
+                        <TextInput
+                          maxLength={500}
+                          // editable={}
+                          onFocus={() =>
                             this.setState({
+                              selectedInput: 2,
                               suggestions: searchInSuggestions(
-                                e,
+                                '',
                                 this.state.suggestedUsers,
                               ),
-                            });
-
-                            this.setState({actionsText: e});
+                            })
                           }
-                        }}
-                        placeholder={'Type assigner email address'}
-                      />
+                          style={styles.textInputPopup}
+                          multiline={true}
+                          value={this.state.actionsText}
+                          onChangeText={(e) => {
+                            if (e === '') {
+                              this.setState({suggestions: [], actionsText: e});
+                            } else {
+                              // this.state.suggestedUsers.filter((d : any) => d.email != )
 
-                      <TouchableOpacity
-                        onPress={() => {
-                          this.state.AssignedTo.push(this.state.actionsText);
-                          this.setState({actionsText: ''});
-                        }}
-                        style={styles.arrowRightAssigners}>
-                        <Icon
-                          size={wp(5)}
-                          name="arrowright"
-                          type="antdesign"
-                          color={colors.primary}
+                              this.setState({
+                                suggestions: searchInSuggestions(
+                                  e,
+                                  this.state.suggestedUsers,
+                                ),
+                              });
+
+                              this.setState({actionsText: e});
+                            }
+                          }}
+                          placeholder={'Type assigner email address'}
                         />
-                      </TouchableOpacity>
-                    </View>
-                    {/* Suggestions  */}
-                    {this.state.suggestions.length == 0 ? null : (
-                      // {this.state.involvePersonSuggestions.length != 0 ? (
-                      <View style={styles.involveSuggestCont}>
-                        {this.state.suggestions.map(
-                          (d: involved_persons, i: number) => (
-                            <TouchableOpacity
-                              key={i}
-                              onPress={() => {
-                                this.state.AssignedTo.push(d.email);
-                                this.setState({
-                                  involvePersonText: '',
-                                  suggestions: [],
-                                });
-                              }}
-                              style={[
-                                styles.involvePsuggCont,
-                                this.state.suggestions.length == i + 1
-                                  ? {borderBottomWidth: wp(0)}
-                                  : null,
-                              ]}>
-                              <Avatar
-                                containerStyle={{marginRight: wp(3)}}
-                                rounded
-                                source={{
-                                  uri: d.img_url,
-                                }}
-                              />
-                              <View>
-                                <Text style={styles.involvePSt}>{d.name}</Text>
-                                <Text style={{fontSize: wp(2.5)}}>
-                                  {d.email}
-                                </Text>
-                              </View>
-                            </TouchableOpacity>
-                          ),
-                        )}
+
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.state.AssignedTo.push(this.state.actionsText);
+                            this.setState({actionsText: ''});
+                          }}
+                          style={styles.arrowRightAssigners}>
+                          <Icon
+                            size={wp(5)}
+                            name="arrowright"
+                            type="antdesign"
+                            color={colors.primary}
+                          />
+                        </TouchableOpacity>
                       </View>
-                    )}
-                  </View>
-                )}
+                      {/* Suggestions  */}
+                      {this.state.suggestions.length == 0 ? null : (
+                        // {this.state.involvePersonSuggestions.length != 0 ? (
+                        <View style={styles.involveSuggestCont}>
+                          {this.state.suggestions.map(
+                            (d: involved_persons, i: number) => (
+                              <TouchableOpacity
+                                key={i}
+                                onPress={() => {
+                                  this.state.AssignedTo.push(d.email);
+                                  this.setState({
+                                    involvePersonText: '',
+                                    suggestions: [],
+                                  });
+                                }}
+                                style={[
+                                  styles.involvePsuggCont,
+                                  this.state.suggestions.length == i + 1
+                                    ? {borderBottomWidth: wp(0)}
+                                    : null,
+                                ]}>
+                                <Avatar
+                                  containerStyle={{marginRight: wp(3)}}
+                                  rounded
+                                  source={{
+                                    uri: d.img_url,
+                                  }}
+                                />
+                                <View>
+                                  <Text style={styles.involvePSt}>
+                                    {d.name}
+                                  </Text>
+                                  <Text style={{fontSize: wp(2.5)}}>
+                                    {d.email}
+                                  </Text>
+                                </View>
+                              </TouchableOpacity>
+                            ),
+                          )}
+                        </View>
+                      )}
+                    </View>
+                  )}
+                </>
                 <View style={styles.tagsContainer}>
                   {this.state.AssignedTo.length != 0 ? (
                     <Tags
@@ -720,7 +738,9 @@ export default class SuggestionsPop extends React.Component<
                 <View style={styles.eleminationAndAdministrativeContainer}>
                   <TouchableOpacity
                     onPress={() => {
-                      this.setState({type: 'Elimination'});
+                      if (this.state.actionsChangeable == true) {
+                        this.setState({type: 'Elimination'});
+                      }
                     }}
                     style={{marginLeft: wp(2), marginRight: wp(2)}}>
                     <Icon
@@ -740,7 +760,7 @@ export default class SuggestionsPop extends React.Component<
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
-                      if (this.state.actionsChangeable == false) {
+                      if (this.state.actionsChangeable == true) {
                         this.setState({type: 'Administrative'});
                       }
                     }}
@@ -759,7 +779,7 @@ export default class SuggestionsPop extends React.Component<
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
-                      if (this.state.actionsChangeable == false) {
+                      if (this.state.actionsChangeable == true) {
                         this.setState({type: 'Substitution'});
                       }
                     }}
@@ -780,7 +800,7 @@ export default class SuggestionsPop extends React.Component<
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
-                      if (this.state.actionsChangeable == false) {
+                      if (this.state.actionsChangeable == true) {
                         this.setState({type: 'Engineering'});
                       }
                     }}
@@ -801,7 +821,7 @@ export default class SuggestionsPop extends React.Component<
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
-                      if (this.state.actionsChangeable == false) {
+                      if (this.state.actionsChangeable == true) {
                         this.setState({type: 'PPE'});
                       }
                     }}
