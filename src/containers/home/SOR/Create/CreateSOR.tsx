@@ -1298,6 +1298,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   onPress={(d: any) => {
                     const form = new FormData();
                     form.append('q', d.details);
+                    form.append('pid', this.state.projectid);
                     createApi
                       .createApi()
                       .suggestiosns(form)
