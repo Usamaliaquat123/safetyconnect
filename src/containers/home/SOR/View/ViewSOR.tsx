@@ -490,9 +490,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 justification: {
                   question: this.state.fiveWhyQuestion,
                   answer: this.state.fiveWhyAnswer,
-                  contributoryCauses: this.state.contributoryCauses,
-                  rootCauses: this.state.rootCauses,
                 },
+                contributoryCauses: this.state.contributoryCauses,
+                rootCauses: this.state.rootCauses,
                 project: this.state.projectId,
                 report: this.props.route.params.data._id,
                 user: this.state.user._id,
@@ -521,7 +521,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   question: this.state.fiveWhyQuestion,
                   answer: this.state.fiveWhyAnswer,
                 },
-                project: this.state.projectid,
+                project: this.state.projectId,
                 contributoryCauses: this.state.contributoryCauses,
                 rootCauses: this.state.rootCauses,
                 keyFindings: this.state.keyFindings,
@@ -1529,7 +1529,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
                         this.setState({keyFindings: e});
                       }}
-                      keyFindingss={this.state.keyFindingss}
+                      keyFindingss={
+                        this.props.route.params.data.justifications[0]
+                          .keyFindings
+                      }
                       contributoryCauses={this.state.contributoryCauses}
                       contributoryCausesD={
                         this.props.route.params.data.justifications[0]
@@ -1544,9 +1547,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       fiveWhyQuestions={(q: Array<string>) => {
                         this.setState({fiveWhyQuestion: q});
                       }}
-                      fiveWhyAnswer={(a: Array<string>) =>
-                        this.setState({fiveWhyAnswer: a})
-                      }
+                      fiveWhyAnswer={(a: Array<string>) => {
+                        console.log(this.state.keyFindings);
+                        this.setState({fiveWhyAnswer: a});
+                      }}
                       reportId={this.state.reportIdInvestigation}
                       userId={this.state.user._id}
                       containerStyle={{marginTop: wp(3)}}

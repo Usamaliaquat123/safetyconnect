@@ -75,6 +75,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
           .subCategory,
         selectedrootCausesQ: this.props.rootCausesD[0].category,
         selectedrootCausesA: this.props.rootCausesD[0].subCategory,
+        keyFindings: this.props.keyFindingss,
       });
     }
 
@@ -233,7 +234,12 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
           <Text style={styles.keyfindingsText}>Key Findings</Text>
           <View style={styles.keyfindingsInputContiner}>
             <TextInput
-              onChangeText={(e) => this.props.keyFindings(e)}
+              value={this.state.keyFindings}
+              onChangeText={(e) => {
+                this.setState({keyFindings: e});
+
+                this.props.keyFindings(e);
+              }}
               underlineColorAndroid="transparent"
               style={styles.keyfindingsInput}
               multiline={true}

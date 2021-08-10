@@ -855,8 +855,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               .createApi()
                               .createFiveWhy(newObj)
                               .then((res) => {
-                                console.log('this.state.reportIdInvestigation');
-                                console.log(this.state.reportIdInvestigation);
+                                console.log('this.state.response of five why');
+                                console.log(res);
                                 this.setState({mainReportId: sors.report._id});
                                 createApi
                                   .createApi()
