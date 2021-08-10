@@ -63,6 +63,7 @@ export default class SuggestionsPop extends React.Component<
       type: props.suggestions.category,
       status: props.suggestions.status,
       suggestions: [],
+      actionsChangeable: false,
       is_complete: props.suggestions.is_complete,
       is_selected: props.suggestions.is_selected,
       AssignedTo:
@@ -94,6 +95,9 @@ export default class SuggestionsPop extends React.Component<
     if (this.state.statuses == 0) {
       this.setState({statuses: 'InProgress'});
     }
+    this.setState({
+      actionsChangeable: this.props.suggestions.actionsChangeable,
+    });
 
     if (this.props.suggestions.justification != undefined) {
       if (this.props.suggestions.justification.attachments.length != 0) {
@@ -730,7 +734,9 @@ export default class SuggestionsPop extends React.Component<
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
-                      this.setState({type: 'Administrative'});
+                      if (this.state.actionsChangeable == false) {
+                        this.setState({type: 'Administrative'});
+                      }
                     }}
                     style={{marginLeft: wp(2), marginRight: wp(2)}}>
                     <Icon
@@ -747,7 +753,9 @@ export default class SuggestionsPop extends React.Component<
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
-                      this.setState({type: 'Substitution'});
+                      if (this.state.actionsChangeable == false) {
+                        this.setState({type: 'Substitution'});
+                      }
                     }}
                     style={{marginLeft: wp(2), marginRight: wp(2)}}>
                     <Icon
@@ -766,7 +774,9 @@ export default class SuggestionsPop extends React.Component<
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
-                      this.setState({type: 'Engineering'});
+                      if (this.state.actionsChangeable == false) {
+                        this.setState({type: 'Engineering'});
+                      }
                     }}
                     style={{marginLeft: wp(2), marginRight: wp(2)}}>
                     <Icon
@@ -785,7 +795,9 @@ export default class SuggestionsPop extends React.Component<
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
-                      this.setState({type: 'PPE'});
+                      if (this.state.actionsChangeable == false) {
+                        this.setState({type: 'PPE'});
+                      }
                     }}
                     style={{marginLeft: wp(2), marginRight: wp(2)}}>
                     <Icon
