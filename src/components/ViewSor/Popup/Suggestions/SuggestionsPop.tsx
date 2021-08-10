@@ -29,6 +29,7 @@ export interface SuggestionsPopProps {
   onClose: Function;
   isOpen: boolean;
   suggestions: Array<any>;
+  currentUser: any;
   save: Function;
   discard: Function;
   suggestedUsers: Array<involved_persons>;
@@ -83,6 +84,7 @@ export default class SuggestionsPop extends React.Component<
 
   componentDidMount = () => {
     console.log('five why justification');
+    console.log(this.state.AssignedTo);
 
     AsyncStorage.getItem('email').then((e) => {
       // this.state.submitToAndObserverEmailsLocal.concat(e);
@@ -95,9 +97,6 @@ export default class SuggestionsPop extends React.Component<
     if (this.state.statuses == 0) {
       this.setState({statuses: 'InProgress'});
     }
-    this.setState({
-      actionsChangeable: this.props.suggestions.actionsChangeable,
-    });
 
     if (this.props.suggestions.justification != undefined) {
       if (this.props.suggestions.justification.attachments.length != 0) {
@@ -166,6 +165,13 @@ export default class SuggestionsPop extends React.Component<
               // this.setState({files: res.data});
             });
         }
+
+        // if(){
+
+        //   this.setState({
+        //     actionsChangeable: this.props.suggestions.actionsChangeable,
+        //   });
+        // }
 
         console.log('old files');
       } else {

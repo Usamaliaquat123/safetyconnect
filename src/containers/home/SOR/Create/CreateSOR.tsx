@@ -1592,7 +1592,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             date: moment().format('YYYY-MM-DD'),
                             status: 'InProgress',
 
-                            actionsChangeable: false,
+                            // actionsChangeable: false,
 
                             category: 'Elimination',
                           },
@@ -2529,6 +2529,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               onClose={() =>
                 this.setState({SuggestionPop: !this.state.SuggestionPop})
               }
+              currentUser={this.state.user}
               allSuggestions={this.state.actionRecommendations}
               isOpen={this.state.SuggestionPop}
               suggestions={this.state.allActionsEdit}
