@@ -113,7 +113,7 @@ export default class SuggestionsPop extends React.Component<
         this.state.submitToAndObserverEmailsLocal.filter((d: any) => d == e)
           .length == 0
       ) {
-        this.setState({matched: false});
+        this.setState({matched: false, actionsChangeable: true});
       } else {
         this.setState({matched: true});
       }

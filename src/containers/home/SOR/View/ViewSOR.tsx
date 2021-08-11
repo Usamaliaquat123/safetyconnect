@@ -1702,7 +1702,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             // actionsAndRecommendationText :"",
                           },
                           submitToAndObserverEmails: members,
-
+                          // ne
                           SuggestionPop: true,
                           newActions: true,
                         });
@@ -2687,11 +2687,17 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   <TouchableOpacity
                     onPress={() => {
                       AsyncStorage.getItem('email').then((email) => {
-                        console.log( this.props.route.params.data.action_required)
                         console.log(
-                          this.props.route.params.data.action_required.map(
-                            (d) => d.justification.content === ' ',
+                          this.props.route.params.data.action_required,
+                        );
+                        console.log(
+                          this.props.route.params.data.action_required.filter(
+                            (d) => d.justification.content === '',
                           ),
+                        );
+
+                        this.props.route.params.data.action_required.filter(
+                          (d) => d.justification.content === '',
                         );
 
                         // if (email == this.props.route.params.data.created_by) {
@@ -3026,6 +3032,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             onClose={() =>
               this.setState({SuggestionPop: !this.state.SuggestionPop})
             }
+            newAct={this.state.newActions} 
             currentUser={this.state.user}
             allSuggestions={this.state.actionsAndRecommendations}
             submitToAndObserverEmails={this.state.submitToAndObserverEmails}

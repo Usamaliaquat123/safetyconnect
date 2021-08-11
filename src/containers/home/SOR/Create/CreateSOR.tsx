@@ -1513,11 +1513,15 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         arr[i].selected = !arr[i].selected;
                         this.setState({actionRecommendations: arr});
                       }}
+                      
                       onLongPress={() => {
                         this.setState({
                           allActionsEdit: d,
                           allActionsEditIndex: i,
                           SuggestionPop: true,
+
+                          submitToAndObserverEmails: [this.state.user.email],
+                          
                           newActions: false,
                         });
                       }}
@@ -2530,6 +2534,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               onClose={() =>
                 this.setState({SuggestionPop: !this.state.SuggestionPop})
               }
+              submitToAndObserverEmails = {this.state.submitToAndObserverEmails}
               newAct={this.state.newAct}
               currentUser={this.state.user}
               allSuggestions={this.state.actionRecommendations}
