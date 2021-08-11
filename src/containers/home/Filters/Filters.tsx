@@ -304,14 +304,18 @@ export class Filters extends React.Component<FiltersProps, any> {
             <View style={styles.dateContainer}>
               {/* Date  container  */}
               <View style={styles.fromDate}>
-                <View style={[styles.selectionContainer, {width: wp(45)}]}>
+                <TouchableOpacity
+                  onPress={() => console.log('from')}
+                  style={[styles.selectionContainer, {width: wp(45)}]}>
                   <Text style={styles.selectedContent}>From</Text>
-                </View>
+                </TouchableOpacity>
               </View>
               <View style={styles.toDate}>
-                <View style={[styles.selectionContainer, {width: wp(45)}]}>
+                <TouchableOpacity
+                onPress={() => console.log('to')}
+                  style={[styles.selectionContainer, {width: wp(45)}]}>
                   <Text style={styles.selectedContent}>to</Text>
-                </View>
+                </TouchableOpacity>
               </View>
             </View>
 
