@@ -2711,16 +2711,20 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             ).length != 0
                           ) {
                             this.setState({
+                              // loading: true,
                               errorModal: true,
                               errHeadingText: 'Actions validations ',
                               errDesText:
                                 'Actions should be completed or rejected',
                             });
-                            console.log(
-                              this.props.route.params.data.action_required.filter(
-                                (d: any) => d.justification.content === '',
-                              ),
-                            );
+
+                            // Some validations is left
+
+                            // console.log(
+                            //   this.props.route.params.data.action_required.filter(
+                            //     (d: any) => d.justification.content === '',
+                            //   ),
+                            // );
                           } else {
                             if (
                               email == this.props.route.params.data.created_by
@@ -3146,34 +3150,34 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         />
         <FlashMessage ref="myLocalFlashMessage" />
 
-        {this.state.loading ? (
-          <Model
-            isVisible={this.state.errorModal}
-            onBackdropPress={() => {
-              this.setState({errorModal: false, loading: false});
-            }}>
-            {this.state.loading == true ? (
-              <LottieView
-                autoPlay={true}
-                style={{width: wp(90)}}
-                source={animation.loading}
-                loop={true}
-              />
-            ) : (
-              <View style={styles.modelContainer}>
-                <View>
-                  <Text style={styles.errHeadPop}>
-                    {this.state.errHeadingText}
-                  </Text>
-                  <Text style={styles.errEmailPassDesc}>
-                    {this.state.errDesText}
-                  </Text>
-                  {/* <Text style={styles.plzTryAgain}>Please try again later.</Text> */}
-                </View>
+        {/* {this.state.loading ? ( */}
+        <Model
+          isVisible={this.state.errorModal}
+          onBackdropPress={() => {
+            this.setState({errorModal: false, loading: false});
+          }}>
+          {this.state.loading == true ? (
+            <LottieView
+              autoPlay={true}
+              style={{width: wp(90)}}
+              source={animation.loading}
+              loop={true}
+            />
+          ) : (
+            <View style={styles.modelContainer}>
+              <View>
+                <Text style={styles.errHeadPop}>
+                  {this.state.errHeadingText}
+                </Text>
+                <Text style={styles.errEmailPassDesc}>
+                  {this.state.errDesText}
+                </Text>
+                {/* <Text style={styles.plzTryAgain}>Please try again later.</Text> */}
               </View>
-            )}
-          </Model>
-        ) : null}
+            </View>
+          )}
+        </Model>
+        {/* ) : null} */}
       </Animated.View>
     );
   }
