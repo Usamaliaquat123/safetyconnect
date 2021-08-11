@@ -1465,7 +1465,7 @@ class Home extends React.Component<HomeProps, any> {
                   <PieChart
                     padAngle={0}
                     animate={true}
-                    innerRadius={'80%'}
+                    innerRadius={'90%'}
                     style={{height: wp(50), width: wp(50)}}
                     data={actionData}>
                     <View
