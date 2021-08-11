@@ -456,7 +456,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         action_required: this.state.actionsAndRecommendations /** done */,
         location: this.props.route.params.data.location /** done */,
         submit_to:
-          this.state.reAssignToArrTags.lendgth == 0
+          this.state.reAssignToArrTags.length == 0
             ? this.state.submitted_to
             : this.state.reAssignToArrTags.map((d) => d.email) /** done */,
         escalate_to: this.state.esclate_to,
