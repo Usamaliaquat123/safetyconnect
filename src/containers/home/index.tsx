@@ -72,6 +72,8 @@ class Home extends React.Component<HomeProps, any> {
       projectId: '',
       orgSelection: false,
       notificationsData: [],
+      pendingActionTotal: 0,
+      completedActionTotal: 0,
       currentorg: '',
       allOrganizations: [],
       allProjects: [],
@@ -128,7 +130,10 @@ class Home extends React.Component<HomeProps, any> {
                     };
 
                     this.state.taskAssignedByYou.push(row);
-                    this.setState({});
+                    this.setState({
+                      pendingActionTotal: this.state.taskAssignedByYou.length,
+                      completedActionTotal: 2,
+                    });
                     // this.setState({taskAssignedByYou: row});
                   });
                 });
@@ -153,7 +158,11 @@ class Home extends React.Component<HomeProps, any> {
 
                     this.state.taskAssignedToYou.push(row);
                     this.state.taskYouAreInvolvedIn.push(row);
-                    this.setState({});
+                    this.setState({
+                      completedActionTotal: this.state.taskAssignedToYou.map(
+                        (d) => d.data.reports.action_required,
+                      ),
+                    });
                   });
                 });
               // createApi
@@ -481,6 +490,22 @@ class Home extends React.Component<HomeProps, any> {
       {val: 25, color: '#FED330'},
     ];
     const AuditManagement = auditData
+      .filter((value) => value.val > 0)
+      .map((value, index) => ({
+        value: value.val,
+        svg: {
+          fill: value.color,
+          onPress: () => {},
+        },
+        key: `pie-${index}`,
+      }));
+
+    // ACtions data
+    const actionD = [
+      {val: this.state.pendingActionTotal, color: '#715DDF'},
+      {val: this.state.completedActionTotal, color: '#A998FC'},
+    ];
+    const actionData = actionD
       .filter((value) => value.val > 0)
       .map((value, index) => ({
         value: value.val,
@@ -1425,8 +1450,57 @@ class Home extends React.Component<HomeProps, any> {
                 </View>
               </View>
 
+              {/* ACtions Chart */}
               {/* Tabs Content */}
-
+              <View style={{marginBottom: wp(3), padding: wp(3)}}>
+                <Text
+                  style={{
+                    fontSize: wp(3.5),
+                    color: 'black',
+                    fontFamily: fonts.SFuiDisplayBold,
+                  }}>
+                  Actions
+                </Text>
+                <Animated.View style={styles.tabsContent}>
+                  <PieChart
+                    padAngle={0}
+                    animate={true}
+                    innerRadius={'80%'}
+                    style={{height: wp(50), width: wp(50)}}
+                    data={actionData}>
+                    <View
+                      style={{justifyContent: 'center', alignItems: 'center'}}>
+                      <Text style={styles.chartContent}>Total</Text>
+                      <Text style={styles.chartContent}>Actions</Text>
+                      <Text style={styles.chartContent}>
+                        {this.state.pendingActionTotal *
+                          this.state.completedActionTotal}
+                      </Text>
+                    </View>
+                  </PieChart>
+                </Animated.View>
+                {/* colors guide */}
+                <View style={styles.guideColors}>
+                  <View style={styles.guideitem}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(4), backgroundColor: '#715DDF'},
+                      ]}></View>
+                    <Text style={styles.guideText}>In Progress</Text>
+                  </View>
+                  <View style={[styles.guideitem]}>
+                    <View
+                      style={[
+                        styles.swatch,
+                        {marginLeft: wp(3), backgroundColor: '#A998FC'},
+                      ]}></View>
+                    <Text style={styles.guideText}>Completed</Text>
+                  </View>
+                </View>
+              </View>
+              {/* line height */}
+              <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} />
               {/* observation and feedback */}
               <View style={{marginBottom: wp(3), padding: wp(3)}}>
                 <Text

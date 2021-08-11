@@ -1083,6 +1083,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                         )}
                                         repeated={d.repeatedSor}
                                         onPress={() => {
+                                          d['closed'] = true;
                                           this.props.navigation.navigate(
                                             'ViewSOR',
                                             {

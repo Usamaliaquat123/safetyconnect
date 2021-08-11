@@ -175,6 +175,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.setState({esclate_to: this.props.route.params.data.esclate_to});
     }
     // var excludingSubmitCreatedByUsers = [];
+
+    console.log(this.props.route.params.data.closed);
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
 
@@ -2687,48 +2689,48 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   <TouchableOpacity
                     onPress={() => {
                       AsyncStorage.getItem('email').then((email) => {
-                        console.log(
-                          this.props.route.params.data.action_required,
-                        );
-                        console.log(
-                          this.props.route.params.data.action_required.filter(
-                            (d) => d.justification.content === '',
-                          ),
-                        );
+                        // console.log(
+                        //   this.props.route.params.data.action_required,
+                        // );
+                        // console.log(
+                        //   this.props.route.params.data.action_required.filter(
+                        //     (d) => d.justification.content === '',
+                        //   ),
+                        // );
 
-                        this.props.route.params.data.action_required.filter(
-                          (d) => d.justification.content === '',
-                        );
+                        // this.props.route.params.data.action_required.filter(
+                        //   (d) => d.justification.content === '',
+                        // );
 
-                        // if (email == this.props.route.params.data.created_by) {
-                        //   if (this.state.fiveWhytoggle == true) {
-                        //     if (this.state.fiveWhyQuestion.length == 5) {
-                        //       this.onSubmitUpdateSor(5);
-                        //     } else {
-                        //       this.setState({
-                        //         errorModal: true,
-                        //         errHeadingText: 'Minimum 5 why ',
-                        //         errDesText: 'minimum 5 why should be added..!',
-                        //       });
-                        //     }
-                        //   } else {
-                        //     this.onSubmitUpdateSor(5);
-                        //   }
-                        // } else {
-                        //   if (this.state.fiveWhytoggle == true) {
-                        //     if (this.state.fiveWhyQuestion.length == 5) {
-                        //       this.onSubmitUpdateSor(3);
-                        //     } else {
-                        //       this.setState({
-                        //         errorModal: true,
-                        //         errHeadingText: 'Minimum 5 why ',
-                        //         errDesText: 'minimum 5 why should be added..!',
-                        //       });
-                        //     }
-                        //   } else {
-                        //     this.onSubmitUpdateSor(3);
-                        //   }
-                        // }
+                        if (email == this.props.route.params.data.created_by) {
+                          if (this.state.fiveWhytoggle == true) {
+                            if (this.state.fiveWhyQuestion.length == 5) {
+                              this.onSubmitUpdateSor(5);
+                            } else {
+                              this.setState({
+                                errorModal: true,
+                                errHeadingText: 'Minimum 5 why ',
+                                errDesText: 'minimum 5 why should be added..!',
+                              });
+                            }
+                          } else {
+                            this.onSubmitUpdateSor(5);
+                          }
+                        } else {
+                          if (this.state.fiveWhytoggle == true) {
+                            if (this.state.fiveWhyQuestion.length == 5) {
+                              this.onSubmitUpdateSor(3);
+                            } else {
+                              this.setState({
+                                errorModal: true,
+                                errHeadingText: 'Minimum 5 why ',
+                                errDesText: 'minimum 5 why should be added..!',
+                              });
+                            }
+                          } else {
+                            this.onSubmitUpdateSor(3);
+                          }
+                        }
                       });
                     }}
                     style={[
@@ -3032,7 +3034,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             onClose={() =>
               this.setState({SuggestionPop: !this.state.SuggestionPop})
             }
-            newAct={this.state.newActions} 
+            newAct={this.state.newActions}
             currentUser={this.state.user}
             allSuggestions={this.state.actionsAndRecommendations}
             submitToAndObserverEmails={this.state.submitToAndObserverEmails}
