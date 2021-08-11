@@ -2710,15 +2710,28 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               (d: any) => d.status == 'InProgress',
                             ).length != 0
                           ) {
-                            this.setState({
-                              // loading: true,
-                              errorModal: true,
-                              errHeadingText: 'Actions validations ',
-                              errDesText:
-                                'Actions should be completed or rejected',
-                            });
-
                             // Some validations is left
+
+                            if (
+                              this.props.route.params.data.action_required.filter(
+                                (d: any) => d.justification.content !== '',
+                              )
+                            ) {
+                              this.setState({
+                                // loading: true,
+                                errorModal: true,
+                                errHeadingText: 'Actions validations ',
+                                errDesText: 'Add the justification',
+                              });
+                            } else {
+                              this.setState({
+                                // loading: true,
+                                errorModal: true,
+                                errHeadingText: 'Actions validations ',
+                                errDesText:
+                                  'Actions should be completed or rejected',
+                              });
+                            }
 
                             // console.log(
                             //   this.props.route.params.data.action_required.filter(
