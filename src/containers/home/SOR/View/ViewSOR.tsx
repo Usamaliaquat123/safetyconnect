@@ -161,6 +161,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       projectName: '',
       commentMentionReplace: '',
       projectId: '',
+      closed: false,
       excludingSubmitCreatedByUsers: [],
     };
 
@@ -176,7 +177,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     }
     // var excludingSubmitCreatedByUsers = [];
 
-    console.log(this.props.route.params.data.closed);
+    console.log('this.props.route.params.data');
+    console.log(this.props.route.params.data);
+    if (this.props.route.params.data.closed == true) {
+      this.setState({closed: true});
+    }
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
 
@@ -2631,50 +2636,54 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               <>
                 {/* Submit btns  */}
                 <View style={styles.saveAsDraftAndSubmitBtns}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      console.log('submit');
-                      if (this.state.fiveWhytoggle == true) {
-                        console.log('line 2566');
-                        console.log(this.state.fiveWhyQuestion);
-                        if (this.state.fiveWhyQuestion.length == 5) {
+                  {!this.state.closed && (
+                    <TouchableOpacity
+                      onPress={() => {
+                        console.log('submit');
+                        if (this.state.fiveWhytoggle == true) {
+                          console.log('line 2566');
+                          console.log(this.state.fiveWhyQuestion);
+                          if (this.state.fiveWhyQuestion.length == 5) {
+                            this.onSubmitUpdateSor(1);
+                            console.log('line 2570');
+                          } else {
+                            console.log('line 2572');
+                            this.setState({
+                              errorModal: true,
+                              errHeadingText: 'Minimum 5 why ',
+                              errDesText: 'minimum 5 why should be added..!',
+                            });
+                          }
+                        } else {
+                          console.log('line 2580');
                           this.onSubmitUpdateSor(1);
-                          console.log('line 2570');
-                        } else {
-                          console.log('line 2572');
-                          this.setState({
-                            errorModal: true,
-                            errHeadingText: 'Minimum 5 why ',
-                            errDesText: 'minimum 5 why should be added..!',
-                          });
                         }
-                      } else {
-                        console.log('line 2580');
-                        this.onSubmitUpdateSor(1);
-                      }
-                    }}
-                    style={styles.saveAsDraftContainer}>
-                    <Text style={styles.saveAsDraftText}>Save as Draft</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => {
-                      if (this.state.fiveWhytoggle == true) {
-                        if (this.state.fiveWhyQuestion.length == 5) {
+                      }}
+                      style={styles.saveAsDraftContainer}>
+                      <Text style={styles.saveAsDraftText}>Save as Draft</Text>
+                    </TouchableOpacity>
+                  )}
+                  {this.state.closed == false && (
+                    <TouchableOpacity
+                      onPress={() => {
+                        if (this.state.fiveWhytoggle == true) {
+                          if (this.state.fiveWhyQuestion.length == 5) {
+                            this.onSubmitUpdateSor(2);
+                          } else {
+                            this.setState({
+                              errorModal: true,
+                              errHeadingText: 'Minimum 5 why ',
+                              errDesText: 'minimum 5 why should be added..!',
+                            });
+                          }
+                        } else {
                           this.onSubmitUpdateSor(2);
-                        } else {
-                          this.setState({
-                            errorModal: true,
-                            errHeadingText: 'Minimum 5 why ',
-                            errDesText: 'minimum 5 why should be added..!',
-                          });
                         }
-                      } else {
-                        this.onSubmitUpdateSor(2);
-                      }
-                    }}
-                    style={styles.saveAsSubmitContainer}>
-                    <Text style={styles.saveAsSubmitText}>Submit</Text>
-                  </TouchableOpacity>
+                      }}
+                      style={styles.saveAsSubmitContainer}>
+                      <Text style={styles.saveAsSubmitText}>Submit</Text>
+                    </TouchableOpacity>
+                  )}
                 </View>
                 <View style={styles.previewAndMarkAsCompleteBtns}>
                   <TouchableOpacity
@@ -2686,61 +2695,68 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     style={styles.saveAsDraftContainer}>
                     <Text style={styles.saveAsDraftText}>Preview</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => {
-                      AsyncStorage.getItem('email').then((email) => {
-                        // console.log(
-                        //   this.props.route.params.data.action_required,
-                        // );
-                        // console.log(
-                        //   this.props.route.params.data.action_required.filter(
-                        //     (d) => d.justification.content === '',
-                        //   ),
-                        // );
 
-                        // this.props.route.params.data.action_required.filter(
-                        //   (d) => d.justification.content === '',
-                        // );
+                  {this.state.closed == false && (
+                    <TouchableOpacity
+                      onPress={() => {
+                        AsyncStorage.getItem('email').then((email) => {
+                          // console.log(
+                          //   this.props.route.params.data.action_required,
+                          // );
+                          // console.log(
+                          //   this.props.route.params.data.action_required.filter(
+                          //     (d) => d.justification.content === '',
+                          //   ),
+                          // );
 
-                        if (email == this.props.route.params.data.created_by) {
-                          if (this.state.fiveWhytoggle == true) {
-                            if (this.state.fiveWhyQuestion.length == 5) {
+                          // this.props.route.params.data.action_required.filter(
+                          //   (d) => d.justification.content === '',
+                          // );
+
+                          if (
+                            email == this.props.route.params.data.created_by
+                          ) {
+                            if (this.state.fiveWhytoggle == true) {
+                              if (this.state.fiveWhyQuestion.length == 5) {
+                                this.onSubmitUpdateSor(5);
+                              } else {
+                                this.setState({
+                                  errorModal: true,
+                                  errHeadingText: 'Minimum 5 why ',
+                                  errDesText:
+                                    'minimum 5 why should be added..!',
+                                });
+                              }
+                            } else {
                               this.onSubmitUpdateSor(5);
-                            } else {
-                              this.setState({
-                                errorModal: true,
-                                errHeadingText: 'Minimum 5 why ',
-                                errDesText: 'minimum 5 why should be added..!',
-                              });
                             }
                           } else {
-                            this.onSubmitUpdateSor(5);
-                          }
-                        } else {
-                          if (this.state.fiveWhytoggle == true) {
-                            if (this.state.fiveWhyQuestion.length == 5) {
+                            if (this.state.fiveWhytoggle == true) {
+                              if (this.state.fiveWhyQuestion.length == 5) {
+                                this.onSubmitUpdateSor(3);
+                              } else {
+                                this.setState({
+                                  errorModal: true,
+                                  errHeadingText: 'Minimum 5 why ',
+                                  errDesText:
+                                    'minimum 5 why should be added..!',
+                                });
+                              }
+                            } else {
                               this.onSubmitUpdateSor(3);
-                            } else {
-                              this.setState({
-                                errorModal: true,
-                                errHeadingText: 'Minimum 5 why ',
-                                errDesText: 'minimum 5 why should be added..!',
-                              });
                             }
-                          } else {
-                            this.onSubmitUpdateSor(3);
                           }
-                        }
-                      });
-                    }}
-                    style={[
-                      styles.saveAsSubmitContainer,
-                      {backgroundColor: colors.green},
-                    ]}>
-                    <Text style={[styles.saveAsSubmitText]}>
-                      Mark as Complete
-                    </Text>
-                  </TouchableOpacity>
+                        });
+                      }}
+                      style={[
+                        styles.saveAsSubmitContainer,
+                        {backgroundColor: colors.green},
+                      ]}>
+                      <Text style={[styles.saveAsSubmitText]}>
+                        Mark as Complete
+                      </Text>
+                    </TouchableOpacity>
+                  )}
                 </View>
               </>
             ) : null}

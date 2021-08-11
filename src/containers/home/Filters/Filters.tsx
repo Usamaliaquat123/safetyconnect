@@ -58,7 +58,7 @@ export class Filters extends React.Component<FiltersProps, any> {
       submittedSelected: '',
 
       selectedLocations: '',
-      risk: ['Low ', 'Medium', 'High'],
+      risk: ['low ', 'medium', 'high'],
       // Selectors
       allUsers: [],
       isRiskSelector: false,
@@ -288,7 +288,11 @@ export class Filters extends React.Component<FiltersProps, any> {
               {this.state.isRiskSelector && (
                 <View style={styles.dataContainer}>
                   {this.state.risk.map((d: any, i: number) => (
-                    <TouchableOpacity onPress={() => console.log(d)}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.setState({isRiskSelector: false});
+                        this.state.filterObject['risk'] = [d];
+                      }}>
                       <Text style={styles.datacontainerText}>{d}</Text>
                     </TouchableOpacity>
                   ))}
