@@ -84,6 +84,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       email: '',
       // dropdownAnim: new Animated.Value(1),
       // *****
+      newAct: false,
 
       selectL: false,
       projectSuggest: [],
@@ -274,7 +275,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       .createApi()
       .observationSuggestions(str, this.state.projectid)
       .then((res: any) => {
-        console.log(res);
         if (res.status == 200) {
           this.setState({suggestions: res.data.results});
         }
@@ -1597,7 +1597,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                             category: 'Elimination',
                           },
-
+                          newAct: true,
                           SuggestionPop: true,
                           newActions: true,
                         });
@@ -2530,6 +2530,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               onClose={() =>
                 this.setState({SuggestionPop: !this.state.SuggestionPop})
               }
+              newAct={this.state.newAct}
               currentUser={this.state.user}
               allSuggestions={this.state.actionRecommendations}
               isOpen={this.state.SuggestionPop}
