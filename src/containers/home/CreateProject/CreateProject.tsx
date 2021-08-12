@@ -17,7 +17,7 @@ import {
 import {colors, fonts} from '@theme';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
-import {Tags, SuggestionsAvatar} from '@components';
+import {Tags, SuggestionsAvatar, User} from '@components';
 import {RouteProp, CommonActions} from '@react-navigation/native';
 import styles from './styles';
 import {createApi as api} from '@service';
@@ -71,7 +71,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       projectName: '',
       loading: false,
       projects: [],
-      email: 'inconnent12345@outlook.com',
       // errors popup
       errorProjectName: false,
       locations: [],
@@ -91,6 +90,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       // Location : suggestion
       locationSuppervisorsTags: [],
       locationSuppervisorsSugg: [],
+      user: '',
       organizationId: '',
       additionalSuppervisorsSugg: [],
       additionalSuppervisorsTags: [],
@@ -141,7 +141,14 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                   ...new Set(members.map((itm) => JSON.stringify(itm))),
                 ].map((i) => JSON.parse(i));
 
-                console.log(d);
+                // d.map((item) => {
+                //   if(item.email == this.state.user){
+                //     return
+                //   }
+                // })
+
+                var gol = d.filter((d) => d.email != this.state.user);
+                console.log(gol);
                 var data = {
                   created_by: email,
                   project_name: this.state.projectName,
@@ -151,14 +158,14 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                   secondary_leader: this.state.assignSuppervisor.map(
                     (d) => d.email,
                   ),
-                  involved_persons: d.map((j) => j._id),
+                  involved_persons: gol.map((j) => j._id),
                   description: this.state.projectDescription,
                   p_locations: this.state.assignLocations,
                   organization: this.state.organizationId,
                 };
                 console.log('data');
                 console.log(data);
-                // this.setState({loading: false});
+                this.setState({loading: false});
                 api
                   .createApi()
                   .Postproject(data)
@@ -235,6 +242,10 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   };
   componentDidMount = async () => {
     // api
+
+    AsyncStorage.getItem('email').then((email: any) => {
+      this.setState({user: email});
+    });
 
     getCurrentOrganization().then((orgid: any) => {
       this.setState({organizationId: orgid});
