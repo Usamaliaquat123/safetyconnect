@@ -905,7 +905,6 @@ export default class SuggestionsPop extends React.Component<
                           assigned_to: this.state.AssignedTo[0],
                           dueDate: moment().format('YYYY-MM-DD'),
                           is_complete: this.state.is_complete,
-
                           is_selected: this.state.is_selected,
                           category: this.state.type,
                           hierarchy: this.state.type,

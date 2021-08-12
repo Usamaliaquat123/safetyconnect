@@ -123,6 +123,25 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                   this.state.assignSuppervisor,
                 );
 
+                for (var i = 0; i < members.length; i++) {
+                  var obj = members[i];
+
+                  if (members.indexOf(obj._id) !== -1) {
+                    members.splice(i, 1);
+                  }
+                }
+
+                // console.log('members');
+                // // console.log(members);
+                // var dta = [
+                //   ...new Set(members.map((item) => JSON.stringify(item))),
+                // ];
+
+                const d = [
+                  ...new Set(members.map((itm) => JSON.stringify(itm))),
+                ].map((i) => JSON.parse(i));
+
+                console.log(d);
                 var data = {
                   created_by: email,
                   project_name: this.state.projectName,
@@ -132,13 +151,14 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                   secondary_leader: this.state.assignSuppervisor.map(
                     (d) => d.email,
                   ),
-                  involved_persons: members.map((d) => d._id),
+                  involved_persons: d.map((j) => j._id),
                   description: this.state.projectDescription,
                   p_locations: this.state.assignLocations,
                   organization: this.state.organizationId,
                 };
                 console.log('data');
                 console.log(data);
+                // this.setState({loading: false});
                 api
                   .createApi()
                   .Postproject(data)
