@@ -192,13 +192,27 @@ const createApi = (
    * @Dashboard
    */
 
+  // if (actions.selectedProject !== 'All') {
+  //   observationDataUrl += `&project=${actions.selectedProject}`;
+  //   tableDataUrl += `&project=${actions.selectedProject}`;
+  //   assignedToUrl += `&project=${actions.selectedProject}`;
+  //   assignedByUrl += `&project=${actions.selectedProject}`;
+  //   console.log(actions.selectedProject);
+  // }
+  // if (actions.selectedProject === 'All') {
+  //   observationDataUrl = `${process.env.REACT_APP_BACKEND_API}/dashboard/?organization=${organization}`;
+  //   tableDataUrl = `${process.env.REACT_APP_BACKEND_API}/dashboard/taskAssigned/?organization=${organization}&email=${userEmail}`;
+  //   assignedToUrl = `${process.env.REACT_APP_BACKEND_API}/dashboard/taskAssignedTo/?organization=${organization}&email=${userEmail}`;
+  //   assignedByUrl = `${process.env.REACT_APP_BACKEND_API}/dashboard/taskAssignedBy/?organization=${organization}&email=${userEmail}`;
+  // }
+
   const taskAssignedTo = (orgnaization: any, email: any) =>
     baseapi.get(
-      `/dashboard/taskAssigned/?organization=${orgnaization}&email=${email}&page=0&limit=20`,
+      `/dashboard/taskAssignedTo/?organization=${orgnaization}&email=${email}&page=0&limit=20`,
     );
   const taskAssignedBy = (orgnaization: any, email: any) =>
     baseapi.get(
-      `/dashboard/taskAssigned/?organization=${orgnaization}&email=${email}&page=0&limit=20`,
+      `/dashboard/taskAssignedBy/?organization=${orgnaization}&email=${email}&page=0&limit=20`,
     );
   const tableData = (orgnaization: any, email: any) =>
     baseapi.get(

@@ -51,7 +51,7 @@ export interface HomeProps {
   reduxActions: any;
   reduxState: any;
 }
-// const CopilotText = walkthroughable(Text);
+const CopilotText = walkthroughable(Text);
 
 class Home extends React.Component<HomeProps, any> {
   constructor(props: any) {
@@ -95,6 +95,9 @@ class Home extends React.Component<HomeProps, any> {
       noOfDrafts: 0,
       noOfPublished: 0,
     };
+  }
+  handleStartButtonPress() {
+    this.props.start();
   }
   componentWillUnmount = () => {};
   componentDidMount = () => {
@@ -539,6 +542,12 @@ class Home extends React.Component<HomeProps, any> {
                 <Text style={styles.title}>Welcome</Text>
                 <Text style={styles.orgTitle}>{this.state.name}</Text>
               </View>
+              <CopilotStep
+                text="This is a hello world example!"
+                order={5}
+                name="hello">
+                <CopilotText>Hello world!</CopilotText>
+              </CopilotStep>
               <View
                 style={{
                   position: 'absolute',
