@@ -356,7 +356,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           projectid: currentProj,
         })
         .then((res: any) => {
-          console.log('res');
+          console.log('res of involved users');
           console.log(res);
           this.setState({involved_persons: res.data.data.involved_persons});
         });
@@ -749,15 +749,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         action: 'low',
                       });
 
-
-
-                  
                       // if (rec[i].justification !== '') {
                       //   actions['justification'] = rec[i].justification;
                       // }
                     }
                     console.log('==================Actions*');
-                    console.log(actions)
+                    console.log(actions);
                     var sors = {
                       report: {
                         _id: '',
@@ -1518,7 +1515,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         arr[i].selected = !arr[i].selected;
                         this.setState({actionRecommendations: arr});
                       }}
-                      
                       onLongPress={() => {
                         this.setState({
                           allActionsEdit: d,
@@ -1526,7 +1522,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           SuggestionPop: true,
 
                           submitToAndObserverEmails: [this.state.user.email],
-                          
+
                           newActions: false,
                         });
                       }}
@@ -1607,6 +1603,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             category: 'Elimination',
                           },
                           newAct: true,
+                          submitToAndObserverEmails: [this.state.user.email],
                           SuggestionPop: true,
                           newActions: true,
                         });
@@ -2540,7 +2537,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               onClose={() =>
                 this.setState({SuggestionPop: !this.state.SuggestionPop})
               }
-              submitToAndObserverEmails = {this.state.submitToAndObserverEmails}
+              submitToAndObserverEmails={this.state.submitToAndObserverEmails}
               newAct={this.state.newAct}
               currentUser={this.state.user}
               allSuggestions={this.state.actionRecommendations}
