@@ -1791,6 +1791,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         var data = {
                           emails: [this.state.involveToText],
                           organization: this.state.currentOrg,
+                          projectId: this.state.projectid,
                           invitedBy: this.state.user.email,
                           organizationName: this.state.currentOrgName,
                         };

@@ -97,7 +97,7 @@ class Home extends React.Component<HomeProps, any> {
     };
   }
   handleStartButtonPress() {
-    this.props.start();
+    // this.props.start();
   }
   componentWillUnmount = () => {};
   componentDidMount = () => {
@@ -116,7 +116,7 @@ class Home extends React.Component<HomeProps, any> {
             AsyncStorage.getItem('email').then((email: any) => {
               createApi
                 .createApi()
-                .taskAssignedBy(org.data.data._id, email)
+                .taskAssignedBy(org.data.data._id, email, this.state.projectid)
                 .then((assignBy: any) => {
                   assignBy.data.data[0].projects.forEach((assignBye: any) => {
                     const element = assignBye.reports.action_required;
@@ -142,7 +142,7 @@ class Home extends React.Component<HomeProps, any> {
                 });
               createApi
                 .createApi()
-                .taskAssignedTo(org.data.data._id, email)
+                .taskAssignedTo(org.data.data._id, email, this.state.projectid)
                 .then((assignTo: any) => {
                   assignTo.data.data[0].projects.forEach((assigndTot: any) => {
                     const element = assigndTot.reports.action_required;

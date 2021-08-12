@@ -206,17 +206,17 @@ const createApi = (
   //   assignedByUrl = `${process.env.REACT_APP_BACKEND_API}/dashboard/taskAssignedBy/?organization=${organization}&email=${userEmail}`;
   // }
 
-  const taskAssignedTo = (orgnaization: any, email: any) =>
+  const taskAssignedTo = (orgnaization: any, email: any, projectId: string) =>
     baseapi.get(
-      `/dashboard/taskAssignedTo/?organization=${orgnaization}&email=${email}&page=0&limit=20`,
+      `/dashboard/taskAssignedTo/?organization=${orgnaization}&email=${email}&page=0&limit=20&project=${projectId}`,
     );
-  const taskAssignedBy = (orgnaization: any, email: any) =>
+  const taskAssignedBy = (orgnaization: any, email: any, projectId: string) =>
     baseapi.get(
-      `/dashboard/taskAssignedBy/?organization=${orgnaization}&email=${email}&page=0&limit=20`,
+      `/dashboard/taskAssignedBy/?organization=${orgnaization}&email=${email}&page=0&limit=20&project=${projectId}`,
     );
-  const tableData = (orgnaization: any, email: any) =>
+  const tableData = (orgnaization: any, email: any, projectId: string) =>
     baseapi.get(
-      `/dashboard/taskAssigned/?organization=${orgnaization}&email=${email}&page=0&limit=20`,
+      `/dashboard/taskAssigned/?organization=${orgnaization}&email=${email}&page=0&limit=20&project=${projectId}`,
     );
   /*
    * @Locations
