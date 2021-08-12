@@ -176,6 +176,9 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
           this.setState({loading: false});
           this.setState({errorTeamMem: true});
         }
+      } else {
+        this.setState({loading: false});
+        this.setState({errorLocationName: true});
       }
     } else {
       this.setState({loading: false});
@@ -349,6 +352,11 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         (Mandatory)
                       </Text>
                     </View>
+                    {this.state.errorLocationName && (
+                      <Text style={{fontSize: wp(3), color: colors.error}}>
+                        * Add your location
+                      </Text>
+                    )}
                     {/* {this.state.assignLocations.length < 1 ? (
                       <View style={[styles.inputContainer]}>
                         <TextInput

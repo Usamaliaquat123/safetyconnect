@@ -900,11 +900,15 @@ export default class SuggestionsPop extends React.Component<
                         var sugg = {
                           // status: this.state.status,
                           content: this.state.observation,
+                          createdBy: this.props.currentUser.email,
+                          assignedTo: this.state.AssignedTo[0],
                           assigned_to: this.state.AssignedTo[0],
-                          date: moment().format('YYYY-MM-DD'),
+                          dueDate: moment().format('YYYY-MM-DD'),
                           is_complete: this.state.is_complete,
+
                           is_selected: this.state.is_selected,
                           category: this.state.type,
+                          hierarchy: this.state.type,
                           status: this.state.statuses,
                         };
 
