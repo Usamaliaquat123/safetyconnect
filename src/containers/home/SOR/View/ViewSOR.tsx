@@ -2733,11 +2733,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               });
                             }
 
-                            // console.log(
-                            //   this.props.route.params.data.action_required.filter(
-                            //     (d: any) => d.justification.content === '',
-                            //   ),
-                            // );
+                            
                           } else {
                             if (
                               email == this.props.route.params.data.created_by

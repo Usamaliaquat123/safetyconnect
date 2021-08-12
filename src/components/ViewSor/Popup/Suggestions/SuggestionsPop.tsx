@@ -124,7 +124,7 @@ export default class SuggestionsPop extends React.Component<
     }
 
     if (this.state.statuses == 0) {
-      this.setState({statuses: 'InProgress'});
+      this.setState({statuses: 'In Progress'});
     }
 
     if (this.props.suggestions.justification != undefined) {
@@ -481,7 +481,7 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.matched) {
-                        this.setState({statuses: 'InProgress'});
+                        this.setState({statuses: 'In Progress'});
                       }
                     }}
                     style={{marginLeft: wp(2), marginRight: wp(2)}}>
@@ -491,7 +491,7 @@ export default class SuggestionsPop extends React.Component<
                       name="progress-clock"
                       type="material-community"
                       color={
-                        this.state.statuses == 'InProgress'
+                        this.state.statuses == 'In Progress'
                           ? colors.green
                           : colors.lightGrey
                       }
@@ -546,7 +546,7 @@ export default class SuggestionsPop extends React.Component<
                   </TouchableOpacity>
                 </View>
                 {/* Add Justification */}
-                {this.state.statuses != 'InProgress' && (
+                {this.state.statuses != 'In Progress' && (
                   <>
                     {this.state.addjustificationPop == true ? (
                       <TouchableOpacity
