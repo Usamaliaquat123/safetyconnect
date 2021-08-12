@@ -111,70 +111,71 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
   createProject = async () => {
     if (this.state.projectName !== '') {
       this.setState({errorProjectName: false});
+      if (this.state.assignLocations.length > 0) {
+        if (this.state.assignLeaderss.length != 0) {
+          if (this.state.assignSuppervisor.length != 0) {
+            this.setState({loading: true});
+            await AsyncStorage.getItem('email')
+              .then((email: any) => {
+                this.setState({errorTeamMem: false});
+                // this.props.route.params.suggestedUsers?.map((d  :any) => )
+                var members = this.state.assignLeaderss.concat(
+                  this.state.assignSuppervisor,
+                );
 
-      if (this.state.assignLeaderss.length != 0) {
-        if (this.state.assignSuppervisor.length != 0) {
-          this.setState({loading: true});
-          await AsyncStorage.getItem('email')
-            .then((email: any) => {
-              this.setState({errorTeamMem: false});
-              // this.props.route.params.suggestedUsers?.map((d  :any) => )
-              var members = this.state.assignLeaderss.concat(
-                this.state.assignSuppervisor,
-              );
+                var data = {
+                  created_by: email,
+                  project_name: this.state.projectName,
+                  // involved_persons: members.map((d: any) => d._id),
+                  locations: this.state.assignLocations.map((d) => d.name),
+                  project_leader: this.state.assignLeaderss.map((d) => d.email),
+                  secondary_leader: this.state.assignSuppervisor.map(
+                    (d) => d.email,
+                  ),
+                  involved_persons: members.map((d) => d._id),
+                  description: this.state.projectDescription,
+                  p_locations: this.state.assignLocations,
+                  organization: this.state.organizationId,
+                };
+                console.log('data');
+                console.log(data);
+                api
+                  .createApi()
+                  .Postproject(data)
 
-              var data = {
-                created_by: email,
-                project_name: this.state.projectName,
-                // involved_persons: members.map((d: any) => d._id),
-                locations: this.state.assignLocations.map((d) => d.name),
-                project_leader: this.state.assignLeaderss.map((d) => d.email),
-                secondary_leader: this.state.assignSuppervisor.map(
-                  (d) => d.email,
-                ),
-                involved_persons: members.map((d) => d._id),
-                description: this.state.projectDescription,
-                p_locations: this.state.assignLocations,
-                organization: this.state.organizationId,
-              };
-              console.log('data');
-              console.log(data);
-              api
-                .createApi()
-                .Postproject(data)
+                  .then((res: any) => {
+                    console.log(res);
+                    console.log('created project');
 
-                .then((res: any) => {
-                  console.log(res);
-                  console.log('created project');
+                    if (res.status == 200) {
+                      savedCurrentProjectAndOrganizations(
+                        res.data.data.project_id,
+                        this.state.organizationId,
+                      );
+                      this.setState({loading: false});
+                      // AsyncStorage.setItem('email', email);
 
-                  if (res.status == 200) {
-                    savedCurrentProjectAndOrganizations(
-                      res.data.data.project_id,
-                      this.state.organizationId,
-                    );
-                    this.setState({loading: false});
-                    // AsyncStorage.setItem('email', email);
-
-                    this.props.navigation.dispatch(
-                      CommonActions.reset({
-                        index: 1,
-                        routes: [
-                          {
-                            name: 'Main',
-                          },
-                        ],
-                      }),
-                    );
-                  }
-                })
-                .catch((err) => {});
-            })
-            .catch((err) => {});
+                      this.props.navigation.dispatch(
+                        CommonActions.reset({
+                          index: 1,
+                          routes: [
+                            {
+                              name: 'Main',
+                            },
+                          ],
+                        }),
+                      );
+                    }
+                  })
+                  .catch((err) => {});
+              })
+              .catch((err) => {});
+          } else {
+          }
         } else {
+          this.setState({loading: false});
+          this.setState({errorTeamMem: true});
         }
-      } else {
-        this.setState({loading: false});
-        this.setState({errorTeamMem: true});
       }
     } else {
       this.setState({loading: false});
@@ -334,11 +335,20 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
 
                   {/* Locations */}
                   <View>
-                    <Text
-                      style={[styles.emailTextContainer, {marginTop: wp(2)}]}>
-                      {' '}
-                      Locations
-                    </Text>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text
+                        style={[styles.emailTextContainer, {marginTop: wp(2)}]}>
+                        {' '}
+                        Locations
+                      </Text>
+                      <Text
+                        style={[
+                          styles.emailTextContainer,
+                          {opacity: 0.5, marginLeft: wp(1), marginTop: wp(2)},
+                        ]}>
+                        (Mandatory)
+                      </Text>
+                    </View>
                     {/* {this.state.assignLocations.length < 1 ? (
                       <View style={[styles.inputContainer]}>
                         <TextInput
