@@ -901,7 +901,7 @@ export default class SuggestionsPop extends React.Component<
                           // status: this.state.status,
                           content: this.state.observation,
                           createdBy: this.props.currentUser.email,
-                          assignedTo: this.state.AssignedTo[0],
+                          assignTo: this.state.AssignedTo[0],
                           assigned_to: this.state.AssignedTo[0],
                           dueDate: moment().format('YYYY-MM-DD'),
                           is_complete: this.state.is_complete,
