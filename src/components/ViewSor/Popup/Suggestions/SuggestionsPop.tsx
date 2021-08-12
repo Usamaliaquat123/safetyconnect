@@ -575,6 +575,7 @@ export default class SuggestionsPop extends React.Component<
                               onChangeText={(e) =>
                                 this.setState({justificationT: e})
                               }
+                              editable={this.state.matched}
                               multiline={true}
                               value={this.state.justificationT}
                               style={styles.textInputPopup}
@@ -895,6 +896,7 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.AssignedTo.length != 0) {
+                        console.log(this.state.AssignedTo);
                         var sugg = {
                           // status: this.state.status,
                           content: this.state.observation,

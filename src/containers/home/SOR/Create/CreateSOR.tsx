@@ -748,11 +748,16 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         justification: rec[i].justification,
                         action: 'low',
                       });
+
+
+
+                  
                       // if (rec[i].justification !== '') {
                       //   actions['justification'] = rec[i].justification;
                       // }
                     }
-
+                    console.log('==================Actions*');
+                    console.log(actions)
                     var sors = {
                       report: {
                         _id: '',
