@@ -15,7 +15,6 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {PrivateValueStore, RouteProp} from '@react-navigation/native';
 import styles from './styles';
-import FlashMessage, {showMessage} from 'react-native-flash-message';
 
 import {
   classifySor,
@@ -544,12 +543,12 @@ class Home extends React.Component<HomeProps, any> {
                 <Text style={styles.title}>Welcome</Text>
                 <Text style={styles.orgTitle}>{this.state.name}</Text>
               </View>
-              <CopilotStep
+              {/* <CopilotStep
                 text="This is a hello world example!"
                 order={5}
                 name="hello">
                 <CopilotText>Hello world!</CopilotText>
-              </CopilotStep>
+              </CopilotStep> */}
               <View
                 style={{
                   position: 'absolute',
@@ -1862,7 +1861,6 @@ class Home extends React.Component<HomeProps, any> {
               </View>
             </View>
           </View>
-          <FlashMessage ref="myLocalFlashMessage" />
           {/* Repeated sor modal */}
 
           <Modal
