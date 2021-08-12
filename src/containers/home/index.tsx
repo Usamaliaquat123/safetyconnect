@@ -15,6 +15,8 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {PrivateValueStore, RouteProp} from '@react-navigation/native';
 import styles from './styles';
+import FlashMessage, {showMessage} from 'react-native-flash-message';
+
 import {
   classifySor,
   getCurrentOrganization,
@@ -1860,7 +1862,7 @@ class Home extends React.Component<HomeProps, any> {
               </View>
             </View>
           </View>
-
+          <FlashMessage ref="myLocalFlashMessage" />
           {/* Repeated sor modal */}
 
           <Modal

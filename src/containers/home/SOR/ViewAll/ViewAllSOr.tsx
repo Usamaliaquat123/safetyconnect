@@ -15,6 +15,7 @@ import {
 import {createApi, Create_sor, submitted} from '@service';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors, fonts, animation, images, GlStyles} from '@theme';
+import FlashMessage, {showMessage} from 'react-native-flash-message';
 import {AllSorDTO} from '@dtos';
 import {connect} from 'react-redux';
 import styles from './styles';
@@ -193,6 +194,11 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           .then((res: any) => {
             if (res.data.message == 'no sor found') {
               if (dta != null) {
+                showMessage({
+                  message: 'Sor is not found',
+                  type: 'danger',
+                  position: 'bottom',
+                });
                 this.setState({
                   nosorOrSorMessage: 'try the different filter or create the',
                 });
@@ -1585,6 +1591,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
             ))}
           </View>
         </Modal>
+        <FlashMessage ref="myLocalFlashMessage" />
 
         <Modal
           onBackdropPress={() => {

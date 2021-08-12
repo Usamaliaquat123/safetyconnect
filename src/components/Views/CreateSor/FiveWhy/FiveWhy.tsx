@@ -148,7 +148,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
     this.setState({});
   };
   onChangeQuestion = (e: any, i: number) => {
-    this.state.fivewhy[i].question = e;
+    this.state.fivewhy[i].question = `${e}?`;
     this.props.fiveWhyQuestions(this.state.fivewhy.map((d: any) => d.question));
     this.props.fiveWhyAnswer(this.state.fivewhy.map((d: any) => d.answer));
     this.setState({});
@@ -221,7 +221,10 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
               {/* Add Questions Button */}
               <TouchableOpacity
                 onPress={() =>
-                  this.addQuestions(this.state.question, this.state.answer)
+                  this.addQuestions(
+                    `${this.state.question}?`,
+                    this.state.answer,
+                  )
                 }
                 style={styles.addQuestionbtn}>
                 <Text style={styles.addQuestionText}>Add Question</Text>

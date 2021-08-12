@@ -2701,19 +2701,19 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       onPress={() => {
                         AsyncStorage.getItem('email').then((email) => {
                           // console.log('')
-                          console.log(
-                            this.props.route.params.data.action_required,
-                          );
+                          // console.log(
+                          //   this.props.route.params.data.action_required,
+                          // );
 
                           if (
-                            this.props.route.params.data.action_required.map(
-                              (d: any) => d.status == 'InProgress',
+                            this.state.actionsAndRecommendations.map(
+                              (d: any) => d.status == 'In Progress',
                             ).length != 0
                           ) {
                             // Some validations is left
 
                             if (
-                              this.props.route.params.data.action_required.filter(
+                              this.state.actionsAndRecommendations.filter(
                                 (d: any) => d.justification.content !== '',
                               )
                             ) {
