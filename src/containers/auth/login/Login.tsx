@@ -110,12 +110,10 @@ class Login extends React.Component<LoginProps, any> {
     }
   }
   componentDidMount() {
-    console.log('again aa gaya');
-    Linking.addEventListener('url', (e) => {
-      console.log(e);
+    Linking.addEventListener('url', () => {
       this.handleOpenURL(this.props.navigation);
     });
-    // Linking.addEventListener('sd', (e) => {});
+    Linking.addEventListener('sd', (e) => {});
     // dynamicLinks().app.;
     // dynamicLinks()
     //   .getInitialLink()
@@ -126,7 +124,6 @@ class Login extends React.Component<LoginProps, any> {
     });
   }
 
-  componentWillMount() {}
   submitSignin = async () => {
     if (
       this.state.username != '' &&

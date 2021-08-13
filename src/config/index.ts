@@ -6,6 +6,8 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import OneSignal from 'react-native-onesignal';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
 import jwt_decode from 'jwt-decode';
+
+import {Linking} from 'react-native';
 import {createApi, submitted} from '@service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // Load the SDK for JavaScript
@@ -94,50 +96,55 @@ const configSentry = () => {
 
 // }
 
-const urlOpener = async (url: any, redirectUrl: any) => {
+const urlOpener = async (urls: any, redirectUrl: any) => {
   await InAppBrowser.isAvailable();
-  const {type, url: newUrl} = await InAppBrowser.openAuth(url, redirectUrl, {
+
+  console.log('sdsdasdsadadsadasdsa', urls, redirectUrl);
+
+  const {type, url: newUrl} = await InAppBrowser.openAuth(urls, redirectUrl, {
     showTitle: false,
     enableUrlBarHiding: false,
     enableDefaultShare: false,
     ephemeralWebSession: false,
   });
-  console.log(type, url, newUrl);
+  // console.log(type, url, newUrl);
 
-  // if (type === 'success') {
-  //   console.log('adh');
+  if (type === 'success') {
+    console.log('adh');
 
-  //   try {
-  //     Auth.currentSession()
-  //       .then((user: any) => {
-  //         console.log('session', user.accessToken);
-  //         var data = jwt_decode(user.accessToken.jwtToken);
-  //         console.log(data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //         console.log('there is error');
-  //       });
-  //     Auth.currentAuthenticatedUser().then((user) => {
-  //       createApi
-  //         .createApi()
-  //         .getUser(user.signInUserSession.idToken.payload.email)
-  //         .then((data: any) => {
-  //           // if(data.success)
-  //           console.log(data.data.success);
-  //           if (data.data.success == false) {
-  //           } else {
-  //           }
-  //         })
-  //         .catch((err) => console.log(err));
-  //     });
-  //   } catch (error) {
-  //     console.log('sasta');
-  //     console.log(error);
-  //   }
-  //   // Linking.openURL(newUrl);
-  // } else {
-  // }
+    try {
+      Auth.currentSession()
+        .then((user: any) => {
+          console.log('session', user.accessToken);
+          var data = jwt_decode(user.accessToken.jwtToken);
+          console.log(data);
+          console.log('line 116');
+        })
+        .catch((err) => {
+          console.log(err);
+          console.log('there is error');
+        });
+      Auth.currentAuthenticatedUser().then((user) => {
+        createApi
+          .createApi()
+          .getUser(user.signInUserSession.idToken.payload.email)
+          .then((data: any) => {
+            // if(data.success)
+            console.log('line 127');
+            console.log(data.data.success);
+            if (data.data.success == false) {
+            } else {
+            }
+          })
+          .catch((err) => console.log(err));
+      });
+    } catch (error) {
+      console.log('sasta');
+      console.log(error);
+    }
+    Linking.openURL(newUrl);
+  } else {
+  }
 };
 
 const AmlifyConfigure = () => {
