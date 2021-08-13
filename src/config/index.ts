@@ -96,9 +96,13 @@ const configSentry = () => {
 
 const urlOpener = async (url: any, redirectUrl: any) => {
   await InAppBrowser.isAvailable();
+
+  const browser = await InAppBrowser.isAvailable();
+
+  console.log(browser);
   console.log(url);
   console.log(redirectUrl);
-
+  await InAppBrowser.openAuth(url, redirectUrl);
   // InAppBrowser.open
   // const {type, url: newUrl} = await InAppBrowser.openAuth(url, redirectUrl, {
   //   showTitle: false,

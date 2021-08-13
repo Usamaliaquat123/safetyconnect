@@ -169,6 +169,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                       emails: emails,
                       organization: res.data.data.organization_id,
                       invitedBy: email,
+                      // projectId  :
                       organizationName: this.state.org,
                     };
                     api
