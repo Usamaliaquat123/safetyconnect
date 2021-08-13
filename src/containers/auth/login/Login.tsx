@@ -79,14 +79,19 @@ class Login extends React.Component<LoginProps, any> {
       Auth.currentSession().then((user: any) => {
         var data = jwt_decode(user.accessToken.jwtToken);
 
+        console.log('data');
         console.log(data);
       });
 
       Auth.currentAuthenticatedUser().then((user) => {
+        console.log('user line 87');
+        console.log(user);
         createApi
           .createApi()
           .getUser(user.signInUserSession.idToken.payload.email)
           .then((data: any) => {
+            console.log('line 92');
+            console.log(data);
             if (data.data.success == false) {
               this.setState({loading: false, errorModal: false});
               navigation.navigate('TellAboutYou', {
@@ -102,7 +107,10 @@ class Login extends React.Component<LoginProps, any> {
               navigation.navigate('Main');
             }
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            console.log('err on line 107');
+            console.log(err);
+          });
       });
     } catch (error) {
       console.log(error);
@@ -196,7 +204,7 @@ class Login extends React.Component<LoginProps, any> {
       //   console.log(res)
       // }).catch(err => console.log(err))
 
-      const user = await Auth.federatedSignIn({provider: 'Google'});
+      await Auth.federatedSignIn({provider: 'Google'});
 
       this.props.navigation.navigate('Main');
     } catch (e) {}
