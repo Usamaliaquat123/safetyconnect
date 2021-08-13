@@ -96,54 +96,46 @@ const configSentry = () => {
 
 const urlOpener = async (url: any, redirectUrl: any) => {
   await InAppBrowser.isAvailable();
-
-  const browser = await InAppBrowser.isAvailable();
-
-  console.log(browser);
-  console.log(url);
-  console.log(redirectUrl);
-  // await InAppBrowser.openAuth(url, redirectUrl);
-  InAppBrowser.open;
   const {type, url: newUrl} = await InAppBrowser.openAuth(url, redirectUrl, {
     showTitle: false,
     enableUrlBarHiding: false,
     enableDefaultShare: false,
     ephemeralWebSession: false,
   });
-  // console.log(type, url, newUrl);
+  console.log(type, url, newUrl);
 
   // if (type === 'success') {
-  console.log('adh');
+  //   console.log('adh');
 
-  try {
-    Auth.currentSession()
-      .then((user: any) => {
-        console.log('session', user.accessToken);
-        var data = jwt_decode(user.accessToken.jwtToken);
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log('there is error');
-      });
-    Auth.currentAuthenticatedUser().then((user) => {
-      createApi
-        .createApi()
-        .getUser(user.signInUserSession.idToken.payload.email)
-        .then((data: any) => {
-          // if(data.success)
-          console.log(data.data.success);
-          if (data.data.success == false) {
-          } else {
-          }
-        })
-        .catch((err) => console.log(err));
-    });
-  } catch (error) {
-    console.log('sasta');
-    console.log(error);
-  }
-  // Linking.openURL(newUrl);
+  //   try {
+  //     Auth.currentSession()
+  //       .then((user: any) => {
+  //         console.log('session', user.accessToken);
+  //         var data = jwt_decode(user.accessToken.jwtToken);
+  //         console.log(data);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         console.log('there is error');
+  //       });
+  //     Auth.currentAuthenticatedUser().then((user) => {
+  //       createApi
+  //         .createApi()
+  //         .getUser(user.signInUserSession.idToken.payload.email)
+  //         .then((data: any) => {
+  //           // if(data.success)
+  //           console.log(data.data.success);
+  //           if (data.data.success == false) {
+  //           } else {
+  //           }
+  //         })
+  //         .catch((err) => console.log(err));
+  //     });
+  //   } catch (error) {
+  //     console.log('sasta');
+  //     console.log(error);
+  //   }
+  //   // Linking.openURL(newUrl);
   // } else {
   // }
 };
@@ -160,10 +152,10 @@ const AmlifyConfigure = () => {
           userPoolWebClientId: '5n6tdp3pqcoj0q44ch83963gfp',
         },
         oauth: {
-          // scopes: ['email', 'openId'],
+          scopes: ['email', 'openId'],
           domain: 'homesafety.auth.us-east-2.amazoncognito.com',
           redirectSignIn: 'safetyconnect://chat/Eri',
-          redirectSignOut: 'https://dev.safetyconnect.ai/signin',
+          redirectSignOut: 'safetyconnect://chat/Eri',
           urlOpener,
           responseType: 'code', // or 'token', note that REFRESH token will only be generated when the responseType is code
         },

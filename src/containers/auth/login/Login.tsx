@@ -74,24 +74,20 @@ class Login extends React.Component<LoginProps, any> {
   };
 
   handleOpenURL(navigation: any) {
-    this.setState({loading: true, errorModal: true});
+    console.log('asdsadasdjagsdjasgdasjhgj ');
+    // this.setState({loading: true, errorModal: true});
     try {
       Auth.currentSession().then((user: any) => {
         var data = jwt_decode(user.accessToken.jwtToken);
 
-        console.log('data');
         console.log(data);
       });
 
       Auth.currentAuthenticatedUser().then((user) => {
-        console.log('user line 87');
-        console.log(user);
         createApi
           .createApi()
           .getUser(user.signInUserSession.idToken.payload.email)
           .then((data: any) => {
-            console.log('line 92');
-            console.log(data);
             if (data.data.success == false) {
               this.setState({loading: false, errorModal: false});
               navigation.navigate('TellAboutYou', {
@@ -107,20 +103,19 @@ class Login extends React.Component<LoginProps, any> {
               navigation.navigate('Main');
             }
           })
-          .catch((err) => {
-            console.log('err on line 107');
-            console.log(err);
-          });
+          .catch((err) => console.log(err));
       });
     } catch (error) {
       console.log(error);
     }
   }
   componentDidMount() {
-    Linking.addEventListener('url', () => {
+    console.log('again aa gaya');
+    Linking.addEventListener('url', (e) => {
+      console.log(e);
       this.handleOpenURL(this.props.navigation);
     });
-    Linking.addEventListener('sd', (e) => {});
+    // Linking.addEventListener('sd', (e) => {});
     // dynamicLinks().app.;
     // dynamicLinks()
     //   .getInitialLink()
@@ -131,6 +126,7 @@ class Login extends React.Component<LoginProps, any> {
     });
   }
 
+  componentWillMount() {}
   submitSignin = async () => {
     if (
       this.state.username != '' &&
@@ -204,7 +200,7 @@ class Login extends React.Component<LoginProps, any> {
       //   console.log(res)
       // }).catch(err => console.log(err))
 
-      await Auth.federatedSignIn({provider: 'Google'});
+      const user = await Auth.federatedSignIn({provider: 'Google'});
 
       this.props.navigation.navigate('Main');
     } catch (e) {}
