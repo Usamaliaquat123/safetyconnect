@@ -6,7 +6,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import OneSignal from 'react-native-onesignal';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
 import jwt_decode from 'jwt-decode';
-// import { usenav } from "react-navigation";
+
 import {Linking} from 'react-native';
 import {createApi, submitted} from '@service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -99,8 +99,6 @@ const configSentry = () => {
 const urlOpener = async (urls: any, redirectUrl: any) => {
   await InAppBrowser.isAvailable();
 
-  console.log('sdsdasdsadadsadasdsa', urls, redirectUrl);
-
   const {type, url: newUrl} = await InAppBrowser.openAuth(urls, redirectUrl, {
     showTitle: false,
     enableUrlBarHiding: false,
@@ -110,8 +108,6 @@ const urlOpener = async (urls: any, redirectUrl: any) => {
   // console.log(type, url, newUrl);
 
   if (type === 'success') {
-    // console.log('adh');
-
     try {
       Auth.currentSession()
         .then((user: any) => {
@@ -129,19 +125,11 @@ const urlOpener = async (urls: any, redirectUrl: any) => {
           .createApi()
           .getUser(user.signInUserSession.idToken.payload.email)
           .then((data: any) => {
+            // if(data.success)
+            console.log('line 127');
+            console.log(data.data.success);
             if (data.data.success == false) {
-              // this.setState({loading: false, errorModal: false});
-              navigation.navigate('TellAboutYou', {
-                username: user.signInUserSession.idToken.payload.email,
-                isgoogle: true,
-              });
             } else {
-              this.setState({loading: false, errorModal: false});
-              AsyncStorage.setItem(
-                'email',
-                user.signInUserSession.idToken.payload.email,
-              );
-              navigation.navigate('Main');
             }
           })
           .catch((err) => console.log(err));
