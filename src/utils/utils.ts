@@ -522,7 +522,7 @@ export const cameraCapture = () => {
   });
 };
 
-export const redirectDynamiclink = (link: any, navigation: any) => {
+export const  redirectDynamiclink = (link: any, navigation: any) => {
   // console.log('Dynamic link');
   // console.log(link);
   // console.log(link);

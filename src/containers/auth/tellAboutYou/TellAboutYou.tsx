@@ -53,15 +53,7 @@ const industries = [
   'Others (Please Specify)',
 ];
 
-const typeofRole = [
-  'CEO',
-  'Director',
-  'General Manager',
-  'Corporate Manager',
-  'Advisor',
-  'Executive',
-  'Other',
-];
+const typeofRole = ['Manager', 'Supervisor', 'Craft Worker'];
 
 const yourRole = [
   'Figurehead',

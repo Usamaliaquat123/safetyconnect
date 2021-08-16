@@ -52,7 +52,10 @@ export interface HomeProps {
   reduxActions: any;
   reduxState: any;
 }
-const CopilotText = walkthroughable(Text);
+// const CopilotText = walkthroughable(Text);
+const WalkthroughableText = walkthroughable(Text);
+const WalkthroughableImage = walkthroughable(Image);
+const WalkthroughableView = walkthroughable(View);
 
 class Home extends React.Component<HomeProps, any> {
   constructor(props: any) {
@@ -115,10 +118,15 @@ class Home extends React.Component<HomeProps, any> {
             this.setState({orgImage: org.data.data.img_url});
 
             AsyncStorage.getItem('email').then((email: any) => {
+              console.log(org.data.data._id);
+              console.log(email);
+              console.log(this.state.project);
               createApi
                 .createApi()
-                .taskAssignedBy(org.data.data._id, email, this.state.projectid)
+                .taskAssignedBy(org.data.data._id, email, currentProj)
                 .then((assignBy: any) => {
+                  console.log('assignBy');
+                  console.log(assignBy);
                   assignBy.data.data[0].projects.forEach((assignBye: any) => {
                     const element = assignBye.reports.action_required;
                     const row = {
@@ -143,7 +151,7 @@ class Home extends React.Component<HomeProps, any> {
                 });
               createApi
                 .createApi()
-                .taskAssignedTo(org.data.data._id, email, this.state.projectid)
+                .taskAssignedTo(org.data.data._id, email, currentProj)
                 .then((assignTo: any) => {
                   assignTo.data.data[0].projects.forEach((assigndTot: any) => {
                     const element = assigndTot.reports.action_required;
@@ -2168,4 +2176,7 @@ const mapDispatchToProps = (dispatch: any) => {
     // reduxActions: bindActionCreators(reduxActions.default, dispatch),
   };
 };
-export default copilot()(Home);
+export default copilot({
+  animated: true, // Can be true or false
+  overlay: 'svg', // Can be either view or svg
+})(Home);
