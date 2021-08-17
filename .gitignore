@@ -1,6 +1,6 @@
 # OSX
 #
-android/java_pid13231.hprof
+*.hprof
 .DS_Store
 
 # Xcode
