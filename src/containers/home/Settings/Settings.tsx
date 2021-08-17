@@ -346,7 +346,7 @@ class Settings extends React.Component<SettingsProps, any> {
                       <TouchableOpacity
                         style={{
                           // marginRight: wp(),
-                          paddingRight: wp(6),
+                          // paddingRight: wp(2),
                           width: wp(10),
                           height: wp(10),
                           justifyContent: 'center',
