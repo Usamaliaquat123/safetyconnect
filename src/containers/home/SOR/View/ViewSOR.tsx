@@ -450,6 +450,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         risk: {
           /** done */ severity: severity,
           likelihood: liklihood,
+          category:
+            severity * liklihood < 7
+              ? `low`
+              : severity * liklihood < 14
+              ? `medium`
+              : 'high',
         },
         repeatedSor: this.props.route.params.data.repeatedSor,
         justification: this.props.route.params.data.justification,
@@ -2732,8 +2738,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                   'Actions should be completed or rejected',
                               });
                             }
-
-                            
                           } else {
                             if (
                               email == this.props.route.params.data.created_by

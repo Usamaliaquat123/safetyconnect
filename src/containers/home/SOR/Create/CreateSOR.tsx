@@ -532,6 +532,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   risk: {
                     severity: 5,
                     likelihood: 5,
+                    // category: 5 ,
                   },
                   action_required: [],
 
@@ -766,6 +767,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         risk: {
                           severity: liklihood[0].value,
                           likelihood: severity[0].value,
+                          category:
+                            liklihood[0].value * severity[0].value < 7
+                              ? `low`
+                              : liklihood[0].value * severity[0].value < 14
+                              ? `medium`
+                              : 'high',
                         },
                         action_required: actions,
 
