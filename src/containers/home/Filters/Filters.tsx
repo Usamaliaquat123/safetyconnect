@@ -71,10 +71,12 @@ export class Filters extends React.Component<FiltersProps, any> {
       isRiskSelector: false,
       isSubmittedToSelected: false,
       isStatusSelected: false,
+      selectedDayFrom: '',
+      selectedDayTo: '',
       isObservationSelected: false,
       isObserverSelected: false,
-      setDateModal: true,
-
+      setDateModal: false,
+      datePickerOfFromOrTo: '',
       todayDateCallender: moment().format('YYYY-MM-DD'),
       filterObject: {},
     };
@@ -314,16 +316,34 @@ export class Filters extends React.Component<FiltersProps, any> {
               {/* Date  container  */}
               <View style={styles.fromDate}>
                 <TouchableOpacity
-                  onPress={() => console.log('from')}
+                  onPress={() => {
+                    this.setState({
+                      datePickerOfFromOrTo: 'from',
+                      setDateModal: true,
+                    });
+                  }}
                   style={[styles.selectionContainer, {width: wp(45)}]}>
-                  <Text style={styles.selectedContent}>From</Text>
+                  <Text style={styles.selectedContent}>
+                    {this.state.selectedDayFrom === ''
+                      ? 'From'
+                      : this.state.selectedDayFrom}
+                  </Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.toDate}>
                 <TouchableOpacity
-                  onPress={() => console.log('to')}
+                  onPress={() =>
+                    this.setState({
+                      datePickerOfFromOrTo: 'to',
+                      setDateModal: true,
+                    })
+                  }
                   style={[styles.selectionContainer, {width: wp(45)}]}>
-                  <Text style={styles.selectedContent}>to</Text>
+                  <Text style={styles.selectedContent}>
+                    {this.state.selectedDayTo === ''
+                      ? 'to'
+                      : this.state.selectedDayTo}
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -446,9 +466,18 @@ export class Filters extends React.Component<FiltersProps, any> {
                     selectedDay: day.dateString,
                   });
 
-                  var date = `${day.dateString}`;
+                  if (this.state.datePickerOfFromOrTo === 'from') {
+                    this.setState({
+                      selectedDayFrom: day.dateString,
+                      filterObject: {rangeFrom: [day.dateString]},
+                    });
+                  } else {
+                    this.setState({
+                      selectedDayTo: day.dateString,
+                      filterObject: {rangeTo: [day.dateString]},
+                    });
+                  }
 
-                  this.setState({todayDateCallender: day.dateString});
                   this.setState({setDateModal: false});
                 }}
                 markedDates={this.state.marked}

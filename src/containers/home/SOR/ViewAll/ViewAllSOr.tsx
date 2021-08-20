@@ -115,6 +115,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       newsorModal: false,
       refreshing: false,
       involvedPerson: [],
+      searchValue: '',
       repeatedSors: [],
       projectSelectors: false,
       loading: false,
@@ -410,11 +411,21 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 <TextInput
                   onFocus={() => this.setState({selectedInputIndex: 5})}
                   underlineColorAndroid="transparent"
-                  onChange={(v: any) => console.log(v)}
+                  onChangeText={(v: any) => {
+                    this.setState({searchValue: v});
+                  }}
                   placeholder={'Search'}
                   style={styles.optnselectorText}
-                  value={this.state.esclateTo}></TextInput>
+                  value={this.state.searchValue}></TextInput>
                 <Icon
+                  onPress={() => {
+                    AsyncStorage.setItem(
+                      'filters',
+                      JSON.stringify({details: this.state.searchValue}),
+                    );
+
+                    this.componentDidMount();
+                  }}
                   style={{padding: 3, opacity: 0.5}}
                   size={wp(6)}
                   name="search1"
