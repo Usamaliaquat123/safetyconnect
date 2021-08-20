@@ -12,6 +12,8 @@ import {
   Image,
   TextInput,
 } from 'react-native';
+import moment from 'moment';
+import Modal from 'react-native-modal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors, fonts, animation, images, GlStyles} from '@theme';
@@ -21,6 +23,8 @@ import styles from './styles';
 import {bindActionCreators} from 'redux';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
+import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+
 import {RouteProp} from '@react-navigation/native';
 import {getCurrentProject} from '@utils';
 import {
@@ -61,12 +65,17 @@ export class Filters extends React.Component<FiltersProps, any> {
       risk: ['low ', 'medium', 'high'],
       // Selectors
       allUsers: [],
+      marked: {
+        [moment().format('YYYY-MM-DD')]: {marked: true, color: 'green'},
+      },
       isRiskSelector: false,
       isSubmittedToSelected: false,
       isStatusSelected: false,
       isObservationSelected: false,
       isObserverSelected: false,
+      setDateModal: true,
 
+      todayDateCallender: moment().format('YYYY-MM-DD'),
       filterObject: {},
     };
   }
@@ -312,7 +321,7 @@ export class Filters extends React.Component<FiltersProps, any> {
               </View>
               <View style={styles.toDate}>
                 <TouchableOpacity
-                onPress={() => console.log('to')}
+                  onPress={() => console.log('to')}
                   style={[styles.selectionContainer, {width: wp(45)}]}>
                   <Text style={styles.selectedContent}>to</Text>
                 </TouchableOpacity>
@@ -325,9 +334,12 @@ export class Filters extends React.Component<FiltersProps, any> {
                 flexDirection: 'row',
                 marginTop: wp(3),
               }}>
-              <Tags onClose={(e) => console.log(e)} tags={[{name: 'Today'}]} />
               <Tags
-                onClose={(e) => console.log(e)}
+                onClose={(e: any) => console.log(e)}
+                tags={[{name: 'Today'}]}
+              />
+              <Tags
+                onClose={(e: any) => console.log(e)}
                 tags={[{name: 'this week'}]}
               />
               <Tags
@@ -376,6 +388,112 @@ export class Filters extends React.Component<FiltersProps, any> {
               </Text>
             </TouchableOpacity>
           </View>
+
+          {/* Callender */}
+
+          <Modal
+            animationInTiming={1000}
+            animationIn={'bounceInUp'}
+            animationOut={'bounceOutDown'}
+            animationOutTiming={1000}
+            useNativeDriver={true}
+            isVisible={this.state.setDateModal}
+            onBackdropPress={() => {
+              this.setState({setDateModal: false, loading: false});
+            }}>
+            <View
+              style={{
+                padding: wp(5),
+                borderRadius: wp(3),
+                backgroundColor: colors.secondary,
+              }}>
+              <Text
+                style={{
+                  fontSize: wp(3.5),
+                  fontFamily: fonts.SFuiDisplayBold,
+                  textAlign: 'center',
+                }}>
+                Select Your Date
+              </Text>
+              <Icon
+                onPress={() => this.setState({setDateModal: false})}
+                containerStyle={{
+                  position: 'absolute',
+                  right: wp(2),
+                  top: wp(2),
+                }}
+                name={'cross'}
+                type={'entypo'}
+                size={wp(4)}
+                color={colors.text}
+              />
+              <Calendar
+                theme={{
+                  textDayFontSize: wp(3),
+                  textDayFontFamily: fonts.SFuiDisplayMedium,
+                  dotColor: colors.primary,
+                  // textSectionTitleColor: colors.primary,
+
+                  selectedDayTextColor: colors.primary,
+                }}
+                onDayPress={(day) => {
+                  let data = {
+                    [day.dateString]: {marked: true, color: 'green'},
+                  };
+                  this.setState({
+                    //   currentDate: day.dateString,
+                    marked: data,
+                    selectedDay: day.dateString,
+                  });
+
+                  var date = `${day.dateString}`;
+
+                  this.setState({todayDateCallender: day.dateString});
+                  this.setState({setDateModal: false});
+                }}
+                markedDates={this.state.marked}
+                // markedDates={{}}
+                markingType={'custom'}
+                // Handler which gets executed on day long press. Default = undefined
+                onDayLongPress={(day) => {}}
+                // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
+                monthFormat={'yyyy MM'}
+                // Handler which gets executed when visible month changes in calendar. Default = undefined
+                onMonthChange={(month) => {}}
+                // Hide month navigation arrows. Default = false
+                hideArrows={true}
+                // Replace default arrows with custom ones (direction can be 'left' or 'right')
+                // renderArrow={(direction) => <Arrow />}
+                // Do not show days of other months in month page. Default = false
+                hideExtraDays={true}
+                // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
+                // day from another month that is visible in calendar page. Default = false
+                disableMonthChange={true}
+                // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
+                firstDay={1}
+                // Hide day names. Default = false
+                hideDayNames={true}
+                // Show week numbers to the left. Default = false
+                showWeekNumbers={true}
+                // Handler which gets executed when press arrow icon left. It receive a callback can go back month
+                onPressArrowLeft={(subtractMonth) => subtractMonth()}
+                // Handler which gets executed when press arrow icon right. It receive a callback can go next month
+                onPressArrowRight={(addMonth) => addMonth()}
+                // Disable left arrow. Default = false
+                disableArrowLeft={true}
+                // Disable right arrow. Default = false
+                disableArrowRight={true}
+                // Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates
+                disableAllTouchEventsForDisabledDays={true}
+                // Replace default month and year title with custom one. the function receive a date as parameter.
+                renderHeader={(date) => {
+                  /*Return JSX*/
+                }}
+                // Enable the option to swipe between months. Default = false
+                enableSwipeMonths={true}
+              />
+            </View>
+          </Modal>
         </ScrollView>
       </View>
     );
