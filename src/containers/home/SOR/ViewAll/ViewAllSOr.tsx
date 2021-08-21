@@ -126,6 +126,10 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   }
 
   componentDidMount = () => {
+    console.log(this.props.reduxState.allSors);
+    // console.log(this.props.reduxState.loading);
+
+    // console.log(this.props.reduxActions.)
     getCurrentOrganization().then((orgId: any) => {
       console.log('orgId');
       console.log(orgId);
@@ -138,6 +142,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     });
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
+
+      this.props.reduxActions.getAllSors(currentProj, [1, 2, 3, 4, 5]);
 
       createApi
         .createApi()
@@ -447,7 +453,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
               </TouchableOpacity>
             </View>
             <View style={styles.lineheight}></View>
-            {this.state.loading == true ? (
+            {this.props.reduxState.loading == true ? (
               <View style={styles.lottiefilesLoading}>
                 <LottieView
                   // ref={(animation) => {

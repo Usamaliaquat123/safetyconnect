@@ -1,7 +1,9 @@
 import {report} from '@typings';
 
 interface AllSorDTO {
-  allSors: Array<report>;
+  allProjects?: Array<any>;
+  allOrganizations?: Array<any>;
+  allSors?: Array<report>;
   loading: Boolean;
   error: Boolean;
 }

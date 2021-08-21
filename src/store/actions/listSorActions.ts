@@ -51,12 +51,13 @@ export type orgnaization = {
 
 /** ALL sor reducers */
 export const getAllSors = (
-  projectId: string,
-  sorType: Array<number>,
+  projectId?: string,
+  sorType?: Array<number>,
 ): IThunkAction => {
   return (dispatch, getState) => {
     dispatch(loading(true));
-    dispatch(cleanSors([]));
+    // console.log('yAHOOAD AODAS DOAD OASD');
+    // dispatch(cleanSors([]));
     createApi
       .createApi()
       .filterSors({
@@ -66,9 +67,12 @@ export const getAllSors = (
         query: {status: sorType},
       })
       .then((res: any) => {
+        if (res.data.message == 'successful') {
+          // console.log(res.data.data.report);
+          dispatch(loading(false));
+          dispatch(allSors(res.data.data.report));
+        }
         // dispatch(error(false));
-        dispatch(loading(false));
-        dispatch(allSors(res.data.data.report));
       })
       .catch((err) => {
         dispatch(loading(false));
@@ -76,6 +80,24 @@ export const getAllSors = (
       });
   };
 };
+
+/* Repeated sors*/
+export const getRepeatedSors = (): IThunkAction => {
+  return (dispatch, getState) => {};
+};
+/* Filter sors */
+export const filterSors = (
+  projectId: string,
+  filterobj: Object,
+): IThunkAction => {
+  return (dispatch, getState) => {};
+};
+
+/* Involved Persons*/
+export const involvedPersons = (organizationId: any): IThunkAction => {
+  return (dispatch, getState) => {};
+};
+
 /* Clear all sors */
 
 export const clearAllSor = (): IThunkAction => {

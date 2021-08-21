@@ -6,14 +6,20 @@ import InitialAppReducer, {
   initialState as initState,
 } from './Reducers/InitialAppReducer';
 // import {  } from "./Reducers/listSorReducers";
-import allSorReducer, {
-  initialState as listState,
-} from './Reducers/allSorReducer';
+import allSorReducer, {initialState as allSors} from './Reducers/allSorReducer';
+import organizationReducer, {
+  initialState as allOrg,
+} from './Reducers/organizationReducer';
+import projectReducer, {
+  initialState as allProjects,
+} from './Reducers/projectReducer';
 
 export type RootState = {
   init: typeof initState;
-  list: typeof listState;
-};  
+  listsor: typeof allSors;
+  organizations: typeof allOrg;
+  projects: typeof allProjects;
+};
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
@@ -35,6 +41,8 @@ function configureStore() {
   let rootReducer = combineReducers({
     init: InitialAppReducer,
     allSors: allSorReducer,
+    organizations: organizationReducer,
+    projects: projectReducer,
     // auto-plugin
   });
 
