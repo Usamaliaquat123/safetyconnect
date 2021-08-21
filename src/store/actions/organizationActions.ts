@@ -13,29 +13,6 @@ export const loading = createAction(ActionTypes.LOADING);
 export const error = createAction(ActionTypes.ERROR);
 export const cleanSors = createAction(ActionTypes.CLEAN_ORGANIZATION);
 
-/** @typings Sor [types] */
-export type SorType = {
-  draft: Array<report>;
-  submitted: Array<report>;
-  exclated: Array<report>;
-  inprogress: Array<report>;
-  completed: Array<report>;
-};
-/** @typings project [types] */
-export type project = {
-  _id: string;
-  project_id: {
-    created_by: string;
-    updatedAt: string;
-    project_name: string;
-    total_documents: number;
-    reports: Array<report>;
-    locations: Array<string>;
-    involved_persons: Array<string>;
-    pending_persons: Array<string>;
-  };
-  project_name: string;
-};
 /** @typings Organization [types] */
 export type orgnaization = {
   name?: string;
@@ -46,6 +23,11 @@ export type orgnaization = {
   members?: Array<string>;
   projects?: Array<string>;
   project_name?: string;
+};
+
+/* get all organization*/
+export const getAllOrganizations = (): IThunkAction => {
+  return async (dispatch, getState) => {};
 };
 
 /** Create Organization */

@@ -7,8 +7,6 @@ import {report} from '@typings';
 /**
  *  Action Types
  */
-const initList = createAction(ActionTypes.LIST_INIT);
-export const updateList = createAction(ActionTypes.LIST_CHANGE);
 export const loading = createAction(ActionTypes.LOADING);
 export const error = createAction(ActionTypes.ERROR);
 export const allSors = createAction(ActionTypes.ALL_SORS);
