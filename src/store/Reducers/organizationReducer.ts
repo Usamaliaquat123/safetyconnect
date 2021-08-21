@@ -1,7 +1,7 @@
 import ActionTypes, {IAction} from '../ActionTypes';
-import {AllSorDTO} from '@dtos';
+import {organizationDTO} from '@dtos';
 
-export const initialState: AllSorDTO = {
+export const initialState: organizationDTO = {
   allOrganizations: [],
   loading: false,
   error: false,
@@ -9,7 +9,7 @@ export const initialState: AllSorDTO = {
 
 const organizationReducer = (
   state = initialState,
-  actions: IAction<AllSorDTO>,
+  actions: IAction<organizationDTO>,
 ) => {
   switch (actions.type) {
     case ActionTypes.LOADING: {

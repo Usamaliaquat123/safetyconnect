@@ -1,13 +1,13 @@
 import ActionTypes, {IAction} from '../ActionTypes';
-import {AllSorDTO} from '@dtos';
+import {projectDTO} from '@dtos';
 
-export const initialState: AllSorDTO = {
+export const initialState: projectDTO = {
   allProjects: [],
   loading: false,
   error: false,
 };
 
-const projectReducer = (state = initialState, actions: IAction<AllSorDTO>) => {
+const projectReducer = (state = initialState, actions: IAction<projectDTO>) => {
   switch (actions.type) {
     case ActionTypes.LOADING: {
       return {

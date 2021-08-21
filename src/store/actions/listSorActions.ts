@@ -246,43 +246,8 @@ export const createProject = (): IThunkAction => {
 //   };
 // };
 
-export const editList = (id: string, text: string): IThunkAction => {
-  return async (dispatch, getState) => {
-    const state = getState();
-    const list = state.list.list;
-
-    const item = list.filter((e: any) => (e.id === id ? (e.text = text) : e));
-
-    dispatch(
-      updateList({
-        list: [...state.list.list],
-      }),
-    );
-  };
-};
-
-export const delList = (id: string): IThunkAction => {
-  return async (dispatch, getState) => {
-    const state = getState();
-    const list = state.list.list;
-
-    list.splice(
-      list.findIndex((e: any) => e.id === id),
-      1,
-    );
-
-    dispatch(
-      updateList({
-        list: [...state.list.list],
-      }),
-    );
-  };
-};
-
 const listAction = {
   getAllSors,
-  editList,
-  delList,
 };
 
 export default listAction;
