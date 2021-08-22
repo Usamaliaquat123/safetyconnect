@@ -96,14 +96,6 @@ export const involvedPersons = (organizationId: any): IThunkAction => {
   return (dispatch, getState) => {};
 };
 
-/* Clear all sors */
-
-export const clearAllSor = (): IThunkAction => {
-  return (dispatch, getState) => {
-    dispatch(cleanSors([]));
-  };
-};
-
 /** Update sor */
 export const updateSor = (data: report, nav: any): IThunkAction => {
   return async (dispatch, getState) => {
@@ -192,42 +184,11 @@ export const createSor = (
       });
   };
 };
-/** Create Organization */
-export const createOrganization = (
-  orgnaization: orgnaization,
-): IThunkAction => {
-  return async (dispatch, getState) => {
-    dispatch(loading(true));
-    await createApi
-      .createApi()
-      .organization({
-        created_by: orgnaization.email,
-        name: orgnaization.name,
-        details: orgnaization.details,
-        members: orgnaization.members,
-        projects: orgnaization.projects,
-      })
-      .then((res) => {
-        dispatch(loading(false));
-        if (res.status == 200) {
-          dispatch(error(false));
+/* Clear all sors */
 
-          // this.props.navigation.navigate('CreateProj', {
-          //   organization: res.data.data.organization_id,
-          // });
-        } else {
-          dispatch(error(true));
-          // this.setState({loading: false, errorModal: false});
-        }
-      });
-
-    dispatch(loading({loading: true}));
-  };
-};
-/** Create Project */
-export const createProject = (): IThunkAction => {
-  return async (dispatch, getState) => {
-    dispatch(loading({loading: true}));
+export const clearAllSor = (): IThunkAction => {
+  return (dispatch, getState) => {
+    dispatch(cleanSors([]));
   };
 };
 
@@ -248,6 +209,8 @@ export const createProject = (): IThunkAction => {
 
 const listAction = {
   getAllSors,
+  getRepeatedSors,
+  filterSors,
 };
 
 export default listAction;

@@ -38,6 +38,7 @@ export interface orgnaization {
   name?: string;
   details?: string;
   createdAt?: string;
+  img_url?: string;
   updatedAt?: string;
   members?: Array<string>;
   pending_members?: Array<any>;
@@ -136,6 +137,6 @@ export interface comments {
 export interface invite {
   emails: Array<string>;
   organization: string;
-  invitedBy: string;
-  organizationName: string;
+  invitedBy?: string;
+  organizationName?: string;
 }

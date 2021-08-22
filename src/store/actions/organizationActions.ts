@@ -2,28 +2,16 @@ import {createAction} from '@utils';
 import ActionTypes from '../ActionTypes';
 import {IThunkAction} from '../Store';
 import {createApi} from '@service';
-import {report} from '@typings';
+import {orgnaization} from '@typings';
+import {savedCurrentOrganization} from '@utils';
 
 /**
  *  Action Types
  */
-// const initList = createAction(ActionTypes.LIST_INIT);
 export const updateList = createAction(ActionTypes.LIST_ORGANIZATION);
 export const loading = createAction(ActionTypes.LOADING);
 export const error = createAction(ActionTypes.ERROR);
 export const cleanSors = createAction(ActionTypes.CLEAN_ORGANIZATION);
-
-/** @typings Organization [types] */
-export type orgnaization = {
-  name?: string;
-  details?: string;
-  email?: string;
-  created_by?: string;
-  pending_members?: Array<string>;
-  members?: Array<string>;
-  projects?: Array<string>;
-  project_name?: string;
-};
 
 /* get all organization*/
 export const getAllOrganizations = (): IThunkAction => {
@@ -32,23 +20,44 @@ export const getAllOrganizations = (): IThunkAction => {
 
 /** Create Organization */
 export const createOrganization = (
-  orgnaization: orgnaization,
+  organization: orgnaization,
+  users: Array<string>,
+  navigation: any,
 ): IThunkAction => {
   return async (dispatch, getState) => {
+    console.log(['orgnaization']);
     dispatch(loading(true));
     await createApi
       .createApi()
       .organization({
-        created_by: orgnaization.email,
-        name: orgnaization.name,
-        details: orgnaization.details,
-        members: orgnaization.members,
-        projects: orgnaization.projects,
+        created_by: organization.created_by,
+        name: organization.name,
+        details: organization.details,
+        members: organization.members,
+        img_url: organization.img_url,
+        projects: organization.projects,
       })
-      .then((res) => {
-        dispatch(loading(false));
+      .then(async (res: any) => {
         if (res.status == 200) {
-          dispatch(error(false));
+          if (users.length != 0) {
+            await createApi
+              .createApi()
+              .inviteBulk({
+                emails: users,
+                organization: res.data.data.organization_id,
+                invitedBy: organization.created_by,
+                organizationName: organization.name,
+              })
+              .then((invite) => {
+                savedCurrentOrganization(res.data.data.organization_id);
+                dispatch(loading(false));
+                dispatch(error(false));
+                navigation.navigate('createProject');
+              });
+          }
+
+          dispatch(loading(false));
+          console.log(res);
 
           // this.props.navigation.navigate('CreateProj', {
           //   organization: res.data.data.organization_id,
@@ -59,7 +68,7 @@ export const createOrganization = (
         }
       });
 
-    dispatch(loading({loading: true}));
+    // dispatch(loading({loading: true}));
   };
 };
 

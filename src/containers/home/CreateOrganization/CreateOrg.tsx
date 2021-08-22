@@ -21,7 +21,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import * as reduxActions from '../../../store/actions/listSorActions';
+import * as reduxActions from '../../../store/actions/organizationActions';
 import {Tags} from '@components';
 import {Icon, Avatar} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -36,7 +36,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
 import {bindActionCreators} from 'redux';
 
-import {AllSorDTO} from '@dtos';
+import {organizationDTO} from '@dtos';
 import {getActiveChildNavigationOptions} from 'react-navigation';
 import {validateEmail, profileUploader} from '@utils';
 import {default as Model} from 'react-native-modal';
@@ -52,7 +52,7 @@ export interface CreateOrgProps {
   navigation: CreateOrgNavigationProp;
   route: CreateOrgRouteProp;
   reduxActions: any;
-  reduxState: any;
+  reduxState: organizationDTO;
 }
 
 class CreateOrg extends React.Component<CreateOrgProps, any> {
@@ -78,7 +78,9 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
       createNewProject: false,
     };
   }
-  componentDidMount() {}
+  componentDidMount() {
+    console.log(this.props.reduxState.loading);
+  }
 
   searchForUsers = (e: string) => {
     if (validateEmail(e)) {
@@ -141,8 +143,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
   createOrg = () => {
     if (this.state.org !== '') {
       if (this.state.orgDetails !== '') {
-        this.setState({loading: true, errorModal: true});
-
         AsyncStorage.getItem('email')
           .then((email: any) => {
             var data = {
@@ -154,49 +154,55 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
               projects: [],
             };
 
-            console.log(data);
-            api
-              .createApi()
-              .organization(data)
-              .then((res: any) => {
-                console.log('res');
-                console.log(res);
-                if (res.status == 200) {
-                  if (this.state.selectedEmails.length != 0) {
-                    var emails = this.state.selectedEmails;
+            this.props.reduxActions.createOrganization(
+              data,
+              this.state.selectedEmails,
+              this.props.navigation,
+            );
 
-                    var inviteData = {
-                      emails: emails,
-                      organization: res.data.data.organization_id,
-                      invitedBy: email,
-                      // projectId  :
-                      organizationName: this.state.org,
-                    };
-                    api
-                      .createApi()
-                      .inviteBulk(inviteData)
-                      .then((invited) => {
-                        this.setState({loading: false, errorModal: false});
-                        AsyncStorage.setItem(
-                          'invitedUsers',
-                          JSON.stringify(emails),
-                        );
-                        savedCurrentOrganization(res.data.data.organization_id);
-                        this.props.navigation.navigate('createProject');
-                      });
-                  } else {
-                    this.setState({loading: false, errorModal: false});
-                    // this.props.navigation.navigate('createProject', {
-                    //   organization: res.data.data.organization_id,
-                    // });
-                  }
-                } else {
-                  this.setState({loading: false, errorModal: false});
-                }
-              })
-              .catch((err) => {
-                this.setState({loading: false, errorModal: false});
-              });
+            // console.log(data);
+            // api
+            //   .createApi()
+            //   .organization(data)
+            //   .then((res: any) => {
+            //     console.log('res');
+            //     console.log(res);
+            //     if (res.status == 200) {
+            //       if (this.state.selectedEmails.length != 0) {
+            //         var emails = this.state.selectedEmails;
+
+            //         var inviteData = {
+            //           emails: emails,
+            //           organization: res.data.data.organization_id,
+            //           invitedBy: email,
+            //           // projectId  :
+            //           organizationName: this.state.org,
+            //         };
+            //         api
+            //           .createApi()
+            //           .inviteBulk(inviteData)
+            //           .then((invited) => {
+            //             this.setState({loading: false, errorModal: false});
+            //             AsyncStorage.setItem(
+            //               'invitedUsers',
+            //               JSON.stringify(emails),
+            //             );
+            //             savedCurrentOrganization(res.data.data.organization_id);
+            //             this.props.navigation.navigate('createProject');
+            //           });
+            //       } else {
+            //         this.setState({loading: false, errorModal: false});
+            //         // this.props.navigation.navigate('createProject', {
+            //         //   organization: res.data.data.organization_id,
+            //         // });
+            //       }
+            //     } else {
+            //       this.setState({loading: false, errorModal: false});
+            //     }
+            //   })
+            //   .catch((err) => {
+            //     this.setState({loading: false, errorModal: false});
+            //   });
           })
           .catch((err) => {
             this.setState({loading: true, errorModal: true});
@@ -475,31 +481,25 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
         </ScrollView>
 
         {/* Error modal */}
-        <Modal
-          isVisible={this.state.errorModal}
-          onBackdropPress={() =>
-            this.setState({errorModal: false, loading: false})
-          }>
-          {this.state.loading == true && (
-            <View>
-              <View style={{alignSelf: 'center'}}>
-                <LottieView
-                  autoPlay={true}
-                  style={{width: wp(90)}}
-                  source={animation.loading}
-                  loop={true}
-                />
-              </View>
+        <Modal isVisible={this.props.reduxState.loading}>
+          <View>
+            <View style={{alignSelf: 'center'}}>
+              <LottieView
+                autoPlay={true}
+                style={{width: wp(90)}}
+                source={animation.loading}
+                loop={true}
+              />
             </View>
-          )}
+          </View>
         </Modal>
       </View>
     );
   }
 }
 
-const mapStateToProps = (state: AllSorDTO) => ({
-  reduxState: state.allSors,
+const mapStateToProps = (state: any) => ({
+  reduxState: state.organizations,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
