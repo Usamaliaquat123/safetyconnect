@@ -14,13 +14,13 @@ export const error = createAction(ActionTypes.ERROR);
 export const cleanSors = createAction(ActionTypes.CLEAN_PROJECT);
 
 /* get all organization*/
-export const getAllOrganizations = (): IThunkAction => {
+export const getAllProjects = (): IThunkAction => {
   return async (dispatch, getState) => {};
 };
 
 /** Create Organization */
-export const createOrganization = (
-  organization: orgnaization,
+export const createProjects = (
+  project: orgnaization,
   users: Array<string>,
   navigation: any,
 ): IThunkAction => {
