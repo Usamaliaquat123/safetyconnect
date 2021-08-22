@@ -14,6 +14,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {bindActionCreators} from 'redux';
+
 import {colors, fonts} from '@theme';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
@@ -23,6 +25,7 @@ import styles from './styles';
 import {createApi as api} from '@service';
 import {animation} from '@theme';
 import LottieView from 'lottie-react-native';
+import * as reduxActions from '../../../store/actions/projectActions';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {default as Model} from 'react-native-modal';
@@ -1024,13 +1027,12 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     );
   }
 }
+const mapStateToProps = (state: any) => ({
+  reduxState: state.projects,
+});
 
-const mapStateToProps = (state: any) => {
-  return {};
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {};
-};
+const mapDispatchToProps = (dispatch: any) => ({
+  reduxActions: bindActionCreators(reduxActions, dispatch),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateProject);

@@ -72,6 +72,14 @@ export const createOrganization = (
   };
 };
 
+/** Get Organization */
+export const getOrganization = (organizationId : string) => {
+
+return new Promise((resolve, reject) => {
+
+})
+};
+
 const listAction = {
   createOrganization,
 };
