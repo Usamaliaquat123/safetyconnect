@@ -2312,7 +2312,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               text="Comments of the report "
               order={12}
               name="copComments">
-              <View style={styles.commentsSections}>
+              <WalkthroughableView style={styles.commentsSections}>
                 {this.state.comments.map((d: any, i: number) => {
                   return (
                     <View>
@@ -2723,7 +2723,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     </Text>
                   </View>
                 )}
-              </View>
+              </WalkthroughableView>
             </CopilotStep>
 
             {this.state.allBtnsEnabled ? (

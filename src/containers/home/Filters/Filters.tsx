@@ -190,7 +190,7 @@ export class Filters extends React.Component<FiltersProps, any> {
                         });
                         this.state.filterObject['created_by'] = [d.email];
                       }}>
-                      <Text style={styles.datacontainerText}>{d.email}</Text>
+                      <Text style={styles.datacontainerText}>{d.name}</Text>
                     </TouchableOpacity>
                   ))}
                 </View>
@@ -274,7 +274,7 @@ export class Filters extends React.Component<FiltersProps, any> {
                         });
                         this.state.filterObject['submit_to'] = [d.email];
                       }}>
-                      <Text style={styles.datacontainerText}>{d.email}</Text>
+                      <Text style={styles.datacontainerText}>{d.name}</Text>
                     </TouchableOpacity>
                   ))}
                 </View>

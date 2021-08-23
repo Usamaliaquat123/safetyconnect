@@ -106,7 +106,7 @@ class Menu extends React.Component<MenuProps, any> {
             />
           </View>
 
-          {/* Audit and Inspection */}
+          {/* create organization */}
           <TouchableOpacity
             onPress={() => {
               //   this.setState({createModal: xfalse});
@@ -121,7 +121,7 @@ class Menu extends React.Component<MenuProps, any> {
             </View>
             <Text style={styles.auditReportText}>Create Organization</Text>
           </TouchableOpacity>
-          {/* Incident and Accident Report */}
+          {/* Create project */}
           <TouchableOpacity
             onPress={() => {
               this.props.navigation.navigate('createProject');
@@ -135,6 +135,27 @@ class Menu extends React.Component<MenuProps, any> {
               />
             </View>
             <Text style={styles.auditReportText}>Create Project</Text>
+          </TouchableOpacity>
+          {/* invite user */}
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate('InvitePeople');
+              //   this.setState({createModal: false});
+            }}
+            style={styles.containerOfIcon}>
+            <View style={styles.incidentContaineR}>
+              {/* <Image
+                source={images.homeIcon.incidentreporting}
+                style={GlStyles.images}
+              /> */}
+              <Icon
+                name="adduser"
+                type="antdesign"
+                color={colors.green}
+                iconStyle={{fontWeight: 'bold'}}
+              />
+            </View>
+            <Text style={styles.auditReportText}>Invite</Text>
           </TouchableOpacity>
         </View>
       </View>
