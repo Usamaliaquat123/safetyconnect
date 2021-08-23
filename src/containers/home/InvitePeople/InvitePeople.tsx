@@ -84,8 +84,6 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
   componentDidMount() {
     // get all projects
 
-    // console.log(this.state.projects.filter((d: any) => d.selected == true));
-
     getCurrentOrganization().then((orgId: any) => {
       api
         .createApi()
@@ -110,8 +108,6 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                 projects: data.data.data.projects,
               });
             });
-
-          // console.log(this.state.projectText);
         });
     });
   }
@@ -120,7 +116,6 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
     if (e !== '') {
       var tags = searchInSuggestions(e.toLowerCase(), this.state.users);
 
-      // console.log(tags);
       if (tags.length == 0) {
         if (validateEmail(e)) {
           this.setState({matchedEmailSuggestions: e});
@@ -162,7 +157,6 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
       invitedBy: this.state.user,
       organizationName: this.state.organizationName,
     };
-    console.log(data);
 
     api
       .createApi()
