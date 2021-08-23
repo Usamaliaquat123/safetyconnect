@@ -72,10 +72,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
       usersTags: [],
       usersSuggestions: [],
       projectsSugg: [],
-      projects: [
-        {name: 'saftey connect', selected: true},
-        {name: '10 pearls', selected: false},
-      ],
+      projects: [],
 
       errHeading: '',
       errDesc: '',
@@ -94,20 +91,24 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
         .createApi()
         .getOrganization(orgId)
         .then((data: any) => {
-          console.log(data.data.data);
           getCurrentProject().then((res) =>
             this.setState({
               projectText: data.data.data.projects.filter(
                 (d) => d.project_id._id == res,
               )[0].project_id.project_name,
               // noOrg: false,
-              users: data.data.members,
+              users: data.data.data.members,
             }),
           ),
             // );
-            this.setState({
-              projects: data.data.data.projects,
-              // projectsSugg:
+
+            AsyncStorage.getItem('email').then((email: any) => {
+              this.setState({
+                currentOrg: orgId,
+                organizationName: data.data.data.name,
+                user: email,
+                projects: data.data.data.projects,
+              });
             });
 
           // console.log(this.state.projectText);
@@ -118,9 +119,10 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
   searchUsersAndEmail = async (e: string) => {
     if (e !== '') {
       var tags = searchInSuggestions(e.toLowerCase(), this.state.users);
+
+      // console.log(tags);
       if (tags.length == 0) {
         if (validateEmail(e)) {
-          console.log('tags');
           this.setState({matchedEmailSuggestions: e});
         }
       }
@@ -150,7 +152,27 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
     }
     this.setState({projectText: e});
   };
-  invitePeople = () => {};
+  invitePeople = () => {
+    var data = {
+      emails: this.state.usersTags.map((user: any) => user.email),
+      organization: this.state.currentOrg,
+      projectId: this.state.projects.filter(
+        (p: any) => p.project_id.project_name == this.state.projectText,
+      )[0].project_id._id,
+      invitedBy: this.state.user,
+      organizationName: this.state.organizationName,
+    };
+    console.log(data);
+
+    api
+      .createApi()
+      .inviteBulk(data)
+      .then((res) => {
+        if (res.data == 'invited') {
+          this.props.navigation.goBack();
+        }
+      });
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -308,6 +330,9 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                   </View>
                   <View style={[styles.inputContainer]}>
                     <TextInput
+                      onFocus={() =>
+                        this.setState({projectsSugg: this.state.projects})
+                      }
                       // editable={this.state.noOrg}
                       value={
                         this.state.noOrg == false
