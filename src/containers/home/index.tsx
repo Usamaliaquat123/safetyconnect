@@ -15,7 +15,8 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {PrivateValueStore, RouteProp} from '@react-navigation/native';
 import styles from './styles';
-
+import * as reduxActions from '../../store/actions/listSorActions';
+import {bindActionCreators} from 'redux';
 import {
   classifySor,
   getCurrentOrganization,
@@ -2165,18 +2166,17 @@ class Home extends React.Component<HomeProps, any> {
     );
   }
 }
-const mapStateToProps = (state: any) => {
-  return {
-    reduxState: state.reducers,
-  };
-};
+const mapStateToProps = (state: AllSorDTO) => ({
+  reduxState: state.allSors,
+});
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    // reduxActions: bindActionCreators(reduxActions.default, dispatch),
-  };
-};
-export default copilot({
-  animated: true, // Can be true or false
-  overlay: 'svg', // Can be either view or svg
+const mapDispatchToProps = (dispatch: any) => ({
+  reduxActions: bindActionCreators(reduxActions, dispatch),
+});
+var copHome = copilot({
+  // style: {}
+  verticalOffset: 24,
+  animated: true,
+  overlay: 'svg',
 })(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(copHome);

@@ -985,7 +985,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   render() {
     return (
       <Animated.View style={[styles.container]}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          ref={(ref) => (this.scrollView = ref)}
+          showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
@@ -1127,7 +1129,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
             <CopilotStep
               text="Observation Details with involved users "
-              order={2}
+              order={3}
               name="copObsdetailInvolvedUsers">
               <WalkthroughableView style={styles.obserContainer}>
                 <Text style={styles.observationDate}>
@@ -1342,7 +1344,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               {/* Potiential Risk */}
               <CopilotStep
                 text="Potiential Risk (System Defined) "
-                order={3}
+                order={4}
                 name="copPotientialRisk">
                 <WalkthroughableView>
                   {this.state.potientialRisk == 0 ? null : (
@@ -1388,7 +1390,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               </CopilotStep>
               {/* Actual Risk */}
 
-              <CopilotStep text="Actual Risk " order={4} name="copActualrisk">
+              <CopilotStep text="Actual Risk " order={5} name="copActualrisk">
                 <WalkthroughableView>
                   {this.state.selectedRisk == false ? (
                     <View>
@@ -1619,9 +1621,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             {this.state.sor_type != 'positive' ? (
               <CopilotStep
                 text="Actions and recommendations"
-                order={5}
+                order={6}
                 name="copactionAndrecommendations">
-                <>
+                <WalkthroughableView>
                   <View style={styles.actionContainer}>
                     <Text style={styles.actionText}>
                       Action / Recommendation
@@ -1781,7 +1783,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       />
                     </TouchableOpacity>
                   </View>
-                </>
+                </WalkthroughableView>
               </CopilotStep>
             ) : null}
 
@@ -1789,7 +1791,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
             {/* Line  */}
             <View style={styles.lineheight} />
-            <CopilotStep text="SOR attachments" order={6} name="copAttachments">
+            <CopilotStep text="SOR attachments" order={7} name="copAttachments">
               <WalkthroughableView style={styles.attachmentsContainer}>
                 <Text style={styles.attachmentsFont}>Attachments</Text>
                 {this.state.fileLoading == true ? (
@@ -1999,7 +2001,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               {/* initialize by */}
               <CopilotStep
                 text="Report who is created"
-                order={7}
+                order={8}
                 name="copactionAndrecommendations">
                 <WalkthroughableView style={{flexDirection: 'row'}}>
                   <Text style={styles.initializeByAndSubmittedToHeading}>
@@ -2013,7 +2015,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               {/* submitted to */}
               <CopilotStep
                 text="Report was submitted to "
-                order={8}
+                order={9}
                 name="copReportWasSubmitTo">
                 <WalkthroughableView
                   style={{flexDirection: 'row', marginTop: wp(2)}}>
@@ -2028,7 +2030,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               {/* REASSIGNED to  */}
               <CopilotStep
                 text="Report want to resassign someone "
-                order={8}
+                order={10}
                 name="copReportReAssignedTo">
                 <WalkthroughableView style={{marginTop: wp(4)}}>
                   <Text style={styles.sbBtnText}>Re-assign to </Text>
@@ -2136,7 +2138,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               {/* ESCLATED TO  */}
               <CopilotStep
                 text="Esclated to report "
-                order={9}
+                order={11}
                 name="copEsclatedTo">
                 <WalkthroughableView>
                   <Text style={styles.sbBtnText}>Esclated to </Text>
@@ -2308,7 +2310,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             {/* comments sections */}
             <CopilotStep
               text="Comments of the report "
-              order={9}
+              order={12}
               name="copComments">
               <View style={styles.commentsSections}>
                 {this.state.comments.map((d: any, i: number) => {
