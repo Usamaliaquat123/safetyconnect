@@ -1789,215 +1789,207 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
             {/* Line  */}
             <View style={styles.lineheight} />
-            <CopilotStep
-                text="Actions and recommendations"
-                order={5}
-                name="copactionAndrecommendations">
-            <WalkthroughableView style={styles.attachmentsContainer}>
-              <Text style={styles.attachmentsFont}>Attachments</Text>
-              {this.state.fileLoading == true ? (
-                <View style={{alignSelf: 'center'}}>
-                  <LottieView
-                    autoPlay={true}
-                    style={{width: wp(30)}}
-                    source={animation.profileimage}
-                    loop={true}
-                  />
-                </View>
-              ) : (
-                <View>
-                  {this.state.attachments.length == 0 ? (
-                    <Text style={styles.youdonthaveAnyAttachments}>
-                      You don't have any attachments
-                    </Text>
-                  ) : (
-                    <View>
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          flexWrap: 'wrap',
-                          alignSelf: 'center',
-                        }}>
-                        {this.state.attachments.map((d: any, i: number) => {
-                          if (d.type == 'image') {
-                            return (
-                              <TouchableOpacity
-                                onPress={() =>
-                                  this.setState({imageViewer: true})
-                                }
-                                style={styles.AttchimageContainer}>
-                                <Image
-                                  source={{
-                                    uri: d.uri,
-                                  }}
-                                  style={[
-                                    GlStyles.images,
-                                    {borderRadius: wp(3)},
-                                  ]}
-                                  resizeMode={'cover'}
-                                />
+            <CopilotStep text="SOR attachments" order={6} name="copAttachments">
+              <WalkthroughableView style={styles.attachmentsContainer}>
+                <Text style={styles.attachmentsFont}>Attachments</Text>
+                {this.state.fileLoading == true ? (
+                  <View style={{alignSelf: 'center'}}>
+                    <LottieView
+                      autoPlay={true}
+                      style={{width: wp(30)}}
+                      source={animation.profileimage}
+                      loop={true}
+                    />
+                  </View>
+                ) : (
+                  <View>
+                    {this.state.attachments.length == 0 ? (
+                      <Text style={styles.youdonthaveAnyAttachments}>
+                        You don't have any attachments
+                      </Text>
+                    ) : (
+                      <View>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            flexWrap: 'wrap',
+                            alignSelf: 'center',
+                          }}>
+                          {this.state.attachments.map((d: any, i: number) => {
+                            if (d.type == 'image') {
+                              return (
                                 <TouchableOpacity
-                                  onPress={() => {
-                                    if (d.upload != 'self') {
-                                      this.photoAnim.play();
-                                      downloadFile(d.uri, d.type)
-                                        .then((res: any) => {})
-                                        .catch((err) => {});
-                                    }
-                                  }}
-                                  style={styles.lottieDownloadContainer}>
-                                  <LottieView
-                                    ref={(animation) => {
-                                      this.photoAnim = animation;
+                                  onPress={() =>
+                                    this.setState({imageViewer: true})
+                                  }
+                                  style={styles.AttchimageContainer}>
+                                  <Image
+                                    source={{
+                                      uri: d.uri,
                                     }}
-                                    style={{width: wp(11)}}
-                                    source={animation.download}
-                                    loop={false}
+                                    style={[
+                                      GlStyles.images,
+                                      {borderRadius: wp(3)},
+                                    ]}
+                                    resizeMode={'cover'}
                                   />
+                                  <TouchableOpacity
+                                    onPress={() => {
+                                      if (d.upload != 'self') {
+                                        this.photoAnim.play();
+                                        downloadFile(d.uri, d.type)
+                                          .then((res: any) => {})
+                                          .catch((err) => {});
+                                      }
+                                    }}
+                                    style={styles.lottieDownloadContainer}>
+                                    <LottieView
+                                      ref={(animation) => {
+                                        this.photoAnim = animation;
+                                      }}
+                                      style={{width: wp(11)}}
+                                      source={animation.download}
+                                      loop={false}
+                                    />
 
-                                  {d.upload == 'self' ? (
-                                    <TouchableOpacity
-                                      style={{marginRight: wp(3)}}
-                                      onPress={() => {
-                                        var arr = [
-                                          ...this.state.attachments,
-                                        ].filter((b) => b != d);
-                                        this.setState({attachments: arr});
-                                      }}>
-                                      <Icon
-                                        containerStyle={{
-                                          marginRight: wp(2),
-                                          marginTop: wp(2),
-                                          opacity: 0.5,
-                                        }}
-                                        name="circle-with-cross"
-                                        size={wp(5)}
-                                        type="entypo"
-                                        color={colors.text}
-                                      />
-                                    </TouchableOpacity>
-                                  ) : null}
-                                </TouchableOpacity>
-                              </TouchableOpacity>
-                            );
-                          } else {
-                            return (
-                              <View>
-                                {d.type != 'image' ? (
-                                  <View style={styles.attachFileContainer}>
-                                    <View
-                                      style={{
-                                        width: '60%',
-                                        height: '60%',
-                                        alignSelf: 'center',
-                                        marginTop: wp(4),
-                                      }}>
-                                      <Image
-                                        source={
-                                          d.type == 'pdf'
-                                            ? images.pdf
-                                            : d.type == 'doc'
-                                            ? images.doc
-                                            : d.type == 'text'
-                                            ? images.text
-                                            : d.type == 'doc'
-                                            ? images.doc
-                                            : // : d.type == 'excel'
-                                              // ? images.excel
-                                              // : d.type == 'powerpoint'
-                                              // ? images.powerpoint
-                                              null
-                                        }
-                                        style={[GlStyles.images]}
-                                        resizeMode={'contain'}
-                                      />
-                                    </View>
-                                    <Text style={styles.attchFileText}>
-                                      {d.name.substring(0, 10)}.../.{d.type}
-                                    </Text>
-                                    <View
-                                      style={
-                                        styles.attachmentDownloadContainer
-                                      }>
+                                    {d.upload == 'self' ? (
                                       <TouchableOpacity
+                                        style={{marginRight: wp(3)}}
                                         onPress={() => {
-                                          if (d.upload != 'self') {
-                                            this.photoAnim.play();
-                                            downloadFile(d.url, d.type)
-                                              .then((res: any) => {})
-                                              .catch((err) => {});
-                                          }
+                                          var arr = [
+                                            ...this.state.attachments,
+                                          ].filter((b) => b != d);
+                                          this.setState({attachments: arr});
                                         }}>
-                                        <LottieView
-                                          ref={(animation) => {
-                                            this.animation = animation;
+                                        <Icon
+                                          containerStyle={{
+                                            marginRight: wp(2),
+                                            marginTop: wp(2),
+                                            opacity: 0.5,
                                           }}
-                                          style={{width: wp(15)}}
-                                          source={animation.download}
-                                          loop={false}
+                                          name="circle-with-cross"
+                                          size={wp(5)}
+                                          type="entypo"
+                                          color={colors.text}
                                         />
                                       </TouchableOpacity>
-
-                                      {d.upload == 'self' ? (
+                                    ) : null}
+                                  </TouchableOpacity>
+                                </TouchableOpacity>
+                              );
+                            } else {
+                              return (
+                                <View>
+                                  {d.type != 'image' ? (
+                                    <View style={styles.attachFileContainer}>
+                                      <View
+                                        style={{
+                                          width: '60%',
+                                          height: '60%',
+                                          alignSelf: 'center',
+                                          marginTop: wp(4),
+                                        }}>
+                                        <Image
+                                          source={
+                                            d.type == 'pdf'
+                                              ? images.pdf
+                                              : d.type == 'doc'
+                                              ? images.doc
+                                              : d.type == 'text'
+                                              ? images.text
+                                              : d.type == 'doc'
+                                              ? images.doc
+                                              : // : d.type == 'excel'
+                                                // ? images.excel
+                                                // : d.type == 'powerpoint'
+                                                // ? images.powerpoint
+                                                null
+                                          }
+                                          style={[GlStyles.images]}
+                                          resizeMode={'contain'}
+                                        />
+                                      </View>
+                                      <Text style={styles.attchFileText}>
+                                        {d.name.substring(0, 10)}.../.{d.type}
+                                      </Text>
+                                      <View
+                                        style={
+                                          styles.attachmentDownloadContainer
+                                        }>
                                         <TouchableOpacity
                                           onPress={() => {
-                                            var arr = [
-                                              ...this.state.attachments,
-                                            ].filter((b) => b != d);
-                                            this.setState({attachments: arr});
+                                            if (d.upload != 'self') {
+                                              this.photoAnim.play();
+                                              downloadFile(d.url, d.type)
+                                                .then((res: any) => {})
+                                                .catch((err) => {});
+                                            }
                                           }}>
-                                          <Icon
-                                            containerStyle={{
-                                              marginRight: wp(2),
-                                              marginTop: wp(2),
-                                              opacity: 0.5,
+                                          <LottieView
+                                            ref={(animation) => {
+                                              this.animation = animation;
                                             }}
-                                            name="circle-with-cross"
-                                            size={wp(5)}
-                                            type="entypo"
-                                            color={colors.text}
+                                            style={{width: wp(15)}}
+                                            source={animation.download}
+                                            loop={false}
                                           />
                                         </TouchableOpacity>
-                                      ) : null}
+
+                                        {d.upload == 'self' ? (
+                                          <TouchableOpacity
+                                            onPress={() => {
+                                              var arr = [
+                                                ...this.state.attachments,
+                                              ].filter((b) => b != d);
+                                              this.setState({attachments: arr});
+                                            }}>
+                                            <Icon
+                                              containerStyle={{
+                                                marginRight: wp(2),
+                                                marginTop: wp(2),
+                                                opacity: 0.5,
+                                              }}
+                                              name="circle-with-cross"
+                                              size={wp(5)}
+                                              type="entypo"
+                                              color={colors.text}
+                                            />
+                                          </TouchableOpacity>
+                                        ) : null}
+                                      </View>
                                     </View>
-                                  </View>
-                                ) : null}
-                              </View>
-                            );
-                          }
-                        })}
+                                  ) : null}
+                                </View>
+                              );
+                            }
+                          })}
+                        </View>
                       </View>
-                    </View>
-                  )}
-                </View>
-              )}
+                    )}
+                  </View>
+                )}
 
-              {this.state.attachments.length < 6 && (
-                <TouchableOpacity
-                  onPress={() => {
-                    if (this.state.attachments.length < 6) {
-                      this.openDoc(this.state.attachments, false);
-                    }
-                  }}
-                  style={{marginTop: wp(3), flexDirection: 'row'}}>
-                  <Icon
-                    containerStyle={{marginRight: wp(3)}}
-                    name="plus"
-                    size={wp(4)}
-                    type="antdesign"
-                    color={colors.primary}
-                  />
-                  <Text style={styles.aaddNewAttachmentText}>
-                    Add New Attachments
-                  </Text>
-                </TouchableOpacity>
-              )}
-            </WalkthroughableView>
-
-           
-           
-           
-           
+                {this.state.attachments.length < 6 && (
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (this.state.attachments.length < 6) {
+                        this.openDoc(this.state.attachments, false);
+                      }
+                    }}
+                    style={{marginTop: wp(3), flexDirection: 'row'}}>
+                    <Icon
+                      containerStyle={{marginRight: wp(3)}}
+                      name="plus"
+                      size={wp(4)}
+                      type="antdesign"
+                      color={colors.primary}
+                    />
+                    <Text style={styles.aaddNewAttachmentText}>
+                      Add New Attachments
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </WalkthroughableView>
             </CopilotStep>
 
             {/* Line  */}
@@ -2005,233 +1997,252 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             {/* Initialize and Submitted to options */}
             <View style={styles.initializeAndSubmittedTo}>
               {/* initialize by */}
-              <View style={{flexDirection: 'row'}}>
-                <Text style={styles.initializeByAndSubmittedToHeading}>
-                  Initiated By:
-                </Text>
-                <Text style={styles.initializeByAndSubmitedToAnswer}>
-                  {this.props.route.params.data.created_by}
-                </Text>
-              </View>
+              <CopilotStep
+                text="Report who is created"
+                order={7}
+                name="copactionAndrecommendations">
+                <WalkthroughableView style={{flexDirection: 'row'}}>
+                  <Text style={styles.initializeByAndSubmittedToHeading}>
+                    Initiated By:
+                  </Text>
+                  <Text style={styles.initializeByAndSubmitedToAnswer}>
+                    {this.props.route.params.data.created_by}
+                  </Text>
+                </WalkthroughableView>
+              </CopilotStep>
               {/* submitted to */}
-              <View style={{flexDirection: 'row', marginTop: wp(2)}}>
-                <Text style={styles.initializeByAndSubmittedToHeading}>
-                  Submitted To:
-                </Text>
-                <Text style={styles.initializeByAndSubmitedToAnswer}>
-                  {this.state.submitted_to[0]}
-                </Text>
-              </View>
+              <CopilotStep
+                text="Report was submitted to "
+                order={8}
+                name="copReportWasSubmitTo">
+                <WalkthroughableView
+                  style={{flexDirection: 'row', marginTop: wp(2)}}>
+                  <Text style={styles.initializeByAndSubmittedToHeading}>
+                    Submitted To:
+                  </Text>
+                  <Text style={styles.initializeByAndSubmitedToAnswer}>
+                    {this.state.submitted_to[0]}
+                  </Text>
+                </WalkthroughableView>
+              </CopilotStep>
               {/* REASSIGNED to  */}
-              <View style={{marginTop: wp(4)}}>
-                <Text style={styles.sbBtnText}>Re-assign to </Text>
-                {this.state.reAssignToArrTags.length < 1 ? (
-                  <>
-                    <View style={[styles.optnselector]}>
-                      <TextInput
-                        onFocus={() => {
-                          this.setState({
-                            reAssignToArr: searchInSuggestions(
-                              '',
-                              this.state.involved_person,
-                            ),
-                          });
-                        }}
-                        underlineColorAndroid="transparent"
-                        onChangeText={(v: any) => {
-                          if (v === '') {
-                            this.setState({
-                              reAssignToArr: [],
-                              reassignToText: v,
-                            });
-                          } else {
+              <CopilotStep
+                text="Report want to resassign someone "
+                order={8}
+                name="copReportReAssignedTo">
+                <WalkthroughableView style={{marginTop: wp(4)}}>
+                  <Text style={styles.sbBtnText}>Re-assign to </Text>
+                  {this.state.reAssignToArrTags.length < 1 ? (
+                    <>
+                      <View style={[styles.optnselector]}>
+                        <TextInput
+                          onFocus={() => {
                             this.setState({
                               reAssignToArr: searchInSuggestions(
-                                v.toLowerCase(),
+                                '',
                                 this.state.involved_person,
                               ),
-                              reassignToText: v,
                             });
-                          }
-                        }}
-                        placeholder={'Select or Type Name'}
-                        style={styles.optnselectorText}
-                        value={this.state.reassignToText}
-                      />
-                    </View>
-
-                    {this.state.reAssignToArr.length != 0 ? (
-                      <View>
-                        <View style={styles.involveSuggestCont}>
-                          {this.state.reAssignToArr.map(
-                            (d: involved_persons, i: number) => (
-                              <TouchableOpacity
-                                key={i}
-                                onPress={() => {
-                                  this.setState({
-                                    reassignToText: '',
-                                    reAssignToArr: [],
-                                  });
-
-                                  if (
-                                    this.state.reAssignToArr.filter(
-                                      (v: involved_persons) => v == d,
-                                    ).length != 0
-                                  ) {
-                                    this.state.reAssignToArrTags.push(d);
-                                  } else {
-                                    return null;
-                                  }
-                                }}
-                                style={[
-                                  styles.involvePsuggCont,
-                                  this.state.reAssignToArr.length == i + 1
-                                    ? {borderBottomWidth: wp(0)}
-                                    : null,
-                                ]}>
-                                <Avatar
-                                  containerStyle={{marginRight: wp(3)}}
-                                  rounded
-                                  source={{
-                                    uri: d.img_url,
-                                  }}
-                                />
-                                <View>
-                                  <Text style={styles.involvePSt}>
-                                    {d.name}
-                                  </Text>
-                                  <Text style={{fontSize: wp(2)}}>
-                                    {d.email}
-                                  </Text>
-                                </View>
-                              </TouchableOpacity>
-                            ),
-                          )}
-                        </View>
+                          }}
+                          underlineColorAndroid="transparent"
+                          onChangeText={(v: any) => {
+                            if (v === '') {
+                              this.setState({
+                                reAssignToArr: [],
+                                reassignToText: v,
+                              });
+                            } else {
+                              this.setState({
+                                reAssignToArr: searchInSuggestions(
+                                  v.toLowerCase(),
+                                  this.state.involved_person,
+                                ),
+                                reassignToText: v,
+                              });
+                            }
+                          }}
+                          placeholder={'Select or Type Name'}
+                          style={styles.optnselectorText}
+                          value={this.state.reassignToText}
+                        />
                       </View>
-                    ) : null}
-                  </>
-                ) : null}
-                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                  <Tags
-                    onClose={(d: any) => {
-                      this.setState({
-                        reAssignToArrTags: this.state.reAssignToArrTags.filter(
-                          (v: any) => v !== d,
-                        ),
-                      });
-                    }}
-                    tags={this.state.reAssignToArrTags}
-                  />
-                </View>
-              </View>
 
-              {/* ESCLATED TO  */}
-              <View>
-                <Text style={styles.sbBtnText}>Esclated to </Text>
-                <View
-                  style={[
-                    styles.optnselector,
-                    this.state.selectedInputIndex == 5
-                      ? {borderColor: colors.green}
-                      : null,
-                  ]}>
-                  <TextInput
-                    onFocus={() =>
-                      this.setState({
-                        selectedInputIndex: 5,
-                        exclateToArr: searchInSuggestions(
-                          '',
-                          this.state.involved_person,
-                        ),
-                      })
-                    }
-                    underlineColorAndroid="transparent"
-                    onChangeText={(v: any) => {
-                      if (v === '') {
-                        this.setState({esclateTo: v, exclateToArr: []});
-                      } else {
+                      {this.state.reAssignToArr.length != 0 ? (
+                        <View>
+                          <View style={styles.involveSuggestCont}>
+                            {this.state.reAssignToArr.map(
+                              (d: involved_persons, i: number) => (
+                                <TouchableOpacity
+                                  key={i}
+                                  onPress={() => {
+                                    this.setState({
+                                      reassignToText: '',
+                                      reAssignToArr: [],
+                                    });
+
+                                    if (
+                                      this.state.reAssignToArr.filter(
+                                        (v: involved_persons) => v == d,
+                                      ).length != 0
+                                    ) {
+                                      this.state.reAssignToArrTags.push(d);
+                                    } else {
+                                      return null;
+                                    }
+                                  }}
+                                  style={[
+                                    styles.involvePsuggCont,
+                                    this.state.reAssignToArr.length == i + 1
+                                      ? {borderBottomWidth: wp(0)}
+                                      : null,
+                                  ]}>
+                                  <Avatar
+                                    containerStyle={{marginRight: wp(3)}}
+                                    rounded
+                                    source={{
+                                      uri: d.img_url,
+                                    }}
+                                  />
+                                  <View>
+                                    <Text style={styles.involvePSt}>
+                                      {d.name}
+                                    </Text>
+                                    <Text style={{fontSize: wp(2)}}>
+                                      {d.email}
+                                    </Text>
+                                  </View>
+                                </TouchableOpacity>
+                              ),
+                            )}
+                          </View>
+                        </View>
+                      ) : null}
+                    </>
+                  ) : null}
+                  <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                    <Tags
+                      onClose={(d: any) => {
                         this.setState({
+                          reAssignToArrTags: this.state.reAssignToArrTags.filter(
+                            (v: any) => v !== d,
+                          ),
+                        });
+                      }}
+                      tags={this.state.reAssignToArrTags}
+                    />
+                  </View>
+                </WalkthroughableView>
+              </CopilotStep>
+              {/* ESCLATED TO  */}
+              <CopilotStep
+                text="Esclated to report "
+                order={9}
+                name="copEsclatedTo">
+                <WalkthroughableView>
+                  <Text style={styles.sbBtnText}>Esclated to </Text>
+                  <View
+                    style={[
+                      styles.optnselector,
+                      this.state.selectedInputIndex == 5
+                        ? {borderColor: colors.green}
+                        : null,
+                    ]}>
+                    <TextInput
+                      onFocus={() =>
+                        this.setState({
+                          selectedInputIndex: 5,
                           exclateToArr: searchInSuggestions(
-                            v.toLowerCase(),
+                            '',
                             this.state.involved_person,
                           ),
-                          esclateTo: v,
-                        });
+                        })
                       }
-                    }}
-                    placeholder={'Select or Type Name'}
-                    style={styles.optnselectorText}
-                    value={this.state.esclateTo}
-                  />
-                </View>
-
-                {this.state.exclateToArr.length != 0 ? (
-                  <View>
-                    <View style={styles.involveSuggestCont}>
-                      {this.state.exclateToArr.map(
-                        (d: involved_persons, i: number) => (
-                          <TouchableOpacity
-                            key={i}
-                            onPress={() => {
-                              this.setState({
-                                esclateTo: '',
-                                exclateToArr: this.state.exclateToArr.filter(
-                                  (item: any) => {
-                                    return item !== d;
-                                  },
-                                ),
-                              });
-                              if (
-                                this.state.exclateToArr.filter(
-                                  (v: involved_persons) => v == d,
-                                ).length != 0
-                              ) {
-                                console.log(d);
-                                // console.log(this.state.esclate_to);
-                                this.state.esclate_to.push(d.email);
-                              } else {
-                                return null;
-                              }
-                            }}
-                            style={[
-                              styles.involvePsuggCont,
-                              this.state.exclateToArr.length == i + 1
-                                ? {borderBottomWidth: wp(0)}
-                                : null,
-                            ]}>
-                            <Avatar
-                              containerStyle={{marginRight: wp(3)}}
-                              rounded
-                              source={{
-                                uri: d.img_url,
-                              }}
-                            />
-                            <View>
-                              <Text style={styles.involvePSt}>{d.name}</Text>
-                              <Text style={{fontSize: wp(2)}}>{d.email}</Text>
-                            </View>
-                          </TouchableOpacity>
-                        ),
-                      )}
-                    </View>
+                      underlineColorAndroid="transparent"
+                      onChangeText={(v: any) => {
+                        if (v === '') {
+                          this.setState({esclateTo: v, exclateToArr: []});
+                        } else {
+                          this.setState({
+                            exclateToArr: searchInSuggestions(
+                              v.toLowerCase(),
+                              this.state.involved_person,
+                            ),
+                            esclateTo: v,
+                          });
+                        }
+                      }}
+                      placeholder={'Select or Type Name'}
+                      style={styles.optnselectorText}
+                      value={this.state.esclateTo}
+                    />
                   </View>
-                ) : null}
-                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                  <Tags
-                    type={'esclatedTotags'}
-                    onClose={(d: any) => {
-                      this.setState({
-                        esclate_to: this.state.esclate_to.filter(
-                          (v: any) => v !== d,
-                        ),
-                      });
-                    }}
-                    tags={this.state.esclate_to}
-                  />
-                </View>
-              </View>
 
+                  {this.state.exclateToArr.length != 0 ? (
+                    <View>
+                      <View style={styles.involveSuggestCont}>
+                        {this.state.exclateToArr.map(
+                          (d: involved_persons, i: number) => (
+                            <TouchableOpacity
+                              key={i}
+                              onPress={() => {
+                                this.setState({
+                                  esclateTo: '',
+                                  exclateToArr: this.state.exclateToArr.filter(
+                                    (item: any) => {
+                                      return item !== d;
+                                    },
+                                  ),
+                                });
+                                if (
+                                  this.state.exclateToArr.filter(
+                                    (v: involved_persons) => v == d,
+                                  ).length != 0
+                                ) {
+                                  console.log(d);
+                                  // console.log(this.state.esclate_to);
+                                  this.state.esclate_to.push(d.email);
+                                } else {
+                                  return null;
+                                }
+                              }}
+                              style={[
+                                styles.involvePsuggCont,
+                                this.state.exclateToArr.length == i + 1
+                                  ? {borderBottomWidth: wp(0)}
+                                  : null,
+                              ]}>
+                              <Avatar
+                                containerStyle={{marginRight: wp(3)}}
+                                rounded
+                                source={{
+                                  uri: d.img_url,
+                                }}
+                              />
+                              <View>
+                                <Text style={styles.involvePSt}>{d.name}</Text>
+                                <Text style={{fontSize: wp(2)}}>{d.email}</Text>
+                              </View>
+                            </TouchableOpacity>
+                          ),
+                        )}
+                      </View>
+                    </View>
+                  ) : null}
+                  <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                    <Tags
+                      type={'esclatedTotags'}
+                      onClose={(d: any) => {
+                        this.setState({
+                          esclate_to: this.state.esclate_to.filter(
+                            (v: any) => v !== d,
+                          ),
+                        });
+                      }}
+                      tags={this.state.esclate_to}
+                    />
+                  </View>
+                </WalkthroughableView>
+              </CopilotStep>
               {/* Repeated sors */}
 
               {this.state.repeatedSors.length != 0 && (
@@ -2295,133 +2306,140 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               />
             </View> */}
             {/* comments sections */}
-            <View style={styles.commentsSections}>
-              {this.state.comments.map((d: any, i: number) => {
-                return (
-                  <View>
-                    <TouchableOpacity
-                      onLongPress={() => {
-                        if (d.is_comment == true) {
-                          if (d.attachments != undefined) {
+            <CopilotStep
+              text="Comments of the report "
+              order={9}
+              name="copComments">
+              <View style={styles.commentsSections}>
+                {this.state.comments.map((d: any, i: number) => {
+                  return (
+                    <View>
+                      <TouchableOpacity
+                        onLongPress={() => {
+                          if (d.is_comment == true) {
+                            if (d.attachments != undefined) {
+                              this.setState({
+                                editAttachedCommentArr: d.attachments,
+                              });
+                            } else {
+                              this.setState({
+                                editAttachedCommentArr: [],
+                              });
+                            }
                             this.setState({
-                              editAttachedCommentArr: d.attachments,
-                            });
-                          } else {
-                            this.setState({
-                              editAttachedCommentArr: [],
+                              editDiscardComment: d.comment,
+                              editDiscardCommentIndex: i,
+                              editDelComment: true,
                             });
                           }
-                          this.setState({
-                            editDiscardComment: d.comment,
-                            editDiscardCommentIndex: i,
-                            editDelComment: true,
-                          });
-                        }
-                      }}
-                      style={styles.userComments}>
-                      {d.user == '' ? null : (
-                        <Avatar
-                          // containerStyle={{position: 'absolute', top: wp(0)}}
-                          size={wp(6)}
-                          rounded
-                          source={{
-                            uri:
-                              d.user.img_url == undefined
-                                ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
-                                : d.user.img_url,
-                          }}
-                        />
-                      )}
+                        }}
+                        style={styles.userComments}>
+                        {d.user == '' ? null : (
+                          <Avatar
+                            // containerStyle={{position: 'absolute', top: wp(0)}}
+                            size={wp(6)}
+                            rounded
+                            source={{
+                              uri:
+                                d.user.img_url == undefined
+                                  ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                                  : d.user.img_url,
+                            }}
+                          />
+                        )}
 
-                      <View style={styles.commentUser}>
-                        <Text style={styles.userCommentName}>
-                          {d.user.name == undefined
-                            ? this.state.user.name
-                            : d.user.name}
-                        </Text>
-                        <Text style={styles.usercomment}>{d.comment}</Text>
-                      </View>
-                      <View style={styles.dateComments}>
-                        <Text style={styles.dateTextComment}>
-                          {moment(d.date).fromNow()}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                    {d.files.length != 0 ? (
-                      <ScrollView
-                        style={{marginBottom: wp(3), marginLeft: wp(8)}}
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}>
-                        {d.files.map((f: any, i: number) => (
-                          <View
-                            style={[
-                              styles.AttchimageContainer,
-                              {
-                                backgroundColor: colors.secondary,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                              },
-                            ]}>
-                            {f.type == 'image' ? (
-                              <Image
-                                source={{
-                                  uri: f.uri,
-                                }}
-                                style={[GlStyles.images, {borderRadius: wp(5)}]}
-                                resizeMode={'cover'}
-                              />
-                            ) : (
-                              <View>
+                        <View style={styles.commentUser}>
+                          <Text style={styles.userCommentName}>
+                            {d.user.name == undefined
+                              ? this.state.user.name
+                              : d.user.name}
+                          </Text>
+                          <Text style={styles.usercomment}>{d.comment}</Text>
+                        </View>
+                        <View style={styles.dateComments}>
+                          <Text style={styles.dateTextComment}>
+                            {moment(d.date).fromNow()}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                      {d.files.length != 0 ? (
+                        <ScrollView
+                          style={{marginBottom: wp(3), marginLeft: wp(8)}}
+                          horizontal={true}
+                          showsHorizontalScrollIndicator={false}>
+                          {d.files.map((f: any, i: number) => (
+                            <View
+                              style={[
+                                styles.AttchimageContainer,
+                                {
+                                  backgroundColor: colors.secondary,
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                },
+                              ]}>
+                              {f.type == 'image' ? (
                                 <Image
-                                  source={
-                                    f.type == 'pdf'
-                                      ? images.pdf
-                                      : f.type == 'doc'
-                                      ? images.doc
-                                      : f.type == 'text'
-                                      ? images.text
-                                      : f.type == 'doc'
-                                      ? images.doc
-                                      : // : d.type == 'excel'
-                                        // ? images.excel
-                                        // : d.type == 'powerpoint'
-                                        // ? images.powerpoint
-                                        null
-                                  }
-                                  style={{width: wp(10), height: wp(10)}}
+                                  source={{
+                                    uri: f.uri,
+                                  }}
+                                  style={[
+                                    GlStyles.images,
+                                    {borderRadius: wp(5)},
+                                  ]}
+                                  resizeMode={'cover'}
                                 />
-                              </View>
-                            )}
+                              ) : (
+                                <View>
+                                  <Image
+                                    source={
+                                      f.type == 'pdf'
+                                        ? images.pdf
+                                        : f.type == 'doc'
+                                        ? images.doc
+                                        : f.type == 'text'
+                                        ? images.text
+                                        : f.type == 'doc'
+                                        ? images.doc
+                                        : // : d.type == 'excel'
+                                          // ? images.excel
+                                          // : d.type == 'powerpoint'
+                                          // ? images.powerpoint
+                                          null
+                                    }
+                                    style={{width: wp(10), height: wp(10)}}
+                                  />
+                                </View>
+                              )}
 
-                            <TouchableOpacity
-                              onPress={() => {
-                                var arr = [
-                                  ...this.state.commentAttachment,
-                                ].filter((j) => j != d);
-                                this.setState({commentAttachment: arr});
-                              }}
-                              style={{
-                                position: 'absolute',
-                                right: wp(2),
-                                top: wp(2),
-                                zIndex: wp(1),
-                              }}>
-                              <Icon
-                                size={wp(5)}
-                                name="download-outline"
-                                type="material-community"
-                                color={colors.text}
-                              />
-                            </TouchableOpacity>
-                          </View>
-                        ))}
-                      </ScrollView>
-                    ) : null}
-                  </View>
-                );
-              })}
-              <View style={{flexDirection: 'row'}}>
-                {/* <Avatar
+                              <TouchableOpacity
+                                onPress={() => {
+                                  var arr = [
+                                    ...this.state.commentAttachment,
+                                  ].filter((j) => j != d);
+                                  this.setState({commentAttachment: arr});
+                                }}
+                                style={{
+                                  position: 'absolute',
+                                  right: wp(2),
+                                  top: wp(2),
+                                  zIndex: wp(1),
+                                }}>
+                                <Icon
+                                  size={wp(5)}
+                                  name="download-outline"
+                                  type="material-community"
+                                  color={colors.text}
+                                />
+                              </TouchableOpacity>
+                            </View>
+                          ))}
+                        </ScrollView>
+                      ) : null}
+                    </View>
+                  );
+                })}
+                <View style={{flexDirection: 'row'}}>
+                  {/* <Avatar
                   containerStyle={{
                     marginRight: wp(2),
                     marginTop: wp(4),
@@ -2433,235 +2451,175 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   }}
                 /> */}
 
-                <View
-                  style={[
-                    styles.commentTextInput,
-                    this.state.notifiedAndInv == 4
-                      ? {borderColor: colors.green}
-                      : {borderColor: colors.lightGrey},
-                  ]}>
-                  <TextInput
-                    onFocus={() => this.setState({notifiedAndInv: 4})}
-                    style={{fontSize: wp(3), width: wp(50)}}
-                    multiline={true}
-                    value={this.state.commentText}
-                    onChange={(e) => {
-                      // mentionComment
-
-                      if (filterLocation(e.nativeEvent.text) != null) {
-                        this.setState({
-                          commentsSugg: searchInSuggestions(
-                            filterLocation(e.nativeEvent.text)[0].split('@')[1],
-                            this.state.involvedPerson,
-                          ),
-                          commentMentionReplace: filterLocation(
-                            e.nativeEvent.text,
-                          )[0],
-                        });
-                      }
-
-                      this.setState({commentText: e.nativeEvent.text});
-                    }}
-                    placeholder={'Your comment here '}
-                  />
                   <View
-                    style={{
-                      // top: wp(2.7),
-                      position: 'absolute',
-                      right: wp(3),
-                      flexDirection: 'row',
-                    }}>
-                    <TouchableOpacity
-                      onPress={() =>
-                        this.openDoc(this.state.commentAttachment, true)
-                      }
-                      style={{
-                        backgroundColor: colors.lightBlue,
-                        padding: wp(2),
-                        marginRight: wp(2),
-                        borderRadius: wp(3),
-                      }}>
-                      <Icon
-                        size={wp(5)}
-                        name="attachment"
-                        type="entypo"
-                        color={colors.primary}
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => {
-                        if (this.state.commentText != '') {
-                          var map = [...this.state.comments];
+                    style={[
+                      styles.commentTextInput,
+                      this.state.notifiedAndInv == 4
+                        ? {borderColor: colors.green}
+                        : {borderColor: colors.lightGrey},
+                    ]}>
+                    <TextInput
+                      onFocus={() => this.setState({notifiedAndInv: 4})}
+                      style={{fontSize: wp(3), width: wp(50)}}
+                      multiline={true}
+                      value={this.state.commentText}
+                      onChange={(e) => {
+                        // mentionComment
 
-                          this.addComment(
-                            this.state.commentText,
-                            this.state.commentAttachment,
-                          );
+                        if (filterLocation(e.nativeEvent.text) != null) {
+                          this.setState({
+                            commentsSugg: searchInSuggestions(
+                              filterLocation(e.nativeEvent.text)[0].split(
+                                '@',
+                              )[1],
+                              this.state.involvedPerson,
+                            ),
+                            commentMentionReplace: filterLocation(
+                              e.nativeEvent.text,
+                            )[0],
+                          });
                         }
+
+                        this.setState({commentText: e.nativeEvent.text});
                       }}
+                      placeholder={'Your comment here '}
+                    />
+                    <View
                       style={{
-                        padding: wp(2),
-                        borderRadius: wp(3),
-                        backgroundColor: colors.lightBlue,
+                        // top: wp(2.7),
+                        position: 'absolute',
+                        right: wp(3),
+                        flexDirection: 'row',
                       }}>
-                      <Icon
-                        size={wp(5)}
-                        name="arrowright"
-                        type="antdesign"
-                        color={colors.primary}
-                      />
-                    </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() =>
+                          this.openDoc(this.state.commentAttachment, true)
+                        }
+                        style={{
+                          backgroundColor: colors.lightBlue,
+                          padding: wp(2),
+                          marginRight: wp(2),
+                          borderRadius: wp(3),
+                        }}>
+                        <Icon
+                          size={wp(5)}
+                          name="attachment"
+                          type="entypo"
+                          color={colors.primary}
+                        />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          if (this.state.commentText != '') {
+                            var map = [...this.state.comments];
+
+                            this.addComment(
+                              this.state.commentText,
+                              this.state.commentAttachment,
+                            );
+                          }
+                        }}
+                        style={{
+                          padding: wp(2),
+                          borderRadius: wp(3),
+                          backgroundColor: colors.lightBlue,
+                        }}>
+                        <Icon
+                          size={wp(5)}
+                          name="arrowright"
+                          type="antdesign"
+                          color={colors.primary}
+                        />
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 </View>
-              </View>
-              {/* User suggestions  */}
-              {this.state.commentsSugg.length !== 0 ? (
-                <View style={styles.commentSuggContainer}>
-                  {this.state.commentsSugg.map(
-                    (d: involved_persons, i: number) => (
-                      <View key={i}>
-                        <TouchableOpacity
-                          onPress={() => {
-                            // this.setState({
-                            //   commentText: this.state.commentText.concat(
-                            //     d.name,
-                            //   ),
-                            // });
-                            this.setState({
-                              commentText: this.state.commentText.replace(
-                                this.state.commentMentionReplace,
-                                d.name,
-                              ),
-                              commentsSugg: [],
-                            });
-                            // this.state.involvePersonTags.push(d);
-                          }}
-                          style={[
-                            styles.commentPSuggCont,
-                            this.state.commentsSugg.length == i + 1
-                              ? {borderBottomWidth: wp(0)}
-                              : null,
-                          ]}>
-                          <Avatar
-                            containerStyle={{marginRight: wp(3)}}
-                            rounded
-                            source={{
-                              uri: d.img_url,
+                {/* User suggestions  */}
+                {this.state.commentsSugg.length !== 0 ? (
+                  <View style={styles.commentSuggContainer}>
+                    {this.state.commentsSugg.map(
+                      (d: involved_persons, i: number) => (
+                        <View key={i}>
+                          <TouchableOpacity
+                            onPress={() => {
+                              // this.setState({
+                              //   commentText: this.state.commentText.concat(
+                              //     d.name,
+                              //   ),
+                              // });
+                              this.setState({
+                                commentText: this.state.commentText.replace(
+                                  this.state.commentMentionReplace,
+                                  d.name,
+                                ),
+                                commentsSugg: [],
+                              });
+                              // this.state.involvePersonTags.push(d);
                             }}
-                          />
-                          <View>
-                            <Text style={styles.involvePSt}>{d.name}</Text>
-                            <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
-                              {d.email}
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
+                            style={[
+                              styles.commentPSuggCont,
+                              this.state.commentsSugg.length == i + 1
+                                ? {borderBottomWidth: wp(0)}
+                                : null,
+                            ]}>
+                            <Avatar
+                              containerStyle={{marginRight: wp(3)}}
+                              rounded
+                              source={{
+                                uri: d.img_url,
+                              }}
+                            />
+                            <View>
+                              <Text style={styles.involvePSt}>{d.name}</Text>
+                              <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                                {d.email}
+                              </Text>
+                            </View>
+                          </TouchableOpacity>
+                        </View>
+                      ),
+                    )}
+                  </View>
+                ) : null}
+
+                {/* Comments Attachments */}
+                {this.state.commentAttachment.length != 0 ? (
+                  <View>
+                    {this.state.commentAttachmentLoading == true ? (
+                      <View style={{alignSelf: 'center'}}>
+                        <LottieView
+                          autoPlay={true}
+                          style={{width: wp(30)}}
+                          source={animation.profileimage}
+                          loop={true}
+                        />
                       </View>
-                    ),
-                  )}
-                </View>
-              ) : null}
-
-              {/* Comments Attachments */}
-              {this.state.commentAttachment.length != 0 ? (
-                <View>
-                  {this.state.commentAttachmentLoading == true ? (
-                    <View style={{alignSelf: 'center'}}>
-                      <LottieView
-                        autoPlay={true}
-                        style={{width: wp(30)}}
-                        source={animation.profileimage}
-                        loop={true}
-                      />
-                    </View>
-                  ) : (
-                    <>
-                      <ScrollView
-                        horizontal={true}
-                        style={{marginLeft: wp(6.7)}}
-                        showsHorizontalScrollIndicator={false}>
-                        {this.state.commentAttachment.map(
-                          (d: any, i: number) => (
-                            <View
-                              style={{
-                                marginLeft: wp(2),
-                                marginTop: wp(3),
-                                marginBottom: wp(5),
-                              }}>
-                              {d.type == 'image' ? (
-                                <View style={styles.AttchimageContainer}>
-                                  <Image
-                                    source={{
-                                      uri: d.uri,
-                                    }}
-                                    style={[
-                                      GlStyles.images,
-                                      {borderRadius: wp(5)},
-                                    ]}
-                                    resizeMode={'cover'}
-                                  />
-                                  <TouchableOpacity
-                                    onPress={() => {
-                                      var arr = [
-                                        ...this.state.commentAttachment,
-                                      ].filter((j) => j != d);
-                                      this.setState({commentAttachment: arr});
-                                    }}
-                                    style={{
-                                      position: 'absolute',
-                                      right: wp(2),
-                                      top: wp(2),
-                                      zIndex: wp(1),
-                                    }}>
-                                    <Icon
-                                      size={wp(5)}
-                                      name="circle-with-cross"
-                                      type="entypo"
-                                      color={colors.text}
-                                    />
-                                  </TouchableOpacity>
-                                </View>
-                              ) : (
-                                <View>
-                                  <View
-                                    style={[
-                                      styles.AttchimageContainer,
-                                      {
-                                        backgroundColor: colors.secondary,
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                      },
-                                    ]}>
+                    ) : (
+                      <>
+                        <ScrollView
+                          horizontal={true}
+                          style={{marginLeft: wp(6.7)}}
+                          showsHorizontalScrollIndicator={false}>
+                          {this.state.commentAttachment.map(
+                            (d: any, i: number) => (
+                              <View
+                                style={{
+                                  marginLeft: wp(2),
+                                  marginTop: wp(3),
+                                  marginBottom: wp(5),
+                                }}>
+                                {d.type == 'image' ? (
+                                  <View style={styles.AttchimageContainer}>
                                     <Image
-                                      source={
-                                        d.type == 'pdf'
-                                          ? images.pdf
-                                          : d.type == 'doc'
-                                          ? images.doc
-                                          : d.type == 'text'
-                                          ? images.text
-                                          : d.type == 'doc'
-                                          ? images.doc
-                                          : // : d.type == 'excel'
-                                            // ? images.excel
-                                            // : d.type == 'powerpoint'
-                                            // ? images.powerpoint
-                                            null
-                                      }
-                                      style={{width: wp(10), height: wp(10)}}
+                                      source={{
+                                        uri: d.uri,
+                                      }}
+                                      style={[
+                                        GlStyles.images,
+                                        {borderRadius: wp(5)},
+                                      ]}
+                                      resizeMode={'cover'}
                                     />
-
-                                    <Text
-                                      style={{
-                                        fontSize: wp(2.5),
-
-                                        color: colors.text,
-                                        marginTop: wp(2),
-                                      }}>
-                                      {d.name.split('.')[0].substring(0, 10)}...{' '}
-                                      {d.name.split('.')[1]}
-                                    </Text>
-
                                     <TouchableOpacity
                                       onPress={() => {
                                         var arr = [
@@ -2683,23 +2641,88 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                       />
                                     </TouchableOpacity>
                                   </View>
-                                </View>
-                              )}
-                            </View>
-                          ),
-                        )}
-                      </ScrollView>
-                    </>
-                  )}
-                </View>
-              ) : (
-                <View style={{marginLeft: wp(5)}}>
-                  <Text style={[styles.attchFileText]}>
-                    Uploaded files will be appear here .
-                  </Text>
-                </View>
-              )}
-            </View>
+                                ) : (
+                                  <View>
+                                    <View
+                                      style={[
+                                        styles.AttchimageContainer,
+                                        {
+                                          backgroundColor: colors.secondary,
+                                          justifyContent: 'center',
+                                          alignItems: 'center',
+                                        },
+                                      ]}>
+                                      <Image
+                                        source={
+                                          d.type == 'pdf'
+                                            ? images.pdf
+                                            : d.type == 'doc'
+                                            ? images.doc
+                                            : d.type == 'text'
+                                            ? images.text
+                                            : d.type == 'doc'
+                                            ? images.doc
+                                            : // : d.type == 'excel'
+                                              // ? images.excel
+                                              // : d.type == 'powerpoint'
+                                              // ? images.powerpoint
+                                              null
+                                        }
+                                        style={{width: wp(10), height: wp(10)}}
+                                      />
+
+                                      <Text
+                                        style={{
+                                          fontSize: wp(2.5),
+
+                                          color: colors.text,
+                                          marginTop: wp(2),
+                                        }}>
+                                        {d.name.split('.')[0].substring(0, 10)}
+                                        ... {d.name.split('.')[1]}
+                                      </Text>
+
+                                      <TouchableOpacity
+                                        onPress={() => {
+                                          var arr = [
+                                            ...this.state.commentAttachment,
+                                          ].filter((j) => j != d);
+                                          this.setState({
+                                            commentAttachment: arr,
+                                          });
+                                        }}
+                                        style={{
+                                          position: 'absolute',
+                                          right: wp(2),
+                                          top: wp(2),
+                                          zIndex: wp(1),
+                                        }}>
+                                        <Icon
+                                          size={wp(5)}
+                                          name="circle-with-cross"
+                                          type="entypo"
+                                          color={colors.text}
+                                        />
+                                      </TouchableOpacity>
+                                    </View>
+                                  </View>
+                                )}
+                              </View>
+                            ),
+                          )}
+                        </ScrollView>
+                      </>
+                    )}
+                  </View>
+                ) : (
+                  <View style={{marginLeft: wp(5)}}>
+                    <Text style={[styles.attchFileText]}>
+                      Uploaded files will be appear here .
+                    </Text>
+                  </View>
+                )}
+              </View>
+            </CopilotStep>
 
             {this.state.allBtnsEnabled ? (
               <>
