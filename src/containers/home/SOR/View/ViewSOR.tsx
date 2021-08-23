@@ -57,6 +57,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {involved_persons, actions, actionsDashboard} from '@typings';
 import * as reduxActions from '../../../../store/actions/listSorActions';
 
+const WalkthroughableText = walkthroughable(Text);
+const WalkthroughableTouchableOpacity = walkthroughable(TouchableOpacity);
+const WalkthroughableView = walkthroughable(View);
+const WalkthroughableInput = walkthroughable(TextInput);
 type ViewSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'ViewSOR'
@@ -174,6 +178,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
+    this.props.start(false, this.scrollView);
     if (this.props.route.params.data.esclate_to != undefined) {
       this.setState({esclate_to: this.props.route.params.data.esclate_to});
     }
@@ -998,185 +1003,199 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
           <Animated.View style={[styles.content]}>
             {/* Observation Details */}
-            <View style={styles.observationDcontent}>
-              {/* Observation ID */}
-              <View style={styles.observationIdContainer}>
-                <Text style={styles.observationIDText}>Observation ID:</Text>
-                <Text style={styles.observationIDAns}>112233</Text>
-              </View>
-              {/* Observation Type */}
-              <View style={styles.observationTypeContainer}>
-                <Text style={styles.observationTypeText}>
-                  Observation Type:
-                </Text>
-                <View style={styles.observationTypeAns}>
-                  <TouchableOpacity style={styles.classittleicon}>
-                    {this.state.sor_type != 'lsr' ? (
-                      <View>
-                        {this.state.sor_type != 'near miss' ? (
-                          <Icon
-                            size={wp(3)}
-                            name={
-                              this.state.sor_type == 'lsr'
-                                ? 'aperture'
-                                : this.state.sor_type == 'positive'
-                                ? 'check-circle'
-                                : this.state.sor_type == 'concern'
-                                ? 'warning'
-                                : this.state.sor_type == 'near miss'
-                                ? 'centercode'
-                                : 'frowno'
-                            }
-                            type={
-                              this.state.sor_type == 'lsr'
-                                ? 'ionicon'
-                                : this.state.sor_type == 'positive'
-                                ? 'font-awesome-5'
-                                : this.state.sor_type == 'concern'
-                                ? 'antdesign'
-                                : this.state.sor_type == 'near miss'
-                                ? 'font-awesome-5'
-                                : 'antdesign'
-                            }
-                            color={
-                              this.state.sor_type == 'lsr'
-                                ? colors.classify_sor_btns.lsr
-                                : this.state.sor_type == 'positive'
-                                ? colors.classify_sor_btns.positive
-                                : this.state.sor_type == 'concern'
-                                ? colors.classify_sor_btns.concern
-                                : this.state.sor_type == 'near miss'
-                                ? colors.classify_sor_btns.nearmiss
-                                : 'frowno'
-                            }
-                          />
-                        ) : null}
-                      </View>
-                    ) : null}
-
-                    {this.state.sor_type == 'lsr' ? (
-                      <View style={{width: wp(7), height: wp(7)}}>
-                        <Image
-                          source={images.lsr}
-                          style={[GlStyles.images, {tintColor: colors.text}]}
-                        />
-                      </View>
-                    ) : null}
-                    {this.state.sor_type == 'near miss' ? (
-                      <View style={{width: wp(8), height: wp(8)}}>
-                        <Image
-                          source={images.nearMiss}
-                          style={GlStyles.images}
-                        />
-                      </View>
-                    ) : null}
-                    <Text
-                      style={[
-                        styles.clasifyT,
-                        this.state.sor_type == 'lsr'
-                          ? {color: colors.classify_sor_btns.lsr}
-                          : this.state.sor_type == 'positive'
-                          ? {color: colors.classify_sor_btns.positive}
-                          : this.state.sor_type == 'concern'
-                          ? {color: colors.classify_sor_btns.concern}
-                          : this.state.sor_type == 'near miss'
-                          ? {color: colors.classify_sor_btns.nearmiss}
-                          : null,
-                      ]}>
-                      {capitalizeFirstLetter(this.state.sor_type)}
-                    </Text>
-                  </TouchableOpacity>
+            <CopilotStep
+              text="Observation detail"
+              order={2}
+              name="copObservationDetail">
+              <WalkthroughableView style={styles.observationDcontent}>
+                {/* Observation ID */}
+                <View style={styles.observationIdContainer}>
+                  <Text style={styles.observationIDText}>Observation ID:</Text>
+                  <Text style={styles.observationIDAns}>112233</Text>
                 </View>
-              </View>
-              {/* Reported on  */}
-              <View style={styles.reportedOnContainer}>
-                <Text style={styles.reportedOnText}>Reported on:</Text>
-                <Text style={styles.reportedOnAns}>
-                  {moment(this.state.time).format('MMM DD, YYYY LT')}
-                </Text>
-              </View>
-              {/* Project */}
-              <View style={styles.projectContainer}>
-                <Text style={styles.projectText}>Project:</Text>
-                <Text style={styles.projectAns}>{this.state.projectName}</Text>
-              </View>
-              {/* Location */}
-              <View style={styles.locationContainer}>
-                <Text style={styles.locationText}>Location:</Text>
-                <Text style={styles.locationAns}>
-                  {this.props.route.params.data.location}
-                </Text>
-              </View>
-            </View>
+                {/* Observation Type */}
+                <View style={styles.observationTypeContainer}>
+                  <Text style={styles.observationTypeText}>
+                    Observation Type:
+                  </Text>
+                  <View style={styles.observationTypeAns}>
+                    <TouchableOpacity style={styles.classittleicon}>
+                      {this.state.sor_type != 'lsr' ? (
+                        <View>
+                          {this.state.sor_type != 'near miss' ? (
+                            <Icon
+                              size={wp(3)}
+                              name={
+                                this.state.sor_type == 'lsr'
+                                  ? 'aperture'
+                                  : this.state.sor_type == 'positive'
+                                  ? 'check-circle'
+                                  : this.state.sor_type == 'concern'
+                                  ? 'warning'
+                                  : this.state.sor_type == 'near miss'
+                                  ? 'centercode'
+                                  : 'frowno'
+                              }
+                              type={
+                                this.state.sor_type == 'lsr'
+                                  ? 'ionicon'
+                                  : this.state.sor_type == 'positive'
+                                  ? 'font-awesome-5'
+                                  : this.state.sor_type == 'concern'
+                                  ? 'antdesign'
+                                  : this.state.sor_type == 'near miss'
+                                  ? 'font-awesome-5'
+                                  : 'antdesign'
+                              }
+                              color={
+                                this.state.sor_type == 'lsr'
+                                  ? colors.classify_sor_btns.lsr
+                                  : this.state.sor_type == 'positive'
+                                  ? colors.classify_sor_btns.positive
+                                  : this.state.sor_type == 'concern'
+                                  ? colors.classify_sor_btns.concern
+                                  : this.state.sor_type == 'near miss'
+                                  ? colors.classify_sor_btns.nearmiss
+                                  : 'frowno'
+                              }
+                            />
+                          ) : null}
+                        </View>
+                      ) : null}
+
+                      {this.state.sor_type == 'lsr' ? (
+                        <View style={{width: wp(7), height: wp(7)}}>
+                          <Image
+                            source={images.lsr}
+                            style={[GlStyles.images, {tintColor: colors.text}]}
+                          />
+                        </View>
+                      ) : null}
+                      {this.state.sor_type == 'near miss' ? (
+                        <View style={{width: wp(8), height: wp(8)}}>
+                          <Image
+                            source={images.nearMiss}
+                            style={GlStyles.images}
+                          />
+                        </View>
+                      ) : null}
+                      <Text
+                        style={[
+                          styles.clasifyT,
+                          this.state.sor_type == 'lsr'
+                            ? {color: colors.classify_sor_btns.lsr}
+                            : this.state.sor_type == 'positive'
+                            ? {color: colors.classify_sor_btns.positive}
+                            : this.state.sor_type == 'concern'
+                            ? {color: colors.classify_sor_btns.concern}
+                            : this.state.sor_type == 'near miss'
+                            ? {color: colors.classify_sor_btns.nearmiss}
+                            : null,
+                        ]}>
+                        {capitalizeFirstLetter(this.state.sor_type)}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                {/* Reported on  */}
+                <View style={styles.reportedOnContainer}>
+                  <Text style={styles.reportedOnText}>Reported on:</Text>
+                  <Text style={styles.reportedOnAns}>
+                    {moment(this.state.time).format('MMM DD, YYYY LT')}
+                  </Text>
+                </View>
+                {/* Project */}
+                <View style={styles.projectContainer}>
+                  <Text style={styles.projectText}>Project:</Text>
+                  <Text style={styles.projectAns}>
+                    {this.state.projectName}
+                  </Text>
+                </View>
+                {/* Location */}
+                <View style={styles.locationContainer}>
+                  <Text style={styles.locationText}>Location:</Text>
+                  <Text style={styles.locationAns}>
+                    {this.props.route.params.data.location}
+                  </Text>
+                </View>
+              </WalkthroughableView>
+            </CopilotStep>
+
             {/* Line  */}
 
             <View style={styles.lineheight} />
-            <View style={styles.obserContainer}>
-              <Text style={styles.observationDate}>
-                On {moment(this.state.time).format('MMM DD, YYYY')} at{' '}
-                {moment(this.state.time).format('LT')}
-              </Text>
-              <View>
-                <TextInput
-                  multiline={true}
-                  value={this.state.observation}
-                  onChange={(e) => {
-                    this.setState({observation: e.nativeEvent.text});
-                    this.setState({time: Date.now()});
-                  }}
-                  style={styles.observationText}
-                />
-              </View>
-              {this.state.involvedPerson.length != 0 && (
-                <View style={{flexDirection: 'row'}}>
-                  <Text style={styles.involvedPersonContainertext}>
-                    Involved Person:{' '}
-                  </Text>
-                  <Text style={styles.involvedPersonText}>
-                    {this.state.involvedPerson.length > 1 ? (
-                      <>
-                        {this.state.isCounterInvolved ? (
-                          <View style={{flexDirection: 'column'}}>
-                            {this.state.involvedPerson.map((d) => (
-                              <Text style={{flexDirection: 'column'}}>
-                                {d.name}
-                              </Text>
-                            ))}
-                          </View>
-                        ) : (
-                          <Text>
-                            {' '}
-                            {this.state.involvedPerson.slice(0, 1)[0].name}
-                            {'   '}
-                            <TouchableOpacity
-                              onPress={() =>
-                                this.setState({
-                                  isCounterInvolved: !this.state
-                                    .isCounterInvolved,
-                                })
-                              }>
-                              <Text
-                                style={{
-                                  marginLeft: wp(1),
-                                  fontWeight: 'bold',
-                                  color: colors.primary,
-                                  fontSize: wp(3),
-                                }}>
-                                {this.state.involvedPerson.length - 1} more
-                              </Text>
-                            </TouchableOpacity>
-                          </Text>
-                        )}
-                      </>
-                    ) : (
-                      <></>
-                      // this.state.involvedPerson.map((d) => d.name).join(',')
-                    )}
-                    {/* {this.state.involvedPerson.map((d) => d.name).join(',')} */}
-                  </Text>
+
+            <CopilotStep
+              text="Observation Details with involved users "
+              order={2}
+              name="copObsdetailInvolvedUsers">
+              <WalkthroughableView style={styles.obserContainer}>
+                <Text style={styles.observationDate}>
+                  On {moment(this.state.time).format('MMM DD, YYYY')} at{' '}
+                  {moment(this.state.time).format('LT')}
+                </Text>
+                <View>
+                  <TextInput
+                    multiline={true}
+                    value={this.state.observation}
+                    onChange={(e) => {
+                      this.setState({observation: e.nativeEvent.text});
+                      this.setState({time: Date.now()});
+                    }}
+                    style={styles.observationText}
+                  />
                 </View>
-              )}
-            </View>
+                {this.state.involvedPerson.length != 0 && (
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.involvedPersonContainertext}>
+                      Involved Person:{' '}
+                    </Text>
+                    <Text style={styles.involvedPersonText}>
+                      {this.state.involvedPerson.length > 1 ? (
+                        <>
+                          {this.state.isCounterInvolved ? (
+                            <View style={{flexDirection: 'column'}}>
+                              {this.state.involvedPerson.map((d) => (
+                                <Text style={{flexDirection: 'column'}}>
+                                  {d.name}
+                                </Text>
+                              ))}
+                            </View>
+                          ) : (
+                            <Text>
+                              {' '}
+                              {this.state.involvedPerson.slice(0, 1)[0].name}
+                              {'   '}
+                              <TouchableOpacity
+                                onPress={() =>
+                                  this.setState({
+                                    isCounterInvolved: !this.state
+                                      .isCounterInvolved,
+                                  })
+                                }>
+                                <Text
+                                  style={{
+                                    marginLeft: wp(1),
+                                    fontWeight: 'bold',
+                                    color: colors.primary,
+                                    fontSize: wp(3),
+                                  }}>
+                                  {this.state.involvedPerson.length - 1} more
+                                </Text>
+                              </TouchableOpacity>
+                            </Text>
+                          )}
+                        </>
+                      ) : (
+                        <></>
+                        // this.state.involvedPerson.map((d) => d.name).join(',')
+                      )}
+                      {/* {this.state.involvedPerson.map((d) => d.name).join(',')} */}
+                    </Text>
+                  </View>
+                )}
+              </WalkthroughableView>
+            </CopilotStep>
             {/* Line  */}
             <View style={styles.lineheight} />
             {/* <View style={styles.subContainer}>
@@ -1321,122 +1340,140 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               </Text> */}
 
               {/* Potiential Risk */}
-              {this.state.potientialRisk == 0 ? null : (
-                <View style={styles.potentialRiskContainer}>
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text style={styles.potientialRiskHeading}>
-                      Potential Risk
-                    </Text>
-                    <Text style={styles.systemDefinedtext}>
-                      (System Defined)
-                    </Text>
-                  </View>
-                  <View
-                    style={[
-                      styles.badgePotientialRisk,
-                      this.state.potientialRisk < 7
-                        ? {borderColor: colors.green}
-                        : this.state.potientialRisk < 14
-                        ? {borderColor: colors.riskIcons.orrange}
-                        : {borderColor: colors.error},
-                    ]}>
-                    <Text
-                      style={[
-                        styles.potentialRiskBadgeContainerText,
-                        this.state.potientialRisk < 7
-                          ? {color: colors.green}
-                          : this.state.potientialRisk < 14
-                          ? {color: colors.riskIcons.orrange}
-                          : {color: colors.error},
-                      ]}>
-                      {this.state.potientialRisk}-{' '}
-                      {this.state.potientialRisk < 7
-                        ? 'Low'
-                        : this.state.potientialRisk < 14
-                        ? 'Medium'
-                        : 'High'}
-                    </Text>
-                  </View>
-                </View>
-              )}
+              <CopilotStep
+                text="Potiential Risk (System Defined) "
+                order={3}
+                name="copPotientialRisk">
+                <WalkthroughableView>
+                  {this.state.potientialRisk == 0 ? null : (
+                    <View style={styles.potentialRiskContainer}>
+                      <View
+                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Text style={styles.potientialRiskHeading}>
+                          Potential Risk
+                        </Text>
+                        <Text style={styles.systemDefinedtext}>
+                          (System Defined)
+                        </Text>
+                      </View>
+                      <View
+                        style={[
+                          styles.badgePotientialRisk,
+                          this.state.potientialRisk < 7
+                            ? {borderColor: colors.green}
+                            : this.state.potientialRisk < 14
+                            ? {borderColor: colors.riskIcons.orrange}
+                            : {borderColor: colors.error},
+                        ]}>
+                        <Text
+                          style={[
+                            styles.potentialRiskBadgeContainerText,
+                            this.state.potientialRisk < 7
+                              ? {color: colors.green}
+                              : this.state.potientialRisk < 14
+                              ? {color: colors.riskIcons.orrange}
+                              : {color: colors.error},
+                          ]}>
+                          {this.state.potientialRisk}-{' '}
+                          {this.state.potientialRisk < 7
+                            ? 'Low'
+                            : this.state.potientialRisk < 14
+                            ? 'Medium'
+                            : 'High'}
+                        </Text>
+                      </View>
+                    </View>
+                  )}
+                </WalkthroughableView>
+              </CopilotStep>
               {/* Actual Risk */}
 
-              {this.state.selectedRisk == false ? (
-                <View>
-                  <Chart
-                    liklihood={this.state.liklihood}
-                    severity={this.state.severity}
-                    style={{marginTop: wp(3)}}
-                    onPress={(v: object) => {}}
-                  />
-                </View>
-              ) : (
-                <TouchableOpacity
-                  onPress={() => this.setState({selectedRisk: false})}>
-                  <View
-                    style={[styles.potentialRiskContainer, {marginTop: wp(3)}]}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                      <Text
-                        style={[
-                          styles.actualRiskheading,
-                          {fontFamily: fonts.SFuiDisplaySemiBold},
-                        ]}>
-                        Actual Risk
-                      </Text>
-                      <Text style={styles.systemDefinedtext}>(Calculated)</Text>
+              <CopilotStep text="Actual Risk " order={4} name="copActualrisk">
+                <WalkthroughableView>
+                  {this.state.selectedRisk == false ? (
+                    <View>
+                      <Chart
+                        liklihood={this.state.liklihood}
+                        severity={this.state.severity}
+                        style={{marginTop: wp(3)}}
+                        onPress={(v: object) => {}}
+                      />
                     </View>
-                    <View
-                      style={[
-                        styles.badgeActualRisk,
-                        this.props.route.params.data.risk.likelihood *
-                          this.props.route.params.data.risk.severity <
-                        7
-                          ? {
-                              borderColor: colors.green,
-                              backgroundColor: colors.green,
-                            }
-                          : this.props.route.params.data.risk.likelihood *
-                              this.props.route.params.data.risk.severity <
-                            14
-                          ? {
-                              borderColor: colors.riskIcons.orrange,
-                              backgroundColor: colors.riskIcons.orrange,
-                            }
-                          : {
-                              borderColor: colors.error,
-                              backgroundColor: colors.error,
-                            },
-                      ]}>
-                      <Text
+                  ) : (
+                    <TouchableOpacity
+                      onPress={() => this.setState({selectedRisk: false})}>
+                      <View
                         style={[
-                          styles.potentialRiskBadgeContainerText,
-                          this.props.route.params.data.risk.likelihood *
-                            this.props.route.params.data.risk.severity <
-                          7
-                            ? {color: colors.secondary}
-                            : this.props.route.params.data.risk.likelihood *
+                          styles.potentialRiskContainer,
+                          {marginTop: wp(3)},
+                        ]}>
+                        <View
+                          style={{flexDirection: 'row', alignItems: 'center'}}>
+                          <Text
+                            style={[
+                              styles.actualRiskheading,
+                              {fontFamily: fonts.SFuiDisplaySemiBold},
+                            ]}>
+                            Actual Risk
+                          </Text>
+                          <Text style={styles.systemDefinedtext}>
+                            (Calculated)
+                          </Text>
+                        </View>
+                        <View
+                          style={[
+                            styles.badgeActualRisk,
+                            this.props.route.params.data.risk.likelihood *
+                              this.props.route.params.data.risk.severity <
+                            7
+                              ? {
+                                  borderColor: colors.green,
+                                  backgroundColor: colors.green,
+                                }
+                              : this.props.route.params.data.risk.likelihood *
+                                  this.props.route.params.data.risk.severity <
+                                14
+                              ? {
+                                  borderColor: colors.riskIcons.orrange,
+                                  backgroundColor: colors.riskIcons.orrange,
+                                }
+                              : {
+                                  borderColor: colors.error,
+                                  backgroundColor: colors.error,
+                                },
+                          ]}>
+                          <Text
+                            style={[
+                              styles.potentialRiskBadgeContainerText,
+                              this.props.route.params.data.risk.likelihood *
                                 this.props.route.params.data.risk.severity <
-                              14
-                            ? {color: colors.secondary}
-                            : {color: colors.secondary},
-                        ]}>
-                        {this.props.route.params.data.risk.likelihood *
-                          this.props.route.params.data.risk.severity}
-                        -{' '}
-                        {this.props.route.params.data.risk.likelihood *
-                          this.props.route.params.data.risk.severity <
-                        7
-                          ? 'Low'
-                          : this.props.route.params.data.risk.likelihood *
+                              7
+                                ? {color: colors.secondary}
+                                : this.props.route.params.data.risk.likelihood *
+                                    this.props.route.params.data.risk.severity <
+                                  14
+                                ? {color: colors.secondary}
+                                : {color: colors.secondary},
+                            ]}>
+                            {this.props.route.params.data.risk.likelihood *
+                              this.props.route.params.data.risk.severity}
+                            -{' '}
+                            {this.props.route.params.data.risk.likelihood *
                               this.props.route.params.data.risk.severity <
-                            14
-                          ? 'Medium'
-                          : 'High'}
-                      </Text>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              )}
+                            7
+                              ? 'Low'
+                              : this.props.route.params.data.risk.likelihood *
+                                  this.props.route.params.data.risk.severity <
+                                14
+                              ? 'Medium'
+                              : 'High'}
+                          </Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                </WalkthroughableView>
+              </CopilotStep>
             </View>
             {/* five WHY Questionaries */}
             {/* Line  */}
@@ -1580,166 +1617,183 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             {/* Actions / recommendations */}
 
             {this.state.sor_type != 'positive' ? (
-              <>
-                <View style={styles.actionContainer}>
-                  <Text style={styles.actionText}>Action / Recommendation</Text>
-                  {this.props.route.params.data.action_required == undefined ? (
-                    <Text style={styles.nosuchActionsAndRecommendations}>
-                      No such Actions / Recommendations
+              <CopilotStep
+                text="Actions and recommendations"
+                order={5}
+                name="copactionAndrecommendations">
+                <>
+                  <View style={styles.actionContainer}>
+                    <Text style={styles.actionText}>
+                      Action / Recommendation
                     </Text>
-                  ) : (
-                    <View>
-                      {this.state.actionsAndRecommendations.map(
-                        (d: any, i: number) => (
-                          <TouchableOpacity
-                            onPress={() => {
-                              var data = [
-                                ...this.state.actionsAndRecommendations,
-                              ];
-                              if (d.is_complete == true) {
-                                data[i].is_complete = false;
-                              } else {
-                                data[i].is_complete = true;
-                              }
+                    {this.props.route.params.data.action_required ==
+                    undefined ? (
+                      <Text style={styles.nosuchActionsAndRecommendations}>
+                        No such Actions / Recommendations
+                      </Text>
+                    ) : (
+                      <View>
+                        {this.state.actionsAndRecommendations.map(
+                          (d: any, i: number) => (
+                            <TouchableOpacity
+                              onPress={() => {
+                                var data = [
+                                  ...this.state.actionsAndRecommendations,
+                                ];
+                                if (d.is_complete == true) {
+                                  data[i].is_complete = false;
+                                } else {
+                                  data[i].is_complete = true;
+                                }
 
-                              this.setState({actionsAndRecommendations: data});
-                            }}
-                            onLongPress={() => {
-                              var submitto = this.props.route.params.data
-                                .submit_to;
-                              var created_by = this.props.route.params.data
-                                .created_by;
-                              var esclate_to = this.props.route.params.data
-                                .esclate_to;
-                              // var members = this.state.submitto.concat(
-                              //   this.state.assignSuppervisor,
-                              // );
+                                this.setState({
+                                  actionsAndRecommendations: data,
+                                });
+                              }}
+                              onLongPress={() => {
+                                var submitto = this.props.route.params.data
+                                  .submit_to;
+                                var created_by = this.props.route.params.data
+                                  .created_by;
+                                var esclate_to = this.props.route.params.data
+                                  .esclate_to;
+                                // var members = this.state.submitto.concat(
+                                //   this.state.assignSuppervisor,
+                                // );
 
-                              var members = [];
+                                var members = [];
 
-                              console.log(
-                                '44448372871837218371283721837128371283712837218371',
-                              );
-                              console.log(this.props.route.params.data);
-                              members.push(
-                                this.props.route.params.data.submit_to[0],
-                              );
+                                console.log(
+                                  '44448372871837218371283721837128371283712837218371',
+                                );
+                                console.log(this.props.route.params.data);
+                                members.push(
+                                  this.props.route.params.data.submit_to[0],
+                                );
 
-                              members.push(
-                                this.props.route.params.data.created_by,
-                              );
+                                members.push(
+                                  this.props.route.params.data.created_by,
+                                );
 
-                              // if (this.state.user.email == d.assigned_to) {
-                              this.setState({
-                                allActionsEdit: d,
+                                // if (this.state.user.email == d.assigned_to) {
+                                this.setState({
+                                  allActionsEdit: d,
 
-                                SuggestionPop: true,
-                                allActionsEditIndex: i,
-                                newActions: false,
-                                submitToAndObserverEmails: members,
-                              });
-                              // }
-                            }}
-                            key={i}
-                            style={[
-                              styles.suggestedActionsContainer,
-                              d.is_complete == true
-                                ? {
-                                    backgroundColor: colors.lightBlue,
-                                    borderWidth: wp(0),
-                                  }
-                                : {
-                                    backgroundColor: colors.secondary,
-                                    borderWidth: wp(0.2),
-                                  },
-                            ]}>
-                            <View style={{flexDirection: 'row', width: wp(84)}}>
-                              <Text style={styles.actionType}>
-                                {d.category}:{' '}
-                                <Text style={styles.actionDesc}>
-                                  {d.content.substring(0, 50)}...
+                                  SuggestionPop: true,
+                                  allActionsEditIndex: i,
+                                  newActions: false,
+                                  submitToAndObserverEmails: members,
+                                });
+                                // }
+                              }}
+                              key={i}
+                              style={[
+                                styles.suggestedActionsContainer,
+                                d.is_complete == true
+                                  ? {
+                                      backgroundColor: colors.lightBlue,
+                                      borderWidth: wp(0),
+                                    }
+                                  : {
+                                      backgroundColor: colors.secondary,
+                                      borderWidth: wp(0.2),
+                                    },
+                              ]}>
+                              <View
+                                style={{flexDirection: 'row', width: wp(84)}}>
+                                <Text style={styles.actionType}>
+                                  {d.category}:{' '}
+                                  <Text style={styles.actionDesc}>
+                                    {d.content.substring(0, 50)}...
+                                  </Text>
                                 </Text>
-                              </Text>
-                            </View>
-                            <Icon
-                              size={wp(6)}
-                              name="more-vertical"
-                              type="feather"
-                              color={'#686868'}
-                            />
-                          </TouchableOpacity>
-                        ),
-                      )}
-                    </View>
-                  )}
-                </View>
+                              </View>
+                              <Icon
+                                size={wp(6)}
+                                name="more-vertical"
+                                type="feather"
+                                color={'#686868'}
+                              />
+                            </TouchableOpacity>
+                          ),
+                        )}
+                      </View>
+                    )}
+                  </View>
 
-                <View
-                  style={[
-                    styles.addActionAndRecommendation,
-                    this.state.notifiedAndInv == 3
-                      ? {borderColor: colors.green}
-                      : {borderColor: colors.lightGrey},
-                  ]}>
-                  <TextInput
-                    onFocus={() => this.setState({notifiedAndInv: 3})}
-                    maxLength={500}
-                    onChange={(e) =>
-                      this.setState({
-                        actionsAndRecommendationText: e.nativeEvent.text,
-                      })
-                    }
-                    value={this.state.actionsAndRecommendationText}
-                    multiline={true}
-                    style={styles.textaddActionContainer}
-                    placeholder={'Add action / recommendation here'}
-                  />
-
-                  <TouchableOpacity
-                    onPress={() => {
-                      // this.submitActionsAndRecommendations(
-                      //   this.state.actionsAndRecommendationText,
-                      // );
-                      if (this.state.actionsAndRecommendationText !== '') {
-                        var members = [];
-                        members.push(this.props.route.params.data.submit_to[0]);
-
-                        members.push(this.props.route.params.data.created_by);
+                  <View
+                    style={[
+                      styles.addActionAndRecommendation,
+                      this.state.notifiedAndInv == 3
+                        ? {borderColor: colors.green}
+                        : {borderColor: colors.lightGrey},
+                    ]}>
+                    <TextInput
+                      onFocus={() => this.setState({notifiedAndInv: 3})}
+                      maxLength={500}
+                      onChange={(e) =>
                         this.setState({
-                          allActionsEdit: {
-                            is_complete: false,
-                            is_selected: false,
-                            content: this.state.actionsAndRecommendationText,
-                            assigned_to: [],
-                            date: moment().format('YYYY-MM-DD'),
-                            status: 'InProgress',
-                            category: 'Elimination',
-                            // actionsAndRecommendationText :"",
-                          },
-                          submitToAndObserverEmails: members,
-                          // ne
-                          SuggestionPop: true,
-                          newActions: true,
-                        });
+                          actionsAndRecommendationText: e.nativeEvent.text,
+                        })
                       }
-                    }}
-                    style={styles.arrowRightActionsAndRecommendations}>
-                    <Icon
-                      size={wp(4)}
-                      name="arrowright"
-                      type="antdesign"
-                      color={colors.primary}
+                      value={this.state.actionsAndRecommendationText}
+                      multiline={true}
+                      style={styles.textaddActionContainer}
+                      placeholder={'Add action / recommendation here'}
                     />
-                  </TouchableOpacity>
-                </View>
-              </>
+
+                    <TouchableOpacity
+                      onPress={() => {
+                        // this.submitActionsAndRecommendations(
+                        //   this.state.actionsAndRecommendationText,
+                        // );
+                        if (this.state.actionsAndRecommendationText !== '') {
+                          var members = [];
+                          members.push(
+                            this.props.route.params.data.submit_to[0],
+                          );
+
+                          members.push(this.props.route.params.data.created_by);
+                          this.setState({
+                            allActionsEdit: {
+                              is_complete: false,
+                              is_selected: false,
+                              content: this.state.actionsAndRecommendationText,
+                              assigned_to: [],
+                              date: moment().format('YYYY-MM-DD'),
+                              status: 'InProgress',
+                              category: 'Elimination',
+                              // actionsAndRecommendationText :"",
+                            },
+                            submitToAndObserverEmails: members,
+                            // ne
+                            SuggestionPop: true,
+                            newActions: true,
+                          });
+                        }
+                      }}
+                      style={styles.arrowRightActionsAndRecommendations}>
+                      <Icon
+                        size={wp(4)}
+                        name="arrowright"
+                        type="antdesign"
+                        color={colors.primary}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </>
+              </CopilotStep>
             ) : null}
 
             {/* Attachments / Images or docs */}
 
             {/* Line  */}
             <View style={styles.lineheight} />
-            <View style={styles.attachmentsContainer}>
+            <CopilotStep
+                text="Actions and recommendations"
+                order={5}
+                name="copactionAndrecommendations">
+            <WalkthroughableView style={styles.attachmentsContainer}>
               <Text style={styles.attachmentsFont}>Attachments</Text>
               {this.state.fileLoading == true ? (
                 <View style={{alignSelf: 'center'}}>
@@ -1938,7 +1992,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </Text>
                 </TouchableOpacity>
               )}
-            </View>
+            </WalkthroughableView>
+
+           
+           
+           
+           
+            </CopilotStep>
+
             {/* Line  */}
             <View style={styles.lineheight} />
             {/* Initialize and Submitted to options */}
