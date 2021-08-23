@@ -46,6 +46,7 @@ import {
   Selector,
   FiveWhy,
 } from '@components';
+import {copilot, walkthroughable, CopilotStep} from 'react-native-copilot';
 
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
@@ -58,7 +59,10 @@ import {AllSorDTO} from '@dtos';
 // import QuickReplies from 'react-native-gifted-chat/lib/QuickReplies';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {validateEmail} from '../../../../utils/utils';
-
+const WalkthroughableText = walkthroughable(Text);
+const WalkthroughableTouchableOpacity = walkthroughable(TouchableOpacity);
+const WalkthroughableView = walkthroughable(View);
+const WalkthroughableInput = walkthroughable(TextInput);
 type CreateSORNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'CreateSOR'
@@ -300,6 +304,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   }
 
   componentDidMount = () => {
+    this.props.start(false, this.scrollView);
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectid: currentProj});
 
@@ -1135,7 +1140,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     return (
       <Animated.View style={[styles.container]}>
         {/* Header */}
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          ref={(ref) => (this.scrollView = ref)}
+          showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
@@ -1163,246 +1170,269 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             <View style={styles.lineheight} />
             {/* Classify SOR */}
 
-            <View style={styles.clasSorContainer}>
-              <Text style={styles.clasSorHeading}>Classify Observation</Text>
-              <View style={styles.clasSorBtnV}>
-                {this.state.classifySorbtns.map(
-                  (d: classifySorBtn, i: number) => (
-                    <TouchableOpacity
-                      key={i}
-                      onPress={() => {
-                        this.setState({fiveWhytoggle: false});
-                        var classifySorbtns = [...this.state.classifySorbtns];
-                        classifySorbtns.map((b: object, j: number) => {
-                          if (classifySorbtns[j] == d) {
-                            classifySorbtns[j].selected = !classifySorbtns[j]
-                              .selected;
-                          } else {
-                            classifySorbtns[j].selected = false;
-                          }
-                        });
+            <CopilotStep
+              text="Classify your observation"
+              order={1}
+              name="copClassifyObs">
+              <WalkthroughableView style={styles.clasSorContainer}>
+                <Text style={styles.clasSorHeading}>Classify Observation</Text>
+                <View style={styles.clasSorBtnV}>
+                  {this.state.classifySorbtns.map(
+                    (d: classifySorBtn, i: number) => (
+                      <TouchableOpacity
+                        key={i}
+                        onPress={() => {
+                          this.setState({fiveWhytoggle: false});
+                          var classifySorbtns = [...this.state.classifySorbtns];
+                          classifySorbtns.map((b: object, j: number) => {
+                            if (classifySorbtns[j] == d) {
+                              classifySorbtns[j].selected = !classifySorbtns[j]
+                                .selected;
+                            } else {
+                              classifySorbtns[j].selected = false;
+                            }
+                          });
 
-                        this.setState(classifySorbtns);
-                      }}
-                      style={[
-                        styles.clasSorBtnCont,
-                        {borderColor: d.color},
-                        d.selected ? {backgroundColor: d.color} : {},
-                      ]}>
-                      <View style={styles.clasSorBtnWrap}>
-                        <Icon
-                          size={17}
-                          name={d.icon}
-                          type={d.type}
-                          color={d.selected ? '#fff' : d.color}
-                        />
-                        <Text
-                          style={[
-                            styles.clasSorBtnTtl,
-                            {
-                              color: d.selected ? '#fff' : d.color,
-                            },
-                          ]}>
-                          {d.title}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  ),
-                )}
-              </View>
-            </View>
+                          this.setState(classifySorbtns);
+                        }}
+                        style={[
+                          styles.clasSorBtnCont,
+                          {borderColor: d.color},
+                          d.selected ? {backgroundColor: d.color} : {},
+                        ]}>
+                        <View style={styles.clasSorBtnWrap}>
+                          <Icon
+                            size={17}
+                            name={d.icon}
+                            type={d.type}
+                            color={d.selected ? '#fff' : d.color}
+                          />
+                          <Text
+                            style={[
+                              styles.clasSorBtnTtl,
+                              {
+                                color: d.selected ? '#fff' : d.color,
+                              },
+                            ]}>
+                            {d.title}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    ),
+                  )}
+                </View>
+              </WalkthroughableView>
+            </CopilotStep>
+
             {/* Line  */}
             <View style={styles.lineheight} />
             {/* Observation Details */}
-            <View style={styles.observationDetailsContainer}>
-              <Text style={styles.observationT}>Observation Detail</Text>
-              <View
-                style={[
-                  styles.observationDetail,
-                  this.state.selectedInputIndex == 1
-                    ? {borderColor: colors.green}
-                    : null,
-                ]}>
-                <View style={{flexDirection: 'row'}}>
-                  <Text style={styles.obserttle}>On </Text>
-                  <Icon
-                    size={15}
-                    name="calendar-clock"
-                    type="material-community"
-                    color={colors.primary}
+            <CopilotStep
+              text="Specify your observation detail"
+              order={2}
+              name="copObservationDetail">
+              <WalkthroughableView style={styles.observationDetailsContainer}>
+                <Text style={styles.observationT}>Observation Detail</Text>
+                <View
+                  style={[
+                    styles.observationDetail,
+                    this.state.selectedInputIndex == 1
+                      ? {borderColor: colors.green}
+                      : null,
+                  ]}>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.obserttle}>On </Text>
+                    <Icon
+                      size={15}
+                      name="calendar-clock"
+                      type="material-community"
+                      color={colors.primary}
+                    />
+                    <TouchableOpacity
+                      onPress={() =>
+                        this.setState({setDateModal: !this.state.setDateModal})
+                      }>
+                      <Text style={[styles.obserttle, {color: colors.primary}]}>
+                        {moment(this.state.todayDateCallender).format(
+                          'MMMM DD',
+                        )}
+                        , {moment(this.state.todayDateCallender).format('YYYY')}{' '}
+                      </Text>
+                    </TouchableOpacity>
+
+                    <Text style={styles.obserttle}>at about </Text>
+
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.setState({setTimeModal: !this.state.setTimeModal});
+                      }}>
+                      <Text style={[styles.obserttle, {color: colors.primary}]}>
+                        {moment(this.state.currentTime).format('LT')}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <Text style={styles.obserttle}>it was observed that</Text>
+                  <TextInput
+                    multiline={true}
+                    onFocus={() => this.setState({selectedInputIndex: 1})}
+                    value={this.state.observationT}
+                    underlineColorAndroid="transparent"
+                    placeholder="Enter your observation here"
+                    onChangeText={(t) => {
+                      this.setState({observationT: t});
+                      this.searchInObservation(t);
+                    }}
+                    style={[styles.obInputText]}
                   />
-                  <TouchableOpacity
-                    onPress={() =>
-                      this.setState({setDateModal: !this.state.setDateModal})
-                    }>
-                    <Text style={[styles.obserttle, {color: colors.primary}]}>
-                      {moment(this.state.todayDateCallender).format('MMMM DD')},{' '}
-                      {moment(this.state.todayDateCallender).format('YYYY')}{' '}
-                    </Text>
-                  </TouchableOpacity>
-
-                  <Text style={styles.obserttle}>at about </Text>
-
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.setState({setTimeModal: !this.state.setTimeModal});
-                    }}>
-                    <Text style={[styles.obserttle, {color: colors.primary}]}>
-                      {moment(this.state.currentTime).format('LT')}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <Text style={styles.obserttle}>it was observed that</Text>
-                <TextInput
-                  multiline={true}
-                  onFocus={() => this.setState({selectedInputIndex: 1})}
-                  value={this.state.observationT}
-                  underlineColorAndroid="transparent"
-                  placeholder="Enter your observation here"
-                  onChangeText={(t) => {
-                    this.setState({observationT: t});
-                    this.searchInObservation(t);
-                  }}
-                  style={[styles.obInputText]}
-                />
-                <View style={{flexDirection: 'row'}}>
-                  <Text style={styles.obText}>
-                    at{' '}
-                    {/* <Text style={{color: colors.primary}}>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.obText}>
+                      at{' '}
+                      {/* <Text style={{color: colors.primary}}>
                   {this.state.obserLocation}
                 </Text>{' '} */}
-                  </Text>
-                  <TextInput
-                    value={this.state.observation}
-                    style={styles.textInputOfArea}
-                    onChangeText={(e) => this.setState({observation: e})}
-                    placeholder={'@Add Area'}
-                  />
-                  <Text style={styles.obText}> and it happend at</Text>
-                </View>
+                    </Text>
+                    <TextInput
+                      value={this.state.observation}
+                      style={styles.textInputOfArea}
+                      onChangeText={(e) => this.setState({observation: e})}
+                      placeholder={'@Add Area'}
+                    />
+                    <Text style={styles.obText}> and it happend at</Text>
+                  </View>
 
-                <View style={{flexDirection: 'row', marginTop: wp(-7)}}>
-                  <Text style={styles.textinputItHappenAt}>
-                    <Text style={{fontWeight: 'bold'}}>
-                      {moment(this.state.todayDateCallender).format(
-                        'MMMM DD, YYYY',
-                      )}
-                    </Text>{' '}
-                    at about{' '}
-                  </Text>
+                  <View style={{flexDirection: 'row', marginTop: wp(-7)}}>
+                    <Text style={styles.textinputItHappenAt}>
+                      <Text style={{fontWeight: 'bold'}}>
+                        {moment(this.state.todayDateCallender).format(
+                          'MMMM DD, YYYY',
+                        )}
+                      </Text>{' '}
+                      at about{' '}
+                    </Text>
 
-                  <Text style={styles.textInputTime}>
-                    {moment().format('LT')}
-                  </Text>
+                    <Text style={styles.textInputTime}>
+                      {moment().format('LT')}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-              {/* Suggestions  */}
-              {this.state.suggestions.length != 0 ? (
-                <Suggestions
-                  styles={{}}
-                  type={'observation'}
-                  arr={this.state.suggestions}
-                  onPress={(d: any) => {
-                    const form = new FormData();
-                    form.append('q', d.details);
-                    form.append('pid', this.state.projectid);
-                    createApi
-                      .createApi()
-                      .suggestiosns(form)
-                      .then((res: any) => {
-                        var obj = res.data.results;
-                        for (let i = 0; i < res.data.results.length; i++) {
-                          obj[i]['status'] = 0;
-                          obj[i]['selected'] = false;
-                          obj[i]['is_selected'] = false;
-                          obj[i]['is_complete'] = false;
-                          (obj[i]['date'] = moment().format('YYYY-MM-DD')),
-                            (obj[i]['assigned_to'] = []);
-                        }
-                        this.setState({
-                          potientialRisk: d.risk.severity * d.risk.likelihood,
-                          actionRecommendations: [...obj],
+                {/* Suggestions  */}
+                {this.state.suggestions.length != 0 ? (
+                  <Suggestions
+                    styles={{}}
+                    type={'observation'}
+                    arr={this.state.suggestions}
+                    onPress={(d: any) => {
+                      const form = new FormData();
+                      form.append('q', d.details);
+                      form.append('pid', this.state.projectid);
+                      createApi
+                        .createApi()
+                        .suggestiosns(form)
+                        .then((res: any) => {
+                          var obj = res.data.results;
+                          for (let i = 0; i < res.data.results.length; i++) {
+                            obj[i]['status'] = 0;
+                            obj[i]['selected'] = false;
+                            obj[i]['is_selected'] = false;
+                            obj[i]['is_complete'] = false;
+                            (obj[i]['date'] = moment().format('YYYY-MM-DD')),
+                              (obj[i]['assigned_to'] = []);
+                          }
+                          this.setState({
+                            potientialRisk: d.risk.severity * d.risk.likelihood,
+                            actionRecommendations: [...obj],
+                          });
+
+                          // this.setState({
+                          //     actionRecommendations: [...res.data.results],
+                          //   });
                         });
 
-                        // this.setState({
-                        //     actionRecommendations: [...res.data.results],
-                        //   });
-                      });
+                      // this.setState({selectedInputIndex: 3});
 
-                    // this.setState({selectedInputIndex: 3});
+                      this.setState({observationT: d.details, suggestions: []});
+                    }}
+                  />
+                ) : null}
+              </WalkthroughableView>
+            </CopilotStep>
 
-                    this.setState({observationT: d.details, suggestions: []});
-                  }}
-                />
-              ) : null}
-            </View>
             {/* Line  */}
             <View style={styles.lineheight} />
             {/* Risk Chart*/}
             {this.state.classifySorbtns[1].selected == false ? (
               <View style={styles.riskContainer}>
-                {/* Potential Risk */}
-
-                {this.state.potientialRisk == 0 ? null : (
-                  <View style={styles.potentialRiskContainer}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                      <Text style={styles.potientialRiskHeading}>
-                        Potential Risk
-                      </Text>
-                      <Text style={styles.systemDefinedtext}>
-                        (System Defined)
-                      </Text>
-                    </View>
-                    <View
-                      style={[
-                        styles.badgePotientialRisk,
-                        this.state.potientialRisk < 7
-                          ? {borderColor: colors.green}
-                          : this.state.potientialRisk < 14
-                          ? {borderColor: colors.riskIcons.orrange}
-                          : {borderColor: colors.error},
-                      ]}>
-                      <Text
-                        style={[
-                          styles.potentialRiskBadgeContainerText,
-                          this.state.potientialRisk < 7
-                            ? {color: colors.green}
-                            : this.state.potientialRisk < 14
-                            ? {color: colors.riskIcons.orrange}
-                            : {color: colors.error},
-                        ]}>
-                        {this.state.potientialRisk} -{' '}
-                        {this.state.potientialRisk < 7
-                          ? 'Low'
-                          : this.state.potientialRisk < 14
-                          ? 'Medium'
-                          : 'High'}
-                      </Text>
-                    </View>
-                  </View>
-                )}
+                <CopilotStep
+                  text="Potiential Risk ( System Defined )"
+                  order={3}
+                  name="copProtientialRisk">
+                  {/* Potential Risk */}
+                  <WalkthroughableView>
+                    {this.state.potientialRisk == 0 ? null : (
+                      <View style={styles.potentialRiskContainer}>
+                        <View
+                          style={{flexDirection: 'row', alignItems: 'center'}}>
+                          <Text style={styles.potientialRiskHeading}>
+                            Potential Risk
+                          </Text>
+                          <Text style={styles.systemDefinedtext}>
+                            (System Defined)
+                          </Text>
+                        </View>
+                        <View
+                          style={[
+                            styles.badgePotientialRisk,
+                            this.state.potientialRisk < 7
+                              ? {borderColor: colors.green}
+                              : this.state.potientialRisk < 14
+                              ? {borderColor: colors.riskIcons.orrange}
+                              : {borderColor: colors.error},
+                          ]}>
+                          <Text
+                            style={[
+                              styles.potentialRiskBadgeContainerText,
+                              this.state.potientialRisk < 7
+                                ? {color: colors.green}
+                                : this.state.potientialRisk < 14
+                                ? {color: colors.riskIcons.orrange}
+                                : {color: colors.error},
+                            ]}>
+                            {this.state.potientialRisk} -{' '}
+                            {this.state.potientialRisk < 7
+                              ? 'Low'
+                              : this.state.potientialRisk < 14
+                              ? 'Medium'
+                              : 'High'}
+                          </Text>
+                        </View>
+                      </View>
+                    )}
+                  </WalkthroughableView>
+                </CopilotStep>
                 {/* Actual Risk */}
-                <View>
-                  <View style={{flexDirection: 'row', marginTop: wp(1)}}>
-                    <Text style={styles.RiskHeading}>Actual Risk</Text>
-                    <Text style={{fontStyle: 'italic', fontSize: wp(3)}}>
-                      {/* {this.state.liklihood. * this.state.severity} */}
-                    </Text>
-                  </View>
+                <CopilotStep text="Actual Risk" order={4} name="copActualRisk">
+                  <WalkthroughableView>
+                    <View style={{flexDirection: 'row', marginTop: wp(1)}}>
+                      <Text style={styles.RiskHeading}>Actual Risk</Text>
+                      <Text style={{fontStyle: 'italic', fontSize: wp(3)}}>
+                        {/* {this.state.liklihood. * this.state.severity} */}
+                      </Text>
+                    </View>
 
-                  <Chart
-                    liklihood={this.state.liklihood}
-                    severity={this.state.severity}
-                    // style={{marginTop: wp(1)}}
-                    onPress={(v: any) => {
-                      // if (v.liklihood == undefined) {
-                      //   this.setState({severity: v.severity});
-                      // } else {
-                      // }
-                      // if (v.liklihood == undefined) {
-                    }}
-                  />
-                </View>
+                    <Chart
+                      liklihood={this.state.liklihood}
+                      severity={this.state.severity}
+                      // style={{marginTop: wp(1)}}
+                      onPress={(v: any) => {
+                        // if (v.liklihood == undefined) {
+                        //   this.setState({severity: v.severity});
+                        // } else {
+                        // }
+                        // if (v.liklihood == undefined) {
+                      }}
+                    />
+                  </WalkthroughableView>
+                </CopilotStep>
               </View>
             ) : null}
 
@@ -1411,158 +1441,173 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             {/* Five WHY Questions  */}
 
             {this.state.classifySorbtns[3].selected == true && (
-              <View style={styles.fiveWhyContainer}>
-                <View style={styles.fiveWhyHeadingContainer}>
-                  <Text style={styles.investigationReqtext}>
-                    {' '}
-                    Investigation Required
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.setState({fiveWhytoggle: !this.state.fiveWhytoggle});
-
-                      // this.setState({fiveWhytoggle: !this.state.fiveWhytoggle});
-                    }}
-                    style={styles.fivewhyToggleContainer}>
-                    <View
-                      style={[
-                        styles.fivewhyToggeNo,
-                        this.state.fiveWhytoggle == false
-                          ? {
-                              borderColor: colors.error,
-                              backgroundColor: '#F59798',
-                            }
-                          : {
-                              borderColor: colors.text,
-                              borderRightWidth: wp(0),
-                              opacity: 0.5,
-                            },
-                      ]}>
-                      <Text
-                        style={[
-                          styles.fivewhyToggeNoText,
-                          this.state.fiveWhytoggle == false
-                            ? {color: colors.secondary}
-                            : {color: colors.text},
-                        ]}>
-                        No
+              <CopilotStep
+                text="Define 5 why questionaires"
+                order={5}
+                name="copFiveWhy">
+                <WalkthroughableView>
+                  <View style={styles.fiveWhyContainer}>
+                    <View style={styles.fiveWhyHeadingContainer}>
+                      <Text style={styles.investigationReqtext}>
+                        {' '}
+                        Investigation Required
                       </Text>
-                    </View>
-                    <View
-                      style={[
-                        styles.fivewhyToggeYes,
-                        this.state.fiveWhytoggle == true
-                          ? {
-                              borderColor: colors.green,
-                              backgroundColor: colors.lightGreen,
-                            }
-                          : {
-                              borderColor: colors.text,
-                              borderLeftWidth: wp(0),
-                              opacity: 0.5,
-                            },
-                      ]}>
-                      <Text
-                        style={[
-                          styles.fivewhyToggeYesText,
-                          this.state.fiveWhytoggle == true
-                            ? {color: colors.green}
-                            : {color: colors.text},
-                        ]}>
-                        Yes
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.setState({
+                            fiveWhytoggle: !this.state.fiveWhytoggle,
+                          });
 
-                {this.state.fiveWhytoggle ? (
-                  <FiveWhy
-                    onChangeCountributory={(e: any) => {
-                      this.setState({countributoryCauses: e});
-                    }}
-                    onChangeRiskCause={(e: any) => {
-                      this.setState({rootCauses: e});
-                    }}
-                    contributoryCauses={this.state.countributoryCauses}
-                    rootCauses={this.state.rootCauses}
-                    data={this.state.fiveWHYdata}
-                    keyFindings={(e: any) => this.setState({keyFindings: e})}
-                    fiveWhyQuestions={(q: Array<string>) => {
-                      this.setState({fiveWhyQuestion: q});
-                    }}
-                    fiveWhyAnswer={(a: Array<string>) => {
-                      this.setState({fiveWhyAnswer: a});
-                    }}
-                    reportId={this.state.reportIdInvestigation}
-                    userId={this.state.user._id}
-                    containerStyle={{marginTop: wp(3)}}
-                  />
-                ) : null}
-              </View>
+                          // this.setState({fiveWhytoggle: !this.state.fiveWhytoggle});
+                        }}
+                        style={styles.fivewhyToggleContainer}>
+                        <View
+                          style={[
+                            styles.fivewhyToggeNo,
+                            this.state.fiveWhytoggle == false
+                              ? {
+                                  borderColor: colors.error,
+                                  backgroundColor: '#F59798',
+                                }
+                              : {
+                                  borderColor: colors.text,
+                                  borderRightWidth: wp(0),
+                                  opacity: 0.5,
+                                },
+                          ]}>
+                          <Text
+                            style={[
+                              styles.fivewhyToggeNoText,
+                              this.state.fiveWhytoggle == false
+                                ? {color: colors.secondary}
+                                : {color: colors.text},
+                            ]}>
+                            No
+                          </Text>
+                        </View>
+                        <View
+                          style={[
+                            styles.fivewhyToggeYes,
+                            this.state.fiveWhytoggle == true
+                              ? {
+                                  borderColor: colors.green,
+                                  backgroundColor: colors.lightGreen,
+                                }
+                              : {
+                                  borderColor: colors.text,
+                                  borderLeftWidth: wp(0),
+                                  opacity: 0.5,
+                                },
+                          ]}>
+                          <Text
+                            style={[
+                              styles.fivewhyToggeYesText,
+                              this.state.fiveWhytoggle == true
+                                ? {color: colors.green}
+                                : {color: colors.text},
+                            ]}>
+                            Yes
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+
+                    {this.state.fiveWhytoggle ? (
+                      <FiveWhy
+                        onChangeCountributory={(e: any) => {
+                          this.setState({countributoryCauses: e});
+                        }}
+                        onChangeRiskCause={(e: any) => {
+                          this.setState({rootCauses: e});
+                        }}
+                        contributoryCauses={this.state.countributoryCauses}
+                        rootCauses={this.state.rootCauses}
+                        data={this.state.fiveWHYdata}
+                        keyFindings={(e: any) =>
+                          this.setState({keyFindings: e})
+                        }
+                        fiveWhyQuestions={(q: Array<string>) => {
+                          this.setState({fiveWhyQuestion: q});
+                        }}
+                        fiveWhyAnswer={(a: Array<string>) => {
+                          this.setState({fiveWhyAnswer: a});
+                        }}
+                        reportId={this.state.reportIdInvestigation}
+                        userId={this.state.user._id}
+                        containerStyle={{marginTop: wp(3)}}
+                      />
+                    ) : null}
+                  </View>
+                </WalkthroughableView>
+              </CopilotStep>
             )}
 
             {/* Line  */}
             <View style={styles.lineheight} />
             {/* Actions/Recommendation */}
             {this.state.classifySorbtns[1].selected == false ? (
-              <View style={styles.actionContainer}>
-                <Text style={styles.actionsRecHeading}>
-                  Actions / Recommendation
-                </Text>
+              <CopilotStep
+                text="Actions and recommendations"
+                order={6}
+                name="copActions">
+                <WalkthroughableView style={styles.actionContainer}>
+                  <Text style={styles.actionsRecHeading}>
+                    Actions / Recommendation
+                  </Text>
 
-                {/* Suggested Actions */}
-                {this.state.actionRecommendations.map((d: any, i: number) => (
-                  <View>
-                    <TouchableOpacity
-                      onPress={() => {
-                        var arr = this.state.actionRecommendations;
-                        arr[i].selected = !arr[i].selected;
-                        this.setState({actionRecommendations: arr});
-                      }}
-                      onLongPress={() => {
-                        this.setState({
-                          allActionsEdit: d,
-                          allActionsEditIndex: i,
-                          SuggestionPop: true,
+                  {/* Suggested Actions */}
+                  {this.state.actionRecommendations.map((d: any, i: number) => (
+                    <View>
+                      <TouchableOpacity
+                        onPress={() => {
+                          var arr = this.state.actionRecommendations;
+                          arr[i].selected = !arr[i].selected;
+                          this.setState({actionRecommendations: arr});
+                        }}
+                        onLongPress={() => {
+                          this.setState({
+                            allActionsEdit: d,
+                            allActionsEditIndex: i,
+                            SuggestionPop: true,
 
-                          submitToAndObserverEmails: [this.state.user.email],
+                            submitToAndObserverEmails: [this.state.user.email],
 
-                          newActions: false,
-                        });
-                      }}
-                      key={i}
-                      style={[
-                        styles.suggestedActionsContainer,
-                        d.selected == true
-                          ? {
-                              backgroundColor: colors.lightBlue,
-                              borderWidth: wp(0),
-                            }
-                          : {
-                              backgroundColor: colors.secondary,
-                              borderWidth: wp(0.2),
-                            },
-                      ]}>
-                      <View style={{flexDirection: 'row', width: wp(84)}}>
-                        <Text style={styles.actionType}>
-                          {d.category}:{' '}
-                          <Text style={styles.actionDesc}>
-                            {d.content.substring(0, 50)}...
+                            newActions: false,
+                          });
+                        }}
+                        key={i}
+                        style={[
+                          styles.suggestedActionsContainer,
+                          d.selected == true
+                            ? {
+                                backgroundColor: colors.lightBlue,
+                                borderWidth: wp(0),
+                              }
+                            : {
+                                backgroundColor: colors.secondary,
+                                borderWidth: wp(0.2),
+                              },
+                        ]}>
+                        <View style={{flexDirection: 'row', width: wp(84)}}>
+                          <Text style={styles.actionType}>
+                            {d.category}:{' '}
+                            <Text style={styles.actionDesc}>
+                              {d.content.substring(0, 50)}...
+                            </Text>
                           </Text>
-                        </Text>
-                      </View>
-                      <Icon
-                        size={wp(6)}
-                        name="more-vertical"
-                        type="feather"
-                        color={'#686868'}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                ))}
+                        </View>
+                        <Icon
+                          size={wp(6)}
+                          name="more-vertical"
+                          type="feather"
+                          color={'#686868'}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  ))}
 
-                <View style={[styles.addActionAndRecommendation]}>
-                  {/* <TextInput
+                  <View style={[styles.addActionAndRecommendation]}>
+                    {/* <TextInput
                     onFocus={() => {
                     
                     }}
@@ -1577,92 +1622,53 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     placeholder={'Suggest your recommendation / actions'}
                   /> */}
 
-                  <TextInput
-                    maxLength={500}
-                    onChange={(e) =>
-                      this.setState({
-                        actionsAndRecommendationText: e.nativeEvent.text,
-                      })
-                    }
-                    value={this.state.actionsAndRecommendationText}
-                    multiline={true}
-                    style={styles.textaddActionContainer}
-                    placeholder={'Add action / recommendation here'}
-                  />
-
-                  <TouchableOpacity
-                    onPress={() => {
-                      if (this.state.actionsAndRecommendationText !== '') {
+                    <TextInput
+                      maxLength={500}
+                      onChange={(e) =>
                         this.setState({
-                          allActionsEdit: {
-                            is_complete: false,
-                            is_selected: false,
-                            content: this.state.actionsAndRecommendationText,
-                            assigned_to: [],
-                            date: moment().format('YYYY-MM-DD'),
-                            status: 'InProgress',
-
-                            // actionsChangeable: false,
-
-                            category: 'Elimination',
-                          },
-                          newAct: true,
-                          submitToAndObserverEmails: [this.state.user.email],
-                          SuggestionPop: true,
-                          newActions: true,
-                        });
+                          actionsAndRecommendationText: e.nativeEvent.text,
+                        })
                       }
-                    }}
-                    style={styles.addActionsAndRecommendationArrow}>
-                    <Icon
-                      size={wp(4)}
-                      name="arrowright"
-                      type="antdesign"
-                      color={colors.primary}
+                      value={this.state.actionsAndRecommendationText}
+                      multiline={true}
+                      style={styles.textaddActionContainer}
+                      placeholder={'Add action / recommendation here'}
                     />
-                  </TouchableOpacity>
-                </View>
 
-                {/* Suggestions 
-                {this.state.actionRecommendations.length != 0 ? (
-                  <Suggestions
-                    type={'suggestions'}
-                    styles={{}}
-                    arr={this.state.actionRecommendations}
-                    onPress={(d: any) => {
-                      // this.state.actionsTags.push(d);
+                    <TouchableOpacity
+                      onPress={() => {
+                        if (this.state.actionsAndRecommendationText !== '') {
+                          this.setState({
+                            allActionsEdit: {
+                              is_complete: false,
+                              is_selected: false,
+                              content: this.state.actionsAndRecommendationText,
+                              assigned_to: [],
+                              date: moment().format('YYYY-MM-DD'),
+                              status: 'InProgress',
 
-                      if (
-                        this.state.actionsTags.filter((v: any) => v == d)
-                          .length == 0
-                      ) {
-                        this.state.actionsTags.push(d);
-                        this.setState({actionRecommendations: []});
-                      } else {
-                        return null;
-                      }
+                              // actionsChangeable: false,
 
-                      this.setState({
-                        actionRecommendationsText: '',
-                        actionRecommendations: [],
-                      });
-                    }}
-                  />
-                ) : null} */}
-                {/* <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                  <Tags
-                    type={'sugg'}
-                    onClose={(d: any) => {
-                      this.setState({
-                        actionsTags: this.state.actionsTags.filter(
-                          (v: any) => v !== d,
-                        ),
-                      });
-                    }}
-                    tags={this.state.actionsTags}
-                  />
-                </View> */}
-              </View>
+                              category: 'Elimination',
+                            },
+                            newAct: true,
+                            submitToAndObserverEmails: [this.state.user.email],
+                            SuggestionPop: true,
+                            newActions: true,
+                          });
+                        }
+                      }}
+                      style={styles.addActionsAndRecommendationArrow}>
+                      <Icon
+                        size={wp(4)}
+                        name="arrowright"
+                        type="antdesign"
+                        color={colors.primary}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </WalkthroughableView>
+              </CopilotStep>
             ) : null}
 
             {/* Line  */}
@@ -1670,465 +1676,18 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
             {/* Involved person */}
 
-            <View
-              style={{
-                paddingTop: wp(4),
-                paddingBottom: wp(5),
-                paddingLeft: wp(3),
-                paddingRight: wp(3),
-              }}>
-              <Text style={styles.sbBtnText}>Involved Person </Text>
-              <View
-                style={[
-                  styles.optnselector,
-                  this.state.selectedInputIndex == 5
-                    ? {borderColor: colors.primary}
-                    : null,
-                ]}>
-                <TextInput
-                  onFocus={() => {
-                    this.setState({
-                      selectedInputIndex: 5,
-                      involvedToArr: searchInSuggestions(
-                        '',
-                        this.state.involved_persons,
-                      ),
-                    });
-                  }}
-                  underlineColorAndroid="transparent"
-                  onChangeText={(v: any) => {
-                    if (v === '') {
-                      this.setState({involvedToArr: [], involveToText: v});
-                    } else {
-                      if (validateEmail(v)) {
-                        this.setState({
-                          suggestedAddEmail: true,
-                          involveToText: v,
-                        });
-                      } else {
-                        this.setState({
-                          involvedToArr: searchInSuggestions(
-                            v.toLowerCase(),
-                            this.state.involved_persons,
-                          ),
-                          involveToText: v,
-                        });
-                      }
-                    }
-                  }}
-                  placeholder={'Select or Type Name'}
-                  style={styles.optnselectorText}
-                  value={this.state.involveToText}
-                />
-              </View>
-
-              {this.state.involvedToArr.length != 0 ? (
-                <View>
-                  <View style={styles.involveSuggestCont}>
-                    {this.state.involvedToArr.map(
-                      (d: involved_persons, i: number) => (
-                        <TouchableOpacity
-                          key={i}
-                          onPress={() => {
-                            this.setState({
-                              involveToText: '',
-                            });
-
-                            this.setState({
-                              involvedToArr: this.state.involvedToArr.filter(
-                                (b: any) => b != d,
-                              ),
-                            });
-                            if (
-                              this.state.involvePersonTags.filter(
-                                (v: involved_persons) => v == d,
-                              ).length == 0
-                            ) {
-                              this.state.involvePersonTags.push(d);
-                            } else {
-                              return null;
-                            }
-                          }}
-                          style={[
-                            styles.involvePsuggCont,
-                            this.state.involvedToArr.length == i + 1
-                              ? {borderBottomWidth: wp(0)}
-                              : null,
-                          ]}>
-                          <Avatar
-                            containerStyle={{marginRight: wp(3)}}
-                            rounded
-                            source={{
-                              uri: d.img_url,
-                            }}
-                          />
-                          <View>
-                            <Text style={styles.involvePSt}>{d.name}</Text>
-                            <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
-                              {d.email}
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      ),
-                    )}
-                  </View>
-                </View>
-              ) : null}
-
-              {/* Peoples email suggestion */}
-
-              <View>
-                {this.state.suggestedAddEmail == true && (
-                  <View style={styles.involveSuggestCont}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        this.state.involvePersonTags.push({
-                          email: this.state.involveToText,
-                          img_url: '',
-                          name: this.state.involveToText,
-                        });
-                        this.state.involved_persons.push({
-                          email: this.state.involveToText,
-                          img_url:
-                            'https://dummyimage.com/600x400/ffffff/000000&text=@',
-                          name: this.state.involveToText,
-                        });
-
-                        var data = {
-                          emails: [this.state.involveToText],
-                          organization: this.state.currentOrg,
-                          projectId: this.state.projectid,
-                          invitedBy: this.state.user.email,
-                          organizationName: this.state.currentOrgName,
-                        };
-                        createApi
-                          .createApi()
-                          .inviteBulk(data)
-                          .then((inviteBulk) => {});
-
-                        this.setState({
-                          involveToText: '',
-                          suggestedAddEmail: false,
-                        });
-                      }}
-                      style={[styles.involvePsuggCont, {borderBottomWidth: 0}]}>
-                      <Icon
-                        name={'send'}
-                        type={'feather'}
-                        size={wp(5)}
-                        containerStyle={{opacity: 0.5}}
-                      />
-                      <View style={{alignItems: 'center'}}>
-                        <Text
-                          style={{
-                            opacity: 0.5,
-                            fontSize: wp(3),
-                            marginLeft: wp(4),
-                          }}>
-                          Invite {this.state.involveToText}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-                )}
-              </View>
-
-              <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                <Tags
-                  onClose={(d: any) => {
-                    this.setState({
-                      involvePersonTags: this.state.involvePersonTags.filter(
-                        (v: any) => v !== d,
-                      ),
-                    });
-                  }}
-                  tags={this.state.involvePersonTags}
-                />
-              </View>
-            </View>
-
-            {/* Line  */}
-            <View style={styles.lineheight} />
-            {/* Attachment / Upload files */}
-            <View style={styles.attachmentContainer}>
-              <View style={styles.attachmentheadingContainer}>
-                <Text style={styles.attachmentsHeading}>Attachments </Text>
-                <Text style={styles.attachmentOptionalText}>(optional)</Text>
-              </View>
-              <View>
-                {/* Attachments photos */}
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    alignSelf: 'center',
-                  }}>
-                  {/* File uploading */}
-
-                  {this.state.fileLoading == true ? (
-                    <View>
-                      <LottieView
-                        autoPlay={true}
-                        style={{width: wp(30)}}
-                        source={animation.profileimage}
-                        loop={true}
-                      />
-                    </View>
-                  ) : (
-                    <>
-                      {this.state.filename.map((d: any, i: number) => {
-                        if (d.type == 'image') {
-                          return (
-                            <TouchableOpacity
-                              onPress={() => this.setState({imageViewer: true})}
-                              style={styles.AttchimageContainer}>
-                              <Image
-                                source={{
-                                  uri: d.uri,
-                                }}
-                                style={[GlStyles.images, {borderRadius: wp(3)}]}
-                                resizeMode={'cover'}
-                              />
-                              <TouchableOpacity
-                                onPress={() => {}}
-                                style={{position: 'absolute', right: wp(0)}}>
-                                <TouchableOpacity
-                                  onPress={() => {
-                                    var arr = [...this.state.filename].filter(
-                                      (b) => b != d,
-                                    );
-                                    this.setState({filename: arr});
-                                  }}>
-                                  <Icon
-                                    containerStyle={{
-                                      marginRight: wp(2),
-                                      marginTop: wp(2),
-                                      opacity: 0.5,
-                                    }}
-                                    name="circle-with-cross"
-                                    size={wp(5)}
-                                    type="entypo"
-                                    color={colors.text}
-                                  />
-                                </TouchableOpacity>
-                              </TouchableOpacity>
-                            </TouchableOpacity>
-                          );
-                        } else {
-                          return (
-                            <TouchableOpacity
-                              onPress={() => this.setState({imageViewer: true})}
-                              style={[
-                                styles.AttchimageContainer,
-                                {
-                                  borderWidth: wp(0.3),
-                                  borderColor: colors.textOpa,
-                                },
-                              ]}>
-                              <View
-                                style={{
-                                  width: '60%',
-                                  height: '60%',
-                                  marginTop: wp(4),
-                                  alignSelf: 'center',
-                                }}>
-                                <Image
-                                  source={
-                                    d.type == 'pdf'
-                                      ? images.pdf
-                                      : d.type == 'doc' || d.type == 'docx'
-                                      ? images.doc
-                                      : d.type == 'xlsx'
-                                      ? images.excel
-                                      : null
-                                  }
-                                  style={[GlStyles.images]}
-                                  resizeMode={'contain'}
-                                />
-                              </View>
-                              <Text
-                                style={{
-                                  fontSize: wp(2.5),
-                                  marginTop: wp(1),
-                                  fontFamily: fonts.SFuiDisplayMedium,
-                                  textAlign: 'center',
-                                }}>
-                                {d.name.slice(0, 5)}
-                              </Text>
-                              <TouchableOpacity
-                                onPress={() => {}}
-                                style={{position: 'absolute', right: wp(0)}}>
-                                <TouchableOpacity
-                                  onPress={() => {
-                                    var arr = [...this.state.filename].filter(
-                                      (b) => b != d,
-                                    );
-                                    this.setState({filename: arr});
-                                  }}>
-                                  <Icon
-                                    containerStyle={{
-                                      marginRight: wp(2),
-                                      marginTop: wp(2),
-                                      opacity: 0.5,
-                                    }}
-                                    name="circle-with-cross"
-                                    size={wp(5)}
-                                    type="entypo"
-                                    color={colors.text}
-                                  />
-                                </TouchableOpacity>
-                              </TouchableOpacity>
-                            </TouchableOpacity>
-                          );
-                        }
-                      })}
-                    </>
-                  )}
-                </View>
-              </View>
-
-              <View style={styles.attachmentContentContainer}>
-                <TouchableOpacity
-                  onPress={() => this.pickupDoc()}
-                  style={styles.uploadBorder}>
-                  <Icon
-                    size={wp(9)}
-                    name="plus"
-                    type="antdesign"
-                    color={colors.primary}
-                  />
-                </TouchableOpacity>
-                <View style={styles.attachmentsDetailTextContainer}>
-                  <Text style={styles.supportedfileFotmatsText}>
-                    Supported file formats{' '}
-                  </Text>
-                  <Text style={styles.supportedfileFotmats}>
-                    .doc, .pdf, .jpeg, .png, .xlsx
-                  </Text>
-
-                  <View style={{flexDirection: 'row'}}>
-                    <Text style={styles.supportedfileFotmatsText}>
-                      Maximum File Size:{' '}
-                    </Text>
-                    <Text style={styles.fileSizeText}>10 MB</Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-            {/* Line  */}
-            <View style={styles.lineheight} />
-            {/* Submit To / Esclate To */}
-            <View style={styles.optnToggleContainer}>
-              <View>
-                <Text style={styles.sbBtnText}>Submitted to</Text>
-                {this.state.submitToTags.length == 0 && (
-                  <View
-                    style={[
-                      styles.optnselector,
-                      this.state.selectedInputIndex == 4
-                        ? {borderColor: colors.primary}
-                        : null,
-                    ]}>
-                    <TextInput
-                      onFocus={() => {
-                        this.setState({
-                          selectedInputIndex: 4,
-                          submitToArr: searchInSuggestions(
-                            '',
-                            this.state.involved_persons,
-                          ),
-                        });
-
-                        // if (this.state.actionsTags.length == 0) {
-                        //   this.state.actionsTags.push(
-                        //     this.state.actionRecommendations[0],
-                        //   );
-                        // }
-                      }}
-                      style={styles.optnselectorText}
-                      placeholder={'Select or Type Name'}
-                      underlineColorAndroid="transparent"
-                      onChangeText={(v: any) => {
-                        if (v === '') {
-                          this.setState({submitToArr: [], submitTo: v});
-                        } else {
-                          this.setState({
-                            submitToArr: searchInSuggestions(
-                              v.toLowerCase(),
-                              this.state.involved_persons,
-                            ),
-                            submitTo: v,
-                          });
-                        }
-                      }}
-                      value={this.state.submitTo}
-                    />
-                  </View>
-                )}
-
-                {this.state.submitToArr.length != 0 ? (
-                  <View style={styles.involveSuggestCont}>
-                    {this.state.submitToArr.map(
-                      (d: involved_persons, i: number) => (
-                        <TouchableOpacity
-                          key={i}
-                          onPress={() => {
-                            this.setState({
-                              submitToArr: [],
-                              submitTo: '',
-                            });
-
-                            if (
-                              this.state.submitToTags.filter(
-                                (v: involved_persons) => v == d,
-                              ).length == 0
-                            ) {
-                              this.state.submitToTags.push(d);
-                            } else {
-                              return null;
-                            }
-                          }}
-                          style={[
-                            styles.involvePsuggCont,
-                            this.state.submitToArr.length == i + 1
-                              ? {borderBottomWidth: wp(0)}
-                              : null,
-                          ]}>
-                          <Avatar
-                            containerStyle={{marginRight: wp(3)}}
-                            rounded
-                            source={{
-                              uri: d.img_url,
-                            }}
-                          />
-                          <View>
-                            <Text style={styles.involvePSt}>{d.name}</Text>
-                            <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
-                              {d.email}
-                            </Text>
-                          </View>
-                        </TouchableOpacity>
-                      ),
-                    )}
-                  </View>
-                ) : null}
-
-                <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                  <Tags
-                    onClose={(d: any) => {
-                      this.setState({
-                        submitToTags: this.state.submitToTags.filter(
-                          (v: any) => v !== d,
-                        ),
-                      });
-                    }}
-                    tags={this.state.submitToTags}
-                  />
-                </View>
-              </View>
-              {/* notified only */}
-              <View>
-                <Text style={styles.sbBtnText}>Notified only </Text>
+            <CopilotStep
+              text="Add Involved persons"
+              order={7}
+              name="copInvolvedPersons">
+              <WalkthroughableView
+                style={{
+                  paddingTop: wp(4),
+                  paddingBottom: wp(5),
+                  paddingLeft: wp(3),
+                  paddingRight: wp(3),
+                }}>
+                <Text style={styles.sbBtnText}>Involved Person </Text>
                 <View
                   style={[
                     styles.optnselector,
@@ -2137,57 +1696,72 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       : null,
                   ]}>
                   <TextInput
-                    onFocus={() =>
+                    onFocus={() => {
                       this.setState({
                         selectedInputIndex: 5,
-                        exclateToArr: searchInSuggestions(
+                        involvedToArr: searchInSuggestions(
                           '',
                           this.state.involved_persons,
                         ),
-                      })
-                    }
+                      });
+                    }}
                     underlineColorAndroid="transparent"
                     onChangeText={(v: any) => {
                       if (v === '') {
-                        this.setState({exclateToArr: [], esclateTo: v});
+                        this.setState({involvedToArr: [], involveToText: v});
                       } else {
-                        this.setState({
-                          exclateToArr: searchInSuggestions(
-                            v.toLowerCase(),
-                            this.state.involved_persons,
-                          ),
-                          esclateTo: v,
-                        });
+                        if (validateEmail(v)) {
+                          this.setState({
+                            suggestedAddEmail: true,
+                            involveToText: v,
+                          });
+                        } else {
+                          this.setState({
+                            involvedToArr: searchInSuggestions(
+                              v.toLowerCase(),
+                              this.state.involved_persons,
+                            ),
+                            involveToText: v,
+                          });
+                        }
                       }
                     }}
                     placeholder={'Select or Type Name'}
                     style={styles.optnselectorText}
-                    value={this.state.esclateTo}
+                    value={this.state.involveToText}
                   />
                 </View>
 
-                {this.state.exclateToArr.length != 0 ? (
+                {this.state.involvedToArr.length != 0 ? (
                   <View>
                     <View style={styles.involveSuggestCont}>
-                      {this.state.exclateToArr.map(
+                      {this.state.involvedToArr.map(
                         (d: involved_persons, i: number) => (
                           <TouchableOpacity
                             key={i}
                             onPress={() => {
-                              this.setState({esclateTo: '', exclateToArr: []});
+                              this.setState({
+                                involveToText: '',
+                              });
+
+                              this.setState({
+                                involvedToArr: this.state.involvedToArr.filter(
+                                  (b: any) => b != d,
+                                ),
+                              });
                               if (
-                                this.state.exclateToTags.filter(
+                                this.state.involvePersonTags.filter(
                                   (v: involved_persons) => v == d,
                                 ).length == 0
                               ) {
-                                this.state.exclateToTags.push(d);
+                                this.state.involvePersonTags.push(d);
                               } else {
                                 return null;
                               }
                             }}
                             style={[
                               styles.involvePsuggCont,
-                              this.state.exclateToArr.length == i + 1
+                              this.state.involvedToArr.length == i + 1
                                 ? {borderBottomWidth: wp(0)}
                                 : null,
                             ]}>
@@ -2210,19 +1784,485 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     </View>
                   </View>
                 ) : null}
+
+                {/* Peoples email suggestion */}
+
+                <View>
+                  {this.state.suggestedAddEmail == true && (
+                    <View style={styles.involveSuggestCont}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.state.involvePersonTags.push({
+                            email: this.state.involveToText,
+                            img_url: '',
+                            name: this.state.involveToText,
+                          });
+                          this.state.involved_persons.push({
+                            email: this.state.involveToText,
+                            img_url:
+                              'https://dummyimage.com/600x400/ffffff/000000&text=@',
+                            name: this.state.involveToText,
+                          });
+
+                          var data = {
+                            emails: [this.state.involveToText],
+                            organization: this.state.currentOrg,
+                            projectId: this.state.projectid,
+                            invitedBy: this.state.user.email,
+                            organizationName: this.state.currentOrgName,
+                          };
+                          createApi
+                            .createApi()
+                            .inviteBulk(data)
+                            .then((inviteBulk) => {});
+
+                          this.setState({
+                            involveToText: '',
+                            suggestedAddEmail: false,
+                          });
+                        }}
+                        style={[
+                          styles.involvePsuggCont,
+                          {borderBottomWidth: 0},
+                        ]}>
+                        <Icon
+                          name={'send'}
+                          type={'feather'}
+                          size={wp(5)}
+                          containerStyle={{opacity: 0.5}}
+                        />
+                        <View style={{alignItems: 'center'}}>
+                          <Text
+                            style={{
+                              opacity: 0.5,
+                              fontSize: wp(3),
+                              marginLeft: wp(4),
+                            }}>
+                            Invite {this.state.involveToText}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                </View>
+
                 <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
                   <Tags
                     onClose={(d: any) => {
                       this.setState({
-                        exclateToTags: this.state.exclateToTags.filter(
+                        involvePersonTags: this.state.involvePersonTags.filter(
                           (v: any) => v !== d,
                         ),
                       });
                     }}
-                    tags={this.state.exclateToTags}
+                    tags={this.state.involvePersonTags}
                   />
                 </View>
-              </View>
+              </WalkthroughableView>
+            </CopilotStep>
+            {/* Line  */}
+
+            <View style={styles.lineheight} />
+            {/* Attachment / Upload files */}
+            <CopilotStep
+              text="Attach your specified file"
+              order={8}
+              name="copAttachment">
+              <WalkthroughableView style={styles.attachmentContainer}>
+                <View style={styles.attachmentheadingContainer}>
+                  <Text style={styles.attachmentsHeading}>Attachments </Text>
+                  <Text style={styles.attachmentOptionalText}>(optional)</Text>
+                </View>
+                <View>
+                  {/* Attachments photos */}
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                      alignSelf: 'center',
+                    }}>
+                    {/* File uploading */}
+
+                    {this.state.fileLoading == true ? (
+                      <View>
+                        <LottieView
+                          autoPlay={true}
+                          style={{width: wp(30)}}
+                          source={animation.profileimage}
+                          loop={true}
+                        />
+                      </View>
+                    ) : (
+                      <>
+                        {this.state.filename.map((d: any, i: number) => {
+                          if (d.type == 'image') {
+                            return (
+                              <TouchableOpacity
+                                onPress={() =>
+                                  this.setState({imageViewer: true})
+                                }
+                                style={styles.AttchimageContainer}>
+                                <Image
+                                  source={{
+                                    uri: d.uri,
+                                  }}
+                                  style={[
+                                    GlStyles.images,
+                                    {borderRadius: wp(3)},
+                                  ]}
+                                  resizeMode={'cover'}
+                                />
+                                <TouchableOpacity
+                                  onPress={() => {}}
+                                  style={{position: 'absolute', right: wp(0)}}>
+                                  <TouchableOpacity
+                                    onPress={() => {
+                                      var arr = [...this.state.filename].filter(
+                                        (b) => b != d,
+                                      );
+                                      this.setState({filename: arr});
+                                    }}>
+                                    <Icon
+                                      containerStyle={{
+                                        marginRight: wp(2),
+                                        marginTop: wp(2),
+                                        opacity: 0.5,
+                                      }}
+                                      name="circle-with-cross"
+                                      size={wp(5)}
+                                      type="entypo"
+                                      color={colors.text}
+                                    />
+                                  </TouchableOpacity>
+                                </TouchableOpacity>
+                              </TouchableOpacity>
+                            );
+                          } else {
+                            return (
+                              <TouchableOpacity
+                                onPress={() =>
+                                  this.setState({imageViewer: true})
+                                }
+                                style={[
+                                  styles.AttchimageContainer,
+                                  {
+                                    borderWidth: wp(0.3),
+                                    borderColor: colors.textOpa,
+                                  },
+                                ]}>
+                                <View
+                                  style={{
+                                    width: '60%',
+                                    height: '60%',
+                                    marginTop: wp(4),
+                                    alignSelf: 'center',
+                                  }}>
+                                  <Image
+                                    source={
+                                      d.type == 'pdf'
+                                        ? images.pdf
+                                        : d.type == 'doc' || d.type == 'docx'
+                                        ? images.doc
+                                        : d.type == 'xlsx'
+                                        ? images.excel
+                                        : null
+                                    }
+                                    style={[GlStyles.images]}
+                                    resizeMode={'contain'}
+                                  />
+                                </View>
+                                <Text
+                                  style={{
+                                    fontSize: wp(2.5),
+                                    marginTop: wp(1),
+                                    fontFamily: fonts.SFuiDisplayMedium,
+                                    textAlign: 'center',
+                                  }}>
+                                  {d.name.slice(0, 5)}
+                                </Text>
+                                <TouchableOpacity
+                                  onPress={() => {}}
+                                  style={{position: 'absolute', right: wp(0)}}>
+                                  <TouchableOpacity
+                                    onPress={() => {
+                                      var arr = [...this.state.filename].filter(
+                                        (b) => b != d,
+                                      );
+                                      this.setState({filename: arr});
+                                    }}>
+                                    <Icon
+                                      containerStyle={{
+                                        marginRight: wp(2),
+                                        marginTop: wp(2),
+                                        opacity: 0.5,
+                                      }}
+                                      name="circle-with-cross"
+                                      size={wp(5)}
+                                      type="entypo"
+                                      color={colors.text}
+                                    />
+                                  </TouchableOpacity>
+                                </TouchableOpacity>
+                              </TouchableOpacity>
+                            );
+                          }
+                        })}
+                      </>
+                    )}
+                  </View>
+                </View>
+
+                <View style={styles.attachmentContentContainer}>
+                  <TouchableOpacity
+                    onPress={() => this.pickupDoc()}
+                    style={styles.uploadBorder}>
+                    <Icon
+                      size={wp(9)}
+                      name="plus"
+                      type="antdesign"
+                      color={colors.primary}
+                    />
+                  </TouchableOpacity>
+                  <View style={styles.attachmentsDetailTextContainer}>
+                    <Text style={styles.supportedfileFotmatsText}>
+                      Supported file formats{' '}
+                    </Text>
+                    <Text style={styles.supportedfileFotmats}>
+                      .doc, .pdf, .jpeg, .png, .xlsx
+                    </Text>
+
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={styles.supportedfileFotmatsText}>
+                        Maximum File Size:{' '}
+                      </Text>
+                      <Text style={styles.fileSizeText}>10 MB</Text>
+                    </View>
+                  </View>
+                </View>
+              </WalkthroughableView>
+            </CopilotStep>
+            {/* Line  */}
+            <View style={styles.lineheight} />
+            {/* Submit To / Esclate To */}
+            <View style={styles.optnToggleContainer}>
+              <CopilotStep
+                text="Report you want to submit to"
+                order={9}
+                name="copsubmitTo">
+                <WalkthroughableView>
+                  <Text style={styles.sbBtnText}>Submitted to</Text>
+                  {this.state.submitToTags.length == 0 && (
+                    <View
+                      style={[
+                        styles.optnselector,
+                        this.state.selectedInputIndex == 4
+                          ? {borderColor: colors.primary}
+                          : null,
+                      ]}>
+                      <TextInput
+                        onFocus={() => {
+                          this.setState({
+                            selectedInputIndex: 4,
+                            submitToArr: searchInSuggestions(
+                              '',
+                              this.state.involved_persons,
+                            ),
+                          });
+
+                          // if (this.state.actionsTags.length == 0) {
+                          //   this.state.actionsTags.push(
+                          //     this.state.actionRecommendations[0],
+                          //   );
+                          // }
+                        }}
+                        style={styles.optnselectorText}
+                        placeholder={'Select or Type Name'}
+                        underlineColorAndroid="transparent"
+                        onChangeText={(v: any) => {
+                          if (v === '') {
+                            this.setState({submitToArr: [], submitTo: v});
+                          } else {
+                            this.setState({
+                              submitToArr: searchInSuggestions(
+                                v.toLowerCase(),
+                                this.state.involved_persons,
+                              ),
+                              submitTo: v,
+                            });
+                          }
+                        }}
+                        value={this.state.submitTo}
+                      />
+                    </View>
+                  )}
+
+                  {this.state.submitToArr.length != 0 ? (
+                    <View style={styles.involveSuggestCont}>
+                      {this.state.submitToArr.map(
+                        (d: involved_persons, i: number) => (
+                          <TouchableOpacity
+                            key={i}
+                            onPress={() => {
+                              this.setState({
+                                submitToArr: [],
+                                submitTo: '',
+                              });
+
+                              if (
+                                this.state.submitToTags.filter(
+                                  (v: involved_persons) => v == d,
+                                ).length == 0
+                              ) {
+                                this.state.submitToTags.push(d);
+                              } else {
+                                return null;
+                              }
+                            }}
+                            style={[
+                              styles.involvePsuggCont,
+                              this.state.submitToArr.length == i + 1
+                                ? {borderBottomWidth: wp(0)}
+                                : null,
+                            ]}>
+                            <Avatar
+                              containerStyle={{marginRight: wp(3)}}
+                              rounded
+                              source={{
+                                uri: d.img_url,
+                              }}
+                            />
+                            <View>
+                              <Text style={styles.involvePSt}>{d.name}</Text>
+                              <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                                {d.email}
+                              </Text>
+                            </View>
+                          </TouchableOpacity>
+                        ),
+                      )}
+                    </View>
+                  ) : null}
+
+                  <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                    <Tags
+                      onClose={(d: any) => {
+                        this.setState({
+                          submitToTags: this.state.submitToTags.filter(
+                            (v: any) => v !== d,
+                          ),
+                        });
+                      }}
+                      tags={this.state.submitToTags}
+                    />
+                  </View>
+                </WalkthroughableView>
+              </CopilotStep>
+              {/* notified only */}
+
+              <CopilotStep
+                text="Report you want to Notified to"
+                order={10}
+                name="copNotifiedTo">
+                <WalkthroughableView>
+                  <Text style={styles.sbBtnText}>Notified only </Text>
+                  <View
+                    style={[
+                      styles.optnselector,
+                      this.state.selectedInputIndex == 5
+                        ? {borderColor: colors.primary}
+                        : null,
+                    ]}>
+                    <TextInput
+                      onFocus={() =>
+                        this.setState({
+                          selectedInputIndex: 5,
+                          exclateToArr: searchInSuggestions(
+                            '',
+                            this.state.involved_persons,
+                          ),
+                        })
+                      }
+                      underlineColorAndroid="transparent"
+                      onChangeText={(v: any) => {
+                        if (v === '') {
+                          this.setState({exclateToArr: [], esclateTo: v});
+                        } else {
+                          this.setState({
+                            exclateToArr: searchInSuggestions(
+                              v.toLowerCase(),
+                              this.state.involved_persons,
+                            ),
+                            esclateTo: v,
+                          });
+                        }
+                      }}
+                      placeholder={'Select or Type Name'}
+                      style={styles.optnselectorText}
+                      value={this.state.esclateTo}
+                    />
+                  </View>
+
+                  {this.state.exclateToArr.length != 0 ? (
+                    <View>
+                      <View style={styles.involveSuggestCont}>
+                        {this.state.exclateToArr.map(
+                          (d: involved_persons, i: number) => (
+                            <TouchableOpacity
+                              key={i}
+                              onPress={() => {
+                                this.setState({
+                                  esclateTo: '',
+                                  exclateToArr: [],
+                                });
+                                if (
+                                  this.state.exclateToTags.filter(
+                                    (v: involved_persons) => v == d,
+                                  ).length == 0
+                                ) {
+                                  this.state.exclateToTags.push(d);
+                                } else {
+                                  return null;
+                                }
+                              }}
+                              style={[
+                                styles.involvePsuggCont,
+                                this.state.exclateToArr.length == i + 1
+                                  ? {borderBottomWidth: wp(0)}
+                                  : null,
+                              ]}>
+                              <Avatar
+                                containerStyle={{marginRight: wp(3)}}
+                                rounded
+                                source={{
+                                  uri: d.img_url,
+                                }}
+                              />
+                              <View>
+                                <Text style={styles.involvePSt}>{d.name}</Text>
+                                <Text style={{fontSize: wp(2.5), opacity: 0.5}}>
+                                  {d.email}
+                                </Text>
+                              </View>
+                            </TouchableOpacity>
+                          ),
+                        )}
+                      </View>
+                    </View>
+                  ) : null}
+                  <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                    <Tags
+                      onClose={(d: any) => {
+                        this.setState({
+                          exclateToTags: this.state.exclateToTags.filter(
+                            (v: any) => v !== d,
+                          ),
+                        });
+                      }}
+                      tags={this.state.exclateToTags}
+                    />
+                  </View>
+                </WalkthroughableView>
+              </CopilotStep>
             </View>
 
             {/* Line  */}
@@ -2515,10 +2555,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             </View>
           </Modal>
 
-         
-         
-         
-         
           {this.state.setTimeModal && (
             <DateTimePicker
               // testID="dateTimePicker"
@@ -2587,7 +2623,14 @@ const mapStateToProps = (state: AllSorDTO) => ({
 const mapDispatchToProps = (dispatch: any) => ({
   reduxActions: bindActionCreators(reduxActions, dispatch),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(CreateSOR);
+
+var copCreateSor = copilot({
+  // style: {}
+  verticalOffset: 24,
+  animated: true,
+  overlay: 'svg',
+})(CreateSOR);
+export default connect(mapStateToProps, mapDispatchToProps)(copCreateSor);
 
 // if (this.state.filename.length != 0) {
 //   var filetypes = [];
