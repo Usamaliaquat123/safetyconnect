@@ -34,6 +34,7 @@ import {getActiveChildNavigationOptions} from 'react-navigation';
 import {
   searchInSuggestions,
   validateEmail,
+  getCurrentProject,
   getCurrentOrganization,
 } from '@utils';
 import {Tags} from '@components';
@@ -67,12 +68,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
       peoples: [], // must be array of id's
       // projects: [],
       matchedEmailSuggestions: '',
-      users: [
-        {email: 'inconnent12345@outlook.com', name: 'Usama'},
-        {email: 'inconnent1234s5@outlook.com', name: 'Daniyal'},
-        {email: 'inconnent123ws5@outlook.com', name: 'Khadija'},
-        {email: 'inconnent12q45@outlook.com', name: 'Mama'},
-      ],
+      users: [],
       usersTags: [],
       usersSuggestions: [],
       projectsSugg: [],
@@ -84,19 +80,13 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
       errHeading: '',
       errDesc: '',
 
-      projectText: {},
+      projectText: '',
       noOrg: false,
     };
   }
-
   componentDidMount() {
     // get all projects
 
-    // this.setState({
-    //   projectText: this.state.projects.filter(
-    //     (d: any) => d.selected == true,
-    //   )[0],
-    // });
     // console.log(this.state.projects.filter((d: any) => d.selected == true));
 
     getCurrentOrganization().then((orgId: any) => {
@@ -104,12 +94,23 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
         .createApi()
         .getOrganization(orgId)
         .then((data: any) => {
-          console.log(data.data.data.projects);
-          this.setState({
-            noOrg: false,
-            projects: data.data.data.projects,
-            // projectsSugg: data.data.projects,
-          });
+          console.log(data.data.data);
+          getCurrentProject().then((res) =>
+            this.setState({
+              projectText: data.data.data.projects.filter(
+                (d) => d.project_id._id == res,
+              )[0].project_id.project_name,
+              // noOrg: false,
+              users: data.data.members,
+            }),
+          ),
+            // );
+            this.setState({
+              projects: data.data.data.projects,
+              // projectsSugg:
+            });
+
+          // console.log(this.state.projectText);
         });
     });
   }
@@ -134,13 +135,15 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
     if (e !== '') {
       var matchedsugg = [];
       for (let i = 0; i < this.state.projects.length; i++) {
-        if (this.state.projects[i].name.toLowerCase().match(e.toLowerCase())) {
+        if (
+          this.state.projects[i].project_id.project_name
+            .toLowerCase()
+            .match(e.toLowerCase())
+        ) {
           matchedsugg.push(this.state.projects[i]);
         }
       }
     }
-
-    console.log(matchedsugg);
 
     if (matchedsugg != undefined) {
       this.setState({projectsSugg: matchedsugg});
@@ -305,10 +308,10 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                   </View>
                   <View style={[styles.inputContainer]}>
                     <TextInput
-                      editable={this.state.noOrg}
+                      // editable={this.state.noOrg}
                       value={
                         this.state.noOrg == false
-                          ? this.state.projectText.name
+                          ? this.state.projectText
                           : "You don't have any organizations yet"
                       }
                       style={{
@@ -334,7 +337,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                             key={i}
                             onPress={() => {
                               this.setState({
-                                projectText: d,
+                                projectText: d.project_id.project_name,
                                 projectsSugg: [],
                               });
                             }}
@@ -357,7 +360,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                                   styles.involvePSt,
                                   {fontSize: wp(3), opacity: 0.5},
                                 ]}>
-                                {d.name}
+                                {d.project_id.project_name}
                               </Text>
                             </View>
                           </TouchableOpacity>
