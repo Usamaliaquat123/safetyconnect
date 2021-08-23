@@ -319,7 +319,7 @@ export default class SuggestionsPop extends React.Component<
               style={[
                 styles.commentTextInput,
                 this.state.selectedInput == 1
-                  ? {borderColor: colors.green, cborderWidth: wp(0.3)}
+                  ? {borderColor: colors.green, borderWidth: wp(0.3)}
                   : {borderColor: colors.lightGrey},
               ]}>
               <TextInput

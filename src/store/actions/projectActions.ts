@@ -73,7 +73,7 @@ export const createProjects = (
 };
 
 const listAction = {
-  createOrganization,
+  createProjects,
 };
 
 export default listAction;

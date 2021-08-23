@@ -35,12 +35,15 @@ import {createApi as api} from '@service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Modal from 'react-native-modal';
 import {bindActionCreators} from 'redux';
-
+import {copilot, walkthroughable, CopilotStep} from 'react-native-copilot';
 import {organizationDTO} from '@dtos';
 import {getActiveChildNavigationOptions} from 'react-navigation';
 import {validateEmail, profileUploader} from '@utils';
 import {default as Model} from 'react-native-modal';
-
+const WalkthroughableText = walkthroughable(Text);
+const WalkthroughableTouchableOpacity = walkthroughable(TouchableOpacity);
+const WalkthroughableView = walkthroughable(View);
+const WalkthroughableInput = walkthroughable(TextInput);
 // import {validateEmail} from '@utils/';
 type CreateOrgNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -79,6 +82,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
     };
   }
   componentDidMount() {
+    this.props.start();
     console.log(this.props.reduxState.loading);
   }
 
@@ -246,6 +250,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                 />
               </View>
               {/* Upload profile photo */}
+
               <TouchableOpacity
                 onPress={() => this.imgCap('upload')}
                 style={{
@@ -254,27 +259,32 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                   justifyContent: 'center',
                   alignSelf: 'center',
                 }}>
-                <View>
-                  {this.state.fileLoading ? (
-                    <LottieView
-                      autoPlay={true}
-                      style={{width: wp(20)}}
-                      source={animation.profileimage}
-                      loop={true}
-                    />
-                  ) : (
-                    <Avatar
-                      rounded
-                      size={wp(25)}
-                      source={{
-                        uri:
-                          this.state.uploadedImage !== ''
-                            ? this.state.uploadedImage
-                            : 'https://via.placeholder.com/150',
-                      }}
-                    />
-                  )}
-                </View>
+                <CopilotStep
+                  text="Upload your organization logo"
+                  order={1}
+                  name="openApp">
+                  <WalkthroughableView>
+                    {this.state.fileLoading ? (
+                      <LottieView
+                        autoPlay={true}
+                        style={{width: wp(20)}}
+                        source={animation.profileimage}
+                        loop={true}
+                      />
+                    ) : (
+                      <Avatar
+                        rounded
+                        size={wp(25)}
+                        source={{
+                          uri:
+                            this.state.uploadedImage !== ''
+                              ? this.state.uploadedImage
+                              : 'https://via.placeholder.com/150',
+                        }}
+                      />
+                    )}
+                  </WalkthroughableView>
+                </CopilotStep>
               </TouchableOpacity>
               <Text
                 style={{
@@ -284,38 +294,46 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                 }}>
                 Organization Logo
               </Text>
-
               <View>
                 {/* inputs container */}
                 <View style={styles.inputsContainer}>
                   {/* Email Container */}
-                  <View>
-                    <View style={{flexDirection: 'row'}}>
-                      <Text style={styles.emailTextContainer}>
-                        Organization Name
-                      </Text>
-                      <Text
-                        style={[
-                          styles.emailTextContainer,
-                          {opacity: 0.5, marginLeft: wp(3)},
-                        ]}>
-                        (Mandatory)
-                      </Text>
-                    </View>
-                    <View style={[styles.inputContainer]}>
-                      <TextInput
-                        value={this.state.org}
-                        style={styles.authInputs}
-                        onChangeText={(e) => this.setState({org: e})}
-                        placeholder={'Enter Organization Name'}
-                      />
-                    </View>
-                    {this.state.orgError && (
-                      <Text style={{fontSize: wp(3), color: colors.error}}>
-                        Type your organization name
-                      </Text>
-                    )}
-                  </View>
+                  <CopilotStep
+                    text="Enter your organization name"
+                    order={2}
+                    name="secondText">
+                    <WalkthroughableView>
+                      <View style={{flexDirection: 'row', marginBottom: wp(2)}}>
+                        <Text style={styles.emailTextContainer}>
+                          Organization Name
+                        </Text>
+                        <Text
+                          style={[
+                            styles.emailTextContainer,
+                            {opacity: 0.5, marginLeft: wp(3)},
+                          ]}>
+                          (Mandatory)
+                        </Text>
+                      </View>
+
+                      <View>
+                        <View style={[styles.inputContainer]}>
+                          <TextInput
+                            value={this.state.org}
+                            style={styles.authInputs}
+                            onChangeText={(e) => this.setState({org: e})}
+                            placeholder={'Enter Organization Name'}
+                          />
+                        </View>
+                      </View>
+
+                      {this.state.orgError && (
+                        <Text style={{fontSize: wp(3), color: colors.error}}>
+                          Type your organization name
+                        </Text>
+                      )}
+                    </WalkthroughableView>
+                  </CopilotStep>
 
                   {/* Organization Description */}
                   <View>
@@ -351,31 +369,36 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                   {/* selected projectLeaders tags */}
 
                   {/* People */}
-                  <View>
-                    <View style={{flexDirection: 'row', marginTop: wp(3)}}>
-                      <Text style={styles.emailTextContainer}>People</Text>
-                      <Icon
-                        containerStyle={{marginTop: wp(1), marginLeft: wp(2)}}
-                        name={'info'}
-                        type={'feather'}
-                        size={wp(3)}
-                        iconStyle={{opacity: 0.5}}
-                      />
-                    </View>
-                    <View style={[styles.inputContainer]}>
-                      <TextInput
-                        value={this.state.peoplesText}
-                        style={styles.authInputs}
-                        onChangeText={(e) => this.searchForUsers(e)}
-                        placeholder={'Enter name or add email'}
-                      />
-                    </View>
-                    {this.state.orgError && (
-                      <Text style={{fontSize: wp(3), color: colors.error}}>
-                        Add people to the organization
-                      </Text>
-                    )}
-                  </View>
+                  <CopilotStep
+                    text="Invite co-workers or employees "
+                    order={3}
+                    name="peopleguide">
+                    <WalkthroughableView>
+                      <View style={{flexDirection: 'row', marginTop: wp(3)}}>
+                        <Text style={styles.emailTextContainer}>People</Text>
+                        <Icon
+                          containerStyle={{marginTop: wp(1), marginLeft: wp(2)}}
+                          name={'info'}
+                          type={'feather'}
+                          size={wp(3)}
+                          iconStyle={{opacity: 0.5}}
+                        />
+                      </View>
+                      <View style={[styles.inputContainer]}>
+                        <TextInput
+                          value={this.state.peoplesText}
+                          style={styles.authInputs}
+                          onChangeText={(e) => this.searchForUsers(e)}
+                          placeholder={'Enter name or add email'}
+                        />
+                      </View>
+                      {this.state.orgError && (
+                        <Text style={{fontSize: wp(3), color: colors.error}}>
+                          Add people to the organization
+                        </Text>
+                      )}
+                    </WalkthroughableView>
+                  </CopilotStep>
                   {/* Peoples email suggestions */}
 
                   <View>
@@ -506,4 +529,10 @@ const mapDispatchToProps = (dispatch: any) => ({
   reduxActions: bindActionCreators(reduxActions, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateOrg);
+var copCreateOrg = copilot({
+  // style: {}
+  verticalOffset: 24,
+  animated: true,
+  overlay: 'view',
+})(CreateOrg);
+export default connect(mapStateToProps, mapDispatchToProps)(copCreateOrg);
