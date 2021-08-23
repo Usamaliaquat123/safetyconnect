@@ -31,7 +31,11 @@ import {bindActionCreators} from 'redux';
 
 import {AllSorDTO} from '@dtos';
 import {getActiveChildNavigationOptions} from 'react-navigation';
-import {searchInSuggestions, validateEmail} from '@utils/utils';
+import {
+  searchInSuggestions,
+  validateEmail,
+  getCurrentOrganization,
+} from '@utils';
 import {Tags} from '@components';
 // import {validateEmail} from '@utils/';
 type InvitePeopleNavigationProp = StackNavigationProp<
@@ -87,36 +91,28 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
 
   componentDidMount() {
     // get all projects
-    this.setState({
-      projectText: this.state.projects.filter(
-        (d: any) => d.selected == true,
-      )[0],
-    });
-    console.log(this.state.projects.filter((d: any) => d.selected == true));
 
-    AsyncStorage.getItem('email').then((email: any) => {
+    // this.setState({
+    //   projectText: this.state.projects.filter(
+    //     (d: any) => d.selected == true,
+    //   )[0],
+    // });
+    // console.log(this.state.projects.filter((d: any) => d.selected == true));
+
+    getCurrentOrganization().then((orgId: any) => {
       api
         .createApi()
-        .getUser(email)
-        .then((user: any) => {
-          var usr = user.data.data;
-
-          if (usr.organizations.length == 0) {
-            this.setState({noOrg: true});
-          } else {
-            this.setState({noOrg: false});
-          }
+        .getOrganization(orgId)
+        .then((data: any) => {
+          console.log(data.data.data.projects);
+          this.setState({
+            noOrg: false,
+            projects: data.data.data.projects,
+            // projectsSugg: data.data.projects,
+          });
         });
     });
   }
-
-  createProject = async () => {
-    if (this.state.noOrg) {
-      this.props.navigation.navigate('createProject');
-    } else {
-      this.props.navigation.navigate('CreateOrganization');
-    }
-  };
 
   searchUsersAndEmail = async (e: string) => {
     if (e !== '') {
@@ -311,7 +307,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                     <TextInput
                       editable={this.state.noOrg}
                       value={
-                        this.state.noOrg == true
+                        this.state.noOrg == false
                           ? this.state.projectText.name
                           : "You don't have any organizations yet"
                       }
@@ -369,27 +365,6 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                       </View>
                     </View>
                   ) : null}
-
-                  <TouchableOpacity
-                    onPress={() => this.createProject()}
-                    style={{
-                      marginTop: wp(3),
-                      justifyContent: 'center',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}>
-                    <Icon
-                      name={'plus'}
-                      type={'antdesign'}
-                      size={wp(4)}
-                      color={colors.primary}
-                    />
-                    <Text style={styles.inviteppleText}>
-                      {this.state.noOrg == true
-                        ? 'Add Project'
-                        : 'Add Organization'}
-                    </Text>
-                  </TouchableOpacity>
                 </View>
               </View>
 

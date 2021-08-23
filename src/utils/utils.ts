@@ -522,7 +522,7 @@ export const cameraCapture = () => {
   });
 };
 
-export const  redirectDynamiclink = (link: any, navigation: any) => {
+export const redirectDynamiclink = (link: any, navigation: any) => {
   // console.log('Dynamic link');
   // console.log(link);
   // console.log(link);
@@ -657,7 +657,7 @@ export const filterInvolvedPerson = (
                   name: d,
                   email: d,
                   img_url:
-                    'https://dummyimage.com/600x400/ffffff/000000&text=@',  
+                    'https://dummyimage.com/600x400/ffffff/000000&text=@',
                 });
               } else {
                 involvedUsers.push({
