@@ -50,6 +50,8 @@ import {
   fileuploader,
   getCurrentProject,
 } from '@utils';
+import {copilot, walkthroughable, CopilotStep} from 'react-native-copilot';
+
 import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {involved_persons, actions, actionsDashboard} from '@typings';
@@ -3203,4 +3205,10 @@ const mapStateToProps = (state: AllSorDTO) => ({
 const mapDispatchToProps = (dispatch: any) => ({
   reduxActions: bindActionCreators(reduxActions, dispatch),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(ViewSOR);
+var copViewSor = copilot({
+  // style: {}
+  verticalOffset: 24,
+  animated: true,
+  overlay: 'svg',
+})(ViewSOR);
+export default connect(mapStateToProps, mapDispatchToProps)(copViewSor);
