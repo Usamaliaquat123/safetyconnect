@@ -156,6 +156,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
       )[0].project_id._id,
       invitedBy: this.state.user,
       organizationName: this.state.organizationName,
+      projectName: this.state.projectText,
     };
 
     api
