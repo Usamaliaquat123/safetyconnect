@@ -22,8 +22,13 @@ import {Auth} from 'aws-amplify';
 import {colors, images, GlStyles, animation} from '@theme';
 import Modal from 'react-native-modal';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+// import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -110,6 +115,17 @@ class Login extends React.Component<LoginProps, any> {
     }
   }
   componentDidMount() {
+    GoogleSignin.configure({
+      scopes: ['homesafety.auth.us-east-2.amazoncognito.com'], // what API you want to access on behalf of the user, default is email and profile
+      webClientId: '5n6tdp3pqcoj0q44ch83963gfp', // client ID of type WEB for your server (needed to verify user ID and offline access)
+      offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+      hostedDomain: '', // specifies a hosted domain restriction
+      loginHint: '', // [iOS] The user's ID, or email address, to be prefilled in the authentication UI if possible. [See docs here](https://developers.google.com/identity/sign-in/ios/api/interface_g_i_d_sign_in.html#a0a68c7504c31ab0b728432565f6e33fd)
+      forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
+      accountName: '', // [Android] specifies an account name on the device that should be used
+      iosClientId: '5n6tdp3pqcoj0q44ch83963gfp', // [iOS] optional, if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
+      googleServicePlistPath: '', // [iOS] optional, if you renamed your GoogleService-Info file, new name here, e.g. GoogleService-Info-Staging
+    });
     Linking.addEventListener('url', () => {
       this.handleOpenURL(this.props.navigation);
     });
@@ -190,16 +206,47 @@ class Login extends React.Component<LoginProps, any> {
       this.setState({emailError: true});
     }
   };
+
   // Continue with google
   loginWithGoogle = async () => {
     try {
+      // Somewhere in your code
+      // signIn = async () => {
+      try {
+        await GoogleSignin.hasPlayServices();
+        const userInfo = await GoogleSignin.signIn();
+        // this.setState({userInfo});
+
+        console.log(userInfo);
+      } catch (error) {
+        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+          // user cancelled the login flow
+          console.log('User cancelled login');
+        } else if (error.code === statusCodes.IN_PROGRESS) {
+          // operation (e.g. sign in) is in progress already
+          console.log('Operation already in progress');
+        } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+          // play services not available or outdated
+          console.log('Play services not available');
+        } else {
+          console.log(error);
+          // some other error happened
+        }
+      }
+      // };
       // GoogleSignin.signIn().then(res => {
       //   console.log(res)
       // }).catch(err => console.log(err))
 
-      const user = await Auth.federatedSignIn({provider: 'Google'});
+      // GoogleSignin.signIn()
+      //   .then(async (googleUser) => {
+      //     console.log(googleUser);
+      //   })
+      //   .catch((err) => console.log(err));
 
-      this.props.navigation.navigate('Main');
+      // const user = await Auth.federatedSignIn({provider: 'Google'});
+
+      // this.props.navigation.navigate('Main');
     } catch (e) {}
   };
   render() {
