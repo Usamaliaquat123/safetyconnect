@@ -151,7 +151,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
     var data = {
       emails: this.state.usersTags.map((user: any) => user.email),
       organization: this.state.currentOrg,
-      projectId: this.state.projects.filter(
+      project: this.state.projects.filter(
         (p: any) => p.project_id.project_name == this.state.projectText,
       )[0].project_id._id,
       invitedBy: this.state.user,
