@@ -322,6 +322,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           .getOrganization(currentOrg)
           .then((res: any) => {
             this.setState({
+              projectName: res.data.data.projects.map(
+                (d: any) => d.project_id._id == this.state.projectid,
+              )[0].project_id.project_name,
               allProjects: res.data.data.projects,
               currentOrgName: res.data.data.name,
             });
@@ -1807,9 +1810,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           var data = {
                             emails: [this.state.involveToText],
                             organization: this.state.currentOrg,
-                            projectId: this.state.projectid,
+                            project: this.state.projectid,
                             invitedBy: this.state.user.email,
                             organizationName: this.state.currentOrgName,
+                            projectName: this.state.projectName,
                           };
                           createApi
                             .createApi()
