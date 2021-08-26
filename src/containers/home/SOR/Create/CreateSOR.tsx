@@ -602,8 +602,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       this.props.navigation.navigate('Main');
                     }, 1000);
 
-
-                    
                     createApi
                       .createApi()
                       .getAllRepeatedSugg(
