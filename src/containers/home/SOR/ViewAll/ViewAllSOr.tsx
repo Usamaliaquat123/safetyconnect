@@ -530,40 +530,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 />
                                 <Text style={styles.listDraftText}>Drafts</Text>
                               </TouchableOpacity>
-                              <TouchableOpacity
-                                onPress={() => {
-                                  if (this.state.draftSorted == true) {
-                                    this.state.draft.sort(
-                                      (a: any, b: any) =>
-                                        new Date(a.createdAt) -
-                                        new Date(b.createdAt),
-                                    );
-                                    this.setState({draftSorted: false});
-                                  } else {
-                                    this.state.draft.sort(
-                                      (a: any, b: any) =>
-                                        new Date(b.createdAt) -
-                                        new Date(a.createdAt),
-                                    );
-                                    this.setState({draftSorted: true});
-                                  }
-
-                                  // this.setState({});
-                                }}
-                                style={{
-                                  position: 'absolute',
-                                  right: wp(4),
-                                  flexDirection: 'row',
-                                }}>
-                                <Icon
-                                  color={colors.primary}
-                                  containerStyle={{marginTop: wp(-0.6)}}
-                                  size={wp(5)}
-                                  name="filter"
-                                  type="ionicon"
-                                />
-                                <Text style={styles.filterText}>Filter</Text>
-                              </TouchableOpacity>
                             </View>
 
                             {this.state.isDraft == true ? (
@@ -656,33 +622,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                   <Text style={styles.listDraftText}>
                                     In Progress
                                   </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                  onPress={() => {
-                                    if (this.state.inProgressSorted == true) {
-                                      this.state.inprogress.sort(
-                                        (a: any, b: any) =>
-                                          new Date(a.createdAt) -
-                                          new Date(b.createdAt),
-                                      );
-                                      this.setState({inProgressSorted: false});
-                                    } else {
-                                      this.state.inprogress.sort(
-                                        (a: any, b: any) =>
-                                          new Date(b.createdAt) -
-                                          new Date(a.createdAt),
-                                      );
-                                      this.setState({inProgressSorted: true});
-                                    }
-                                  }}
-                                  style={styles.filterHeader}>
-                                  <Icon
-                                    color={colors.primary}
-                                    size={wp(5)}
-                                    name="filter"
-                                    type="ionicon"
-                                  />
-                                  <Text style={styles.filterText}>Filter</Text>
                                 </TouchableOpacity>
                               </View>
                               {/* <View style={{width:120,height:125}, item.status==='1' ?{display: "block"}: {display:'none'}}> */}
@@ -791,39 +730,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                     Notified to
                                   </Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity
-                                  onPress={() => {
-                                    if (this.state.notifiedToSorted == true) {
-                                      this.state.exclated.sort(
-                                        (a: any, b: any) =>
-                                          new Date(a.createdAt) -
-                                          new Date(b.createdAt),
-                                      );
-                                      this.setState({notifiedToSorted: false});
-                                    } else {
-                                      this.state.exclated.sort(
-                                        (a: any, b: any) =>
-                                          new Date(b.createdAt) -
-                                          new Date(a.createdAt),
-                                      );
-                                      this.setState({notifiedToSorted: true});
-                                    }
-                                  }}
-                                  style={{
-                                    position: 'absolute',
-                                    right: wp(4),
-                                    flexDirection: 'row',
-                                    marginTop: wp(-1),
-                                  }}>
-                                  <Icon
-                                    color={colors.primary}
-                                    size={wp(5)}
-                                    name="filter"
-                                    type="ionicon"
-                                  />
-
-                                  <Text style={styles.filterText}>Filter</Text>
-                                </TouchableOpacity>
                               </View>
                               {this.state.isSubmited == true ? (
                                 <View style={styles.listViewContent}>
@@ -922,39 +828,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                     Pending Closure
                                   </Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity
-                                  onPress={() => {
-                                    if (
-                                      this.state.pendingClosureSorted == true
-                                    ) {
-                                      this.state.pendingClosure.sort(
-                                        (a: any, b: any) =>
-                                          new Date(a.createdAt) -
-                                          new Date(b.createdAt),
-                                      );
-                                      this.setState({
-                                        pendingClosureSorted: false,
-                                      });
-                                    } else {
-                                      this.state.pendingClosure.sort(
-                                        (a: any, b: any) =>
-                                          new Date(b.createdAt) -
-                                          new Date(a.createdAt),
-                                      );
-                                      this.setState({
-                                        pendingClosureSorted: true,
-                                      });
-                                    }
-                                  }}
-                                  style={styles.filterHeader}>
-                                  <Icon
-                                    color={colors.primary}
-                                    size={wp(5)}
-                                    name="filter"
-                                    type="ionicon"
-                                  />
-                                  <Text style={styles.filterText}>Filter</Text>
-                                </TouchableOpacity>
                               </View>
                               {this.state.isNotified == true ? (
                                 <View style={styles.listViewContent}>
@@ -1049,33 +922,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                   <Text style={styles.listDraftText}>
                                     Closed
                                   </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                  onPress={() => {
-                                    if (this.state.closedSorted == true) {
-                                      this.state.closed.sort(
-                                        (a: any, b: any) =>
-                                          new Date(a.createdAt) -
-                                          new Date(b.createdAt),
-                                      );
-                                      this.setState({closedSorted: false});
-                                    } else {
-                                      this.state.closed.sort(
-                                        (a: any, b: any) =>
-                                          new Date(b.createdAt) -
-                                          new Date(a.createdAt),
-                                      );
-                                      this.setState({closedSorted: true});
-                                    }
-                                  }}
-                                  style={styles.filterHeader}>
-                                  <Icon
-                                    color={colors.primary}
-                                    size={wp(5)}
-                                    name="filter"
-                                    type="ionicon"
-                                  />
-                                  <Text style={styles.filterText}>Filter</Text>
                                 </TouchableOpacity>
                               </View>
                               {this.state.isCompleted == true ? (

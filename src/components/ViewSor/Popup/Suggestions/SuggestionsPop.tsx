@@ -88,12 +88,6 @@ export default class SuggestionsPop extends React.Component<
     console.log('five why justification');
     console.log(this.state.AssignedTo[0]);
 
-    // this.state.submitToAndObserverEmailsLocal.push(this.state.AssignedTo[0]);
-    console.log(
-      this.props.submitToAndObserverEmails?.filter(
-        (d) => d == this.props.currentUser.email,
-      ),
-    );
     if (this.state.AssignedTo[0] == this.props.currentUser.email) {
       this.setState({actionsChangeable: true});
     } else {
@@ -106,14 +100,14 @@ export default class SuggestionsPop extends React.Component<
       // this.state.submitToAndObserverEmailsLocal.concat(e);
       this.setState({});
 
-      console.log('this.state.submitToAndObserverEmailsLocal');
-      console.log(this.state.submitToAndObserverEmailsLocal);
+      // console.log('this.state.submitToAndObserverEmailsLocal');
+      // console.log(this.state.submitToAndObserverEmailsLocal);
 
       if (
         this.state.submitToAndObserverEmailsLocal.filter((d: any) => d == e)
           .length == 0
       ) {
-        this.setState({matched: false, actionsChangeable: true});
+        this.setState({matched: false, actionsChangeable: false});
       } else {
         this.setState({matched: true});
       }
@@ -138,11 +132,11 @@ export default class SuggestionsPop extends React.Component<
         };
 
         // console.log('sdsds');
-        console.log(
-          this.props.suggestions.justification.attachments.map(
-            (d) => d.split('.')[1],
-          ),
-        );
+        // console.log(
+        //   this.props.suggestions.justification.attachments.map(
+        //     (d) => d.split('.')[1],
+        //   ),
+        // );
         // var files = {
         //   name: this.props.suggestions.justification.attachments.split('/')[1],
         //   type: this.props.suggestions.justification.attachments
@@ -767,7 +761,7 @@ export default class SuggestionsPop extends React.Component<
                     onPress={() => {
                       if (this.state.actionsChangeable == true) {
                         this.setState({type: 'Elimination'});
-                      } else if (this.props.newAct) {
+                      } else if (this.props.newAct == true) {
                         this.setState({type: 'Elimination'});
                       }
                     }}
@@ -791,7 +785,7 @@ export default class SuggestionsPop extends React.Component<
                     onPress={() => {
                       if (this.state.actionsChangeable == true) {
                         this.setState({type: 'Administrative'});
-                      } else if (this.props.newAct) {
+                      } else if (this.props.newAct == true) {
                         this.setState({type: 'Administrative'});
                       }
                     }}
@@ -812,7 +806,7 @@ export default class SuggestionsPop extends React.Component<
                     onPress={() => {
                       if (this.state.actionsChangeable == true) {
                         this.setState({type: 'Substitution'});
-                      } else if (this.props.newAct) {
+                      } else if (this.props.newAct == true) {
                         this.setState({type: 'Substitution'});
                       }
                     }}
@@ -835,7 +829,7 @@ export default class SuggestionsPop extends React.Component<
                     onPress={() => {
                       if (this.state.actionsChangeable == true) {
                         this.setState({type: 'Engineering'});
-                      } else if (this.props.newAct) {
+                      } else if (this.props.newAct == true) {
                         this.setState({type: 'Engineering'});
                       }
                     }}
@@ -858,7 +852,7 @@ export default class SuggestionsPop extends React.Component<
                     onPress={() => {
                       if (this.state.actionsChangeable == true) {
                         this.setState({type: 'PPE'});
-                      } else if (this.props.newAct) {
+                      } else if (this.props.newAct == true) {
                         this.setState({type: 'PPE'});
                       }
                     }}
