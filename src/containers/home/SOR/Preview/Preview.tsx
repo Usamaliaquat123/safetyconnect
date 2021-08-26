@@ -79,6 +79,8 @@ export class Preview extends React.Component<ViewAllProps, any> {
       attachments: [],
       involvedperson: [],
       projectId: '',
+
+      fivewhy: [],
     };
   }
 
@@ -147,6 +149,27 @@ export class Preview extends React.Component<ViewAllProps, any> {
     console.log('this.props.route.params.data');
     console.log(this.props.route.params.data);
 
+    // this.props.route.params.data.justifications[0].justification.question.map(
+    //   (d: any) => {
+    // this.setState({  fiveWhy: [ question: d]});
+    // this.setState({
+    //   fiveWhy: this.props.route.params.data.justifications[0].justification
+    //     .question,
+    // });
+    // },
+    // );
+
+    console.log('this.state.fiveWhy');
+    console.log(this.state.fiveWhy);
+
+    // this.props.route.params.data.justifications[0].justification.answer.map(
+    //   (d: any, i: number) => {
+    //     this.state.fiveWhy[i]['answer'] = d;
+    //   },
+    // );
+
+    console.log('this.state.fiveWhy');
+    console.log(this.state.fiveWhy);
     createApi
       .createApi()
       .getUser(this.props.route.params.data.created_by)
@@ -249,7 +272,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
-              onPress={() => this.props.navigation.goBack()}
+                onPress={() => this.props.navigation.goBack()}
                 size={25}
                 name="arrow-back-outline"
                 type="ionicon"
@@ -612,6 +635,61 @@ export class Preview extends React.Component<ViewAllProps, any> {
                   </View>
                 </View>
 
+                {/* Five why   */}
+                {this.props.route.params.data.justifications.length != 0 && (
+                  <View style={styles.lineheight} />
+                )}
+                {this.props.route.params.data.action_required.length != 0 && (
+                  <>
+                    <View style={{marginTop: wp(3), marginBottom: wp(3)}}>
+                      <Text
+                        style={{
+                          fontSize: wp(4),
+                          fontFamily: fonts.SFuiDisplayBold,
+                        }}>
+                        Five why{' '}
+                      </Text>
+
+                      <View style={{flexDirection: 'row'}}>
+                        <View style={{flexDirection: 'column'}}>
+                          {this.props.route.params.data.justifications[0].justification.question.map(
+                            (d: any, i: number) => (
+                              <View
+                                style={{
+                                  flexDirection: 'column',
+                                  // justifyContent: 'space-between',
+                                }}>
+                                <Text
+                                  style={{
+                                    fontSize: wp(3),
+                                    fontFamily: fonts.SFuiDisplayMedium,
+                                  }}>
+                                  Q. {i + 1}. {d}
+                                </Text>
+                              </View>
+                            ),
+                          )}
+                        </View>
+                        <View
+                          style={{flexDirection: 'column', marginLeft: wp(20)}}>
+                          {this.props.route.params.data.justifications[0].justification.answer.map(
+                            (d: any, i: number) => (
+                              <Text
+                                style={{
+                                  fontSize: wp(3),
+                                  opacity: 0.5,
+                                  fontFamily: fonts.SFuiDisplayMedium,
+                                }}>
+                                A. {i + 1}. {d}
+                              </Text>
+                            ),
+                          )}
+                        </View>
+                      </View>
+                    </View>
+                  </>
+                )}
+
                 {/* Actions and recommendations */}
                 {this.props.route.params.data.action_required.length != 0 && (
                   <View style={styles.lineheight} />
@@ -719,9 +797,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
                           fontFamily: fonts.SFuiDisplayMedium,
                         }}>
                         {' '}
-                        {this.state.involvedperson
-                          .map((d) => d.name)
-                          .join(',')}
+                        {this.state.involvedperson.map((d) => d.name).join(',')}
                       </Text>
                     </View>
                   </View>

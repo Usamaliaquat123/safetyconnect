@@ -203,8 +203,8 @@ class Home extends React.Component<HomeProps, any> {
               // });
             });
 
-            console.log('this.state.taskAssignedToYou');
-            console.log(this.state.taskAssignedToYou);
+            // console.log('this.state.taskAssignedToYou');
+            // console.log(this.state.taskAssignedToYou);
           });
 
         // // Filter sors
