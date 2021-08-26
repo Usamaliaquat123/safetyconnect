@@ -189,6 +189,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     if (this.props.route.params.data.closed == true) {
       this.setState({closed: true});
     }
+
+    if (
+      this.props.route.params.data.submit_to[0] == this.state.user.email &&
+      this.props.route.params.data.created_by == this.state.user.email
+    ) {
+      this.setState({closed: false});
+    } else {
+      this.setState({closed: true});
+    }
+
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
 
