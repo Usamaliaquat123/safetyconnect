@@ -169,7 +169,7 @@ export class Filters extends React.Component<FiltersProps, any> {
                 <Text style={styles.selectedContent}>
                   {' '}
                   {this.state.selectedObserver !== ''
-                    ? this.state.selectedObserver.email
+                    ? this.state.selectedObserver.name
                     : 'Select Type'}{' '}
                 </Text>
                 <Icon
@@ -252,7 +252,7 @@ export class Filters extends React.Component<FiltersProps, any> {
                 <Text style={styles.selectedContent}>
                   {' '}
                   {this.state.submittedSelected !== ''
-                    ? this.state.submittedSelected.email
+                    ? this.state.submittedSelected.name
                     : 'Select Type'}{' '}
                 </Text>
                 <Icon

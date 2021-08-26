@@ -200,23 +200,31 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           .filterSors(data)
           .then((res: any) => {
             if (res.data.message == 'no sor found') {
+              console.log('gaye mutheda');
+              // console.log(dta);
+              // console.log(dta);
               if (dta != null) {
                 showMessage({
-                  message: 'Sor is not found',
+                  message: 'No sor found',
                   type: 'danger',
                   position: 'bottom',
                 });
                 this.setState({
                   nosorOrSorMessage: 'try the different filter or create the',
                 });
+                // this.setState({loading: false});
+                this.props.reduxActions.setLoading(false);
               } else {
                 this.setState({
                   nosorOrSorMessage: 'would you like to create the ',
                 });
+                this.props.reduxActions.setLoading(false);
+                // this.setState({loading: false});
               }
             }
-
-            if (res.data.data.report == undefined) {
+            // console.log('gaye mutheda');
+            // console.log(res.data);
+            if (res.data.data == undefined) {
               this.setState({loading: false});
             } else {
               res.data.data.report.reverse();

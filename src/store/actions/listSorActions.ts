@@ -47,6 +47,14 @@ export type orgnaization = {
   project_name?: string;
 };
 
+/*Loading state */
+export const setLoading = (load: boolean): IThunkAction => {
+  return (dispatch, getState) => {
+    console.log(load);
+    dispatch(loading(load));
+  };
+};
+
 /** ALL sor reducers */
 export const getAllSors = (
   projectId?: string,
@@ -211,6 +219,7 @@ const listAction = {
   getAllSors,
   getRepeatedSors,
   filterSors,
+  setLoading,
 };
 
 export default listAction;
