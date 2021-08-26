@@ -482,6 +482,8 @@ export class Filters extends React.Component<FiltersProps, any> {
                       selectedDayTo: day.dateString,
                       filterObject: {rangeTo: [day.dateString]},
                     });
+
+                    console.log(this.state.filterObject);
                   }
 
                   this.setState({setDateModal: false});

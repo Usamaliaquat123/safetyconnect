@@ -143,7 +143,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
 
-      this.props.reduxActions.getAllSors(currentProj, [1, 2, 3, 4, 5]);
+      // this.props.reduxActions.getAllSors(currentProj, [1, 2, 3, 4, 5]);
 
       createApi
         .createApi()
@@ -225,7 +225,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
             // console.log('gaye mutheda');
             // console.log(res.data);
             if (res.data.data == undefined) {
-              this.setState({loading: false});
+              this.setState({lovading: false});
             } else {
               res.data.data.report.reverse();
               for (let i = 0; i < res.data.data.report.length; i++) {

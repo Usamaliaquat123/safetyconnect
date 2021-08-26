@@ -53,7 +53,13 @@ const industries = [
   'Others (Please Specify)',
 ];
 
-const typeofRole = ['Manager', 'Supervisor', 'Craft Worker'];
+const typeofRole = ['CEO'	,	
+'Director',		
+'General Manager	',	
+'Corporate Manager	'	,
+'Advisor'		,
+'Executive'		,
+'Other'		];
 
 const yourRole = [
   'Figurehead',
@@ -628,7 +634,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       }}
                       onPress={() => {
                         if (this.state.arrayOfYourRole.length == 0) {
-                          this.setState({arrayOfYourRole: typeofRole});
+                          this.setState({arrayOfYourRole: typeofRole}); 
                         } else {
                           this.setState({arrayOfYourRole: []});
                         }
