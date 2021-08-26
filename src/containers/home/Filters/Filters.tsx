@@ -79,6 +79,7 @@ export class Filters extends React.Component<FiltersProps, any> {
       datePickerOfFromOrTo: '',
       todayDateCallender: moment().format('YYYY-MM-DD'),
       filterObject: {},
+      riskSelected: '',
     };
   }
 
@@ -288,7 +289,12 @@ export class Filters extends React.Component<FiltersProps, any> {
                   this.setState({isRiskSelector: !this.state.isRiskSelector})
                 }
                 style={styles.selectionContainer}>
-                <Text style={styles.selectedContent}>Select Type </Text>
+                <Text style={styles.selectedContent}>
+                  {' '}
+                  {this.state.riskSelected !== ''
+                    ? this.state.riskSelected
+                    : 'Select Type'}{' '}
+                </Text>
                 <Icon
                   name={'down'}
                   type={'antdesign'}
@@ -301,7 +307,7 @@ export class Filters extends React.Component<FiltersProps, any> {
                   {this.state.risk.map((d: any, i: number) => (
                     <TouchableOpacity
                       onPress={() => {
-                        this.setState({isRiskSelector: false});
+                        this.setState({isRiskSelector: false, riskSelected: d});
                         this.state.filterObject['risk'] = [d];
                       }}>
                       <Text style={styles.datacontainerText}>{d}</Text>
