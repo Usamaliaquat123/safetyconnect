@@ -346,11 +346,13 @@ class Settings extends React.Component<SettingsProps, any> {
                       <TouchableOpacity
                         style={{
                           // marginRight: wp(),
-                          paddingRight: wp(6),
+                          // paddingRight: wp(6),
                           width: wp(10),
                           height: wp(10),
+                          position: 'absolute',
+                          right: 0,
                           justifyContent: 'center',
-                          alignSelf: 'center',
+                          // alignSelf: 'center',
                         }}
                         onPress={() => {
                           if (this.state.arrayOfYourRole.length == 0) {
@@ -434,11 +436,13 @@ class Settings extends React.Component<SettingsProps, any> {
                       <TouchableOpacity
                         style={{
                           // marginRight: wp(),
-                          paddingRight: wp(6),
+                          // paddingRight: wp(6),
                           width: wp(10),
                           height: wp(10),
                           justifyContent: 'center',
-                          alignSelf: 'center',
+                          // alignSelf: 'center',
+                          position: 'absolute',
+                          right: 0,
                         }}
                         onPress={() => {
                           if (this.state.arrayofDepartment.length == 0) {
@@ -522,11 +526,13 @@ class Settings extends React.Component<SettingsProps, any> {
                       <TouchableOpacity
                         style={{
                           // marginRight: wp(),
-                          paddingRight: wp(6),
+                          // paddingRight: wp(6),
                           width: wp(10),
+                          position: 'absolute',
+                          right: 0,
                           height: wp(10),
                           justifyContent: 'center',
-                          alignSelf: 'center',
+                          // alignSelf: 'center',
                         }}
                         onPress={() => {
                           if (this.state.arrayofIndustry.length == 0) {
