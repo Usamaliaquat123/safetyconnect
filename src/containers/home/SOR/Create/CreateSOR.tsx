@@ -602,90 +602,94 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       this.props.navigation.navigate('Main');
                     }, 1000);
 
-                    createApi
-                      .createApi()
-                      .getAllRepeatedSugg(
-                        this.state.observationT,
-                        this.state.projectid,
-                        sors.report._id,
-                      )
-                      .then(async (sugg: any) => {
-                        this.setState({
-                          loading: false,
-                          errorModal: false,
-                        });
-
-                        var rep = sugg.data.results;
-
-                        if (rep.length == 0) {
-                          showMessage({
-                            message: 'SOR sucessfully subitted',
-                            type: 'success',
-                            position: 'bottom',
-                          });
-
-                          setTimeout(() => {
-                            this.props.navigation.navigate('Main');
-                          }, 1000);
-                        } else {
-                          console.log('this.state.reportIdInvestigation');
-                          console.log(this.state.reportIdInvestigation);
-                          this.setState({mainReportId: sor.report._id});
-
-                          for (let i = 0; i < rep.length; i++) {
-                            const {data} = await createApi
-                              .createApi()
-                              .getUser(rep[i].created_by);
-                            const {data: res} = data;
-                            console.log('res hai bhai');
-                            console.log(res);
-
-                            rep[i]['selected'] = false;
-                            rep[i]['user'] = {
-                              _id: res._id,
-                              email: res.email,
-                              name: res.name,
-                              img_url: res.img_url,
-                            };
-
-                            this.setState(
-                              (prevState) => {
-                                return {
-                                  ...prevState,
-                                  repeatedSorData: rep,
-                                };
-                              },
-                              () => {
-                                console.log(
-                                  'updated state = ',
-                                  this.state.repeatedSorData,
-                                  this.state.repeatedSorData.length,
-                                );
-                              },
-                            );
-
-                            // createApi
-                            //   .createApi()
-                            //   .getUser(rep[i].created_by)
-                            //   .then((user: any) => {
-                            //     rep[i]['selected'] = false;
-                            //     rep[i]['user'] = {
-                            //       _id: user.data.data._id,
-                            //       email: user.data.data.email,
-                            //       name: user.data.data.name,
-                            //       img_url: user.data.data.img_url,
-                            //     };
-                            //   });
-                            // this.setState({
-                            //   repeatedSorData: rep,
-                            // });
-                          }
+                    if (status != 1) {
+                      createApi
+                        .createApi()
+                        .getAllRepeatedSugg(
+                          this.state.observationT,
+                          this.state.projectid,
+                          sors.report._id,
+                        )
+                        .then(async (sugg: any) => {
                           this.setState({
-                            repeatedSorModal: true,
+                            loading: false,
+                            errorModal: false,
                           });
-                        }
-                      })
-                      .catch((err) => console.log(err));
+
+                          var rep = sugg.data.results;
+
+                          if (rep.length == 0) {
+                            showMessage({
+                              message: 'SOR sucessfully subitted',
+                              type: 'success',
+                              position: 'bottom',
+                            });
+
+                            setTimeout(() => {
+                              this.props.navigation.navigate('Main');
+                            }, 1000);
+                          } else {
+                            console.log('this.state.reportIdInvestigation');
+                            console.log(this.state.reportIdInvestigation);
+                            this.setState({mainReportId: sor.report._id});
+
+                            for (let i = 0; i < rep.length; i++) {
+                              const {
+                                data,
+                              } = await createApi
+                                .createApi()
+                                .getUser(rep[i].created_by);
+                              const {data: res} = data;
+                              console.log('res hai bhai');
+                              console.log(res);
+
+                              rep[i]['selected'] = false;
+                              rep[i]['user'] = {
+                                _id: res._id,
+                                email: res.email,
+                                name: res.name,
+                                img_url: res.img_url,
+                              };
+
+                              this.setState(
+                                (prevState) => {
+                                  return {
+                                    ...prevState,
+                                    repeatedSorData: rep,
+                                  };
+                                },
+                                () => {
+                                  console.log(
+                                    'updated state = ',
+                                    this.state.repeatedSorData,
+                                    this.state.repeatedSorData.length,
+                                  );
+                                },
+                              );
+
+                              // createApi
+                              //   .createApi()
+                              //   .getUser(rep[i].created_by)
+                              //   .then((user: any) => {
+                              //     rep[i]['selected'] = false;
+                              //     rep[i]['user'] = {
+                              //       _id: user.data.data._id,
+                              //       email: user.data.data.email,
+                              //       name: user.data.data.name,
+                              //       img_url: user.data.data.img_url,
+                              //     };
+                              //   });
+                              // this.setState({
+                              //   repeatedSorData: rep,
+                              // });
+                            }
+                            this.setState({
+                              repeatedSorModal: true,
+                            });
+                          }
+                        })
+                        .catch((err) => console.log(err));
+                    }
 
                     if (res.status == 200) {
                     } else {
@@ -874,6 +878,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 console.log('this.state.response of five why');
                                 console.log(res);
                                 this.setState({mainReportId: sors.report._id});
+
+
+
+                                if(status != 1){
                                 createApi
                                   .createApi()
                                   .getAllRepeatedSugg(
@@ -955,6 +963,19 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                       });
                                     }
                                   });
+
+
+
+                                }else{
+                                  showMessage({
+                                    message: 'SOR sucessfully subitted',
+                                    type: 'success',
+                                    position: 'bottom',
+                                  });
+                                  setTimeout(() => {
+                                    this.props.navigation.navigate('Main');
+                                  }, 1000);
+                                }
 
                                 console.log('five why');
                                 console.log(res);
