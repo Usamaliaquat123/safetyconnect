@@ -473,21 +473,17 @@ export class Filters extends React.Component<FiltersProps, any> {
                   });
 
                   if (this.state.datePickerOfFromOrTo === 'from') {
-                    // this.setState({
-                    //   selectedDayFrom: day.dateString,
-                    //   filterObject: {rangeFrom: [day.dateString]},
-                    // });
-
                     this.state.filterObject['rangeFrom'] = [day.dateString];
+                    this.setState({
+                      selectedDayFrom: day.dateString,
+                    });
                   } else {
+                    this.state.filterObject['rangeTo'] = [day.dateString];
                     this.setState({
                       selectedDayTo: day.dateString,
-                      // filterObject['rangeTo']: [day.dateString]
                     });
 
-                    this.state.filterObject['rangeTo'] = [day.dateString];
-
-                    console.log(this.state.filterObject);
+                    // console.log(this.state.filterObject);
                   }
 
                   this.setState({setDateModal: false});
