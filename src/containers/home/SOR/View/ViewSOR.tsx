@@ -197,97 +197,67 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         currentProj,
       );
 
+      // New Involved usersSuggestions
+      this.props.route.params.data.involved_persons.map((d: any) => {
+        createApi
+          .createApi()
+          .getUser(d)
+          .then((res: any) => {
+            console.log('res', res.data.data);
+            this.state.involvedPerson.push({
+              name: res.data.data.name,
+              img_url: res.data.data.img_url,
+              email: res.data.data.email,
+            });
+          });
+      });
+
+      // Old involved person idea
+
       createApi
         .createApi()
         .getProject({projectid: currentProj})
         .then((res: any) => {
           console.log(res);
-          this.setState({
-            projectName: res.data.data.project_name,
-            involvedPerson: res.data.data.involved_persons,
-          });
 
-          // console.log('res.data.data.involved_persons');
-          // console.log(res.data.data.involved_persons);
-          // console.log(this.props.route.params.data.involved_persons);
-
-          var data: Array<any> = [];
-          // filterInvolvedPerson(this.props.route.params.data.involved_persons,res.data.data.involved_persons, []).then(res => console.log(res)).catch(err => con)
-          this.props.route.params.data.involved_persons.map((d: any) => {
-            if (
-              res.data.data.involved_persons.filter((i: any) => i.email == d)
-                .length == 0
-            ) {
-              createApi
-                .createApi()
-                .getUser(d)
-                .then((res: any) => {
-                  if (res.data.message === 'no user exists') {
-                    this.state.involvedPerson.push({
-                      name: d,
-                      email: d,
-                      img_url:
-                        'https://dummyimage.com/600x400/ffffff/000000&text=@',
-                    });
-                  } else {
-                    this.state.involvedPerson.push({
-                      name: res.data.data.name,
-                      img_url: res.data.data.img_url,
-                      email: res.data.data.email,
-                    });
-                  }
-                })
-                .catch((err: any) => {});
-            } else {
-              this.state.involvedPerson.push(
-                res.data.data.involved_persons.filter(
-                  (i: any) => i.email == d,
-                )[0],
-              );
-            }
-
-            // this.setState({});
-          });
-
-          console.log(this.state.involvedPerson);
-
-          // this.setState({involvedPerson: data});
-          // this.setState({
-          //   excludingSubmitCreatedByUsers: this.state.involvedPerson,
-          // });
-          // AsyncStorage.getItem('email').then((email: any) => {
-          //   this.state.excludingSubmitCreatedByUsers.map(
-          //     (d: any, i: number) => {
-          //       // const element = notifiedToAndInvolved[i];
-
-          //       if (d.email == this.props.route.params.data.created_by) {
-          //         this.state.excludingSubmitCreatedByUsers.splice(i, 1);
+          //     var data: Array<any> = [];
+          //     this.props.route.params.data.involved_persons.map((d: any) => {
+          //       if (
+          //         res.data.data.involved_persons.filter((i: any) => i.email == d)
+          //           .length == 0
+          //       ) {
+          //         createApi
+          //           .createApi()
+          //           .getUser(d)
+          //           .then((res: any) => {
+          //             if (res.data.message === 'no user exists') {
+          //               this.state.involvedPerson.push({
+          //                 name: d,
+          //                 email: d,
+          //                 img_url:
+          //                   'https://dummyimage.com/600x400/ffffff/000000&text=@',
+          //               });
+          //             } else {
+          //               this.state.involvedPerson.push({
+          //                 name: res.data.data.name,
+          //                 img_url: res.data.data.img_url,
+          //                 email: res.data.data.email,
+          //               });
+          //             }
+          //           })
+          //           .catch((err: any) => {});
+          //       } else {
+          //         this.state.involvedPerson.push(
+          //           res.data.data.involved_persons.filter(
+          //             (i: any) => i.email == d,
+          //           )[0],
+          //         );
           //       }
-          //       if (d.email == this.props.route.params.data.submit_to[0]) {
-          //         this.state.excludingSubmitCreatedByUsers.splice(i, 1);
-          //       }
-          //     },
-          //   );
+          //     });
 
-          //   if (
-          //     this.state.excludingSubmitCreatedByUsers.filter(
-          //       (d) => d.email == email,
-          //     )
-          //   ) {
-          //     this.setState({allBtnsEnabled: true});
-          //   } else {
-          //     this.setState({allBtnsEnabled: false});
-          //   }
-          // });
-
-          // this.mappingInvolved(
-          //   res.data.data.involved_persons,
-          //   this.props.route.params.data.involved_persons[0],
-          // );
-
-          for (let i = 0; i < res.data.data.involved_persons.length; i++) {
-            res.data.data.involved_persons[i]['selected'] = false;
-          }
+          //     for (let i = 0; i < res.data.data.involved_persons.length; i++) {
+          //       res.data.data.involved_persons[i]['selected'] = false;
+          //     }
 
           this.setState({involved_person: res.data.data.involved_persons});
         })
