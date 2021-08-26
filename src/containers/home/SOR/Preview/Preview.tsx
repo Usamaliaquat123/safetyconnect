@@ -249,6 +249,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
+              onPress={() => this.props.navigation.goBack()}
                 size={25}
                 name="arrow-back-outline"
                 type="ionicon"

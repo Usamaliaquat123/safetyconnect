@@ -150,7 +150,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         .getProject({projectid: currentProj})
         .then((involvedPerson: any) => {
           console.log('involvedPerson.data');
-          console.log();
           this.setState({projectName: involvedPerson.data.data.project_name});
           var j = {};
           var arr = [];
@@ -195,6 +194,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           }
         }
 
+        console.log('filtered data');
+        console.log(data);
         createApi
           .createApi()
           .filterSors(data)
