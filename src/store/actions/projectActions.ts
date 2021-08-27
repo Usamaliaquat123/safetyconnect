@@ -60,6 +60,7 @@ export const createProject = (
 
 const listAction = {
   createProject,
+  getAllProjects,
 };
 
 export default listAction;
