@@ -142,6 +142,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       countributoryCauses: '',
       rootCauses: '',
       fiveWHYdata: [],
+      selectedProject: {},
       keyFindings: '',
       // Involved person
       involvedToArr: [],
@@ -321,13 +322,20 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           .createApi()
           .getOrganization(currentOrg)
           .then((res: any) => {
+            console.log(res.data.data.projects);
             this.setState({
               projectName: res.data.data.projects.map(
                 (d: any) => d.project_id._id == this.state.projectid,
               )[0].project_id.project_name,
               allProjects: res.data.data.projects,
+              c: res.data.data.projects.map(
+                (d: any) => d.project_id._id == this.state.projectid,
+              )[0],
               currentOrgName: res.data.data.name,
             });
+
+            console.log('this.state.selectedProject');
+            console.log(this.state.selectedProject);
           });
     });
     // {key: "test.txt"} .catch(err => conso.le.log(err)});
@@ -1185,13 +1193,151 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           </View>
           <Animated.View style={[styles.content]}>
             {/* Select Project  / Select location */}
-            {/* <Selector
-              orgnaization={this.state.currentOrg}
-              projects={this.state.allProjects}
-              selectedLocation={this.state.allLocations}
-              selectedProject={this.state.projectid}
-              navigation={this.props.navigation}
-            /> */}
+
+            <View style={styles.selectProjectLocationContainer}>
+              {/* Select Project */}
+              <View style={styles.selectProjectContainer}>
+                <Text style={styles.selectProjHead}>Select Project :</Text>
+                <TouchableOpacity onPress={() => {}} style={styles.selectProj}>
+                  <Text style={styles.projName}>
+                    {this.state.selectedProject.project_name}
+                  </Text>
+                  <Icon
+                    // onPress={() => props.navigation.goBack()}
+                    size={wp(3)}
+                    containerStyle={styles.downIcon}
+                    name="down"
+                    type="antdesign"
+                    // color={colo}
+                  />
+                </TouchableOpacity>
+
+                {this.state.allProjects.length != 0 && (
+                  <ScrollView
+                    style={{
+                      // top: wp(20),
+                      borderRadius: wp(1),
+                      borderColor: colors.textOpa,
+                      width: wp(42),
+                      borderWidth: wp(0.2),
+                      // position: 'absolute',
+                      // paddingTop: 60,
+                      // marginTop: 0,
+
+                      backgroundColor: colors.secondary,
+                      maxHeight: wp(40),
+                    }}>
+                    {this.state.allProjects.map((d: any) => (
+                      <TouchableOpacity
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          padding: wp(3),
+                        }}
+                        onPress={() => {
+                          createApi
+                            .createApi()
+                            .getLocations({projectid: d.project_id._id})
+                            .then((resp: any) => {
+                              this.setState({
+                                allLocations: resp.data.data.p_locations,
+                                allProjects: [],
+                              });
+                            });
+                        }}>
+                        <Icon
+                          name={'stats-chart-sharp'}
+                          type={'ionicon'}
+                          color={colors.text}
+                          size={wp(3)}
+                          containerStyle={{marginRight: wp(3)}}
+                        />
+                        <Text
+                          style={{
+                            fontSize: wp(3),
+                            fontFamily: fonts.SFuiDisplayMedium,
+                          }}>
+                          {d.project_name}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </ScrollView>
+                )}
+              </View>
+
+              {/* Select location */}
+              <View style={styles.selectLocationContainer}>
+                <Text style={styles.selectlocationHead}>Select Location :</Text>
+                <TouchableOpacity
+                  onPress={() => {}}
+                  style={styles.selectLocation}>
+                  <Text style={styles.locaName}>
+                    {this.state.selectedLocation}
+                  </Text>
+                  <Icon
+                    onPress={() => {}}
+                    size={wp(3)}
+                    containerStyle={styles.downIcon}
+                    name="down"
+                    type="antdesign"
+                    // color={colo}
+                  />
+                </TouchableOpacity>
+
+                {this.state.allLocations.length != 0 && (
+                  <ScrollView
+                    style={{
+                      // top: wp(20),
+                      borderRadius: wp(1),
+                      borderColor: colors.textOpa,
+                      width: wp(42),
+                      borderWidth: wp(0.2),
+                      // position: 'absolute',
+                      // paddingTop: 60,
+                      // marginTop: 0,
+
+                      backgroundColor: colors.secondary,
+                      maxHeight: wp(40),
+                    }}>
+                    {this.state.allLocations.map((d: any) => (
+                      <TouchableOpacity
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          padding: wp(3),
+                        }}
+                        onPress={() => {
+                          createApi
+                            .createApi()
+                            .getLocations({projectid: d.project_id._id})
+                            .then((resp: any) => {
+                              this.setState({
+                                allLocations: [],
+                                selectedLocation: resp.data.data.p_locations,
+                              });
+                            });
+                        }}>
+                        <Icon
+                          name={'stats-chart-sharp'}
+                          type={'ionicon'}
+                          color={colors.text}
+                          size={wp(3)}
+                          containerStyle={{marginRight: wp(3)}}
+                        />
+                        <Text
+                          style={{
+                            fontSize: wp(3),
+                            fontFamily: fonts.SFuiDisplayMedium,
+                          }}>
+                          {d.project_name}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </ScrollView>
+                )}
+              </View>
+            </View>
+
             {/* Line  */}
             <View style={styles.lineheight} />
             {/* Classify SOR */}

@@ -120,92 +120,98 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       this.setState({errorProjectName: false});
       if (this.state.assignLocations.length > 0) {
         if (this.state.assignLeaderss.length != 0) {
-          if (this.state.assignSuppervisor.length != 0) {
-            this.setState({loading: true});
-            await AsyncStorage.getItem('email')
-              .then((email: any) => {
-                this.setState({errorTeamMem: false});
-                // this.props.route.params.suggestedUsers?.map((d  :any) => )
-                var members = this.state.assignLeaderss.concat(
+          // if (this.state.assignSuppervisor.length != 0) {
+
+          this.setState({loading: true});
+          await AsyncStorage.getItem('email')
+            .then((email: any) => {
+              this.setState({errorTeamMem: false});
+              // this.props.route.params.suggestedUsers?.map((d  :any) => )
+
+              var members = [];
+
+              if (this.state.assignSuppervisor.length != 0) {
+                members = this.state.assignLeaderss.concat(
                   this.state.assignSuppervisor,
                 );
+              } else {
+                members = this.state.assignLeaderss;
+              }
 
-                for (var i = 0; i < members.length; i++) {
-                  var obj = members[i];
+              for (var i = 0; i < members.length; i++) {
+                var obj = members[i];
 
-                  if (members.indexOf(obj._id) !== -1) {
-                    members.splice(i, 1);
-                  }
+                if (members.indexOf(obj._id) !== -1) {
+                  members.splice(i, 1);
                 }
+              }
 
-                // console.log('members');
-                // // console.log(members);
-                // var dta = [
-                //   ...new Set(members.map((item) => JSON.stringify(item))),
-                // ];
+              // console.log('members');
+              // // console.log(members);
+              // var dta = [
+              //   ...new Set(members.map((item) => JSON.stringify(item))),
+              // ];
 
-                const d = [
-                  ...new Set(members.map((itm) => JSON.stringify(itm))),
-                ].map((i) => JSON.parse(i));
+              const d = [
+                ...new Set(members.map((itm) => JSON.stringify(itm))),
+              ].map((i) => JSON.parse(i));
 
-                // d.map((item) => {
-                //   if(item.email == this.state.user){
-                //     return
-                //   }
-                // })
+              // d.map((item) => {
+              //   if(item.email == this.state.user){
+              //     return
+              //   }
+              // })
 
-                var gol = d.filter((d) => d.email != this.state.user);
-                console.log(gol);
-                var data = {
-                  created_by: email,
-                  project_name: this.state.projectName,
-                  // involved_persons: members.map((d: any) => d._id),
-                  locations: this.state.assignLocations.map((d) => d.name),
-                  project_leader: this.state.assignLeaderss.map((d) => d.email),
-                  secondary_leader: this.state.assignSuppervisor.map(
-                    (d) => d.email,
-                  ),
-                  involved_persons: gol.map((j) => j._id),
-                  description: this.state.projectDescription,
-                  p_locations: this.state.assignLocations,
-                  organization: this.state.organizationId,
-                };
-                console.log('data');
-                console.log(data);
-                this.setState({loading: false});
-                api
-                  .createApi()
-                  .Postproject(data)
+              var gol = d.filter((d) => d.email != this.state.user);
+              console.log(gol);
+              var data = {
+                created_by: email,
+                project_name: this.state.projectName,
+                // involved_persons: members.map((d: any) => d._id),
+                locations: this.state.assignLocations.map((d) => d.name),
+                project_leader: this.state.assignLeaderss.map((d) => d.email),
+                secondary_leader: this.state.assignSuppervisor.map(
+                  (d) => d.email,
+                ),
+                involved_persons: gol.map((j) => j._id),
+                description: this.state.projectDescription,
+                p_locations: this.state.assignLocations,
+                organization: this.state.organizationId,
+              };
+              console.log('data');
+              console.log(data);
+              this.setState({loading: false});
+              api
+                .createApi()
+                .Postproject(data)
 
-                  .then((res: any) => {
-                    console.log(res);
-                    console.log('created project');
+                .then((res: any) => {
+                  console.log(res);
+                  console.log('created project');
 
-                    if (res.status == 200) {
-                      savedCurrentProjectAndOrganizations(
-                        res.data.data.project_id,
-                        this.state.organizationId,
-                      );
-                      this.setState({loading: false});
-                      // AsyncStorage.setItem('email', email);
+                  if (res.status == 200) {
+                    savedCurrentProjectAndOrganizations(
+                      res.data.data.project_id,
+                      this.state.organizationId,
+                    );
+                    this.setState({loading: false});
+                    // AsyncStorage.setItem('email', email);
 
-                      this.props.navigation.dispatch(
-                        CommonActions.reset({
-                          index: 1,
-                          routes: [
-                            {
-                              name: 'Main',
-                            },
-                          ],
-                        }),
-                      );
-                    }
-                  })
-                  .catch((err) => {});
-              })
-              .catch((err) => {});
-          } else {
-          }
+                    this.props.navigation.dispatch(
+                      CommonActions.reset({
+                        index: 1,
+                        routes: [
+                          {
+                            name: 'Main',
+                          },
+                        ],
+                      }),
+                    );
+                  }
+                })
+                .catch((err) => {});
+            })
+            .catch((err) => {});
         } else {
           this.setState({loading: false});
           this.setState({errorTeamMem: true});
