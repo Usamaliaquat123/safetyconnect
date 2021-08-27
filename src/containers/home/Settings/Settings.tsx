@@ -1,28 +1,24 @@
 import * as React from 'react';
 import {
   View,
-  StyleSheet,
   Text,
   ScrollView,
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import {Buffer} from 'buffer';
 import {connect} from 'react-redux';
 import styles from './style';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp, CommonActions} from '@react-navigation/native';
 import {StackNavigatorProps} from '@nav';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Icon, Avatar} from 'react-native-elements';
 import Modal from 'react-native-modal';
 import LottieView from 'lottie-react-native';
-
-import RNFetchBlob from 'rn-fetch-blob';
-
+import {bindActionCreators} from 'redux';
+import * as reduxActions from '@actions';
+import {AllSorDTO} from '@dtos';
 import {
   imagePicker,
-  cameraCapture,
   profileUploader,
   suggestInActionsRecommendations,
 } from '@utils';
@@ -612,12 +608,12 @@ class Settings extends React.Component<SettingsProps, any> {
   }
 }
 
-const mapStateToProps = (state: any) => {
-  return {};
-};
+const mapStateToProps = (state: AllSorDTO) => ({
+  reduxState: state.allSors,
+});
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {};
-};
+const mapDispatchToProps = (dispatch: any) => ({
+  reduxActions: bindActionCreators(reduxActions, dispatch),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
