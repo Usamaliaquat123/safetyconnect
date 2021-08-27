@@ -21,7 +21,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import * as reduxActions from '../../../store/actions/organizationActions';
+import * as reduxActions from '@actions';
 import {Tags} from '@components';
 import {Icon, Avatar} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -83,6 +83,8 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
   }
   componentDidMount() {
     this.props.start();
+
+    console.log(this.props.reduxActions);
   }
 
   searchForUsers = (e: string) => {

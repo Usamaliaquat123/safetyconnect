@@ -25,7 +25,7 @@ import styles from './styles';
 import {createApi as api} from '@service';
 import {animation} from '@theme';
 import LottieView from 'lottie-react-native';
-import * as reduxActions from '../../../store/actions/projectActions';
+import * as reduxActions from '@actions';
 import {copilot, walkthroughable, CopilotStep} from 'react-native-copilot';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {default as Model} from 'react-native-modal';
@@ -267,15 +267,12 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     getCurrentOrganization().then((orgid: any) => {
       this.setState({organizationId: orgid});
 
-      api
-        .createApi()
-        .getOrganization(orgid)
-        .then((orgData: any) => {
-          this.setState({
-            allAssignSuppervisorText: orgData.data.data.members,
-            allAssignLeaders: orgData.data.data.members,
-          });
+      this.props.reduxActions.getOrganization(orgid).then((res: any) => {
+        this.setState({
+          allAssignSuppervisorText: res.members,
+          allAssignLeaders: res.members,
         });
+      });
     });
   };
 

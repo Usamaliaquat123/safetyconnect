@@ -32,6 +32,8 @@
         "@config/*":["./config/*"],
         "@dtos":["./dtos/index"],
         "@dtos/*":["./dtos/*"],
+        "@actions":["./store/actions/index"],
+        "@actions/*":["./store/actions/*"],
       }
     },
     "exclude": [

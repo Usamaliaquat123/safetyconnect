@@ -73,15 +73,21 @@ export const createOrganization = (
 };
 
 /** Get Organization */
-export const getOrganization = (organizationId : string) => {
-
-return new Promise((resolve, reject) => {
-
-})
+export const getOrganization = (organizationId: string) => {
+  return new Promise((resolve, reject) => {
+    createApi
+      .createApi()
+      .getOrganization(organizationId)
+      .then((res: any) => {
+        resolve(res.data.data);
+      })
+      .catch((err) => reject(err));
+  });
 };
 
 const listAction = {
   createOrganization,
+  getOrganization,
 };
 
 export default listAction;

@@ -14,7 +14,7 @@ import {
 } from './listSorActions';
 import {createProject, getAllProjects} from './projectActions';
 
-export default {
+export {
   getAllSors,
   getRepeatedSors,
   filterSors,
