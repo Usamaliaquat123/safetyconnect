@@ -3,8 +3,8 @@ import ActionTypes from '../ActionTypes';
 import {IThunkAction} from '../Store';
 import {createApi} from '@service';
 import {orgnaization} from '@typings';
-import {savedCurrentOrganization} from '@utils';
-
+import {savedCurrentProjectAndOrganizations} from '@utils';
+import {CommonActions} from '@react-navigation/native';
 /**
  *  Action Types
  */
@@ -18,52 +18,38 @@ export const getAllProjects = (): IThunkAction => {
   return async (dispatch, getState) => {};
 };
 
-/** Create Organization */
-export const createProjects = (
-  project: orgnaization,
-  users: Array<string>,
+/** Create Project */
+export const createProject = (
+  data: any,
+  organization: string,
   navigation: any,
 ): IThunkAction => {
   return async (dispatch, getState) => {
-    console.log(['orgnaization']);
+    console.log(['project']);
     dispatch(loading(true));
     await createApi
       .createApi()
-      .organization({
-        created_by: organization.created_by,
-        name: organization.name,
-        details: organization.details,
-        members: organization.members,
-        img_url: organization.img_url,
-        projects: organization.projects,
-      })
+      .Postproject(data)
       .then(async (res: any) => {
         if (res.status == 200) {
-          if (users.length != 0) {
-            await createApi
-              .createApi()
-              .inviteBulk({
-                emails: users,
-                organization: res.data.data.organization_id,
-                invitedBy: organization.created_by,
-                organizationName: organization.name,
-              })
-              .then((invite) => {
-                savedCurrentOrganization(res.data.data.organization_id);
-                dispatch(loading(false));
-                dispatch(error(false));
-                navigation.navigate('createProject');
-              });
-          }
-
           dispatch(loading(false));
-          console.log(res);
-
-          // this.props.navigation.navigate('CreateProj', {
-          //   organization: res.data.data.organization_id,
-          // });
+          savedCurrentProjectAndOrganizations(
+            res.data.data.project_id,
+            organization,
+          );
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [
+                {
+                  name: 'Main',
+                },
+              ],
+            }),
+          );
         } else {
           dispatch(error(true));
+          dispatch(loading(false));
           // this.setState({loading: false, errorModal: false});
         }
       });
@@ -73,7 +59,7 @@ export const createProjects = (
 };
 
 const listAction = {
-  createProjects,
+  createProject,
 };
 
 export default listAction;

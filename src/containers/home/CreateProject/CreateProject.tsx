@@ -122,7 +122,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
         if (this.state.assignLeaderss.length != 0) {
           // if (this.state.assignSuppervisor.length != 0) {
 
-          this.setState({loading: true});
+          // this.setState({loading: true});
           await AsyncStorage.getItem('email')
             .then((email: any) => {
               this.setState({errorTeamMem: false});
@@ -163,7 +163,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               // })
 
               var gol = d.filter((d) => d.email != this.state.user);
-              console.log(gol);
               var data = {
                 created_by: email,
                 project_name: this.state.projectName,
@@ -178,38 +177,42 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                 p_locations: this.state.assignLocations,
                 organization: this.state.organizationId,
               };
-              console.log('data');
-              console.log(data);
               this.setState({loading: false});
-              api
-                .createApi()
-                .Postproject(data)
 
-                .then((res: any) => {
-                  console.log(res);
-                  console.log('created project');
+              this.props.reduxActions.createProject(
+                data,
+                this.state.organizationId,
+                this.props.navigation,
+              );
+              // api
+              //   .createApi()
+              //   .Postproject(data)
 
-                  if (res.status == 200) {
-                    savedCurrentProjectAndOrganizations(
-                      res.data.data.project_id,
-                      this.state.organizationId,
-                    );
-                    this.setState({loading: false});
-                    // AsyncStorage.setItem('email', email);
+              //   .then((res: any) => {
+              //     console.log(res);
+              //     console.log('created project');
 
-                    this.props.navigation.dispatch(
-                      CommonActions.reset({
-                        index: 1,
-                        routes: [
-                          {
-                            name: 'Main',
-                          },
-                        ],
-                      }),
-                    );
-                  }
-                })
-                .catch((err) => {});
+              //     if (res.status == 200) {
+              //       savedCurrentProjectAndOrganizations(
+              //         res.data.data.project_id,
+              //         this.state.organizationId,
+              //       );
+              //       this.setState({loading: false});
+              //       // AsyncStorage.setItem('email', email);
+
+              //       this.props.navigation.dispatch(
+              //         CommonActions.reset({
+              //           index: 1,
+              //           routes: [
+              //             {
+              //               name: 'Main',
+              //             },
+              //           ],
+              //         }),
+              //       );
+              //     }
+              //   })
+              //   .catch((err) => {});
             })
             .catch((err) => {});
         } else {
@@ -282,7 +285,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* content */}
           <View style={[styles.content]}>
-            {this.state.loading == true ? (
+            {this.props.reduxState.loading == true ? (
               <View
                 style={{
                   alignSelf: 'center',
