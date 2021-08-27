@@ -19,6 +19,9 @@ enum ActionTypes {
   // PROJECT
   LIST_PROJECT = 'LIST_PROJECT',
   CLEAN_PROJECT = 'CLEAN_PROJECT',
+  // USERS
+  ALL_USERS = 'ALL_USERS',
+  USER = 'USER',
 }
 
 export interface IAction<T> {

@@ -8,7 +8,7 @@ import {CommonActions} from '@react-navigation/native';
 /**
  *  Action Types
  */
-export const updateList = createAction(ActionTypes.LIST_PROJECT);
+export const allUsers = createAction(ActionTypes.ALL_USERS);
 export const loading = createAction(ActionTypes.LOADING);
 export const error = createAction(ActionTypes.ERROR);
 export const cleanSors = createAction(ActionTypes.CLEAN_PROJECT);
@@ -25,13 +25,43 @@ export const updateUser = (
   navigation: any,
 ): IThunkAction => {
   return async (dispatch, getState) => {
-    // dispatch(loading({loading: true}));
+    dispatch(loading({loading: true}));
+  };
+};
+
+/** Get User */
+export const getUser = (email: string): IThunkAction => {
+  return async (dispatch, getState) => {
+    dispatch(loading({loading: true}));
+  };
+};
+
+/** Invite User */
+export const inviteUser = (data: any, navigation: any): IThunkAction => {
+  return async (dispatch, getState) => {
+    dispatch(loading({loading: true}));
+
+    createApi
+      .createApi()
+      .inviteBulk(data)
+      .then((invited) => {
+        dispatch(loading({loading: false}));
+        if (invited.data == 'invited') {
+          navigation.goBack();
+        }
+      })
+      .catch((err) => {
+        dispatch(error(true));
+        dispatch(loading({loading: false}));
+      });
   };
 };
 
 const listAction = {
   getAllUsers,
   updateUser,
+  getUser,
+  inviteUser,
 };
 
 export default listAction;

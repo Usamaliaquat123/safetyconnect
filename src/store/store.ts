@@ -10,6 +10,7 @@ import allSorReducer, {initialState as allSors} from './Reducers/allSorReducer';
 import organizationReducer, {
   initialState as allOrg,
 } from './Reducers/organizationReducer';
+import userReducer, {initialState as allUsers} from './Reducers/userReducer';
 import projectReducer, {
   initialState as allProjects,
 } from './Reducers/projectReducer';
@@ -19,6 +20,7 @@ export type RootState = {
   listsor: typeof allSors;
   organizations: typeof allOrg;
   projects: typeof allProjects;
+  users: typeof allUsers;
 };
 
 export type AppThunk<ReturnType = void> = ThunkAction<
@@ -43,6 +45,7 @@ function configureStore() {
     allSors: allSorReducer,
     organizations: organizationReducer,
     projects: projectReducer,
+    users: userReducer,
     // auto-plugin
   });
 

@@ -14,7 +14,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import * as reduxActions from '../../../store/actions/listSorActions';
+import * as reduxActions from '@actions';
 
 import {Icon, Avatar} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -158,6 +158,8 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
       organizationName: this.state.organizationName,
       projectName: this.state.projectText,
     };
+
+    this.props.reduxActions.invitePeople(data);
 
     api
       .createApi()
