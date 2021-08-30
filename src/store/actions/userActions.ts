@@ -32,12 +32,16 @@ export const updateUser = (
 /** Get User */
 export const getUser = (email: string) => {
   return new Promise((resolve, reject) => {
-    createApi.createApi().getUser(email).then(data => {
-      resolve(data);
-    }).catch(err => {
-      reject(err)
-    }) 
-  })
+    createApi
+      .createApi()
+      .getUser(email)
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
 };
 
 /** Invite User */

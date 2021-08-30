@@ -89,8 +89,8 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
             .then((res) => {
               this.props.reduxActions
                 .getUser(this.props.route.params.email)
-                .then((res: any) => {
-                  if (res.data.data.organizations.length == 0) {
+                .then((d: any) => {
+                  if (d.data.data.organizations.length == 0) {
                     this.props.navigation.navigate('TellAboutYou', {
                       username: this.props.route.params.email,
                     });
@@ -360,12 +360,11 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
   }
 }
 
-const mapStateToProps = (state: any) => {
-  return {};
-};
+const mapStateToProps = (state: AllSorDTO) => ({
+  reduxState: state.allSors,
+});
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {};
-};
-
+const mapDispatchToProps = (dispatch: any) => ({
+  reduxActions: bindActionCreators(reduxActions, dispatch),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(ChangePassword);
