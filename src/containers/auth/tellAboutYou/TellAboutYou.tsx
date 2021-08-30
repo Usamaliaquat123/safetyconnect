@@ -53,13 +53,15 @@ const industries = [
   'Others (Please Specify)',
 ];
 
-const typeofRole = ['CEO'	,	
-'Director',		
-'General Manager	',	
-'Corporate Manager	'	,
-'Advisor'		,
-'Executive'		,
-'Other'		];
+const typeofRole = [
+  'CEO',
+  'Director',
+  'General Manager	',
+  'Corporate Manager	',
+  'Advisor',
+  'Executive',
+  'Other',
+];
 
 const yourRole = [
   'Figurehead',
@@ -226,30 +228,33 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
             role: this.state.DesignAndArchitectureText,
             department: this.state.IndustryRole,
             industry: this.state.name,
-            img_url: this.state.uploadedImage,
+            img_url:
+              this.state.uploadedImage === ''
+                ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                : this.state.uploadedImage,
           };
 
           console.log(setUserInfoData);
-          // api
-          //   .createApi()
-          //   .setUserInfo(setUserInfoData)
-          //   .then((res) => {
-          //     if ((res.status = 200)) {
-          //       this.setState({
-          //         loading: false,
-          //         errorModal: false,
-          //       });
-          //       api
-          //         .createApi()
-          //         .getUser(this.props.route.params.username)
-          //         .then((res: any) => {
-          //           AsyncStorage.setItem('user', JSON.stringify(res.data.data));
-          //         });
-          //       AsyncStorage.setItem('email', this.props.route.params.username);
+          api
+            .createApi()
+            .setUserInfo(setUserInfoData)
+            .then((res) => {
+              if ((res.status = 200)) {
+                this.setState({
+                  loading: false,
+                  errorModal: false,
+                });
+                api
+                  .createApi()
+                  .getUser(this.props.route.params.username)
+                  .then((res: any) => {
+                    AsyncStorage.setItem('user', JSON.stringify(res.data.data));
+                  });
+                AsyncStorage.setItem('email', this.props.route.params.username);
 
-          //       this.props.navigation.navigate('CreateOrganization');
-          //     }
-          //   })
+                this.props.navigation.navigate('CreateOrganization');
+              }
+            });
           //   .catch((err) => console.log(err));
           // } else if (res.status == null) {
           // }
@@ -636,7 +641,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       }}
                       onPress={() => {
                         if (this.state.arrayOfYourRole.length == 0) {
-                          this.setState({arrayOfYourRole: typeofRole}); 
+                          this.setState({arrayOfYourRole: typeofRole});
                         } else {
                           this.setState({arrayOfYourRole: []});
                         }
