@@ -220,10 +220,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
       // Old involved person idea
 
-this.props.reduxActions.getProject(currentProj).then((project: any) => {
-  this.setState({involved_person: project.involved_persons});
-})
-
+      this.props.reduxActions.getProject(currentProj).then((project: any) => {
+        this.setState({involved_person: project.involved_persons});
+      });
     });
 
     // Get user and save it on state
@@ -558,13 +557,12 @@ this.props.reduxActions.getProject(currentProj).then((project: any) => {
   getAllComments = () => {
     // this.props.route.params.data.comments;
 
-
-
-
-    this.props.reduxActions.getAllComments( this.props.route.params.data.comments,
-      this.props.route.params.data._id).then((res:  any) => { 
-
-
+    this.props.reduxActions
+      .getAllComments(
+        this.props.route.params.data.comments,
+        this.props.route.params.data._id,
+      )
+      .then((res: any) => {
         for (let i = 0; i < res.data.data.all_comments.length; i++) {
           var rs = res.data.data.all_comments[i].files.map(
             (d) => (d = `report/${d}`),
@@ -610,8 +608,6 @@ this.props.reduxActions.getProject(currentProj).then((project: any) => {
                 //     res.data.data.all_comments[i].files[k]
               }
             });
-
-       
         }
         const sortedActivities = res.data.data.all_comments.sort(
           (a, b) => new Date(a.date) - new Date(b.date),
@@ -622,8 +618,7 @@ this.props.reduxActions.getProject(currentProj).then((project: any) => {
         console.log('comments');
         console.log(this.state.comments);
         // this.state..sort(function(a, b){return a-b});
-
-    })
+      });
 
     // })
     // .catch((err) => {});
@@ -638,45 +633,43 @@ this.props.reduxActions.getProject(currentProj).then((project: any) => {
     });
 
     AsyncStorage.getItem('email').then((email: any) => {
-      createApi
-        .createApi()
-        .getUser(email)
-        .then((user: any) => {
-          var comments = {
-            data: {
-              user: user.data.data._id,
-              comment: comment,
+      this.props.reduxActions.getUser(email).then((user : any) => {
+        var comments = {
+          data: {
+            user: user.data.data._id,
+            comment: comment,
+            date: Date.now(),
+            files: attachment.map((d: any) => d.name),
+            is_comment: true,
+          },
+          comment_document_id: this.props.route.params.data.comments,
+        };
+
+        // this.state.commentAttachment
+
+        createApi
+          .createApi()
+          .createComment(comments)
+          .then((res: any) => {
+            var map = [...this.state.comments];
+            map.push({
               date: Date.now(),
-              files: attachment.map((d: any) => d.name),
+              comment: comment,
+              files: attachment,
+              _id: res.data.data,
+              user: {
+                name: user.name,
+                email: user.email,
+                _id: user._id,
+                img_url: user.img_url,
+              },
               is_comment: true,
-            },
-            comment_document_id: this.props.route.params.data.comments,
-          };
-
-          // this.state.commentAttachment
-
-          createApi
-            .createApi()
-            .createComment(comments)
-            .then((res: any) => {
-              var map = [...this.state.comments];
-              map.push({
-                date: Date.now(),
-                comment: comment,
-                files: attachment,
-                _id: res.data.data,
-                user: {
-                  name: user.data.data.name,
-                  email: user.data.data.email,
-                  _id: user.data.data._id,
-                  img_url: user.data.data.img_url,
-                },
-                is_comment: true,
-              });
-
-              this.setState({comments: map});
             });
-        });
+
+            this.setState({comments: map});
+          });
+      });
+     
     });
   };
 
