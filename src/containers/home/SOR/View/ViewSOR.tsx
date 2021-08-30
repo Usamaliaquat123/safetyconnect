@@ -636,7 +636,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.props.reduxActions.getUser(email).then((user : any) => {
         var comments = {
           data: {
-            user: user.data.data._id,
+            user: user._id,
             comment: comment,
             date: Date.now(),
             files: attachment.map((d: any) => d.name),
@@ -646,28 +646,30 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         };
 
         // this.state.commentAttachment
+this.props.reduxActions.createComment().them(comments).then((res: any) => {
+  var map = [...this.state.comments];
+  map.push({
+    date: Date.now(),
+    comment: comment,
+    files: attachment,
+    _id: res.data.data,
+    user: {
+      name: user.name,
+      email: user.email,
+      _id: user._id,
+      img_url: user.img_url,
+    },
+    is_comment: true,
+  });
 
-        createApi
-          .createApi()
-          .createComment(comments)
-          .then((res: any) => {
-            var map = [...this.state.comments];
-            map.push({
-              date: Date.now(),
-              comment: comment,
-              files: attachment,
-              _id: res.data.data,
-              user: {
-                name: user.name,
-                email: user.email,
-                _id: user._id,
-                img_url: user.img_url,
-              },
-              is_comment: true,
-            });
-
-            this.setState({comments: map});
-          });
+  this.setState({comments: map});
+})
+        // createApi
+        //   .createApi()
+        //   .createComment(comments)
+        //   .then((res: any) => {
+         
+        //   });
       });
      
     });

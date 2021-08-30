@@ -12,8 +12,16 @@ export const editComment = () => {
 };
 
 /** Create comments */
-export const createComment = () => {
-  return new Promise((resolve, reject) => {});
+export const createComment = (comments: any) => {
+  return new Promise((resolve, reject) => {
+    createApi
+      .createApi()
+      .createComment(comments)
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((err) => reject(err));
+  });
 };
 
 /** get All Comments */
