@@ -209,72 +209,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
       // New Involved usersSuggestions
       this.props.route.params.data.involved_persons.map((d: any) => {
-        createApi
-          .createApi()
-          .getUser(d)
-          .then((res: any) => {
-            console.log('res', res.data.data);
-            this.state.involvedPerson.push({
-              name: res.data.data.name,
-              img_url: res.data.data.img_url,
-              email: res.data.data.email,
-            });
+        this.props.reduxActions.getUser(d.email).then((user: any) => {
+          this.state.involvedPerson.push({
+            name: user.name,
+            img_url: user.img_url,
+            email: user.email,
           });
+        });
       });
 
       // Old involved person idea
- 
 
+this.props.reduxActions.getProject(currentProj).then((project: any) => {
+  this.setState({involved_person: project.involved_persons});
+})
 
-
-      createApi
-        .createApi()
-        .getProject({projectid: currentProj})
-        .then((res: any) => {
-          console.log(res.data.data);
-
-          //     var data: Array<any> = [];
-          //     this.props.route.params.data.involved_persons.map((d: any) => {
-          //       if (
-          //         res.data.data.involved_persons.filter((i: any) => i.email == d)
-          //           .length == 0
-          //       ) {
-          //         createApi
-          //           .createApi()
-          //           .getUser(d)
-          //           .then((res: any) => {
-          //             if (res.data.message === 'no user exists') {
-          //               this.state.involvedPerson.push({
-          //                 name: d,
-          //                 email: d,
-          //                 img_url:
-          //                   'https://dummyimage.com/600x400/ffffff/000000&text=@',
-          //               });
-          //             } else {
-          //               this.state.involvedPerson.push({
-          //                 name: res.data.data.name,
-          //                 img_url: res.data.data.img_url,
-          //                 email: res.data.data.email,
-          //               });
-          //             }
-          //           })
-          //           .catch((err: any) => {});
-          //       } else {
-          //         this.state.involvedPerson.push(
-          //           res.data.data.involved_persons.filter(
-          //             (i: any) => i.email == d,
-          //           )[0],
-          //         );
-          //       }
-          //     });
-
-          //     for (let i = 0; i < res.data.data.involved_persons.length; i++) {
-          //       res.data.data.involved_persons[i]['selected'] = false;
-          //     }
-
-          this.setState({involved_person: res.data.data.involved_persons});
-        })
-        .catch((err) => {});
     });
 
     // Get user and save it on state
