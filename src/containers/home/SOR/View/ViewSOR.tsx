@@ -633,7 +633,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
 
     AsyncStorage.getItem('email').then((email: any) => {
-      this.props.reduxActions.getUser(email).then((user : any) => {
+      this.props.reduxActions.getUser(email).then((user: any) => {
         var comments = {
           data: {
             user: user._id,
@@ -646,32 +646,28 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         };
 
         // this.state.commentAttachment
-this.props.reduxActions.createComment().them(comments).then((res: any) => {
-  var map = [...this.state.comments];
-  map.push({
-    date: Date.now(),
-    comment: comment,
-    files: attachment,
-    _id: res.data.data,
-    user: {
-      name: user.name,
-      email: user.email,
-      _id: user._id,
-      img_url: user.img_url,
-    },
-    is_comment: true,
-  });
+        this.props.reduxActions
+          .createComment()
+          .them(comments)
+          .then((res: any) => {
+            var map = [...this.state.comments];
+            map.push({
+              date: Date.now(),
+              comment: comment,
+              files: attachment,
+              _id: res.data.data,
+              user: {
+                name: user.name,
+                email: user.email,
+                _id: user._id,
+                img_url: user.img_url,
+              },
+              is_comment: true,
+            });
 
-  this.setState({comments: map});
-})
-        // createApi
-        //   .createApi()
-        //   .createComment(comments)
-        //   .then((res: any) => {
-         
-        //   });
+            this.setState({comments: map});
+          });
       });
-     
     });
   };
 
