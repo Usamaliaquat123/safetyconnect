@@ -228,27 +228,29 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
             industry: this.state.name,
             img_url: this.state.uploadedImage,
           };
-          api
-            .createApi()
-            .setUserInfo(setUserInfoData)
-            .then((res) => {
-              if ((res.status = 200)) {
-                this.setState({
-                  loading: false,
-                  errorModal: false,
-                });
-                api
-                  .createApi()
-                  .getUser(this.props.route.params.username)
-                  .then((res: any) => {
-                    AsyncStorage.setItem('user', JSON.stringify(res.data.data));
-                  });
-                AsyncStorage.setItem('email', this.props.route.params.username);
 
-                this.props.navigation.navigate('CreateOrganization');
-              }
-            })
-            .catch((err) => console.log(err));
+          console.log(setUserInfoData);
+          // api
+          //   .createApi()
+          //   .setUserInfo(setUserInfoData)
+          //   .then((res) => {
+          //     if ((res.status = 200)) {
+          //       this.setState({
+          //         loading: false,
+          //         errorModal: false,
+          //       });
+          //       api
+          //         .createApi()
+          //         .getUser(this.props.route.params.username)
+          //         .then((res: any) => {
+          //           AsyncStorage.setItem('user', JSON.stringify(res.data.data));
+          //         });
+          //       AsyncStorage.setItem('email', this.props.route.params.username);
+
+          //       this.props.navigation.navigate('CreateOrganization');
+          //     }
+          //   })
+          //   .catch((err) => console.log(err));
           // } else if (res.status == null) {
           // }
         } else {

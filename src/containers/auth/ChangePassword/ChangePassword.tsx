@@ -87,7 +87,20 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
             this.state.password, //password new
           )
             .then((res) => {
-              this.props.navigation.navigate('Main');
+              api
+                .createApi()
+                .getUser(this.props.route.params.email)
+                .then((getusr: any) => {
+                  if (getusr.data.data.organizations.length == 0) {
+                    this.props.navigation.navigate('TellAboutYou', {
+                      username: this.props.route.params.email,
+                    });
+                  } else {
+                    this.props.navigation.navigate('Main');
+                  }
+                });
+
+              // this.props.navigation.navigate('Main');
             })
             .catch((err) => {
               console.log('error on forgot password submit ');
