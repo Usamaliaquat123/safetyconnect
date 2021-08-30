@@ -159,16 +159,16 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
       projectName: this.state.projectText,
     };
 
-    this.props.reduxActions.invitePeople(data);
+    this.props.reduxActions.inviteUser(data, this.props.navigation);
 
-    api
-      .createApi()
-      .inviteBulk(data)
-      .then((res) => {
-        if (res.data == 'invited') {
-          this.props.navigation.goBack();
-        }
-      });
+    // api
+    //   .createApi()
+    //   .inviteBulk(data)
+    //   .then((res) => {
+    //     if (res.data == 'invited') {
+    //       this.props.navigation.goBack();
+    //     }
+    //   });
   };
   render() {
     return (
