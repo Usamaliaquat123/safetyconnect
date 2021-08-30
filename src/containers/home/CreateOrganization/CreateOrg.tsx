@@ -155,7 +155,10 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
               name: this.state.org,
               details: this.state.orgDetails,
               members: [],
-              img_url: this.state.uploadedImage,
+              img_url:
+                this.state.uploadedImage == ''
+                  ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                  : this.state.uploadedImage,
               projects: [],
             };
 
