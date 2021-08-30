@@ -30,10 +30,14 @@ export const updateUser = (
 };
 
 /** Get User */
-export const getUser = (email: string): IThunkAction => {
-  return async (dispatch, getState) => {
-    dispatch(loading({loading: true}));
-  };
+export const getUser = (email: string) => {
+  return new Promise((resolve, reject) => {
+    createApi.createApi().getUser(email).then(data => {
+      resolve(data);
+    }).catch(err => {
+      reject(err)
+    }) 
+  })
 };
 
 /** Invite User */
