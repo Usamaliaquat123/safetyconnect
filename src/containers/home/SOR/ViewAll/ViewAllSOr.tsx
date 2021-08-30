@@ -134,7 +134,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       console.log('orgId');
       console.log(orgId);
 
-      this.props.reduxActions.getOrganization(orgId).then((res) => {
+      this.props.reduxActions.getOrganization(orgId).then((res: any) => {
         this.setState({projects: res.projects});
       });
     });
@@ -143,37 +143,28 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
       // this.props.reduxActions.getAllSors(currentProj, [1, 2, 3, 4, 5]);
 
-      createApi
-        .createApi()
-        .getProject({projectid: currentProj})
-        .then((involvedPerson: any) => {
-          console.log('involvedPerson.data');
-          this.setState({projectName: involvedPerson.data.data.project_name});
-          var j = {};
-          var arr = [];
-          for (
-            let i = 0;
-            i < involvedPerson.data.data.involved_persons.length;
-            i++
-          ) {
-            Object.defineProperty(
-              j,
-              involvedPerson.data.data.involved_persons[i].email,
-              {
-                value: involvedPerson.data.data.involved_persons[i],
-                writable: false,
-              },
-            );
-            this.state.involvedPerson.push(
-              involvedPerson.data.data.involved_persons[i],
-            );
-          }
+      this.props.reduxActions.getProject(currentProj).then((projD: any) => {
+        console.log('involvedPerson.data');
+        this.setState({projectName: projD.project_name});
+        var j = {};
+        var arr = [];
+        for (let i = 0; i < projD.involved_persons.length; i++) {
+          Object.defineProperty(j, projD.involved_persons[i].email, {
+            value: projD.involved_persons[i],
+            writable: false,
+          });
+          this.state.involvedPerson.push(projD.involved_persons[i]);
+        }
 
-          AsyncStorage.setItem(
-            'involved_person',
-            JSON.stringify(this.state.involvedPerson),
-          );
-        });
+        AsyncStorage.setItem(
+          'involved_person',
+          JSON.stringify(this.state.involvedPerson),
+        );
+      });
+      // createApi
+      //   .createApi()
+      //   .getProject({projectid: currentProj})
+      //   .then((involvedPerson: any) => {});
 
       AsyncStorage.getItem('filters').then((filtersObj) => {
         console.log('filtersObj');
