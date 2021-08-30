@@ -228,7 +228,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         .createApi()
         .getProject({projectid: currentProj})
         .then((res: any) => {
-          console.log(res);
+          console.log(res.data.data);
 
           //     var data: Array<any> = [];
           //     this.props.route.params.data.involved_persons.map((d: any) => {
