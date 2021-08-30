@@ -190,7 +190,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           .filterSors(data)
           .then((res: any) => {
             if (res.data.message == 'no sor found') {
-              console.log('gaye mutheda');
+              // console.log('gaye mutheda');
               // console.log(dta);
               // console.log(dta);
               if (dta != null) {

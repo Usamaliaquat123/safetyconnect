@@ -55,7 +55,7 @@ import {copilot, walkthroughable, CopilotStep} from 'react-native-copilot';
 import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {involved_persons, actions, actionsDashboard} from '@typings';
-import * as reduxActions from '../../../../store/actions/listSorActions';
+import * as reduxActions from '@actions';
 
 const WalkthroughableText = walkthroughable(Text);
 const WalkthroughableTouchableOpacity = walkthroughable(TouchableOpacity);
@@ -223,6 +223,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       });
 
       // Old involved person idea
+ 
+
+
 
       createApi
         .createApi()
