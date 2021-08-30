@@ -558,16 +558,13 @@ this.props.reduxActions.getProject(currentProj).then((project: any) => {
   getAllComments = () => {
     // this.props.route.params.data.comments;
 
-    createApi
-      .createApi()
-      .getAllComents(
-        this.props.route.params.data.comments,
-        this.props.route.params.data._id,
-      )
-      .then((res: any) => {
-        // AsyncStorage.getItem('involved_person').then((involveppl: any) => {
-        // var involvedPersonss = JSON.parse(involveppl);
-        console.log(res);
+
+
+
+    this.props.reduxActions.getAllComments( this.props.route.params.data.comments,
+      this.props.route.params.data._id).then((res:  any) => { 
+
+
         for (let i = 0; i < res.data.data.all_comments.length; i++) {
           var rs = res.data.data.all_comments[i].files.map(
             (d) => (d = `report/${d}`),
@@ -614,32 +611,7 @@ this.props.reduxActions.getProject(currentProj).then((project: any) => {
               }
             });
 
-          //  res.data.data.all_comments
-
-          // if (types == 'jpeg' || types == 'png' || types == 'jpg') {
-          //   obj = {
-          //     name: res.data.data.all_comments[i].files,
-          //     type: 'image',
-          //     uri: imgUrl[0],
-          //   };
-          // } else {
-          //   obj = {
-          //     name: res.data.data.all_comments[i].files,
-          //     type: 'image',
-          //     uri: imgUrl[0],
-          //   };
-          // }
-
-          // for (let j = 0; j < involvedPersonss.length; j++) {
-          // if (res.data.data.all_comments[i].user != null) {
-          //   if (
-          //     res.data.data.all_comments[i].user.email ==
-          //     involvedPersonss[j].email
-          //   ) {
-          //     res.data.data.all_comments[i].user = involvedPersonss[j];
-          //   }
-          // }
-          // }
+       
         }
         const sortedActivities = res.data.data.all_comments.sort(
           (a, b) => new Date(a.date) - new Date(b.date),
@@ -650,7 +622,9 @@ this.props.reduxActions.getProject(currentProj).then((project: any) => {
         console.log('comments');
         console.log(this.state.comments);
         // this.state..sort(function(a, b){return a-b});
-      });
+
+    })
+
     // })
     // .catch((err) => {});
   };

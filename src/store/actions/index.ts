@@ -14,11 +14,21 @@ import {
 } from './listSorActions';
 import {createProject, getAllProjects, getProject} from './projectActions';
 import {getAllUsers, updateUser, getUser, inviteUser} from './userActions';
+import {
+  editComment,
+  createComment,
+  deleteComments,
+  getAllComments,
+} from './commentActions';
 export {
   getAllSors,
   getRepeatedSors,
   filterSors,
   involvedPersons,
+  editComment,
+  createComment,
+  deleteComments,
+  getAllComments,
   updateSor,
   getAllUsers,
   updateUser,

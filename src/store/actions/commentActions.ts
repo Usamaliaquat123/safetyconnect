@@ -5,28 +5,32 @@ import {createApi} from '@service';
 import {orgnaization} from '@typings';
 import {savedCurrentProjectAndOrganizations} from '@utils';
 import {CommonActions} from '@react-navigation/native';
-/**
- *  Action Types
- */
 
-/* get all organization*/
+/* Edit comments*/
 export const editComment = () => {
   return new Promise((resolve, reject) => {});
 };
 
-/** Create Project */
+/** Create comments */
 export const createComment = () => {
   return new Promise((resolve, reject) => {});
 };
 
-/** Get Project */
+/** get All Comments */
 
-export const getAllComments = (projectId: string) => {
+export const getAllComments = (commentId: string, sorId: string) => {
   return new Promise((resolve, reject) => {});
 };
+/** Delete Comments */
+
+export const deleteComments = (commentId: string) => {
+  return new Promise((resolve, reject) => {});
+};
+
 const listAction = {
   editComment,
   createComment,
+  deleteComments,
   getAllComments,
 };
 
