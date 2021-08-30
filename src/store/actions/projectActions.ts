@@ -58,7 +58,24 @@ export const createProject = (
   };
 };
 
+/** Get Project */
+
+export const getProject = (projectId: string) => {
+  return new Promise((resolve, reject) => {
+    createApi
+      .createApi()
+      .getProject(projectId)
+      .then((res: any) => {
+        if (res.status == 200) {
+          resolve(res.data.data);
+        } else {
+          reject(res.data.message);
+        }
+      });
+  });
+};
 const listAction = {
+  getProject,
   createProject,
   getAllProjects,
 };

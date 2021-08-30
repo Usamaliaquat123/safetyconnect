@@ -184,35 +184,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                 this.state.organizationId,
                 this.props.navigation,
               );
-              // api
-              //   .createApi()
-              //   .Postproject(data)
-
-              //   .then((res: any) => {
-              //     console.log(res);
-              //     console.log('created project');
-
-              //     if (res.status == 200) {
-              //       savedCurrentProjectAndOrganizations(
-              //         res.data.data.project_id,
-              //         this.state.organizationId,
-              //       );
-              //       this.setState({loading: false});
-              //       // AsyncStorage.setItem('email', email);
-
-              //       this.props.navigation.dispatch(
-              //         CommonActions.reset({
-              //           index: 1,
-              //           routes: [
-              //             {
-              //               name: 'Main',
-              //             },
-              //           ],
-              //         }),
-              //       );
-              //     }
-              //   })
-              //   .catch((err) => {});
             })
             .catch((err) => {});
         } else {

@@ -28,7 +28,7 @@ import {
   fileuploader,
 } from '@utils';
 import {bindActionCreators} from 'redux';
-import * as reduxActions from '../../../../store/actions/listSorActions';
+import * as reduxActions from '@actions';
 
 import {Icon, Avatar} from 'react-native-elements';
 import {colors, images, GlStyles, fonts, animation} from '@theme';
@@ -647,6 +647,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               } = await createApi
                                 .createApi()
                                 .getUser(rep[i].created_by);
+
+
+
+
                               const {data: res} = data;
                               console.log('res hai bhai');
                               console.log(res);

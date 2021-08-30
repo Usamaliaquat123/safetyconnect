@@ -25,7 +25,7 @@ import LottieView from 'lottie-react-native';
 import Modal from 'react-native-modal';
 import {bindActionCreators} from 'redux';
 import OneSignal from 'react-native-onesignal';
-import * as reduxActions from '../../../../store/actions/listSorActions';
+import * as reduxActions from '@actions';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
@@ -133,12 +133,10 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     getCurrentOrganization().then((orgId: any) => {
       console.log('orgId');
       console.log(orgId);
-      createApi
-        .createApi()
-        .getOrganization(orgId)
-        .then((org: any) => {
-          this.setState({projects: org.data.data.projects});
-        });
+
+      this.props.reduxActions.getOrganization(orgId).then((res) => {
+        this.setState({projects: res.projects});
+      });
     });
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});

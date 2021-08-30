@@ -12,7 +12,7 @@ import {
   createSor,
   clearAllSor,
 } from './listSorActions';
-import {createProject, getAllProjects} from './projectActions';
+import {createProject, getAllProjects, getProject} from './projectActions';
 import {getAllUsers, updateUser, getUser, inviteUser} from './userActions';
 export {
   getAllSors,
@@ -22,6 +22,7 @@ export {
   updateSor,
   getAllUsers,
   updateUser,
+  getProject,
   getUser,
   inviteUser,
   createSor,
