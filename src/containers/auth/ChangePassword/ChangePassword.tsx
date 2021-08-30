@@ -14,6 +14,9 @@ import {
 } from 'react-native-responsive-screen';
 import {Auth} from 'aws-amplify';
 import {connect} from 'react-redux';
+import * as reduxActions from '@actions';
+import {bindActionCreators} from 'redux';
+import {AllSorDTO} from '@dtos';
 import {Icon} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
