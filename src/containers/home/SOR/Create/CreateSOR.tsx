@@ -1267,7 +1267,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </View> */}
 
               {/* Select location */}
-              <View style={styles.selectLocationContainer}>
+              {/* <View style={styles.selectLocationContainer}>
                 <Text style={styles.selectlocationHead}>Select Location :</Text>
                 <TouchableOpacity
                   onPress={() => {}}
@@ -1336,7 +1336,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     ))}
                   </ScrollView>
                 )}
-              </View>
+              </View> */}
+           
+           
+           
             </View>
 
             {/* Line  */}
