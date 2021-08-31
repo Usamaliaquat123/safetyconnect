@@ -230,8 +230,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         .then((res: any) => {
           console.log(res);
 
-
-          this.setState({projectName : res.data.data.project_name})
+          this.setState({projectName: res.data.data.project_name});
 
           //     var data: Array<any> = [];
           //     this.props.route.params.data.involved_persons.map((d: any) => {
@@ -341,6 +340,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
   // FIVE WHY
   getFiveWHY = () => {
+    console.log('this.props.route.params.data.five_why');
+    console.log(
+      console.log(
+        'this.props.route.params.data.submit_to',
+        this.props.route.params.data,
+      ),
+    );
     // Question map and them push
     if (this.props.route.params.data.justifications.length != 0) {
       this.props.route.params.data.justifications[0].justification.question.map(
@@ -1564,12 +1570,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       keyFindings={(e: any) => {
                         console.log(e);
 
-                        this.setState({keyFindings: e});
+                        this.setState({keyFindingss: e});
                       }}
-                      keyFindingss={
-                        this.props.route.params.data.justifications[0]
-                          .keyFindings
-                      }
+                      keyFindingss={this.state.keyFindingss}
                       contributoryCauses={this.state.contributoryCauses}
                       contributoryCausesD={
                         this.props.route.params.data.justifications[0]
