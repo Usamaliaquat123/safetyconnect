@@ -1179,10 +1179,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         </>
                       ) : (
                         <Text>
-                          {this.state.involvedPerson.map((d) => d.name)}
+                          {this.state.involvedPerson.map((d: any) => d.name)}
                         </Text>
                       )}
-                      {/* {this.state.involvedPerson.map((d) => d.name).join(',')} */}
                     </Text>
                   </View>
                 )}
