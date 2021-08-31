@@ -366,15 +366,19 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectid: currentProj});
 
-      this.props.reduxActions.createApi
+      createApi
         .createApi()
-        .getProject({
-          projectid: currentProj,
-        })
+        .getProject(currentProj)
+        .then((res: any) => {});
+
+      // this.props.reduxActions.createApi
+      createApi
+        .createApi()
+        .getProject(currentProj)
         .then((res: any) => {
+          this.setState({involved_persons: res.data.data.involved_persons});
           console.log('res of involved users');
           console.log(res);
-          this.setState({involved_persons: res.data.data.involved_persons});
         });
     });
     // Time Update on every seconds
