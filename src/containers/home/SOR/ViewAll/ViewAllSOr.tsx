@@ -147,8 +147,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
       createApi
         .createApi()
-        .getProject({projectid: currentProj})
+        .getProject(currentProj)
         .then((involvedPerson: any) => {
+          console.log(involvedPerson);
           console.log('involvedPerson.data');
           this.setState({projectName: involvedPerson.data.data.project_name});
           var j = {};

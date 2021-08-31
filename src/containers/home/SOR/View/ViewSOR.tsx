@@ -55,7 +55,7 @@ import {copilot, walkthroughable, CopilotStep} from 'react-native-copilot';
 import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {involved_persons, actions, actionsDashboard} from '@typings';
-import * as reduxActions from '@actions';
+import * as reduxActions from '../../../../store/actions/listSorActions';
 
 const WalkthroughableText = walkthroughable(Text);
 const WalkthroughableTouchableOpacity = walkthroughable(TouchableOpacity);
@@ -209,21 +209,72 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
       // New Involved usersSuggestions
       this.props.route.params.data.involved_persons.map((d: any) => {
-        this.props.reduxActions.getUser(d.email).then((user: any) => {
-          this.state.involvedPerson.push({
-            name: user.name,
-            img_url: user.img_url,
-            email: user.email,
+        createApi
+          .createApi()
+          .getUser(d)
+          .then((res: any) => {
+            console.log('res', res.data.data);
+            this.state.involvedPerson.push({
+              name: res.data.data.name,
+              img_url: res.data.data.img_url,
+              email: res.data.data.email,
+            });
           });
-        });
       });
 
       // Old involved person idea
 
-      this.props.reduxActions.getProject(currentProj).then((project: any) => {
-        this.setState({involved_person: project.involved_persons});
-        this.setState({projectName: project.project_name});
-      });
+      createApi
+        .createApi()
+        .getProject(currentProj)
+        .then((res: any) => {
+          console.log(res);
+
+
+          this.setState({projectName : res.data.data.project_name})
+
+          //     var data: Array<any> = [];
+          //     this.props.route.params.data.involved_persons.map((d: any) => {
+          //       if (
+          //         res.data.data.involved_persons.filter((i: any) => i.email == d)
+          //           .length == 0
+          //       ) {
+          //         createApi
+          //           .createApi()
+          //           .getUser(d)
+          //           .then((res: any) => {
+          //             if (res.data.message === 'no user exists') {
+          //               this.state.involvedPerson.push({
+          //                 name: d,
+          //                 email: d,
+          //                 img_url:
+          //                   'https://dummyimage.com/600x400/ffffff/000000&text=@',
+          //               });
+          //             } else {
+          //               this.state.involvedPerson.push({
+          //                 name: res.data.data.name,
+          //                 img_url: res.data.data.img_url,
+          //                 email: res.data.data.email,
+          //               });
+          //             }
+          //           })
+          //           .catch((err: any) => {});
+          //       } else {
+          //         this.state.involvedPerson.push(
+          //           res.data.data.involved_persons.filter(
+          //             (i: any) => i.email == d,
+          //           )[0],
+          //         );
+          //       }
+          //     });
+
+          //     for (let i = 0; i < res.data.data.involved_persons.length; i++) {
+          //       res.data.data.involved_persons[i]['selected'] = false;
+          //     }
+
+          this.setState({involved_person: res.data.data.involved_persons});
+        })
+        .catch((err) => {});
     });
 
     // Get user and save it on state
@@ -558,12 +609,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   getAllComments = () => {
     // this.props.route.params.data.comments;
 
-    this.props.reduxActions
-      .getAllComments(
+    createApi
+      .createApi()
+      .getAllComents(
         this.props.route.params.data.comments,
         this.props.route.params.data._id,
       )
       .then((res: any) => {
+        // AsyncStorage.getItem('involved_person').then((involveppl: any) => {
+        // var involvedPersonss = JSON.parse(involveppl);
+        console.log(res);
         for (let i = 0; i < res.data.data.all_comments.length; i++) {
           var rs = res.data.data.all_comments[i].files.map(
             (d) => (d = `report/${d}`),
@@ -609,6 +664,33 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 //     res.data.data.all_comments[i].files[k]
               }
             });
+
+          //  res.data.data.all_comments
+
+          // if (types == 'jpeg' || types == 'png' || types == 'jpg') {
+          //   obj = {
+          //     name: res.data.data.all_comments[i].files,
+          //     type: 'image',
+          //     uri: imgUrl[0],
+          //   };
+          // } else {
+          //   obj = {
+          //     name: res.data.data.all_comments[i].files,
+          //     type: 'image',
+          //     uri: imgUrl[0],
+          //   };
+          // }
+
+          // for (let j = 0; j < involvedPersonss.length; j++) {
+          // if (res.data.data.all_comments[i].user != null) {
+          //   if (
+          //     res.data.data.all_comments[i].user.email ==
+          //     involvedPersonss[j].email
+          //   ) {
+          //     res.data.data.all_comments[i].user = involvedPersonss[j];
+          //   }
+          // }
+          // }
         }
         const sortedActivities = res.data.data.all_comments.sort(
           (a, b) => new Date(a.date) - new Date(b.date),
@@ -620,7 +702,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         console.log(this.state.comments);
         // this.state..sort(function(a, b){return a-b});
       });
-
     // })
     // .catch((err) => {});
   };
@@ -634,41 +715,45 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
 
     AsyncStorage.getItem('email').then((email: any) => {
-      this.props.reduxActions.getUser(email).then((user: any) => {
-        var comments = {
-          data: {
-            user: user._id,
-            comment: comment,
-            date: Date.now(),
-            files: attachment.map((d: any) => d.name),
-            is_comment: true,
-          },
-          comment_document_id: this.props.route.params.data.comments,
-        };
-
-        // this.state.commentAttachment
-        this.props.reduxActions
-          .createComment()
-          .them(comments)
-          .then((res: any) => {
-            var map = [...this.state.comments];
-            map.push({
-              date: Date.now(),
+      createApi
+        .createApi()
+        .getUser(email)
+        .then((user: any) => {
+          var comments = {
+            data: {
+              user: user.data.data._id,
               comment: comment,
-              files: attachment,
-              _id: res.data.data,
-              user: {
-                name: user.name,
-                email: user.email,
-                _id: user._id,
-                img_url: user.img_url,
-              },
+              date: Date.now(),
+              files: attachment.map((d: any) => d.name),
               is_comment: true,
-            });
+            },
+            comment_document_id: this.props.route.params.data.comments,
+          };
 
-            this.setState({comments: map});
-          });
-      });
+          // this.state.commentAttachment
+
+          createApi
+            .createApi()
+            .createComment(comments)
+            .then((res: any) => {
+              var map = [...this.state.comments];
+              map.push({
+                date: Date.now(),
+                comment: comment,
+                files: attachment,
+                _id: res.data.data,
+                user: {
+                  name: user.data.data.name,
+                  email: user.data.data.email,
+                  _id: user.data.data._id,
+                  img_url: user.data.data.img_url,
+                },
+                is_comment: true,
+              });
+
+              this.setState({comments: map});
+            });
+        });
     });
   };
 
