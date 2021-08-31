@@ -1559,43 +1559,47 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     </TouchableOpacity>
                   </View>
                   {this.state.fiveWhytoggle == true ? (
-                    <FiveWhy
-                      onChangeCountributory={(e: any) =>
-                        this.setState({contributoryCauses: e})
-                      }
-                      isViewSor={true}
-                      onChangeRiskCause={(e: any) =>
-                        this.setState({rootCauses: e})
-                      }
-                      keyFindings={(e: any) => {
-                        console.log(e);
+                    <></>
+                  ) : // <FiveWhy
+                  //   onChangeCountributory={(e: any) =>
+                  //     this.setState({contributoryCauses: e})
+                  //   }
+                  //   isViewSor={true}
+                  //   onChangeRiskCause={(e: any) =>
+                  //     this.setState({rootCauses: e})
+                  //   }
+                  //   keyFindings={(e: any) => {
+                  //     console.log(e);
 
-                        this.setState({keyFindingss: e});
-                      }}
-                      keyFindingss={this.state.keyFindingss}
-                      contributoryCauses={this.state.contributoryCauses}
-                      contributoryCausesD={
-                        this.props.route.params.data.justifications[0]
-                          .contributoryCauses
-                      }
-                      rootCausesD={
-                        this.props.route.params.data.justifications[0]
-                          .rootCauses
-                      }
-                      rootCauses={this.state.rootCauses}
-                      data={this.state.fiveWHYdata}
-                      fiveWhyQuestions={(q: Array<string>) => {
-                        this.setState({fiveWhyQuestion: q});
-                      }}
-                      fiveWhyAnswer={(a: Array<string>) => {
-                        console.log(this.state.keyFindings);
-                        this.setState({fiveWhyAnswer: a});
-                      }}
-                      reportId={this.state.reportIdInvestigation}
-                      userId={this.state.user._id}
-                      containerStyle={{marginTop: wp(3)}}
-                    />
-                  ) : null}
+                  //     this.setState({keyFindingss: e});
+                  //   }}
+                  //   keyFindingss={
+                  //     this.props.route.params.data.justifications[0]
+                  //       .keyFindings
+                  //   }
+                  //   contributoryCauses={this.state.contributoryCauses}
+                  //   contributoryCausesD={
+                  //     this.props.route.params.data.justifications[0]
+                  //       .contributoryCauses
+                  //   }
+                  //   rootCausesD={
+                  //     this.props.route.params.data.justifications[0]
+                  //       .rootCauses
+                  //   }
+                  //   rootCauses={this.state.rootCauses}
+                  //   data={this.state.fiveWHYdata}
+                  //   fiveWhyQuestions={(q: Array<string>) => {
+                  //     this.setState({fiveWhyQuestion: q});
+                  //   }}
+                  //   fiveWhyAnswer={(a: Array<string>) => {
+                  //     console.log(this.state.keyFindings);
+                  //     this.setState({fiveWhyAnswer: a});
+                  //   }}
+                  //   reportId={this.state.reportIdInvestigation}
+                  //   userId={this.state.user._id}
+                  //   containerStyle={{marginTop: wp(3)}}
+                  // />
+                  null}
                 </View>
               </>
             )}

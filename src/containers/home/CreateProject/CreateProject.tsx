@@ -238,12 +238,17 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     getCurrentOrganization().then((orgid: any) => {
       this.setState({organizationId: orgid});
 
-      this.props.reduxActions.getOrganization(orgid).then((res: any) => {
-        this.setState({
-          allAssignSuppervisorText: res.members,
-          allAssignLeaders: res.members,
-        });
-      });
+      api
+        .createApi()
+        .getOrganization(orgid)
+        .then((org: any) => {
+          this.setState({
+            allAssignSuppervisorText: org.data.data.members,
+            allAssignLeaders: org.data.data.members,
+          });
+        })
+        .catch((err: any) => {});
+      this.props.reduxActions.getOrganization(orgid).then((res: any) => {});
     });
   };
 
