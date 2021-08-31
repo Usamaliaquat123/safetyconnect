@@ -202,6 +202,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
 
+      this.props.reduxActions.getProject(currentProj).then((res: any) => {
+        this.setState({projectName: res.project_name});
+      });
       this.getAllRepeatedSors(
         this.props.route.params.data.repeatedSor,
         currentProj,
