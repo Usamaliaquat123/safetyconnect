@@ -25,7 +25,7 @@ import LottieView from 'lottie-react-native';
 import Modal from 'react-native-modal';
 import {bindActionCreators} from 'redux';
 import OneSignal from 'react-native-onesignal';
-import * as reduxActions from '@actions';
+import * as reduxActions from '../../../../store/actions/listSorActions';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
@@ -133,38 +133,49 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     getCurrentOrganization().then((orgId: any) => {
       console.log('orgId');
       console.log(orgId);
-
-      this.props.reduxActions.getOrganization(orgId).then((res: any) => {
-        this.setState({projects: res.projects});
-      });
+      createApi
+        .createApi()
+        .getOrganization(orgId)
+        .then((org: any) => {
+          this.setState({projects: org.data.data.projects});
+        });
     });
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
 
       // this.props.reduxActions.getAllSors(currentProj, [1, 2, 3, 4, 5]);
 
-      this.props.reduxActions.getProject(currentProj).then((projD: any) => {
-        console.log('involvedPerson.data');
-        this.setState({projectName: projD.project_name});
-        var j = {};
-        var arr = [];
-        for (let i = 0; i < projD.involved_persons.length; i++) {
-          Object.defineProperty(j, projD.involved_persons[i].email, {
-            value: projD.involved_persons[i],
-            writable: false,
-          });
-          this.state.involvedPerson.push(projD.involved_persons[i]);
-        }
+      createApi
+        .createApi()
+        .getProject({projectid: currentProj})
+        .then((involvedPerson: any) => {
+          console.log('involvedPerson.data');
+          this.setState({projectName: involvedPerson.data.data.project_name});
+          var j = {};
+          var arr = [];
+          for (
+            let i = 0;
+            i < involvedPerson.data.data.involved_persons.length;
+            i++
+          ) {
+            Object.defineProperty(
+              j,
+              involvedPerson.data.data.involved_persons[i].email,
+              {
+                value: involvedPerson.data.data.involved_persons[i],
+                writable: false,
+              },
+            );
+            this.state.involvedPerson.push(
+              involvedPerson.data.data.involved_persons[i],
+            );
+          }
 
-        AsyncStorage.setItem(
-          'involved_person',
-          JSON.stringify(this.state.involvedPerson),
-        );
-      });
-      // createApi
-      //   .createApi()
-      //   .getProject({projectid: currentProj})
-      //   .then((involvedPerson: any) => {});
+          AsyncStorage.setItem(
+            'involved_person',
+            JSON.stringify(this.state.involvedPerson),
+          );
+        });
 
       AsyncStorage.getItem('filters').then((filtersObj) => {
         console.log('filtersObj');
@@ -190,7 +201,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           .filterSors(data)
           .then((res: any) => {
             if (res.data.message == 'no sor found') {
-              // console.log('gaye mutheda');
+              console.log('gaye mutheda');
               // console.log(dta);
               // console.log(dta);
               if (dta != null) {
@@ -1159,7 +1170,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 data: d,
                               })
                             }
-                            date={d.occured_at}
+                            date={d.occurred_at}
                             risk={d.risk.severity * d.risk.likelihood}
                             viewPortWidth={80}
                             user1={d.user1}
@@ -1223,7 +1234,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 data: d,
                               })
                             }
-                            date={d.occured_at}
+                            date={d.occurred_at}
                             risk={d.risk.severity * d.risk.likelihood}
                             viewPortWidth={80}
                             observation={d.details}
@@ -1285,7 +1296,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 data: d,
                               })
                             }
-                            date={d.occured_at}
+                            date={d.occurred_at}
                             risk={d.risk.severity * d.risk.likelihood}
                             viewPortWidth={80}
                             observation={d.details}

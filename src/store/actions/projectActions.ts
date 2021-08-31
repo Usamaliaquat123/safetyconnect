@@ -67,6 +67,7 @@ export const getProject = (projectId: string) => {
       .getProject(projectId)
       .then((res: any) => {
         if (res.status == 200) {
+          // console.log(res);
           resolve(res.data.data);
         } else {
           reject(res.data.message);

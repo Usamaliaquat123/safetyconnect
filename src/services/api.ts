@@ -102,7 +102,8 @@ const createApi = (
   /*
    * @project
    */
-  const getProject = (data: project) => baseapi.get('project', data);
+  const getProject = (data: project) =>
+    baseapi.get(`project?projectid=${data}`);
   const project = (data: project) => baseapi.put('project', data);
   const Postproject = (data: project) => baseapi.post('project', data);
 
