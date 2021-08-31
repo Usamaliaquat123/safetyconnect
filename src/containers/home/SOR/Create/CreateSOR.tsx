@@ -366,7 +366,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectid: currentProj});
 
-      createApi
+      this.props.reduxActions.createApi
         .createApi()
         .getProject({
           projectid: currentProj,
@@ -647,9 +647,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               } = await createApi
                                 .createApi()
                                 .getUser(rep[i].created_by);
-
-
-
 
                               const {data: res} = data;
                               console.log('res hai bhai');
@@ -1200,7 +1197,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
             <View style={styles.selectProjectLocationContainer}>
               {/* Select Project */}
-              <View style={styles.selectProjectContainer}>
+              {/* <View style={styles.selectProjectContainer}>
                 <Text style={styles.selectProjHead}>Select Project :</Text>
                 <TouchableOpacity onPress={() => {}} style={styles.selectProj}>
                   <Text style={styles.projName}>
@@ -1267,7 +1264,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     ))}
                   </ScrollView>
                 )}
-              </View>
+              </View> */}
 
               {/* Select location */}
               <View style={styles.selectLocationContainer}>
