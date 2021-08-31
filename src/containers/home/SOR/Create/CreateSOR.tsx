@@ -1337,13 +1337,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   </ScrollView>
                 )}
               </View> */}
-           
-           
-           
             </View>
 
             {/* Line  */}
-            <View style={styles.lineheight} />
+            {/* <View style={styles.lineheight} /> */}
             {/* Classify SOR */}
 
             <CopilotStep
