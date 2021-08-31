@@ -181,7 +181,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
       this.setState({projectid: currentProj});
       createApi
         .createApi()
-        .getProject({projectid: currentProj})
+        .getProject(currentProj)
         .then((res: any) => {
           this.setState({
             projectName: res.data.data.project_name,

@@ -85,7 +85,7 @@ class ViewAll extends React.Component<ViewAllProps, any> {
 
         createApi
           .createApi()
-          .getProject({projectid: currentProj})
+          .getProject(currentProj)
           .then((currentProj: any) => {
             AsyncStorage.getItem('filters').then((filtersObj: any) => {
               console.log('filtersObj');
