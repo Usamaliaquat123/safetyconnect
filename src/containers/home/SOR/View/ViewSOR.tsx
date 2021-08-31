@@ -194,9 +194,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.props.route.params.data.submit_to[0] == this.state.user.email &&
       this.props.route.params.data.created_by == this.state.user.email
     ) {
-      this.setState({closed: false});
-    } else {
       this.setState({closed: true});
+    } else {
+      this.setState({closed: false});
     }
 
     getCurrentProject().then((currentProj: any) => {
@@ -213,7 +213,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           .createApi()
           .getUser(d)
           .then((res: any) => {
-            console.log('res', res.data.data);
+            // console.log('res=======================', res.data.data);
             this.state.involvedPerson.push({
               name: res.data.data.name,
               img_url: res.data.data.img_url,
@@ -1178,8 +1178,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           )}
                         </>
                       ) : (
-                        <></>
-                        // this.state.involvedPerson.map((d) => d.name).join(',')
+                        <Text>
+                          {this.state.involvedPerson.map((d) => d.name)}
+                        </Text>
                       )}
                       {/* {this.state.involvedPerson.map((d) => d.name).join(',')} */}
                     </Text>
