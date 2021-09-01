@@ -143,10 +143,10 @@ class Home extends React.Component<HomeProps, any> {
                     };
 
                     this.state.taskAssignedByYou.push(row);
-                    this.setState({
-                      pendingActionTotal: this.state.taskAssignedByYou.length,
-                      completedActionTotal: 2,
-                    });
+                    // this.setState({
+                      // pendingActionTotal: this.state.taskAssignedByYou.length,
+                      // completedActionTotal: 2,
+                    // });
                     // this.setState({taskAssignedByYou: row});
                   });
                 });
@@ -1496,8 +1496,7 @@ class Home extends React.Component<HomeProps, any> {
                       <Text style={styles.chartContent}>Total</Text>
                       <Text style={styles.chartContent}>Actions</Text>
                       <Text style={styles.chartContent}>
-                        {this.state.pendingActionTotal *
-                          this.state.completedActionTotal}
+                        {this.state.completedActionTotal}
                       </Text>
                     </View>
                   </PieChart>
