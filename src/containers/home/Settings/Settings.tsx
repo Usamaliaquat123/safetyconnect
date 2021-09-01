@@ -58,18 +58,7 @@ const typeofRole = [
   'Other',
 ];
 
-const yourRole = [
-  'Figurehead',
-  'Leader',
-  'Liaison',
-  'Monitor',
-  'Disseminator',
-  'Spokesperson',
-  'Entrepreneur',
-  'Disturbance Handler',
-  'Resource Allocator',
-  'Negotiator',
-];
+const yourRole = ['Manager', 'Supervisor', 'Craft Worker'];
 class Settings extends React.Component<SettingsProps, any> {
   constructor(props: any) {
     super(props);

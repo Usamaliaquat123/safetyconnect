@@ -63,18 +63,7 @@ const typeofRole = [
   'Other',
 ];
 
-const yourRole = [
-  'Figurehead',
-  'Leader',
-  'Liaison',
-  'Monitor',
-  'Disseminator',
-  'Spokesperson',
-  'Entrepreneur',
-  'Disturbance Handler',
-  'Resource Allocator',
-  'Negotiator',
-];
+const yourRole = ['Manager', 'Supervisor', 'Craft Worker'];
 
 export interface TellAboutYouProps {
   navigation: TellAboutYouNavigationProp;
