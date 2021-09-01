@@ -99,6 +99,9 @@ class Home extends React.Component<HomeProps, any> {
       noOfCompleted: 0,
       noOfDrafts: 0,
       noOfPublished: 0,
+      mediumRisk: 0,
+      highRisk: 0,
+      lowRisk: 0,
     };
   }
   handleStartButtonPress() {
@@ -166,6 +169,9 @@ class Home extends React.Component<HomeProps, any> {
                 .createApi()
                 .taskAssignedTo(org.data.data._id, email, currentProj)
                 .then((assignTo: any) => {
+                  console.log('assignTo');
+                  console.log(assignTo);
+
                   var taskAssignedTo = [];
                   assignTo.data.data[0].projects.forEach((assigndTot: any) => {
                     const element = assigndTot.reports.action_required;
@@ -247,7 +253,11 @@ class Home extends React.Component<HomeProps, any> {
                     dash.data.Drafts +
                     dash.data.Published,
                 });
-
+                this.setState({
+                  mediumRisk: dash.data.Medium,
+                  highRisk: dash.data.High,
+                  lowRisk: dash.data.Low,
+                });
                 this.setState({
                   noOfCompleted: dash.data.Completed,
                   noOfDrafts: dash.data.Drafts,
@@ -484,10 +494,9 @@ class Home extends React.Component<HomeProps, any> {
       }));
     // Risk Assesments data
     const riskAssesmentsD = [
-      {val: 28, color: '#778CA3'},
-      {val: 25, color: '#A5B1C2'},
-      {val: 20, color: '#C3C9DB'},
-      {val: 80, color: '#4B6584'},
+      {val: this.state.mediumRisk, color: '#778CA3'},
+      {val: this.state.highRisk, color: '#A5B1C2'},
+      {val: this.state.lowRisk, color: '#C3C9DB'},
     ];
     const riskAssesments = riskAssesmentsD
       .filter((value) => value.val > 0)
@@ -1597,7 +1606,7 @@ class Home extends React.Component<HomeProps, any> {
               {/* line height */}
               <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} />
               {/* incidents */}
-              <View style={{marginBottom: wp(3), padding: wp(3)}}>
+              {/* <View style={{marginBottom: wp(3), padding: wp(3)}}>
                 <Text
                   style={{
                     fontSize: wp(3.5),
@@ -1608,21 +1617,7 @@ class Home extends React.Component<HomeProps, any> {
                 </Text>
 
                 <Animated.View style={styles.tabsContent}>
-                  {/* <PieChart
-                    padAngle={0}
-                    animate={true}
-                    innerRadius={'80%'}
-                    style={{height: wp(50), width: wp(50)}}
-                    data={pieData}>
-                    <View
-                      style={{justifyContent: 'center', alignItems: 'center'}}>
-                      <Text style={styles.chartContent}>Total</Text>
-                      <Text style={styles.chartContent}>Observations</Text>
-                      <Text style={styles.chartContent}>
-                        {this.state.totalObservations}
-                      </Text>
-                    </View>
-                  </PieChart> */}
+                 
                   <ProgressCircle
                     backgroundColor={'#C080FF'}
                     style={{height: wp(50), width: wp(50)}}
@@ -1631,7 +1626,6 @@ class Home extends React.Component<HomeProps, any> {
                     progressColor={'rgb(134, 65, 244)'}
                   />
                 </Animated.View>
-                {/* colors guide */}
                 <View style={styles.guideColors}>
                   <View style={styles.guideitem}>
                     <View
@@ -1659,9 +1653,9 @@ class Home extends React.Component<HomeProps, any> {
                     <Text style={styles.guideText}>Dismissed</Text>
                   </View>
                 </View>
-              </View>
+              </View> */}
               {/* line height */}
-              <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} />
+              {/* <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} /> */}
               {/* inspection */}
               <View style={{marginBottom: wp(3), padding: wp(3)}}>
                 <Text
@@ -1755,7 +1749,7 @@ class Home extends React.Component<HomeProps, any> {
                         styles.swatch,
                         {marginLeft: wp(4), backgroundColor: '#4B6584'},
                       ]}></View>
-                    <Text style={styles.guideText}>Completed</Text>
+                    <Text style={styles.guideText}>Medium</Text>
                   </View>
                   <View style={[styles.guideitem]}>
                     <View
@@ -1763,7 +1757,7 @@ class Home extends React.Component<HomeProps, any> {
                         styles.swatch,
                         {marginLeft: wp(3), backgroundColor: '#778CA3'},
                       ]}></View>
-                    <Text style={styles.guideText}>In Progress</Text>
+                    <Text style={styles.guideText}>High</Text>
                   </View>
                   <View style={styles.guideitem}>
                     <View
@@ -1771,24 +1765,14 @@ class Home extends React.Component<HomeProps, any> {
                         styles.swatch,
                         {marginLeft: wp(3), backgroundColor: '#A5B1C2'},
                       ]}></View>
-
-                    <Text style={styles.guideText}>Scheduled</Text>
-                  </View>
-                  <View style={styles.guideitem}>
-                    <View
-                      style={[
-                        styles.swatch,
-                        {marginLeft: wp(3), backgroundColor: '#C3C9DB'},
-                      ]}></View>
-
-                    <Text style={styles.guideText}>Draft</Text>
+                    <Text style={styles.guideText}>Low</Text>
                   </View>
                 </View>
               </View>
               {/* line height */}
-              <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} />
+              {/* <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} /> */}
               {/* learning management */}
-              <View style={{marginBottom: wp(3), padding: wp(3)}}>
+              {/* <View style={{marginBottom: wp(3), padding: wp(3)}}>
                 <Text
                   style={{
                     fontSize: wp(3.5),
@@ -1814,7 +1798,6 @@ class Home extends React.Component<HomeProps, any> {
                     </View>
                   </PieChart>
                 </Animated.View>
-                {/* colors guide */}
                 <View style={styles.guideColors}>
                   <View style={styles.guideitem}>
                     <View
@@ -1842,12 +1825,12 @@ class Home extends React.Component<HomeProps, any> {
                     <Text style={styles.guideText}>Inverted</Text>
                   </View>
                 </View>
-              </View>
+              </View> */}
 
               {/* line height */}
-              <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} />
+              {/* <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} /> */}
               {/* Audits */}
-              <View style={{marginBottom: wp(3), padding: wp(3)}}>
+              {/* <View style={{marginBottom: wp(3), padding: wp(3)}}>
                 <Text
                   style={{
                     fontSize: wp(3.5),
@@ -1865,7 +1848,6 @@ class Home extends React.Component<HomeProps, any> {
                     progressColor={'rgb(134, 65, 244)'}
                   />
                 </Animated.View>
-                {/* colors guide */}
                 <View style={styles.guideColors}>
                   <View style={styles.guideitem}>
                     <View
@@ -1884,7 +1866,7 @@ class Home extends React.Component<HomeProps, any> {
                     <Text style={styles.guideText}>Closed</Text>
                   </View>
                 </View>
-              </View>
+              </View> */}
             </View>
           </View>
           {/* Repeated sor modal */}
