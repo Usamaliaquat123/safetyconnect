@@ -49,6 +49,16 @@ const industries = [
 ];
 
 const typeofRole = [
+  'CEO',
+  'Director',
+  'General Manager	',
+  'Corporate Manager	',
+  'Advisor',
+  'Executive',
+  'Other',
+];
+
+const yourRole = [
   'Figurehead',
   'Leader',
   'Liaison',
@@ -60,8 +70,6 @@ const typeofRole = [
   'Resource Allocator',
   'Negotiator',
 ];
-
-const yourRole = ['Manager', 'Supervisor', 'Craft Worker'];
 class Settings extends React.Component<SettingsProps, any> {
   constructor(props: any) {
     super(props);
@@ -400,7 +408,7 @@ class Settings extends React.Component<SettingsProps, any> {
                         marginTop: wp(3),
                         fontFamily: fonts.SFuiDisplaySemiBold,
                       }}>
-                      Your Department
+                      Your Industries
                     </Text>
                     <View style={[styles.inputContainer]}>
                       <TextInput

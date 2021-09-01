@@ -615,9 +615,7 @@ class Home extends React.Component<HomeProps, any> {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    this.props.navigation.navigate('Settings', {
-                      data: this.state.user,
-                    });
+                    this.props.navigation.navigate('TellAboutYou');
                   }}>
                   <Avatar
                     rounded
@@ -1670,7 +1668,7 @@ class Home extends React.Component<HomeProps, any> {
                   <PieChart
                     padAngle={0.1}
                     animate={true}
-                    innerRadius={'10%'}
+                    innerRadius={'2%'}
                     style={{height: wp(50), width: wp(50)}}
                     data={inspectionData}>
                     <View
