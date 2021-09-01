@@ -154,6 +154,8 @@ class Home extends React.Component<HomeProps, any> {
                 .createApi()
                 .taskAssignedTo(org.data.data._id, email, currentProj)
                 .then((assignTo: any) => {
+                  console.log('assignTo-------------');
+                  console.log(assignTo);
                   assignTo.data.data[0].projects.forEach((assigndTot: any) => {
                     const element = assigndTot.reports.action_required;
                     const row = {
@@ -168,14 +170,16 @@ class Home extends React.Component<HomeProps, any> {
                       location: assigndTot.reports.location,
                       createdAt: assigndTot.reports.action_required.dueDate,
                     };
+                    console.log('data-------------');
+                    console.log(row);
 
                     this.state.taskAssignedToYou.push(row);
                     this.state.taskYouAreInvolvedIn.push(row);
-                    this.setState({
-                      completedActionTotal: this.state.taskAssignedToYou.map(
-                        (d) => d.data.reports.action_required,
-                      ),
-                    });
+                    // this.setState({
+                    //   completedActionTotal: this.state.taskAssignedToYou.map(
+                    //     (d) => d.data.reports.action_required,
+                    //   ),
+                    // });
                   });
                 });
               // createApi
@@ -674,7 +678,7 @@ class Home extends React.Component<HomeProps, any> {
                 <Text style={{fontSize: wp(3)}}>Analytics</Text>
               </View>
             </View>
-            {/* Tasks Assigned to you */}
+            {/* your recent activities */}
             <View style={styles.recentActivity}>
               <View style={styles.recentlyHead}>
                 <Text style={styles.actHeading}>Your Recent Activities</Text>
