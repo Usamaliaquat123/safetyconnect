@@ -408,7 +408,7 @@ class Settings extends React.Component<SettingsProps, any> {
                         marginTop: wp(3),
                         fontFamily: fonts.SFuiDisplaySemiBold,
                       }}>
-                      Your Industries
+                      Type of Role
                     </Text>
                     <View style={[styles.inputContainer]}>
                       <TextInput

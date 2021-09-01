@@ -615,7 +615,9 @@ class Home extends React.Component<HomeProps, any> {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    this.props.navigation.navigate('TellAboutYou');
+                    this.props.navigation.navigate('Settings', {
+                      data: this.state.user,
+                    });
                   }}>
                   <Avatar
                     rounded
