@@ -219,6 +219,12 @@ const createApi = (
     baseapi.get(
       `/dashboard/taskAssigned/?organization=${orgnaization}&email=${email}&page=0&limit=20&project=${projectId}`,
     );
+
+  const actionTableUrl = (organization: any, projectId:  string) => {
+    baseapi.get(
+      `/dashboard/actions/?organization=${organization}&project=${projectId}`,
+    );
+  }
   /*
    * @Locations
    */
@@ -236,6 +242,8 @@ const createApi = (
     getFileApi,
     getFilesUrl,
     uploadFile,
+    actionTableUrl,
+
     editFiveWhy,
     inviteBulk,
     getFiveWhy,
