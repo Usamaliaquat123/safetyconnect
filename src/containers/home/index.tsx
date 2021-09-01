@@ -122,11 +122,20 @@ class Home extends React.Component<HomeProps, any> {
               console.log(org.data.data._id);
               console.log(email);
               console.log(this.state.project);
+
+              createApi
+                .createApi()
+                .actionTableUrl(currentorg, currentProj)
+                .then((res: any) => {
+                  this.setState({completedActionTotal: res.data.data.total});
+                });
+
               createApi
                 .createApi()
                 .taskAssignedBy(org.data.data._id, email, currentProj)
                 .then((assignBy: any) => {
                   console.log('assignBy');
+                  var taskAssignedBy = [];
                   console.log(assignBy);
                   assignBy.data.data[0].projects.forEach((assignBye: any) => {
                     const element = assignBye.reports.action_required;
@@ -142,18 +151,22 @@ class Home extends React.Component<HomeProps, any> {
                       createdAt: assignBye.reports.action_required.dueDate,
                     };
 
-                    this.state.taskAssignedByYou.push(row);
+                    taskAssignedBy.push(row);
+                    // this.state.taskAssignedByYou.push(row);
                     // this.setState({
                     // pendingActionTotal: this.state.taskAssignedByYou.length,
                     // completedActionTotal: 2,
                     // });
                     // this.setState({taskAssignedByYou: row});
                   });
+                  this.setState({taskAssignedByYou: taskAssignedBy});
                 });
+
               createApi
                 .createApi()
                 .taskAssignedTo(org.data.data._id, email, currentProj)
                 .then((assignTo: any) => {
+                  var taskAssignedTo = [];
                   assignTo.data.data[0].projects.forEach((assigndTot: any) => {
                     const element = assigndTot.reports.action_required;
                     const row = {
@@ -169,13 +182,17 @@ class Home extends React.Component<HomeProps, any> {
                       createdAt: assigndTot.reports.action_required.dueDate,
                     };
 
-                    this.state.taskAssignedToYou.push(row);
+                    taskAssignedTo.push(row);
                     this.state.taskYouAreInvolvedIn.push(row);
                     // this.setState({
                     //   completedActionTotal: this.state.taskAssignedToYou.map(
                     //     (d) => d.data.reports.action_required,
                     //   ),
                     // });
+                  });
+                  this.setState({
+                    taskAssignedToYou: taskAssignedTo,
+                    taskYouAreInvolvedIn: taskAssignedTo,
                   });
                 });
               // createApi
@@ -221,19 +238,20 @@ class Home extends React.Component<HomeProps, any> {
               .createApi()
               .dashboardApi(currentProj, currentorg)
               .then((dash: any) => {
-                // console.log('dash');
+                console.log('dash=================');
+                console.log(dash);
                 //  console.log)
                 this.setState({
                   totalObs:
-                    dash.data.noOfCompleted +
-                    dash.data.noOfDrafts +
-                    dash.data.noOfPublished,
+                    dash.data.Completed +
+                    dash.data.Drafts +
+                    dash.data.Published,
                 });
 
                 this.setState({
-                  noOfCompleted: dash.data.noOfCompleted,
-                  noOfDrafts: dash.data.noOfDrafts,
-                  noOfPublished: dash.data.noOfPublished,
+                  noOfCompleted: dash.data.Completed,
+                  noOfDrafts: dash.data.Drafts,
+                  noOfPublished: dash.data.Published,
                 });
                 this.setState({});
               });
