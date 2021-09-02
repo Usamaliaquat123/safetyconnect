@@ -244,7 +244,9 @@ export class Preview extends React.Component<ViewAllProps, any> {
     <TABLE cellpadding=0 cellspacing=0 class="t1">
     <TR>
       <TD class="tr0 td8"><P style="font-size: 14px;"  class="p3 ft3">Observation Type:</P></TD>
-      <TD class="tr0 td9"><P style="font-size: 16px;"  class="p6 ft8">Concern</P></TD>
+      <TD class="tr0 td9"><P style="font-size: 16px;"  class="p6 ft8">${
+        this.props.route.params.data.sor_type
+      }</P></TD>
       <TD class="tr0 td2"><P style="font-size: 14px;"  class="p3 ft3">Status:</P></TD>
       <TD class="tr0 td10"><P style="font-size: 13px;"  class="p3 ft4">In Progress</P></TD>
     </TR>
