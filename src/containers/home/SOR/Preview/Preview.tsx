@@ -201,11 +201,12 @@ export class Preview extends React.Component<ViewAllProps, any> {
     
     <DIV class="dclr"></DIV>
     <DIV id="id1_1">
+    <img src="https://user-images.githubusercontent.com/33973828/131846448-ca935765-2906-42cf-bd27-46b81354a8c1.png" width="25%" style="margin-left: 3%;"/>
     <P style="    font-size: 14px;" class="p0 ft0">https://app.safety.connect.ai</P>
     <P style="font-size: 32px;font-weight: bold;" class="p1 ft1">Observation Summary</P>
     <P style="        font-size: 14px;
     margin-top: 13px;
-    margin-left: 4px;"class="p2 ft2">Project ID: ${this.state.project_id}</P>
+    margin-left: 4px;"class="p2 ft2">Project ID: ${this.state.projectId}</P>
     <TABLE cellpadding=0 cellspacing=0 class="t0">
     <TR>
       <TD  class="tr0 td0"><P style="    font-size: 15px;
@@ -213,7 +214,9 @@ export class Preview extends React.Component<ViewAllProps, any> {
       <TD class="tr0 td1"><P class="p3 ft4">${this.state.projectName}</P></TD>
       <TD  class="tr0 td0"><P  class="tr0 td2"><P style="    font-size: 15px;
         font-weight: bold;" class="p3 ft3">Location:</P></TD>
-      <TD class="tr0 td3"><P class="p3 ft4">karachu</P></TD>
+      <TD class="tr0 td3"><P class="p3 ft4">${
+        this.props.route.params.data.location
+      }</P></TD>
     </TR>
     <TR>
       <TD  class="tr1 td0"><P  class="tr0 td0"><P style="    font-size: 15px;
@@ -254,14 +257,30 @@ export class Preview extends React.Component<ViewAllProps, any> {
       <TD class="tr3 td8"><P style="font-size: 14px;" class="p3 ft3">Potential Risk:</P></TD>
         
         <TD style="font-size: 12px;" rowspan=2 class="tr4 td9">
-          <div style="background-color: red;
+          <div  style="${
+            this.state.prisk < 6
+              ? 'background-color: #4BA735;'
+              : this.state.prisk < 14
+              ? 'background-color: #FF9900;'
+              : 'background-color: #F14030;'
+          }
           padding: 20px;
           width: 100px;
           margin-top: 10%;
           border-radius: 24px;">
             <P style="color: #ffffff;
             font-size: 14px;
-            text-align: center;" class="p3 ft9">Medium</P>
+            text-align: center;" class="p3 ft9">
+            
+           ${
+             this.state.prisk < 6
+               ? 'low'
+               : this.state.prisk < 14
+               ? 'Medium'
+               : 'High'
+           }
+            
+            </P>
           </div>
           
           </TD>
@@ -269,13 +288,26 @@ export class Preview extends React.Component<ViewAllProps, any> {
     
     
       <TD style="font-size: 12px;" rowspan=2 class="tr4 td10">
-        <div style="background-color: red;
+        <div style="${
+          this.state.risk < 6
+            ? 'background-color: #4BA735;'
+            : this.state.risk < 14
+            ? 'background-color: #FF9900;'
+            : 'background-color: #F14030;'
+        }
         padding: 20px;
         width: 100px;
         border-radius: 24px;">
           <P style="color: #ffffff;
           font-size: 14px;
-          text-align: center;" class="p3 ft9">High</P>
+          text-align: center;" class="p3 ft9">
+          ${
+            this.state.risk < 6
+              ? 'low'
+              : this.state.risk < 14
+              ? 'Medium'
+              : 'High'
+          }</P>
         </div>
         
         </TD>
@@ -293,11 +325,13 @@ export class Preview extends React.Component<ViewAllProps, any> {
     <P style="font-size: 19px;
     margin-top: 22px;
     margin-bottom: 18px;" class="p8 ft6">Actions & Recommendations</P>
-    <P class="p5 ft2"><SPAN class="ft2">1.</SPAN><SPAN class="ft11">Remove damage hammer from workshop</SPAN></P>
-    <P class="p9 ft2"><SPAN class="ft2">2.</SPAN><SPAN class="ft11">Replace damage hammer with new hammer</SPAN></P>
-    <P class="p9 ft2"><SPAN class="ft2">3.</SPAN><SPAN class="ft11">Counseling of the employees regarding safe hand tool use was done</SPAN></P>
-    <P class="p9 ft2"><SPAN class="ft2">4.</SPAN><SPAN class="ft11">Involved worker shall be provided with training on hand tool safety</SPAN></P>
-    
+    ${this.props.route.params.data.action_required.map(
+      (d, i) =>
+        ` <P class="p5 ft2"><SPAN class="ft2">${
+          i + 1
+        }.</SPAN><SPAN class="ft11">${d.content}</SPAN></P>`,
+    )}
+   
     
     <hr style="    margin-top: 20px;" />
     <P  style="font-size: 21px;
@@ -309,12 +343,15 @@ export class Preview extends React.Component<ViewAllProps, any> {
     
     <TR>
       <TD  class="tr6 td11"><P style="font-size: 13px;" class="p3 ft12">Initiated By</P></TD>
-      <TD class="tr6 td1"><P style="font-size: 12px;"  class="p3 ft13">syed Test</P></TD>
-      <TD class="tr6 td12"><P style="font-size: 13px;" class="p3 ft12">Area Supervisor <SPAN  style="font-size: 12px;" class="ft13">syed Test</SPAN></P></TD>
+      <TD class="tr6 td1"><P style="font-size: 12px;"  class="p3 ft13">${
+        this.props.route.params.data.created_by
+      }</P></TD>
+      <TD class="tr6 td12"><P style="font-size: 12px;    margin-top: 29px;" class="p3 ft12">Area Supervisor <SPAN  style="font-size: 12px;" class="ft13">syed Test</SPAN></P></TD>
     </TR>
     </TABLE>
     <P class="p11 ft4">syed Test</P>
-    <P style="font-size: 13px;" class="p12 ft12">Involved Persons</P>
+    <P style="font-size: 13px;
+    margin-top: -11px;" class="p12 ft12">Involved Persons</P>
     
     <hr style="font-size: 30px;" />
     
@@ -377,7 +414,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
       });
 
     getCurrentProject().then((currentProj: any) => {
-      this.setState({projectid: currentProj});
+      this.setState({projectId: currentProj});
       createApi
         .createApi()
         .getProject(currentProj)
