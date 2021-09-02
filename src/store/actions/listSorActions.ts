@@ -215,6 +215,18 @@ export const clearAllSor = (): IThunkAction => {
 //   };
 // };
 
+
+
+
+export const createFiveWhy = () => {
+  return new Promise(function (resolve, reject) {
+    
+
+
+  })
+}
+
+
 const listAction = {
   getAllSors,
   getRepeatedSors,

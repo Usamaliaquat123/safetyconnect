@@ -639,54 +639,63 @@ export class Preview extends React.Component<ViewAllProps, any> {
                 {this.props.route.params.data.justifications.length != 0 && (
                   <View style={styles.lineheight} />
                 )}
-                {this.props.route.params.data.action_required.length != 0 && (
-                  <>
-                    <View style={{marginTop: wp(3), marginBottom: wp(3)}}>
-                      <Text
-                        style={{
-                          fontSize: wp(4),
-                          fontFamily: fonts.SFuiDisplayBold,
-                        }}>
-                        Five why{' '}
-                      </Text>
 
-                      <View style={{flexDirection: 'row'}}>
-                        <View style={{flexDirection: 'column'}}>
-                          {this.props.route.params.data.justifications[0].justification.question.map(
-                            (d: any, i: number) => (
-                              <View
-                                style={{
-                                  flexDirection: 'column',
-                                  // justifyContent: 'space-between',
-                                }}>
-                                <Text
-                                  style={{
-                                    fontSize: wp(3),
-                                    fontFamily: fonts.SFuiDisplayMedium,
-                                  }}>
-                                  Q. {i + 1}. {d}
-                                </Text>
-                              </View>
-                            ),
-                          )}
+                {this.props.route.params.data.justifications.length != 0 && (
+                  <>
+                    {this.props.route.params.data.action_required.length !=
+                      0 && (
+                      <>
+                        <View style={{marginTop: wp(3), marginBottom: wp(3)}}>
+                          <Text
+                            style={{
+                              fontSize: wp(4),
+                              fontFamily: fonts.SFuiDisplayBold,
+                            }}>
+                            Five why{' '}
+                          </Text>
+
+                          <View style={{flexDirection: 'row'}}>
+                            <View style={{flexDirection: 'column'}}>
+                              {this.props.route.params.data.justifications[0].justification.question.map(
+                                (d: any, i: number) => (
+                                  <View
+                                    style={{
+                                      flexDirection: 'column',
+                                      // justifyContent: 'space-between',
+                                    }}>
+                                    <Text
+                                      style={{
+                                        fontSize: wp(3),
+                                        fontFamily: fonts.SFuiDisplayMedium,
+                                      }}>
+                                      Q. {i + 1}. {d}
+                                    </Text>
+                                  </View>
+                                ),
+                              )}
+                            </View>
+                            <View
+                              style={{
+                                flexDirection: 'column',
+                                marginLeft: wp(20),
+                              }}>
+                              {this.props.route.params.data.justifications[0].justification.answer.map(
+                                (d: any, i: number) => (
+                                  <Text
+                                    style={{
+                                      fontSize: wp(3),
+                                      opacity: 0.5,
+                                      fontFamily: fonts.SFuiDisplayMedium,
+                                    }}>
+                                    A. {i + 1}. {d}
+                                  </Text>
+                                ),
+                              )}
+                            </View>
+                          </View>
                         </View>
-                        <View
-                          style={{flexDirection: 'column', marginLeft: wp(20)}}>
-                          {this.props.route.params.data.justifications[0].justification.answer.map(
-                            (d: any, i: number) => (
-                              <Text
-                                style={{
-                                  fontSize: wp(3),
-                                  opacity: 0.5,
-                                  fontFamily: fonts.SFuiDisplayMedium,
-                                }}>
-                                A. {i + 1}. {d}
-                              </Text>
-                            ),
-                          )}
-                        </View>
-                      </View>
-                    </View>
+                      </>
+                    )}
                   </>
                 )}
 
