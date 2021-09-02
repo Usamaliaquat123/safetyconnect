@@ -694,6 +694,86 @@ export class Preview extends React.Component<ViewAllProps, any> {
                             </View>
                           </View>
                         </View>
+                        {/* Key findings */}
+                        <View>
+                          <Text
+                            style={{
+                              fontSize: wp(3),
+                              fontFamily: fonts.SFuiDisplayBold,
+                            }}>
+                            Key Findings
+                          </Text>
+                          <Text style={{fontSize: wp(3)}}>
+                            {
+                              this.props.route.params.data.justifications[0]
+                                .keyFindings
+                            }
+                          </Text>
+                        </View>
+                        {/* Root Causes */}
+                        <View>
+                          <Text
+                            style={{
+                              fontSize: wp(3),
+                              fontFamily: fonts.SFuiDisplayBold,
+                            }}>
+                            Root Causes
+                          </Text>
+                          {this.props.route.params.data.justifications[0].rootCauses.map(
+                            (d: any) => (
+                              <>
+                                <Text
+                                  style={{
+                                    fontSize: wp(3),
+                                    fontFamily: fonts.SFuiDisplayMedium,
+                                  }}>
+                                  * {d.category}
+                                </Text>
+                                <Text
+                                  style={{
+                                    fontSize: wp(3),
+                                    marginLeft: wp(3),
+                                    fontFamily: fonts.SFuiDisplayLight,
+                                    opacity: 0.5,
+                                  }}>
+                                  {d.subCategory[0]}
+                                </Text>
+                              </>
+                            ),
+                          )}
+                        </View>
+                        {/* Contributory Causes */}
+                        <View style={{marginBottom: wp(5)}}>
+                          <Text
+                            style={{
+                              fontSize: wp(3),
+                              fontFamily: fonts.SFuiDisplayBold,
+                            }}>
+                            Contributory Causes
+                          </Text>
+                          {this.props.route.params.data.justifications[0].contributoryCauses.map(
+                            (d: any) => (
+                              <>
+                                <Text
+                                  style={{
+                                    fontSize: wp(3),
+                                    fontFamily: fonts.SFuiDisplayMedium,
+                                  }}>
+                                  * {d.category}
+                                </Text>
+                                <Text
+                                  style={{
+                                    fontSize: wp(3),
+                                    marginLeft: wp(3),
+                                    fontFamily: fonts.SFuiDisplayLight,
+                                    opacity: 0.5,
+                                  }}>
+                                  {d.subCategory[0]}
+                                </Text>
+                              </>
+                            ),
+                          )}
+                        </View>
                       </>
                     )}
                   </>
