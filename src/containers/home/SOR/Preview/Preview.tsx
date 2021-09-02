@@ -205,12 +205,12 @@ export class Preview extends React.Component<ViewAllProps, any> {
     <P style="font-size: 32px;font-weight: bold;" class="p1 ft1">Observation Summary</P>
     <P style="        font-size: 14px;
     margin-top: 13px;
-    margin-left: 4px;"class="p2 ft2">Project ID: 6115f4f8f01f192fa062af86</P>
+    margin-left: 4px;"class="p2 ft2">Project ID: ${this.state.project_id}</P>
     <TABLE cellpadding=0 cellspacing=0 class="t0">
     <TR>
       <TD  class="tr0 td0"><P style="    font-size: 15px;
         font-weight: bold;" class="p3 ft3">Project:</P></TD>
-      <TD class="tr0 td1"><P class="p3 ft4">GTA</P></TD>
+      <TD class="tr0 td1"><P class="p3 ft4">${this.state.projectName}</P></TD>
       <TD  class="tr0 td0"><P  class="tr0 td2"><P style="    font-size: 15px;
         font-weight: bold;" class="p3 ft3">Location:</P></TD>
       <TD class="tr0 td3"><P class="p3 ft4">karachu</P></TD>
@@ -218,10 +218,14 @@ export class Preview extends React.Component<ViewAllProps, any> {
     <TR>
       <TD  class="tr1 td0"><P  class="tr0 td0"><P style="    font-size: 15px;
         font-weight: bold;" class="p3 ft3">Occurred On:</P></TD>
-      <TD class="tr1 td1"><P class="p3 ft4">Thu, Sep 2, 2021 12:06 PM</P></TD>
+      <TD class="tr1 td1"><P class="p3 ft4">${moment(
+        this.props.route.params.data.occurred_at,
+      ).format('llll')}</P></TD>
       <TD class="tr1 td2"><P  class="tr0 td0"><P style="    font-size: 15px;
         font-weight: bold;" class="p3 ft3">Reported On:</P></TD>
-      <TD class="tr1 td3"><P class="p3 ft4">Wed, Sep 1, 2021 6:35 PM</P></TD>
+      <TD class="tr1 td3"><P class="p3 ft4">${
+        this.props.route.params.data.occurred_at
+      }</P></TD>
     </TR>
     <TR>
       
@@ -234,7 +238,9 @@ export class Preview extends React.Component<ViewAllProps, any> {
     <hr  style="margin-top: 24px"/>
     <P style="    font-size: 19px;
     margin-bottom: 14px;" class="p4 ft6">Observation Details</P>
-    <P style="font-size: 14px;" class="p5 ft7">On Thu, Sep 2, 2021 12:06 PM It was observed that Damaged hammer was being used at workshop, which can cause hand injury.</P>
+    <P style="font-size: 14px;" class="p5 ft7">On ${moment(
+      this.props.route.params.data.occurred_at,
+    ).format('llll')} ${this.props.route.params.data.details}</P>
     <TABLE cellpadding=0 cellspacing=0 class="t1">
     <TR>
       <TD class="tr0 td8"><P style="font-size: 14px;"  class="p3 ft3">Observation Type:</P></TD>
