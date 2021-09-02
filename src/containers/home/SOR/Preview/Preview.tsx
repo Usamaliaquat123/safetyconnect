@@ -695,7 +695,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
                           </View>
                         </View>
                         {/* Key findings */}
-                        <View>
+                        <View style={{marginBottom: wp(2)}}>
                           <Text
                             style={{
                               fontSize: wp(3),
