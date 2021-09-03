@@ -357,7 +357,17 @@ export class Preview extends React.Component<ViewAllProps, any> {
     
     <P style="font-size: 19px;
     margin-left: 53px;" class="ft6">Attachments</P>
-    <P style="font-size: 12px;" class="p14 ft4">No files uploaded yet</P>
+    ${
+      this.props.route.params.data.attachments.length != 0
+        ? `
+      ${this.props.route.params.data.attachments.map(
+        (d: any, i: number) =>
+          ` <P style="font-size: 12px;" class="p14 ft4">${i + 1} . ${d}</P>`,
+      )}
+      
+      `
+        : ` <P style="font-size: 12px;" class="p14 ft4">No files uploaded yet</P>`
+    }
     </DIV>
     <DIV id="id1_2">
     <DIV id="id1_2_1">
