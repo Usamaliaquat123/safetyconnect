@@ -191,6 +191,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         if (dta != null) {
           if (Object.keys(dta).length !== 0) {
             data['query'] = dta;
+          }
+          if (dta.rangeFrom == undefined || dta.risk == undefined) {
             data['query']['status'] = [1, 2, 3, 4, 5];
           }
         }
