@@ -190,37 +190,37 @@ class Signup extends React.Component<SignupProps, any> {
   }
 
   continuewithgoogle = async () => {
-    // try {
-    //   let user = await Auth.federatedSignIn({provider: 'Google'});
-    //   console.log(user);
-    //   // this.props.navigation.navigate('Main');
-    // } catch (err) {
-    //   console.log('user error');
-    //   console.log(err);
-    // }
-
     try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      // this.setState({userInfo});
-
-      console.log('userInfo');
-      console.log(userInfo);
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
-        console.log('User cancelled login');
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (e.g. sign in) is in progress already
-        console.log('Operation already in progress');
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
-        console.log('Play services not available');
-      } else {
-        console.log(error);
-        // some other error happened
-      }
+      let user = await Auth.federatedSignIn({provider: 'Google'});
+      console.log(user);
+      // this.props.navigation.navigate('Main');
+    } catch (err) {
+      console.log('user error');
+      console.log(err);
     }
+
+    // try {
+    //   await GoogleSignin.hasPlayServices();
+    //   const userInfo = await GoogleSignin.signIn();
+    //   // this.setState({userInfo});
+
+    //   console.log('userInfo');
+    //   console.log(userInfo);
+    // } catch (error) {
+    //   if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+    //     // user cancelled the login flow
+    //     console.log('User cancelled login');
+    //   } else if (error.code === statusCodes.IN_PROGRESS) {
+    //     // operation (e.g. sign in) is in progress already
+    //     console.log('Operation already in progress');
+    //   } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+    //     // play services not available or outdated
+    //     console.log('Play services not available');
+    //   } else {
+    //     console.log(error);
+    //     // some other error happened
+    //   }
+    // }
   };
   render() {
     return (

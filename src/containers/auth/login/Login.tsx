@@ -212,27 +212,27 @@ class Login extends React.Component<LoginProps, any> {
     try {
       // Somewhere in your code
       // signIn = async () => {
-      try {
-        await GoogleSignin.hasPlayServices();
-        const userInfo = await GoogleSignin.signIn();
-        // this.setState({userInfo});
+      // try {
+      //   await GoogleSignin.hasPlayServices();
+      //   const userInfo = await GoogleSignin.signIn();
+      //   // this.setState({userInfo});
 
-        console.log(userInfo);
-      } catch (error) {
-        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-          // user cancelled the login flow
-          console.log('User cancelled login');
-        } else if (error.code === statusCodes.IN_PROGRESS) {
-          // operation (e.g. sign in) is in progress already
-          console.log('Operation already in progress');
-        } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-          // play services not available or outdated
-          console.log('Play services not available');
-        } else {
-          console.log(error);
-          // some other error happened
-        }
-      }
+      //   console.log(userInfo);
+      // } catch (error) {
+      //   if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      //     // user cancelled the login flow
+      //     console.log('User cancelled login');
+      //   } else if (error.code === statusCodes.IN_PROGRESS) {
+      //     // operation (e.g. sign in) is in progress already
+      //     console.log('Operation already in progress');
+      //   } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      //     // play services not available or outdated
+      //     console.log('Play services not available');
+      //   } else {
+      //     console.log(error);
+      //     // some other error happened
+      //   }
+      // }
       // };
       // GoogleSignin.signIn().then(res => {
       //   console.log(res)
@@ -244,7 +244,7 @@ class Login extends React.Component<LoginProps, any> {
       //   })
       //   .catch((err) => console.log(err));
 
-      // const user = await Auth.federatedSignIn({provider: 'Google'});
+      const user = await Auth.federatedSignIn({provider: 'Google'});
 
       // this.props.navigation.navigate('Main');
     } catch (e) {}
