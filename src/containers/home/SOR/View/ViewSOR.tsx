@@ -2749,7 +2749,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       <Text style={styles.saveAsDraftText}>Save as Draft</Text>
                     </TouchableOpacity>
                   )}
-                  {this.state.closed == false && (
+                  {!this.state.closed && (
                     <TouchableOpacity
                       onPress={() => {
                         if (this.state.fiveWhytoggle == true) {
