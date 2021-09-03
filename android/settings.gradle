@@ -1,4 +1,8 @@
 rootProject.name = 'SafetyConnect'
+
+
+include ':react-native-google-signin', ':app'
+project(':react-native-google-signin').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-google-signin/google-signin/android')
 include ':@react-native-async-storage_async-storage'
 project(':@react-native-async-storage_async-storage').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-async-storage/async-storage/android')
 include ':@react-native-async-storage_async-storage'

@@ -204,6 +204,7 @@ class Signup extends React.Component<SignupProps, any> {
       const userInfo = await GoogleSignin.signIn();
       // this.setState({userInfo});
 
+      console.log('userInfo');
       console.log(userInfo);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
