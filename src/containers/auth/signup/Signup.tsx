@@ -193,7 +193,7 @@ class Signup extends React.Component<SignupProps, any> {
     // try {
     //   let user = await Auth.federatedSignIn({provider: 'Google'});
     //   console.log(user);
-    //   this.props.navigation.navigate('Main');
+    //   // this.props.navigation.navigate('Main');
     // } catch (err) {
     //   console.log('user error');
     //   console.log(err);
