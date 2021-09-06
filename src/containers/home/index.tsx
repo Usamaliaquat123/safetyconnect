@@ -138,8 +138,8 @@ class Home extends React.Component<HomeProps, any> {
                 .taskAssignedBy(org.data.data._id, email, currentProj)
                 .then((assignBy: any) => {
                   console.log('assignBy');
-                  var taskAssignedBy = [];
                   console.log(assignBy);
+                  var taskAssignedBy = [];
                   assignBy.data.data[0].projects.forEach((assignBye: any) => {
                     const element = assignBye.reports.action_required;
                     const row = {
@@ -167,7 +167,7 @@ class Home extends React.Component<HomeProps, any> {
 
               createApi
                 .createApi()
-                .taskAssignedTo(org.data.data._id, email, currentProj)
+                .tableData(org.data.data._id, email, currentProj)
                 .then((assignTo: any) => {
                   console.log('assignTo');
                   console.log(assignTo);
@@ -189,7 +189,6 @@ class Home extends React.Component<HomeProps, any> {
                     };
 
                     taskAssignedTo.push(row);
-                    this.state.taskYouAreInvolvedIn.push(row);
                     // this.setState({
                     //   completedActionTotal: this.state.taskAssignedToYou.map(
                     //     (d) => d.data.reports.action_required,
@@ -197,33 +196,34 @@ class Home extends React.Component<HomeProps, any> {
                     // });
                   });
                   this.setState({
-                    taskAssignedToYou: taskAssignedTo,
                     taskYouAreInvolvedIn: taskAssignedTo,
                   });
                 });
-              // createApi
-              // .createApi()
-              // .tableData(org.data.data._id, email)
-              // .then((tblData: any) => {
-              //   tblData.data.data[0].projects.forEach((tblDataa: any) => {
-              //     const element = tblDataa.reports.action_required;
-              //     const row = {
-              //       projectId: tblDataa._id,
-              //       reportId: tblDataa.reports._id,
-              //       details: element.content,
-              //       assignedTo: element.assignTo,
-              //       createdBy: element.createdBy,
-              //       location: tblDataa.reports.location,
-              //     };
-              //     if (tblDataa.reports.createdAt) {
-              //       row.createdAt = tblDataa.reports.createdAt
-              //         .toString()
-              //         .substring(0, 11);
-              //     }
-              //     console.log('elemenata');
-              //     console.log(row);
-              //   });
-              // });
+
+              createApi
+                .createApi()
+                .taskAssignedTo(org.data.data._id, email, currentProj)
+                .then((tblData: any) => {
+                  var taskAssignedToYou = [];
+                  tblData.data.data[0].projects.forEach((tblDataa: any) => {
+                    const element = tblDataa.reports.action_required;
+                    const row = {
+                      // projectId: assigndTot._id,
+                      data: tblDataa.reports,
+                      sorType: tblDataa.reports.sor_type,
+                      projectId: tblDataa._id,
+                      reportId: tblDataa.reports._id,
+                      details: element.content,
+                      assignedTo: element.assignTo,
+                      createdBy: element.createdBy,
+                      location: tblDataa.reports.location,
+                      createdAt: tblDataa.reports.action_required.dueDate,
+                    };
+                    taskAssignedToYou.push(row);
+                  });
+
+                  this.setState({taskAssignedTo: taskAssignedToYou});
+                });
             });
 
             // console.log('this.state.taskAssignedToYou');
