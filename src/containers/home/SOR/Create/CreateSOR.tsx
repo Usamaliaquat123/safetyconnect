@@ -772,8 +772,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       //   actions['justification'] = rec[i].justification;
                       // }
                     }
-                    console.log('==================Actions*');
-                    console.log(actions);
                     var sors = {
                       report: {
                         _id: '',
@@ -922,8 +920,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                             .createApi()
                                             .getUser(rep[i].created_by);
                                           const {data: res} = data;
-                                          console.log('res hai bhai');
-                                          console.log(res);
 
                                           rep[i]['selected'] = false;
                                           rep[i]['user'] = {
@@ -978,6 +974,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                     type: 'success',
                                     position: 'bottom',
                                   });
+                                  this.setState({
+                                    loading: false,
+                                    errorModal: false,
+                                  });
                                   setTimeout(() => {
                                     this.props.navigation.navigate('Main');
                                   }, 1000);
@@ -1014,6 +1014,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                                     var rep = sugg.data.results;
                                     if (rep.length == 0) {
+                                      this.setState({
+                                        loading: false,
+                                        errorModal: false,
+                                      });
                                       showMessage({
                                         message: 'SOR sucessfully subitted',
                                         type: 'success',
@@ -1082,6 +1086,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                       message: 'SOR sucessfully subitted',
                                       type: 'success',
                                       position: 'bottom',
+                                    });
+                                    this.setState({
+                                      loading: false,
+                                      errorModal: false,
                                     });
                                     setTimeout(() => {
                                       this.props.navigation.navigate('Main');
