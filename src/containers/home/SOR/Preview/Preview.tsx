@@ -79,7 +79,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
       attachments: [],
       involvedperson: [],
       projectId: '',
-
+      questionAndAnswers: [],
       fivewhy: [],
     };
   }
@@ -332,6 +332,77 @@ export class Preview extends React.Component<ViewAllProps, any> {
         }.</SPAN><SPAN class="ft11">${d.content}</SPAN></P>`,
     )}
    
+
+  ${ this.props.route.params.data.justifications.length != 0 && 
+  
+  `  "
+  <!-- Five why -->
+  <hr style=" margin-top: 26px" />
+  <P style="font-size: 19px;
+  margin-top: 22px;
+  margin-bottom: 18px;" class="p8 ft6">Five WHY</P>
+  
+  
+  ${this.state.questionAndAnswers.map(
+    (d: any, i: number) =>
+      `<P class="p5 ft2"><SPAN class="ft2">${i + 1}.</SPAN><SPAN class="ft11">${
+        d.question
+      }</SPAN></P>
+    <P class="p5 ft2"><SPAN class="ft2">${i + 1}</SPAN><SPAN class="ft11">${
+        d.answer
+      }</SPAN></P>`,
+  )}
+  
+  
+  
+  <!-- Key Findings -->
+  <P style="font-size: 19px;
+  margin-top: 22px;
+  margin-bottom: 18px;" class="p8 ft6">Key findings</P>
+  
+  <P class="p5 ft2"><SPAN class="ft2">*</SPAN><SPAN class="ft11">${
+        this.props.route.params.data.justifications[0].keyFindings
+      }</SPAN></P>
+  
+  <!-- Root causes -->
+  <P style="font-size: 19px;
+  margin-top: 22px;
+  margin-bottom: 18px;" class="p8 ft6">Root Causes</P>
+  ${this.props.route.params.data.justifications[0].rootCauses.map(
+    (d: any, i: number) =>
+      `<P class="p5 ft2"><SPAN class="ft2">${i + 1}</SPAN><SPAN class="ft11">${
+        d.category
+      }</SPAN></P>
+      <P class="p5 ft2"><SPAN class="ft2">${i + 1}</SPAN><SPAN class="ft11">${
+        d.subCategory[0]
+      }</SPAN></P>
+     
+      `,
+  )}
+  
+  <!-- Contributory causes -->
+  <P style="font-size: 19px;
+  margin-top: 22px;
+  margin-bottom: 18px;" class="p8 ft6">Contributory Causes</P>
+  ${this.props.route.params.data.justifications[0].contributoryCauses.map((d  :any, i : number) => 
+    `<P class="p5 ft2"><SPAN class="ft2">${i + 1}</SPAN><SPAN class="ft11">${
+      d.category
+    }</SPAN></P>
+    <P class="p5 ft2"><SPAN class="ft2">${i + 1}</SPAN><SPAN class="ft11">${
+      d.subCategory[0]
+    }</SPAN></P>
+   `
+    
+    )}
+  
+  
+  "`
+  
+  
+  }
+
+
+
     
     <hr style="    margin-top: 20px;" />
     <P  style="font-size: 21px;
@@ -394,6 +465,20 @@ export class Preview extends React.Component<ViewAllProps, any> {
     // this.props.route.
     console.log('this.props.route.params.data');
     console.log(this.props.route.params.data);
+    var data = [];
+    this.props.route.params.data.justifications[0].justification.question.map(
+      (d: any) => {
+        data.push({question: d});
+      },
+    );
+
+    this.props.route.params.data.justifications[0].justification.answer.map(
+      (d: any, i: number) => {
+        data[i]['answer'] = d;
+      },
+    );
+
+    this.setState({questionAndAnswers: data});
 
     // this.props.route.params.data.justifications[0].justification.question.map(
     //   (d: any) => {
@@ -902,7 +987,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
 
                           <View style={{flexDirection: 'row'}}>
                             <View style={{flexDirection: 'column'}}>
-                              {this.props.route.params.data.justifications[0].justification.question.map(
+                              {this.state.questionAndAnswers.map(
                                 (d: any, i: number) => (
                                   <View
                                     style={{
@@ -914,30 +999,31 @@ export class Preview extends React.Component<ViewAllProps, any> {
                                         fontSize: wp(3),
                                         fontFamily: fonts.SFuiDisplayMedium,
                                       }}>
-                                      Q. {i + 1}. {d}
+                                      Q. {i + 1}. {d.question}
+                                    </Text>
+                                    <Text
+                                      style={{
+                                        fontSize: wp(3),
+                                        opacity: 0.5,
+                                        fontFamily: fonts.SFuiDisplayMedium,
+                                      }}>
+                                      A. {i + 1}. {d.answer}
                                     </Text>
                                   </View>
                                 ),
                               )}
                             </View>
-                            <View
+                            {/* <View
                               style={{
                                 flexDirection: 'column',
                                 marginLeft: wp(20),
                               }}>
                               {this.props.route.params.data.justifications[0].justification.answer.map(
                                 (d: any, i: number) => (
-                                  <Text
-                                    style={{
-                                      fontSize: wp(3),
-                                      opacity: 0.5,
-                                      fontFamily: fonts.SFuiDisplayMedium,
-                                    }}>
-                                    A. {i + 1}. {d}
-                                  </Text>
+                                 
                                 ),
                               )}
-                            </View>
+                            </View> */}
                           </View>
                         </View>
                         {/* Key findings */}
