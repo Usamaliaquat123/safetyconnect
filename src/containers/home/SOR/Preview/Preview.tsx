@@ -335,7 +335,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
 
   ${
     this.props.route.params.data.justifications.length != 0 &&
-    `  "
+    `  
   <!-- Five why -->
   <hr style=" margin-top: 26px" />
   <P style="font-size: 19px;
@@ -384,7 +384,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
   )}
   
   
-  "`
+  `
   }
 
 
