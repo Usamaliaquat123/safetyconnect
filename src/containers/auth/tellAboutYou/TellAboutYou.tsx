@@ -630,7 +630,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       }}
                       onPress={() => {
                         if (this.state.arrayOfYourRole.length == 0) {
-                          this.setState({arrayOfYourRole: typeofRole});
+                          this.setState({arrayOfYourRole: yourRole});
                         } else {
                           this.setState({arrayOfYourRole: []});
                         }
