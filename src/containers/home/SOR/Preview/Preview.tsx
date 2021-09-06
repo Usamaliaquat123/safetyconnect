@@ -366,12 +366,8 @@ export class Preview extends React.Component<ViewAllProps, any> {
   margin-bottom: 18px;" class="p8 ft6">Root Causes</P>
   ${this.props.route.params.data.justifications[0].rootCauses.map(
     (d: any, i: number) =>
-      `<P class="p5 ft2"><SPAN class="ft2">${i + 1}</SPAN><SPAN class="ft11">${
-        d.category
-      }</SPAN></P>
-      <P class="p5 ft2"><SPAN class="ft2">-</SPAN><SPAN class="ft11">${
-        d.subCategory[0]
-      }</SPAN></P>
+      `<P class="p5 ft2"><SPAN class="ft2">*</SPAN><SPAN class="ft11">${d.category}</SPAN></P>
+      <P class="p5 ft2"><SPAN class="ft2">-</SPAN><SPAN class="ft11">${d.subCategory[0]}</SPAN></P>
      
       `,
   )}
@@ -382,12 +378,8 @@ export class Preview extends React.Component<ViewAllProps, any> {
   margin-bottom: 18px;" class="p8 ft6">Contributory Causes</P>
   ${this.props.route.params.data.justifications[0].contributoryCauses.map(
     (d: any, i: number) =>
-      `<P class="p5 ft2"><SPAN class="ft2">${i + 1}</SPAN><SPAN class="ft11">${
-        d.category
-      }</SPAN></P>
-    <P class="p5 ft2"><SPAN class="ft2">${i + 1}</SPAN><SPAN class="ft11">${
-        d.subCategory[0]
-      }</SPAN></P>
+      `<P class="p5 ft2"><SPAN class="ft2">*</SPAN><SPAN class="ft11">${d.category}</SPAN></P>
+    <P class="p5 ft2"><SPAN class="ft2">-</SPAN><SPAN class="ft11">${d.subCategory[0]}</SPAN></P>
    `,
   )}
   
