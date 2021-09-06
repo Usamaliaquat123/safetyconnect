@@ -1194,9 +1194,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           <Animated.View style={[styles.content]}>
             {/* Select Project  / Select location */}
 
-            <View style={styles.selectProjectLocationContainer}>
-              {/* Select Project */}
-              {/* <View style={styles.selectProjectContainer}>
+            {/* <View style={styles.selectProjectLocationContainer}> */}
+            {/* Select Project */}
+            {/* <View style={styles.selectProjectContainer}>
                 <Text style={styles.selectProjHead}>Select Project :</Text>
                 <TouchableOpacity onPress={() => {}} style={styles.selectProj}>
                   <Text style={styles.projName}>
@@ -1265,8 +1265,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 )}
               </View> */}
 
-              {/* Select location */}
-              {/* <View style={styles.selectLocationContainer}>
+            {/* Select location */}
+            {/* <View style={styles.selectLocationContainer}>
                 <Text style={styles.selectlocationHead}>Select Location :</Text>
                 <TouchableOpacity
                   onPress={() => {}}
@@ -1336,7 +1336,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   </ScrollView>
                 )}
               </View> */}
-            </View>
+            {/* </View> */}
 
             {/* Line  */}
             {/* <View style={styles.lineheight} /> */}
