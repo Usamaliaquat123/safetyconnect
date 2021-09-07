@@ -2723,7 +2723,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               <>
                 {/* Submit btns  */}
                 <View style={styles.saveAsDraftAndSubmitBtns}>
-                  {!this.state.closed && (
+                  {this.props.route.params.data.status != 2 && (
+                    <>
+                     {!this.state.closed && (
                     <TouchableOpacity
                       onPress={() => {
                         console.log('submit');
@@ -2750,6 +2752,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       <Text style={styles.saveAsDraftText}>Save as Draft</Text>
                     </TouchableOpacity>
                   )}
+                    </>
+                  )}
+                 
                   {!this.state.closed && (
                     <TouchableOpacity
                       onPress={() => {
