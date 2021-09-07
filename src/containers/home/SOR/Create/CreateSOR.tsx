@@ -322,16 +322,18 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           .createApi()
           .getOrganization(currentOrg)
           .then((res: any) => {
+            console.log('res.data.data.projects');
             console.log(res.data.data.projects);
+
             this.setState({
-              projectName: res.data.data.projects.map(
+              projectName: res.data.data.projects.filter(
                 (d: any) => d.project_id._id == this.state.projectid,
-              )[0].project_id.project_name,
+              )[0].project_name,
               allProjects: res.data.data.projects,
-              //   c: res.data.data.projects.map(
-              //     (d: any) => d.project_id._id == this.state.projectid,
-              //   )[0],
-              // currentOrgName: res.data.data.name,
+              selectedProject: res.data.data.projects.filter(
+                (d: any) => d.project_id._id == this.state.projectid,
+              )[0],
+              currentOrgName: res.data.data.name,
             });
 
             console.log('res.data.data');
@@ -339,6 +341,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
             console.log('this.state.selectedProject');
             console.log(this.state.selectedProject);
+
+
+
+            // this.props.rout
           });
     });
     // {key: "test.txt"} .catch(err => conso.le.log(err)});
