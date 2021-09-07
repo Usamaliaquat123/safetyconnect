@@ -328,10 +328,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 (d: any) => d.project_id._id == this.state.projectid,
               )[0].project_id.project_name,
               allProjects: res.data.data.projects,
-              c: res.data.data.projects.map(
-                (d: any) => d.project_id._id == this.state.projectid,
-              )[0],
-              currentOrgName: res.data.data.name,
+              //   c: res.data.data.projects.map(
+              //     (d: any) => d.project_id._id == this.state.projectid,
+              //   )[0],
+              // currentOrgName: res.data.data.name,
             });
 
             console.log('res.data.data');
@@ -757,24 +757,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     console.log('==================Actions=');
                     // console.log(rec.map((d: any) => delete d['selected']));
 
-                    var actions: Array<any> = [];
-                    for (let i = 0; i < rec.length; i++) {
-                      actions.push({
-                        assigned_to: rec[i].assigned_to,
-                        category: rec[i].category,
-                        content: rec[i].content,
-                        date: rec[i].date,
-                        is_complete: rec[i].is_complete,
-                        is_selected: rec[i].is_selected,
-                        status: rec[i].status,
-                        justification: rec[i].justification,
-                        action: 'low',
-                      });
-
-                      // if (rec[i].justification !== '') {
-                      //   actions['justification'] = rec[i].justification;
-                      // }
-                    }
                     var sors = {
                       report: {
                         _id: '',
@@ -796,7 +778,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               ? `medium`
                               : 'high',
                         },
-                        action_required: actions,
+                        action_required: rec,
 
                         location: this.state.observation,
                         submit_to: this.state.submitToTags.map(

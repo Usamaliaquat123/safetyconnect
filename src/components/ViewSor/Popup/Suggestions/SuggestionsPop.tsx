@@ -903,6 +903,7 @@ export default class SuggestionsPop extends React.Component<
                           category: this.state.type,
                           hierarchy: this.state.type,
                           status: this.state.statuses,
+                          action: this.state.observation,
                         };
 
                         if (this.state.addjustificationPop == false) {
