@@ -222,7 +222,9 @@ class Home extends React.Component<HomeProps, any> {
                     taskAssignedToYou.push(row);
                   });
 
-                  this.setState({taskAssignedTo: taskAssignedToYou});
+                  console.log('taskAssignedToYou');
+                  // console.log(taskAssignedToYou)
+                  this.setState({taskAssignedToYou: taskAssignedToYou});
                 });
             });
 

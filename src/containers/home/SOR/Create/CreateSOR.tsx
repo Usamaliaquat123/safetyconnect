@@ -313,6 +313,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         .createApi()
         .getLocations(currentProj)
         .then((res: any) => {
+          console.log('res');
+          console.log(res);
           this.setState({allLocations: res.data.data.p_locations});
         });
     });
@@ -341,10 +343,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
             console.log('this.state.selectedProject');
             console.log(this.state.selectedProject);
-
-
-
-            // this.props.rout
           });
     });
     // {key: "test.txt"} .catch(err => conso.le.log(err)});

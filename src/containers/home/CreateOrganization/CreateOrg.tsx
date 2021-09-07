@@ -345,13 +345,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                       <Text style={styles.emailTextContainer}>
                         Organization Description
                       </Text>
-                      <Text
-                        style={[
-                          styles.emailTextContainer,
-                          {opacity: 0.5, marginLeft: wp(3)},
-                        ]}>
-                        (Mandatory)
-                      </Text>
                     </View>
                     <View style={[styles.inputContainer]}>
                       <TextInput
