@@ -228,7 +228,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     }
   };
   componentDidMount = async () => {
-    // this.props.start();
+    this.props.start();
     // api
 
     AsyncStorage.getItem('email').then((email: any) => {
