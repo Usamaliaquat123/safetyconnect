@@ -162,12 +162,36 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
               projects: [],
             };
 
+            AsyncStorage.setItem(
+              'pending_users',
+              JSON.stringify(this.state.selectedEmails),
+            );
             this.props.reduxActions.createOrganization(
               data,
               this.state.selectedEmails,
               this.props.navigation,
             );
 
+            // var userNotRegisterd = [];
+
+            // this.state.selectedEmails.forEach((d: any) => {
+            //   api
+            //     .createApi()
+            //     .getUser(d)
+            //     .then((res: any) => {
+            //       console.log('res');
+            //       console.log(res);
+            //       if (res.data.message == 'no user exists') {
+            //         // userNotRegisterd.push(d);
+            //         this.state.unregisteredUser.push(d);
+            //         this.setState({});
+
+            //         // console.log('adas');
+            //       }
+            //     });
+            // });
+
+            // console.log(this.state.unregisteredUser);
             // console.log(data);
             // api
             //   .createApi()

@@ -105,8 +105,8 @@ class Menu extends React.Component<MenuProps, any> {
               iconStyle={{opacity: 0.5}}
             />
           </View>
-          {/* create organization
-          <TouchableOpacity
+          {/* create organization */}
+          {/* <TouchableOpacity
             onPress={() => {
               //   this.setState({createModal: xfalse});
               this.props.navigation.navigate('CreateOrganization');
