@@ -8,6 +8,8 @@ import {
   observationsSug,
   country,
 } from '@typings';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 // our "constructor"
 const base_uri = `https://dev.safetyconnect.ai`;
 const createApi = (
@@ -102,8 +104,15 @@ const createApi = (
   /*
    * @project
    */
-  const getProject = (data: project) =>
-    baseapi.get(`project?projectid=${data}`);
+  const getProject = (data: project) => {
+    AsyncStorage.getItem('email').then((email: any) => {
+      getUser(email).then((res: any) => {
+        return baseapi.get(
+          `project?projectid=${data}&userid=${res.data.data._id}`,
+        );
+      });
+    });
+  };
   const project = (data: project) => baseapi.put('project', data);
   const Postproject = (data: project) => baseapi.post('project', data);
 
@@ -229,7 +238,8 @@ const createApi = (
    * @Locations
    */
 
-  const getLocations = (data: any) => baseapi.get('/project/location', data);
+  const getLocations = (data: any) =>
+    baseapi.get(`/project/location?projectid=${data}`);
 
   return {
     searchApi,

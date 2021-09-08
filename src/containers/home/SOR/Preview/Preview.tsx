@@ -491,14 +491,15 @@ export class Preview extends React.Component<ViewAllProps, any> {
       .createApi()
       .getUser(this.props.route.params.data.created_by)
       .then((user: any) => {
-        this.setState({createdByName: user.data.data.name});
+
+        this.setState({createdByName: user.data.data.name,user :user.data.data });
       });
 
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
       createApi
         .createApi()
-        .getProject(currentProj)
+        .getProject(currentProj,  this.state.user._id)
         .then((res: any) => {
           this.setState({
             projectName: res.data.data.project_name,

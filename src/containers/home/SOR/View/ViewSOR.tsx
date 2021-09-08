@@ -628,7 +628,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         // var involvedPersonss = JSON.parse(involveppl);
         console.log('res >>>>>>>>>>>>>>>>>>>>>');
         console.log(res);
-
+      
         const sortedActivities = res.data.data.all_comments.sort(
           (a, b) => new Date(a.date) - new Date(b.date),
         );
