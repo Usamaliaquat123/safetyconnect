@@ -626,80 +626,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .then((res: any) => {
         // AsyncStorage.getItem('involved_person').then((involveppl: any) => {
         // var involvedPersonss = JSON.parse(involveppl);
+        console.log('res >>>>>>>>>>>>>>>>>>>>>');
         console.log(res);
-        for (let i = 0; i < res.data.data.all_comments.length; i++) {
-          var rs = res.data.data.all_comments[i].files.map(
-            (d) => (d = `report/${d}`),
-          );
 
-          // var types = res.data.data.all_comments[i].files.map(
-          //   (d: any) => (d = d.split('.')[1]),
-          // );
-          var dta = {
-            bucket: 'hns-codist',
-            report: rs,
-          };
-
-          console.log(dta);
-
-          createApi
-            .createApi()
-            .getPublicPhotos(dta)
-            .then((imgUrl: any) => {
-              console.log('imgUrl');
-              console.log(imgUrl);
-              var obj = {};
-              for (
-                let k = 0;
-                k < res.data.data.all_comments[i].files.length;
-                k++
-              ) {
-                if (
-                  res.data.data.all_comments[i].files[k].split('.')[1] ==
-                    'jpeg' ||
-                  res.data.data.all_comments[i].files[k].split('.')[1] == 'png'
-                ) {
-                  var data = {
-                    name: res.data.data.all_comments[i].files[k],
-                    type: 'image',
-                    uri: imgUrl.data[k],
-                  };
-
-                  res.data.data.all_comments[i].files[k] = data;
-                  this.setState({});
-                }
-
-                //     res.data.data.all_comments[i].files[k]
-              }
-            });
-
-          //  res.data.data.all_comments
-
-          // if (types == 'jpeg' || types == 'png' || types == 'jpg') {
-          //   obj = {
-          //     name: res.data.data.all_comments[i].files,
-          //     type: 'image',
-          //     uri: imgUrl[0],
-          //   };
-          // } else {
-          //   obj = {
-          //     name: res.data.data.all_comments[i].files,
-          //     type: 'image',
-          //     uri: imgUrl[0],
-          //   };
-          // }
-
-          // for (let j = 0; j < involvedPersonss.length; j++) {
-          // if (res.data.data.all_comments[i].user != null) {
-          //   if (
-          //     res.data.data.all_comments[i].user.email ==
-          //     involvedPersonss[j].email
-          //   ) {
-          //     res.data.data.all_comments[i].user = involvedPersonss[j];
-          //   }
-          // }
-          // }
-        }
         const sortedActivities = res.data.data.all_comments.sort(
           (a, b) => new Date(a.date) - new Date(b.date),
         );
@@ -2725,36 +2654,39 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 <View style={styles.saveAsDraftAndSubmitBtns}>
                   {this.props.route.params.data.status != 2 && (
                     <>
-                     {!this.state.closed && (
-                    <TouchableOpacity
-                      onPress={() => {
-                        console.log('submit');
-                        if (this.state.fiveWhytoggle == true) {
-                          console.log('line 2566');
-                          console.log(this.state.fiveWhyQuestion);
-                          if (this.state.fiveWhyQuestion.length == 5) {
-                            this.onSubmitUpdateSor(1);
-                            console.log('line 2570');
-                          } else {
-                            console.log('line 2572');
-                            this.setState({
-                              errorModal: true,
-                              errHeadingText: 'Minimum 5 why ',
-                              errDesText: 'minimum 5 why should be added..!',
-                            });
-                          }
-                        } else {
-                          console.log('line 2580');
-                          this.onSubmitUpdateSor(1);
-                        }
-                      }}
-                      style={styles.saveAsDraftContainer}>
-                      <Text style={styles.saveAsDraftText}>Save as Draft</Text>
-                    </TouchableOpacity>
-                  )}
+                      {!this.state.closed && (
+                        <TouchableOpacity
+                          onPress={() => {
+                            console.log('submit');
+                            if (this.state.fiveWhytoggle == true) {
+                              console.log('line 2566');
+                              console.log(this.state.fiveWhyQuestion);
+                              if (this.state.fiveWhyQuestion.length == 5) {
+                                this.onSubmitUpdateSor(1);
+                                console.log('line 2570');
+                              } else {
+                                console.log('line 2572');
+                                this.setState({
+                                  errorModal: true,
+                                  errHeadingText: 'Minimum 5 why ',
+                                  errDesText:
+                                    'minimum 5 why should be added..!',
+                                });
+                              }
+                            } else {
+                              console.log('line 2580');
+                              this.onSubmitUpdateSor(1);
+                            }
+                          }}
+                          style={styles.saveAsDraftContainer}>
+                          <Text style={styles.saveAsDraftText}>
+                            Save as Draft
+                          </Text>
+                        </TouchableOpacity>
+                      )}
                     </>
                   )}
-                 
+
                   {!this.state.closed && (
                     <TouchableOpacity
                       onPress={() => {
