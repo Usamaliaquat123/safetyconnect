@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
 
   header: {
     padding: wp(5),
+    // paddingTop: wp
     paddingRight: wp(7),
     paddingLeft: wp(7),
     flex: 1,
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     width: wp(6),
     marginLeft: wp(5),
     padding: wp(0.5),
-    borderRadius: 10,
+    // borderRadius: 10,
   },
   avatarView: {
     position: 'absolute',

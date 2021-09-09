@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // padding: wp(1),
     paddingLeft: wp(5),
-    borderRadius: wp(4),
+    // borderRadius: wp(4),
   },
   iconStyle: {
     marginRight: wp(2),

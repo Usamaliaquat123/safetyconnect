@@ -11,6 +11,8 @@ import {connect} from 'react-redux';
 import {searchInObjects} from '@utils';
 import {Imessage} from '@typings';
 import {Search, Header, User} from '@components';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import styles from './styles';
 type MessagingNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -34,7 +36,9 @@ class Messaging extends React.Component<MessagingProps, any> {
     };
   }
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    AsyncStorage.getItem('email').then((email) => {});
+  };
 
   render() {
     return (

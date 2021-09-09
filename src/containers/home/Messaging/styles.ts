@@ -9,9 +9,10 @@ const styles = StyleSheet.create({
     flex: 2,
 
     backgroundColor: colors.secondary,
-    borderTopLeftRadius: wp(8),
-    borderTopRightRadius: wp(8),
+    // borderTopLeftRadius: wp(8),
+    // borderTopRightRadius: wp(8),
     padding: wp(8),
+    paddingTop: wp(4),
     paddingLeft: wp(5),
     paddingRight: wp(5),
   },
