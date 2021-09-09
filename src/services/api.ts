@@ -104,12 +104,14 @@ const createApi = (
   /*
    * @project
    */
-  const getProject = (data: project) => {
-    AsyncStorage.getItem('email').then((email: any) => {
-      return getUser(email).then((res: any) => {
-        return baseapi.get(
-          `project?projectid=${data}&userid=${res.data.data._id}`,
-        );
+  const getProject = async (projectId: string) => {
+    await AsyncStorage.getItem('email').then(async (email: any) => {
+      await getUser(email).then(async (res: any) => {
+        await baseapi
+          .get(`project?projectid=${projectId}&userid=${res.data.data._id}`)
+          .then((res) => {
+            return res;
+          });
       });
     });
   };
