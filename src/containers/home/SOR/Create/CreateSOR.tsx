@@ -1205,7 +1205,15 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 <Text style={styles.selectProjHead}>Select Project :</Text>
                 <TouchableOpacity
                   onPress={() => {
-                    this.setState({allProjectsSugg: this.state.allProjects});
+
+
+                    if(this.state.allProjectsSugg.length != 0 ){
+
+                      this.setState({allProjectsSugg: []});
+                    }else{
+                      
+                      this.setState({allProjectsSugg: this.state.allProjects});
+                    }
                   }}
                   style={styles.selectProj}>
                   <Text style={styles.projName}>
