@@ -94,11 +94,29 @@ class Login extends React.Component<LoginProps, any> {
           .getUser(user.signInUserSession.idToken.payload.email)
           .then((data: any) => {
             if (data.data.success == false) {
+              createApi
+                .createApi()
+                .createUser({
+                  name: user.username,
+                  email: user.signInUserSession.idToken.payload.email, // dynal=mic link
+                  organization: [],
+                  img_url:
+                    'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+                })
+                .then((res) => {
+                  this.setState({loading: false, errorModal: false});
+                  navigation.navigate('TellAboutYou', {
+                    username: user.signInUserSession.idToken.payload.email,
+                    isgoogle: true,
+                  });
+                });
               this.setState({loading: false, errorModal: false});
-              navigation.navigate('TellAboutYou', {
-                username: user.signInUserSession.idToken.payload.email,
-                isgoogle: true,
-              });
+
+              // this.setState({loading: false, errorModal: false});
+              // navigation.navigate('TellAboutYou', {
+              //   username: user.signInUserSession.idToken.payload.email,
+              //   isgoogle: true,
+              // });
             } else {
               this.setState({loading: false, errorModal: false});
               AsyncStorage.setItem(

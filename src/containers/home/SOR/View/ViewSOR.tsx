@@ -2721,6 +2721,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </TouchableOpacity>
 
                   {this.state.closed == false && (
+                    <>
+  {/* {this.props.route.params.data.} */}
                     <TouchableOpacity
                       onPress={() => {
                         AsyncStorage.getItem('email').then((email) => {
@@ -2805,6 +2807,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         Mark as Complete
                       </Text>
                     </TouchableOpacity>
+                    </>
                   )}
                 </View>
               </>

@@ -84,7 +84,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
   componentDidMount() {
     this.props.start();
 
-    console.log(this.props.reduxActions);
+    // console.log(this.props.reduxActions);
   }
 
   searchForUsers = (e: string) => {
@@ -146,6 +146,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
   uplaodOrganizationImage = () => {};
 
   createOrg = () => {
+    this.props.reduxActions;
     if (this.state.org !== '') {
       if (this.state.orgDetails !== '') {
         AsyncStorage.getItem('email')
@@ -162,10 +163,14 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
               projects: [],
             };
 
-            AsyncStorage.setItem(
-              'pending_users',
-              JSON.stringify(this.state.selectedEmails),
-            );
+            // AsyncStorage.setItem(
+            //   'pending_users',
+            //   JSON.stringify(this.state.selectedEmails),
+            // );
+
+            console.log(data);
+            console.log(this.state.selectedEmails);
+
             this.props.reduxActions.createOrganization(
               data,
               this.state.selectedEmails,

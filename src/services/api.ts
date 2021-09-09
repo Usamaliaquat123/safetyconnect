@@ -106,7 +106,7 @@ const createApi = (
    */
   const getProject = (data: project) => {
     AsyncStorage.getItem('email').then((email: any) => {
-      getUser(email).then((res: any) => {
+      return getUser(email).then((res: any) => {
         return baseapi.get(
           `project?projectid=${data}&userid=${res.data.data._id}`,
         );

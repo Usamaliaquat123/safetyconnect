@@ -228,6 +228,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
             .createApi()
             .setUserInfo(setUserInfoData)
             .then((res) => {
+              console.log(res);
               if ((res.status = 200)) {
                 this.setState({
                   loading: false,

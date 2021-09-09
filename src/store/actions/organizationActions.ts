@@ -38,6 +38,8 @@ export const createOrganization = (
         projects: organization.projects,
       })
       .then(async (res: any) => {
+        console.log('oragnization created');
+        console.log(res);
         if (res.status == 200) {
           if (users.length != 0) {
             await createApi
@@ -49,6 +51,8 @@ export const createOrganization = (
                 organizationName: organization.name,
               })
               .then((invite) => {
+                console.log('users invited');
+                console.log(res);
                 savedCurrentOrganization(res.data.data.organization_id);
                 dispatch(loading(false));
                 dispatch(error(false));
