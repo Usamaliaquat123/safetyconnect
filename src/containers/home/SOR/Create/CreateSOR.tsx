@@ -81,6 +81,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
+      selectedLocation: {},
+      allProjectsSugg: [],
+      allLocationsSugg: [],
       // Animated View | Animations
       initAnim: new Animated.Value(0),
       contentAnim: new Animated.Value(80),
@@ -313,9 +316,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         .createApi()
         .getLocations(currentProj)
         .then((res: any) => {
-          console.log('res');
+          console.log('location data');
           console.log(res);
-          this.setState({allLocations: res.data.data.p_locations});
+          this.setState({
+            allLocations: res.data.data.p_locations,
+            selectedLocation: res.data.data.p_locations[0],
+          });
+
+          console.log(res.data.data.p_locations[0]);
         });
     });
     getCurrentOrganization().then((currentOrg: any) => {
@@ -1035,7 +1043,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                         };
 
                                         this.setState(
-                                          (prevState) => {
+                                          (prevState: any) => {
                                             return {
                                               ...prevState,
                                               repeatedSorData: rep,
@@ -1195,7 +1203,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               {/* Select Project */}
               <View style={styles.selectProjectContainer}>
                 <Text style={styles.selectProjHead}>Select Project :</Text>
-                <TouchableOpacity onPress={() => {}} style={styles.selectProj}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({allProjectsSugg: this.state.allProjects});
+                  }}
+                  style={styles.selectProj}>
                   <Text style={styles.projName}>
                     {this.state.selectedProject.project_name}
                   </Text>
@@ -1209,7 +1221,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   />
                 </TouchableOpacity>
 
-                {this.state.allProjects.length != 0 && (
+                {this.state.allProjectsSugg.length != 0 && (
                   <ScrollView
                     style={{
                       // top: wp(20),
@@ -1224,7 +1236,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       backgroundColor: colors.secondary,
                       maxHeight: wp(40),
                     }}>
-                    {this.state.allProjects.map((d: any) => (
+                    {this.state.allProjectsSugg.map((d: any) => (
                       <TouchableOpacity
                         style={{
                           flexDirection: 'row',
@@ -1238,7 +1250,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             .then((resp: any) => {
                               this.setState({
                                 allLocations: resp.data.data.p_locations,
-                                allProjects: [],
+                                allProjectsSugg: [],
                               });
                             });
                         }}>
@@ -1266,10 +1278,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               <View style={styles.selectLocationContainer}>
                 <Text style={styles.selectlocationHead}>Select Location :</Text>
                 <TouchableOpacity
-                  onPress={() => {}}
+                  onPress={() => {
+                    this.setState({allLocationsSugg: this.state.allLocations});
+                  }}
                   style={styles.selectLocation}>
                   <Text style={styles.locaName}>
-                    {this.state.selectedLocation}
+                    {this.state.selectedLocation.name}
                   </Text>
                   <Icon
                     onPress={() => {}}
@@ -1281,7 +1295,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   />
                 </TouchableOpacity>
 
-                {this.state.allLocations.length != 0 && (
+                {this.state.allLocationsSugg.length != 0 && (
                   <ScrollView
                     style={{
                       // top: wp(20),
@@ -1296,7 +1310,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       backgroundColor: colors.secondary,
                       maxHeight: wp(40),
                     }}>
-                    {this.state.allLocations.map((d: any) => (
+                    {this.state.allLocationsSugg.map((d: any) => (
                       <TouchableOpacity
                         style={{
                           flexDirection: 'row',
@@ -1304,15 +1318,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           padding: wp(3),
                         }}
                         onPress={() => {
-                          createApi
-                            .createApi()
-                            .getLocations({projectid: d.project_id._id})
-                            .then((resp: any) => {
-                              this.setState({
-                                allLocations: [],
-                                selectedLocation: resp.data.data.p_locations,
-                              });
-                            });
+                          this.setState({
+                            allLocationsSugg: [],
+                            selectedLocation: d,
+                          });
                         }}>
                         <Icon
                           name={'stats-chart-sharp'}
@@ -1326,18 +1335,17 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             fontSize: wp(3),
                             fontFamily: fonts.SFuiDisplayMedium,
                           }}>
-                          {d.project_name}
+                          {d.name}
                         </Text>
                       </TouchableOpacity>
                     ))}
-                    `
                   </ScrollView>
                 )}
               </View>
             </View>
 
             {/* Line  */}
-            {/* <View style={styles.lineheight} /> */}
+            <View style={styles.lineheight} />
             {/* Classify SOR */}
 
             <CopilotStep

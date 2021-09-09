@@ -81,11 +81,13 @@ const styles = StyleSheet.create({
     paddingBottom: wp(3),
     borderColor: colors.textOpa,
     borderRadius: wp(1),
+    width: wp(42),
     flexDirection: 'row',
   },
   downIcon: {
-    marginLeft: wp(7),
-
+    // marginLeft: wp(7),
+    position: 'absolute',
+    right: wp(5),
     opacity: 0.7,
   },
   projName: {
@@ -107,6 +109,7 @@ const styles = StyleSheet.create({
     paddingTop: wp(3),
     paddingBottom: wp(3),
     borderColor: colors.textOpa,
+    width: wp(42),
     borderRadius: wp(1),
     flexDirection: 'row',
   },
