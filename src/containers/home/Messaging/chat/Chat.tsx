@@ -226,7 +226,7 @@ class Chat extends React.Component<ChatProps, any> {
                 {
                   text: props.text?.trim(),
                   // user: props,
-                  // _id: props.(),
+                  _id: 2,
                 },
                 true,
               );

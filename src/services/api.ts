@@ -104,16 +104,8 @@ const createApi = (
   /*
    * @project
    */
-  const getProject = async (projectId: string) => {
-    await AsyncStorage.getItem('email').then(async (email: any) => {
-      await getUser(email).then(async (res: any) => {
-        await baseapi
-          .get(`project?projectid=${projectId}&userid=${res.data.data._id}`)
-          .then((res) => {
-            return res;
-          });
-      });
-    });
+  const getProject = async (projectId: string, userid: any) => {
+    return baseapi.get(`project?projectid=${projectId}&userid=${userid}`);
   };
   const project = (data: project) => baseapi.put('project', data);
   const Postproject = (data: project) => baseapi.post('project', data);

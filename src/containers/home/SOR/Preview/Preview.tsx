@@ -492,35 +492,34 @@ export class Preview extends React.Component<ViewAllProps, any> {
       .getUser(this.props.route.params.data.created_by)
       .then((user: any) => {
         this.setState({createdByName: user.data.data.name});
-      });
+        getCurrentProject().then((currentProj: any) => {
+          this.setState({projectId: currentProj});
+          createApi
+            .createApi()
+            .getProject(currentProj, user.data.data._id)
+            .then((res: any) => {
+              this.setState({
+                projectName: res.data.data.project_name,
+              });
 
-    getCurrentProject().then((currentProj: any) => {
-      this.setState({projectId: currentProj});
-      createApi
-        .createApi()
-        .getProject(currentProj)
-        .then((res: any) => {
-          this.setState({
-            projectName: res.data.data.project_name,
-          });
+              this.setState({
+                involvedperson: res.data.data.involved_persons,
+              });
 
-          this.setState({
-            involvedperson: res.data.data.involved_persons,
-          });
+              // this.props.route.params.data.involved_persons.map((d) => {
+              //   this.state.involvedperson.push(
+              //     res.data.data.involved_persons.filter(
+              //       (i: any) => i.email == d,
+              //     )[0],
+              //   );
 
-          // this.props.route.params.data.involved_persons.map((d) => {
-          //   this.state.involvedperson.push(
-          //     res.data.data.involved_persons.filter(
-          //       (i: any) => i.email == d,
-          //     )[0],
-          //   );
+              //   this.setState({});
+              // });
 
-          //   this.setState({});
-          // });
-
-          this.getAllAttachments(this.props.route.params.data.attachments);
+              this.getAllAttachments(this.props.route.params.data.attachments);
+            });
         });
-    });
+      });
   };
 
   // get All Attachments

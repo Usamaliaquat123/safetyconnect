@@ -370,6 +370,21 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         .createApi()
         .getUser(email)
         .then((user: any) => {
+          getCurrentProject().then((currentProj: any) => {
+            this.setState({projectid: currentProj});
+
+            // this.props.reduxActions.createApi
+            createApi
+              .createApi()
+              .getProject(currentProj, user.data.data._id)
+              .then((res: any) => {
+                console.log('res of involved users');
+                console.log(res);
+                this.setState({
+                  involved_persons: res.data.data.involved_persons,
+                });
+              });
+          });
           this.setState({user: user.data.data});
         });
     });
@@ -378,19 +393,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     AsyncStorage.getItem('email').then((email: any) => {
       this.setState({email});
     });
-    getCurrentProject().then((currentProj: any) => {
-      this.setState({projectid: currentProj});
 
-      // this.props.reduxActions.createApi
-      createApi
-        .createApi()
-        .getProject(currentProj)
-        .then((res: any) => {
-          console.log('res of involved users');
-          console.log(res);
-          this.setState({involved_persons: res.data.data.involved_persons});
-        });
-    });
     // Time Update on every seconds
 
     // setInterval(() => {
@@ -1257,7 +1260,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               this.setState({
                                 allLocations: resp.data.data.p_locations,
                                 allProjectsSugg: [],
-                                projectid : d.project_id._id,
+                                projectid: d.project_id._id,
                               });
                             });
                         }}>

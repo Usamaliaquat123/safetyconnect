@@ -129,6 +129,168 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
     console.log(this.props.reduxState.allSors);
     // console.log(this.props.reduxState.loading);
 
+    AsyncStorage.getItem('email').then((email: any) => {
+      createApi
+        .createApi()
+        .getUser(email)
+        .then((user  :any) => {
+          getCurrentProject().then((currentProj: any) => {
+            this.setState({projectId: currentProj});
+
+            // this.props.reduxActions.getAllSors(currentProj, [1, 2, 3, 4, 5]);
+
+            createApi
+              .createApi()
+              .getProject(currentProj, user.data.data._id)
+              .then((involvedPerson: any) => {
+                console.log(involvedPerson);
+                console.log('involvedPerson.data');
+                this.setState({
+                  projectName: involvedPerson.data.data.project_name,
+                });
+                var j = {};
+                var arr = [];
+                for (
+                  let i = 0;
+                  i < involvedPerson.data.data.involved_persons.length;
+                  i++
+                ) {
+                  Object.defineProperty(
+                    j,
+                    involvedPerson.data.data.involved_persons[i].email,
+                    {
+                      value: involvedPerson.data.data.involved_persons[i],
+                      writable: false,
+                    },
+                  );
+                  this.state.involvedPerson.push(
+                    involvedPerson.data.data.involved_persons[i],
+                  );
+                }
+
+                AsyncStorage.setItem(
+                  'involved_person',
+                  JSON.stringify(this.state.involvedPerson),
+                );
+              });
+
+            AsyncStorage.getItem('filters').then((filtersObj) => {
+              console.log('filtersObj');
+              console.log(JSON.parse(filtersObj));
+              var dta = JSON.parse(filtersObj);
+              var data = {
+                project: currentProj,
+                limit: 1000000,
+                page: 0,
+                query: {status: [1, 2, 3, 4, 5]},
+              };
+              if (dta != null) {
+                if (Object.keys(dta).length !== 0) {
+                  data['query'] = dta;
+                }
+                if (dta.rangeFrom == undefined || dta.risk == undefined) {
+                  data['query']['status'] = [1, 2, 3, 4, 5];
+                }
+              }
+
+              console.log('filtered data');
+              console.log(data);
+              createApi
+                .createApi()
+                .filterSors(data)
+                .then((res: any) => {
+                  if (res.data.message == 'no sor found') {
+                    // console.log('gaye mutheda');
+                    // console.log(dta);
+                    // console.log(dta);
+                    if (dta != null) {
+                      showMessage({
+                        message: 'No sor found',
+                        type: 'danger',
+                        position: 'bottom',
+                      });
+                      this.setState({
+                        nosorOrSorMessage:
+                          'try the different filter or create the',
+                      });
+                      // this.setState({loading: false});
+                      this.props.reduxActions.setLoading(false);
+                    } else {
+                      this.setState({
+                        nosorOrSorMessage: 'would you like to create the ',
+                      });
+                      this.props.reduxActions.setLoading(false);
+                      // this.setState({loading: false});
+                    }
+                  }
+                  // console.log('gaye mutheda');
+                  // console.log(res.data);
+                  if (res.data.data == undefined) {
+                    this.setState({lovading: false});
+                  } else {
+                    res.data.data.report.reverse();
+                    for (let i = 0; i < res.data.data.report.length; i++) {
+                      if (res.data.data.report[i].status == 1) {
+                        // var rep = filterAndMappingPersons(
+                        //   res.data.data.report[i],
+                        //   this.state.involvedPerson,
+                        // );
+
+                        if (res.data.data.report[i].details != undefined) {
+                          this.state.draft.push(res.data.data.report[i]);
+                        }
+                      } else if (res.data.data.report[i].status == 2) {
+                        // var rep = filterAndMappingPersons(
+                        //   res.data.data.report[i],
+                        //   this.state.involvedPerson,
+                        // );
+
+                        if (res.data.data.report[i].details != undefined) {
+                          this.state.inprogress.push(res.data.data.report[i]);
+                          // this.state.submitted.push(rep);
+                        }
+                      } else if (res.data.data.report[i].status == 3) {
+                        // var rep = filterAndMappingPersons(
+                        //   res.data.data.report[i],
+                        //   this.state.involvedPerson,
+                        // );
+
+                        if (res.data.data.report[i].details != undefined) {
+                          this.state.exclated.push(res.data.data.report[i]);
+                        }
+                      } else if (res.data.data.report[i].status == 4) {
+                        // var rep = filterAndMappingPersons(
+                        //   res.data.data.report[i],
+                        //   this.state.involvedPerson,
+                        // );
+
+                        if (res.data.data.report[i].details != undefined) {
+                          this.state.pendingClosure.push(
+                            res.data.data.report[i],
+                          );
+                        }
+                      } else if (res.data.data.report[i].status == 5) {
+                        // var rep = filterAndMappingPersons(
+                        //   res.data.data.report[i],
+                        //   this.state.involvedPerson,
+                        // );
+
+                        if (res.data.data.report[i].details != undefined) {
+                          this.state.closed.push(res.data.data.report[i]);
+                        }
+                      }
+                    }
+                  }
+
+                  this.setState({loading: false});
+                })
+                .catch((err) => console.log(err));
+            });
+          });
+        });
+    });
+    // this.props.
+
     // console.log(this.props.reduxActions.)
     getCurrentOrganization().then((orgId: any) => {
       console.log('orgId');
@@ -139,154 +301,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         .then((org: any) => {
           this.setState({projects: org.data.data.projects});
         });
-    });
-    getCurrentProject().then((currentProj: any) => {
-      this.setState({projectId: currentProj});
-
-      // this.props.reduxActions.getAllSors(currentProj, [1, 2, 3, 4, 5]);
-
-      createApi
-        .createApi()
-        .getProject(currentProj)
-        .then((involvedPerson: any) => {
-          console.log(involvedPerson);
-          console.log('involvedPerson.data');
-          this.setState({projectName: involvedPerson.data.data.project_name});
-          var j = {};
-          var arr = [];
-          for (
-            let i = 0;
-            i < involvedPerson.data.data.involved_persons.length;
-            i++
-          ) {
-            Object.defineProperty(
-              j,
-              involvedPerson.data.data.involved_persons[i].email,
-              {
-                value: involvedPerson.data.data.involved_persons[i],
-                writable: false,
-              },
-            );
-            this.state.involvedPerson.push(
-              involvedPerson.data.data.involved_persons[i],
-            );
-          }
-
-          AsyncStorage.setItem(
-            'involved_person',
-            JSON.stringify(this.state.involvedPerson),
-          );
-        });
-
-      AsyncStorage.getItem('filters').then((filtersObj) => {
-        console.log('filtersObj');
-        console.log(JSON.parse(filtersObj));
-        var dta = JSON.parse(filtersObj);
-        var data = {
-          project: currentProj,
-          limit: 1000000,
-          page: 0,
-          query: {status: [1, 2, 3, 4, 5]},
-        };
-        if (dta != null) {
-          if (Object.keys(dta).length !== 0) {
-            data['query'] = dta;
-          }
-          if (dta.rangeFrom == undefined || dta.risk == undefined) {
-            data['query']['status'] = [1, 2, 3, 4, 5];
-          }
-        }
-
-        console.log('filtered data');
-        console.log(data);
-        createApi
-          .createApi()
-          .filterSors(data)
-          .then((res: any) => {
-            if (res.data.message == 'no sor found') {
-              console.log('gaye mutheda');
-              // console.log(dta);
-              // console.log(dta);
-              if (dta != null) {
-                showMessage({
-                  message: 'No sor found',
-                  type: 'danger',
-                  position: 'bottom',
-                });
-                this.setState({
-                  nosorOrSorMessage: 'try the different filter or create the',
-                });
-                // this.setState({loading: false});
-                this.props.reduxActions.setLoading(false);
-              } else {
-                this.setState({
-                  nosorOrSorMessage: 'would you like to create the ',
-                });
-                this.props.reduxActions.setLoading(false);
-                // this.setState({loading: false});
-              }
-            }
-            // console.log('gaye mutheda');
-            // console.log(res.data);
-            if (res.data.data == undefined) {
-              this.setState({lovading: false});
-            } else {
-              res.data.data.report.reverse();
-              for (let i = 0; i < res.data.data.report.length; i++) {
-                if (res.data.data.report[i].status == 1) {
-                  // var rep = filterAndMappingPersons(
-                  //   res.data.data.report[i],
-                  //   this.state.involvedPerson,
-                  // );
-
-                  if (res.data.data.report[i].details != undefined) {
-                    this.state.draft.push(res.data.data.report[i]);
-                  }
-                } else if (res.data.data.report[i].status == 2) {
-                  // var rep = filterAndMappingPersons(
-                  //   res.data.data.report[i],
-                  //   this.state.involvedPerson,
-                  // );
-
-                  if (res.data.data.report[i].details != undefined) {
-                    this.state.inprogress.push(res.data.data.report[i]);
-                    // this.state.submitted.push(rep);
-                  }
-                } else if (res.data.data.report[i].status == 3) {
-                  // var rep = filterAndMappingPersons(
-                  //   res.data.data.report[i],
-                  //   this.state.involvedPerson,
-                  // );
-
-                  if (res.data.data.report[i].details != undefined) {
-                    this.state.exclated.push(res.data.data.report[i]);
-                  }
-                } else if (res.data.data.report[i].status == 4) {
-                  // var rep = filterAndMappingPersons(
-                  //   res.data.data.report[i],
-                  //   this.state.involvedPerson,
-                  // );
-
-                  if (res.data.data.report[i].details != undefined) {
-                    this.state.pendingClosure.push(res.data.data.report[i]);
-                  }
-                } else if (res.data.data.report[i].status == 5) {
-                  // var rep = filterAndMappingPersons(
-                  //   res.data.data.report[i],
-                  //   this.state.involvedPerson,
-                  // );
-
-                  if (res.data.data.report[i].details != undefined) {
-                    this.state.closed.push(res.data.data.report[i]);
-                  }
-                }
-              }
-            }
-
-            this.setState({loading: false});
-          })
-          .catch((err) => console.log(err));
-      });
     });
   };
   selecteProj = async (d: any) => {

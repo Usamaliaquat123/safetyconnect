@@ -224,56 +224,65 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
       // Old involved person idea
 
-      createApi
-        .createApi()
-        .getProject(currentProj)
-        .then((res: any) => {
-          console.log(res);
+      AsyncStorage.getItem('email').then((email: any) => {
+        createApi
+          .createApi()
+          .getUser(email)
+          .then((user: any) => {
+            createApi
+              .createApi()
+              .getProject(currentProj, user.data.data._id)
+              .then((res: any) => {
+                console.log(res);
 
-          this.setState({projectName: res.data.data.project_name});
+                this.setState({projectName: res.data.data.project_name});
 
-          //     var data: Array<any> = [];
-          //     this.props.route.params.data.involved_persons.map((d: any) => {
-          //       if (
-          //         res.data.data.involved_persons.filter((i: any) => i.email == d)
-          //           .length == 0
-          //       ) {
-          //         createApi
-          //           .createApi()
-          //           .getUser(d)
-          //           .then((res: any) => {
-          //             if (res.data.message === 'no user exists') {
-          //               this.state.involvedPerson.push({
-          //                 name: d,
-          //                 email: d,
-          //                 img_url:
-          //                   'https://dummyimage.com/600x400/ffffff/000000&text=@',
-          //               });
-          //             } else {
-          //               this.state.involvedPerson.push({
-          //                 name: res.data.data.name,
-          //                 img_url: res.data.data.img_url,
-          //                 email: res.data.data.email,
-          //               });
-          //             }
-          //           })
-          //           .catch((err: any) => {});
-          //       } else {
-          //         this.state.involvedPerson.push(
-          //           res.data.data.involved_persons.filter(
-          //             (i: any) => i.email == d,
-          //           )[0],
-          //         );
-          //       }
-          //     });
+                //     var data: Array<any> = [];
+                //     this.props.route.params.data.involved_persons.map((d: any) => {
+                //       if (
+                //         res.data.data.involved_persons.filter((i: any) => i.email == d)
+                //           .length == 0
+                //       ) {
+                //         createApi
+                //           .createApi()
+                //           .getUser(d)
+                //           .then((res: any) => {
+                //             if (res.data.message === 'no user exists') {
+                //               this.state.involvedPerson.push({
+                //                 name: d,
+                //                 email: d,
+                //                 img_url:
+                //                   'https://dummyimage.com/600x400/ffffff/000000&text=@',
+                //               });
+                //             } else {
+                //               this.state.involvedPerson.push({
+                //                 name: res.data.data.name,
+                //                 img_url: res.data.data.img_url,
+                //                 email: res.data.data.email,
+                //               });
+                //             }
+                //           })
+                //           .catch((err: any) => {});
+                //       } else {
+                //         this.state.involvedPerson.push(
+                //           res.data.data.involved_persons.filter(
+                //             (i: any) => i.email == d,
+                //           )[0],
+                //         );
+                //       }
+                //     });
 
-          //     for (let i = 0; i < res.data.data.involved_persons.length; i++) {
-          //       res.data.data.involved_persons[i]['selected'] = false;
-          //     }
+                //     for (let i = 0; i < res.data.data.involved_persons.length; i++) {
+                //       res.data.data.involved_persons[i]['selected'] = false;
+                //     }
 
-          this.setState({involved_person: res.data.data.involved_persons});
-        })
-        .catch((err) => {});
+                this.setState({
+                  involved_person: res.data.data.involved_persons,
+                });
+              })
+              .catch((err) => {});
+          });
+      });
     });
 
     // Get user and save it on state
@@ -628,7 +637,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         // var involvedPersonss = JSON.parse(involveppl);
         console.log('res >>>>>>>>>>>>>>>>>>>>>');
         console.log(res);
-      
+
         const sortedActivities = res.data.data.all_comments.sort(
           (a, b) => new Date(a.date) - new Date(b.date),
         );
@@ -2722,91 +2731,91 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
                   {this.state.closed == false && (
                     <>
-  {/* {this.props.route.params.data.} */}
-                    <TouchableOpacity
-                      onPress={() => {
-                        AsyncStorage.getItem('email').then((email) => {
-                          // console.log('')
-                          // console.log(
-                          //   this.props.route.params.data.action_required,
-                          // );
-
-                          if (
-                            this.state.actionsAndRecommendations.map(
-                              (d: any) => d.status == 'In Progress',
-                            ).length != 0
-                          ) {
-                            // Some validations is left
+                      {/* {this.props.route.params.data.} */}
+                      <TouchableOpacity
+                        onPress={() => {
+                          AsyncStorage.getItem('email').then((email) => {
+                            // console.log('')
+                            // console.log(
+                            //   this.props.route.params.data.action_required,
+                            // );
 
                             if (
-                              this.state.actionsAndRecommendations.filter(
-                                (d: any) => d.justification.content !== '',
-                              )
+                              this.state.actionsAndRecommendations.map(
+                                (d: any) => d.status == 'In Progress',
+                              ).length != 0
                             ) {
-                              this.setState({
-                                // loading: true,
-                                errorModal: true,
-                                errHeadingText: 'Actions validations ',
-                                errDesText: 'Add the justification',
-                              });
+                              // Some validations is left
+
+                              if (
+                                this.state.actionsAndRecommendations.filter(
+                                  (d: any) => d.justification.content !== '',
+                                )
+                              ) {
+                                this.setState({
+                                  // loading: true,
+                                  errorModal: true,
+                                  errHeadingText: 'Actions validations ',
+                                  errDesText: 'Add the justification',
+                                });
+                              } else {
+                                this.setState({
+                                  // loading: true,
+                                  errorModal: true,
+                                  errHeadingText: 'Actions validations ',
+                                  errDesText:
+                                    'Actions should be completed or rejected',
+                                });
+                              }
                             } else {
-                              this.setState({
-                                // loading: true,
-                                errorModal: true,
-                                errHeadingText: 'Actions validations ',
-                                errDesText:
-                                  'Actions should be completed or rejected',
-                              });
-                            }
-                          } else {
-                            if (
-                              email == this.props.route.params.data.created_by
-                            ) {
-                              if (this.state.fiveWhytoggle == true) {
-                                if (this.state.fiveWhyQuestion.length == 5) {
+                              if (
+                                email == this.props.route.params.data.created_by
+                              ) {
+                                if (this.state.fiveWhytoggle == true) {
+                                  if (this.state.fiveWhyQuestion.length == 5) {
+                                    this.onSubmitUpdateSor(5);
+                                  } else {
+                                    this.setState({
+                                      errorModal: true,
+                                      errHeadingText: 'Minimum 5 why ',
+                                      errDesText:
+                                        'minimum 5 why should be added..!',
+                                    });
+                                  }
+                                } else {
                                   this.onSubmitUpdateSor(5);
-                                } else {
-                                  this.setState({
-                                    errorModal: true,
-                                    errHeadingText: 'Minimum 5 why ',
-                                    errDesText:
-                                      'minimum 5 why should be added..!',
-                                  });
                                 }
                               } else {
-                                this.onSubmitUpdateSor(5);
-                              }
-                            } else {
-                              if (this.state.fiveWhytoggle == true) {
-                                if (this.state.fiveWhyQuestion.length == 5) {
+                                if (this.state.fiveWhytoggle == true) {
+                                  if (this.state.fiveWhyQuestion.length == 5) {
+                                    this.onSubmitUpdateSor(3);
+                                  } else {
+                                    this.setState({
+                                      errorModal: true,
+                                      errHeadingText: 'Minimum 5 why ',
+                                      errDesText:
+                                        'minimum 5 why should be added..!',
+                                    });
+                                  }
+                                } else {
                                   this.onSubmitUpdateSor(3);
-                                } else {
-                                  this.setState({
-                                    errorModal: true,
-                                    errHeadingText: 'Minimum 5 why ',
-                                    errDesText:
-                                      'minimum 5 why should be added..!',
-                                  });
                                 }
-                              } else {
-                                this.onSubmitUpdateSor(3);
                               }
                             }
-                          }
 
-                          // this.props.route.params.data.action_required.filter(
-                          //   (d) => d.justification.content === '',
-                          // );
-                        });
-                      }}
-                      style={[
-                        styles.saveAsSubmitContainer,
-                        {backgroundColor: colors.green},
-                      ]}>
-                      <Text style={[styles.saveAsSubmitText]}>
-                        Mark as Complete
-                      </Text>
-                    </TouchableOpacity>
+                            // this.props.route.params.data.action_required.filter(
+                            //   (d) => d.justification.content === '',
+                            // );
+                          });
+                        }}
+                        style={[
+                          styles.saveAsSubmitContainer,
+                          {backgroundColor: colors.green},
+                        ]}>
+                        <Text style={[styles.saveAsSubmitText]}>
+                          Mark as Complete
+                        </Text>
+                      </TouchableOpacity>
                     </>
                   )}
                 </View>

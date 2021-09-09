@@ -75,59 +75,60 @@ class ViewAll extends React.Component<ViewAllProps, any> {
         .createApi()
         .getUser(email)
         .then((user: any) => {
-          this.setState({user: user.data.data});
-        });
-    });
-
-    if (typeof this.props.route.params.data == 'number') {
-      getCurrentProject().then((currentProj: any) => {
-        this.setState({projectId: currentProj});
-
-        createApi
-          .createApi()
-          .getProject(currentProj)
-          .then((currentProj: any) => {
-            AsyncStorage.getItem('filters').then((filtersObj: any) => {
-              console.log('filtersObj');
-              var dta = JSON.parse(filtersObj);
-              var data = {
-                project: currentProj.data.data._id,
-                limit: 100000,
-                page: 0,
-                query: {status: [this.props.route.params.data]},
-              };
-              if (dta != null) {
-                if (Object.keys(dta).length !== 0) {
-                  data['query'] = dta;
-                  data['query']['status'] = [this.props.route.params.data];
-                }
-              }
+          if (typeof this.props.route.params.data == 'number') {
+            getCurrentProject().then((currentProj: any) => {
+              this.setState({projectId: currentProj});
 
               createApi
                 .createApi()
-                .filterSors(data)
-                .then((res: any) => {
-                  var sors = [];
-                  for (let i = 0; i < res.data.data.report.length; i++) {
-                    sors.push(res.data.data.report[i]);
-                  }
+                .getProject(currentProj, user.data.data._id)
+                .then((currentProj: any) => {
+                  AsyncStorage.getItem('filters').then((filtersObj: any) => {
+                    console.log('filtersObj');
+                    var dta = JSON.parse(filtersObj);
+                    var data = {
+                      project: currentProj.data.data._id,
+                      limit: 100000,
+                      page: 0,
+                      query: {status: [this.props.route.params.data]},
+                    };
+                    if (dta != null) {
+                      if (Object.keys(dta).length !== 0) {
+                        data['query'] = dta;
+                        data['query']['status'] = [
+                          this.props.route.params.data,
+                        ];
+                      }
+                    }
 
-                  this.setState({loading: false});
+                    createApi
+                      .createApi()
+                      .filterSors(data)
+                      .then((res: any) => {
+                        var sors = [];
+                        for (let i = 0; i < res.data.data.report.length; i++) {
+                          sors.push(res.data.data.report[i]);
+                        }
 
-                  this.setState({reports: sors});
-                })
-                .catch((err) => {
-                  this.setState({loading: false});
+                        this.setState({loading: false});
+
+                        this.setState({reports: sors});
+                      })
+                      .catch((err) => {
+                        this.setState({loading: false});
+                      });
+                  });
                 });
-            });
-          });
 
-        this.setState({loading: true});
-      });
-    } else {
-      // console.log(this.props.route.params.data);
-      this.setState({reports: this.props.route.params.data});
-    }
+              this.setState({loading: true});
+            });
+          } else {
+            // console.log(this.props.route.params.data);
+            this.setState({reports: this.props.route.params.data});
+          }
+          this.setState({user: user.data.data});
+        });
+    });
   }
 
   _onRefresh = () => {
