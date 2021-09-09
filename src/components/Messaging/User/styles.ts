@@ -3,10 +3,10 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 const styles = StyleSheet.create({
   userContainer: {
-    marginBottom: wp(3),
+    marginBottom: wp(1),
     paddingLeft: wp(2),
     marginTop: wp(3),
     flexDirection: 'row',
@@ -17,7 +17,9 @@ const styles = StyleSheet.create({
   name: {
     justifyContent: 'center',
     marginTop: wp(2),
-    fontSize: wp(3.5),
+    fontSize: wp(3),
+
+    fontFamily: fonts.SFuiDisplayMedium,
     color: colors.text,
   },
   isonline: {
@@ -40,7 +42,8 @@ const styles = StyleSheet.create({
   },
   textNumber: {
     color: colors.secondary,
-    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
+    fontSize: wp(2),
     alignSelf: 'center',
     position: 'absolute',
   },

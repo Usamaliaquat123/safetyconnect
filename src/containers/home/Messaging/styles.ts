@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -20,10 +20,10 @@ const styles = StyleSheet.create({
     marginTop: wp(5),
   },
   ttleConversation: {
-    fontWeight: 'bold',
+    fontFamily: fonts.SFuiDisplayBold,
     color: colors.text,
-    fontSize: wp(4),
-    marginBottom: wp(3.5),
+    fontSize: wp(3.5),
+    marginBottom: wp(2),
   },
   line: {
     borderWidth: wp(0.1),
