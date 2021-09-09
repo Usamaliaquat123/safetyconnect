@@ -12,6 +12,7 @@ import {searchInObjects} from '@utils';
 import {Imessage} from '@typings';
 import {Search, Header, User} from '@components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {allRecentActivity, createApi} from '@service';
 
 import styles from './styles';
 type MessagingNavigationProp = StackNavigationProp<
@@ -33,11 +34,19 @@ class Messaging extends React.Component<MessagingProps, any> {
       loading: false,
       users: messagingUsers,
       group: groupConversation,
+      currentUser: {},
     };
   }
 
   componentDidMount = () => {
-    AsyncStorage.getItem('email').then((email) => {});
+    AsyncStorage.getItem('email').then((email: any) => {
+      createApi
+        .createApi()
+        .getUser(email)
+        .then((res: any) => {
+          this.setState({currentUser: res.data.data});
+        });
+    });
   };
 
   render() {
@@ -46,7 +55,7 @@ class Messaging extends React.Component<MessagingProps, any> {
         <ScrollView>
           <Header
             onBackPress={() => this.props.navigation.goBack()}
-            profile={View_sor.user.profile}
+            profile={this.state.currentUser.img_url}
           />
           <View style={styles.content}>
             <Search
