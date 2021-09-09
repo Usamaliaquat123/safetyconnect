@@ -1205,13 +1205,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 <Text style={styles.selectProjHead}>Select Project :</Text>
                 <TouchableOpacity
                   onPress={() => {
-
-
-                    if(this.state.allProjectsSugg.length != 0 ){
-
+                    if (this.state.allProjectsSugg.length != 0) {
                       this.setState({allProjectsSugg: []});
-                    }else{
-                      
+                    } else {
                       this.setState({allProjectsSugg: this.state.allProjects});
                     }
                   }}
@@ -1254,8 +1250,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         onPress={() => {
                           createApi
                             .createApi()
-                            .getLocations({projectid: d.project_id._id})
+                            .getLocations(d.project_id._id)
                             .then((resp: any) => {
+                              console.log('resp');
+                              console.log(resp);
                               this.setState({
                                 allLocations: resp.data.data.p_locations,
                                 allProjectsSugg: [],
@@ -1287,7 +1285,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 <Text style={styles.selectlocationHead}>Select Location :</Text>
                 <TouchableOpacity
                   onPress={() => {
-                    this.setState({allLocationsSugg: this.state.allLocations});
+                    if (this.state.allLocationsSugg.length != 0) {
+                      this.setState({allLocationsSugg: []});
+                    } else {
+                      this.setState({
+                        allLocationsSugg: this.state.allLocations,
+                      });
+                    }
                   }}
                   style={styles.selectLocation}>
                   <Text style={styles.locaName}>
