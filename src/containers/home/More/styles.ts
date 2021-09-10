@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -56,7 +56,8 @@ const styles = StyleSheet.create({
   },
   itemText: {
     alignSelf: 'center',
-    fontSize: wp(3.6),
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
     opacity: 0.5,
     marginLeft: wp(2),
   },

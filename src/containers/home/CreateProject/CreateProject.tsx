@@ -304,12 +304,11 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                           Project Name
                         </Text>
                         <Text
-                          style={{
-                            fontFamily: fonts.SFuiDisplayLight,
-                            opacity: 0.5,
-                            fontSize: wp(3.4),
-                          }}>
-                          ( Mandatory )
+                          style={[
+                            styles.emailTextContainer,
+                            {opacity: 0.5, marginLeft: wp(1), marginTop: wp(2)},
+                          ]}>
+                          (Mandatory)
                         </Text>
                       </View>
 
@@ -343,6 +342,12 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         {' '}
                         Project Description
                       </Text>
+                      <Icon
+                        name={'info'}
+                        type={'feather'}
+                        size={wp(3.5)}
+                        color={colors.textOpa}
+                      />
                     </View>
                     <View>
                       <View style={[styles.inputContainer]}>
@@ -454,12 +459,13 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                           {' '}
                           Project Leaders
                         </Text>
-                        <Icon
-                          name={'info'}
-                          type={'feather'}
-                          size={wp(3.5)}
-                          color={colors.textOpa}
-                        />
+                        <Text
+                          style={[
+                            styles.emailTextContainer,
+                            {opacity: 0.5, marginLeft: wp(1), marginTop: wp(2)},
+                          ]}>
+                          (Mandatory)
+                        </Text>
                       </View>
                       {this.state.assignLeaderss.length < 1 ? (
                         <View style={[styles.inputContainer]}>
