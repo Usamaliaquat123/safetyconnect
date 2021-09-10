@@ -68,7 +68,7 @@ const typeofRole = [
 
 const yourRole = ['Manager', 'Supervisor', 'Craft Worker'];
 
-export interface TellAboutYouProps {
+export interface GoogleSigninOptnProps {
   navigation: GoogleSigninOptnNavigationProp;
   route: GoogleSigninOptnRouteProp;
   reduxActions: any;
@@ -191,30 +191,23 @@ class GoogleSigninOptn extends React.Component<GoogleSigninOptnProps, any> {
 
   updateProfile = () => {
     if (this.state.name !== '') {
-      if (this.state.uploadedImage !== '') {
-        createApi
-          .createApi()
-          .createUser({
-            name: this.state.name,
-            email: this.props.route.params.data.emails, // dynal=mic link
-            organization: [],
-            img_url:
-              'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
-          })
-          .then((res) => {
-            this.setState({loading: false, errorModal: false});
-            navigation.navigate('TellAboutYou', {
-              username: user.signInUserSession.idToken.payload.email,
-              isgoogle: true,
-            });
+      createApi
+        .createApi()
+        .createUser({
+          name: this.state.name,
+          email: this.props.route.params.data, // dynal=mic link
+          organization: [],
+          img_url:
+            'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+        })
+        .then((res) => {
+          this.setState({loading: false, errorModal: false});
+          this.props.navigation.navigate('TellAboutYou', {
+            username: this.props.route.params.data,
+            isgoogle: true,
           });
-        this.setState({loading: false, errorModal: false});
-      } else {
-        this.setState({
-          DesignAndArchitectureTextError: true,
-          nameError: false,
         });
-      }
+      this.setState({loading: false, errorModal: false});
     } else {
       this.setState({nameError: true});
     }
@@ -242,118 +235,14 @@ class GoogleSigninOptn extends React.Component<GoogleSigninOptnProps, any> {
               </View>
             ) : (
               <View style={{marginTop: wp(10)}}>
-                <Text style={styles.headingContainer}>
-                  Tell us more about yourself
-                </Text>
-
-                {/* Upload profile photo */}
-                <View style={{marginTop: wp(5)}}>
-                  <Text
-                    style={{
-                      fontSize: wp(3),
-                      opacity: 0.5,
-                      fontFamily: fonts.SFuiDisplayMedium,
-                    }}>
-                    Upload your Profile Picture
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={styles.headingContainer}>
+                    Continue With Google
                   </Text>
-
-                  <View
-                    style={{
-                      padding: wp(3),
-                      flexDirection: 'row',
-                      width: wp(50),
-                      justifyContent: 'space-between',
-                    }}>
-                    <View style={{paddingRight: wp(10)}}>
-                      {this.state.fileLoading ? (
-                        <LottieView
-                          autoPlay={true}
-                          style={{width: wp(20)}}
-                          source={animation.profileimage}
-                          loop={true}
-                        />
-                      ) : (
-                        <Avatar
-                          rounded
-                          size={wp(25)}
-                          source={{
-                            uri:
-                              this.state.uploadedImage != ''
-                                ? this.state.uploadedImage
-                                : 'https://via.placeholder.com/150',
-                          }}
-                        />
-                      )}
-                    </View>
-                    <View>
-                      <Text
-                        style={{
-                          fontFamily: fonts.SFuiDisplayMedium,
-                          opacity: 0.5,
-                          fontSize: wp(3),
-                          marginBottom: wp(4),
-                        }}>
-                        Upload picture from your phone gallery
-                      </Text>
-                      {/* Button to upload profile picture */}
-                      <TouchableOpacity
-                        onPress={() => this.imgCap('upload')}
-                        style={{
-                          borderWidth: wp(0.3),
-                          alignItems: 'center',
-                          padding: wp(3),
-                          // width: wp(30),
-                          borderRadius: wp(3),
-
-                          borderColor: colors.primary,
-                        }}>
-                        <Text
-                          style={{
-                            fontSize: wp(3),
-                            fontFamily: fonts.SFuiDisplayMedium,
-                            color: colors.primary,
-                          }}>
-                          Upload Picture
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
+                  <View style={styles.imgContainerOfSocialAccounts}>
+                    <Image source={images.google} style={GlStyles.images} />
                   </View>
                 </View>
-
-                {/* {this.props.route.params.isgoogle == true && (
-                  <View style={styles.inputsContainer}>
-                    <Text
-                      style={[styles.emailTextContainer, {marginTop: wp(2)}]}>
-                      Your Full Name *
-                    </Text>
-                    <View
-                      style={[
-                        styles.inputContainer,
-                        this.state.selected == 0
-                          ? {borderColor: colors.primary, padding: wp(0)}
-                          : {
-                              borderColor: colors.textOpa,
-                              padding: wp(0),
-                            },
-                      ]}>
-                      <TextInput
-                        onFocus={() => this.setState({selected: 0})}
-                        underlineColorAndroid="transparent"
-                        style={styles.selectText}
-                        value={this.state.userFullName}
-                        onChangeText={(e) => {
-                          this.setState({userFullName: e});
-                        }}
-                        placeholder={'john doe'}
-                      />
-                    </View>
-                    {this.state.userFullNameError && (
-                      <Text style={{color: colors.error, fontSize: wp(3)}}>
-                        * Enter your Industry Name
-                      </Text>
-                    )}
-                  </View>
-                )} */}
 
                 {/* your industry */}
                 <View style={styles.inputsContainer}>
@@ -376,16 +265,6 @@ class GoogleSigninOptn extends React.Component<GoogleSigninOptnProps, any> {
                       style={styles.selectText}
                       value={this.state.name}
                       onChangeText={(e) => {
-                        if (e !== '') {
-                          this.setState({
-                            arrayOfRole: suggestInActionsRecommendations(
-                              e.toLowerCase(),
-                              industries,
-                            ),
-                          });
-                        } else {
-                          this.setState({arrayOfRole: []});
-                        }
                         this.setState({name: e});
                       }}
                       placeholder={'Your Full Name '}
@@ -394,7 +273,7 @@ class GoogleSigninOptn extends React.Component<GoogleSigninOptnProps, any> {
 
                   {this.state.nameError && (
                     <Text style={{color: colors.error, fontSize: wp(3)}}>
-                      * Enter your Industry Name
+                      * Enter your full name
                     </Text>
                   )}
                 </View>

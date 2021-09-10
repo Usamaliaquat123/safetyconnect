@@ -71,24 +71,25 @@ class Signup extends React.Component<SignupProps, any> {
           .getUser(user.signInUserSession.idToken.payload.email)
           .then((data: any) => {
             if (data.data.success == false) {
-              console.log('user hai bhai');
-              console.log(user);
-              createApi
-                .createApi()
-                .createUser({
-                  name: user.username,
-                  email: user.signInUserSession.idToken.payload.email, // dynal=mic link
-                  organization: [],
-                  img_url:
-                    'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
-                })
-                .then((res) => {
-                  this.setState({loading: false, errorModal: false});
-                  navigation.navigate('TellAboutYou', {
-                    username: user.signInUserSession.idToken.payload.email,
-                    isgoogle: true,
-                  });
-                });
+              this.props.navigation.navigate('GoogleSigninOptn', {
+                data: user.signInUserSession.idToken.payload.email,
+              });
+              // createApi
+              //   .createApi()
+              //   .createUser({
+              //     name: user.username,
+              //     email: user.signInUserSession.idToken.payload.email, // dynal=mic link
+              //     organization: [],
+              //     img_url:
+              //       'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+              //   })
+              //   .then((res) => {
+              //     this.setState({loading: false, errorModal: false});
+              //     navigation.navigate('TellAboutYou', {
+              //       username: user.signInUserSession.idToken.payload.email,
+              //       isgoogle: true,
+              //     });
+              //   });
               this.setState({loading: false, errorModal: false});
             } else {
               this.setState({loading: false, errorModal: false});

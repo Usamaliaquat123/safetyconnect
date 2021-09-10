@@ -17,6 +17,7 @@ export type StackNavigatorProps = {
   Messaging: undefined;
   Chat: {data: Imessage};
   MyTasks: undefined;
+  GoogleSigninOptn: {data: string};
   Preview: {data: Isor};
   ViewAll: {data: number | any; title: string};
   createProject: undefined;

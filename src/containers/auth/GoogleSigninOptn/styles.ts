@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
   //   borderTopRightRadius: wp(3),
   // },
   headingContainer: {
+    marginRight: wp(3),
     fontSize: wp(5),
     color: colors.primary,
     fontFamily: fonts.SFuiDisplaySemiBold,
@@ -200,6 +201,11 @@ const styles = StyleSheet.create({
     paddingBottom: wp(3),
     alignItems: 'center',
     flexDirection: 'row',
+  },
+  imgContainerOfSocialAccounts: {
+    width: wp(8),
+    height: wp(8),
+    marginRight: wp(15),
   },
   involveSuggestCont: {
     borderColor: colors.text,
