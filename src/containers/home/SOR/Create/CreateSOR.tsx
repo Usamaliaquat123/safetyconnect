@@ -394,37 +394,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       this.setState({email});
     });
 
-    // Time Update on every seconds
-
-    // setInterval(() => {
-    //   this.setState({
-    //     curTime: moment().format('LT'),
-    //     obserLocation: this.state.obserLocation
-    //       ? this.state.obserLocation
-    //       : '@Add Location',
-    //   });
-    // }, 1000);
-    // this.AnimatedViews();
-
-    // const form = new FormData();
-    // this.setState({actionRecommendationsText: "Damaged hammer was being used at  workshop, which can cause hand injury."});
-    // form.append('q', "Damaged hammer was being used at  workshop, which can cause hand injury.");
-    // createApi
-    //   .createApi()
-    //   .suggestiosns(form)
-    //   .then((res: any) => {
-    //     var obj = res.data.results
-    //     for (let i = 0; i < res.data.results.length; i++) {
-    //       obj[i]['status'] = 0
-    //       obj[i]['is_selected'] = false
-    //       obj[i]['is_complete'] = false
-    //       obj[i]['date'] =moment().format('YYYY-MM-DD'),
-    //       obj[i]['assigned_to'] = []
-    //   }
-    //     this.setState({
-    //       actionRecommendations: [...obj],
-    //     });
-    //   });
+   
   };
 
   onlinksorRepeated = (e: any) => {

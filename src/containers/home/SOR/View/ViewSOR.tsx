@@ -81,7 +81,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     this.state = {
       sor: {},
       user: {},
-      time: this.props.route.params.data.occured_at,
+      time: this.props.route.params.data.occurred_at,
       imageViewer: false,
       images: [],
       photoArr: [],
@@ -90,7 +90,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       // custom data
       sor_type: this.props.route.params.data.sor_type,
       observation: this.props.route.params.data.details,
-      date: this.props.route.params.data.occured_at,
+      date: this.props.route.params.data.occurred_at,
       comments: [],
       suggestedUsers: [],
       involvedPerson: [],

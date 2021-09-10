@@ -493,8 +493,10 @@ export const imagePicker = () => {
         {
           mediaType: 'photo',
           includeBase64: true,
-          maxHeight: 1000,
-          maxWidth: 1000,
+          maxHeight: 10000,
+          // allowsEditing : true,
+          maxWidth: 10000,
+          // width : 50,
         },
         (res: ImagePicker.ImagePickerResponse) => {
           resolve(res);
