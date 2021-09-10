@@ -2267,14 +2267,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           }
                         }}
                         style={styles.userComments}>
-                        {d.user == '' ? null : (
+                        {d?.user == '' ? null : (
                           <Avatar
                             // containerStyle={{position: 'absolute', top: wp(0)}}
                             size={wp(6)}
                             rounded
                             source={{
                               uri:
-                                d.user.img_url == undefined
+                                d.user.img_url == undefined ||
+                                d.user?.img_url == null
                                   ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
                                   : d.user.img_url,
                             }}

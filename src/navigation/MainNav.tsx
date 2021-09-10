@@ -19,6 +19,7 @@ import {
   Messaging,
   MyTasks,
   WelcomeHome,
+  GoogleSigninOptn,
   Chat,
   Splash,
   ViewAll,
@@ -130,6 +131,13 @@ export const MainStackNavigator = (screen: route) => {
         <Stack.Screen
           name="Preview"
           component={Preview}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="GoogleSigninOptn"
+          component={GoogleSigninOptn}
           options={{
             headerShown: false,
           }}

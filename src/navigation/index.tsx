@@ -53,7 +53,7 @@ export const Navigator = (props: any) => {
     <SafeAreaProvider>
       <NavigationContainer>
         {/* <WelcomeHome /> */}
-        <MainStackNavigator screen={'Splash'} />
+        <MainStackNavigator screen={'GoogleSigninOptn'} />
       </NavigationContainer>
     </SafeAreaProvider>
   );

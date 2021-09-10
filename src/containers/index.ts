@@ -13,6 +13,7 @@ import ViewSOR from './home/SOR/View/ViewSOR';
 import CreatePass from './auth/createPassword/CreatePass';
 import Chat from './home/Messaging/chat/Chat';
 import TellAboutYou from './auth/tellAboutYou/TellAboutYou';
+import GoogleSigninOptn from './auth/GoogleSigninOptn/GoogleSigninOptn';
 import CreateOrg from './home/CreateOrganization/CreateOrg';
 import CreateProject from './home/CreateProject/CreateProject';
 import More from './home/More/More';
@@ -34,6 +35,7 @@ export {
   AddLocation,
   Chat,
   WelcomeHome,
+  GoogleSigninOptn,
   Preview,
   InvitePeople,
   Login,
