@@ -148,106 +148,106 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
   createOrg = () => {
     this.props.reduxActions;
     if (this.state.org !== '') {
-      if (this.state.orgDetails !== '') {
-        AsyncStorage.getItem('email')
-          .then((email: any) => {
-            var data = {
-              created_by: email,
-              name: this.state.org,
-              details: this.state.orgDetails,
-              members: [],
-              img_url:
-                this.state.uploadedImage == ''
-                  ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
-                  : this.state.uploadedImage,
-              projects: [],
-            };
+      // if (this.state.orgDetails !== '') {
+      AsyncStorage.getItem('email')
+        .then((email: any) => {
+          var data = {
+            created_by: email,
+            name: this.state.org,
+            details: this.state.orgDetails === '' ? '' : this.state.orgDetails,
+            members: [],
+            img_url:
+              this.state.uploadedImage == ''
+                ? 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+                : this.state.uploadedImage,
+            projects: [],
+          };
 
-            // AsyncStorage.setItem(
-            //   'pending_users',
-            //   JSON.stringify(this.state.selectedEmails),
-            // );
+          // AsyncStorage.setItem(
+          //   'pending_users',
+          //   JSON.stringify(this.state.selectedEmails),
+          // );
 
-            console.log(data);
-            console.log(this.state.selectedEmails);
+          console.log(data);
+          console.log(this.state.selectedEmails);
 
-            this.props.reduxActions.createOrganization(
-              data,
-              this.state.selectedEmails,
-              this.props.navigation,
-            );
+          this.props.reduxActions.createOrganization(
+            data,
+            this.state.selectedEmails,
+            this.props.navigation,
+          );
 
-            // var userNotRegisterd = [];
+          // var userNotRegisterd = [];
 
-            // this.state.selectedEmails.forEach((d: any) => {
-            //   api
-            //     .createApi()
-            //     .getUser(d)
-            //     .then((res: any) => {
-            //       console.log('res');
-            //       console.log(res);
-            //       if (res.data.message == 'no user exists') {
-            //         // userNotRegisterd.push(d);
-            //         this.state.unregisteredUser.push(d);
-            //         this.setState({});
+          // this.state.selectedEmails.forEach((d: any) => {
+          //   api
+          //     .createApi()
+          //     .getUser(d)
+          //     .then((res: any) => {
+          //       console.log('res');
+          //       console.log(res);
+          //       if (res.data.message == 'no user exists') {
+          //         // userNotRegisterd.push(d);
+          //         this.state.unregisteredUser.push(d);
+          //         this.setState({});
 
-            //         // console.log('adas');
-            //       }
-            //     });
-            // });
+          //         // console.log('adas');
+          //       }
+          //     });
+          // });
 
-            // console.log(this.state.unregisteredUser);
-            // console.log(data);
-            // api
-            //   .createApi()
-            //   .organization(data)
-            //   .then((res: any) => {
-            //     console.log('res');
-            //     console.log(res);
-            //     if (res.status == 200) {
-            //       if (this.state.selectedEmails.length != 0) {
-            //         var emails = this.state.selectedEmails;
+          // console.log(this.state.unregisteredUser);
+          // console.log(data);
+          // api
+          //   .createApi()
+          //   .organization(data)
+          //   .then((res: any) => {
+          //     console.log('res');
+          //     console.log(res);
+          //     if (res.status == 200) {
+          //       if (this.state.selectedEmails.length != 0) {
+          //         var emails = this.state.selectedEmails;
 
-            //         var inviteData = {
-            //           emails: emails,
-            //           organization: res.data.data.organization_id,
-            //           invitedBy: email,
-            //           // projectId  :
-            //           organizationName: this.state.org,
-            //         };
-            //         api
-            //           .createApi()
-            //           .inviteBulk(inviteData)
-            //           .then((invited) => {
-            //             this.setState({loading: false, errorModal: false});
-            //             AsyncStorage.setItem(
-            //               'invitedUsers',
-            //               JSON.stringify(emails),
-            //             );
-            //             savedCurrentOrganization(res.data.data.organization_id);
-            //             this.props.navigation.navigate('createProject');
-            //           });
-            //       } else {
-            //         this.setState({loading: false, errorModal: false});
-            //         // this.props.navigation.navigate('createProject', {
-            //         //   organization: res.data.data.organization_id,
-            //         // });
-            //       }
-            //     } else {
-            //       this.setState({loading: false, errorModal: false});
-            //     }
-            //   })
-            //   .catch((err) => {
-            //     this.setState({loading: false, errorModal: false});
-            //   });
-          })
-          .catch((err) => {
-            this.setState({loading: true, errorModal: true});
-          });
-      } else {
-        this.setState({loading: false});
-        this.setState({orgDescError: true});
-      }
+          //         var inviteData = {
+          //           emails: emails,
+          //           organization: res.data.data.organization_id,
+          //           invitedBy: email,
+          //           // projectId  :
+          //           organizationName: this.state.org,
+          //         };
+          //         api
+          //           .createApi()
+          //           .inviteBulk(inviteData)
+          //           .then((invited) => {
+          //             this.setState({loading: false, errorModal: false});
+          //             AsyncStorage.setItem(
+          //               'invitedUsers',
+          //               JSON.stringify(emails),
+          //             );
+          //             savedCurrentOrganization(res.data.data.organization_id);
+          //             this.props.navigation.navigate('createProject');
+          //           });
+          //       } else {
+          //         this.setState({loading: false, errorModal: false});
+          //         // this.props.navigation.navigate('createProject', {
+          //         //   organization: res.data.data.organization_id,
+          //         // });
+          //       }
+          //     } else {
+          //       this.setState({loading: false, errorModal: false});
+          //     }
+          //   })
+          //   .catch((err) => {
+          //     this.setState({loading: false, errorModal: false});
+          //   });
+        })
+        .catch((err) => {
+          this.setState({loading: true, errorModal: true});
+        });
+      // } else {
+      //   this.setState({loading: false});
+      //   this.setState({orgDescError: true});
+      // }
     } else {
       this.setState({loading: false});
       this.setState({orgError: true});
@@ -374,6 +374,13 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                       <Text style={styles.emailTextContainer}>
                         Organization Description
                       </Text>
+                      <Icon
+                        containerStyle={{marginTop: wp(1), marginLeft: wp(2)}}
+                        name={'info'}
+                        type={'feather'}
+                        size={wp(3)}
+                        iconStyle={{opacity: 0.5}}
+                      />
                     </View>
                     <View style={[styles.inputContainer]}>
                       <TextInput

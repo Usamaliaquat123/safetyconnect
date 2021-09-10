@@ -882,7 +882,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         marginTop: wp(2),
                       }}>
                       <Tags
-                        type={'addTeamMem'}
+                        type={'attachments'}
                         onClose={(d: any) => {
                           this.setState({
                             locationSuppervisorsTags: this.state.locationSuppervisorsTags.filter(
@@ -993,7 +993,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         marginTop: wp(2),
                       }}>
                       <Tags
-                        type={'addTeamMem'}
+                        type={'attachments'}
                         onClose={(d: any) => {
                           this.setState({
                             additionalSuppervisorsTags: this.state.additionalSuppervisorsTags.filter(
