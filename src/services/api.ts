@@ -20,7 +20,7 @@ const createApi = (
   // External aws api
   // upload files
   getFile: string = `https://v7qm45ginh.execute-api.us-west-1.amazonaws.com/`,
-  getFileUri: string = `https://64g95tsm4b.execute-api.us-west-1.amazonaws.com/`,
+  getFileUri: string = `https://eg6gj04g91.execute-api.us-west-1.amazonaws.com/`,
   uploadFilesUri?: string,
   getPublicFiles: string = 'https://3i07qolh6j.execute-api.us-west-1.amazonaws.com',
 ) => {
@@ -172,7 +172,7 @@ const createApi = (
    * @File Uploading
    */
   const getFilesUrl = (data: any) =>
-    getFilesUri.post(`default/getPresingedUrl`, data);
+    getFilesUri.post(`default/getPublicUrl`, data);
   const uploadFile = (file: any, type: any) =>
     uploadFiles.put('', file, {headers: {'Content-Type': type}});
 

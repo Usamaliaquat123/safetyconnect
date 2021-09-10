@@ -186,21 +186,6 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
     }
   };
 
-  uploadImageUri = async (url: any, img: any) => {
-    const uri = img;
-    const response = await fetch(uri);
-    const imgBlob = await response.blob();
-
-    RNFS.readFile(uri).then((file) => console.log(file));
-
-    createApi
-      .createApi('', '', '', '', '', '', url)
-      .uploadFile(imgBlob)
-      .then((res) => {
-        console.log(img);
-      });
-  };
-
   updateProfile = () => {
     if (this.state.name !== '') {
       if (this.state.DesignAndArchitectureText !== '') {
