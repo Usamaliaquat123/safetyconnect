@@ -7,11 +7,13 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {savedCurrentOrganization, savedCurrentProject} from '@utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createApi} from '@service';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
+import {organizationDTO} from '@dtos';
 
 export interface SplashProps {
   navigation: SplashNavigationProp;
@@ -40,7 +42,22 @@ export default class Splash extends React.Component<SplashProps, any> {
             .then((res: any) => {
               // console.log(res);
               AsyncStorage.setItem('user', JSON.stringify(res.data.data));
-              this.props.navigation.navigate('Main');
+
+              if (res.data.data.organizations.length != 0) {
+                savedCurrentOrganization(res.data.data.organizations[0]._id);
+                if (res.data.data.organizations[0].projects.length != 0) {
+                  savedCurrentProject(
+                    res.data.data.organizations[0].projects[0].project_id,
+                  );
+                  this.props.navigation.navigate('Main');
+                  // console.log(res.data.data.organizations[0]);
+                } else {
+                  this.props.navigation.navigate('createProject');
+                }
+              } else {
+                this.props.navigation.navigate('CreateOrg');
+              }
+              // this.props.navigation.navigate('Main');
             });
         }, 5000);
       } else {
