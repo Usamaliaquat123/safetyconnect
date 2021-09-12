@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 
     paddingBottom: hp(5),
     backgroundColor: colors.secondary,
-    borderRadius: wp(3),
+    borderRadius: wp(2),
   },
   headingContainer: {
     fontSize: wp(4.5),

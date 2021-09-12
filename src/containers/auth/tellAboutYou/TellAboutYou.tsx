@@ -400,7 +400,9 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                           },
                     ]}>
                     <TextInput
-                      onFocus={() => this.setState({selected: 0})}
+                      onFocus={() =>
+                        this.setState({selected: 0, arrayOfRole: industries})
+                      }
                       underlineColorAndroid="transparent"
                       style={styles.selectText}
                       value={this.state.name}
@@ -488,7 +490,12 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     <TextInput
                       // secureTextEntry={this.state.isEye}
                       style={styles.authInputs}
-                      onFocus={() => this.setState({selected: 2})}
+                      onFocus={() =>
+                        this.setState({
+                          selected: 2,
+                          arrayOfTypesOfRole: typeofRole,
+                        })
+                      }
                       value={this.state.IndustryRole}
                       onChangeText={(e) => {
                         // if (validatePassword(this.state.password)) {
@@ -586,7 +593,9 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                           },
                     ]}>
                     <TextInput
-                      onFocus={() => this.setState({selected: 3})}
+                      onFocus={() =>
+                        this.setState({selected: 3, arrayOfYourRole: yourRole})
+                      }
                       underlineColorAndroid="transparent"
                       style={styles.selectText}
                       value={this.state.DesignAndArchitectureText}

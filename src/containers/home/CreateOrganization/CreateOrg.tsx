@@ -146,7 +146,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
   uplaodOrganizationImage = () => {};
 
   createOrg = () => {
-    this.props.reduxActions;
+    // this.props.reduxActions;
     if (this.state.org !== '') {
       // if (this.state.orgDetails !== '') {
       AsyncStorage.getItem('email')

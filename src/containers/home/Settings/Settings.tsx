@@ -152,8 +152,11 @@ class Settings extends React.Component<SettingsProps, any> {
               ext: [res.type.split('/')[1]],
             };
 
+            this.setState({fileLoading: true});
+
             profileUploader(res.type, res.type.split('/')[1], res.base64)
               .then((uploadUri: any) => {
+                this.setState({fileLoading: false});
                 this.setState({img_url: uploadUri[0]});
                 console.log('uploaded image');
                 console.log(uploadUri[0]);
@@ -225,18 +228,26 @@ class Settings extends React.Component<SettingsProps, any> {
                     this.imgCap('upload');
                   }}
                   style={{width: wp(50), alignSelf: 'center'}}>
-                  <Avatar
-                    containerStyle={{alignSelf: 'center', marginTop: wp(3)}}
-                    size={wp(30)}
-                    rounded
-                    source={{
-                      uri:
-                        this.state.img_url === ' '
-                          ? 'https://via.placeholder.com/150'
-                          : this.state.img_url,
-                    }}
-                  />
-
+                  {this.state.fileLoading ? (
+                    <LottieView
+                      autoPlay={true}
+                      style={{width: wp(20)}}
+                      source={animation.profileimage}
+                      loop={true}
+                    />
+                  ) : (
+                    <Avatar
+                      containerStyle={{alignSelf: 'center', marginTop: wp(3)}}
+                      size={wp(30)}
+                      rounded
+                      source={{
+                        uri:
+                          this.state.img_url === ' '
+                            ? 'https://via.placeholder.com/150'
+                            : this.state.img_url,
+                      }}
+                    />
+                  )}
                   <View
                     style={{
                       backgroundColor: colors.green,

@@ -179,11 +179,9 @@ export const MainStackNavigator = (screen: route) => {
           }}
         />
         <Stack.Screen
-        
           name="Login"
           component={Login}
           options={{
-
             headerShown: false,
           }}
         />

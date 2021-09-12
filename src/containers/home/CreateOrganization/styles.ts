@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     // alignSelf: 'center',
     paddingBottom: hp(3),
     backgroundColor: colors.secondary,
-    borderRadius: wp(3),
+    borderRadius: wp(2),
   },
   headingContainer: {
     fontSize: wp(4),

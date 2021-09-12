@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     marginTop: wp(7),
     // paddingBottom: hp(20),
     backgroundColor: colors.secondary,
-    borderRadius: wp(4),
+    borderRadius: wp(2),
   },
   contentLocations: {
     // height:hp(100),
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     marginTop: wp(7),
     // paddingBottom: hp(20),
     backgroundColor: colors.secondary,
-    borderRadius: wp(4),
+    borderRadius: wp(2),
   },
   headingContainer: {
     fontSize: wp(5),
