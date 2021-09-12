@@ -393,8 +393,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     AsyncStorage.getItem('email').then((email: any) => {
       this.setState({email});
     });
-
-   
   };
 
   onlinksorRepeated = (e: any) => {
@@ -740,7 +738,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     );
                     console.log(rec);
                     console.log('==================Actions=');
-                    // console.log(rec.map((d: any) => delete d['selected']));
+                    console.log(rec.map((d: any) => delete d['selected']));
 
                     var sors = {
                       report: {

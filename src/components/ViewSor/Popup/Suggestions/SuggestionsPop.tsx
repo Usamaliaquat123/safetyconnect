@@ -890,7 +890,10 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.AssignedTo.length != 0) {
-                        console.log(this.state.AssignedTo);
+                        console.log(
+                          'this.state.AssignedTo  yahdsjdhasjdhsajdbn bbajsdhshjd,NJD,JHBSAdjnbdHASNBDHSABNBD SNBDJADJA dhjdhjahD',
+                        );
+                        console.log(this.state.AssignedTo[0]);
                         var sugg = {
                           // status: this.state.status,
                           content: this.state.observation,
@@ -899,7 +902,7 @@ export default class SuggestionsPop extends React.Component<
                           assigned_to: this.state.AssignedTo[0],
                           dueDate: moment().format('YYYY-MM-DD'),
                           is_complete: this.state.is_complete,
-                          is_selected: this.state.is_selected,
+                          // is_selected: this.state.is_selected,
                           category: this.state.type,
                           hierarchy: this.state.type,
                           status: this.state.statuses,
