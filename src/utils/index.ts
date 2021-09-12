@@ -42,6 +42,7 @@ import {
   writeHtmlToPdf,
   getAllProjects,
   FiveWhySubMenus,
+  navigationTransition,
   filterInvolvedPerson,
 } from './utils';
 export {
@@ -61,6 +62,7 @@ export {
   APPLE_AUTH,
   getSorData,
   profileUploader,
+  navigationTransition,
   GOOGLE_AUTH,
   suffixThNd,
   filterAndMappingPersons,

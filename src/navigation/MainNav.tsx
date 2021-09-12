@@ -33,8 +33,9 @@ import {
   ChangePassword,
 } from '@containers';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, TransitionSpecs} from '@react-navigation/stack';
 import {BottomTabNavigator} from './TabBar';
+import {navigationTransition} from '@utils';
 import {StackNavigatorProps, route} from './typings';
 import Filters from '../containers/home/Filters/Filters';
 
@@ -178,9 +179,11 @@ export const MainStackNavigator = (screen: route) => {
           }}
         />
         <Stack.Screen
+        
           name="Login"
           component={Login}
           options={{
+
             headerShown: false,
           }}
         />
