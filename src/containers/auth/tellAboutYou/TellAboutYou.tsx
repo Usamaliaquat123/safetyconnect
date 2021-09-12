@@ -254,7 +254,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
       <View style={[styles.container]}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* content */}
-          <View>
+          <View style={{padding: wp(5)}}>
             {this.state.loading == true ? (
               <View
                 style={{

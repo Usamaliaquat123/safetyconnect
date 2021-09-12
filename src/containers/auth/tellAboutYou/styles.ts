@@ -7,7 +7,7 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: wp(5),
+    // padding: wp(5),
     backgroundColor: colors.secondary,
   },
 

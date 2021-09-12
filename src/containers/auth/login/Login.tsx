@@ -94,22 +94,25 @@ class Login extends React.Component<LoginProps, any> {
           .getUser(user.signInUserSession.idToken.payload.email)
           .then((data: any) => {
             if (data.data.success == false) {
-              createApi
-                .createApi()
-                .createUser({
-                  name: user.username,
-                  email: user.signInUserSession.idToken.payload.email, // dynal=mic link
-                  organization: [],
-                  img_url:
-                    'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
-                })
-                .then((res) => {
-                  this.setState({loading: false, errorModal: false});
-                  navigation.navigate('TellAboutYou', {
-                    username: user.signInUserSession.idToken.payload.email,
-                    isgoogle: true,
-                  });
-                });
+              this.props.navigation.navigate('GoogleSigninOptn', {
+                data: user.signInUserSession.idToken.payload.email,
+              });
+              // createApi
+              //   .createApi()
+              //   .createUser({
+              //     name: user.username,
+              //     email: user.signInUserSession.idToken.payload.email, // dynal=mic link
+              //     organization: [],
+              //     img_url:
+              //       'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+              //   })
+              //   .then((res) => {
+              //     this.setState({loading: false, errorModal: false});
+              //     navigation.navigate('TellAboutYou', {
+              //       username: user.signInUserSession.idToken.payload.email,
+              //       isgoogle: true,
+              //     });
+              //   });
               this.setState({loading: false, errorModal: false});
 
               // this.setState({loading: false, errorModal: false});
@@ -133,17 +136,17 @@ class Login extends React.Component<LoginProps, any> {
     }
   }
   componentDidMount() {
-    GoogleSignin.configure({
-      scopes: ['homesafety.auth.us-east-2.amazoncognito.com'], // what API you want to access on behalf of the user, default is email and profile
-      webClientId: '5n6tdp3pqcoj0q44ch83963gfp', // client ID of type WEB for your server (needed to verify user ID and offline access)
-      offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-      hostedDomain: '', // specifies a hosted domain restriction
-      loginHint: '', // [iOS] The user's ID, or email address, to be prefilled in the authentication UI if possible. [See docs here](https://developers.google.com/identity/sign-in/ios/api/interface_g_i_d_sign_in.html#a0a68c7504c31ab0b728432565f6e33fd)
-      forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
-      accountName: '', // [Android] specifies an account name on the device that should be used
-      iosClientId: '5n6tdp3pqcoj0q44ch83963gfp', // [iOS] optional, if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
-      googleServicePlistPath: '', // [iOS] optional, if you renamed your GoogleService-Info file, new name here, e.g. GoogleService-Info-Staging
-    });
+    // GoogleSignin.configure({
+    //   scopes: ['homesafety.auth.us-east-2.amazoncognito.com'], // what API you want to access on behalf of the user, default is email and profile
+    //   webClientId: '5n6tdp3pqcoj0q44ch83963gfp', // client ID of type WEB for your server (needed to verify user ID and offline access)
+    //   offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+    //   hostedDomain: '', // specifies a hosted domain restriction
+    //   loginHint: '', // [iOS] The user's ID, or email address, to be prefilled in the authentication UI if possible. [See docs here](https://developers.google.com/identity/sign-in/ios/api/interface_g_i_d_sign_in.html#a0a68c7504c31ab0b728432565f6e33fd)
+    //   forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
+    //   accountName: '', // [Android] specifies an account name on the device that should be used
+    //   iosClientId: '5n6tdp3pqcoj0q44ch83963gfp', // [iOS] optional, if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
+    //   googleServicePlistPath: '', // [iOS] optional, if you renamed your GoogleService-Info file, new name here, e.g. GoogleService-Info-Staging
+    // });
     Linking.addEventListener('url', () => {
       this.handleOpenURL(this.props.navigation);
     });
@@ -189,12 +192,6 @@ class Login extends React.Component<LoginProps, any> {
               if (user.data.data.organizations.length != 0) {
                 savedCurrentOrganization(user.data.data.organizations[0]._id);
                 if (user.data.data.organizations[0].projects.length != 0) {
-                  console.log(
-                    'user.data.data.organizations[0].projects[0].project_id',
-                  );
-                  console.log(
-                    user.data.data.organizations[0].projects[0].project_id,
-                  );
                   savedCurrentProject(
                     user.data.data.organizations[0].projects[0].project_id,
                   );
@@ -211,7 +208,33 @@ class Login extends React.Component<LoginProps, any> {
                       ],
                     }),
                   );
+                } else {
+                  AsyncStorage.setItem('email', this.state.username);
+                  this.setState({errorModal: false, loading: false});
+                  this.props.navigation.dispatch(
+                    CommonActions.reset({
+                      index: 1,
+                      routes: [
+                        {
+                          name: 'createProject',
+                        },
+                      ],
+                    }),
+                  );
                 }
+              } else {
+                AsyncStorage.setItem('email', this.state.username);
+                this.setState({errorModal: false, loading: false});
+                this.props.navigation.dispatch(
+                  CommonActions.reset({
+                    index: 1,
+                    routes: [
+                      {
+                        name: 'CreateOrganization',
+                      },
+                    ],
+                  }),
+                );
               }
             });
         } catch (err) {
