@@ -755,7 +755,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                     type="antdesign"
                                   />
                                   <Text style={styles.listDraftText}>
-                                    Notified to
+                                    Escalated to
                                   </Text>
                                 </TouchableOpacity>
                               </View>

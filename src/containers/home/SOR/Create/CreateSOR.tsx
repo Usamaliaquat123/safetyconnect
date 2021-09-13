@@ -1758,32 +1758,17 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             </Text>
                           </Text>
                         </View>
-                        <Icon
+                        {/* <Icon
                           size={wp(6)}
                           name="more-vertical"
                           type="feather"
                           color={'#686868'}
-                        />
+                        /> */}
                       </TouchableOpacity>
                     </View>
                   ))}
 
                   <View style={[styles.addActionAndRecommendation]}>
-                    {/* <TextInput
-                    onFocus={() => {
-                    
-                    }}
-                    style={[
-                      styles.actionInput,
-                      this.state.selectedInputIndex == 3
-                        ? {borderColor: colors.green}
-                        : null,
-                    ]}
-                    value={this.state.actionRecommendationsText}
-                    onChangeText={(e) => this.actionRecommendSuggestion(e)}
-                    placeholder={'Suggest your recommendation / actions'}
-                  /> */}
-
                     <TextInput
                       maxLength={500}
                       onChange={(e) =>
@@ -1808,9 +1793,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               assigned_to: [],
                               date: moment().format('YYYY-MM-DD'),
                               status: 'InProgress',
-
-                              // actionsChangeable: false,
-
                               category: 'Elimination',
                             },
                             newAct: true,
