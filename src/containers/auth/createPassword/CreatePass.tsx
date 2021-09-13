@@ -158,29 +158,8 @@ class CreatePass extends React.Component<CreatePassProps, any> {
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* content */}
           <View>
-            {/* {this.state.loading == true ? ( */}
-            {/* <View
-              style={{
-                alignSelf: 'center',
-                marginTop: wp(40),
-              }}>
-              <LottieView
-                autoPlay={true}
-                style={{width: wp(90)}}
-                source={animation.loading}
-                loop={true}
-              />
-              <Text
-                style={{
-                  fontSize: wp(3.5),
-                  opacity: 0.5,
-                  textAlign: 'center',
-                  marginTop: wp(-5),
-                }}>
-                loading...
-              </Text>
-            </View> */}
-            {/* ) : ( */}
+    
+  
             <View style={{marginTop: wp(5)}}>
               <View style={{marginBottom: wp(10)}}>
                 <Text style={styles.headingContainer}>
