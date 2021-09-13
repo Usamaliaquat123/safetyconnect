@@ -1817,6 +1817,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             submitToAndObserverEmails: [this.state.user.email],
                             SuggestionPop: true,
                             newActions: true,
+                            actionsAndRecommendationText: '',
                           });
                         }
                       }}
