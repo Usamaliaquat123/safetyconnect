@@ -3,4 +3,5 @@ export const animation = {
   loading: require('./json/loading.json'),
   imageLoading: require('./json/fileloading.json'),
   profileimage: require('./json/profileimage.json'),
+  done: require('./json/done.json'),
 };

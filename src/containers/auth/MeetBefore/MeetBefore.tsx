@@ -50,7 +50,7 @@ class MeetBefore extends React.Component<MeetBeforeProps, any> {
       email: this.props.route.params.email, //this.props.route.params.email
       password: '',
       passError: false,
-      isEye: false,
+      isEye: true,
       loading: false,
     };
   }

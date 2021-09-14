@@ -289,7 +289,7 @@ export default class SuggestionsPop extends React.Component<
         animationOutTiming={1000}
         isVisible={this.props.isOpen}
         onBackdropPress={() => this.props.onClose()}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.containerPopup}>
             <View style={{flexDirection: 'row'}}>
               <View style={styles.containerText}>

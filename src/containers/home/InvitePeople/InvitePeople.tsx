@@ -38,6 +38,7 @@ import {
   getCurrentOrganization,
 } from '@utils';
 import {Tags} from '@components';
+import {FLIPPED_ALIAS_KEYS} from '@babel/types';
 // import {validateEmail} from '@utils/';
 type InvitePeopleNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -78,6 +79,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
       errDesc: '',
 
       projectText: '',
+      inviteSended: false,
       noOrg: false,
     };
   }
@@ -159,22 +161,18 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
       projectName: this.state.projectText,
     };
 
-    this.props.reduxActions.inviteUser(data, this.props.navigation);
-
-    // api
-    //   .createApi()
-    //   .inviteBulk(data)
-    //   .then((res) => {
-    //     if (res.data == 'invited') {
-    //       this.props.navigation.goBack();
-    //     }
-    //   });
+    this.setState({inviteSended: true});
+    setTimeout(() => {
+      this.props.reduxActions.inviteUser(data, this.props.navigation);
+      this.setState({inviteSended: false});
+    }, 2000);
   };
   render() {
     return (
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* content */}
+
           <View style={styles.content}>
             <View>
               <View
@@ -402,6 +400,20 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
             {/* )} */}
           </View>
         </ScrollView>
+        <Modal
+          isVisible={this.state.inviteSended}
+          onBackdropPress={() => this.setState({inviteSended: false})}>
+          <View style={styles.modelContainer}>
+            <View>
+              <Text style={[styles.errHeadPop, {color: colors.green}]}>
+                Invite Sended
+              </Text>
+              <Text style={styles.errEmailPassDesc}>
+                Email invite has been sended on your given project
+              </Text>
+            </View>
+          </View>
+        </Modal>
         {/* validations error */}
         {/* Modal Container */}
         <Modal
