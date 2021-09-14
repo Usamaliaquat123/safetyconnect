@@ -213,7 +213,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           .createApi()
           .getUser(d)
           .then((res: any) => {
-            // console.log('res=======================', res.data.data);
             this.state.involvedPerson.push({
               name: res.data.data.name,
               img_url: res.data.data.img_url,
@@ -233,8 +232,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               .createApi()
               .getProject(currentProj, user.data.data._id)
               .then((res: any) => {
-                console.log(res);
-
                 this.setState({projectName: res.data.data.project_name});
 
                 //     var data: Array<any> = [];
@@ -322,11 +319,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.props.route.params.data.risk.severity,
       this.props.route.params.data.risk.likelihood,
     );
-
-    console.log('this.state.esclate_to');
-    console.log(this.state.esclate_to);
-    console.log('this.state.involved ');
-    console.log(this.state.involvedPerson);
   };
 
   getAllRepeatedSors = async (e: any, projectid: any) => {
@@ -349,13 +341,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
   // FIVE WHY
   getFiveWHY = () => {
-    console.log('this.props.route.params.data.five_why');
-    console.log(
-      console.log(
-        'this.props.route.params.data.submit_to',
-        this.props.route.params.data,
-      ),
-    );
     // Question map and them push
     if (this.props.route.params.data.justifications.length != 0) {
       this.props.route.params.data.justifications[0].justification.question.map(
@@ -370,10 +355,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         },
       );
 
-      // console.log('sdsdsds');
-      // console.log(
-      //   this.props.route.params.data.justifications[0].contributoryCauses,
-      // );
       this.setState({
         contributoryCauses: this.props.route.params.data.justifications[0]
           .contributoryCauses,
@@ -407,8 +388,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       //       .rootCauses[0],
       //   });
       // }
-      console.log('inner five why');
-      console.log(this.props.route.params.data);
       //   // Set the state of 5 whys Questions /Answers
       this.setState({
         fiveWhyQuestion: this.props.route.params.data.justifications[0]
@@ -434,7 +413,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
   };
   onSubmitUpdateSor = async (status?: number) => {
-    console.log(this.state.actionsAndRecommendation);
     this.setState({loading: true, errorModal: true});
     var liklihood = this.state.liklihood.filter(
       (d: any) => d.selected == true,
@@ -442,7 +420,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
       .value;
 
-    console.log('sdsds');
     var update = {
       report: {
         _id: this.props.route.params.data._id /** done  */,
@@ -494,9 +471,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .createApi()
       .updateSor(update)
       .then((res) => {
-        console.log(res);
-        console.log(this.state.fiveWhytoggle);
-
         if (res.status == 200) {
           // add five why
           if (this.state.fiveWhytoggle == true) {
@@ -523,8 +497,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 .createApi()
                 .createFiveWhy(obj)
                 .then((res: any) => {
-                  console.log('updated five why');
-                  console.log(res);
                   setTimeout(() => {
                     this.props.navigation.goBack();
                   }, 3000);
@@ -549,9 +521,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 user: this.state.user._id,
                 date: moment().format('MM-DD-YYYY'),
               };
-
-              console.log('updatefiveWhy');
-              console.log(updatefiveWhy);
 
               createApi
                 .createApi()
@@ -583,9 +552,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           }
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   // delete comment through commentId
@@ -646,7 +613,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         // this.setState({});
         console.log('commentsasdasds');
         // this.openDoc();
+
+        this.state.comments.map((d, i) => {
+          console.log(d);
+          this.fileAndImageCapturer(d.files, true);
+          if(d.files.length != 0){
+
+          }
+
+          console.log(d);
+        });
+        console.log('comments  attachmest');
         console.log(this.state.comments);
+
+        // this.fileAndImageCapturer(this.state.comments)
+
         // this.state..sort(function(a, b){return a-b});
       });
     // })
@@ -712,7 +693,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
   };
 
-  fileAndImageCapturer = (attach: Array<string>) => {
+  fileAndImageCapturer = (attach: Array<string>, comments : boolean) => {
     /*
     /*
      * Image object Map to this
@@ -857,37 +838,30 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           this.setState({fileLoading: true});
         }
 
-
-
-
         console.log('----------=a-das-d-asd-asd-as');
-        fileuploader(
-          res.orgType,
-          res.orgType,
-          res.uri,
-        ).then((filename: any) => {
-          imgData['name'] = filename;
-          if (commentAttach == true) {
-            this.setState({commentAttachmentLoading: false});
-          } else {
-            this.setState({fileLoading: false});
-          }
-          var data = {
-            bucket: 'hns-codist',
-            report: [`report/${filename}`],
-          };
+        fileuploader(res.orgType, res.orgType, res.uri).then(
+          (filename: any) => {
+            imgData['name'] = filename;
+            if (commentAttach == true) {
+              this.setState({commentAttachmentLoading: false});
+            } else {
+              this.setState({fileLoading: false});
+            }
+            var data = {
+              bucket: 'hns-codist',
+              report: [`report/${filename}`],
+            };
 
-          createApi
-            .createApi()
-            .getFileApi(data)
-            .then((d: any) => {
-              imgData['uri'] = d.data[0];
-            });
-          attach.splice(0, 0, imgData);
-          console.log('attach');
-          console.log(attach);
-          this.setState({});
-        });
+            createApi
+              .createApi()
+              .getFileApi(data)
+              .then((d: any) => {
+                imgData['uri'] = d.data[0];
+              });
+            attach.splice(0, 0, imgData);
+            this.setState({});
+          },
+        );
       }
 
       this.setState({});
@@ -1540,7 +1514,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         this.setState({fiveWhyQuestion: q});
                       }}
                       fiveWhyAnswer={(a: Array<string>) => {
-                        console.log(this.state.keyFindings);
                         this.setState({fiveWhyAnswer: a});
                       }}
                       reportId={this.state.reportIdInvestigation}
@@ -1603,10 +1576,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
                                 var members = [];
 
-                                console.log(
-                                  '44448372871837218371283721837128371283712837218371',
-                                );
-                                console.log(this.props.route.params.data);
                                 members.push(
                                   this.props.route.params.data.submit_to[0],
                                 );
@@ -2138,8 +2107,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                     (v: involved_persons) => v == d,
                                   ).length != 0
                                 ) {
-                                  console.log(d);
-                                  // console.log(this.state.esclate_to);
                                   this.state.esclate_to.push(d.email);
                                 } else {
                                   return null;
@@ -2252,8 +2219,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               name="copComments">
               <WalkthroughableView style={styles.commentsSections}>
                 {this.state.comments.map((d: any, i: number) => {
-                  // console.log('comments');
-                  // console.log(d);
                   return (
                     <View>
                       <TouchableOpacity
@@ -2676,15 +2641,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       {!this.state.closed && (
                         <TouchableOpacity
                           onPress={() => {
-                            console.log('submit');
                             if (this.state.fiveWhytoggle == true) {
-                              console.log('line 2566');
-                              console.log(this.state.fiveWhyQuestion);
                               if (this.state.fiveWhyQuestion.length == 5) {
                                 this.onSubmitUpdateSor(1);
-                                console.log('line 2570');
                               } else {
-                                console.log('line 2572');
                                 this.setState({
                                   errorModal: true,
                                   errHeadingText: 'Minimum 5 why ',
@@ -2693,7 +2653,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 });
                               }
                             } else {
-                              console.log('line 2580');
                               this.onSubmitUpdateSor(1);
                             }
                           }}
@@ -2749,11 +2708,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             <TouchableOpacity
                               onPress={() => {
                                 AsyncStorage.getItem('email').then((email) => {
-                                  // console.log('')
-                                  // console.log(
-                                  //   this.props.route.params.data.action_required,
-                                  // );
-
                                   if (
                                     this.state.actionsAndRecommendations.map(
                                       (d: any) => d.status == 'In Progress',

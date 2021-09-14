@@ -1465,7 +1465,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   <View style={{flexDirection: 'row', marginTop: wp(-7)}}>
                     <Text style={styles.textinputItHappenAt}>
                       <Text style={{fontWeight: 'bold'}}>
-                        {moment(this.state.todayDateCallender).format(
+                        {moment().format(
                           'MMMM DD, YYYY',
                         )}
                       </Text>{' '}
@@ -2681,7 +2681,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
                 firstDay={1}
                 // Hide day names. Default = false
-                hideDayNames={true}
+                hideDayNames={false}
                 // Show week numbers to the left. Default = false
                 showWeekNumbers={true}
                 // Handler which gets executed when press arrow icon left. It receive a callback can go back month
