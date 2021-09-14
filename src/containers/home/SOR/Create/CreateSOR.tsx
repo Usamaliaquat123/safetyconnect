@@ -1724,6 +1724,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         onPress={() => {
                           var arr = this.state.actionRecommendations;
                           arr[i].selected = !arr[i].selected;
+                          arr[i]['assigned_to'] = this.state.user.email;
                           this.setState({actionRecommendations: arr});
                         }}
                         onLongPress={() => {
@@ -1790,7 +1791,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               is_complete: false,
                               is_selected: false,
                               content: this.state.actionsAndRecommendationText,
-                              assigned_to: [],
+                              assigned_to: this.state.user.email,
                               date: moment().format('YYYY-MM-DD'),
                               status: 'InProgress',
                               category: 'Elimination',
