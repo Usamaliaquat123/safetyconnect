@@ -1659,7 +1659,7 @@ class Home extends React.Component<HomeProps, any> {
               {/* line height */}
               {/* <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} /> */}
               {/* inspection */}
-              <View style={{marginBottom: wp(3), padding: wp(3)}}>
+              {/* <View style={{marginBottom: wp(3), padding: wp(3)}}>
                 <Text
                   style={{
                     fontSize: wp(3.5),
@@ -1682,11 +1682,11 @@ class Home extends React.Component<HomeProps, any> {
                       {/* <Text style={styles.chartContent}>
                         {this.state.totalObservations}
                       </Text> */}
-                    </View>
+                    {/* </View>
                   </PieChart>
-                </Animated.View>
+                </Animated.View> */} 
                 {/* colors guide */}
-                <View style={styles.guideColors}>
+                {/* <View style={styles.guideColors}>
                   <View style={styles.guideitem}>
                     <View
                       style={[
@@ -1721,10 +1721,14 @@ class Home extends React.Component<HomeProps, any> {
 
                     <Text style={styles.guideText}>Draft</Text>
                   </View>
-                </View>
-              </View>
+                </View> */}
+              {/* </View> */}
+           
+           
+           
+           
               {/* line height */}
-              <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} />
+              {/* <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} /> */}
               {/* risk assessments */}
               <View style={{marginBottom: wp(3), padding: wp(3)}}>
                 <Text
