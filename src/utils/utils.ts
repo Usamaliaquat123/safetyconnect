@@ -571,6 +571,12 @@ export const GOOGLE_AUTH = () => {
 
 // File uploader
 export const fileuploader = (types: string, ext: string, uri: string) => {
+
+
+  if(ext =="image/png" || ext == "image/jpeg"  || ext == "image/jpg"){
+    ext = ext.split('/')[1]
+  }
+  console.log(ext);
   var data = {
     bucket: 'hns-codist',
     report: 'report',

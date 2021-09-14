@@ -644,7 +644,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
         this.setState({comments: sortedActivities});
         // this.setState({});
-        console.log('comments');
+        console.log('commentsasdasds');
+        // this.openDoc();
         console.log(this.state.comments);
         // this.state..sort(function(a, b){return a-b});
       });
@@ -856,31 +857,37 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           this.setState({fileLoading: true});
         }
 
-        fileuploader(res.orgType, res.orgType, res.uri).then(
-          (filename: any) => {
-            imgData['name'] = filename;
-            if (commentAttach == true) {
-              this.setState({commentAttachmentLoading: false});
-            } else {
-              this.setState({fileLoading: false});
-            }
-            var data = {
-              bucket: 'hns-codist',
-              report: [`report/${filename}`],
-            };
 
-            createApi
-              .createApi()
-              .getFileApi(data)
-              .then((d: any) => {
-                imgData['uri'] = d.data[0];
-              });
-            attach.splice(0, 0, imgData);
-            console.log('attach');
-            console.log(attach);
-            this.setState({});
-          },
-        );
+
+
+        console.log('----------=a-das-d-asd-asd-as');
+        fileuploader(
+          res.orgType,
+          res.orgType,
+          res.uri,
+        ).then((filename: any) => {
+          imgData['name'] = filename;
+          if (commentAttach == true) {
+            this.setState({commentAttachmentLoading: false});
+          } else {
+            this.setState({fileLoading: false});
+          }
+          var data = {
+            bucket: 'hns-codist',
+            report: [`report/${filename}`],
+          };
+
+          createApi
+            .createApi()
+            .getFileApi(data)
+            .then((d: any) => {
+              imgData['uri'] = d.data[0];
+            });
+          attach.splice(0, 0, imgData);
+          console.log('attach');
+          console.log(attach);
+          this.setState({});
+        });
       }
 
       this.setState({});
@@ -2245,6 +2252,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               name="copComments">
               <WalkthroughableView style={styles.commentsSections}>
                 {this.state.comments.map((d: any, i: number) => {
+                  // console.log('comments');
+                  // console.log(d);
                   return (
                     <View>
                       <TouchableOpacity

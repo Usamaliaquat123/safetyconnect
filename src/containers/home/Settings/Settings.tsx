@@ -112,16 +112,17 @@ class Settings extends React.Component<SettingsProps, any> {
           .createApi()
           .setUserInfo(data)
           .then((res: any) => {
-            this.props.navigation.dispatch(
-              CommonActions.reset({
-                index: 1,
-                routes: [
-                  {
-                    name: 'Home',
-                  },
-                ],
-              }),
-            );
+            this.props.navigation.goBack();
+            // this.props.navigation.dispatch(
+            //   CommonActions.reset({
+            //     index: 1,
+            //     routes: [
+            //       {
+            //         name: 'Home',
+            //       },
+            //     ],
+            //   }),
+            // );
             this.setState({loading: false});
             // this.props.navigation.goBack();
           })
@@ -231,7 +232,7 @@ class Settings extends React.Component<SettingsProps, any> {
                   {this.state.fileLoading ? (
                     <LottieView
                       autoPlay={true}
-                      style={{width: wp(20)}}
+                      style={{width: wp(20), alignSelf: 'center'}}
                       source={animation.profileimage}
                       loop={true}
                     />
