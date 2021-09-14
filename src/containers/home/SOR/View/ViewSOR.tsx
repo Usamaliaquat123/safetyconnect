@@ -613,12 +613,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         // this.setState({});
         console.log('commentsasdasds');
         // this.openDoc();
+        this.fileAndImageCapturer(d.files, true);
 
         this.state.comments.map((d, i) => {
           console.log(d);
-          this.fileAndImageCapturer(d.files, true);
-          if(d.files.length != 0){
-
+          if (d.files.length != 0) {
           }
 
           console.log(d);
@@ -693,7 +692,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
   };
 
-  fileAndImageCapturer = (attach: Array<string>, comments : boolean) => {
+  fileAndImageCapturer = (attach: Array<string>, comments: boolean) => {
     /*
     /*
      * Image object Map to this
@@ -1045,6 +1044,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 <Text style={styles.observationDate}>
                   On {moment(this.state.time).format('MMM DD, YYYY')} at{' '}
                   {moment(this.state.time).format('LT')}
+                </Text>
+                <Text style={[styles.observationDate, {fontSize: wp(2.8)}]}>
+                  It was observed that
                 </Text>
                 <View>
                   <TextInput

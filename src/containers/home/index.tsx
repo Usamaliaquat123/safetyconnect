@@ -1678,15 +1678,15 @@ class Home extends React.Component<HomeProps, any> {
                     <View
                       style={{justifyContent: 'center', alignItems: 'center'}}>
                       {/* <Text style={styles.chartContent}>Total</Text> */}
-                      {/* <Text style={styles.chartContent}>Observations</Text> */}
-                      {/* <Text style={styles.chartContent}>
+              {/* <Text style={styles.chartContent}>Observations</Text> */}
+              {/* <Text style={styles.chartContent}>
                         {this.state.totalObservations}
                       </Text> */}
-                    {/* </View>
+              {/* </View>
                   </PieChart>
-                </Animated.View> */} 
-                {/* colors guide */}
-                {/* <View style={styles.guideColors}>
+                </Animated.View> */}
+              {/* colors guide */}
+              {/* <View style={styles.guideColors}>
                   <View style={styles.guideitem}>
                     <View
                       style={[
@@ -1723,10 +1723,7 @@ class Home extends React.Component<HomeProps, any> {
                   </View>
                 </View> */}
               {/* </View> */}
-           
-           
-           
-           
+
               {/* line height */}
               {/* <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} /> */}
               {/* risk assessments */}

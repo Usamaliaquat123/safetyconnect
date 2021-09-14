@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   headingContainer: {
     fontSize: wp(4.5),
-    color: colors.text,
+    color: colors.green,
     fontFamily: fonts.SFuiDisplayBold,
   },
   inputsContainer: {

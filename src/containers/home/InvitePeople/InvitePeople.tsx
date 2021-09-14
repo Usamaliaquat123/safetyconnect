@@ -224,7 +224,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                       multiline={true}
                       style={styles.authInputs}
                       onChangeText={(e) => this.searchUsersAndEmail(e)}
-                      placeholder={'Enter Name'}
+                      placeholder={'Enter your email'}
                     />
                   </View>
                   {this.state.orgError && (
