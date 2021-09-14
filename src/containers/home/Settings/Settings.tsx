@@ -80,6 +80,8 @@ class Settings extends React.Component<SettingsProps, any> {
   }
 
   componentDidMount() {
+    console.log('this.props.route.params.data');
+    console.log(this.props.route.params.data);
     this.setState({
       username: this.props.route.params.data.name,
       email: this.props.route.params.data.email,

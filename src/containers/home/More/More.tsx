@@ -56,7 +56,7 @@ export default class More extends React.Component<MoreProps, any> {
             name: usr.name,
             email: usr.email,
             url: usr.img_url,
-            user: user,
+            user: user.data.data,
           });
         });
     });
