@@ -133,7 +133,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       createApi
         .createApi()
         .getUser(email)
-        .then((user  :any) => {
+        .then((user: any) => {
           getCurrentProject().then((currentProj: any) => {
             this.setState({projectId: currentProj});
 
@@ -369,7 +369,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
-              onPress={() => this.props.navigation.navigate("home")}
+                onPress={() => this.props.navigation.navigate('home')}
                 size={25}
                 name="arrow-back-outline"
                 type="ionicon"
@@ -1079,7 +1079,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               })
                             }
                             name={d.created_by}
-                            date={d.occured_at}
+                            date={d.occurred_at}
                             risk={d.risk.severity * d.risk.likelihood}
                             viewPortWidth={80}
                             observation={d.details}
@@ -1132,7 +1132,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 data: d,
                               })
                             }
-                            date={d.occured_at}
+                            date={d.occurred_at}
                             risk={d.risk.severity * d.risk.likelihood}
                             viewPortWidth={80}
                             observation={d.details}
