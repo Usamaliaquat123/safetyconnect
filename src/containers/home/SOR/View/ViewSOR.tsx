@@ -315,7 +315,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       (v) => delete v.default,
     );
 
-    this.fileAndImageCapturer(this.props.route.params.data.attachments);
+    this.fileAndImageCapturer(this.props.route.params.data.attachments, false);
     this.mapViewSorPhoto();
     this.mappingMapping(
       this.props.route.params.data.risk.severity,
@@ -613,19 +613,18 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
         this.setState({comments: sortedActivities});
         // this.setState({});
-        console.log('commentsasdasds');
         // this.openDoc();
-        this.fileAndImageCapturer(d.files, true);
 
-        this.state.comments.map((d, i) => {
-          console.log(d);
-          if (d.files.length != 0) {
-          }
+        // this.fileAndImageCapturer(d.files, true);
+        this.getFilesOfComments(this.state.comments);
+        // this.state.comments.map((d, i) => {
+        //   console.log(d);
+        //   if (d.files.length != 0) {
+        //     console.log()
+        //   }
 
-          console.log(d);
-        });
-        console.log('comments  attachmest');
-        console.log(this.state.comments);
+        //   console.log(d);
+        // });
 
         // this.fileAndImageCapturer(this.state.comments)
 
@@ -694,6 +693,93 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
   };
 
+  getFilesOfComments = (comments: Array<any>) => {
+    comments.map((attach: any) => {
+      if (attach.files.length != 0) {
+        var attchf = attach.files;
+        attach = attach.files;
+        console.log('attach asdsadsa');
+        console.log(attach);
+        var dta = attach.map((d) => `report/${d}`);
+        var data = {
+          bucket: 'hns-codist',
+          report: dta,
+        };
+
+        createApi
+          .createApi()
+          .getFileApi(data)
+          .then((d: any) => {
+            for (let i = 0; i < d.data.length; i++) {
+              if (
+                attach[i].split('.')[1] == 'png' ||
+                attach[i].split('.')[1] == 'jpeg' ||
+                attach[i].split('.')[1] == 'jpg'
+              ) {
+                // this.state.attachments.push({
+                //   type: 'image',
+                //   upload: '',
+                //   name: attach[i],
+                //   uri: d.data[i],
+                // });
+                attach[i] = {};
+                attach[i]['type'] = 'image';
+                attach[i]['upload'] = '';
+                attach[i]['name'] = attchf[i];
+                attach[i]['uri'] = d.data[i];
+                // this.setState({});
+                // this.setState({});
+              } else if (attach[i].split('.')[1] == 'pdf') {
+                // this.state.attachments.push({
+                //   type: 'pdf',
+                //   upload: '',
+                //   name: attach[i],
+                //   uri: d.data[i],
+                // });
+
+                attach[i] = {};
+                attach[i]['type'] = 'pdf';
+                attach[i]['upload'] = '';
+                (attach[i]['name'] = attchf[i]), (attach[i]['uri'] = d.data[i]);
+                // this.setState({});
+              } else if (
+                attach[i].split('.')[1] == 'docx' ||
+                attach[i].split('.')[1] == 'doc'
+              ) {
+                attach[i] = {};
+                attach[i]['type'] = 'doc';
+                attach[i]['upload'] = '';
+                attach[i]['name'] = attchf[i];
+                attach[i]['uri'] = d.data[i];
+                // this.state.attachments.push({
+                //   type: 'doc',
+                //   upload: '',
+                //   name: attach[i],
+                //   uri: d.data[i],
+                // });
+                // this.setState({});
+              } else if (attach[i].split('.')[1] == 'xlsx') {
+                attach[i] = {};
+                attach[i]['type'] = 'xlsx';
+                attach[i]['upload'] = '';
+                attach[i]['name'] = attchf[i];
+                attach[i]['uri'] = d.data[i];
+                // this.state.attachments.push({
+                //   type: 'xlsx',
+                //   upload: '',
+                //   name: attach[i],
+                //   uri: d.data[i],
+                // });
+                // this.setState({});
+              }
+            }
+          });
+        console.log(attach);
+      }
+    });
+
+    console.log();
+  };
   fileAndImageCapturer = (attach: Array<string>, comments: boolean) => {
     /*
     /*
