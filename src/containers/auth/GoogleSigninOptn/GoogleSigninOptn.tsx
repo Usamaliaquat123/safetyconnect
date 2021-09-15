@@ -45,28 +45,6 @@ type GoogleSigninOptnRouteProp = RouteProp<
   StackNavigatorProps,
   'GoogleSigninOptn'
 >;
-const industries = [
-  'Oil & Gas',
-  'Mining and Quarrying',
-  'Petrochemicals & Polymers',
-  'Construction',
-  'Power Generation & Distribution',
-  'Transportation & Logistics',
-  'Health Care & Pharmaceuticals',
-  'Others (Please Specify)',
-];
-
-const typeofRole = [
-  'CEO',
-  'Director',
-  'General Manager	',
-  'Corporate Manager	',
-  'Advisor',
-  'Executive',
-  'Other',
-];
-
-const yourRole = ['Manager', 'Supervisor', 'Craft Worker'];
 
 export interface GoogleSigninOptnProps {
   navigation: GoogleSigninOptnNavigationProp;

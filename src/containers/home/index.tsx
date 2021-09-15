@@ -398,7 +398,7 @@ class Home extends React.Component<HomeProps, any> {
       loading: false,
       recentActivity: [],
     });
-    AsyncStorage.getItem('email').then((email) => {
+    AsyncStorage.getItem('email').then((email : any) => {
       createApi
         .createApi()
         .getAllNotifications(email, '[0,1]')

@@ -159,12 +159,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       rootCauses: '',
       keyFindingss: '',
       keyFindings: '',
-      commentAttachmentLoading: false,
+      commentAttachmentLoading: true,
       // Reassign to
       reAssignToArr: [],
       exclateToTags: [],
       reAssignToArrTags: [],
       projectName: '',
+      commenFileLoading: true,
+
       commentMentionReplace: '',
       projectId: '',
       closed: false,
@@ -2177,7 +2179,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           })
                         }
                         name={d.created_by}
-                        date={d.occurred_on}
+                        date={d.occurred_at}
                         risk={d.risk.severity * d.risk.likelihood}
                         viewPortWidth={80}
                         observation={d.details}
@@ -2496,7 +2498,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 {this.state.commentAttachment.length != 0 ? (
                   <View>
                     {this.state.commentAttachmentLoading == true ? (
-                      <View style={{alignSelf: 'center'}}>
+                      <View>
                         <LottieView
                           autoPlay={true}
                           style={{width: wp(30)}}
