@@ -728,20 +728,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 attach[i]['name'] = attchf[i];
                 attach[i]['uri'] = d.data[i];
                 // this.setState({});
-                // this.setState({});
+                this.setState({});
               } else if (attach[i].split('.')[1] == 'pdf') {
-                // this.state.attachments.push({
-                //   type: 'pdf',
-                //   upload: '',
-                //   name: attach[i],
-                //   uri: d.data[i],
-                // });
-
                 attach[i] = {};
                 attach[i]['type'] = 'pdf';
                 attach[i]['upload'] = '';
-                (attach[i]['name'] = attchf[i]), (attach[i]['uri'] = d.data[i]);
-                // this.setState({});
+                attach[i]['name'] = attchf[i];
+                attach[i]['uri'] = d.data[i];
+                this.setState({});
               } else if (
                 attach[i].split('.')[1] == 'docx' ||
                 attach[i].split('.')[1] == 'doc'
@@ -751,26 +745,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 attach[i]['upload'] = '';
                 attach[i]['name'] = attchf[i];
                 attach[i]['uri'] = d.data[i];
-                // this.state.attachments.push({
-                //   type: 'doc',
-                //   upload: '',
-                //   name: attach[i],
-                //   uri: d.data[i],
-                // });
-                // this.setState({});
+                this.setState({});
               } else if (attach[i].split('.')[1] == 'xlsx') {
                 attach[i] = {};
                 attach[i]['type'] = 'xlsx';
                 attach[i]['upload'] = '';
                 attach[i]['name'] = attchf[i];
                 attach[i]['uri'] = d.data[i];
-                // this.state.attachments.push({
-                //   type: 'xlsx',
-                //   upload: '',
-                //   name: attach[i],
-                //   uri: d.data[i],
-                // });
-                // this.setState({});
+                this.setState({});
               }
             }
           });
@@ -779,6 +761,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
 
     console.log();
+    this.setState({});
   };
   fileAndImageCapturer = (attach: Array<string>, comments: boolean) => {
     /*
