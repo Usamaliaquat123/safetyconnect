@@ -692,14 +692,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       }
     });
   };
-
+  // get all comments of files
   getFilesOfComments = (comments: Array<any>) => {
     comments.map((attach: any) => {
       if (attach.files.length != 0) {
         var attchf = attach.files;
         attach = attach.files;
-        console.log('attach asdsadsa');
-        console.log(attach);
         var dta = attach.map((d) => `report/${d}`);
         var data = {
           bucket: 'hns-codist',
@@ -716,18 +714,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 attach[i].split('.')[1] == 'jpeg' ||
                 attach[i].split('.')[1] == 'jpg'
               ) {
-                // this.state.attachments.push({
-                //   type: 'image',
-                //   upload: '',
-                //   name: attach[i],
-                //   uri: d.data[i],
-                // });
                 attach[i] = {};
                 attach[i]['type'] = 'image';
                 attach[i]['upload'] = '';
                 attach[i]['name'] = attchf[i];
                 attach[i]['uri'] = d.data[i];
-                // this.setState({});
                 this.setState({});
               } else if (attach[i].split('.')[1] == 'pdf') {
                 attach[i] = {};
@@ -756,11 +747,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               }
             }
           });
-        console.log(attach);
       }
     });
 
-    console.log();
     this.setState({});
   };
   fileAndImageCapturer = (attach: Array<string>, comments: boolean) => {
