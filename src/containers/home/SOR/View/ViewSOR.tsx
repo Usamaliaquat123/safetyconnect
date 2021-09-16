@@ -159,7 +159,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       rootCauses: '',
       keyFindingss: '',
       keyFindings: '',
-      commentAttachmentLoading: true,
+      commentAttachmentLoading: false,
       // Reassign to
       reAssignToArr: [],
       exclateToTags: [],
@@ -2499,8 +2499,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() => {
-                          if (this.state.commentText != '') {
-                            var map = [...this.state.comments];
+                          if (
+                            this.state.commentText != '' ||
+                            this.state.commentAttachment.length != 0
+                          ) {
+                            // var map = [...this.state.comments];
 
                             this.addComment(
                               this.state.commentText,
@@ -2572,105 +2575,44 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 ) : null}
 
                 {/* Comments Attachments */}
-                {this.state.commentAttachment.length != 0 ? (
+                {this.state.commentAttachmentLoading == true ? (
                   <View>
-                    {this.state.commentAttachmentLoading == true ? (
+                    <LottieView
+                      autoPlay={true}
+                      style={{width: wp(30)}}
+                      source={animation.profileimage}
+                      loop={true}
+                    />
+                  </View>
+                ) : (
+                  <>
+                    {this.state.commentAttachment.length != 0 ? (
                       <View>
-                        <LottieView
-                          autoPlay={true}
-                          style={{width: wp(30)}}
-                          source={animation.profileimage}
-                          loop={true}
-                        />
-                      </View>
-                    ) : (
-                      <>
-                        <ScrollView
-                          horizontal={true}
-                          style={{marginLeft: wp(6.7)}}
-                          showsHorizontalScrollIndicator={false}>
-                          {this.state.commentAttachment.map(
-                            (d: any, i: number) => (
-                              <View
-                                style={{
-                                  marginLeft: wp(2),
-                                  marginTop: wp(3),
-                                  marginBottom: wp(5),
-                                }}>
-                                {d.type == 'image' ? (
-                                  <View style={styles.AttchimageContainer}>
-                                    <Image
-                                      source={{
-                                        uri: d.uri,
-                                      }}
-                                      style={[
-                                        GlStyles.images,
-                                        {borderRadius: wp(5)},
-                                      ]}
-                                      resizeMode={'cover'}
-                                    />
-                                    <TouchableOpacity
-                                      onPress={() => {
-                                        var arr = [
-                                          ...this.state.commentAttachment,
-                                        ].filter((j) => j != d);
-                                        this.setState({commentAttachment: arr});
-                                      }}
-                                      style={{
-                                        position: 'absolute',
-                                        right: wp(2),
-                                        top: wp(2),
-                                        zIndex: wp(1),
-                                      }}>
-                                      <Icon
-                                        size={wp(5)}
-                                        name="circle-with-cross"
-                                        type="entypo"
-                                        color={colors.text}
-                                      />
-                                    </TouchableOpacity>
-                                  </View>
-                                ) : (
-                                  <View>
-                                    <View
-                                      style={[
-                                        styles.AttchimageContainer,
-                                        {
-                                          backgroundColor: colors.secondary,
-                                          justifyContent: 'center',
-                                          alignItems: 'center',
-                                        },
-                                      ]}>
+                        <>
+                          <ScrollView
+                            horizontal={true}
+                            style={{marginLeft: wp(6.7)}}
+                            showsHorizontalScrollIndicator={false}>
+                            {this.state.commentAttachment.map(
+                              (d: any, i: number) => (
+                                <View
+                                  style={{
+                                    marginLeft: wp(2),
+                                    marginTop: wp(3),
+                                    marginBottom: wp(5),
+                                  }}>
+                                  {d.type == 'image' ? (
+                                    <View style={styles.AttchimageContainer}>
                                       <Image
-                                        source={
-                                          d.type == 'pdf'
-                                            ? images.pdf
-                                            : d.type == 'doc'
-                                            ? images.doc
-                                            : d.type == 'text'
-                                            ? images.text
-                                            : d.type == 'doc'
-                                            ? images.doc
-                                            : // : d.type == 'excel'
-                                              // ? images.excel
-                                              // : d.type == 'powerpoint'
-                                              // ? images.powerpoint
-                                              null
-                                        }
-                                        style={{width: wp(10), height: wp(10)}}
+                                        source={{
+                                          uri: d.uri,
+                                        }}
+                                        style={[
+                                          GlStyles.images,
+                                          {borderRadius: wp(5)},
+                                        ]}
+                                        resizeMode={'cover'}
                                       />
-
-                                      <Text
-                                        style={{
-                                          fontSize: wp(2.5),
-
-                                          color: colors.text,
-                                          marginTop: wp(2),
-                                        }}>
-                                        {d.name.split('.')[0].substring(0, 10)}
-                                        ... {d.name.split('.')[1]}
-                                      </Text>
-
                                       <TouchableOpacity
                                         onPress={() => {
                                           var arr = [
@@ -2694,21 +2636,91 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                         />
                                       </TouchableOpacity>
                                     </View>
-                                  </View>
-                                )}
-                              </View>
-                            ),
-                          )}
-                        </ScrollView>
-                      </>
+                                  ) : (
+                                    <View>
+                                      <View
+                                        style={[
+                                          styles.AttchimageContainer,
+                                          {
+                                            backgroundColor: colors.secondary,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                          },
+                                        ]}>
+                                        <Image
+                                          source={
+                                            d.type == 'pdf'
+                                              ? images.pdf
+                                              : d.type == 'doc'
+                                              ? images.doc
+                                              : d.type == 'text'
+                                              ? images.text
+                                              : d.type == 'doc'
+                                              ? images.doc
+                                              : // : d.type == 'excel'
+                                                // ? images.excel
+                                                // : d.type == 'powerpoint'
+                                                // ? images.powerpoint
+                                                null
+                                          }
+                                          style={{
+                                            width: wp(10),
+                                            height: wp(10),
+                                          }}
+                                        />
+
+                                        <Text
+                                          style={{
+                                            fontSize: wp(2.5),
+
+                                            color: colors.text,
+                                            marginTop: wp(2),
+                                          }}>
+                                          {d.name
+                                            .split('.')[0]
+                                            .substring(0, 10)}
+                                          ... {d.name.split('.')[1]}
+                                        </Text>
+
+                                        <TouchableOpacity
+                                          onPress={() => {
+                                            var arr = [
+                                              ...this.state.commentAttachment,
+                                            ].filter((j) => j != d);
+                                            this.setState({
+                                              commentAttachment: arr,
+                                            });
+                                          }}
+                                          style={{
+                                            position: 'absolute',
+                                            right: wp(2),
+                                            top: wp(2),
+                                            zIndex: wp(1),
+                                          }}>
+                                          <Icon
+                                            size={wp(5)}
+                                            name="circle-with-cross"
+                                            type="entypo"
+                                            color={colors.text}
+                                          />
+                                        </TouchableOpacity>
+                                      </View>
+                                    </View>
+                                  )}
+                                </View>
+                              ),
+                            )}
+                          </ScrollView>
+                        </>
+                      </View>
+                    ) : (
+                      <View style={{marginLeft: wp(5)}}>
+                        <Text style={[styles.attchFileText]}>
+                          Uploaded files will be appear here .
+                        </Text>
+                      </View>
                     )}
-                  </View>
-                ) : (
-                  <View style={{marginLeft: wp(5)}}>
-                    <Text style={[styles.attchFileText]}>
-                      Uploaded files will be appear here .
-                    </Text>
-                  </View>
+                  </>
                 )}
               </WalkthroughableView>
             </CopilotStep>
