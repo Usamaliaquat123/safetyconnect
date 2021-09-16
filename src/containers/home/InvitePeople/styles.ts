@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     borderWidth: wp(0.3),
     paddingLeft: wp(3),
     borderRadius: wp(2),
-    flexDirection: 'row',
+    // flexDirection: 'row',
     // alignItems: 'center',
   },
   passTextContainer: {

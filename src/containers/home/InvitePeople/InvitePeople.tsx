@@ -206,23 +206,25 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                     </Text>
                   </View>
                   <View style={[styles.inputContainer]}>
-                    {this.state.usersTags.length != 0 && (
-                      <Tags
-                        style={{height: wp(10)}}
-                        tags={this.state.usersTags}
-                        onClose={(d: any) =>
-                          this.setState({
-                            usersTags: this.state.usersTags.filter(
-                              (v: any) => v !== d,
-                            ),
-                          })
-                        }
-                      />
-                    )}
+                    <View style={{flexDirection: 'row'}}>
+                      {this.state.usersTags.length != 0 && (
+                        <Tags
+                          style={{height: wp(10)}}
+                          tags={this.state.usersTags}
+                          onClose={(d: any) =>
+                            this.setState({
+                              usersTags: this.state.usersTags.filter(
+                                (v: any) => v !== d,
+                              ),
+                            })
+                          }
+                        />
+                      )}
+                    </View>
                     <TextInput
                       value={this.state.org}
                       multiline={true}
-                      style={styles.authInputs}
+                      style={[styles.authInputs]}
                       onChangeText={(e) => this.searchUsersAndEmail(e)}
                       placeholder={'Enter your email'}
                     />
