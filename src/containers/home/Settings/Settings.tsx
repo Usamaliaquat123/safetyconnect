@@ -256,7 +256,7 @@ class Settings extends React.Component<SettingsProps, any> {
                       backgroundColor: colors.green,
                       width: wp(8),
                       padding: wp(2.2),
-                      right: wp(7),
+                      right: wp(10),
                       top: wp(5),
                       position: 'absolute',
                       borderRadius: wp(10),
@@ -591,7 +591,9 @@ class Settings extends React.Component<SettingsProps, any> {
                       styles.submitsorbtnSb,
                       // {backgroundColor: colors.green},
                     ]}>
-                    <Text style={[styles.submitsorbtnSbtxt]}>Update </Text>
+                    <Text style={[styles.submitsorbtnSbtxt]}>
+                      Edit Your Profile{' '}
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </>
