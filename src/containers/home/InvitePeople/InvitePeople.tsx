@@ -341,6 +341,18 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                       onChangeText={(e) => this.chnageProjectName(e)}
                       placeholder={'Enter name'}
                     />
+
+                    <Icon
+                      containerStyle={{
+                        position: 'absolute',
+                        right: wp(5),
+                        top: wp(5),
+                      }}
+                      name={'down'}
+                      type={'antdesign'}
+                      size={wp(3)}
+                      iconStyle={{opacity: 0.5}}
+                    />
                   </View>
                   {this.state.orgError && (
                     <Text style={{fontSize: wp(3), color: colors.error}}>
