@@ -32,6 +32,7 @@ export interface SuggestionsPopProps {
   suggestions: Array<any>;
   currentUser: any;
   newAct: Boolean;
+
   save: Function;
   discard: Function;
   suggestedUsers: Array<involved_persons>;
@@ -82,7 +83,7 @@ export default class SuggestionsPop extends React.Component<
       statuses: props.suggestions.status,
       attachments: [],
       addjustificationPop: true,
-      targetDate: '',
+      targetDate: props.suggestions.dueDate,
       submitToAndObserverEmailsLocal: props.submitToAndObserverEmails,
       justificationErr: false,
     };
@@ -90,7 +91,7 @@ export default class SuggestionsPop extends React.Component<
 
   componentDidMount = () => {
     console.log('five why justification');
-    console.log(this.state.AssignedTo[0]);
+    console.log(this.props.suggestions);
 
     if (this.state.AssignedTo[0] == this.props.currentUser.email) {
       this.setState({actionsChangeable: true});
@@ -356,7 +357,7 @@ export default class SuggestionsPop extends React.Component<
                   onFocus={() => {}}
                   style={styles.textInputPopup}
                   multiline={true}
-                  value={moment(this.state.targetDate).format('DD MM YYYY')}
+                  value={moment(this.state.targetDate).format('DD MMM YYYY')}
                   // onChangeText={(e) => {}
                   placeholder={'Select your Target Date'}
                 />
@@ -951,7 +952,7 @@ export default class SuggestionsPop extends React.Component<
                           createdBy: this.props.currentUser.email,
                           assignTo: this.state.AssignedTo[0],
                           assigned_to: this.state.AssignedTo[0],
-                          dueDate: moment().format('YYYY-MM-DD'),
+                          dueDate: this.state.targetDate,
                           is_complete: this.state.is_complete,
                           // is_selected: this.state.is_selected,
                           category: this.state.type,
@@ -970,10 +971,11 @@ export default class SuggestionsPop extends React.Component<
                         }
 
                         if (
-                          this.state.statuses === 'Completed' ||
-                          this.state.statuses === 'Rejected'
+                          this.state.statuses == 'Completed' ||
+                          this.state.statuses == 'Rejected'
                         ) {
-                          if (this.state.justificationT === ' ') {
+                          console.log(this.state.justificationT);
+                          if (this.state.justificationT !== '') {
                             this.props.save(sugg);
                           } else {
                             this.setState({justificationErr: true});

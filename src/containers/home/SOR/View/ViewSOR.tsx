@@ -1743,7 +1743,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               is_selected: false,
                               content: this.state.actionsAndRecommendationText,
                               assigned_to: [],
-                              date: moment().format('YYYY-MM-DD'),
+                              dueDate: moment().format('YYYY-MM-DD'),
                               status: 'InProgress',
                               category: 'Elimination',
                               // actionsAndRecommendationText :"",
@@ -3190,6 +3190,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             isOpen={this.state.SuggestionPop}
             suggestions={this.state.allActionsEdit}
             save={(d: any) => {
+              console.log()
               if (this.state.newActions == true) {
                 this.state.actionsAndRecommendations.push(d);
               } else {

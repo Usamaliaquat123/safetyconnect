@@ -1491,14 +1491,16 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         .suggestiosns(form)
                         .then((res: any) => {
                           var obj = res.data.results;
+                          console.log(obj);
                           for (let i = 0; i < res.data.results.length; i++) {
                             obj[i]['status'] = 0;
                             obj[i]['selected'] = false;
                             obj[i]['is_selected'] = false;
                             obj[i]['is_complete'] = false;
-                            (obj[i]['date'] = moment().format('YYYY-MM-DD')),
+                            (obj[i]['dueDate'] = moment().format('YYYY-MM-DD')),
                               (obj[i]['assigned_to'] = this.state.user.email);
                           }
+
                           this.setState({
                             potientialRisk: d.risk.severity * d.risk.likelihood,
                             actionRecommendations: [...obj],
@@ -1793,7 +1795,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               is_selected: false,
                               content: this.state.actionsAndRecommendationText,
                               assigned_to: this.state.user.email,
-                              date: moment().format('YYYY-MM-DD'),
+                              dueDate: moment().format('YYYY-MM-DD'),
                               status: 'InProgress',
                               category: 'Elimination',
                             },
