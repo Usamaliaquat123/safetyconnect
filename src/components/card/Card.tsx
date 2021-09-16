@@ -16,7 +16,6 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {any} from 'prop-types';
 export interface CardProps {
   data?: any;
   date?: number;
@@ -371,7 +370,7 @@ export default class Card extends React.Component<CardProps, any> {
                           opacity: 0.5,
                           fontFamily: fonts.SFuiDisplayMedium,
                         }}>
-                        {this.props.name.split('@')[0]}
+                        {capitalizeFirstLetter(this.props.name.split('@')[0])}
                       </Text>
                     </View>
                     <View style={styles.cardLocation}>
@@ -383,7 +382,7 @@ export default class Card extends React.Component<CardProps, any> {
                         color={colors.text}
                       />
                       <Text style={styles.cardBorderText}>
-                        {this.props.location}
+                        {capitalizeFirstLetter(this.props.location)}
                       </Text>
                     </View>
                   </View>

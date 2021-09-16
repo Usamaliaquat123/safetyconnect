@@ -148,7 +148,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
     this.setState({});
   };
   onChangeQuestion = (e: any, i: number) => {
-    this.state.fivewhy[i].question = `${e}?`;
+    this.state.fivewhy[i].question = `${e}`;
     this.props.fiveWhyQuestions(this.state.fivewhy.map((d: any) => d.question));
     this.props.fiveWhyAnswer(this.state.fivewhy.map((d: any) => d.answer));
     this.setState({});
@@ -175,10 +175,23 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
             <View style={styles.whyViewContainer}>
               <View key={i} style={styles.viewWhyContainer}>
                 <Text style={styles.viewCountWhy}>{suffixThNd(i + 1)} WHY</Text>
-                <TextInput
-                  style={styles.viewQuestion}
-                  value={d.question}
-                  onChangeText={(e) => this.onChangeQuestion(e, i)}></TextInput>
+
+                <View style={{flexDirection: 'row'}}>
+                  <TextInput
+                    style={styles.viewQuestion}
+                    value={`${d.question}?`}
+                    onChangeText={(e) => {
+                      this.onChangeQuestion(e, i);
+                    }}></TextInput>
+                  {/* <Text
+                    style={{
+                      fontFamily: fonts.SFuiDisplaySemiBold,
+                      // position:
+                      fontSize: wp(3),
+                    }}>
+                    ?
+                  </Text> */}
+                </View>
                 <TextInput
                   style={styles.viewAnswer}
                   value={d.answer}
@@ -207,7 +220,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
                   placeholder={'Add WHY'}
                 />
                 {/* Answer */}
-                <View style={styles.aInputContain}>
+                <View style={[styles.aInputContain]}>
                   <TextInput
                     value={this.state.answer}
                     onChangeText={(e) => this.setState({answer: e})}
@@ -220,12 +233,16 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
               </View>
               {/* Add Questions Button */}
               <TouchableOpacity
-                onPress={() =>
-                  this.addQuestions(
-                    `${this.state.question}?`,
-                    this.state.answer,
-                  )
-                }
+                onPress={() => {
+                  if (this.state.question !== '') {
+                    if (this.state.answer !== '') {
+                      this.addQuestions(
+                        `${this.state.question}`,
+                        this.state.answer,
+                      );
+                    }
+                  }
+                }}
                 style={styles.addQuestionbtn}>
                 <Text style={styles.addQuestionText}>Add Question</Text>
               </TouchableOpacity>
