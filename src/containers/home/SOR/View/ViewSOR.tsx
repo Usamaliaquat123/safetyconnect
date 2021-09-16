@@ -1807,6 +1807,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                   <TouchableOpacity
                                     onPress={() => {
                                       if (d.upload != 'self') {
+                                        console.log(d);
                                         this.photoAnim.play();
                                         downloadFile(d.uri, d.type)
                                           .then((res: any) => {})
@@ -1891,7 +1892,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                           onPress={() => {
                                             if (d.upload != 'self') {
                                               this.photoAnim.play();
-                                              downloadFile(d.url, d.type)
+                                              console.log(d);
+                                              downloadFile(d.uri, d.type)
                                                 .then((res: any) => {})
                                                 .catch((err) => {});
                                             }
