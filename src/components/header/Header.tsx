@@ -14,13 +14,13 @@ export default class Header extends React.Component<HeaderProps, any> {
     return (
       <View style={styles.header}>
         <View style={styles.headertle}>
-          <Icon
+          {/* <Icon
             onPress={() => this.props.onBackPress()}
             size={25}
             name="arrow-back-outline"
             type="ionicon"
             color={colors.secondary}
-          />
+          /> */}
           <View>
             <Text style={styles.title}>Messaging</Text>
             <View style={styles.underScrore} />

@@ -1143,7 +1143,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               ))}
                             </View>
                           ) : (
-                            <Text>
+                            <Text
+                              style={{
+                                fontSize: wp(3),
+                                marginTop: wp(-1),
+                                fontFamily: fonts.SFuiDisplayMedium,
+                              }}>
                               {' '}
                               {this.state.involvedPerson.slice(0, 1)[0].name}
                               {'   '}
