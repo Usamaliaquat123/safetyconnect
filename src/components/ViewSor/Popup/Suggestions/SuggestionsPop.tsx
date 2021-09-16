@@ -81,6 +81,7 @@ export default class SuggestionsPop extends React.Component<
       attachments: [],
       addjustificationPop: true,
       submitToAndObserverEmailsLocal: props.submitToAndObserverEmails,
+      justificationErr: false,
     };
   }
 
@@ -582,6 +583,17 @@ export default class SuggestionsPop extends React.Component<
                               size={wp(4)}
                             />
                           </View>
+                          {this.state.justificationErr == true && (
+                            <Text
+                              style={{
+                                fontSize: wp(3),
+                                paddingLeft: wp(2),
+                                fontFamily: fonts.SFuiDisplayMedium,
+                                color: colors.error,
+                              }}> 
+                              Justification is required!
+                            </Text>
+                          )}
                         </View>
 
                         {/* Justification attachments
@@ -890,10 +902,6 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.AssignedTo.length != 0) {
-                        console.log(
-                          'this.state.AssignedTo  yahdsjdhasjdhsajdbn bbajsdhshjd,NJD,JHBSAdjnbdHASNBDHSABNBD SNBDJADJA dhjdhjahD',
-                        );
-                        console.log(this.state.AssignedTo[0]);
                         var sugg = {
                           // status: this.state.status,
                           content: this.state.observation,
@@ -917,7 +925,19 @@ export default class SuggestionsPop extends React.Component<
                             ),
                           };
                         }
-                        this.props.save(sugg);
+
+                        if (
+                          this.state.statuses === 'Completed' ||
+                          this.state.statuses === 'Rejected'
+                        ) {
+                          if (this.state.justificationT === ' ') {
+                            this.props.save(sugg);
+                          } else {
+                            this.setState({justificationErr: true});
+                          }
+                        } else {
+                          this.props.save(sugg);
+                        }
                       }
                     }}
                     style={styles.saveBtn}>
