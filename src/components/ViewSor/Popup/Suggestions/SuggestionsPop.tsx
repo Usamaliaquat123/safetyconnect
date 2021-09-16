@@ -12,9 +12,10 @@ import {default as Model} from 'react-native-modal';
 import {Icon} from 'react-native-elements';
 import styles from './styles';
 import {Tags, Suggestions} from '@components';
+import Modal from 'react-native-modal';
 import {fileuploader} from '@utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {colors, fonts, animation, GlStyles, images} from '@theme';
 import {Avatar} from 'react-native-elements';
 import {createApi, Create_sor} from '@service';
@@ -74,12 +75,14 @@ export default class SuggestionsPop extends React.Component<
           ? [props.suggestions.assigned_to]
           : props.suggestions.assigned_to,
       actionsText: '',
+      openCalendar: false,
       selectedInput: 0,
       justificationT: '',
       files: [],
       statuses: props.suggestions.status,
       attachments: [],
       addjustificationPop: true,
+      targetDate: '',
       submitToAndObserverEmailsLocal: props.submitToAndObserverEmails,
       justificationErr: false,
     };
@@ -333,6 +336,46 @@ export default class SuggestionsPop extends React.Component<
                 }
               />
             </View>
+
+            <View style={{marginTop: wp(3), alignSelf: 'flex-start'}}>
+              <Text
+                style={{
+                  fontSize: wp(3),
+                  marginLeft: wp(4),
+                  textAlign: 'left',
+                  fontFamily: fonts.SFuiDisplayMedium,
+                }}>
+                Target Date
+              </Text>
+              <TouchableOpacity
+                onPress={() => this.setState({openCalendar: true})}
+                style={[styles.commentTextInput, {marginLeft: wp(4)}]}>
+                <TextInput
+                  editable={false}
+                  maxLength={500}
+                  onFocus={() => {}}
+                  style={styles.textInputPopup}
+                  multiline={true}
+                  value={moment(this.state.targetDate).format('DD MM YYYY')}
+                  // onChangeText={(e) => {}
+                  placeholder={'Select your Target Date'}
+                />
+
+                <TouchableOpacity
+                  onPress={() => {
+                    this.state.AssignedTo.push(this.state.actionsText);
+                    this.setState({actionsText: ''});
+                  }}
+                  style={styles.arrowRightAssigners}>
+                  <Icon
+                    size={wp(5)}
+                    name="calendar"
+                    type="antdesign"
+                    color={colors.primary}
+                  />
+                </TouchableOpacity>
+              </TouchableOpacity>
+            </View>
             {this.state.AssignedTo != undefined && (
               <>
                 {this.state.AssignedTo.length >= 1 && (
@@ -353,7 +396,7 @@ export default class SuggestionsPop extends React.Component<
                         <Text
                           style={{
                             fontSize: wp(3),
-                            marginBottom: wp(3),
+                            marginBottom: wp(1),
                             color: colors.error,
                           }}>
                           You have to assign someone..
@@ -947,6 +990,124 @@ export default class SuggestionsPop extends React.Component<
               </>
             )}
           </View>
+
+          {/* Callender */}
+
+          <Modal
+            animationInTiming={1000}
+            animationIn={'bounceInUp'}
+            animationOut={'bounceOutDown'}
+            animationOutTiming={1000}
+            useNativeDriver={true}
+            isVisible={this.state.openCalendar}
+            onBackdropPress={() => {
+              this.setState({openCalendar: false});
+            }}>
+            <View
+              style={{
+                padding: wp(5),
+                borderRadius: wp(3),
+                backgroundColor: colors.secondary,
+              }}>
+              <Text
+                style={{
+                  fontSize: wp(3.5),
+                  fontFamily: fonts.SFuiDisplayBold,
+                  textAlign: 'center',
+                }}>
+                Select Your Date
+              </Text>
+              <Text
+                style={{
+                  fontSize: wp(2.8),
+                  marginTop: wp(3),
+                  opacity: 0.5,
+                  fontFamily: fonts.SFuiDisplayBold,
+                  textAlign: 'center',
+                }}>
+                {this.state.currMonth}
+              </Text>
+              <Icon
+                onPress={() => this.setState({openCalendar: false})}
+                containerStyle={{
+                  position: 'absolute',
+                  right: wp(2),
+                  top: wp(2),
+                }}
+                name={'cross'}
+                type={'entypo'}
+                size={wp(4)}
+                color={colors.text}
+              />
+              <Calendar
+                theme={{
+                  textDayFontSize: wp(3),
+                  textDayFontFamily: fonts.SFuiDisplayMedium,
+                  dotColor: colors.primary,
+                  // textSectionTitleColor: colors.primary,
+
+                  selectedDayTextColor: colors.primary,
+                }}
+                onDayPress={(day) => {
+                  let data = {
+                    [day.dateString]: {marked: true, color: 'green'},
+                  };
+                  this.setState({
+                    //   currentDate: day.dateString,
+                    marked: data,
+                    selectedDay: day.dateString,
+                  });
+
+                  var date = `${day.dateString}`;
+
+                  this.setState({targetDate: day.dateString});
+                  this.setState({openCalendar: false});
+                }}
+                markedDates={this.state.marked}
+                // markedDates={{}}
+                markingType={'custom'}
+                // Handler which gets executed on day long press. Default = undefined
+                onDayLongPress={(day) => {}}
+                // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
+                monthFormat={'yyyy MM'}
+                // Handler which gets executed when visible month changes in calendar. Default = undefined
+                onMonthChange={(month) => {}}
+                // Hide month navigation arrows. Default = false
+                hideArrows={true}
+                // Replace default arrows with custom ones (direction can be 'left' or 'right')
+                // renderArrow={(direction) => <Arrow />}
+                // Do not show days of other months in month page. Default = false
+                hideExtraDays={true}
+                // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
+                // day from another month that is visible in calendar page. Default = false
+                disableMonthChange={true}
+                // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
+                firstDay={1}
+                // Hide day names. Default = false
+                hideDayNames={false}
+                // Show week numbers to the left. Default = false
+                showWeekNumbers={true}
+                // Handler which gets executed when press arrow icon left. It receive a callback can go back month
+                onPressArrowLeft={(subtractMonth) => subtractMonth()}
+                // Handler which gets executed when press arrow icon right. It receive a callback can go next month
+                onPressArrowRight={(addMonth) => addMonth()}
+                // Disable left arrow. Default = false
+                disableArrowLeft={true}
+                // Disable right arrow. Default = false
+                disableArrowRight={true}
+                // Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates
+                disableAllTouchEventsForDisabledDays={true}
+                // Replace default month and year title with custom one. the function receive a date as parameter.
+                renderHeader={(date) => {
+                  /*Return JSX*/
+
+                  this.setState({currMonth: moment(date).format('MMMM')});
+                }}
+                // Enable the option to swipe between months. Default = false
+                enableSwipeMonths={true}
+              />
+            </View>
+          </Modal>
         </ScrollView>
       </Model>
     );

@@ -2625,7 +2625,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </Text>
               <Text
                 style={{
-                  fontSize: wp(2.5),
+                  fontSize: wp(2.8),
                   marginTop: wp(3),
                   opacity: 0.5,
                   fontFamily: fonts.SFuiDisplayBold,

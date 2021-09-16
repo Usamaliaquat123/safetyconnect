@@ -103,7 +103,8 @@ const styles = StyleSheet.create({
     fontSize: wp(3),
     textAlign: 'left',
     marginTop: wp(3),
-    marginBottom: wp(2),
+    fontFamily: fonts.SFuiDisplayMedium,
+    // marginBottom: wp(2),
   },
   arrowRightAssigners: {
     backgroundColor: colors.lightBlue,

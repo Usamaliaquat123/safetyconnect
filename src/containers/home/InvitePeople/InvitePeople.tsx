@@ -206,7 +206,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
                     </Text>
                   </View>
                   <View style={[styles.inputContainer]}>
-                    <View style={{flexDirection: 'row'}}>
+                    <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
                       {this.state.usersTags.length != 0 && (
                         <Tags
                           style={{height: wp(10)}}
