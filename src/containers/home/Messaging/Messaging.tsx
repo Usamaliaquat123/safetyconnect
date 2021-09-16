@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors} from '@theme';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -8,6 +8,8 @@ import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import {View_sor, messagingUsers, groupConversation} from '@service';
 import {connect} from 'react-redux';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+
 import {searchInObjects} from '@utils';
 import {Imessage} from '@typings';
 import {Search, Header, User} from '@components';
@@ -84,7 +86,23 @@ class Messaging extends React.Component<MessagingProps, any> {
             {/* Group Conversation */}
             <View style={styles.conversationContainer}>
               <Text style={styles.ttleConversation}>Group Conversations</Text>
-              <View style={styles.line} />
+              <Icon
+                containerStyle={{position: 'absolute', bottom: 0, right: 0}}
+                name="add-circle"
+                size={wp(20)}
+                type="Ionicons"
+                color={colors.green}
+              />
+
+              {/* <TouchableOpacity
+                style={{
+                  backgroundColor: colors.green,
+                  padding: wp(3),
+                  borderRadius: wp(2),
+                }}
+                onPress={() => {}}>
+                </TouchableOpacity> */}
+              {/* <View style={styles.line} /> */}
               {this.state.group.map((d: Imessage) => (
                 <User
                   id={d.userId}
@@ -98,7 +116,7 @@ class Messaging extends React.Component<MessagingProps, any> {
                 />
               ))}
             </View>
-            <View style={styles.line} />
+            {/* <View style={styles.line} /> */}
           </View>
         </ScrollView>
       </View>
