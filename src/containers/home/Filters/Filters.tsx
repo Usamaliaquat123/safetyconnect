@@ -405,7 +405,7 @@ export class Filters extends React.Component<FiltersProps, any> {
               }}>
               <Text
                 style={{
-                  marginTop: wp(10),
+                  marginTop: wp(5),
                   textAlign: 'center',
                   fontFamily: fonts.SFuiDisplaySemiBold,
                   color: colors.primary,

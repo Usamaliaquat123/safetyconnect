@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     padding: wp(3),
     borderColor: colors.primary,
     alignItems: 'center',
+    borderRadius: wp(3),
     width: wp(45),
     borderWidth: wp(0.2),
     justifyContent: 'center',
@@ -40,6 +41,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: wp(3),
   },
   applyfilterText: {
     fontSize: wp(3),
