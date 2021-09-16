@@ -471,13 +471,13 @@ export class Filters extends React.Component<FiltersProps, any> {
                     marked: data,
                     selectedDay: day.dateString,
                   });
-
+                  this.state.filterObject['ranges'] = [];
                   if (this.state.datePickerOfFromOrTo === 'from') {
-                    this.state.filterObject['rangeFrom'] = [
+                    this.state.filterObject['ranges'].push(
                       `${moment(day.dateString).format(
                         'YYYY-MM-DDT19:00:00.000',
                       )}Z`,
-                    ];
+                    );
 
                     console.log(moment(day.dateString).format());
 
@@ -485,11 +485,11 @@ export class Filters extends React.Component<FiltersProps, any> {
                       selectedDayFrom: day.dateString,
                     });
                   } else {
-                    this.state.filterObject['rangeTo'] = [
+                    this.state.filterObject['ranges'].push(
                       `${moment(day.dateString).format(
                         'YYYY-MM-DDT19:00:00.000',
                       )}Z`,
-                    ];
+                    );
                     this.setState({
                       selectedDayTo: day.dateString,
                     });
