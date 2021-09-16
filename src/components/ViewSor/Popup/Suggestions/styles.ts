@@ -17,9 +17,9 @@ const styles = StyleSheet.create({
   },
   containerText: {
     // justifyContent: "space-between",
-    flexDirection: 'row',
+    // flexDirection: 'row',
     marginTop: wp(2),
-    marginRight: wp(20),
+    // marginRight: wp(20),
   },
   involveSuggestCont: {
     // borderColor: colors.green,
@@ -45,7 +45,9 @@ const styles = StyleSheet.create({
   containerTextString: {
     fontSize: wp(3.5),
     fontWeight: 'bold',
-    marginLeft: wp(14),
+    // marginLeft: wp(25),
+    textAlign: 'center',
+    // alignSelf: 'center',
     marginBottom: wp(3),
   },
   commentTextInput: {
@@ -78,13 +80,13 @@ const styles = StyleSheet.create({
 
   recommendationsHead: {
     fontSize: wp(3),
-    textAlign: 'left',
-    marginLeft: wp(7),
+    // textAlign: 'left',
+    marginLeft: wp(4),
     marginBottom: wp(2),
   },
   assignersHead: {
     fontSize: wp(3),
-    textAlign: 'left',
+    // textAlign: 'left',
     // marginLeft: wp(7),
     marginTop: wp(3),
     fontWeight: 'bold',

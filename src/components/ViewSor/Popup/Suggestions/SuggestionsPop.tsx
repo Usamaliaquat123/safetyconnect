@@ -292,19 +292,19 @@ export default class SuggestionsPop extends React.Component<
         onBackdropPress={() => this.props.onClose()}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.containerPopup}>
-            <View style={{flexDirection: 'row'}}>
+            <View>
               <View style={styles.containerText}>
                 <Text style={styles.containerTextString}>
                   Action / Recommendation
                 </Text>
+                <Icon
+                  iconStyle={{position: 'absolute', right: wp(3), top: wp(3)}}
+                  onPress={() => this.props.onClose()}
+                  name={'cross'}
+                  type={'entypo'}
+                  color={'black'}
+                />
               </View>
-              <Icon
-                style={{marginLeft: wp(10), marginTop: wp(2)}}
-                onPress={() => this.props.onClose()}
-                name={'cross'}
-                type={'entypo'}
-                color={'black'}
-              />
             </View>
             {/* Content */}
             <View style={{alignSelf: 'flex-start', marginTop: wp(5)}}>
@@ -590,7 +590,7 @@ export default class SuggestionsPop extends React.Component<
                                 paddingLeft: wp(2),
                                 fontFamily: fonts.SFuiDisplayMedium,
                                 color: colors.error,
-                              }}> 
+                              }}>
                               Justification is required!
                             </Text>
                           )}
