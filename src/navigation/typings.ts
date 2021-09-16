@@ -36,7 +36,7 @@ export type StackNavigatorProps = {
   ChangePassword: {email: string; code: any};
 };
 export type BottomTabNavigatorProp = {
-  home: {user?: any};
+  Home: {user?: any};
   sor: {user?: any};
   addNew: {user?: any};
   create: {user?: any};

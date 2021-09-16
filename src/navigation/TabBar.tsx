@@ -38,9 +38,9 @@ export const BottomTabNavigator = () => {
       <Tab.Navigator
         tabBar={(props) => <TabBar {...props} />}
         sceneContainerStyle={{backgroundColor: 'transparent'}}
-        initialRouteName={'home'}>
+        initialRouteName={'Home'}>
         <Tab.Screen
-          name="home"
+          name="Home"
           // initialParams={}
           component={Home}
           options={{}}
@@ -89,7 +89,7 @@ export default class TabBar extends React.Component<TabBarProps, any> {
     }
 
     this.props.state.routes.map((d: any, i: number) => {
-      if (d.name == 'home') {
+      if (d.name == 'Home') {
         d['icon'] = images.bottomTab.home;
       } else if (d.name == 'MyTasks') {
         d['icon'] = images.bottomTab.sors;
@@ -198,6 +198,7 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                     />
                   </View>
                 )}
+
                 {route.name == 'addNew' ? (
                   <View>
                     <View

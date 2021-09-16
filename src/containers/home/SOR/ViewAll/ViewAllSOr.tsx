@@ -369,7 +369,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
           <View style={styles.header}>
             <View style={styles.headertle}>
               <Icon
-                onPress={() => this.props.navigation.navigate('home')}
+                onPress={() => this.props.navigation.navigate('Home')}
                 size={25}
                 name="arrow-back-outline"
                 type="ionicon"
