@@ -452,17 +452,20 @@ export class Preview extends React.Component<ViewAllProps, any> {
     console.log('this.props.route.params.data');
     console.log(this.props.route.params.data);
     var data = [];
-    this.props.route.params.data.justifications[0].justification.question.map(
-      (d: any) => {
-        data.push({question: d});
-      },
-    );
 
-    this.props.route.params.data.justifications[0].justification.answer.map(
-      (d: any, i: number) => {
-        data[i]['answer'] = d;
-      },
-    );
+    if (this.props.route.params.data?.justifications.length != 0) {
+      this.props.route.params.data.justifications[0].justification.question.map(
+        (d: any) => {
+          data.push({question: d});
+        },
+      );
+
+      this.props.route.params.data.justifications[0].justification.answer.map(
+        (d: any, i: number) => {
+          data[i]['answer'] = d;
+        },
+      );
+    }
 
     this.setState({questionAndAnswers: data});
 
