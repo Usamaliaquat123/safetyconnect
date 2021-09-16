@@ -2236,6 +2236,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             data: d,
                           })
                         }
+                        isView={true}
                         name={d.created_by}
                         date={d.occurred_at}
                         risk={d.risk.severity * d.risk.likelihood}

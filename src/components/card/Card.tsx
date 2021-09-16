@@ -20,6 +20,7 @@ export interface CardProps {
   data?: any;
   date?: number;
   risk?: number;
+  isView: boolean;
   observation?: string;
   classify?: any;
   location?: string;
@@ -267,15 +268,20 @@ export default class Card extends React.Component<CardProps, any> {
                           ? ''
                           : moment(this.props.date).format('LT, DD MMM YYYY')}
                       </Text>
-                      <Icon
-                        containerStyle={{marginLeft: wp(7)}}
-                        name={
-                          this.props.selection ? 'checkcircle' : 'checkcircleo'
-                        }
-                        type={'antdesign'}
-                        size={wp(5)}
-                        color={colors.green}
-                      />
+
+                      {this.props.isView == undefined && (
+                        <Icon
+                          containerStyle={{marginLeft: wp(7)}}
+                          name={
+                            this.props.selection
+                              ? 'checkcircle'
+                              : 'checkcircleo'
+                          }
+                          type={'antdesign'}
+                          size={wp(5)}
+                          color={colors.green}
+                        />
+                      )}
                     </View>
                     {this.props.isclassify == true ? (
                       <TouchableOpacity

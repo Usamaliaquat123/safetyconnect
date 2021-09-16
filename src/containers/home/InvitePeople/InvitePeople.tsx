@@ -418,7 +418,7 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
           <View style={styles.modelContainer}>
             <View>
               <Text style={[styles.errHeadPop, {color: colors.green}]}>
-                Invite Sended
+                Invite Sent
               </Text>
               <Text style={styles.errEmailPassDesc}>
                 Email invite has been sended on your given project
