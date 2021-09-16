@@ -10,6 +10,7 @@ import {colors, fonts} from '@theme';
 import {Icon, Avatar} from 'react-native-elements';
 import moment from 'moment';
 import {mapChart} from '@service';
+import {capitalizeFirstLetter} from '@utils';
 import styles from './styles';
 import {
   widthPercentageToDP as wp,
@@ -328,7 +329,7 @@ export default class Card extends React.Component<CardProps, any> {
                           styles.cardBorderText,
                           {color: this.props.iconConf.color},
                         ]}>
-                        {this.props.classify}
+                        {capitalizeFirstLetter(this.props.classify)}
                       </Text>
                     </View>
                     <View
