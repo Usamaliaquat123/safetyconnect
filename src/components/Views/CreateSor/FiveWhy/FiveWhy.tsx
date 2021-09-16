@@ -179,18 +179,17 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
                 <View style={{flexDirection: 'row'}}>
                   <TextInput
                     style={styles.viewQuestion}
-                    value={`${d.question}?`}
+                    value={`${d.question}`}
                     onChangeText={(e) => {
                       this.onChangeQuestion(e, i);
                     }}></TextInput>
-                  {/* <Text
+                  <Text
                     style={{
-                      fontFamily: fonts.SFuiDisplaySemiBold,
-                      // position:
-                      fontSize: wp(3),
+                      fontFamily: fonts.SFuiDisplayBold,
+                      fontSize: wp(3.5),
                     }}>
                     ?
-                  </Text> */}
+                  </Text>
                 </View>
                 <TextInput
                   style={styles.viewAnswer}

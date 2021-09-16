@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   viewQuestion: {
     fontSize: wp(3.7),
     borderBottomWidth: 0,
-    width: wp(80),
+    // width: wp(80),
     textAlignVertical: 'top',
     padding: 0,
     // paddingBottom: wp(-2),
