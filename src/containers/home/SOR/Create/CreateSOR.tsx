@@ -81,6 +81,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
+      currMonth: '',
       selectedLocation: {},
       allProjectsSugg: [],
       allLocationsSugg: [],
@@ -2622,6 +2623,16 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 }}>
                 Select Your Date
               </Text>
+              <Text
+                style={{
+                  fontSize: wp(2.5),
+                  marginTop: wp(3),
+                  opacity: 0.5,
+                  fontFamily: fonts.SFuiDisplayBold,
+                  textAlign: 'center',
+                }}>
+                {this.state.currMonth}
+              </Text>
               <Icon
                 onPress={() => this.setState({setDateModal: false})}
                 containerStyle={{
@@ -2695,6 +2706,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 // Replace default month and year title with custom one. the function receive a date as parameter.
                 renderHeader={(date) => {
                   /*Return JSX*/
+
+                  this.setState({currMonth: moment(date).format('MMMM')});
                 }}
                 // Enable the option to swipe between months. Default = false
                 enableSwipeMonths={true}
