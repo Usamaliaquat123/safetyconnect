@@ -708,7 +708,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           .createApi()
           .getFileApi(data)
           .then((d: any) => {
+            console.log('================================asdsa');
+            console.log();
             for (let i = 0; i < d.data.length; i++) {
+              var index = d.data[i].split('?')[0].split('/').length - 1;
+              console.log(d.data[i].split('?')[0].split('/')[index]);
+
+              var name = d.data[i].split('?')[0].split('/')[index];
               if (
                 attach[i].split('.')[1] == 'png' ||
                 attach[i].split('.')[1] == 'jpeg' ||
@@ -717,14 +723,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 attach[i] = {};
                 attach[i]['type'] = 'image';
                 attach[i]['upload'] = '';
-                attach[i]['name'] = attchf[i];
+                attach[i]['name'] = name;
                 attach[i]['uri'] = d.data[i];
                 this.setState({});
               } else if (attach[i].split('.')[1] == 'pdf') {
                 attach[i] = {};
                 attach[i]['type'] = 'pdf';
                 attach[i]['upload'] = '';
-                attach[i]['name'] = attchf[i];
+                attach[i]['name'] = name;
                 attach[i]['uri'] = d.data[i];
                 this.setState({});
               } else if (
@@ -734,20 +740,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 attach[i] = {};
                 attach[i]['type'] = 'doc';
                 attach[i]['upload'] = '';
-                attach[i]['name'] = attchf[i];
+                attach[i]['name'] = name;
                 attach[i]['uri'] = d.data[i];
                 this.setState({});
               } else if (attach[i].split('.')[1] == 'xlsx') {
                 attach[i] = {};
                 attach[i]['type'] = 'xlsx';
                 attach[i]['upload'] = '';
-                attach[i]['name'] = attchf[i];
+                attach[i]['name'] = name;
                 attach[i]['uri'] = d.data[i];
                 this.setState({});
               }
             }
           });
       }
+      console.log(attach);
     });
 
     this.setState({});
@@ -2384,6 +2391,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 </View>
                               )}
 
+                              <Text
+                                style={{
+                                  fontSize: wp(2),
+                                  position: 'absolute',
+                                  fontFamily: fonts.SFuiDisplayMedium,
+                                  bottom: wp(3),
+                                }}>
+                                {f.name}
+                              </Text>
                               <TouchableOpacity
                                 onPress={() => {
                                   var arr = [

@@ -1132,8 +1132,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         this.setState({
           errorModal: true,
 
-          errHeadingText: 'Type your current location.',
-          errDesText: 'You dont specify specify your location .',
+          errHeadingText: 'Type your current Area.',
+          errDesText: 'You dont specify specify your area .',
         });
       }
     } else {
@@ -1465,9 +1465,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   <View style={{flexDirection: 'row', marginTop: wp(-7)}}>
                     <Text style={styles.textinputItHappenAt}>
                       <Text style={{fontWeight: 'bold'}}>
-                        {moment().format(
-                          'MMMM DD, YYYY',
-                        )}
+                        {moment().format('MMMM DD, YYYY')}
                       </Text>{' '}
                       at about{' '}
                     </Text>
