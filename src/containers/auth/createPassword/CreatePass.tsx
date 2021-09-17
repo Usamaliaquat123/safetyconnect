@@ -58,6 +58,8 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       errorModal: false,
       passMatchText: '',
       loading: true,
+      organizations: [],
+      projects: [],
       name: '',
 
       // for testing
@@ -74,6 +76,10 @@ class CreatePass extends React.Component<CreatePassProps, any> {
   };
   componentDidMount() {
     if (this.props.route.params.invited != undefined) {
+      this.setState({
+        organizations: this.props.route.params.invited.organization,
+        projects: this.props.route.params.invited.project,
+      });
       savedCurrentOrganization(this.props.route.params.invited.organization);
       savedCurrentProject(this.props.route.params.invited.project);
     }
@@ -114,7 +120,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                     .createUser({
                       name: this.state.name,
                       email: this.props.route.params.email, // dynal=mic link
-                      organization: [],
+                      organization: this.state.organizations,
                       img_url:
                         'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
                     })
