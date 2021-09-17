@@ -43,6 +43,7 @@ export default class Splash extends React.Component<SplashProps, any> {
               // console.log(res);
               AsyncStorage.setItem('user', JSON.stringify(res.data.data));
 
+              console.log(res);
               if (res.data.data.organizations.length != 0) {
                 savedCurrentOrganization(res.data.data.organizations[0]._id);
                 if (res.data.data.organizations[0].projects.length != 0) {
@@ -57,7 +58,7 @@ export default class Splash extends React.Component<SplashProps, any> {
               } else {
                 this.props.navigation.navigate('CreateOrganization');
               }
-              // this.props.navigation.navigate('Main');
+              this.props.navigation.navigate('Main');
             });
         }, 5000);
       } else {

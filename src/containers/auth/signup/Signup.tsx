@@ -62,6 +62,7 @@ class Signup extends React.Component<SignupProps, any> {
     };
   }
   handleOpenURL(navigation: any) {
+    console.log('handle open url');
     console.log(navigation);
     this.setState({loading: true, errorModal: true});
     try {

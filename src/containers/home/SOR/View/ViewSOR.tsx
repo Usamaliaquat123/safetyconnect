@@ -1146,12 +1146,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             <Text
                               style={{
                                 fontSize: wp(3),
-                                marginTop: wp(-1),
+                                // marginTop: wp(-10),
                                 fontFamily: fonts.SFuiDisplayMedium,
                               }}>
-                              {' '}
                               {this.state.involvedPerson.slice(0, 1)[0].name}
-                              {'   '}
                               <TouchableOpacity
                                 onPress={() =>
                                   this.setState({
@@ -3190,7 +3188,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             isOpen={this.state.SuggestionPop}
             suggestions={this.state.allActionsEdit}
             save={(d: any) => {
-              console.log()
+              console.log();
               if (this.state.newActions == true) {
                 this.state.actionsAndRecommendations.push(d);
               } else {

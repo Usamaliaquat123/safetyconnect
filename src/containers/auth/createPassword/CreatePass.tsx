@@ -17,7 +17,11 @@ import {connect} from 'react-redux';
 import {Icon} from 'react-native-elements';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
-import {validatePassword} from '@utils';
+import {
+  validatePassword,
+  savedCurrentOrganization,
+  savedCurrentProject,
+} from '@utils';
 import {colors, images, GlStyles} from '@theme';
 import {RouteProp, ThemeProvider} from '@react-navigation/native';
 import styles from './styles';
@@ -68,6 +72,12 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       passMatchText: '',
     });
   };
+  componentDidMount() {
+    if (this.props.route.params.invited != undefined) {
+      savedCurrentOrganization(this.props.route.params.invited.organization);
+      savedCurrentProject(this.props.route.params.invited.project);
+    }
+  }
 
   setupPass = async () => {
     console.log(this.state.password);
@@ -158,8 +168,6 @@ class CreatePass extends React.Component<CreatePassProps, any> {
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* content */}
           <View>
-    
-  
             <View style={{marginTop: wp(5)}}>
               <View style={{marginBottom: wp(10)}}>
                 <Text style={styles.headingContainer}>

@@ -214,20 +214,29 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
             .setUserInfo(setUserInfoData)
             .then((res) => {
               console.log(res);
-              if ((res.status = 200)) {
-                this.setState({
-                  loading: false,
-                  errorModal: false,
-                });
+              this.setState({
+                loading: false,
+                errorModal: false,
+              });
+              if (res.status == 200) {
                 api
                   .createApi()
                   .getUser(this.props.route.params.username)
                   .then((res: any) => {
-                    AsyncStorage.setItem('user', JSON.stringify(res.data.data));
-                  });
-                AsyncStorage.setItem('email', this.props.route.params.username);
+                    AsyncStorage.getItem('projectId').then((res) => {
+                      if (res) {
+                        this.props.navigation.navigate('Main');
+                      } else {
+                        this.props.navigation.navigate('CreateOrganization');
+                      }
+                    });
 
-                this.props.navigation.navigate('CreateOrganization');
+                    AsyncStorage.setItem('user', JSON.stringify(res.data.data));
+                    AsyncStorage.setItem(
+                      'email',
+                      this.props.route.params.username,
+                    );
+                  });
               }
             });
           //   .catch((err) => console.log(err));

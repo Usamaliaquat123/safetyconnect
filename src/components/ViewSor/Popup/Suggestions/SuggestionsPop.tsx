@@ -302,7 +302,11 @@ export default class SuggestionsPop extends React.Component<
                   Action / Recommendation
                 </Text>
                 <Icon
-                  style={{position: 'absolute', right: wp(3), top: wp(3)}}
+                  containerStyle={{
+                    position: 'absolute',
+                    right: wp(-15),
+                    // top: wp(),
+                  }}
                   onPress={() => this.props.onClose()}
                   name={'cross'}
                   type={'entypo'}

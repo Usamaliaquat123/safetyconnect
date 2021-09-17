@@ -530,25 +530,55 @@ export const redirectDynamiclink = (link: any, navigation: any) => {
   // console.log(link);
   if (link != null) {
     if (link.url.split('/')[3].split('?')[0] == 'user-info') {
-      navigation.navigate('CreatePass', {
-        email: link.url
-          .split('/')[3]
-          .split('?')[1]
-          .split('email=')[1]
-          .split('&')[0],
-        code: link.url.split('/')[3].split('?')[1].split('&')[1].split('=')[1],
-        type: 'verify',
-      });
+      // check if user is invited
+      var val = link.url.split('&').length - 1;
+      // console.log(link.url.split('&')[val].split('=')[1]);
+      // console.log(val);
+
+      if (link.url.split('&')[val].split('=')[0] == 'invitedBy') {
+        navigation.navigate('CreatePass', {
+          invited: {
+            invitedBy: link.url.split('&')[val].split('=')[1],
+            organization: link.url.split('&')[2].split('=')[1],
+            project: link.url.split('&')[4].split('=')[1],
+          },
+          email: link.url
+            .split('/')[3]
+            .split('?')[1]
+            .split('email=')[1]
+            .split('&')[0],
+          code: link.url
+            .split('/')[3]
+            .split('?')[1]
+            .split('&')[1]
+            .split('=')[1],
+          type: 'verify',
+        });
+      } else {
+        navigation.navigate('CreatePass', {
+          email: link.url
+            .split('/')[3]
+            .split('?')[1]
+            .split('email=')[1]
+            .split('&')[0],
+          code: link.url
+            .split('/')[3]
+            .split('?')[1]
+            .split('&')[1]
+            .split('=')[1],
+          type: 'verify',
+        });
+      }
     } else if (link.url.split('/')[3].split('?')[0] == 'change-password') {
       console.log(link);
-      navigation.navigate('ChangePassword', {
-        email: link.url
-          .split('/')[3]
-          .split('?')[1]
-          .split('email=')[1]
-          .split('&')[0],
-        code: link.url.split('/')[3].split('?')[1].split('&')[1].split('=')[1],
-      });
+      // navigation.navigate('ChangePassword', {
+      //   email: link.url
+      //     .split('/')[3]
+      //     .split('?')[1]
+      //     .split('email=')[1]
+      //     .split('&')[0],
+      //   code: link.url.split('/')[3].split('?')[1].split('&')[1].split('=')[1],
+      // });
     } else if (link.url.split('/')[3].split('?')[0] == 'check-social-user') {
       // social login
       // console.log(link);

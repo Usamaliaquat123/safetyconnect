@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   },
   containerText: {
     // justifyContent: "space-between",
-    // flexDirection: 'row',
+    flexDirection: 'row',
     marginTop: wp(2),
     // marginRight: wp(20),
   },

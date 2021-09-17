@@ -3,7 +3,16 @@ export type StackNavigatorProps = {
   Login: undefined;
   Signup: undefined;
   TellAboutYou: {username: string; isgoogle?: boolean};
-  CreatePass: {email: string; code: any; type?: string};
+  CreatePass: {
+    email: string;
+    code: any;
+    type?: string;
+    invited?: {
+      invitedBy: string;
+      organization: string;
+      project: string;
+    };
+  };
   CreateOrg: undefined;
   Forgot: undefined;
   CreateProj: {organization: string};
