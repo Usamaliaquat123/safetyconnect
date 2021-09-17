@@ -194,6 +194,8 @@ export default class More extends React.Component<MoreProps, any> {
 
                   AsyncStorage.removeItem('user');
                   AsyncStorage.removeItem('email');
+                  AsyncStorage.removeItem('organizationId');
+                  AsyncStorage.removeItem('projectId');
 
                   this.props.navigation.dispatch(
                     CommonActions.reset({

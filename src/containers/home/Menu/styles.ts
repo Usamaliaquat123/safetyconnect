@@ -23,6 +23,25 @@ const styles = StyleSheet.create({
     padding: wp(5),
     width: wp(90),
   },
+  involvePSt: {
+    fontFamily: fonts.SFuiDisplayMedium,
+    fontSize: wp(3),
+  },
+  involveSuggestCont: {
+    borderColor: colors.textOpa,
+    borderRadius: wp(2),
+    padding: wp(3),
+    borderWidth: wp(0.3),
+    marginTop: wp(1),
+  },
+  involvePsuggCont: {
+    borderColor: colors.textOpa,
+    borderBottomWidth: wp(0.1),
+    paddingTop: wp(2),
+    paddingBottom: wp(2),
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
   inputContainer: {
     marginTop: wp(2),
     flexWrap: 'wrap',

@@ -366,19 +366,14 @@ export default class SuggestionsPop extends React.Component<
                   placeholder={'Select your Target Date'}
                 />
 
-                <TouchableOpacity
-                  onPress={() => {
-                    this.state.AssignedTo.push(this.state.actionsText);
-                    this.setState({actionsText: ''});
-                  }}
-                  style={styles.arrowRightAssigners}>
+                <View style={styles.arrowRightAssigners}>
                   <Icon
                     size={wp(5)}
                     name="calendar"
                     type="antdesign"
                     color={colors.primary}
                   />
-                </TouchableOpacity>
+                </View>
               </TouchableOpacity>
             </View>
             {this.state.AssignedTo != undefined && (
@@ -1077,7 +1072,10 @@ export default class SuggestionsPop extends React.Component<
                 // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
                 monthFormat={'yyyy MM'}
                 // Handler which gets executed when visible month changes in calendar. Default = undefined
-                onMonthChange={(month) => {}}
+                onMonthChange={(d) => {
+                  console.log(d.month);
+                  this.setState({currMonth: moment(d.month).format('MMMM')});
+                }}
                 // Hide month navigation arrows. Default = false
                 hideArrows={true}
                 // Replace default arrows with custom ones (direction can be 'left' or 'right')

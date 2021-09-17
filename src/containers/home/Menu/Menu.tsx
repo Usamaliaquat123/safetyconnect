@@ -31,7 +31,7 @@ import {bindActionCreators} from 'redux';
 
 import {AllSorDTO} from '@dtos';
 import {getActiveChildNavigationOptions} from 'react-navigation';
-import {getCurrentOrganization} from '@utils/utils';
+import {getCurrentOrganization, getCurrentProject} from '@utils/utils';
 // import {validateEmail} from '@utils/';
 type MenuNavigationProp = StackNavigationProp<StackNavigatorProps, 'Menu'>;
 type MenuRouteProp = RouteProp<StackNavigatorProps, 'Menu'>;
@@ -57,6 +57,7 @@ class Menu extends React.Component<MenuProps, any> {
       peoplesText: '',
       organizationSugg: [],
       organizations: [],
+      currOrganizations: {},
       peoples: [], // must be array of id's
       projects: [],
     };
@@ -69,11 +70,27 @@ class Menu extends React.Component<MenuProps, any> {
         .createApi()
         .getUser(email)
         .then((res: any) => {
+          console.log(res.data.data.organizations);
           this.setState({organizations: res.data.data.organizations});
+          getCurrentOrganization().then((orgId) => {
+            this.setState({
+              currOrganization: res.data.data.organizations.filter(
+                (d) => d._id == orgId,
+              )[0].name,
+            });
+          });
         });
     });
   }
-  changeOrganizationName = (e: any) => {};
+  changeOrganizationName = (e: any) => {
+    var strArr = [];
+    for (var j = 0; j < this.state.organizations.length; j++) {
+      if (this.state.organizations[j].name.toLowerCase().match(e)) {
+        strArr.push(this.state.organizations[j]);
+      }
+    }
+    this.setState({organizationSugg: strArr});
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -190,11 +207,7 @@ class Menu extends React.Component<MenuProps, any> {
                   this.setState({organizationSugg: this.state.organizations})
                 }
                 // editable={this.state.noOrg}
-                value={
-                  this.state.noOrg == false
-                    ? this.state.projectText
-                    : "You don't have any organizations yet"
-                }
+                value={this.state.currOrganization}
                 style={{
                   fontSize: wp(3),
                   width: wp(80),
@@ -215,6 +228,46 @@ class Menu extends React.Component<MenuProps, any> {
                 iconStyle={{opacity: 0.5}}
               />
             </View>
+            {/* Suggestions of organization */}
+            {this.state.organizationSugg.length != 0 ? (
+              <View>
+                <View style={styles.involveSuggestCont}>
+                  {this.state.organizationSugg.map((d: any, i: number) => (
+                    <TouchableOpacity
+                      key={i}
+                      onPress={() => {
+                        this.setState({
+                          projectText: d,
+                          organizationSugg: [],
+                        });
+                      }}
+                      style={[
+                        styles.involvePsuggCont,
+                        this.state.organizationSugg.length == i + 1
+                          ? {borderBottomWidth: wp(0)}
+                          : null,
+                      ]}>
+                      <Icon
+                        name={'stats-chart'}
+                        type={'ionicon'}
+                        iconStyle={{opacity: 0.5}}
+                        size={wp(3)}
+                        containerStyle={{marginRight: wp(3)}}
+                      />
+                      <View style={{alignItems: 'center'}}>
+                        <Text
+                          style={[
+                            styles.involvePSt,
+                            {fontSize: wp(3), opacity: 0.5},
+                          ]}>
+                          {d.name}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+            ) : null}
           </View>
         </View>
       </View>
