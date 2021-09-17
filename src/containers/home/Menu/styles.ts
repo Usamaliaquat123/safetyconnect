@@ -23,6 +23,16 @@ const styles = StyleSheet.create({
     padding: wp(5),
     width: wp(90),
   },
+  inputContainer: {
+    marginTop: wp(2),
+    flexWrap: 'wrap',
+    borderColor: colors.textOpa,
+    borderWidth: wp(0.3),
+    paddingLeft: wp(3),
+    borderRadius: wp(2),
+    // flexDirection: 'row',
+    // alignItems: 'center',
+  },
   container: {
     flex: 1,
     backgroundColor: 'transparent',

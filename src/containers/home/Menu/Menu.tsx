@@ -21,7 +21,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 
 import {RouteProp, CommonActions} from '@react-navigation/native';
-import {colors, images, GlStyles} from '@theme';
+import {colors, images, GlStyles, fonts} from '@theme';
 import {animation} from '@theme';
 import LottieView from 'lottie-react-native';
 import {createApi as api, createApi} from '@service';
@@ -31,6 +31,7 @@ import {bindActionCreators} from 'redux';
 
 import {AllSorDTO} from '@dtos';
 import {getActiveChildNavigationOptions} from 'react-navigation';
+import {getCurrentOrganization} from '@utils/utils';
 // import {validateEmail} from '@utils/';
 type MenuNavigationProp = StackNavigationProp<StackNavigatorProps, 'Menu'>;
 type MenuRouteProp = RouteProp<StackNavigatorProps, 'Menu'>;
@@ -54,12 +55,25 @@ class Menu extends React.Component<MenuProps, any> {
       orgDetails: '',
       projectLeader: '',
       peoplesText: '',
+      organizationSugg: [],
+      organizations: [],
       peoples: [], // must be array of id's
       projects: [],
     };
   }
 
   Menu = () => {};
+  componentDidMount() {
+    AsyncStorage.getItem('email').then((email: any) => {
+      createApi
+        .createApi()
+        .getUser(email)
+        .then((res: any) => {
+          this.setState({organizations: res.data.data.organizations});
+        });
+    });
+  }
+  changeOrganizationName = (e: any) => {};
   render() {
     return (
       <View style={styles.container}>
@@ -156,6 +170,52 @@ class Menu extends React.Component<MenuProps, any> {
             </View>
             <Text style={styles.auditReportText}>Invite</Text>
           </TouchableOpacity>
+          {/* line height */}
+          <View
+            style={{
+              marginTop: wp(3),
+              height: wp(1),
+              backgroundColor: '#F6F6F6',
+            }}
+          />
+          {/* Organization Selector */}
+          <View style={{padding: wp(3)}}>
+            <Text
+              style={{fontSize: wp(3), fontFamily: fonts.SFuiDisplayMedium}}>
+              Select your organization
+            </Text>
+            <View style={[styles.inputContainer]}>
+              <TextInput
+                onFocus={() =>
+                  this.setState({organizationSugg: this.state.organizations})
+                }
+                // editable={this.state.noOrg}
+                value={
+                  this.state.noOrg == false
+                    ? this.state.projectText
+                    : "You don't have any organizations yet"
+                }
+                style={{
+                  fontSize: wp(3),
+                  width: wp(80),
+                }}
+                onChangeText={(e) => this.changeOrganizationName(e)}
+                placeholder={'Enter name'}
+              />
+
+              <Icon
+                containerStyle={{
+                  position: 'absolute',
+                  right: wp(5),
+                  top: wp(5),
+                }}
+                name={'down'}
+                type={'antdesign'}
+                size={wp(3)}
+                iconStyle={{opacity: 0.5}}
+              />
+            </View>
+          </View>
         </View>
       </View>
     );
