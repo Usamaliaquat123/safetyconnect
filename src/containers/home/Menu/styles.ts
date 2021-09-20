@@ -3,7 +3,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 const styles = StyleSheet.create({
   containerOfIcon: {
     marginTop: wp(1),
