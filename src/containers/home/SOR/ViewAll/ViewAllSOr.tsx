@@ -459,23 +459,28 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
                     this.componentDidMount();
                   }}
-                  style={{padding: 3, opacity: 0.5}}
+                  containerStyle={{
+                    paddingLeft: wp(4),
+                    opacity: 0.5,
+                    // marginRight: wp(-),
+                  }}
                   size={wp(6)}
                   name="search1"
                   type="antdesign"
-                  color={colors.text}
+                  color={colors.primary}
                 />
               </View>
 
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Filters')} style={{  flexDirection : "row"}}>
-              <Icon
-                style={{padding: 3}}
-                size={wp(7)}
-                name="filter-variant"
-                type="material-community"
-                color={colors.primary}
-              />
+                onPress={() => this.props.navigation.navigate('Filters')}
+                style={{flexDirection: 'row'}}>
+                <Icon
+                  style={{padding: 3}}
+                  size={wp(7)}
+                  name="filter-variant"
+                  type="material-community"
+                  color={colors.primary}
+                />
                 <Text style={styles.filerText}>Filters </Text>
               </TouchableOpacity>
             </View>

@@ -275,6 +275,7 @@ const styles = StyleSheet.create({
     fontSize: wp(4),
     fontFamily: fonts.SFuiDisplayMedium,
     marginLeft: wp(3),
+    marginTop: wp(1),
     color: colors.primary,
     marginRight: wp(3),
   },
