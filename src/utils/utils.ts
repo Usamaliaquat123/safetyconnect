@@ -165,12 +165,12 @@ export const searchInSuggestions = (
   str: string,
   strArray: Array<any>,
 ): Array<Object> => {
-  var strArr = [];
-  for (var j = 0; j < strArray.length; j++) {
-    if (strArray[j].email.toLowerCase().match(str)) {
-      strArr.push(strArray[j]);
+    var strArr = [];
+    for (var j = 0; j < strArray.length; j++) {
+      if (strArray[j].email.toLowerCase().match(str)) {
+        strArr.push(strArray[j]);
+      }
     }
-  }
   return strArr;
 };
 
