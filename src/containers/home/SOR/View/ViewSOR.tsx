@@ -295,7 +295,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
 
 
-          console.log('usdbsdsbdjb');
 
           if(this.state.user.email == this.props.route.params.data.created_by){
             this.setState({ isMarkAsComplete:  true })

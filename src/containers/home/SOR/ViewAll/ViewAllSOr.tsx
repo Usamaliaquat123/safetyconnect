@@ -468,7 +468,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
               </View>
 
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Filters')}>
+                onPress={() => this.props.navigation.navigate('Filters')} style={{  flexDirection : "row"}}>
               <Icon
                 style={{padding: 3}}
                 size={wp(7)}
