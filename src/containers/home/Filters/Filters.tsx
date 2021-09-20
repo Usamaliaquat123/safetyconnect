@@ -382,9 +382,11 @@ export class Filters extends React.Component<FiltersProps, any> {
 
             <View style={styles.btnsContainer}>
               {/* Close button */}
-              <View style={styles.closebtnContainer}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.goBack()}
+                style={styles.closebtnContainer}>
                 <Text style={styles.closeFilterText}>Close</Text>
-              </View>
+              </TouchableOpacity>
               {/* Apply button */}
               <TouchableOpacity
                 onPress={() => this.submitFilters(this.state.filterObject)}

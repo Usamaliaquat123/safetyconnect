@@ -466,6 +466,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   color={colors.text}
                 />
               </View>
+
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Filters')}>
               <Icon
                 style={{padding: 3}}
                 size={wp(7)}
@@ -473,9 +476,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 type="material-community"
                 color={colors.primary}
               />
-
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Filters')}>
                 <Text style={styles.filerText}>Filters </Text>
               </TouchableOpacity>
             </View>

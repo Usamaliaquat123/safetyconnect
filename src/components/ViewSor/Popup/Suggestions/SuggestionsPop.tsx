@@ -604,9 +604,6 @@ export default class SuggestionsPop extends React.Component<
                         <View>
                           <Text style={styles.justificationHeadingText}>
                             Justification:{'    '}
-                            <Text style={styles.justificationtextOptional}>
-                              (Optional)
-                            </Text>
                           </Text>
                           <View style={styles.commentTextInput}>
                             <TextInput

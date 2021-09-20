@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   submitsorbtnSb: {
-    padding: wp(5),
+    padding: wp(3),
     // width: wp(45),
     borderColor: colors.green,
     marginTop: wp(6),
