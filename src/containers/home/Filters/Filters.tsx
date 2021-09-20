@@ -85,9 +85,15 @@ export class Filters extends React.Component<FiltersProps, any> {
 
   componentDidMount = () => {
     this.getAllUsers();
+    this.state.filterObject['ranges'] = [];
   };
   // submiti filters
   submitFilters = (filterObject: any) => {
+    if (this.state.filterObject['ranges'].length != 2) {
+      this.state.filterObject['ranges'].push(
+        `${moment().format('YYYY-MM-DD')}`,
+      );
+    }
     AsyncStorage.setItem('filters', JSON.stringify(filterObject));
     this.props.navigation.navigate('Main');
   };
@@ -473,12 +479,10 @@ export class Filters extends React.Component<FiltersProps, any> {
                     marked: data,
                     selectedDay: day.dateString,
                   });
-                  this.state.filterObject['ranges'] = [];
+                  // this.state.filterObject['ranges'] = [];
                   if (this.state.datePickerOfFromOrTo === 'from') {
                     this.state.filterObject['ranges'].push(
-                      `${moment(day.dateString).format(
-                        'YYYY-MM-DDT19:00:00.000',
-                      )}Z`,
+                      `${moment(day.dateString).format('YYYY-MM-DD')}`,
                     );
 
                     console.log(moment(day.dateString).format());
@@ -488,9 +492,7 @@ export class Filters extends React.Component<FiltersProps, any> {
                     });
                   } else {
                     this.state.filterObject['ranges'].push(
-                      `${moment(day.dateString).format(
-                        'YYYY-MM-DDT19:00:00.000',
-                      )}Z`,
+                      `${moment(day.dateString).format('YYYY-MM-DD')}`,
                     );
                     this.setState({
                       selectedDayTo: day.dateString,

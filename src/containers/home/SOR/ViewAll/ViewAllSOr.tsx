@@ -126,7 +126,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   }
 
   componentDidMount = () => {
-    console.log(this.props.reduxState.allSors);
+    // console.log(this.props.reduxState.allSors);
     // console.log(this.props.reduxState.loading);
 
     AsyncStorage.getItem('email').then((email: any) => {
@@ -195,10 +195,13 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
               console.log('filtered data');
               console.log(data);
+
               createApi
                 .createApi()
                 .filterSors(data)
                 .then((res: any) => {
+                  console.log('res');
+                  console.log(res);
                   if (res.data.message == 'no sor found') {
                     // console.log('gaye mutheda');
                     // console.log(dta);
@@ -226,8 +229,10 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   // console.log('gaye mutheda');
                   // console.log(res.data);
                   if (res.data.data == undefined) {
-                    this.setState({lovading: false});
+                    this.setState({loading: false});
                   } else {
+                    console.log('data of view ajsdhasjdhasjdbasjdb');
+                    console.log(res.data.data);
                     res.data.data.report.reverse();
                     for (let i = 0; i < res.data.data.report.length; i++) {
                       if (res.data.data.report[i].status == 1) {
