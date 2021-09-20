@@ -103,6 +103,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       actionsAndRecommendations: this.props.route.params.data.action_required,
       // popup Assigners
       addAssigners: false,
+      isMarkAsComplete : false,
       involveAndNotifiedUsersName: '',
       IsaddInvAndNotifiedUser: false,
       involvedAndNotifiedUserType: 'involved',
@@ -291,6 +292,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         .getUser(email)
         .then((user: any) => {
           this.setState({user: user.data.data});
+
+
+
+          console.log('usdbsdsbdjb');
+
+          if(this.state.user.email == this.props.route.params.data.created_by){
+            this.setState({ isMarkAsComplete:  true })
+          }else if(this.state.user.email == this.props.route.params.data.submit_to[0]){
+            this.setState({ isMarkAsComplete:  true })
+            
+          }else{
+            this.setState({ isMarkAsComplete:  false })
+
+          }
+
         });
     });
 
@@ -604,8 +620,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       .then((res: any) => {
         // AsyncStorage.getItem('involved_person').then((involveppl: any) => {
         // var involvedPersonss = JSON.parse(involveppl);
-        console.log('res >>>>>>>>>>>>>>>>>>>>>');
-        console.log(res);
 
         const sortedActivities = res.data.data.all_comments.sort(
           (a, b) => new Date(a.date) - new Date(b.date),
@@ -708,11 +722,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           .createApi()
           .getFileApi(data)
           .then((d: any) => {
-            console.log('================================asdsa');
-            console.log();
             for (let i = 0; i < d.data.length; i++) {
               var index = d.data[i].split('?')[0].split('/').length - 1;
-              console.log(d.data[i].split('?')[0].split('/')[index]);
 
               var name = d.data[i].split('?')[0].split('/')[index];
               if (
@@ -754,7 +765,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             }
           });
       }
-      console.log(attach);
     });
 
     this.setState({});
@@ -864,8 +874,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       //   this.setState({});
       // });
 
-      console.log(res);
-
       if (res.type == 'image/jpeg' || res.type == 'image/png') {
         res['orgType'] = res.type;
         res.type = 'image';
@@ -904,7 +912,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           this.setState({fileLoading: true});
         }
 
-        console.log('----------=a-das-d-asd-asd-as');
         fileuploader(res.orgType, res.orgType, res.uri).then(
           (filename: any) => {
             imgData['name'] = filename;
@@ -1563,8 +1570,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         this.setState({rootCauses: e})
                       }
                       keyFindings={(e: any) => {
-                        console.log(e);
-
                         this.setState({keyFindingss: e});
                       }}
                       keyFindingss={
@@ -1817,7 +1822,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                   <TouchableOpacity
                                     onPress={() => {
                                       if (d.upload != 'self') {
-                                        console.log(d);
                                         this.photoAnim.play();
                                         downloadFile(d.uri, d.type)
                                           .then((res: any) => {})
@@ -1902,7 +1906,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                           onPress={() => {
                                             if (d.upload != 'self') {
                                               this.photoAnim.play();
-                                              console.log(d);
                                               downloadFile(d.uri, d.type)
                                                 .then((res: any) => {})
                                                 .catch((err) => {});
@@ -2795,10 +2798,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   </TouchableOpacity>
 
                   <>
-                    {this.props.route.params.data.created_by ==
-                      this.state.user.email ||
-                      (this.props.route.params.data.submit_to[0] ==
-                        this.state.user.email && (
+                    {this.state.isMarkAsComplete && (
                         <>
                           <TouchableOpacity
                             onPress={() => {
@@ -2886,7 +2886,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             </Text>
                           </TouchableOpacity>
                         </>
-                      ))}
+                      )}
                   </>
                 </View>
               </>
@@ -3188,7 +3188,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             isOpen={this.state.SuggestionPop}
             suggestions={this.state.allActionsEdit}
             save={(d: any) => {
-              console.log();
               if (this.state.newActions == true) {
                 this.state.actionsAndRecommendations.push(d);
               } else {
