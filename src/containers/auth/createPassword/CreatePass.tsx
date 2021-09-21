@@ -80,7 +80,9 @@ class CreatePass extends React.Component<CreatePassProps, any> {
         organizations: this.props.route.params.invited.organization,
         projects: this.props.route.params.invited.project,
       });
+      console.log('organization id');
       console.log(this.props.route.params.invited.organization);
+      console.log('project id');
       console.log(this.props.route.params.invited.project);
       // co
       savedCurrentOrganization(this.props.route.params.invited.organization);
@@ -118,15 +120,28 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                   console.log('with in signin functions');
                   console.log(res);
                   console.log('with in signin functions');
-                  api
-                    .createApi()
-                    .createUser({
+                  var data: any;
+                  if (this.props.route.params.invited != undefined) {
+                    data = {
                       name: this.state.name,
                       email: this.props.route.params.email, // dynal=mic link
                       organization: [this.state.organizations],
+                      project: this.state.projects,
                       img_url:
                         'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
-                    })
+                    };
+                  } else {
+                    data = {
+                      name: this.state.name,
+                      email: this.props.route.params.email, // dynal=mic link
+                      organization: [],
+                      img_url:
+                        'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+                    };
+                  }
+                  api
+                    .createApi()
+                    .createUser(data)
                     .then((res) => {
                       console.log('with in create user function');
                       console.log(res);

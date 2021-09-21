@@ -9,6 +9,7 @@ export interface user {
   organization?: Array<any>;
   name?: string;
   email?: string;
+  projects?: string;
   role?: string;
   img_url?: string;
   department?: string;

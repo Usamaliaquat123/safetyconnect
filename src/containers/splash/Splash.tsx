@@ -43,6 +43,7 @@ export default class Splash extends React.Component<SplashProps, any> {
               // console.log(res);
               AsyncStorage.setItem('user', JSON.stringify(res.data.data));
 
+              console.log('get user api');
               console.log(res);
               if (res.data.data.organizations.length != 0) {
                 savedCurrentOrganization(res.data.data.organizations[0]._id);
