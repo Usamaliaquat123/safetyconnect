@@ -42,6 +42,23 @@ export const createOrganization = (
         console.log(res);
         if (res.status == 200) {
           if (users.length != 0) {
+            var unregisteredUser: Array<any> = [];
+            users.map((d: any) => {
+              createApi
+                .createApi()
+                .getUser(d)
+                .then((res: any) => {
+                  console.log('res');
+                  console.log(res);
+                  if (res.data.message == 'no user exists') {
+                    unregisteredUser.push(d);
+                    // this.state.unregisteredUser.push(d);
+                    // this.setState({});
+
+                    // console.log('adas');
+                  }
+                });
+            });
             await createApi
               .createApi()
               .inviteBulk({
@@ -56,7 +73,9 @@ export const createOrganization = (
                 savedCurrentOrganization(res.data.data.organization_id);
                 dispatch(loading(false));
                 dispatch(error(false));
-                navigation.navigate('createProject');
+                navigation.navigate('createProject', {
+                  users: unregisteredUser,
+                });
               });
           }
 

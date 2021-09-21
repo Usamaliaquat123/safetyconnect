@@ -162,7 +162,13 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               //   }
               // })
 
+              // if( gol.map((j) => j._id == this.state))
+
               var gol = d.filter((d) => d.email != this.state.user);
+              var involvedUsers = gol.filter(
+                (d) =>
+                  this.props.route.params.users.filter((f) => d.email != f)[0],
+              );
               var data = {
                 created_by: email,
                 project_name: this.state.projectName,
@@ -172,7 +178,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                 secondary_leader: this.state.assignSuppervisor.map(
                   (d) => d.email,
                 ),
-                involved_persons: gol.map((j) => j._id),
+                involved_persons: involvedUsers.map((j) => j._id),
                 description: this.state.projectDescription,
                 p_locations: this.state.assignLocations,
                 organization: this.state.organizationId,
@@ -212,14 +218,18 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
         additionalSuppervisorsSugg: [],
         locationSuppervisorsSugg: [],
       });
+
+      var supervisor = this.state.locationSuppervisorsTags.filter(
+        (d) => this.props.route.params.users.filter((f) => d.email != f)[0],
+      );
+      var additional_supervisor = this.state.additionalSuppervisorsTags.filter(
+        (d) => this.props.route.params.users.filter((f) => d.email != f)[0],
+      );
+
       this.state.assignLocations.push({
         name: this.state.locationName,
-        supervisor: this.state.locationSuppervisorsTags.map(
-          (d: any) => d._id,
-        )[0],
-        additional_supervisor: this.state.additionalSuppervisorsTags.map(
-          (d: any) => d._id,
-        )[0],
+        supervisor: supervisor.map((d: any) => d._id)[0],
+        additional_supervisor: additional_supervisor.map((d: any) => d._id)[0],
       });
       // await AsyncStorage.setItem('locations', this.state.locationName);
       // this.props.navigation.goBack();
@@ -242,6 +252,25 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
         .createApi()
         .getOrganization(orgid)
         .then((org: any) => {
+          // console.log("")
+
+          // "img_url": "sdd.jpg",
+          // "_id": "60ba3fd6172e5471c3a93cf1",
+          // "name": "sdsd",
+          // "email": "hewov76940@pidhoes.com"
+
+          if (this.props.route.params.users != 0) {
+            this.props.route.params.users.map((d: any) => {
+              org.data.data.members.push({
+                img_url:
+                  'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+                _id: '60ba3fd6172e5471c3a93cf1',
+                name: d.split('@')[0],
+                email: d,
+              });
+            });
+          }
+
           this.setState({
             allAssignSuppervisorText: org.data.data.members,
             allAssignLeaders: org.data.data.members,

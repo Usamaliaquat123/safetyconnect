@@ -77,7 +77,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
       selectedEmails: [],
       members: [],
       assignProjects: [],
-
+      unregisteredUser: [],
       createNewProject: false,
     };
   }
@@ -153,7 +153,10 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
           var data = {
             created_by: email,
             name: this.state.org,
-            details: this.state.orgDetails === '' ? '' : this.state.orgDetails,
+            details:
+              this.state.orgDetails === ''
+                ? 'placeholder '
+                : this.state.orgDetails,
             members: [],
             img_url:
               this.state.uploadedImage == ''
@@ -162,6 +165,28 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
             projects: [],
           };
 
+          var unregisteredUser = [];
+          this.state.selectedEmails.map((d: any) => {
+            api
+              .createApi()
+              .getUser(d)
+              .then((res: any) => {
+                console.log('res');
+                console.log(res);
+                if (res.data.message == 'no user exists') {
+                  unregisteredUser.push(d);
+                  // this.state.unregisteredUser.push(d);
+                  // this.setState({});
+
+                  // console.log('adas');
+                }
+              });
+          });
+
+          AsyncStorage.setItem(
+            'invitedUsers',
+            JSON.stringify(unregisteredUser),
+          );
           // AsyncStorage.setItem(
           //   'pending_users',
           //   JSON.stringify(this.state.selectedEmails),
@@ -177,23 +202,6 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
           );
 
           // var userNotRegisterd = [];
-
-          // this.state.selectedEmails.forEach((d: any) => {
-          //   api
-          //     .createApi()
-          //     .getUser(d)
-          //     .then((res: any) => {
-          //       console.log('res');
-          //       console.log(res);
-          //       if (res.data.message == 'no user exists') {
-          //         // userNotRegisterd.push(d);
-          //         this.state.unregisteredUser.push(d);
-          //         this.setState({});
-
-          //         // console.log('adas');
-          //       }
-          //     });
-          // });
 
           // console.log(this.state.unregisteredUser);
           // console.log(data);

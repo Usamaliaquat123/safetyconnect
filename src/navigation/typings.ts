@@ -15,7 +15,7 @@ export type StackNavigatorProps = {
   };
   CreateOrg: undefined;
   Forgot: undefined;
-  CreateProj: {organization: string};
+  CreateProj: {organization?: string; users?: []};
   Home: undefined;
   ForgotEmailSend: {email: string};
   Verify: {email: string};
