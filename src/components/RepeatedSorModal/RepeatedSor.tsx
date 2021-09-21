@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import styles from './styles';
 import {Icon} from 'react-native-elements';
 import {Card} from '@components';
-import {colors, fonts} from '@theme';
+import {colors} from '@theme';
 import {repeatedSor, createApi} from '@service';
 import {
   widthPercentageToDP as wp,

@@ -59,7 +59,7 @@ export default class Splash extends React.Component<SplashProps, any> {
               } else {
                 this.props.navigation.navigate('CreateOrganization');
               }
-              this.props.navigation.navigate('CreateOrganization');
+              // this.props.navigation.navigate('CreateOrganization');
             });
         }, 5000);
       } else {
