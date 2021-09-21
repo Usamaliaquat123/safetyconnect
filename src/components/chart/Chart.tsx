@@ -21,14 +21,14 @@ const Chart = (props: Props) => {
   const [severity, setseverity] = useState(props.severity);
   const [total, setTotal] = useState();
 
+  var ttl: any;
   if (severity.filter((i: any) => i.selected == true).length != 0) {
     if (liklihood.filter((i: any) => i.selected == true).length != 0) {
-      var ttl =
+      ttl =
         liklihood.filter((i: any) => i.selected == true)[0].value *
         severity.filter((i: any) => i.selected == true)[0].value;
     }
   }
-
   return (
     <View style={props.style}>
       <View style={{paddingBottom: wp(3)}}>
@@ -138,72 +138,73 @@ const Chart = (props: Props) => {
             );
           })}
         </View>
-        <View
-          style={{
-            right: 0,
-            top: wp(16),
-            position: 'absolute',
-          }}>
+        {ttl != undefined && (
           <View
-            style={[
-              {
-                borderRadius: wp(1),
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: colors.error,
-                padding: wp(8),
-              },
-              ttl < 7
-                ? {backgroundColor: colors.green}
-                : ttl < 14
-                ? {
-                    backgroundColor: colors.riskIcons.orrange,
-                    paddingTop: wp(8),
-                    paddingBottom: wp(8),
-                    paddingLeft: wp(3),
-                    paddingRight: wp(3),
-                  }
-                : {backgroundColor: colors.error},
-            ]}>
+            style={{
+              right: 0,
+              top: wp(16),
+              position: 'absolute',
+            }}>
+            <View
+              style={[
+                {
+                  borderRadius: wp(1),
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: colors.error,
+                  padding: wp(8),
+                },
+                ttl < 7
+                  ? {backgroundColor: colors.green}
+                  : ttl < 14
+                  ? {
+                      backgroundColor: colors.riskIcons.orrange,
+                      paddingTop: wp(8),
+                      paddingBottom: wp(8),
+                      paddingLeft: wp(3),
+                      paddingRight: wp(3),
+                    }
+                  : {backgroundColor: colors.error},
+              ]}>
+              <Text
+                style={[
+                  {
+                    position: 'absolute',
+                    fontSize: wp(8),
+                    color: colors.secondary,
+                    fontFamily: fonts.SFuiDisplayBold,
+                  },
+                ]}>
+                {ttl}
+              </Text>
+            </View>
             <Text
               style={[
                 {
-                  position: 'absolute',
-                  fontSize: wp(8),
-                  color: colors.secondary,
+                  fontSize: wp(4),
                   fontFamily: fonts.SFuiDisplayBold,
+                  textAlign: 'center',
+                  // color: colors.error,
                 },
+                ttl < 7
+                  ? {color: colors.green}
+                  : ttl < 14
+                  ? {color: colors.riskIcons.orrange}
+                  : {color: colors.error},
               ]}>
-              {ttl}
+              {ttl < 7 ? `Low` : ttl < 14 ? `Medium` : 'High'}
+            </Text>
+            <Text
+              style={{
+                fontSize: wp(3),
+                fontFamily: fonts.SFuiDisplayMedium,
+                textAlign: 'center',
+                opacity: 0.5,
+              }}>
+              (L X S)
             </Text>
           </View>
-          <Text
-            style={[
-              {
-                fontSize: wp(4),
-                fontFamily: fonts.SFuiDisplayBold,
-                textAlign: 'center',
-                // color: colors.error,
-              },
-              ttl < 7
-                ? {color: colors.green}
-                : ttl < 14
-                ? {color: colors.riskIcons.orrange}
-                : {color: colors.error},
-            ]}>
-            {ttl < 7 ? `Low` : ttl < 14 ? `Medium` : 'High'}
-          </Text>
-          <Text
-            style={{
-              fontSize: wp(3),
-              fontFamily: fonts.SFuiDisplayMedium,
-              textAlign: 'center',
-              opacity: 0.5,
-            }}>
-            (L X S)
-          </Text>
-        </View>
-
+        )}
         {/* severity */}
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text

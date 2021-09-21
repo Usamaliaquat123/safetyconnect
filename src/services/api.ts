@@ -118,12 +118,15 @@ const createApi = (
       `project/getReports?project=${projectId}&limit=${330}&page=${0}&query={"_id":"${report}"}`,
     );
   const filterSors = (data: sor) =>
-    baseapi.get('project/getReports', {
-      project: data.project,
-      limit: data.limit,
-      page: data.page,
-      query: data.query,
-    });
+    baseapi.post(
+      'project/getReports',
+      JSON.stringify({
+        project: data.project,
+        limit: data.limit,
+        page: data.page,
+        query: data.query,
+      }),
+    );
   const updateSor = (data: any) => baseapi.put('project/report', data);
   // Create initial to get the reportId
   const createSorInit = (data: any) => baseapi.post('project/newreport', data);
