@@ -161,6 +161,8 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
       projectName: this.state.projectText,
     };
 
+    console.log('invited');
+    console.log(data);
     this.setState({inviteSended: true});
     setTimeout(() => {
       this.props.reduxActions.inviteUser(data, this.props.navigation);

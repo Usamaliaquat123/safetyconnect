@@ -80,8 +80,11 @@ class CreatePass extends React.Component<CreatePassProps, any> {
         organizations: this.props.route.params.invited.organization,
         projects: this.props.route.params.invited.project,
       });
-      savedCurrentOrganization(this.props.route.params.invited.organization);
-      savedCurrentProject(this.props.route.params.invited.project);
+      console.log(this.props.route.params.invited.organization);
+      console.log(this.props.route.params.invited.project);
+      // co
+      // savedCurrentOrganization(this.props.route.params.invited.organization);
+      // savedCurrentProject(this.props.route.params.invited.project);
     }
   }
 
@@ -120,7 +123,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                     .createUser({
                       name: this.state.name,
                       email: this.props.route.params.email, // dynal=mic link
-                      organization: this.state.organizations,
+                      organization: [this.state.organizations],
                       img_url:
                         'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
                     })

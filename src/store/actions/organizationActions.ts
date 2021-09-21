@@ -59,24 +59,25 @@ export const createOrganization = (
                   }
                 });
             });
-            await createApi
-              .createApi()
-              .inviteBulk({
-                emails: users,
-                organization: res.data.data.organization_id,
-                invitedBy: organization.created_by,
-                organizationName: organization.name,
-              })
-              .then((invite) => {
-                console.log('users invited');
-                console.log(res);
-                savedCurrentOrganization(res.data.data.organization_id);
-                dispatch(loading(false));
-                dispatch(error(false));
-                navigation.navigate('createProject', {
-                  users: unregisteredUser,
-                });
-              });
+            console.log('users invited');
+            console.log(res);
+            savedCurrentOrganization(res.data.data.organization_id);
+            dispatch(loading(false));
+            dispatch(error(false));
+            navigation.navigate('createProject', {
+              users: unregisteredUser,
+            });
+            // await createApi
+            //   .createApi()
+            //   .inviteBulk({
+            //     emails: users,
+            //     organization: res.data.data.organization_id,
+            //     invitedBy: organization.created_by,
+            //     organizationName: organization.name,
+            //   })
+            //   .then((invite) => {
+
+            //   });
           }
 
           dispatch(loading(false));

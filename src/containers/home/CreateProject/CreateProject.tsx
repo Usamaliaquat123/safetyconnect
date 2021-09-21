@@ -99,7 +99,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
       locationSuppervisorsSugg: [],
       user: '',
       organizationId: '',
-      orgName : "",
+      orgName: '',
       additionalSuppervisorsSugg: [],
       additionalSuppervisorsTags: [],
     };
@@ -165,22 +165,24 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
 
               // if( gol.map((j) => j._id == this.state))
 
-
-
               var gol = d.filter((d) => d.email != this.state.user);
-              if(this.props.route.params.users.length != 0){
+              if (this.props.route.params.users.length != 0) {
                 var data = {
                   emails: gol.map((d) => d.email),
-                  organization:this.state.organizationId ,
-                  invitedBy: this.state.user.email,
+                  organization: this.state.organizationId,
+                  invitedBy: this.state.user,
                   organizationName: this.state.orgName,
                   projectName: this.state.projectName,
-                }
-              
-              
-                api.createApi().inviteBulk(data).then(res => {
-              
-                })
+                };
+
+                // console.log(data);
+
+                api
+                  .createApi()
+                  .inviteBulk(data)
+                  .then((res) => {
+                    // console.log(res);
+                  });
               }
               var involvedUsers = gol.filter(
                 (d) =>
@@ -202,8 +204,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               };
               this.setState({loading: false});
 
-
-            
               this.props.reduxActions.createProject(
                 data,
                 this.state.organizationId,
@@ -265,13 +265,13 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     });
 
     getCurrentOrganization().then((orgid: any) => {
-      this.setState({organizationId: orgid  });
+      this.setState({organizationId: orgid});
 
       api
         .createApi()
         .getOrganization(orgid)
         .then((org: any) => {
-          this.setState({ orgName : org.data.data.name })
+          this.setState({orgName: org.data.data.name});
           // console.log("")
 
           // "img_url": "sdd.jpg",

@@ -53,6 +53,7 @@ export const inviteUser = (data: any, navigation: any): IThunkAction => {
       .createApi()
       .inviteBulk(data)
       .then((invited) => {
+        console.log(invited);
         dispatch(loading({loading: false}));
         if (invited.data == 'invited') {
           navigation.goBack();
