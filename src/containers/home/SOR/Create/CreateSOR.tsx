@@ -220,7 +220,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           this.setState({fileLoading: false});
           this.state.uploadedfiles.push(filename);
         });
-
+        console.log(imgData);
         this.state.filename.push(imgData);
 
         this.setState({});
@@ -2485,7 +2485,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 marginBottom: wp(10),
               }}>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Preview')}
+                onPress={() => {}}
                 style={[
                   styles.submitsorbtn,
                   {

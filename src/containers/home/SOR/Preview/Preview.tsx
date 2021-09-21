@@ -333,6 +333,11 @@ export class Preview extends React.Component<ViewAllProps, any> {
     )}
    
 
+
+
+    ${
+      this.props.route.params.data.justifications != null &&
+      `
   ${
     this.props.route.params.data.justifications.length != 0 &&
     `  
@@ -387,7 +392,8 @@ export class Preview extends React.Component<ViewAllProps, any> {
   `
   }
 
-
+`
+    }
 
     
     <hr style="    margin-top: 20px;" />
@@ -453,18 +459,20 @@ export class Preview extends React.Component<ViewAllProps, any> {
     console.log(this.props.route.params.data);
     var data = [];
 
-    if (this.props.route.params.data?.justifications.length != 0) {
-      this.props.route.params.data.justifications[0].justification.question.map(
-        (d: any) => {
-          data.push({question: d});
-        },
-      );
+    if (this.props.route.params.data.justifications != null) {
+      if (this.props.route.params.data?.justifications.length != 0) {
+        this.props.route.params.data.justifications[0].justification.question.map(
+          (d: any) => {
+            data.push({question: d});
+          },
+        );
 
-      this.props.route.params.data.justifications[0].justification.answer.map(
-        (d: any, i: number) => {
-          data[i]['answer'] = d;
-        },
-      );
+        this.props.route.params.data.justifications[0].justification.answer.map(
+          (d: any, i: number) => {
+            data[i]['answer'] = d;
+          },
+        );
+      }
     }
 
     this.setState({questionAndAnswers: data});
@@ -955,53 +963,60 @@ export class Preview extends React.Component<ViewAllProps, any> {
                 </View>
 
                 {/* Five why   */}
-                {this.props.route.params.data.justifications.length != 0 && (
-                  <View style={styles.lineheight} />
+                {this.props.route.params.data.justifications != null && (
+                  <>
+                    {this.props.route.params.data.justifications.length !=
+                      0 && <View style={styles.lineheight} />}
+                  </>
                 )}
 
-                {this.props.route.params.data.justifications.length != 0 && (
+                {this.props.route.params.data.justifications != null && (
                   <>
-                    {this.props.route.params.data.action_required.length !=
+                    {this.props.route.params.data.justifications.length !=
                       0 && (
                       <>
-                        <View style={{marginTop: wp(3), marginBottom: wp(3)}}>
-                          <Text
-                            style={{
-                              fontSize: wp(4),
-                              fontFamily: fonts.SFuiDisplayBold,
-                            }}>
-                            Five why{' '}
-                          </Text>
+                        {this.props.route.params.data.action_required.length !=
+                          0 && (
+                          <>
+                            <View
+                              style={{marginTop: wp(3), marginBottom: wp(3)}}>
+                              <Text
+                                style={{
+                                  fontSize: wp(4),
+                                  fontFamily: fonts.SFuiDisplayBold,
+                                }}>
+                                Five why{' '}
+                              </Text>
 
-                          <View style={{flexDirection: 'row'}}>
-                            <View style={{flexDirection: 'column'}}>
-                              {this.state.questionAndAnswers.map(
-                                (d: any, i: number) => (
-                                  <View
-                                    style={{
-                                      flexDirection: 'column',
-                                      // justifyContent: 'space-between',
-                                    }}>
-                                    <Text
-                                      style={{
-                                        fontSize: wp(3),
-                                        fontFamily: fonts.SFuiDisplayMedium,
-                                      }}>
-                                      Q. {i + 1}. {d.question}
-                                    </Text>
-                                    <Text
-                                      style={{
-                                        fontSize: wp(3),
-                                        opacity: 0.5,
-                                        fontFamily: fonts.SFuiDisplayMedium,
-                                      }}>
-                                      A. {i + 1}. {d.answer}
-                                    </Text>
-                                  </View>
-                                ),
-                              )}
-                            </View>
-                            {/* <View
+                              <View style={{flexDirection: 'row'}}>
+                                <View style={{flexDirection: 'column'}}>
+                                  {this.state.questionAndAnswers.map(
+                                    (d: any, i: number) => (
+                                      <View
+                                        style={{
+                                          flexDirection: 'column',
+                                          // justifyContent: 'space-between',
+                                        }}>
+                                        <Text
+                                          style={{
+                                            fontSize: wp(3),
+                                            fontFamily: fonts.SFuiDisplayMedium,
+                                          }}>
+                                          Q. {i + 1}. {d.question}
+                                        </Text>
+                                        <Text
+                                          style={{
+                                            fontSize: wp(3),
+                                            opacity: 0.5,
+                                            fontFamily: fonts.SFuiDisplayMedium,
+                                          }}>
+                                          A. {i + 1}. {d.answer}
+                                        </Text>
+                                      </View>
+                                    ),
+                                  )}
+                                </View>
+                                {/* <View
                               style={{
                                 flexDirection: 'column',
                                 marginLeft: wp(20),
@@ -1012,88 +1027,90 @@ export class Preview extends React.Component<ViewAllProps, any> {
                                 ),
                               )}
                             </View> */}
-                          </View>
-                        </View>
-                        {/* Key findings */}
-                        <View style={{marginBottom: wp(2)}}>
-                          <Text
-                            style={{
-                              fontSize: wp(3),
-                              fontFamily: fonts.SFuiDisplayBold,
-                            }}>
-                            Key Findings
-                          </Text>
-                          <Text style={{fontSize: wp(3)}}>
-                            {
-                              this.props.route.params.data.justifications[0]
-                                .keyFindings
-                            }
-                          </Text>
-                        </View>
-                        {/* Root Causes */}
-                        <View>
-                          <Text
-                            style={{
-                              fontSize: wp(3),
-                              fontFamily: fonts.SFuiDisplayBold,
-                            }}>
-                            Root Causes
-                          </Text>
-                          {this.props.route.params.data.justifications[0].rootCauses.map(
-                            (d: any) => (
-                              <>
-                                <Text
-                                  style={{
-                                    fontSize: wp(3),
-                                    fontFamily: fonts.SFuiDisplayMedium,
-                                  }}>
-                                  * {d.category}
-                                </Text>
-                                <Text
-                                  style={{
-                                    fontSize: wp(3),
-                                    marginLeft: wp(3),
-                                    fontFamily: fonts.SFuiDisplayLight,
-                                    opacity: 0.5,
-                                  }}>
-                                  {d.subCategory[0]}
-                                </Text>
-                              </>
-                            ),
-                          )}
-                        </View>
-                        {/* Contributory Causes */}
-                        <View style={{marginBottom: wp(5)}}>
-                          <Text
-                            style={{
-                              fontSize: wp(3),
-                              fontFamily: fonts.SFuiDisplayBold,
-                            }}>
-                            Contributory Causes
-                          </Text>
-                          {this.props.route.params.data.justifications[0].contributoryCauses.map(
-                            (d: any) => (
-                              <>
-                                <Text
-                                  style={{
-                                    fontSize: wp(3),
-                                    fontFamily: fonts.SFuiDisplayMedium,
-                                  }}>
-                                  * {d.category}
-                                </Text>
-                                <Text
-                                  style={{
-                                    fontSize: wp(3),
-                                    marginLeft: wp(3),
-                                    fontFamily: fonts.SFuiDisplayLight,
-                                    opacity: 0.5,
-                                  }}>
-                                  {d.subCategory[0]}
-                                </Text>
-                              </>
-                            ),
-                          )}
-                        </View>
+                              </View>
+                            </View>
+                            {/* Key findings */}
+                            <View style={{marginBottom: wp(2)}}>
+                              <Text
+                                style={{
+                                  fontSize: wp(3),
+                                  fontFamily: fonts.SFuiDisplayBold,
+                                }}>
+                                Key Findings
+                              </Text>
+                              <Text style={{fontSize: wp(3)}}>
+                                {
+                                  this.props.route.params.data.justifications[0]
+                                    .keyFindings
+                                }
+                              </Text>
+                            </View>
+                            {/* Root Causes */}
+                            <View>
+                              <Text
+                                style={{
+                                  fontSize: wp(3),
+                                  fontFamily: fonts.SFuiDisplayBold,
+                                }}>
+                                Root Causes
+                              </Text>
+                              {this.props.route.params.data.justifications[0].rootCauses.map(
+                                (d: any) => (
+                                  <>
+                                    <Text
+                                      style={{
+                                        fontSize: wp(3),
+                                        fontFamily: fonts.SFuiDisplayMedium,
+                                      }}>
+                                      * {d.category}
+                                    </Text>
+                                    <Text
+                                      style={{
+                                        fontSize: wp(3),
+                                        marginLeft: wp(3),
+                                        fontFamily: fonts.SFuiDisplayLight,
+                                        opacity: 0.5,
+                                      }}>
+                                      {d.subCategory[0]}
+                                    </Text>
+                                  </>
+                                ),
+                              )}
+                            </View>
+                            {/* Contributory Causes */}
+                            <View style={{marginBottom: wp(5)}}>
+                              <Text
+                                style={{
+                                  fontSize: wp(3),
+                                  fontFamily: fonts.SFuiDisplayBold,
+                                }}>
+                                Contributory Causes
+                              </Text>
+                              {this.props.route.params.data.justifications[0].contributoryCauses.map(
+                                (d: any) => (
+                                  <>
+                                    <Text
+                                      style={{
+                                        fontSize: wp(3),
+                                        fontFamily: fonts.SFuiDisplayMedium,
+                                      }}>
+                                      * {d.category}
+                                    </Text>
+                                    <Text
+                                      style={{
+                                        fontSize: wp(3),
+                                        marginLeft: wp(3),
+                                        fontFamily: fonts.SFuiDisplayLight,
+                                        opacity: 0.5,
+                                      }}>
+                                      {d.subCategory[0]}
+                                    </Text>
+                                  </>
+                                ),
+                              )}
+                            </View>
+                          </>
+                        )}
                       </>
                     )}
                   </>

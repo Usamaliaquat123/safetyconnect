@@ -953,7 +953,7 @@ export default class SuggestionsPop extends React.Component<
                           // is_selected: this.state.is_selected,
                           category: this.state.type,
                           hierarchy: this.state.type,
-                          status: this.state.statuses,
+                          status: `${this.state.statuses}`,
                           action: this.state.observation,
                         };
 
