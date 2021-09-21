@@ -44,21 +44,20 @@ export default class Splash extends React.Component<SplashProps, any> {
               AsyncStorage.setItem('user', JSON.stringify(res.data.data));
 
               console.log(res);
-              // if (res.data.data.organizations.length != 0) {
-              //   savedCurrentOrganization(res.data.data.organizations[0]._id);
-              //   if (res.data.data.organizations[0].projects.length != 0) {
-              //     savedCurrentProject(
-              //       res.data.data.organizations[0].projects[0].project_id,
-              //     );
-              //     this.props.navigation.navigate('Main');
-              //     // console.log(res.data.data.organizations[0]);
-              //   } else {
-              //     this.props.navigation.navigate('createProject');
-              //   }
-              // } else {
-              //   this.props.navigation.navigate('CreateOrganization');
-              // }
-              this.props.navigation.navigate('CreateOrganization');
+              if (res.data.data.organizations.length != 0) {
+                savedCurrentOrganization(res.data.data.organizations[0]._id);
+                if (res.data.data.organizations[0].projects.length != 0) {
+                  savedCurrentProject(
+                    res.data.data.organizations[0].projects[0].project_id,
+                  );
+                  this.props.navigation.navigate('Main');
+                  // console.log(res.data.data.organizations[0]);
+                } else {
+                  this.props.navigation.navigate('createProject');
+                }
+              } else {
+                this.props.navigation.navigate('CreateOrganization');
+              }
             });
         }, 5000);
       } else {
