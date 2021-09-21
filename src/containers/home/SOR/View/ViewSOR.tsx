@@ -357,64 +357,66 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   // FIVE WHY
   getFiveWHY = () => {
     // Question map and them push
-    if (this.props.route.params.data.justifications.length != 0) {
-      this.props.route.params.data.justifications[0].justification.question.map(
-        (d, i) => {
-          this.state.fiveWHYdata.push({question: d});
-        },
-      );
-      //   // Answer map and then push
-      this.props.route.params.data.justifications[0].justification.answer.map(
-        (d, i) => {
-          this.state.fiveWHYdata[i]['answer'] = d;
-        },
-      );
+    if (this.props.route.params.data.justifications != null) {
+      if (this.props.route.params.data.justifications.length != 0) {
+        this.props.route.params.data.justifications[0].justification.question.map(
+          (d, i) => {
+            this.state.fiveWHYdata.push({question: d});
+          },
+        );
+        //   // Answer map and then push
+        this.props.route.params.data.justifications[0].justification.answer.map(
+          (d, i) => {
+            this.state.fiveWHYdata[i]['answer'] = d;
+          },
+        );
 
-      this.setState({
-        contributoryCauses: this.props.route.params.data.justifications[0]
-          .contributoryCauses,
-        rootCauses: this.props.route.params.data.justifications[0].rootCauses,
-        keyFindingss: this.props.route.params.data.justifications[0]
-          .keyFindings,
-        // contributoryCauses: this.props.route.params.data.justifications[0]
-        //   .contributoryCauses,
-        // rootCauses: this.props.route.params.data.justifications[0].rootCauses,
-        // rootCauses: this.state.rootCauses,
-      });
-      // this.setState({
-      //   contributoryCauses: this.props.route.params.data.justifications[0]
-      //     .contributoryCauses,
-      //   rootCauses: this.props.route.params.data.justifications[0].rootCauses,
-      //   keyFindingss: this.props.route.params.data.justifications[0]
-      //     .keyFindings,
-      //   // contributoryCauses: this.props.route.params.data.justifications[0]
-      //   //   .contributoryCauses,
-      //   // rootCauses: this.props.route.params.data.justifications[0].rootCauses,
-      //   // rootCauses: this.state.rootCauses,
-      // });
+        this.setState({
+          contributoryCauses: this.props.route.params.data.justifications[0]
+            .contributoryCauses,
+          rootCauses: this.props.route.params.data.justifications[0].rootCauses,
+          keyFindingss: this.props.route.params.data.justifications[0]
+            .keyFindings,
+          // contributoryCauses: this.props.route.params.data.justifications[0]
+          //   .contributoryCauses,
+          // rootCauses: this.props.route.params.data.justifications[0].rootCauses,
+          // rootCauses: this.state.rootCauses,
+        });
+        // this.setState({
+        //   contributoryCauses: this.props.route.params.data.justifications[0]
+        //     .contributoryCauses,
+        //   rootCauses: this.props.route.params.data.justifications[0].rootCauses,
+        //   keyFindingss: this.props.route.params.data.justifications[0]
+        //     .keyFindings,
+        //   // contributoryCauses: this.props.route.params.data.justifications[0]
+        //   //   .contributoryCauses,
+        //   // rootCauses: this.props.route.params.data.justifications[0].rootCauses,
+        //   // rootCauses: this.state.rootCauses,
+        // });
 
-      this.setState({});
-      //   // If contributoryCauses exists
-      // if (this.props.route.params.data.justifications[0].contributoryCauses) {
-      //   this.setState({
-      //     countributoryCauses: this.props.route.params.data.justifications[0]
-      //       .contributoryCauses[0],
-      //     rootCauses: this.props.route.params.data.justifications[0]
-      //       .rootCauses[0],
-      //   });
-      // }
-      //   // Set the state of 5 whys Questions /Answers
-      this.setState({
-        fiveWhyQuestion: this.props.route.params.data.justifications[0]
-          .justification.question,
-        fiveWhyAnswer: this.props.route.params.data.justifications[0]
-          .justification.answer,
-        fiveWhytoggle: true,
-      });
-      // } else {
-      //   this.setState({fiveWhytoggle: false});
-    } else {
-      this.setState({fiveWhytoggle: false});
+        this.setState({});
+        //   // If contributoryCauses exists
+        // if (this.props.route.params.data.justifications[0].contributoryCauses) {
+        //   this.setState({
+        //     countributoryCauses: this.props.route.params.data.justifications[0]
+        //       .contributoryCauses[0],
+        //     rootCauses: this.props.route.params.data.justifications[0]
+        //       .rootCauses[0],
+        //   });
+        // }
+        //   // Set the state of 5 whys Questions /Answers
+        this.setState({
+          fiveWhyQuestion: this.props.route.params.data.justifications[0]
+            .justification.question,
+          fiveWhyAnswer: this.props.route.params.data.justifications[0]
+            .justification.answer,
+          fiveWhytoggle: true,
+        });
+        // } else {
+        //   this.setState({fiveWhytoggle: false});
+      } else {
+        this.setState({fiveWhytoggle: false});
+      }
     }
   };
 
