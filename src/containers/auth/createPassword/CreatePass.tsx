@@ -83,8 +83,8 @@ class CreatePass extends React.Component<CreatePassProps, any> {
       console.log(this.props.route.params.invited.organization);
       console.log(this.props.route.params.invited.project);
       // co
-      // savedCurrentOrganization(this.props.route.params.invited.organization);
-      // savedCurrentProject(this.props.route.params.invited.project);
+      savedCurrentOrganization(this.props.route.params.invited.organization);
+      savedCurrentProject(this.props.route.params.invited.project);
     }
   }
 
