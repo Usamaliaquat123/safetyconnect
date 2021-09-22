@@ -89,7 +89,7 @@ export class Filters extends React.Component<FiltersProps, any> {
   };
   // submiti filters
   submitFilters = (filterObject: any) => {
-    if (this.state.filterObject['ranges'].length != 2) {
+    if (this.state.filterObject['ranges'].length == 1) {
       this.state.filterObject['ranges'].push(
         `${moment().format('YYYY-MM-DD')}`,
       );
