@@ -89,7 +89,7 @@ class Menu extends React.Component<MenuProps, any> {
         strArr.push(this.state.organizations[j]);
       }
     }
-    this.setState({organizationSugg: strArr});
+    this.setState({organizationSugg: strArr, currOrganization: e});
   };
   render() {
     return (
