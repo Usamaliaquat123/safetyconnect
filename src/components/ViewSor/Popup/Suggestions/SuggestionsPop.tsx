@@ -1015,16 +1015,24 @@ export default class SuggestionsPop extends React.Component<
                 }}>
                 Select Your Date
               </Text>
-              <Text
-                style={{
-                  fontSize: wp(2.8),
-                  marginTop: wp(3),
-                  opacity: 0.5,
-                  fontFamily: fonts.SFuiDisplayBold,
-                  textAlign: 'center',
-                }}>
-                {this.state.currMonth}
-              </Text>
+              <View style={{}}>
+                <Text
+                  style={{
+                    position: 'absolute',
+                    top: wp(4),
+                    // left: wp(1),
+                    alignSelf: 'center',
+                    // right: wp(1),
+                    zIndex: 1000,
+                    fontSize: wp(2.8),
+                    // marginTop: wp(3),
+                    opacity: 0.5,
+                    fontFamily: fonts.SFuiDisplayBold,
+                    // textAlign: 'center',
+                  }}>
+                  {this.state.currMonth}
+                </Text>
+              </View>
               <Icon
                 onPress={() => this.setState({openCalendar: false})}
                 containerStyle={{
@@ -1069,10 +1077,7 @@ export default class SuggestionsPop extends React.Component<
                 // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
                 monthFormat={'yyyy MM'}
                 // Handler which gets executed when visible month changes in calendar. Default = undefined
-                onMonthChange={(d) => {
-                  console.log(d.month);
-                  this.setState({currMonth: moment(d.month).format('MMMM')});
-                }}
+                onMonthChange={(d) => {}}
                 // Hide month navigation arrows. Default = false
                 hideArrows={true}
                 // Replace default arrows with custom ones (direction can be 'left' or 'right')
@@ -1102,7 +1107,7 @@ export default class SuggestionsPop extends React.Component<
                 renderHeader={(date) => {
                   /*Return JSX*/
 
-                  this.setState({currMonth: moment(date).format('MMMM')});
+                  this.setState({currMonth: moment(date[0]).format('MMMM')});
                 }}
                 // Enable the option to swipe between months. Default = false
                 enableSwipeMonths={true}
