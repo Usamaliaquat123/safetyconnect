@@ -422,7 +422,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     this.setState({repeatedSorModal: false});
     // this.props.navigation.navigate('ViewAllSOr');
   };
-  markAsComplete = () => {};
   preview = () => {
     var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
     var severity = this.state.severity.filter((d: any) => d.selected == true);
@@ -1119,6 +1118,19 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                     }, 1000);
                                   }
                                 });
+                            } else {
+                              this.setState({
+                                loading: false,
+                                errorModal: false,
+                              });
+                              showMessage({
+                                message: 'SOR sucessfully subitted',
+                                type: 'success',
+                                position: 'bottom',
+                              });
+                              setTimeout(() => {
+                                this.props.navigation.navigate('Main');
+                              }, 1000);
                             }
                           }
                           // if (res.status == 200) {
@@ -1552,7 +1564,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             obj[i]['is_selected'] = false;
                             obj[i]['is_complete'] = false;
                             (obj[i]['dueDate'] = moment().format('YYYY-MM-DD')),
-                              (obj[i]['assigned_to'] = this.state.user.email);
+                              (obj[i]['assigned_to'] = []);
                           }
 
                           this.setState({
