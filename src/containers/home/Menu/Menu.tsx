@@ -201,12 +201,13 @@ class Menu extends React.Component<MenuProps, any> {
               style={{fontSize: wp(3), fontFamily: fonts.SFuiDisplayMedium}}>
               Select your organization
             </Text>
-            <View style={[styles.inputContainer]}>
+            <TouchableOpacity
+              onPress={() => {
+                this.setState({organizationSugg: this.state.organizations});
+              }}
+              style={[styles.inputContainer]}>
               <TextInput
-                onFocus={() =>
-                  this.setState({organizationSugg: this.state.organizations})
-                }
-                // editable={this.state.noOrg}
+                editable={false}
                 value={this.state.currOrganization}
                 style={{
                   fontSize: wp(3),
@@ -227,7 +228,7 @@ class Menu extends React.Component<MenuProps, any> {
                 size={wp(3)}
                 iconStyle={{opacity: 0.5}}
               />
-            </View>
+            </TouchableOpacity>
             {/* Suggestions of organization */}
             {this.state.organizationSugg.length != 0 ? (
               <View>
