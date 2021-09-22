@@ -508,13 +508,12 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                           {' '}
                           Project Leaders
                         </Text>
-                        {/* <Text
-                          style={[
-                            styles.emailTextContainer,
-                            {opacity: 0.5, marginLeft: wp(1), marginTop: wp(2)},
-                          ]}>
-                          (Mandatory)
-                        </Text> */}
+                        <Icon
+                          name={'info'}
+                          type={'feather'}
+                          size={wp(3.5)}
+                          color={colors.textOpa}
+                        />
                       </View>
                       {this.state.assignLeaderss.length < 1 ? (
                         <View style={[styles.inputContainer]}>
