@@ -2693,13 +2693,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 }}>
                 Select Your Date
               </Text>
-              <View style={{alignSelf: 'center'}}>
+              <View style={{}}>
                 <Text
                   style={{
                     position: 'absolute',
                     top: wp(4),
-                    left: wp(1),
-                    right: wp(1),
+                    // left: wp(1),
+                    alignSelf : "center",
+                    // right: wp(1),
                     zIndex: 1000,
                     fontSize: wp(2.8),
                     // marginTop: wp(3),
