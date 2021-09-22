@@ -448,9 +448,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       },
       pending_persons: [],
       involved_persons: this.state.involvePersonTags.map((d: any) => d.email),
-      sor_type: this.state.classifySorbtns.filter(
-        (d: any) => d.selected === true,
-      )[0].title,
+      sor_type:
+        this.state.classifySorbtns.filter((d: any) => d.selected === true)[0]
+          ?.title == undefined
+          ? 'lsr'
+          : this.state.classifySorbtns.filter(
+              (d: any) => d.selected === true,
+            )[0]?.title,
       submit_to: this.state.submitToTags.map((d: any) => d.email),
       escalate_to:
         this.state.exclateToTags.length != 0
