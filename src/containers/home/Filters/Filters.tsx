@@ -79,6 +79,7 @@ export class Filters extends React.Component<FiltersProps, any> {
       datePickerOfFromOrTo: '',
       todayDateCallender: moment().format('YYYY-MM-DD'),
       filterObject: {},
+      currMonth: '',
       riskSelected: '',
     };
   }
@@ -449,6 +450,24 @@ export class Filters extends React.Component<FiltersProps, any> {
                 }}>
                 Select Your Date
               </Text>
+              <View style={{}}>
+                <Text
+                  style={{
+                    position: 'absolute',
+                    top: wp(4),
+                    // left: wp(1),
+                    alignSelf: 'center',
+                    // right: wp(1),
+                    zIndex: 1000,
+                    fontSize: wp(2.8),
+                    // marginTop: wp(3),
+                    opacity: 0.5,
+                    fontFamily: fonts.SFuiDisplayBold,
+                    // textAlign: 'center',
+                  }}>
+                  {this.state.currMonth}
+                </Text>
+              </View>
               <Icon
                 onPress={() => this.setState({setDateModal: false})}
                 containerStyle={{
@@ -513,7 +532,7 @@ export class Filters extends React.Component<FiltersProps, any> {
                 // Handler which gets executed when visible month changes in calendar. Default = undefined
                 onMonthChange={(month) => {}}
                 // Hide month navigation arrows. Default = false
-                hideArrows={true}
+                hideArrows={false}
                 // Replace default arrows with custom ones (direction can be 'left' or 'right')
                 // renderArrow={(direction) => <Arrow />}
                 // Do not show days of other months in month page. Default = false
@@ -532,14 +551,15 @@ export class Filters extends React.Component<FiltersProps, any> {
                 // Handler which gets executed when press arrow icon right. It receive a callback can go next month
                 onPressArrowRight={(addMonth) => addMonth()}
                 // Disable left arrow. Default = false
-                disableArrowLeft={true}
+                disableArrowLeft={false}
                 // Disable right arrow. Default = false
-                disableArrowRight={true}
+                disableArrowRight={false}
                 // Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates
                 disableAllTouchEventsForDisabledDays={true}
                 // Replace default month and year title with custom one. the function receive a date as parameter.
                 renderHeader={(date) => {
                   /*Return JSX*/
+                  this.setState({currMonth: moment(date[0]).format('MMMM')});
                 }}
                 // Enable the option to swipe between months. Default = false
                 enableSwipeMonths={true}
