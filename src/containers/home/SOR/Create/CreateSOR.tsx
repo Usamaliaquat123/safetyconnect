@@ -2693,16 +2693,23 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 }}>
                 Select Your Date
               </Text>
-              <Text
-                style={{
-                  fontSize: wp(2.8),
-                  marginTop: wp(3),
-                  opacity: 0.5,
-                  fontFamily: fonts.SFuiDisplayBold,
-                  textAlign: 'center',
-                }}>
-                {this.state.currMonth}
-              </Text>
+              <View style={{alignSelf: 'center'}}>
+                <Text
+                  style={{
+                    position: 'absolute',
+                    top: wp(4),
+                    left: wp(1),
+                    right: wp(1),
+                    zIndex: 1000,
+                    fontSize: wp(2.8),
+                    // marginTop: wp(3),
+                    opacity: 0.5,
+                    fontFamily: fonts.SFuiDisplayBold,
+                    // textAlign: 'center',
+                  }}>
+                  {this.state.currMonth}
+                </Text>
+              </View>
               <Icon
                 onPress={() => this.setState({setDateModal: false})}
                 containerStyle={{
@@ -2748,17 +2755,17 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 monthFormat={'yyyy MM'}
                 // Handler which gets executed when visible month changes in calendar. Default = undefined
                 onMonthChange={(d) => {
-                  this.setState({currMonth: moment(d.month).format('MMMM')});
+                  // this.setState({currMonth: moment(d.month).format('MMMM')});
                 }}
                 // Hide month navigation arrows. Default = false
-                hideArrows={true}
+                hideArrows={false}
                 // Replace default arrows with custom ones (direction can be 'left' or 'right')
                 // renderArrow={(direction) => <Arrow />}
                 // Do not show days of other months in month page. Default = false
                 hideExtraDays={true}
                 // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
                 // day from another month that is visible in calendar page. Default = false
-                disableMonthChange={true}
+                disableMonthChange={false}
                 // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
                 firstDay={1}
                 // Hide day names. Default = false
@@ -2770,16 +2777,20 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 // Handler which gets executed when press arrow icon right. It receive a callback can go next month
                 onPressArrowRight={(addMonth) => addMonth()}
                 // Disable left arrow. Default = false
-                disableArrowLeft={true}
+                disableArrowLeft={false}
                 // Disable right arrow. Default = false
-                disableArrowRight={true}
+                disableArrowRight={false}
                 // Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates
                 disableAllTouchEventsForDisabledDays={true}
                 // Replace default month and year title with custom one. the function receive a date as parameter.
                 renderHeader={(date) => {
+                  this.setState({currMonth: moment(date[0]).format('MMMM')});
                   /*Return JSX*/
+                  console.log('render header');
+                  console.log(date);
+                  console.log(moment(date[0]).format('MMMM'));
 
-                  this.setState({currMonth: moment(date).format('MMMM')});
+                  // this.setState({currMonth: moment(date).format('MMMM')});
                 }}
                 // Enable the option to swipe between months. Default = false
                 enableSwipeMonths={true}

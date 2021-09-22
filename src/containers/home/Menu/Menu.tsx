@@ -89,7 +89,7 @@ class Menu extends React.Component<MenuProps, any> {
         strArr.push(this.state.organizations[j]);
       }
     }
-    this.setState({organizationSugg: strArr, currOrganization: e});
+    this.setState({organizationSugg: strArr});
   };
   render() {
     return (
@@ -238,7 +238,7 @@ class Menu extends React.Component<MenuProps, any> {
                       key={i}
                       onPress={() => {
                         this.setState({
-                          projectText: d,
+                          currOrganization: d.name,
                           organizationSugg: [],
                         });
                       }}
