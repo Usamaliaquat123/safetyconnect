@@ -120,101 +120,101 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
     if (this.state.projectName !== '') {
       this.setState({errorProjectName: false});
       if (this.state.assignLocations.length > 0) {
-        if (this.state.assignLeaderss.length != 0) {
-          // if (this.state.assignSuppervisor.length != 0) {
+        // if (this.state.assignLeaderss.length != 0) {
+        // if (this.state.assignSuppervisor.length != 0) {
 
-          // this.setState({loading: true});
-          await AsyncStorage.getItem('email')
-            .then((email: any) => {
-              this.setState({errorTeamMem: false});
-              // this.props.route.params.suggestedUsers?.map((d  :any) => )
+        // this.setState({loading: true});
+        await AsyncStorage.getItem('email')
+          .then((email: any) => {
+            this.setState({errorTeamMem: false});
+            // this.props.route.params.suggestedUsers?.map((d  :any) => )
 
-              var members = [];
+            var members = [];
 
-              if (this.state.assignSuppervisor.length != 0) {
-                members = this.state.assignLeaderss.concat(
-                  this.state.assignSuppervisor,
-                );
-              } else {
-                members = this.state.assignLeaderss;
-              }
-
-              for (var i = 0; i < members.length; i++) {
-                var obj = members[i];
-
-                if (members.indexOf(obj._id) !== -1) {
-                  members.splice(i, 1);
-                }
-              }
-
-              // console.log('members');
-              // // console.log(members);
-              // var dta = [
-              //   ...new Set(members.map((item) => JSON.stringify(item))),
-              // ];
-
-              const d = [
-                ...new Set(members.map((itm) => JSON.stringify(itm))),
-              ].map((i) => JSON.parse(i));
-
-              // d.map((item) => {
-              //   if(item.email == this.state.user){
-              //     return
-              //   }
-              // })
-
-              // if( gol.map((j) => j._id == this.state))
-
-              var gol = d.filter((d) => d.email != this.state.user);
-              if (this.props.route.params.users.length != 0) {
-                var data = {
-                  emails: gol.map((d) => d.email),
-                  organization: this.state.organizationId,
-                  invitedBy: this.state.user,
-                  organizationName: this.state.orgName,
-                  projectName: this.state.projectName,
-                };
-
-                // console.log(data);
-
-                api
-                  .createApi()
-                  .inviteBulk(data)
-                  .then((res) => {
-                    // console.log(res);
-                  });
-              }
-              var involvedUsers = gol.filter(
-                (d) =>
-                  this.props.route.params.users.filter((f) => d.email != f)[0],
+            if (this.state.assignSuppervisor.length != 0) {
+              members = this.state.assignLeaderss.concat(
+                this.state.assignSuppervisor,
               );
+            } else {
+              members = this.state.assignLeaderss;
+            }
+
+            for (var i = 0; i < members.length; i++) {
+              var obj = members[i];
+
+              if (members.indexOf(obj._id) !== -1) {
+                members.splice(i, 1);
+              }
+            }
+
+            // console.log('members');
+            // // console.log(members);
+            // var dta = [
+            //   ...new Set(members.map((item) => JSON.stringify(item))),
+            // ];
+
+            const d = [
+              ...new Set(members.map((itm) => JSON.stringify(itm))),
+            ].map((i) => JSON.parse(i));
+
+            // d.map((item) => {
+            //   if(item.email == this.state.user){
+            //     return
+            //   }
+            // })
+
+            // if( gol.map((j) => j._id == this.state))
+
+            var gol = d.filter((d) => d.email != this.state.user);
+            if (this.props.route.params.users.length != 0) {
               var data = {
-                created_by: email,
-                project_name: this.state.projectName,
-                // involved_persons: members.map((d: any) => d._id),
-                locations: this.state.assignLocations.map((d) => d.name),
-                project_leader: this.state.assignLeaderss.map((d) => d.email),
-                secondary_leader: this.state.assignSuppervisor.map(
-                  (d) => d.email,
-                ),
-                involved_persons: involvedUsers.map((j) => j._id),
-                description: this.state.projectDescription,
-                p_locations: this.state.assignLocations,
+                emails: gol.map((d) => d.email),
                 organization: this.state.organizationId,
+                invitedBy: this.state.user,
+                organizationName: this.state.orgName,
+                projectName: this.state.projectName,
               };
-              this.setState({loading: false});
 
-              this.props.reduxActions.createProject(
-                data,
-                this.state.organizationId,
-                this.props.navigation,
-              );
-            })
-            .catch((err) => {});
-        } else {
-          this.setState({loading: false});
-          this.setState({errorTeamMem: true});
-        }
+              // console.log(data);
+
+              api
+                .createApi()
+                .inviteBulk(data)
+                .then((res) => {
+                  // console.log(res);
+                });
+            }
+            var involvedUsers = gol.filter(
+              (d) =>
+                this.props.route.params.users.filter((f) => d.email != f)[0],
+            );
+            var data = {
+              created_by: email,
+              project_name: this.state.projectName,
+              // involved_persons: members.map((d: any) => d._id),
+              locations: this.state.assignLocations.map((d) => d.name),
+              project_leader: this.state.assignLeaderss.map((d) => d.email),
+              secondary_leader: this.state.assignSuppervisor.map(
+                (d) => d.email,
+              ),
+              involved_persons: involvedUsers.map((j) => j._id),
+              description: this.state.projectDescription,
+              p_locations: this.state.assignLocations,
+              organization: this.state.organizationId,
+            };
+            this.setState({loading: false});
+
+            this.props.reduxActions.createProject(
+              data,
+              this.state.organizationId,
+              this.props.navigation,
+            );
+          })
+          .catch((err) => {});
+        // } else {
+        //   this.setState({loading: false});
+        //   this.setState({errorTeamMem: true});
+        // }
       } else {
         this.setState({loading: false});
         this.setState({errorLocationName: true});
@@ -508,13 +508,13 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                           {' '}
                           Project Leaders
                         </Text>
-                        <Text
+                        {/* <Text
                           style={[
                             styles.emailTextContainer,
                             {opacity: 0.5, marginLeft: wp(1), marginTop: wp(2)},
                           ]}>
                           (Mandatory)
-                        </Text>
+                        </Text> */}
                       </View>
                       {this.state.assignLeaderss.length < 1 ? (
                         <View style={[styles.inputContainer]}>

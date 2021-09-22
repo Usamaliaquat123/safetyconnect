@@ -543,7 +543,7 @@ export class Filters extends React.Component<FiltersProps, any> {
                 // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
                 firstDay={1}
                 // Hide day names. Default = false
-                hideDayNames={true}
+                hideDayNames={false}
                 // Show week numbers to the left. Default = false
                 showWeekNumbers={true}
                 // Handler which gets executed when press arrow icon left. It receive a callback can go back month

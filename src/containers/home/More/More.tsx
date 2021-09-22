@@ -169,7 +169,7 @@ export default class More extends React.Component<MoreProps, any> {
                 <Text style={styles.itemText}>Data Analytics</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() =>
                 this.props.navigation.navigate('Settings', {
                   data: this.state.user,
@@ -185,7 +185,7 @@ export default class More extends React.Component<MoreProps, any> {
                 </View>
                 <Text style={styles.itemText}>Settings</Text>
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity
               style={[styles.containerOfItem, {marginBottom: wp(15)}]}>
               <TouchableOpacity
