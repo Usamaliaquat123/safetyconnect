@@ -165,6 +165,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         [moment().format('YYYY-MM-DD')]: {marked: true, color: 'green'},
       },
       setTimeModal: false,
+      potientialRiskS: '',
+      potientialRiskL: '',
       currentTime: Date.now(),
     };
   }
@@ -421,7 +423,55 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     // this.props.navigation.navigate('ViewAllSOr');
   };
   markAsComplete = () => {};
-  preview = () => {};
+  preview = () => {
+    var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
+    var severity = this.state.severity.filter((d: any) => d.selected == true);
+
+    var rec = this.state.actionRecommendations.filter(
+      (d: any) => d.selected == true,
+    );
+    var data = {
+      risk: {
+        severity: liklihood[0].value,
+        likelihood: severity[0].value,
+        category:
+          liklihood[0].value * severity[0].value < 7
+            ? `low`
+            : liklihood[0].value * severity[0].value < 14
+            ? `medium`
+            : 'high',
+      },
+
+      potential_risk: {
+        severity: this.state.potientialRiskS,
+        likelihood: this.state.potientialRiskL,
+      },
+      pending_persons: [],
+      involved_persons: this.state.involvePersonTags.map((d: any) => d.email),
+      sor_type: this.state.classifySorbtns.filter(
+        (d: any) => d.selected === true,
+      )[0].title,
+      submit_to: this.state.submitToTags.map((d: any) => d.email),
+      escalate_to:
+        this.state.exclateToTags.length != 0
+          ? this.state.exclateToTags.map((d: any) => d.email)
+          : [],
+      attachments:
+        this.state.uploadedfiles.length == 0 ? [] : this.state.uploadedfiles,
+      justification: [],
+      // repeatedSor: ['613f2adec6359088631ce32d', '61408d6b4487c00c0becfd3c'],
+      _id: '613f2987c6359039e41ce239',
+      created_by: this.state.user.email,
+      details: this.state.observationT,
+      occurred_at: this.state.currentTime,
+      action_required: rec,
+      status: 1,
+      // comments: '613f2987c635900e7e1ce23b',
+      location: this.state.observation,
+    };
+
+    this.props.navigation.navigate('Preview', {data});
+  };
   mappingMapping = (sev: number, lik: number) => {
     this.state.liklihood.map((d: any, i: number) => {
       if (sev == d.value) {
@@ -1502,6 +1552,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           }
 
                           this.setState({
+                            potientialRiskS: d.risk.severity,
+                            potientialRiskL: d.risk.likelihood,
                             potientialRisk: d.risk.severity * d.risk.likelihood,
                             actionRecommendations: [...obj],
                           });
@@ -2485,7 +2537,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 marginBottom: wp(10),
               }}>
               <TouchableOpacity
-                onPress={() => {}}
+                onPress={() => this.preview()}
                 style={[
                   styles.submitsorbtn,
                   {
