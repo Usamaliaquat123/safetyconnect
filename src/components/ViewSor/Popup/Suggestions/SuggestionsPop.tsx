@@ -804,7 +804,7 @@ export default class SuggestionsPop extends React.Component<
                   </>
                 )}
 
-                {/* Elimination / Administrative */}
+                {/* Elimination / Administrative  */}
                 <Text style={styles.selectYourElemination}>
                   Select your elimination / Administrative
                 </Text>

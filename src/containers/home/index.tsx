@@ -398,7 +398,7 @@ class Home extends React.Component<HomeProps, any> {
       loading: false,
       recentActivity: [],
     });
-    AsyncStorage.getItem('email').then((email : any) => {
+    AsyncStorage.getItem('email').then((email: any) => {
       createApi
         .createApi()
         .getAllNotifications(email, '[0,1]')
@@ -1051,6 +1051,7 @@ class Home extends React.Component<HomeProps, any> {
              * Overall Summary
              *
              */}
+            {/*              
             <View style={styles.recentActivity}>
               <View style={styles.recentlyHead}>
                 <Text style={styles.actHeading}>Overall Summary</Text>
@@ -1149,7 +1150,9 @@ class Home extends React.Component<HomeProps, any> {
                 </ScrollView>
               )}
             </View>
+           */}
             {/* latest incidents */}
+            {/* 
             <View
               style={{
                 marginTop: wp(1.5),
@@ -1234,7 +1237,9 @@ class Home extends React.Component<HomeProps, any> {
                 </ScrollView>
               )}
             </View>
+             */}
             {/* open audits  */}
+            {/*             
             <View
               style={{
                 marginTop: wp(1.5),
@@ -1319,7 +1324,11 @@ class Home extends React.Component<HomeProps, any> {
                 </ScrollView>
               )}
             </View>
+            */}
             {/* upcomming trainings  */}
+
+            {/* 
+
             <View
               style={{
                 marginTop: wp(1.5),
@@ -1403,7 +1412,7 @@ class Home extends React.Component<HomeProps, any> {
                   </View>
                 </ScrollView>
               )}
-            </View>
+            </View> */}
 
             {/* Performace stats */}
             <View style={styles.perfStats}>
