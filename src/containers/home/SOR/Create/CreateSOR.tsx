@@ -1293,6 +1293,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               console.log('resp');
                               console.log(resp);
                               this.setState({
+
+                                selectedLocation: resp.data.data.p_locations[0],
                                 allLocations: resp.data.data.p_locations,
                                 allProjectsSugg: [],
                                 projectid: d.project_id._id,

@@ -187,6 +187,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     }
     // var excludingSubmitCreatedByUsers = [];
 
+    this.setState({
+      potientialRisk:
+        this.props.route.params.data.potential_risk.likelihood *
+        this.props.route.params.data.potential_risk.severity,
+    });
+
     console.log('this.props.route.params.data');
     console.log(this.props.route.params.data);
     if (this.props.route.params.data.closed == true) {
