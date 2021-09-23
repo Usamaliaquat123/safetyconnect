@@ -2786,10 +2786,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 // Replace default month and year title with custom one. the function receive a date as parameter.
                 renderHeader={(date) => {
                   this.setState({currMonth: moment(date[0]).format('MMMM')});
-                  /*Return JSX*/
-                  console.log('render header');
-                  console.log(date);
-                  console.log(moment(date[0]).format('MMMM'));
+                 
 
                   // this.setState({currMonth: moment(date).format('MMMM')});
                 }}

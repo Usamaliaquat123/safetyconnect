@@ -242,7 +242,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         // );
 
                         if (res.data.data.report[i].details != undefined) {
-                          this.state.draft.push(res.data.data.report[i]);
+                          if (res.data.data.report[i].created_by == email) {
+                            this.state.draft.push(res.data.data.report[i]);
+                          }
                         }
                       } else if (res.data.data.report[i].status == 2) {
                         // var rep = filterAndMappingPersons(
