@@ -145,7 +145,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       AllUsers: [],
       isCounterInvolved: false,
       // Five WHY
-      fiveWhytoggle: true,
+      fiveWhytoggle: false,
       reportIdInvestigation: '',
 
       // Potiential Risk
