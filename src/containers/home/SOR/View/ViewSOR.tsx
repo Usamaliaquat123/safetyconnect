@@ -148,6 +148,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       fiveWhytoggle: false,
       reportIdInvestigation: '',
 
+      fiveWhyKeyFindings: '',
+      fiveWhyKeyrootCauses: [],
+      fiveWhyKeycontributoryCauses: [],
+
       // Potiential Risk
       potientialRisk: 9,
       // Esclated to
@@ -210,7 +214,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
-
       this.getAllRepeatedSors(
         this.props.route.params.data.repeatedSor,
         currentProj,
@@ -363,74 +366,45 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   // FIVE WHY
   getFiveWHY = () => {
     // Question map and them push
-    if (this.props.route.params.data.justifications != null) {
+
+    if (this.props.route.params.data.justifications !== null) {
+      this.props.route.params.data.justifications = [];
+      this.props.route.params.data.justifications.push({});
+
       createApi
         .createApi()
-        .getFiveWhy(this.props.route.params.data.justifications)
+        .getFiveWhy(this.props.route.params.data.justification)
         .then((res: any) => {
-          console.log('res');
-          console.log(res);
-        });
-
-      if (this.props.route.params.data.justifications.length != 0) {
-        this.props.route.params.data.justifications[0].justification.question.map(
-          (d, i) => {
+          console.log('Five why data');
+          console.log(res.data.data);
+          res.data.data.justification.question.map((d, i) => {
             this.state.fiveWHYdata.push({question: d});
-          },
-        );
-        //   // Answer map and then push
-        this.props.route.params.data.justifications[0].justification.answer.map(
-          (d, i) => {
+          });
+          //   // Answer map and then push
+          res.data.data.justification.answer.map((d, i) => {
             this.state.fiveWHYdata[i]['answer'] = d;
-          },
-        );
+          });
 
-        this.setState({
-          contributoryCauses: this.props.route.params.data.justifications[0]
-            .contributoryCauses,
-          rootCauses: this.props.route.params.data.justifications[0].rootCauses,
-          keyFindingss: this.props.route.params.data.justifications[0]
-            .keyFindings,
-          // contributoryCauses: this.props.route.params.data.justifications[0]
-          //   .contributoryCauses,
-          // rootCauses: this.props.route.params.data.justifications[0].rootCauses,
-          // rootCauses: this.state.rootCauses,
-        });
-        // this.setState({
-        //   contributoryCauses: this.props.route.params.data.justifications[0]
-        //     .contributoryCauses,
-        //   rootCauses: this.props.route.params.data.justifications[0].rootCauses,
-        //   keyFindingss: this.props.route.params.data.justifications[0]
-        //     .keyFindings,
-        //   // contributoryCauses: this.props.route.params.data.justifications[0]
-        //   //   .contributoryCauses,
-        //   // rootCauses: this.props.route.params.data.justifications[0].rootCauses,
-        //   // rootCauses: this.state.rootCauses,
-        // });
+          this.props.route.params.data.justifications = [];
+          this.props.route.params.data.justifications.push({
+            justification: res.data.data.justification,
+            keyFindings: res.data.data.keyFindings,
+            rootCauses: res.data.data.rootCauses,
+            contributoryCauses: res.data.data.contributoryCauses,
+            // date : res.data.data.date,
+          });
 
-        this.setState({});
-        //   // If contributoryCauses exists
-        // if (this.props.route.params.data.justifications[0].contributoryCauses) {
-        //   this.setState({
-        //     countributoryCauses: this.props.route.params.data.justifications[0]
-        //       .contributoryCauses[0],
-        //     rootCauses: this.props.route.params.data.justifications[0]
-        //       .rootCauses[0],
-        //   });
-        // }
-        //   // Set the state of 5 whys Questions /Answers
-        this.setState({
-          fiveWhyQuestion: this.props.route.params.data.justifications[0]
-            .justification.question,
-          fiveWhyAnswer: this.props.route.params.data.justifications[0]
-            .justification.answer,
-          fiveWhytoggle: true,
+          this.setState({
+            fiveWhyQuestion: res.data.data.justification.question,
+            fiveWhyAnswer: res.data.data.justification.answer,
+            fiveWhyKeyFindings: res.data.data.keyFindings,
+            fiveWhyKeyrootCauses: res.data.data.rootCauses,
+            fiveWhyKeycontributoryCauses: res.data.data.contributoryCauses,
+          });
+          this.setState({fiveWhytoggle: true});
         });
-        // } else {
-        //   this.setState({fiveWhytoggle: false});
-      } else {
-        this.setState({fiveWhytoggle: false});
-      }
+    } else {
+      this.setState({fiveWhytoggle: false});
     }
   };
 
@@ -496,81 +470,55 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       },
     };
 
-    console.log(update);
+    if (this.state.fiveWhytoggle == true) {
+      var obj = {
+        justification: {
+          question: this.state.fiveWhyQuestion,
+          answer: this.state.fiveWhyAnswer,
+        },
+        keyFindings: this.state.fiveWhyKeyFindings,
+        contributoryCauses: this.state.fiveWhyKeycontributoryCauses,
 
-    createApi
-      .createApi()
-      .updateSor(update)
-      .then((res) => {
-        if (res.status == 200) {
-          // add five why
-          if (this.state.fiveWhytoggle == true) {
-            this.setState({loading: false, errorModal: false});
-            // if five is not added previosly
+        rootCauses: this.state.fiveWhyKeyrootCauses,
+        project: this.state.projectId,
+        report: this.props.route.params.data._id,
+        user: this.state.user._id,
+        date: moment().format('MM-DD-YYYY'),
+      };
 
-            if (this.props.route.params.data.justifications.length == 0) {
-              // create five why
-              var obj = {
-                justification: {
-                  question: this.state.fiveWhyQuestion,
-                  answer: this.state.fiveWhyAnswer,
-                },
-                keyfindings: this.state.keyfindings,
-                contributoryCauses: this.state.contributoryCauses,
-                rootCauses: this.state.rootCauses,
-                project: this.state.projectId,
-                report: this.props.route.params.data._id,
-                user: this.state.user._id,
-                date: moment().format('MM-DD-YYYY'),
-              };
+      console.log(obj);
+      createApi
+        .createApi()
+        .createFiveWhy(obj)
+        .then((res: any) => {
+          console.log(res.data);
 
-              createApi
-                .createApi()
-                .createFiveWhy(obj)
-                .then((res: any) => {
-                  setTimeout(() => {
-                    this.props.navigation.goBack();
-                  }, 3000);
+          update['report']['justification'] = res.data.data._id;
+          createApi
+            .createApi()
+            .updateSor(update)
+            .then((res) => {
+              if (res.status == 200) {
+                this.setState({loading: false, errorModal: false});
+                setTimeout(() => {
                   showMessage({
                     message: 'SOR Report is sucessfully updated',
                     type: 'success',
                     position: 'bottom',
                   });
-                });
-            } else {
-              //update five why
-              var updatefiveWhy = {
-                justification: {
-                  question: this.state.fiveWhyQuestion,
-                  answer: this.state.fiveWhyAnswer,
-                },
-                project: this.state.projectId,
-                contributoryCauses: this.state.contributoryCauses,
-                rootCauses: this.state.rootCauses,
-                keyFindings: this.state.keyFindingss,
-                report: this.props.route.params.data._id,
-                user: this.state.user._id,
-                date: moment().format('MM-DD-YYYY'),
-              };
+                }, 1000);
+                this.props.navigation.goBack();
+              }
+            });
+        });
 
-              createApi
-                .createApi()
-                .createFiveWhy(updatefiveWhy)
-                .then((res) => {
-                  showMessage({
-                    message: 'SOR Report is sucessfully updated',
-                    type: 'success',
-                    position: 'bottom',
-                  });
-                  setTimeout(() => {
-                    this.props.navigation.goBack();
-                  }, 3000);
-                });
-            }
-
-            //   fiveWhyQuestion:
-            // fiveWhyAnswer:
-          } else {
+      console.log(update);
+    } else {
+      createApi
+        .createApi()
+        .updateSor(update)
+        .then((res) => {
+          if (res.status == 200) {
             this.setState({loading: false, errorModal: false});
             setTimeout(() => {
               showMessage({
@@ -578,12 +526,84 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 type: 'success',
                 position: 'bottom',
               });
-            }, 3000);
+            }, 1000);
             this.props.navigation.goBack();
           }
-        }
-      })
-      .catch((err) => {});
+        });
+    }
+    // createApi
+    //   .createApi()
+    //   .updateSor(update)
+    //   .then((res) => {
+    //     if (res.status == 200) {
+    //       // add five why
+    //       if (this.state.fiveWhytoggle == true) {
+    //         this.setState({loading: false, errorModal: false});
+    //         // if five is not added previosly
+
+    //         if (this.props.route.params.data.justifications.length == 0) {
+    //           // create five why
+
+    //           createApi
+    //             .createApi()
+    //             .createFiveWhy(obj)
+    //             .then((res: any) => {
+    //               setTimeout(() => {
+    //                 this.props.navigation.goBack();
+    //               }, 3000);
+    //               showMessage({
+    //                 message: 'SOR Report is sucessfully updated',
+    //                 type: 'success',
+    //                 position: 'bottom',
+    //               });
+    //             });
+    //         } else {
+    //           //update five why
+    //           var updatefiveWhy = {
+    //             justification: {
+    //               question: this.state.fiveWhyQuestion,
+    //               answer: this.state.fiveWhyAnswer,
+    //             },
+    //             project: this.state.projectId,
+    //             contributoryCauses: this.state.contributoryCauses,
+    //             rootCauses: this.state.rootCauses,
+    //             keyFindings: this.state.keyFindingss,
+    //             report: this.props.route.params.data._id,
+    //             user: this.state.user._id,
+    //             date: moment().format('MM-DD-YYYY'),
+    //           };
+
+    //           createApi
+    //             .createApi()
+    //             .createFiveWhy(updatefiveWhy)
+    //             .then((res) => {
+    //               showMessage({
+    //                 message: 'SOR Report is sucessfully updated',
+    //                 type: 'success',
+    //                 position: 'bottom',
+    //               });
+    //               setTimeout(() => {
+    //                 this.props.navigation.goBack();
+    //               }, 3000);
+    //             });
+    //         }
+
+    //         //   fiveWhyQuestion:
+    //         // fiveWhyAnswer:
+    //       } else {
+    //         this.setState({loading: false, errorModal: false});
+    //         setTimeout(() => {
+    //           showMessage({
+    //             message: 'SOR Report is sucessfully updated',
+    //             type: 'success',
+    //             position: 'bottom',
+    //           });
+    //         }, 3000);
+    //         this.props.navigation.goBack();
+    //       }
+    //     }
+    //   })
+    //   .catch((err) => {});
   };
 
   // delete comment through commentId
@@ -1576,28 +1596,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   ) : (
                     <FiveWhy
                       onChangeCountributory={(e: any) =>
-                        this.setState({contributoryCauses: e})
+                        this.setState({fiveWhyKeycontributoryCauses: e})
                       }
                       isViewSor={true}
                       onChangeRiskCause={(e: any) =>
-                        this.setState({rootCauses: e})
+                        this.setState({fiveWhyKeyrootCauses: e})
                       }
                       keyFindings={(e: any) => {
-                        this.setState({keyFindingss: e});
+                        this.setState({fiveWhyKeyFindings: e});
                       }}
-                      keyFindingss={
-                        this.props.route.params.data.justifications[0]
-                          .keyFindings
-                      }
+                      keyFindingss={this.state.fiveWhyKeyFindings}
                       contributoryCauses={this.state.contributoryCauses}
                       contributoryCausesD={
-                        this.props.route.params.data.justifications[0]
-                          .contributoryCauses
+                        this.state.fiveWhyKeycontributoryCauses
                       }
-                      rootCausesD={
-                        this.props.route.params.data.justifications[0]
-                          .rootCauses
-                      }
+                      rootCausesD={this.state.fiveWhyKeyrootCauses}
                       rootCauses={this.state.rootCauses}
                       data={this.state.fiveWHYdata}
                       fiveWhyQuestions={(q: Array<string>) => {
@@ -2801,11 +2814,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </View>
                 <View style={styles.previewAndMarkAsCompleteBtns}>
                   <TouchableOpacity
-                    onPress={() =>
+                    onPress={() => {
                       this.props.navigation.navigate('Preview', {
                         data: this.props.route.params.data,
-                      })
-                    }
+                      });
+                    }}
                     style={styles.saveAsDraftContainer}>
                     <Text style={styles.saveAsDraftText}>Preview</Text>
                   </TouchableOpacity>

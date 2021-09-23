@@ -67,6 +67,7 @@ export default class FiveWhy extends React.Component<ViewAllProps, any> {
     // this.setState({});
 
     if (this.props.isViewSor) {
+      console.log('this.props.contributoryCausesD');
       console.log(this.props.contributoryCausesD);
       console.log(this.props.rootCausesD);
       this.setState({
