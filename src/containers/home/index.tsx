@@ -154,6 +154,26 @@ class Home extends React.Component<HomeProps, any> {
                       createdAt: assignBye.reports.action_required.dueDate,
                     };
 
+                    createApi
+                      .createApi()
+                      .getUser(element.createdBy)
+                      .then((user: any) => {
+                        row['createdBy'] = {};
+                        row['createdBy']['email'] = user.data.data.email;
+                        row['createdBy']['img_url'] = user.data.data.img_url;
+                        row['createdBy']['name'] = user.data.data.name;
+                      });
+
+                    createApi
+                      .createApi()
+                      .getUser(element.assignTo)
+                      .then((user: any) => {
+                        row['assignedTo'] = {};
+                        row['assignedTo']['email'] = user.data.data.email;
+                        row['assignedTo']['img_url'] = user.data.data.img_url;
+                        row['assignedTo']['name'] = user.data.data.name;
+                      });
+
                     taskAssignedBy.push(row);
                     // this.state.taskAssignedByYou.push(row);
                     // this.setState({
@@ -188,6 +208,26 @@ class Home extends React.Component<HomeProps, any> {
                       createdAt: assigndTot.reports.action_required.dueDate,
                     };
 
+                    createApi
+                      .createApi()
+                      .getUser(element.createdBy)
+                      .then((user: any) => {
+                        row['createdBy'] = {};
+                        row['createdBy']['email'] = user.data.data.email;
+                        row['createdBy']['img_url'] = user.data.data.img_url;
+                        row['createdBy']['name'] = user.data.data.name;
+                      });
+
+                    createApi
+                      .createApi()
+                      .getUser(element.assignTo)
+                      .then((user: any) => {
+                        row['assignedTo'] = {};
+                        row['assignedTo']['email'] = user.data.data.email;
+                        row['assignedTo']['img_url'] = user.data.data.img_url;
+                        row['assignedTo']['name'] = user.data.data.name;
+                      });
+
                     taskAssignedTo.push(row);
                     // this.setState({
                     //   completedActionTotal: this.state.taskAssignedToYou.map(
@@ -220,6 +260,25 @@ class Home extends React.Component<HomeProps, any> {
                       createdAt: tblDataa.reports.action_required.dueDate,
                     };
                     taskAssignedToYou.push(row);
+                    createApi
+                      .createApi()
+                      .getUser(element.createdBy)
+                      .then((user: any) => {
+                        row.createdBy = {};
+                        row['createdBy']['email'] = user.data.data.email;
+                        row['createdBy']['img_url'] = user.data.data.img_url;
+                        row['createdBy']['name'] = user.data.data.name;
+                      });
+
+                    createApi
+                      .createApi()
+                      .getUser(element.assignTo)
+                      .then((user: any) => {
+                        row['assignedTo'] = {};
+                        row['assignedTo']['email'] = user.data.data.email;
+                        row['assignedTo']['img_url'] = user.data.data.img_url;
+                        row['assignedTo']['name'] = user.data.data.name;
+                      });
                   });
 
                   console.log('taskAssignedToYou');

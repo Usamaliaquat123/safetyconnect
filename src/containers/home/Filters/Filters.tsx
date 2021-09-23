@@ -26,7 +26,7 @@ import {StackNavigatorProps} from '@nav';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 
 import {RouteProp} from '@react-navigation/native';
-import {getCurrentProject} from '@utils';
+import {getCurrentProject, capitalizeFirstLetter} from '@utils';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -52,7 +52,7 @@ export class Filters extends React.Component<FiltersProps, any> {
   constructor(props: FiltersProps) {
     super(props);
     this.state = {
-      obsType: ['lsr', 'concern', 'positive', 'nearmiss'],
+      obsType: ['lsr', 'concern', 'positive', 'near miss'],
       selectedObsType: '',
 
       selectedObserver: '',
@@ -158,7 +158,9 @@ export class Filters extends React.Component<FiltersProps, any> {
                         });
                         this.state.filterObject['sor_type'] = [d];
                       }}>
-                      <Text style={styles.datacontainerText}>{d}</Text>
+                      <Text style={styles.datacontainerText}>
+                        {capitalizeFirstLetter(d)}
+                      </Text>
                     </TouchableOpacity>
                   ))}
                 </View>
@@ -317,7 +319,9 @@ export class Filters extends React.Component<FiltersProps, any> {
                         this.setState({isRiskSelector: false, riskSelected: d});
                         this.state.filterObject['risk'] = [d];
                       }}>
-                      <Text style={styles.datacontainerText}>{d}</Text>
+                      <Text style={styles.datacontainerText}>
+                        {capitalizeFirstLetter(d)}
+                      </Text>
                     </TouchableOpacity>
                   ))}
                 </View>
