@@ -262,14 +262,14 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
                 <Text style={styles.headingContainer}>
                   Add New Organization
                 </Text>
-                <Icon
+                {/* <Icon
                   onPress={() => this.props.navigation.goBack()}
                   containerStyle={{marginLeft: wp(2)}}
                   name={'cross'}
                   type={'entypo'}
                   size={wp(4.6)}
                   iconStyle={{opacity: 0.5}}
-                />
+                /> */}
               </View>
               {/* Upload profile photo */}
 
