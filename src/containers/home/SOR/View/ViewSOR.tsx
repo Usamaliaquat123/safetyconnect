@@ -364,6 +364,14 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   getFiveWHY = () => {
     // Question map and them push
     if (this.props.route.params.data.justifications != null) {
+      createApi
+        .createApi()
+        .getFiveWhy(this.props.route.params.data.justifications)
+        .then((res: any) => {
+          console.log('res');
+          console.log(res);
+        });
+
       if (this.props.route.params.data.justifications.length != 0) {
         this.props.route.params.data.justifications[0].justification.question.map(
           (d, i) => {
