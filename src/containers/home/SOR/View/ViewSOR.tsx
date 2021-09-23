@@ -730,6 +730,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           bucket: 'hns-codist',
           report: dta,
         };
+<<<<<<< HEAD
 
         createApi
           .createApi()
@@ -780,6 +781,58 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       }
     });
 
+=======
+
+        createApi
+          .createApi()
+          .getFileApi(data)
+          .then((d: any) => {
+            for (let i = 0; i < d.data.length; i++) {
+              var index = d.data[i].split('?')[0].split('/').length - 1;
+
+              var name = d.data[i].split('?')[0].split('/')[index];
+              if (
+                attach[i].split('.')[1] == 'png' ||
+                attach[i].split('.')[1] == 'jpeg' ||
+                attach[i].split('.')[1] == 'jpg'
+              ) {
+                attach[i] = {};
+                attach[i]['type'] = 'image';
+                attach[i]['upload'] = '';
+                attach[i]['name'] = name;
+                attach[i]['uri'] = d.data[i];
+                this.setState({});
+              } else if (attach[i].split('.')[1] == 'pdf') {
+                attach[i] = {};
+                attach[i]['type'] = 'pdf';
+                attach[i]['upload'] = '';
+                attach[i]['name'] = name;
+                attach[i]['uri'] = d.data[i];
+                this.setState({});
+              } else if (
+                attach[i].split('.')[1] == 'docx' ||
+                attach[i].split('.')[1] == 'doc'
+              ) {
+                attach[i] = {};
+                attach[i]['type'] = 'doc';
+                attach[i]['upload'] = '';
+                attach[i]['name'] = name;
+                attach[i]['uri'] = d.data[i];
+                this.setState({});
+              } else if (attach[i].split('.')[1] == 'xlsx') {
+                attach[i] = {};
+                attach[i]['type'] = 'xlsx';
+                attach[i]['upload'] = '';
+                attach[i]['name'] = name;
+                attach[i]['uri'] = d.data[i];
+                this.setState({});
+              }
+            }
+          });
+      }
+    });
+
+>>>>>>> 5a172f3dccd4da32e1cc2daaf97f89a0772cc91f
     this.setState({});
   };
   fileAndImageCapturer = (attach: Array<string>, comments: boolean) => {
