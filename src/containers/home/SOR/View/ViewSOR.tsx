@@ -2808,10 +2808,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         <TouchableOpacity
                           onPress={() => {
                             AsyncStorage.getItem('email').then((email) => {
+                              console.log();
                               if (
                                 this.state.actionsAndRecommendations.map(
                                   (d: any) => d.status == 'In Progress',
-                                ).length != 0
+                                ).length == 0
                               ) {
                                 // Some validations is left
 
@@ -2820,6 +2821,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                     (d: any) => d.justification.content !== '',
                                   )
                                 ) {
+                                  console.log('justification');
+                                  console.log(
+                                    this.state.actionsAndRecommendations,
+                                  );
                                   this.setState({
                                     // loading: true,
                                     errorModal: true,
