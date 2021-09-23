@@ -1145,8 +1145,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               styles.draftCardContainer,
                               // {marginBottom: wp()},
                             ]}
-                            user1={d.user1}
-                            user2={d.user2}
+                            user1={d.created_by.img_url}
+                            user2={d.submit_to.img_url}
                             onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                           />
                         ))}
@@ -1194,8 +1194,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             )}
                             location={d.location}
                             style={[styles.draftCardContainer]}
-                            user1={d.user1}
-                            user2={d.user2}
+                            user1={d.created_by.img_url}
+                            user2={d.submit_to.img_url}
                             onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                           />
                         ))}
@@ -1245,8 +1245,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             date={d.occurred_at}
                             risk={d.risk.severity * d.risk.likelihood}
                             viewPortWidth={80}
-                            user1={d.user1}
-                            user2={d.user2}
+                            user1={d.created_by.img_url}
+                            user2={d.submit_to.img_url}
                             observation={d.details}
                             classify={d.sor_type}
                             iconConf={classifySor.find(
@@ -1317,8 +1317,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             )}
                             location={d.location}
                             style={[styles.draftCardContainer]}
-                            user1={d.user1}
-                            user2={d.user2}
+                            user1={d.created_by.img_url}
+                            user2={d.submit_to.img_url}
                           />
                         ))}
                       {this.state.exclated.length > 3 && (
@@ -1378,8 +1378,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             )}
                             location={d.location}
                             style={[styles.draftCardContainer]}
-                            user1={d.user1}
-                            user2={d.user2}
+                            user1={d.created_by.img_url}
+                            user2={d.submit_to.img_url}
                             onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                           />
                         ))}
@@ -1529,8 +1529,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   styles.draftCardContainer,
                   // {marginBottom: wp()},
                 ]}
-                user1={d.user1}
-                user2={d.user2}
+                user1={d.created_by.img_url}
+                user2={d.submit_to.img_url}
               />
             ))}
           </View>
