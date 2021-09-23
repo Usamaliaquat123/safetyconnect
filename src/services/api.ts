@@ -123,6 +123,7 @@ const createApi = (
       JSON.stringify({
         project: data.project,
         limit: data.limit,
+        email: data.email,
         page: data.page,
         query: data.query,
       }),

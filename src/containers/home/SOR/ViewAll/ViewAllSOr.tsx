@@ -182,6 +182,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 project: currentProj,
                 limit: 1000000,
                 page: 0,
+                email: email,
                 query: {status: [1, 2, 3, 4, 5]},
               };
               if (dta != null) {
