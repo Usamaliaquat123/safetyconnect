@@ -662,6 +662,17 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         // this.setState({});
         // this.openDoc();
 
+        this.state.comments.map((comment: any, i: number) => {
+          console.log('comment hai ye');
+          console.log(comment);
+          createApi
+            .createApi()
+            .getUser(comment.user.email)
+            .then((res: any) => {
+              this.state.comments[i].user['name'] = res.data.data.name;
+            });
+        });
+
         // this.fileAndImageCapturer(d.files, true);
         this.getFilesOfComments(this.state.comments);
         // this.state.comments.map((d, i) => {
