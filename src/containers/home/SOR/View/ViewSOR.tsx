@@ -367,7 +367,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   getFiveWHY = () => {
     // Question map and them push
 
-    if (this.props.route.params.data.justifications !== null) {
+
+
+    console.log(this.props.route.params.data.justifications)
+    if (this.props.route.params.data.justifications != null) {
       this.props.route.params.data.justifications = [];
       this.props.route.params.data.justifications.push({});
 
@@ -2826,6 +2829,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 <View style={styles.previewAndMarkAsCompleteBtns}>
                   <TouchableOpacity
                     onPress={() => {
+                      // console.log()
                       this.props.navigation.navigate('Preview', {
                         data: this.props.route.params.data,
                       });
