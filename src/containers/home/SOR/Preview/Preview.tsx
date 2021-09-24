@@ -336,10 +336,10 @@ export class Preview extends React.Component<ViewAllProps, any> {
 
 
     ${
-      this.props.route.params.data.justifications != null &&
+      this.props.route.params.data.justification != null &&
       `
   ${
-    this.props.route.params.data.justifications.length != 0 &&
+    this.props.route.params.data.justification.length != 0 &&
     `  
   <!-- Five why -->
   <hr style=" margin-top: 26px" />
@@ -362,14 +362,14 @@ export class Preview extends React.Component<ViewAllProps, any> {
   margin-bottom: 18px;" class="p8 ft6">Key findings</P>
   
   <P class="p5 ft2"><SPAN class="ft2"></SPAN><SPAN class="ft11">${
-    this.props.route.params.data.justifications[0].keyFindings
+    this.props.route.params.data.justification[0].keyFindings
   }</SPAN></P>
   
   <!-- Root causes -->
   <P style="font-size: 19px;
   margin-top: 22px;
   margin-bottom: 18px;" class="p8 ft6">Root Causes</P>
-  ${this.props.route.params.data.justifications[0].rootCauses.map(
+  ${this.props.route.params.data.justification[0].rootCauses.map(
     (d: any, i: number) =>
       `<P class="p5 ft2"><SPAN class="ft2">*</SPAN><SPAN class="ft11">${d.category}</SPAN></P>
       <P class="p5 ft2"><SPAN class="ft2">-</SPAN><SPAN class="ft11">${d.subCategory[0]}</SPAN></P>
@@ -381,7 +381,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
   <P style="font-size: 19px;
   margin-top: 22px;
   margin-bottom: 18px;" class="p8 ft6">Contributory Causes</P>
-  ${this.props.route.params.data.justifications[0].contributoryCauses.map(
+  ${this.props.route.params.data.justification[0].contributoryCauses.map(
     (d: any, i: number) =>
       `<P class="p5 ft2"><SPAN class="ft2">*</SPAN><SPAN class="ft11">${d.category}</SPAN></P>
     <P class="p5 ft2"><SPAN class="ft2">-</SPAN><SPAN class="ft11">${d.subCategory[0]}</SPAN></P>
@@ -459,15 +459,15 @@ export class Preview extends React.Component<ViewAllProps, any> {
     console.log(this.props.route.params.data);
     var data = [];
 
-    if (this.props.route.params.data.justifications != null) {
-      if (this.props.route.params.data?.justifications.length != 0) {
-        this.props.route.params.data.justifications[0].justification.question.map(
+    if (this.props.route.params.data.justification != null) {
+      if (this.props.route.params.data?.justification.length != 0) {
+        this.props.route.params.data.justification[0].justification.question.map(
           (d: any) => {
             data.push({question: d});
           },
         );
 
-        this.props.route.params.data.justifications[0].justification.answer.map(
+        this.props.route.params.data.justification[0].justification.answer.map(
           (d: any, i: number) => {
             data[i]['answer'] = d;
           },
@@ -477,11 +477,11 @@ export class Preview extends React.Component<ViewAllProps, any> {
 
     this.setState({questionAndAnswers: data});
 
-    // this.props.route.params.data.justifications[0].justification.question.map(
+    // this.props.route.params.data.justification[0].justification.question.map(
     //   (d: any) => {
     // this.setState({  fiveWhy: [ question: d]});
     // this.setState({
-    //   fiveWhy: this.props.route.params.data.justifications[0].justification
+    //   fiveWhy: this.props.route.params.data.justification[0].justification
     //     .question,
     // });
     // },
@@ -490,7 +490,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
     console.log('this.state.fiveWhy');
     console.log(this.state.fiveWhy);
 
-    // this.props.route.params.data.justifications[0].justification.answer.map(
+    // this.props.route.params.data.justification[0].justification.answer.map(
     //   (d: any, i: number) => {
     //     this.state.fiveWhy[i]['answer'] = d;
     //   },
@@ -963,17 +963,17 @@ export class Preview extends React.Component<ViewAllProps, any> {
                 </View>
 
                 {/* Five why   */}
-                {this.props.route.params.data.justifications != null && (
+                {this.props.route.params.data.justification != null && (
                   <>
-                    {this.props.route.params.data.justifications.length !=
-                      0 && <View style={styles.lineheight} />}
+                    {this.props.route.params.data.justification.length != 0 && (
+                      <View style={styles.lineheight} />
+                    )}
                   </>
                 )}
 
-                {this.props.route.params.data.justifications != null && (
+                {this.props.route.params.data.justification != null && (
                   <>
-                    {this.props.route.params.data.justifications.length !=
-                      0 && (
+                    {this.props.route.params.data.justification.length != 0 && (
                       <>
                         {this.props.route.params.data.action_required.length !=
                           0 && (
@@ -1021,7 +1021,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
                                 flexDirection: 'column',
                                 marginLeft: wp(20),
                               }}>
-                              {this.props.route.params.data.justifications[0].justification.answer.map(
+                              {this.props.route.params.data.justification[0].justification.answer.map(
                                 (d: any, i: number) => (
                                  
                                 ),
@@ -1040,7 +1040,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
                               </Text>
                               <Text style={{fontSize: wp(3)}}>
                                 {
-                                  this.props.route.params.data.justifications[0]
+                                  this.props.route.params.data.justification[0]
                                     .keyFindings
                                 }
                               </Text>
@@ -1054,7 +1054,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
                                 }}>
                                 Root Causes
                               </Text>
-                              {this.props.route.params.data.justifications[0].rootCauses.map(
+                              {this.props.route.params.data.justification[0].rootCauses.map(
                                 (d: any) => (
                                   <>
                                     <Text
@@ -1086,7 +1086,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
                                 }}>
                                 Contributory Causes
                               </Text>
-                              {this.props.route.params.data.justifications[0].contributoryCauses.map(
+                              {this.props.route.params.data.justification[0].contributoryCauses.map(
                                 (d: any) => (
                                   <>
                                     <Text

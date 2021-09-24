@@ -367,46 +367,50 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   getFiveWHY = () => {
     // Question map and them push
 
+    console.log('this.props.route.params.data.justification');
+    console.log(this.props.route.params.data.justification);
 
-
-    console.log(this.props.route.params.data.justifications)
-    if (this.props.route.params.data.justifications != null) {
-      this.props.route.params.data.justifications = [];
-      this.props.route.params.data.justifications.push({});
-
+    if (this.props.route.params.data.justification != null) {
       createApi
         .createApi()
         .getFiveWhy(this.props.route.params.data.justification)
         .then((res: any) => {
-          console.log('Five why data');
-          console.log(res.data.data);
-          res.data.data.justification.question.map((d, i) => {
-            this.state.fiveWHYdata.push({question: d});
-          });
-          //   // Answer map and then push
-          res.data.data.justification.answer.map((d, i) => {
-            this.state.fiveWHYdata[i]['answer'] = d;
-          });
+          if (res.data.success) {
+            console.log('Five why data');
+            console.log(res.data.data);
+            res.data.data.justification.question.map((d, i) => {
+              this.state.fiveWHYdata.push({question: d});
+            });
+            //   // Answer map and then push
+            res.data.data.justification.answer.map((d, i) => {
+              this.state.fiveWHYdata[i]['answer'] = d;
+            });
 
-          this.props.route.params.data.justifications = [];
-          this.props.route.params.data.justifications.push({
-            justification: res.data.data.justification,
-            keyFindings: res.data.data.keyFindings,
-            rootCauses: res.data.data.rootCauses,
-            contributoryCauses: res.data.data.contributoryCauses,
-            // date : res.data.data.date,
-          });
+            this.props.route.params.data.justification = [];
+            // this.props.route.params.data.justification.push({});
+            this.props.route.params.data.justification.push({
+              justification: res.data.data.justification,
+              keyFindings: res.data.data.keyFindings,
+              rootCauses: res.data.data.rootCauses,
+              contributoryCauses: res.data.data.contributoryCauses,
+              // date : res.data.data.date,
+            });
 
-          this.setState({
-            fiveWhyQuestion: res.data.data.justification.question,
-            fiveWhyAnswer: res.data.data.justification.answer,
-            fiveWhyKeyFindings: res.data.data.keyFindings,
-            fiveWhyKeyrootCauses: res.data.data.rootCauses,
-            fiveWhyKeycontributoryCauses: res.data.data.contributoryCauses,
-          });
-          this.setState({fiveWhytoggle: true});
+            this.setState({
+              fiveWhyQuestion: res.data.data.justification.question,
+              fiveWhyAnswer: res.data.data.justification.answer,
+              fiveWhyKeyFindings: res.data.data.keyFindings,
+              fiveWhyKeyrootCauses: res.data.data.rootCauses,
+              fiveWhyKeycontributoryCauses: res.data.data.contributoryCauses,
+            });
+            this.setState({fiveWhytoggle: true});
+          } else {
+            this.props.route.params.data.justification = null;
+            this.setState({fiveWhytoggle: false});
+          }
         });
     } else {
+      // console.log('asdjaskdajskdasjkdsajkdajskjskd');
       this.setState({fiveWhytoggle: false});
     }
   };
@@ -544,7 +548,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     //         this.setState({loading: false, errorModal: false});
     //         // if five is not added previosly
 
-    //         if (this.props.route.params.data.justifications.length == 0) {
+    //         if (this.props.route.params.data.justification.length == 0) {
     //           // create five why
 
     //           createApi
@@ -2829,7 +2833,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 <View style={styles.previewAndMarkAsCompleteBtns}>
                   <TouchableOpacity
                     onPress={() => {
-                      // console.log()
                       this.props.navigation.navigate('Preview', {
                         data: this.props.route.params.data,
                       });
