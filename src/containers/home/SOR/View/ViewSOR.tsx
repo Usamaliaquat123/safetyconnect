@@ -199,9 +199,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
     console.log('this.props.route.params.data');
     console.log(this.props.route.params.data);
-    if (this.props.route.params.data.closed == true) {
-      this.setState({closed: true});
-    }
 
     if (
       this.props.route.params.data.submit_to[0] == this.state.user.email &&
@@ -210,6 +207,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.setState({closed: true});
     } else {
       this.setState({closed: false});
+    }
+
+    if (this.props.route.params.data.closed == true) {
+      this.setState({closed: true});
     }
 
     getCurrentProject().then((currentProj: any) => {

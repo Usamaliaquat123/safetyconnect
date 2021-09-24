@@ -234,31 +234,31 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   } else {
                     res.data.data.report.reverse();
                     for (let i = 0; i < res.data.data.report.length; i++) {
-                      createApi
-                        .createApi()
-                        .getUser(res.data.data.report[i].created_by)
-                        .then((user: any) => {
-                          res.data.data.report[i].created_by = {};
-                          res.data.data.report[i].created_by['email'] =
-                            user.data.data.email;
-                          res.data.data.report[i].created_by['img_url'] =
-                            user.data.data.img_url;
-                          res.data.data.report[i].created_by['name'] =
-                            user.data.data.name;
-                        });
+                      // createApi
+                      //   .createApi()
+                      //   .getUser(res.data.data.report[i].created_by)
+                      //   .then((user: any) => {
+                      //     res.data.data.report[i].created_by = {};
+                      //     res.data.data.report[i].created_by['email'] =
+                      //       user.data.data.email;
+                      //     res.data.data.report[i].created_by['img_url'] =
+                      //       user.data.data.img_url;
+                      //     res.data.data.report[i].created_by['name'] =
+                      //       user.data.data.name;
+                      //   });
 
-                      createApi
-                        .createApi()
-                        .getUser(res.data.data.report[i].submit_to)
-                        .then((user: any) => {
-                          res.data.data.report[i].submit_to = {};
-                          res.data.data.report[i].submit_to['email'] =
-                            user.data.data.email;
-                          res.data.data.report[i].submit_to['img_url'] =
-                            user.data.data.img_url;
-                          res.data.data.report[i].submit_to['name'] =
-                            user.data.data.name;
-                        });
+                      // createApi
+                      //   .createApi()
+                      //   .getUser(res.data.data.report[i].submit_to)
+                      //   .then((user: any) => {
+                      //     res.data.data.report[i].submit_to = {};
+                      //     res.data.data.report[i].submit_to['email'] =
+                      //       user.data.data.email;
+                      //     res.data.data.report[i].submit_to['img_url'] =
+                      //       user.data.data.img_url;
+                      //     res.data.data.report[i].submit_to['name'] =
+                      //       user.data.data.name;
+                      //   });
 
                       if (res.data.data.report[i].status == 1) {
                         // var rep = filterAndMappingPersons(a
@@ -636,8 +636,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           ? {borderBottomWidth: wp(0)}
                                           : null
                                       }
-                                      user1={d.created_by.img_url}
-                                      user2={d.submit_to.img_url}
+                                      user1={undefined}
+                                      user2={undefined}
                                       observation={d.details}
                                       repeated={d.repeatedSor}
                                       username={d.created_by}
@@ -647,8 +647,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                       )}
                                       onPress={
                                         () => {
-                                          d['created_by'] = d.created_by.email;
-                                          d['submit_to'] = [d.submit_to.email];
+                                          // d['created_by'] = d.created_by.email;
+                                          // d['submit_to'] = [d.submit_to.email];
 
                                           this.props.navigation.navigate(
                                             'ViewSOR',
@@ -737,8 +737,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                             ? {borderBottomWidth: wp(0)}
                                             : null
                                         }
-                                        user1={d.created_by.img_url}
-                                        user2={d.submit_to.img_url}
+                                        user1={undefined}
+                                        user2={undefined}
                                         observation={d.details}
                                         username={d.created_by}
                                         repeated={d.repeatedSor}
@@ -748,8 +748,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                         onPress={() => {
                                           // d['stat'];
 
-                                          d['created_by'] = d.created_by.email;
-                                          d['submit_to'] = [d.submit_to.email];
+                                          // d['created_by'] = d.created_by.email;
+                                          // d['submit_to'] = [d.submit_to.email];
                                           this.props.navigation.navigate(
                                             'ViewSOR',
                                             {
@@ -849,8 +849,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                             ? {borderBottomWidth: wp(0)}
                                             : null
                                         }
-                                        user1={d.created_by.img_url}
-                                        user2={d.submit_to.img_url}
+                                        user1={undefined}
+                                        user2={undefined}
                                         observation={d.details}
                                         username={d.created_by}
                                         iconconf={classifySor.find(
@@ -860,11 +860,11 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           //  console.log(d)
 
                                           {
-                                            d['created_by'] =
-                                              d.created_by.email;
-                                            d['submit_to'] = [
-                                              d.submit_to.email,
-                                            ];
+                                            // d['created_by'] =
+                                            //   d.created_by.email;
+                                            // d['submit_to'] = [
+                                            //   d.submit_to.email,
+                                            // ];
                                             this.props.navigation.navigate(
                                               'ViewSOR',
                                               {
@@ -952,16 +952,16 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                             ? {borderBottomWidth: wp(0)}
                                             : null
                                         }
-                                        user1={d.created_by.img_url}
-                                        user2={d.submit_to.img_url}
+                                        user1={undefined}
+                                        user2={undefined}
                                         observation={d.details}
                                         username={d.created_by}
                                         iconconf={classifySor.find(
                                           (e: any) => e.title == d.sor_type,
                                         )}
                                         onPress={() => {
-                                          d['created_by'] = d.created_by.email;
-                                          d['submit_to'] = [d.submit_to.email];
+                                          // d['created_by'] = d.created_by.email;
+                                          // d['submit_to'] = [d.submit_to.email];
                                           this.props.navigation.navigate(
                                             'ViewSOR',
                                             {
@@ -1048,8 +1048,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                             ? {borderBottomWidth: wp(0)}
                                             : null
                                         }
-                                        user1={d.created_by.img_url}
-                                        user2={d.submit_to.img_url}
+                                        user1={undefined}
+                                        user2={undefined}
                                         observation={d.details}
                                         username={d.created_by}
                                         iconconf={classifySor.find(
@@ -1058,8 +1058,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                         repeated={d.repeatedSor}
                                         onPress={() => {
                                           d['closed'] = true;
-                                          d['created_by'] = d.created_by.email;
-                                          d['submit_to'] = [d.submit_to.email];
+                                          // d['created_by'] = d.created_by.email;
+                                          // d['submit_to'] = [d.submit_to.email];
                                           this.props.navigation.navigate(
                                             'ViewSOR',
                                             {
@@ -1174,8 +1174,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                               styles.draftCardContainer,
                               // {marginBottom: wp()},
                             ]}
-                            user1={d.created_by.img_url}
-                            user2={d.submit_to.img_url}
+                            user1={undefined}
+                            user2={undefined}
                             onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                           />
                         ))}
@@ -1225,8 +1225,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             )}
                             location={d.location}
                             style={[styles.draftCardContainer]}
-                            user1={d.created_by.img_url}
-                            user2={d.submit_to.img_url}
+                            user1={undefined}
+                            user2={undefined}
                             onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                           />
                         ))}
@@ -1278,8 +1278,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             date={d.occurred_at}
                             risk={d.risk.severity * d.risk.likelihood}
                             viewPortWidth={80}
-                            user1={d.created_by.img_url}
-                            user2={d.submit_to.img_url}
+                            user1={undefined}
+                            user2={undefined}
                             observation={d.details}
                             classify={d.sor_type}
                             iconConf={classifySor.find(
@@ -1352,8 +1352,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             )}
                             location={d.location}
                             style={[styles.draftCardContainer]}
-                            user1={d.created_by.img_url}
-                            user2={d.submit_to.img_url}
+                            user1={undefined}
+                            user2={undefined}
                           />
                         ))}
                       {this.state.exclated.length > 3 && (
@@ -1415,8 +1415,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             )}
                             location={d.location}
                             style={[styles.draftCardContainer]}
-                            user1={d.created_by.img_url}
-                            user2={d.submit_to.img_url}
+                            user1={undefined}
+                            user2={undefined}
                             onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                           />
                         ))}
@@ -1568,8 +1568,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   styles.draftCardContainer,
                   // {marginBottom: wp()},
                 ]}
-                user1={d.created_by.img_url}
-                user2={d.submit_to.img_url}
+                user1={undefined}
+                user2={undefined}
               />
             ))}
           </View>
