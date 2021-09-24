@@ -237,6 +237,7 @@ class Menu extends React.Component<MenuProps, any> {
                     <TouchableOpacity
                       key={i}
                       onPress={() => {
+                        AsyncStorage.setItem('organizationId', d._id);
                         this.setState({
                           currOrganization: d.name,
                           organizationSugg: [],

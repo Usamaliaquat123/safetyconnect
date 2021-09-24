@@ -166,7 +166,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
             // if( gol.map((j) => j._id == this.state))
 
             var gol = d.filter((d) => d.email != this.state.user);
-            if (this.props.route.params.users.length != 0) {
+            if (this.props.route.params?.users != undefined) {
               var data = {
                 emails: gol.map((d) => d.email),
                 organization: this.state.organizationId,
@@ -238,18 +238,32 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
         locationSuppervisorsSugg: [],
       });
 
-      var supervisor = this.state.locationSuppervisorsTags.filter(
-        (d) => this.props.route.params.users.filter((f) => d.email != f)[0],
-      );
-      var additional_supervisor = this.state.additionalSuppervisorsTags.filter(
-        (d) => this.props.route.params.users.filter((f) => d.email != f)[0],
-      );
+      if (this.props.route.params?.users != undefined) {
+        var supervisor = this.state.locationSuppervisorsTags.filter(
+          (d) => this.props.route.params.users.filter((f) => d.email != f)[0],
+        );
+        var additional_supervisor = this.state.additionalSuppervisorsTags.filter(
+          (d) => this.props.route.params.users.filter((f) => d.email != f)[0],
+        );
+        this.state.assignLocations.push({
+          name: this.state.locationName,
+          supervisor: supervisor.map((d: any) => d._id)[0],
+          additional_supervisor: additional_supervisor.map(
+            (d: any) => d._id,
+          )[0],
+        });
+      } else {
+        this.state.assignLocations.push({
+          name: this.state.locationName,
+          supervisor: this.state.locationSuppervisorsTags.map(
+            (d: any) => d._id,
+          )[0],
+          additional_supervisor: this.state.additionalSuppervisorsTags.map(
+            (d: any) => d._id,
+          )[0],
+        });
+      }
 
-      this.state.assignLocations.push({
-        name: this.state.locationName,
-        supervisor: supervisor.map((d: any) => d._id)[0],
-        additional_supervisor: additional_supervisor.map((d: any) => d._id)[0],
-      });
       // await AsyncStorage.setItem('locations', this.state.locationName);
       // this.props.navigation.goBack();
     } else {
@@ -294,8 +308,6 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               allAssignLeaders: org.data.data.members,
             });
           }
-
-          console.log(this.state.allAssignSuppervisorText);
         })
         .catch((err: any) => {});
       // this.props.reduxActions.getOrganization(orgid).then((res: any) => {});
