@@ -468,7 +468,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       details: this.state.observationT,
       occurred_at: this.state.currentTime,
       action_required: rec,
-      status: 1,
+      status: 2,
       // comments: '613f2987c635900e7e1ce23b',
       location: this.state.observation,
     };
@@ -1293,7 +1293,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               console.log('resp');
                               console.log(resp);
                               this.setState({
-
                                 selectedLocation: resp.data.data.p_locations[0],
                                 allLocations: resp.data.data.p_locations,
                                 allProjectsSugg: [],
@@ -2701,7 +2700,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     position: 'absolute',
                     top: wp(4),
                     // left: wp(1),
-                    alignSelf : "center",
+                    alignSelf: 'center',
                     // right: wp(1),
                     zIndex: 1000,
                     fontSize: wp(2.8),
@@ -2788,7 +2787,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 // Replace default month and year title with custom one. the function receive a date as parameter.
                 renderHeader={(date) => {
                   this.setState({currMonth: moment(date[0]).format('MMMM')});
-                 
 
                   // this.setState({currMonth: moment(date).format('MMMM')});
                 }}

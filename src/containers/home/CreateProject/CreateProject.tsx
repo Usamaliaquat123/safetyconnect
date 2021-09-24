@@ -272,16 +272,11 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
         .getOrganization(orgid)
         .then((org: any) => {
           this.setState({orgName: org.data.data.name});
-          // console.log("")
 
-          // "img_url": "sdd.jpg",
-          // "_id": "60ba3fd6172e5471c3a93cf1",
-          // "name": "sdsd",
-          // "email": "hewov76940@pidhoes.com"
-
-          if (this.props.route.params.users != 0) {
+          if (this.props.route.params?.users != undefined) {
+            var dta = [];
             this.props.route.params.users.map((d: any) => {
-              org.data.data.members.push({
+              dta.push({
                 img_url:
                   'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
                 _id: '60ba3fd6172e5471c3a93cf1',
@@ -289,15 +284,21 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                 email: d,
               });
             });
+            this.setState({
+              allAssignSuppervisorText: dta,
+              allAssignLeaders: dta,
+            });
+          } else {
+            this.setState({
+              allAssignSuppervisorText: org.data.data.members,
+              allAssignLeaders: org.data.data.members,
+            });
           }
 
-          this.setState({
-            allAssignSuppervisorText: org.data.data.members,
-            allAssignLeaders: org.data.data.members,
-          });
+          console.log(this.state.allAssignSuppervisorText);
         })
         .catch((err: any) => {});
-      this.props.reduxActions.getOrganization(orgid).then((res: any) => {});
+      // this.props.reduxActions.getOrganization(orgid).then((res: any) => {});
     });
   };
 
