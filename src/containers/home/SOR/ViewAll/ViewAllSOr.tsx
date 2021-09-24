@@ -314,7 +314,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     }
                   }
 
+                  // setTimeout(() => {
                   this.setState({loading: false});
+                  // }, 10000);
                 })
                 .catch((err) => console.log(err));
             });
@@ -372,7 +374,8 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
             .getUser(res.data.data.report[0].created_by)
             .then((user: any) => {
               res.data.data.report[0].created_by = {};
-              res.data.data.report[0].created_by['email'] = user.data.data.email;
+              res.data.data.report[0].created_by['email'] =
+                user.data.data.email;
               res.data.data.report[0].created_by['img_url'] =
                 user.data.data.img_url;
               res.data.data.report[0].created_by['name'] = user.data.data.name;
@@ -540,7 +543,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
               </TouchableOpacity>
             </View>
             <View style={styles.lineheight}></View>
-            {this.props.reduxState.loading == true ? (
+            {this.state.loading == true ? (
               <View style={styles.lottiefilesLoading}>
                 <LottieView
                   // ref={(animation) => {
