@@ -649,7 +649,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                         () => {
                                           // d['created_by'] = d.created_by.email;
                                           // d['submit_to'] = [d.submit_to.email];
-
+                                          d['closed'] = false;
                                           this.props.navigation.navigate(
                                             'ViewSOR',
                                             {
@@ -747,7 +747,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                         )}
                                         onPress={() => {
                                           // d['stat'];
-
+                                          d['closed'] = false;
                                           // d['created_by'] = d.created_by.email;
                                           // d['submit_to'] = [d.submit_to.email];
                                           this.props.navigation.navigate(
@@ -860,6 +860,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           //  console.log(d)
 
                                           {
+                                            d['closed'] = false;
                                             // d['created_by'] =
                                             //   d.created_by.email;
                                             // d['submit_to'] = [
@@ -960,6 +961,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           (e: any) => e.title == d.sor_type,
                                         )}
                                         onPress={() => {
+                                          d['closed'] = false;
                                           // d['created_by'] = d.created_by.email;
                                           // d['submit_to'] = [d.submit_to.email];
                                           this.props.navigation.navigate(
@@ -1154,7 +1156,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             onPress={(d: Isor) => {
                               d['created_by'] = d.created_by.email;
                               d['submit_to'] = [d.submit_to.email];
-
+                              d['closed'] = false;
                               this.props.navigation.navigate('ViewSOR', {
                                 data: d,
                               });
@@ -1209,6 +1211,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             name={d.created_by.email}
                             data={d}
                             onPress={(d: Isor) => {
+                              d['closed'] = false;
                               d['created_by'] = d.created_by.email;
                               d['submit_to'] = [d.submit_to.email];
                               this.props.navigation.navigate('ViewSOR', {
@@ -1269,6 +1272,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             data={d}
                             name={d.created_by.email}
                             onPress={(d: Isor) => {
+                              d['closed'] = false;
                               d['created_by'] = d.created_by.email;
                               d['submit_to'] = [d.submit_to.email];
                               this.props.navigation.navigate('ViewSOR', {
@@ -1335,6 +1339,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             name={d.created_by.email}
                             data={d}
                             onPress={(d: Isor) => {
+                              d['closed'] = false;
                               d['created_by'] = d.created_by.email;
                               d['submit_to'] = [d.submit_to.email];
                               this.props.navigation.navigate('ViewSOR', {
@@ -1399,6 +1404,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             data={d}
                             name={d.created_by.email}
                             onPress={(d: Isor) => {
+                              d['closed'] = true;
                               d['created_by'] = d.created_by.email;
                               d['submit_to'] = [d.submit_to.email];
                               this.props.navigation.navigate('ViewSOR', {

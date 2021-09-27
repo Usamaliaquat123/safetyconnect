@@ -302,25 +302,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           if (
             this.state.user.email == this.props.route.params.data.created_by
           ) {
-            if (this.props.route.params.data.closed == true) {
-              this.setState({closed: true, isMarkAsComplete: true});
-            } else {
-              this.setState({isMarkAsComplete: true});
-            }
+            this.setState({isMarkAsComplete: true});
           } else if (
             this.state.user.email == this.props.route.params.data.submit_to[0]
           ) {
-            if (this.props.route.params.data.closed == true) {
-              this.setState({closed: true, isMarkAsComplete: true});
-            } else {
-              this.setState({isMarkAsComplete: true});
-            }
+            this.setState({isMarkAsComplete: true});
           } else {
-            if (this.props.route.params.data.closed == true) {
-              this.setState({closed: true, isMarkAsComplete: true});
-            } else {
-              this.setState({isMarkAsComplete: false});
-            }
+            this.setState({isMarkAsComplete: false});
           }
         });
     });
@@ -2790,30 +2778,35 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 <View style={styles.saveAsDraftAndSubmitBtns}>
                   {this.props.route.params.data.status != 2 && (
                     <>
-                      {!this.state.closed && (
-                        <TouchableOpacity
-                          onPress={() => {
-                            if (this.state.fiveWhytoggle == true) {
-                              if (this.state.fiveWhyQuestion.length == 5) {
-                                this.onSubmitUpdateSor(1);
-                              } else {
-                                this.setState({
-                                  errorModal: true,
-                                  errHeadingText: 'Minimum 5 why ',
-                                  errDesText:
-                                    'minimum 5 why should be added..!',
-                                });
-                              }
-                            } else {
-                              this.onSubmitUpdateSor(1);
-                            }
-                          }}
-                          style={styles.saveAsDraftContainer}>
-                          <Text style={styles.saveAsDraftText}>
-                            Save as Draft
-                          </Text>
-                        </TouchableOpacity>
-                      )}
+                    {this.props.route.params.data.closed == false && (
+ <>
+ {!this.state.closed && (
+     <TouchableOpacity
+       onPress={() => {
+         if (this.state.fiveWhytoggle == true) {
+           if (this.state.fiveWhyQuestion.length == 5) {
+             this.onSubmitUpdateSor(1);
+           } else {
+             this.setState({
+               errorModal: true,
+               errHeadingText: 'Minimum 5 why ',
+               errDesText:
+                 'minimum 5 why should be added..!',
+             });
+           }
+         } else {
+           this.onSubmitUpdateSor(1);
+         }
+       }}
+       style={styles.saveAsDraftContainer}>
+       <Text style={styles.saveAsDraftText}>
+         Save as Draft
+       </Text>
+     </TouchableOpacity>
+   )}
+ </>
+                    )}
+                   
                     </>
                   )}
 
@@ -2850,101 +2843,104 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     <Text style={styles.saveAsDraftText}>Preview</Text>
                   </TouchableOpacity>
 
-                  <>
-                    {this.state.isMarkAsComplete && (
-                      <>
-                        <TouchableOpacity
-                          onPress={() => {
-                            AsyncStorage.getItem('email').then((email) => {
-                              console.log();
-                              if (
-                                this.state.actionsAndRecommendations.map(
-                                  (d: any) => d.status != 'In Progress',
-                                ).length == 0
-                              ) {
-                                // Some validations is left
+                  {this.props.route.params.data.closed == false && (
+                    <>
+                      {this.state.isMarkAsComplete && (
+                        <>
+                          <TouchableOpacity
+                            onPress={() => {
+                              AsyncStorage.getItem('email').then((email) => {
+                                console.log();
+                                if (
+                                  this.state.actionsAndRecommendations.map(
+                                    (d: any) => d.status != 'In Progress',
+                                  ).length == 0
+                                ) {
+                                  // Some validations is left
 
-                                if (
-                                  this.state.actionsAndRecommendations.filter(
-                                    (d: any) => d.justification.content !== '',
-                                  )
-                                ) {
-                                  console.log('justification');
-                                  console.log(
-                                    this.state.actionsAndRecommendations,
-                                  );
-                                  this.setState({
-                                    // loading: true,
-                                    errorModal: true,
-                                    errHeadingText: 'Actions validations ',
-                                    errDesText: 'Add the justification',
-                                  });
+                                  if (
+                                    this.state.actionsAndRecommendations.filter(
+                                      (d: any) =>
+                                        d.justification.content !== '',
+                                    )
+                                  ) {
+                                    console.log('justification');
+                                    console.log(
+                                      this.state.actionsAndRecommendations,
+                                    );
+                                    this.setState({
+                                      // loading: true,
+                                      errorModal: true,
+                                      errHeadingText: 'Actions validations ',
+                                      errDesText: 'Add the justification',
+                                    });
+                                  } else {
+                                    this.setState({
+                                      // loading: true,
+                                      errorModal: true,
+                                      errHeadingText: 'Actions validations ',
+                                      errDesText:
+                                        'Actions should be completed or rejected',
+                                    });
+                                  }
                                 } else {
-                                  this.setState({
-                                    // loading: true,
-                                    errorModal: true,
-                                    errHeadingText: 'Actions validations ',
-                                    errDesText:
-                                      'Actions should be completed or rejected',
-                                  });
-                                }
-                              } else {
-                                if (
-                                  email ==
-                                  this.props.route.params.data.created_by
-                                ) {
-                                  if (this.state.fiveWhytoggle == true) {
-                                    if (
-                                      this.state.fiveWhyQuestion.length == 5
-                                    ) {
+                                  if (
+                                    email ==
+                                    this.props.route.params.data.created_by
+                                  ) {
+                                    if (this.state.fiveWhytoggle == true) {
+                                      if (
+                                        this.state.fiveWhyQuestion.length == 5
+                                      ) {
+                                        this.onSubmitUpdateSor(5);
+                                      } else {
+                                        this.setState({
+                                          errorModal: true,
+                                          errHeadingText: 'Minimum 5 why ',
+                                          errDesText:
+                                            'minimum 5 why should be added..!',
+                                        });
+                                      }
+                                    } else {
                                       this.onSubmitUpdateSor(5);
-                                    } else {
-                                      this.setState({
-                                        errorModal: true,
-                                        errHeadingText: 'Minimum 5 why ',
-                                        errDesText:
-                                          'minimum 5 why should be added..!',
-                                      });
                                     }
                                   } else {
-                                    this.onSubmitUpdateSor(5);
-                                  }
-                                } else {
-                                  if (this.state.fiveWhytoggle == true) {
-                                    if (
-                                      this.state.fiveWhyQuestion.length == 5
-                                    ) {
+                                    if (this.state.fiveWhytoggle == true) {
+                                      if (
+                                        this.state.fiveWhyQuestion.length == 5
+                                      ) {
+                                        this.onSubmitUpdateSor(3);
+                                      } else {
+                                        this.setState({
+                                          errorModal: true,
+                                          errHeadingText: 'Minimum 5 why ',
+                                          errDesText:
+                                            'minimum 5 why should be added..!',
+                                        });
+                                      }
+                                    } else {
                                       this.onSubmitUpdateSor(3);
-                                    } else {
-                                      this.setState({
-                                        errorModal: true,
-                                        errHeadingText: 'Minimum 5 why ',
-                                        errDesText:
-                                          'minimum 5 why should be added..!',
-                                      });
                                     }
-                                  } else {
-                                    this.onSubmitUpdateSor(3);
                                   }
                                 }
-                              }
 
-                              // this.props.route.params.data.action_required.filter(
-                              //   (d) => d.justification.content === '',
-                              // );
-                            });
-                          }}
-                          style={[
-                            styles.saveAsSubmitContainer,
-                            {backgroundColor: colors.green},
-                          ]}>
-                          <Text style={[styles.saveAsSubmitText]}>
-                            Mark as Complete
-                          </Text>
-                        </TouchableOpacity>
-                      </>
-                    )}
-                  </>
+                                // this.props.route.params.data.action_required.filter(
+                                //   (d) => d.justification.content === '',
+                                // );
+                              });
+                            }}
+                            style={[
+                              styles.saveAsSubmitContainer,
+                              {backgroundColor: colors.green},
+                            ]}>
+                            <Text style={[styles.saveAsSubmitText]}>
+                              Mark as Complete
+                            </Text>
+                          </TouchableOpacity>
+                        </>
+                      )}
+                    </>
+                  )}
                 </View>
               </>
             ) : null}
