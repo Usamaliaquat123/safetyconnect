@@ -184,10 +184,14 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                   // console.log(res);
                 });
             }
-            var involvedUsers = gol.filter(
-              (d) =>
-                this.props.route.params.users.filter((f) => d.email != f)[0],
-            );
+
+            if (this.props.route.params?.users != undefined) {
+              var involvedUsers = gol.filter(
+                (d) =>
+                  this.props.route.params.users.filter((f) => d.email != f)[0],
+              );
+            }
+
             var data = {
               created_by: email,
               project_name: this.state.projectName,
