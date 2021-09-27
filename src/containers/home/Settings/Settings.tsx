@@ -54,7 +54,7 @@ const industries = [
 
 const yourRole = ['Top Management', 'Line Management', 'Craft/Trade Employee'];
 
-const selectedRole = [];
+var selectedRole = [];
 const topManagementData = [
   'CEO',
   'Director',
@@ -103,16 +103,16 @@ class Settings extends React.Component<SettingsProps, any> {
   }
 
   componentDidMount() {
-    // console.log('this.props.route.params.data');
-    // console.log(this.props.route.params.data);
-    // this.setState({
-    //   username: this.props.route.params.data.name,
-    //   email: this.props.route.params.data.email,
-    //   role: this.props.route.params.data.role,
-    //   department: this.props.route.params.data.department,
-    //   industry: this.props.route.params.data.industry,
-    //   img_url: this.props.route.params.data.img_url,
-    // });
+    console.log('this.props.route.params.data');
+    console.log(this.props.route.params.data);
+    this.setState({
+      username: this.props.route.params.data.name,
+      email: this.props.route.params.data.email,
+      role: this.props.route.params.data.role,
+      department: this.props.route.params.data.department,
+      industry: this.props.route.params.data.industry,
+      img_url: this.props.route.params.data.img_url,
+    });
   }
 
   updateUser = () => {
@@ -507,21 +507,21 @@ class Settings extends React.Component<SettingsProps, any> {
 
                                 // console.log(d);
                                 if (d == 'Top Management') {
-                                  this.setState({
-                                    selectedRole: topManagementData,
-                                  });
+                                  selectedRole = topManagementData;
+                                  // this.setState({
+                                  // });
                                 } else if (d == 'Line Management') {
-                                  this.setState({
-                                    selectedRole: lineManagementData,
-                                  });
+                                  selectedRole = lineManagementData;
+                                  // this.setState({
+                                  // });
                                 } else if (d == 'Craft/Trade Employee') {
-                                  this.setState({
-                                    selectedRole: craftTradeEmployeeData,
-                                  });
+                                  selectedRole = craftTradeEmployeeData;
+                                  // this.setState({
+                                  // });
                                 } else {
-                                  this.setState({
-                                    selectedRole: topManagementData,
-                                  });
+                                  selectedRole = topManagementData;
+                                  // this.setState({
+                                  // });
                                 }
                               }}
                               style={[
@@ -550,7 +550,6 @@ class Settings extends React.Component<SettingsProps, any> {
                     <View style={[styles.inputContainer]}>
                       <TextInput
                         onFocus={() => {
-                          console.log(selectedRole);
                           this.setState({
                             arrayOfYourRole: selectedRole,
                           });
