@@ -302,13 +302,25 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           if (
             this.state.user.email == this.props.route.params.data.created_by
           ) {
-            this.setState({isMarkAsComplete: true});
+            if (this.props.route.params.data.closed == true) {
+              this.setState({closed: true, isMarkAsComplete: true});
+            } else {
+              this.setState({isMarkAsComplete: true});
+            }
           } else if (
             this.state.user.email == this.props.route.params.data.submit_to[0]
           ) {
-            this.setState({isMarkAsComplete: true});
+            if (this.props.route.params.data.closed == true) {
+              this.setState({closed: true, isMarkAsComplete: true});
+            } else {
+              this.setState({isMarkAsComplete: true});
+            }
           } else {
-            this.setState({isMarkAsComplete: false});
+            if (this.props.route.params.data.closed == true) {
+              this.setState({closed: true, isMarkAsComplete: true});
+            } else {
+              this.setState({isMarkAsComplete: false});
+            }
           }
         });
     });
@@ -340,10 +352,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.props.route.params.data.risk.severity,
       this.props.route.params.data.risk.likelihood,
     );
-
-    if (this.props.route.params.data.closed == true) {
-      this.setState({closed: true, isMarkAsComplete: true});
-    }
   };
 
   getAllRepeatedSors = async (e: any, projectid: any) => {
