@@ -209,10 +209,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.setState({closed: false});
     }
 
-    if (this.props.route.params.data.closed == true) {
-      this.setState({closed: true, isMarkAsComplete: true});
-    }
-
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
       this.getAllRepeatedSors(
@@ -344,6 +340,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       this.props.route.params.data.risk.severity,
       this.props.route.params.data.risk.likelihood,
     );
+
+    if (this.props.route.params.data.closed == true) {
+      this.setState({closed: true, isMarkAsComplete: true});
+    }
   };
 
   getAllRepeatedSors = async (e: any, projectid: any) => {
