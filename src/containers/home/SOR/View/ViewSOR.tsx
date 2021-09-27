@@ -2851,7 +2851,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               console.log();
                               if (
                                 this.state.actionsAndRecommendations.map(
-                                  (d: any) => d.status == 'In Progress',
+                                  (d: any) => d.status != 'In Progress',
                                 ).length == 0
                               ) {
                                 // Some validations is left
