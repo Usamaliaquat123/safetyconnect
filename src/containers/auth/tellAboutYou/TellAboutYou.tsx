@@ -44,27 +44,54 @@ type TellAboutYouNavigationProp = StackNavigationProp<
 type TellAboutYouRouteProp = RouteProp<StackNavigatorProps, 'TellAboutYou'>;
 const industries = [
   'Oil & Gas',
-  'Mining and Quarrying',
-  'Petrochemicals & Polymers',
+  'Mining & Quarrying',
+  ' Petrochemicals & Polymers	',
   'Construction',
   'Power Generation & Distribution',
-  'Transportation & Logistics',
-  'Health Care & Pharmaceuticals',
+  'Transportation & Logistics	',
+  'Health Care & Pharmacuticals',
+  'Telecommunication & IT	',
+  'FMCG & Manufacturing',
+  'Aviation',
+  'Shipping & Automobiles',
   'Others (Please Specify)',
 ];
 
 const typeofRole = [
+  'Top Management',
+  'Line Management',
+  'Craft/Trade Employee',
+];
+
+const yourRole = ['Manager', 'Supervisor', 'Craft Worker'];
+
+var selectedRole = [];
+const topManagementData = [
   'CEO',
   'Director',
-  'General Manager	',
+  'General Manager',
   'Corporate Manager	',
   'Advisor',
   'Executive',
   'Other',
 ];
 
-const yourRole = ['Manager', 'Supervisor', 'Craft Worker'];
+const lineManagementData = [
+  'Manager',
+  'Depty Manager',
+  'Assistant Manager',
+  'Superintendent',
+  'Engineer',
+  'Associate Engineer',
+  'Supervisor',
+];
 
+const craftTradeEmployeeData = [
+  'Foreman',
+  'Technician',
+  'Skilled Worker',
+  'Labor',
+];
 export interface TellAboutYouProps {
   navigation: TellAboutYouNavigationProp;
   route: TellAboutYouRouteProp;
@@ -566,6 +593,24 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                           <TouchableOpacity
                             key={i}
                             onPress={() => {
+                              // console.log(d);
+                              if (d == 'Top Management') {
+                                selectedRole = topManagementData;
+                                // this.setState({
+                                // });
+                              } else if (d == 'Line Management') {
+                                selectedRole = lineManagementData;
+                                // this.setState({
+                                // });
+                              } else if (d == 'Craft/Trade Employee') {
+                                selectedRole = craftTradeEmployeeData;
+                                // this.setState({
+                                // });
+                              } else {
+                                selectedRole = topManagementData;
+                                // this.setState({
+                                // });
+                              }
                               this.setState({
                                 IndustryRole: d,
                                 arrayOfTypesOfRole: [],
@@ -603,7 +648,10 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                     ]}>
                     <TextInput
                       onFocus={() =>
-                        this.setState({selected: 3, arrayOfYourRole: yourRole})
+                        this.setState({
+                          selected: 3,
+                          arrayOfYourRole: selectedRole,
+                        })
                       }
                       underlineColorAndroid="transparent"
                       style={styles.selectText}
@@ -613,7 +661,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                           this.setState({
                             arrayOfYourRole: suggestInActionsRecommendations(
                               e.toLowerCase(),
-                              yourRole,
+                              selectedRole,
                             ),
                           });
                         } else {
@@ -634,7 +682,7 @@ class TellAboutYou extends React.Component<TellAboutYouProps, any> {
                       }}
                       onPress={() => {
                         if (this.state.arrayOfYourRole.length == 0) {
-                          this.setState({arrayOfYourRole: yourRole});
+                          this.setState({arrayOfYourRole: selectedRole});
                         } else {
                           this.setState({arrayOfYourRole: []});
                         }
