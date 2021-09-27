@@ -210,7 +210,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     }
 
     if (this.props.route.params.data.closed == true) {
-      this.setState({closed: true});
+      this.setState({closed: true, isMarkAsComplete: true});
     }
 
     getCurrentProject().then((currentProj: any) => {
