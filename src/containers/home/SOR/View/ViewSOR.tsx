@@ -2809,33 +2809,31 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     </>
                   )}
 
-                  {this.props.route.params.data.closed  == false && (
-<>
-
-                  {!this.state.closed && (
-                    <TouchableOpacity
-                      onPress={() => {
-                        if (this.state.fiveWhytoggle == true) {
-                          if (this.state.fiveWhyQuestion.length == 5) {
-                            this.onSubmitUpdateSor(2);
-                          } else {
-                            this.setState({
-                              errorModal: true,
-                              errHeadingText: 'Minimum 5 why ',
-                              errDesText: 'minimum 5 why should be added..!',
-                            });
-                          }
-                        } else {
-                          this.onSubmitUpdateSor(2);
-                        }
-                      }}
-                      style={styles.saveAsSubmitContainer}>
-                      <Text style={styles.saveAsSubmitText}>Submit</Text>
-                    </TouchableOpacity>
-                  )}
-
-</>
-
+                  {this.props.route.params.data.closed == false && (
+                    <>
+                      {!this.state.closed && (
+                        <TouchableOpacity
+                          onPress={() => {
+                            if (this.state.fiveWhytoggle == true) {
+                              if (this.state.fiveWhyQuestion.length == 5) {
+                                this.onSubmitUpdateSor(2);
+                              } else {
+                                this.setState({
+                                  errorModal: true,
+                                  errHeadingText: 'Minimum 5 why ',
+                                  errDesText:
+                                    'minimum 5 why should be added..!',
+                                });
+                              }
+                            } else {
+                              this.onSubmitUpdateSor(2);
+                            }
+                          }}
+                          style={styles.saveAsSubmitContainer}>
+                          <Text style={styles.saveAsSubmitText}>Submit</Text>
+                        </TouchableOpacity>
+                      )}
+                    </>
                   )}
                 </View>
                 <View style={styles.previewAndMarkAsCompleteBtns}>
@@ -2856,79 +2854,83 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           <TouchableOpacity
                             onPress={() => {
                               AsyncStorage.getItem('email').then((email) => {
-                                console.log();
-                                if (
+                                console.log(
                                   this.state.actionsAndRecommendations.map(
-                                    (d: any) => d.status != 'In Progress',
-                                  ).length == 0
-                                ) {
-                                  // Some validations is left
+                                    (d: any) => d.status != 'In Progres',
+                                  ),
+                                );
+                                // if (
+                                //   this.state.actionsAndRecommendations.map(
+                                //     (d: any) => d.status != 'In Progress',
+                                //   ).length == 0
+                                // ) {
+                                // Some validations is left
 
-                                  if (
-                                    this.state.actionsAndRecommendations.filter(
-                                      (d: any) =>
-                                        d.justification.content !== '',
-                                    )
-                                  ) {
-                                    console.log('justification');
-                                    console.log(
-                                      this.state.actionsAndRecommendations,
-                                    );
-                                    this.setState({
-                                      // loading: true,
-                                      errorModal: true,
-                                      errHeadingText: 'Actions validations ',
-                                      errDesText: 'Add the justification',
-                                    });
-                                  } else {
-                                    this.setState({
-                                      // loading: true,
-                                      errorModal: true,
-                                      errHeadingText: 'Actions validations ',
-                                      errDesText:
-                                        'Actions should be completed or rejected',
-                                    });
-                                  }
-                                } else {
-                                  if (
-                                    email ==
-                                    this.props.route.params.data.created_by
-                                  ) {
-                                    if (this.state.fiveWhytoggle == true) {
-                                      if (
-                                        this.state.fiveWhyQuestion.length == 5
-                                      ) {
-                                        this.onSubmitUpdateSor(5);
-                                      } else {
-                                        this.setState({
-                                          errorModal: true,
-                                          errHeadingText: 'Minimum 5 why ',
-                                          errDesText:
-                                            'minimum 5 why should be added..!',
-                                        });
-                                      }
-                                    } else {
-                                      this.onSubmitUpdateSor(5);
-                                    }
-                                  } else {
-                                    if (this.state.fiveWhytoggle == true) {
-                                      if (
-                                        this.state.fiveWhyQuestion.length == 5
-                                      ) {
-                                        this.onSubmitUpdateSor(3);
-                                      } else {
-                                        this.setState({
-                                          errorModal: true,
-                                          errHeadingText: 'Minimum 5 why ',
-                                          errDesText:
-                                            'minimum 5 why should be added..!',
-                                        });
-                                      }
-                                    } else {
-                                      this.onSubmitUpdateSor(3);
-                                    }
-                                  }
-                                }
+                                // if (
+                                //   this.state.actionsAndRecommendations.filter(
+                                //     (d: any) =>
+                                //       d.justification.content !== '',
+                                //   )
+                                // ) {
+                                //   console.log('justification');
+                                //   console.log(
+                                //     this.state.actionsAndRecommendations,
+                                //   );
+                                //   this.setState({
+                                //     // loading: true,
+                                //     errorModal: true,
+                                //     errHeadingText: 'Actions validations ',
+                                //     errDesText: 'Add the justification',
+                                //   });
+                                // } else {
+                                //   this.setState({
+                                //     // loading: true,
+                                //     errorModal: true,
+                                //     errHeadingText: 'Actions validations ',
+                                //     errDesText:
+                                //       'Actions should be completed or rejected',
+                                //   });
+                                // }
+                                // } else {
+                                //   if (
+                                //     email ==
+                                //     this.props.route.params.data.created_by
+                                //   ) {
+                                //     if (this.state.fiveWhytoggle == true) {
+                                //       if (
+                                //         this.state.fiveWhyQuestion.length == 5
+                                //       ) {
+                                //         this.onSubmitUpdateSor(5);
+                                //       } else {
+                                //         this.setState({
+                                //           errorModal: true,
+                                //           errHeadingText: 'Minimum 5 why ',
+                                //           errDesText:
+                                //             'minimum 5 why should be added..!',
+                                //         });
+                                //       }
+                                //     } else {
+                                //       this.onSubmitUpdateSor(5);
+                                //     }
+                                //   } else {
+                                //     if (this.state.fiveWhytoggle == true) {
+                                //       if (
+                                //         this.state.fiveWhyQuestion.length == 5
+                                //       ) {
+                                //         this.onSubmitUpdateSor(3);
+                                //       } else {
+                                //         this.setState({
+                                //           errorModal: true,
+                                //           errHeadingText: 'Minimum 5 why ',
+                                //           errDesText:
+                                //             'minimum 5 why should be added..!',
+                                //         });
+                                //       }
+                                //     } else {
+                                //       this.onSubmitUpdateSor(3);
+                                //     }
+                                //   }
+                                // }
 
                                 // this.props.route.params.data.action_required.filter(
                                 //   (d) => d.justification.content === '',
