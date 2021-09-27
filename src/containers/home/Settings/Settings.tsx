@@ -38,27 +38,50 @@ export interface SettingsProps {
 type MoreNavigationProp = StackNavigationProp<StackNavigatorProps, 'Settings'>;
 type MoreRouteProp = RouteProp<StackNavigatorProps, 'Settings'>;
 const industries = [
-  'Oil & Gas',
-  'Mining and Quarrying',
-  'Petrochemicals & Polymers',
+  ' Oil & Gas	',
+  'Mining & Quarrying',
+  ' Petrochemicals & Polymers	',
   'Construction',
   'Power Generation & Distribution',
-  'Transportation & Logistics',
-  'Health Care & Pharmaceuticals',
+  'Transportation & Logistics	',
+  'Health Care & Pharmacuticals',
+  'Telecommunication & IT	',
+  'FMCG & Manufacturing',
+  'Aviation',
+  'Shipping & Automobiles',
   'Others (Please Specify)',
 ];
 
-const typeofRole = [
+const yourRole = ['Top Management', 'Line Management', 'Craft/Trade Employee'];
+
+const selectedRole = [];
+const topManagementData = [
   'CEO',
   'Director',
-  'General Manager	',
+  'General Manager',
   'Corporate Manager	',
   'Advisor',
   'Executive',
   'Other',
 ];
 
-const yourRole = ['Manager', 'Supervisor', 'Craft Worker'];
+const lineManagementData = [
+  'Manager',
+  'Depty Manager',
+  'Assistant Manager',
+  'Superintendent',
+  'Engineer',
+  'Associate Engineer',
+  'Supervisor',
+];
+
+const craftTradeEmployeeData = [
+  'Foreman',
+  'Technician',
+  'Skilled Worker',
+  'Labor',
+];
+
 class Settings extends React.Component<SettingsProps, any> {
   constructor(props: any) {
     super(props);
@@ -80,16 +103,16 @@ class Settings extends React.Component<SettingsProps, any> {
   }
 
   componentDidMount() {
-    console.log('this.props.route.params.data');
-    console.log(this.props.route.params.data);
-    this.setState({
-      username: this.props.route.params.data.name,
-      email: this.props.route.params.data.email,
-      role: this.props.route.params.data.role,
-      department: this.props.route.params.data.department,
-      industry: this.props.route.params.data.industry,
-      img_url: this.props.route.params.data.img_url,
-    });
+    // console.log('this.props.route.params.data');
+    // console.log(this.props.route.params.data);
+    // this.setState({
+    //   username: this.props.route.params.data.name,
+    //   email: this.props.route.params.data.email,
+    //   role: this.props.route.params.data.role,
+    //   department: this.props.route.params.data.department,
+    //   industry: this.props.route.params.data.industry,
+    //   img_url: this.props.route.params.data.img_url,
+    // });
   }
 
   updateUser = () => {
@@ -312,187 +335,7 @@ class Settings extends React.Component<SettingsProps, any> {
                       />
                     </View>
                   </View>
-                  {/* Your Role */}
-                  <View>
-                    <Text
-                      style={{
-                        fontSize: wp(3.2),
-                        marginTop: wp(3),
-                        fontFamily: fonts.SFuiDisplaySemiBold,
-                      }}>
-                      Your Role
-                    </Text>
-                    <View style={[styles.inputContainer]}>
-                      <TextInput
-                        onFocus={() => {
-                          this.setState({
-                            arrayOfYourRole: suggestInActionsRecommendations(
-                              '',
-                              yourRole,
-                            ),
-                          });
-                        }}
-                        style={styles.authInputs}
-                        value={this.state.role}
-                        onChangeText={(e) => {
-                          if (e !== '') {
-                            this.setState({
-                              arrayOfYourRole: suggestInActionsRecommendations(
-                                e.toLowerCase(),
-                                yourRole,
-                              ),
-                            });
-                          } else {
-                            this.setState({arrayOfYourRole: []});
-                          }
-                          this.setState({role: e});
-                          this.setState({role: e});
-                        }}
-                        placeholder={'Role'}
-                      />
-                      <TouchableOpacity
-                        style={{
-                          // marginRight: wp(),
-                          // paddingRight: wp(6),
-                          width: wp(10),
-                          height: wp(10),
-                          position: 'absolute',
-                          right: 0,
-                          justifyContent: 'center',
-                          // alignSelf: 'center',
-                        }}
-                        onPress={() => {
-                          if (this.state.arrayOfYourRole.length == 0) {
-                            this.setState({arrayOfYourRole: yourRole});
-                          } else {
-                            this.setState({arrayOfYourRole: []});
-                          }
-                        }}>
-                        <Icon
-                          // containerStyle={{marginRight: wp(8)}}
-                          name={'down'}
-                          type={'antdesign'}
-                          size={wp(3)}
-                          color={colors.text}
-                        />
-                      </TouchableOpacity>
-                    </View>
 
-                    {this.state.arrayOfYourRole.length != 0 ? (
-                      <View style={styles.involveSuggestCont}>
-                        {this.state.arrayOfYourRole.map(
-                          (d: string, i: number) => (
-                            <TouchableOpacity
-                              key={i}
-                              onPress={() => {
-                                this.setState({
-                                  role: d,
-                                  arrayOfYourRole: [],
-                                });
-                              }}
-                              style={[
-                                styles.involvePsuggCont,
-                                this.state.arrayOfYourRole.length == i + 1
-                                  ? {borderBottomWidth: wp(0)}
-                                  : null,
-                              ]}>
-                              <Text style={styles.involvePSt}>{d}</Text>
-                            </TouchableOpacity>
-                          ),
-                        )}
-                      </View>
-                    ) : null}
-                  </View>
-                  {/* Your Department */}
-                  <View>
-                    <Text
-                      style={{
-                        fontSize: wp(3.2),
-                        marginTop: wp(3),
-                        fontFamily: fonts.SFuiDisplaySemiBold,
-                      }}>
-                      Type of Role
-                    </Text>
-                    <View style={[styles.inputContainer]}>
-                      <TextInput
-                        style={styles.authInputs}
-                        onFocus={() => {
-                          this.setState({
-                            arrayofDepartment: suggestInActionsRecommendations(
-                              '',
-                              industries,
-                            ),
-                          });
-                        }}
-                        value={this.state.department}
-                        onChangeText={(e) => {
-                          if (e !== '') {
-                            this.setState({
-                              arrayofDepartment: suggestInActionsRecommendations(
-                                e.toLowerCase(),
-                                typeofRole,
-                              ),
-                            });
-                          } else {
-                            this.setState({arrayofDepartment: []});
-                          }
-                          this.setState({department: e});
-                        }}
-                        placeholder={'Department'}
-                      />
-                      <TouchableOpacity
-                        style={{
-                          // marginRight: wp(),
-                          // paddingRight: wp(6),
-                          width: wp(10),
-                          height: wp(10),
-                          justifyContent: 'center',
-                          // alignSelf: 'center',
-                          position: 'absolute',
-                          right: 0,
-                        }}
-                        onPress={() => {
-                          if (this.state.arrayofDepartment.length == 0) {
-                            this.setState({arrayofDepartment: typeofRole});
-                          } else {
-                            this.setState({arrayofDepartment: []});
-                          }
-                        }}>
-                        <Icon
-                          // containerStyle={{marginRight: wp(8)}}
-                          name={'down'}
-                          type={'antdesign'}
-                          size={wp(3)}
-                          color={colors.text}
-                        />
-                      </TouchableOpacity>
-                    </View>
-
-                    {this.state.arrayofDepartment.length != 0 ? (
-                      <View style={styles.involveSuggestCont}>
-                        {this.state.arrayofDepartment.map(
-                          (d: string, i: number) => (
-                            <TouchableOpacity
-                              key={i}
-                              onPress={() => {
-                                this.setState({
-                                  department: d,
-                                  arrayofDepartment: [],
-                                });
-                              }}
-                              style={[
-                                styles.involvePsuggCont,
-                                this.state.arrayofDepartment.length == i + 1
-                                  ? {borderBottomWidth: wp(0)}
-                                  : null,
-                              ]}>
-                              <Text style={styles.involvePSt}>{d}</Text>
-                            </TouchableOpacity>
-                          ),
-                        )}
-                      </View>
-                    ) : null}
-                  </View>
                   {/* Your Industry */}
                   <View>
                     <Text
@@ -582,6 +425,208 @@ class Settings extends React.Component<SettingsProps, any> {
                       </View>
                     ) : null}
                   </View>
+
+                  {/* Your Type of role */}
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: wp(3.2),
+                        marginTop: wp(3),
+                        fontFamily: fonts.SFuiDisplaySemiBold,
+                      }}>
+                      Type of Role
+                    </Text>
+                    <View style={[styles.inputContainer]}>
+                      <TextInput
+                        style={styles.authInputs}
+                        onFocus={() => {
+                          this.setState({
+                            arrayofDepartment: suggestInActionsRecommendations(
+                              '',
+                              yourRole,
+                            ),
+                          });
+                        }}
+                        value={this.state.department}
+                        onChangeText={(e) => {
+                          if (e !== '') {
+                            this.setState({
+                              arrayofDepartment: suggestInActionsRecommendations(
+                                e.toLowerCase(),
+                                yourRole,
+                              ),
+                            });
+                          } else {
+                            this.setState({arrayofDepartment: []});
+                          }
+                          this.setState({department: e});
+                        }}
+                        placeholder={'Department'}
+                      />
+                      <TouchableOpacity
+                        style={{
+                          // marginRight: wp(),
+                          // paddingRight: wp(6),
+                          width: wp(10),
+                          height: wp(10),
+                          justifyContent: 'center',
+                          // alignSelf: 'center',
+                          position: 'absolute',
+                          right: 0,
+                        }}
+                        onPress={() => {
+                          if (this.state.arrayofDepartment.length == 0) {
+                            // if()
+
+                            this.setState({arrayofDepartment: yourRole});
+                          } else {
+                            this.setState({arrayofDepartment: []});
+                          }
+                        }}>
+                        <Icon
+                          // containerStyle={{marginRight: wp(8)}}
+                          name={'down'}
+                          type={'antdesign'}
+                          size={wp(3)}
+                          color={colors.text}
+                        />
+                      </TouchableOpacity>
+                    </View>
+
+                    {this.state.arrayofDepartment.length != 0 ? (
+                      <View style={styles.involveSuggestCont}>
+                        {this.state.arrayofDepartment.map(
+                          (d: string, i: number) => (
+                            <TouchableOpacity
+                              key={i}
+                              onPress={() => {
+                                this.setState({
+                                  department: d,
+                                  arrayofDepartment: [],
+                                });
+
+                                // console.log(d);
+                                if (d == 'Top Management') {
+                                  this.setState({
+                                    selectedRole: topManagementData,
+                                  });
+                                } else if (d == 'Line Management') {
+                                  this.setState({
+                                    selectedRole: lineManagementData,
+                                  });
+                                } else if (d == 'Craft/Trade Employee') {
+                                  this.setState({
+                                    selectedRole: craftTradeEmployeeData,
+                                  });
+                                } else {
+                                  this.setState({
+                                    selectedRole: topManagementData,
+                                  });
+                                }
+                              }}
+                              style={[
+                                styles.involvePsuggCont,
+                                this.state.arrayofDepartment.length == i + 1
+                                  ? {borderBottomWidth: wp(0)}
+                                  : null,
+                              ]}>
+                              <Text style={styles.involvePSt}>{d}</Text>
+                            </TouchableOpacity>
+                          ),
+                        )}
+                      </View>
+                    ) : null}
+                  </View>
+                  {/* Your Role */}
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: wp(3.2),
+                        marginTop: wp(3),
+                        fontFamily: fonts.SFuiDisplaySemiBold,
+                      }}>
+                      Your Role
+                    </Text>
+                    <View style={[styles.inputContainer]}>
+                      <TextInput
+                        onFocus={() => {
+                          console.log(selectedRole);
+                          this.setState({
+                            arrayOfYourRole: selectedRole,
+                          });
+                        }}
+                        style={styles.authInputs}
+                        value={this.state.role}
+                        onChangeText={(e) => {
+                          if (e !== '') {
+                            this.setState({
+                              arrayOfYourRole: suggestInActionsRecommendations(
+                                e.toLowerCase(),
+                                selectedRole,
+                              ),
+                            });
+                          } else {
+                            this.setState({arrayOfYourRole: []});
+                          }
+                          this.setState({role: e});
+                          this.setState({role: e});
+                        }}
+                        placeholder={'Role'}
+                      />
+                      <TouchableOpacity
+                        style={{
+                          // marginRight: wp(),
+                          // paddingRight: wp(6),
+                          width: wp(10),
+                          height: wp(10),
+                          position: 'absolute',
+                          right: 0,
+                          justifyContent: 'center',
+                          // alignSelf: 'center',
+                        }}
+                        onPress={() => {
+                          if (this.state.arrayOfYourRole.length == 0) {
+                            this.setState({arrayOfYourRole: selectedRole});
+                          } else {
+                            this.setState({arrayOfYourRole: []});
+                          }
+                        }}>
+                        <Icon
+                          // containerStyle={{marginRight: wp(8)}}
+                          name={'down'}
+                          type={'antdesign'}
+                          size={wp(3)}
+                          color={colors.text}
+                        />
+                      </TouchableOpacity>
+                    </View>
+
+                    {this.state.arrayOfYourRole.length != 0 ? (
+                      <View style={styles.involveSuggestCont}>
+                        {this.state.arrayOfYourRole.map(
+                          (d: string, i: number) => (
+                            <TouchableOpacity
+                              key={i}
+                              onPress={() => {
+                                this.setState({
+                                  role: d,
+                                  arrayOfYourRole: [],
+                                });
+                              }}
+                              style={[
+                                styles.involvePsuggCont,
+                                this.state.arrayOfYourRole.length == i + 1
+                                  ? {borderBottomWidth: wp(0)}
+                                  : null,
+                              ]}>
+                              <Text style={styles.involvePSt}>{d}</Text>
+                            </TouchableOpacity>
+                          ),
+                        )}
+                      </View>
+                    ) : null}
+                  </View>
+
                   {/* Save  */}
 
                   <TouchableOpacity
