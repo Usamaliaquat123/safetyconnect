@@ -2778,37 +2778,39 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 <View style={styles.saveAsDraftAndSubmitBtns}>
                   {this.props.route.params.data.status != 2 && (
                     <>
-                    {this.props.route.params.data.closed == false && (
- <>
- {!this.state.closed && (
-     <TouchableOpacity
-       onPress={() => {
-         if (this.state.fiveWhytoggle == true) {
-           if (this.state.fiveWhyQuestion.length == 5) {
-             this.onSubmitUpdateSor(1);
-           } else {
-             this.setState({
-               errorModal: true,
-               errHeadingText: 'Minimum 5 why ',
-               errDesText:
-                 'minimum 5 why should be added..!',
-             });
-           }
-         } else {
-           this.onSubmitUpdateSor(1);
-         }
-       }}
-       style={styles.saveAsDraftContainer}>
-       <Text style={styles.saveAsDraftText}>
-         Save as Draft
-       </Text>
-     </TouchableOpacity>
-   )}
- </>
-                    )}
-                   
+                      {this.props.route.params.data.closed == false && (
+                        <>
+                          {!this.state.closed && (
+                            <TouchableOpacity
+                              onPress={() => {
+                                if (this.state.fiveWhytoggle == true) {
+                                  if (this.state.fiveWhyQuestion.length == 5) {
+                                    this.onSubmitUpdateSor(1);
+                                  } else {
+                                    this.setState({
+                                      errorModal: true,
+                                      errHeadingText: 'Minimum 5 why ',
+                                      errDesText:
+                                        'minimum 5 why should be added..!',
+                                    });
+                                  }
+                                } else {
+                                  this.onSubmitUpdateSor(1);
+                                }
+                              }}
+                              style={styles.saveAsDraftContainer}>
+                              <Text style={styles.saveAsDraftText}>
+                                Save as Draft
+                              </Text>
+                            </TouchableOpacity>
+                          )}
+                        </>
+                      )}
                     </>
                   )}
+
+                  {this.props.route.params.data.closed  == false && (
+<>
 
                   {!this.state.closed && (
                     <TouchableOpacity
@@ -2830,6 +2832,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       style={styles.saveAsSubmitContainer}>
                       <Text style={styles.saveAsSubmitText}>Submit</Text>
                     </TouchableOpacity>
+                  )}
+
+</>
+
                   )}
                 </View>
                 <View style={styles.previewAndMarkAsCompleteBtns}>
