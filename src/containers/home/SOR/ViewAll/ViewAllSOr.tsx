@@ -1154,14 +1154,14 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             type={'all'}
                             data={d}
                             onPress={(d: Isor) => {
-                              d['created_by'] = d.created_by.email;
-                              d['submit_to'] = [d.submit_to.email];
+                              // d['created_by'] = d.created_by.email;
+                              // d['submit_to'] = [d.submit_to.email];
                               d['closed'] = false;
                               this.props.navigation.navigate('ViewSOR', {
                                 data: d,
                               });
                             }}
-                            name={d.created_by.email}
+                            name={d.created_by}
                             date={d.occurred_at}
                             risk={d.risk.severity * d.risk.likelihood}
                             viewPortWidth={80}
@@ -1208,12 +1208,12 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             repeated={d.repeatedSor}
                             key={i}
                             type={'all'}
-                            name={d.created_by.email}
+                            name={d.created_by}
                             data={d}
                             onPress={(d: Isor) => {
                               d['closed'] = false;
-                              d['created_by'] = d.created_by.email;
-                              d['submit_to'] = [d.submit_to.email];
+                              // d['created_by'] = d.created_by.email;
+                              // d['submit_to'] = [d.submit_to.email];
                               this.props.navigation.navigate('ViewSOR', {
                                 data: d,
                               });
@@ -1270,11 +1270,11 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             repeated={d.repeatedSor}
                             type={'all'}
                             data={d}
-                            name={d.created_by.email}
+                            name={d.created_by}
                             onPress={(d: Isor) => {
                               d['closed'] = false;
-                              d['created_by'] = d.created_by.email;
-                              d['submit_to'] = [d.submit_to.email];
+                              // d['created_by'] = d.created_by.email;
+                              // d['submit_to'] = [d.submit_to.email];
                               this.props.navigation.navigate('ViewSOR', {
                                 data: d,
                               });
@@ -1336,12 +1336,12 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             key={i}
                             repeated={d.repeatedSor}
                             type={'all'}
-                            name={d.created_by.email}
+                            name={d.created_by}
                             data={d}
                             onPress={(d: Isor) => {
                               d['closed'] = false;
-                              d['created_by'] = d.created_by.email;
-                              d['submit_to'] = [d.submit_to.email];
+                              // d['created_by'] = d.created_by.email;
+                              // d['submit_to'] = [d.submit_to.email];
                               this.props.navigation.navigate('ViewSOR', {
                                 data: d,
                               });
@@ -1402,11 +1402,11 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             type={'all'}
                             repeated={d.repeatedSor}
                             data={d}
-                            name={d.created_by.email}
+                            name={d.created_by}
                             onPress={(d: Isor) => {
                               d['closed'] = true;
-                              d['created_by'] = d.created_by.email;
-                              d['submit_to'] = [d.submit_to.email];
+                              // d['created_by'] = d.created_by.email;
+                              // d['submit_to'] = [d.submit_to.email];
                               this.props.navigation.navigate('ViewSOR', {
                                 data: d,
                               });
@@ -1554,15 +1554,15 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 // type={'all'}
                 data={d}
                 onPress={(d: Isor) => {
-                  d['created_by'] = d.created_by.email;
-                  d['submit_to'] = [d.submit_to.email];
+                  // d['created_by'] = d.created_by.email;
+                  // d['submit_to'] = [d.submit_to.email];
                   this.props.navigation.navigate('ViewSOR', {
                     data: d,
                   });
                   this.setState({repeatedSorModal: false});
                 }}
                 onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                name={d.created_by.email}
+                name={d.created_by}
                 date={d.occurred_at}
                 risk={d.risk.severity * d.risk.likelihood}
                 viewPortWidth={80}

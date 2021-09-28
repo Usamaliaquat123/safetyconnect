@@ -31,7 +31,11 @@ import {bindActionCreators} from 'redux';
 
 import {AllSorDTO} from '@dtos';
 import {getActiveChildNavigationOptions} from 'react-navigation';
-import {getCurrentOrganization, getCurrentProject} from '@utils/utils';
+import {
+  getCurrentOrganization,
+  getCurrentProject,
+  savedCurrentOrganization,
+} from '@utils/utils';
 // import {validateEmail} from '@utils/';
 type MenuNavigationProp = StackNavigationProp<StackNavigatorProps, 'Menu'>;
 type MenuRouteProp = RouteProp<StackNavigatorProps, 'Menu'>;
@@ -237,11 +241,13 @@ class Menu extends React.Component<MenuProps, any> {
                     <TouchableOpacity
                       key={i}
                       onPress={() => {
-                        AsyncStorage.setItem('organizationId', d._id);
-                        this.setState({
-                          currOrganization: d.name,
-                          organizationSugg: [],
+                        savedCurrentOrganization(d._id).then(() => {
+                          this.setState({
+                            currOrganization: d.name,
+                            organizationSugg: [],
+                          });
                         });
+                        // AsyncStorage.setItem('organizationId', d._id);
                       }}
                       style={[
                         styles.involvePsuggCont,
