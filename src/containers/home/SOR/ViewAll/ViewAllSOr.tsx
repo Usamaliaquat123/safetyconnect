@@ -503,6 +503,21 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   onFocus={() => this.setState({selectedInputIndex: 5})}
                   underlineColorAndroid="transparent"
                   onChangeText={(v: any) => {
+                    console.log(this.state.draft);
+                    var draft = [];
+                    for (let i = 0; i < this.state.draft.length; i++) {
+                      // const element = this.state.draft[i];
+                      this.state.draft[i].details.toLowerCase().match(v);
+                      draft.push(
+                        this.state.draft[i].details.toLowerCase().match(v),
+                      );
+                    }
+                    console.log(draft)
+                    // console.log(
+                    //   this.state.draft.filter((d) =>
+                    //     d.details.toLowerCase().match(v),
+                    //   ),
+                    // );
                     this.setState({searchValue: v});
                   }}
                   placeholder={'Search'}

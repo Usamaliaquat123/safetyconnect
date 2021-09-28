@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
     marginRight: wp(3),
   },
   optnselectorText: {
-    fontSize: wp(4),
+    fontSize: wp(3),
     width: wp(52),
     fontFamily: fonts.SFuiDisplayMedium,
   },

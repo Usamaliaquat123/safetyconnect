@@ -319,8 +319,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         .createApi()
         .getLocations(currentProj)
         .then((res: any) => {
-          console.log('location data');
-          console.log(res);
+          // console.log('location data');
+          // console.log(res);
           this.setState({
             allLocations: res.data.data.p_locations,
             selectedLocation: res.data.data.p_locations[0],

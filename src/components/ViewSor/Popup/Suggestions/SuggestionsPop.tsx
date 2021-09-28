@@ -32,7 +32,7 @@ export interface SuggestionsPopProps {
   suggestions: Array<any>;
   currentUser: any;
   newAct: Boolean;
-
+  isView: Boolean;
   save: Function;
   discard: Function;
   suggestedUsers: Array<involved_persons>;
@@ -332,7 +332,9 @@ export default class SuggestionsPop extends React.Component<
                 editable={this.state.matched}
                 value={this.state.observation}
                 onChange={(e) => {
-                  this.setState({observation: e.nativeEvent.text});
+                  if (this.props.isView) {
+                    this.setState({observation: e.nativeEvent.text});
+                  }
                 }}
                 placeholder={
                   this.state.observation === ''
@@ -501,9 +503,11 @@ export default class SuggestionsPop extends React.Component<
                       type={'suggAndRecommendationsPopup'}
                       onClose={(d: any) => {
                         if (this.state.matched == true) {
-                          this.setState({
-                            AssignedTo: [],
-                          });
+                          if (this.props.isView) {
+                            this.setState({
+                              AssignedTo: [],
+                            });
+                          }
                         }
                       }}
                       tags={this.state.AssignedTo}
@@ -519,7 +523,9 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.matched) {
-                        this.setState({statuses: 'In Progress'});
+                        if (this.props.isView) {
+                          this.setState({statuses: 'In Progress'});
+                        }
                       }
                     }}
                     style={{marginLeft: wp(2), marginRight: wp(2)}}>
@@ -541,7 +547,9 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.matched) {
-                        this.setState({statuses: 'Completed'});
+                        if (this.props.isView) {
+                          this.setState({statuses: 'Completed'});
+                        }
                       }
                     }}
                     style={{marginLeft: wp(2), marginRight: wp(2)}}>
@@ -563,7 +571,9 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.matched) {
-                        this.setState({statuses: 'Rejected'});
+                        if (this.props.isView) {
+                          this.setState({statuses: 'Rejected'});
+                        }
                       }
                     }}
                     style={{marginLeft: wp(2), marginRight: wp(2)}}>
@@ -812,7 +822,9 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.actionsChangeable == true) {
-                        this.setState({type: 'Elimination'});
+                        if (this.props.isView) {
+                          this.setState({type: 'Elimination'});
+                        }
                       } else if (this.props.newAct == true) {
                         this.setState({type: 'Elimination'});
                       }
@@ -836,7 +848,9 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.actionsChangeable == true) {
-                        this.setState({type: 'Administrative'});
+                        if (this.props.isView) {
+                          this.setState({type: 'Administrative'});
+                        }
                       } else if (this.props.newAct == true) {
                         this.setState({type: 'Administrative'});
                       }
@@ -857,7 +871,9 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.actionsChangeable == true) {
-                        this.setState({type: 'Substitution'});
+                        if (this.props.isView) {
+                          this.setState({type: 'Substitution'});
+                        }
                       } else if (this.props.newAct == true) {
                         this.setState({type: 'Substitution'});
                       }
@@ -880,7 +896,9 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.actionsChangeable == true) {
-                        this.setState({type: 'Engineering'});
+                        if (this.props.isView) {
+                          this.setState({type: 'Engineering'});
+                        }
                       } else if (this.props.newAct == true) {
                         this.setState({type: 'Engineering'});
                       }
@@ -903,7 +921,9 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.actionsChangeable == true) {
-                        this.setState({type: 'PPE'});
+                        if (this.props.isView) {
+                          this.setState({type: 'PPE'});
+                        }
                       } else if (this.props.newAct == true) {
                         this.setState({type: 'PPE'});
                       }
