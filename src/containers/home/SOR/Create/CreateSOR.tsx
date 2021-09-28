@@ -2825,6 +2825,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               onClose={() =>
                 this.setState({SuggestionPop: !this.state.SuggestionPop})
               }
+              isView={true}
               submitToAndObserverEmails={this.state.submitToAndObserverEmails}
               newAct={this.state.newAct}
               currentUser={this.state.user}
