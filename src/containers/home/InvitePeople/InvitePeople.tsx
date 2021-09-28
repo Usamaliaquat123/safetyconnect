@@ -150,24 +150,26 @@ class InvitePeople extends React.Component<InvitePeopleProps, any> {
     this.setState({projectText: e});
   };
   invitePeople = () => {
-    var data = {
-      emails: this.state.usersTags.map((user: any) => user.email),
-      organization: this.state.currentOrg,
-      project: this.state.projects.filter(
-        (p: any) => p.project_id.project_name == this.state.projectText,
-      )[0].project_id._id,
-      invitedBy: this.state.user,
-      organizationName: this.state.organizationName,
-      projectName: this.state.projectText,
-    };
+    if (this.state.usersTags.map((user: any) => user.email).length != 0) {
+      var data = {
+        emails: this.state.usersTags.map((user: any) => user.email),
+        organization: this.state.currentOrg,
+        project: this.state.projects.filter(
+          (p: any) => p.project_id.project_name == this.state.projectText,
+        )[0].project_id._id,
+        invitedBy: this.state.user,
+        organizationName: this.state.organizationName,
+        projectName: this.state.projectText,
+      };
 
-    console.log('invited');
-    console.log(data);
-    this.setState({inviteSended: true});
-    setTimeout(() => {
-      this.props.reduxActions.inviteUser(data, this.props.navigation);
-      this.setState({inviteSended: false});
-    }, 2000);
+      console.log('invited');
+      console.log(data);
+      this.setState({inviteSended: true});
+      setTimeout(() => {
+        this.props.reduxActions.inviteUser(data, this.props.navigation);
+        this.setState({inviteSended: false});
+      }, 2000);
+    }
   };
   render() {
     return (
