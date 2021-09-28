@@ -295,9 +295,19 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                         iconconf={classifySor.find(
                           (e: any) => e.title == d.data.sor_type,
                         )}
-                        onPress={() =>
-                          this.props.navigation.navigate('ViewSOR', {data: d})
-                        }
+                        onPress={() => {
+                          if (this.props.route.params.data == 5) {
+                            d['closed'] = true;
+                            this.props.navigation.navigate('ViewSOR', {
+                              data: d,
+                            });
+                          } else {
+                            d['closed'] = false;
+                            this.props.navigation.navigate('ViewSOR', {
+                              data: d,
+                            });
+                          }
+                        }}
                         date={d.createdAt}
                         onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                       />
@@ -344,11 +354,19 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                 key={i}
                 // type={'all'}
                 data={d}
-                onPress={(d: Isor) =>
-                  this.props.navigation.navigate('ViewSOR', {
-                    data: d,
-                  })
-                }
+                onPress={(d: Isor) => {
+                  if (this.props.route.params.data == 5) {
+                    d['closed'] = true;
+                    this.props.navigation.navigate('ViewSOR', {
+                      data: d,
+                    });
+                  } else {
+                    d['closed'] = false;
+                    this.props.navigation.navigate('ViewSOR', {
+                      data: d,
+                    });
+                  }
+                }}
                 name={d.created_by}
                 date={d.occurred_at}
                 risk={d.risk.severity * d.risk.likelihood}
