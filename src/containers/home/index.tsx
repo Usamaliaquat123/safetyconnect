@@ -1493,7 +1493,7 @@ class Home extends React.Component<HomeProps, any> {
                 </View>
                 <View style={[styles.tabs, {alignSelf: 'center'}]}>
                   <TouchableOpacity
-                    onPress={() => this.setState({selectedStats: 1})}
+                    // onPress={() => this.setState({selectedStats: 1})}
                     style={[
                       styles.tab,
                       {
@@ -1514,11 +1514,11 @@ class Home extends React.Component<HomeProps, any> {
                           fontWeight: 'bold',
                         },
                       ]}>
-                      SOR
+                      Observation
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={() => this.setState({selectedStats: 2})}
+                    // onPress={() => this.setState({selectedStats: 2})}
                     style={[
                       styles.tab,
                       this.state.selectedStats == 2 && {
@@ -1538,7 +1538,7 @@ class Home extends React.Component<HomeProps, any> {
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={() => this.setState({selectedStats: 3})}
+                    // onPress={() => this.setState({selectedStats: 3})}
                     style={[
                       styles.tab,
                       {

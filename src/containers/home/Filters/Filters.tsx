@@ -364,7 +364,7 @@ export class Filters extends React.Component<FiltersProps, any> {
                 </TouchableOpacity>
               </View>
             </View>
-
+            {/* 
             <View
               style={{
                 flexWrap: 'wrap',
@@ -387,7 +387,7 @@ export class Filters extends React.Component<FiltersProps, any> {
                 onClose={(e) => console.log(e)}
                 tags={[{name: 'this year'}]}
               />
-            </View>
+            </View> */}
 
             {/* close and apply */}
 

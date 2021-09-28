@@ -256,9 +256,19 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                           iconconf={classifySor.find(
                             (e: any) => e.title == d.sor_type,
                           )}
-                          onPress={() =>
-                            this.props.navigation.navigate('ViewSOR', {data: d})
-                          }
+                          onPress={() => {
+                            if (this.props.route.params.data == 5) {
+                              d['closed'] = true;
+                              this.props.navigation.navigate('ViewSOR', {
+                                data: d,
+                              });
+                            } else {
+                              d['closed'] = false;
+                              this.props.navigation.navigate('ViewSOR', {
+                                data: d,
+                              });
+                            }
+                          }}
                           date={d.occurred_at}
                           onPressRepeated={(e) => this.getAllRepeatedSor(e)}
                         />
