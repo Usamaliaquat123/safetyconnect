@@ -35,6 +35,7 @@ import {
   getCurrentOrganization,
   getCurrentProject,
   savedCurrentOrganization,
+  savedCurrentProject,
 } from '@utils/utils';
 // import {validateEmail} from '@utils/';
 type MenuNavigationProp = StackNavigationProp<StackNavigatorProps, 'Menu'>;
@@ -75,6 +76,7 @@ class Menu extends React.Component<MenuProps, any> {
         .getUser(email)
         .then((res: any) => {
           console.log(res.data.data.organizations);
+          // console.log('res.data.data.organizations');
           this.setState({organizations: res.data.data.organizations});
           getCurrentOrganization().then((orgId) => {
             this.setState({
@@ -241,12 +243,19 @@ class Menu extends React.Component<MenuProps, any> {
                     <TouchableOpacity
                       key={i}
                       onPress={() => {
-                        savedCurrentOrganization(d._id).then(() => {
-                          this.setState({
-                            currOrganization: d.name,
-                            organizationSugg: [],
-                          });
-                        });
+                        console.log('proajdhasjhd');
+                        console.log(d);
+
+                        savedCurrentProject(d.projects[0].project_id).then(
+                          () => {
+                            savedCurrentOrganization(d._id).then(() => {
+                              this.setState({
+                                currOrganization: d.name,
+                                organizationSugg: [],
+                              });
+                            });
+                          },
+                        );
                         // AsyncStorage.setItem('organizationId', d._id);
                       }}
                       style={[
