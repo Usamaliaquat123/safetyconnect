@@ -334,6 +334,8 @@ export default class SuggestionsPop extends React.Component<
                 onChange={(e) => {
                   if (this.props.isView) {
                     this.setState({observation: e.nativeEvent.text});
+                  } else if (this.state.newAct) {
+                    this.setState({observation: e.nativeEvent.text});
                   }
                 }}
                 placeholder={
@@ -507,6 +509,10 @@ export default class SuggestionsPop extends React.Component<
                             this.setState({
                               AssignedTo: [],
                             });
+                          } else if (this.state.newAct) {
+                            this.setState({
+                              AssignedTo: [],
+                            });
                           }
                         }
                       }}
@@ -524,6 +530,8 @@ export default class SuggestionsPop extends React.Component<
                     onPress={() => {
                       if (this.state.matched) {
                         if (this.props.isView) {
+                          this.setState({statuses: 'In Progress'});
+                        } else if (this.state.newAct) {
                           this.setState({statuses: 'In Progress'});
                         }
                       }
@@ -549,6 +557,8 @@ export default class SuggestionsPop extends React.Component<
                       if (this.state.matched) {
                         if (this.props.isView) {
                           this.setState({statuses: 'Completed'});
+                        } else if (this.state.newAct) {
+                          this.setState({statuses: 'Completed'});
                         }
                       }
                     }}
@@ -572,6 +582,8 @@ export default class SuggestionsPop extends React.Component<
                     onPress={() => {
                       if (this.state.matched) {
                         if (this.props.isView) {
+                          this.setState({statuses: 'Rejected'});
+                        } else if (this.state.newAct) {
                           this.setState({statuses: 'Rejected'});
                         }
                       }
