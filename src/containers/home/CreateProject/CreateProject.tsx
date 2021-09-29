@@ -167,22 +167,22 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
 
             var gol = d.filter((d) => d.email != this.state.user);
             // if (this.props.route.params?.users != undefined) {
-            var bulkData = {
-              emails: gol.map((d) => d.email),
-              organization: this.state.organizationId,
-              invitedBy: this.state.user,
-              organizationName: this.state.orgName,
-              projectName: this.state.projectName,
-            };
+            // var bulkData = {
+            //   emails: gol.map((d) => d.email),
+            //   organization: this.state.organizationId,
+            //   invitedBy: this.state.user,
+            //   organizationName: this.state.orgName,
+            //   projectName: this.state.projectName,
+            // };
 
-            // console.log(data);
+            // // console.log(data);
 
-            api
-              .createApi()
-              .inviteBulk(bulkData)
-              .then((res) => {
-                // console.log(res);
-              });
+            // api
+            //   .createApi()
+            //   .inviteBulk(bulkData)
+            //   .then((res) => {
+            //     // console.log(res);
+            //   });
             // }
             var involvedPersons: Array<any> = [];
             if (this.props.route.params?.users != undefined) {
@@ -212,11 +212,25 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
             };
             this.setState({loading: false});
 
-            this.props.reduxActions.createProject(
-              data,
-              this.state.organizationId,
-              this.props.navigation,
-            );
+            if (this.props.route.params?.users != undefined) {
+              this.props.reduxActions.createProject(
+                data,
+                this.state.organizationId,
+                this.props.navigation,
+                gol.map((d) => d.email),
+                this.state.orgName,
+                true,
+              );
+            } else {
+              this.props.reduxActions.createProject(
+                data,
+                this.state.organizationId,
+                this.props.navigation,
+                gol.map((d) => d.email),
+                this.state.orgName,
+                false,
+              );
+            }
           })
           .catch((err) => {});
         // } else {

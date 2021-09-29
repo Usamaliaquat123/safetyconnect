@@ -24,7 +24,8 @@ export const createProject = (
   organization: string,
   navigation: any,
   emails?: any,
-  organizationName: string,
+  organizationName?: string,
+  fromOrg: boolean = false,
 ): IThunkAction => {
   return async (dispatch, getState) => {
     console.log(['project']);
@@ -34,22 +35,28 @@ export const createProject = (
       .Postproject(data)
       .then(async (res: any) => {
         if (res.status == 200) {
-          var bulkData = {
-            emails: emails,
-            organization: organization,
-            invitedBy: data.created_by,
-            organizationName: organizationName,
-            projectName: data.project_name,
-          };
+          if (fromOrg) {
+            var bulkData = {
+              emails: emails,
+              organization: organization,
+              invitedBy: data.created_by,
+              organizationName: organizationName,
+              projectName: data.project_name,
+              project: res.data.data.project_id,
+            };
 
-          // console.log(data);
+            console.log(
+              'bulkData isbadaidsjkasdjasdjkasjdksadnsakdjsakdjsakdjaskjk',
+            );
+            console.log(bulkData);
 
-          createApi
-            .createApi()
-            .inviteBulk(bulkData)
-            .then((res) => {
-              // console.log(res);
-            });
+            createApi
+              .createApi()
+              .inviteBulk(bulkData)
+              .then((res) => {
+                // console.log(res);
+              });
+          }
           dispatch(loading(false));
           savedCurrentProjectAndOrganizations(
             res.data.data.project_id,
