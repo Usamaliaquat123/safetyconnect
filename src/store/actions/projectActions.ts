@@ -45,11 +45,6 @@ export const createProject = (
               project: res.data.data.project_id,
             };
 
-            console.log(
-              'bulkData isbadaidsjkasdjasdjkasjdksadnsakdjsakdjsakdjaskjk',
-            );
-            console.log(bulkData);
-
             createApi
               .createApi()
               .inviteBulk(bulkData)
