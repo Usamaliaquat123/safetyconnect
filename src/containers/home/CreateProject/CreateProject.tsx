@@ -166,31 +166,31 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
             // if( gol.map((j) => j._id == this.state))
 
             var gol = d.filter((d) => d.email != this.state.user);
-            if (this.props.route.params?.users != undefined) {
-              var data = {
-                emails: gol.map((d) => d.email),
-                organization: this.state.organizationId,
-                invitedBy: this.state.user,
-                organizationName: this.state.orgName,
-                projectName: this.state.projectName,
-              };
+            // if (this.props.route.params?.users != undefined) {
+            var data = {
+              emails: gol.map((d) => d.email),
+              organization: this.state.organizationId,
+              invitedBy: this.state.user,
+              organizationName: this.state.orgName,
+              projectName: this.state.projectName,
+            };
 
-              // console.log(data);
+            // console.log(data);
 
-              api
-                .createApi()
-                .inviteBulk(data)
-                .then((res) => {
-                  // console.log(res);
-                });
-            }
+            api
+              .createApi()
+              .inviteBulk(data)
+              .then((res) => {
+                // console.log(res);
+              });
+            // }
 
-            if (this.props.route.params?.users != undefined) {
+            // if (this.props.route.params?.users != undefined) {
               var involvedUsers = gol.filter(
                 (d) =>
                   this.props.route.params.users.filter((f) => d.email != f)[0],
               );
-            }
+            // }
 
             var data = {
               created_by: email,

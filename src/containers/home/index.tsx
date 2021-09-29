@@ -1569,7 +1569,7 @@ class Home extends React.Component<HomeProps, any> {
               {/* ACtions Chart */}
               {/* Tabs Content */}
               <View style={{marginBottom: wp(3), padding: wp(3)}}>
-                <Text
+                <Text 
                   style={{
                     fontSize: wp(3.5),
                     color: 'black',

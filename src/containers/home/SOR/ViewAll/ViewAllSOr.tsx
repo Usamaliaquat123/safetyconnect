@@ -508,9 +508,9 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     for (let i = 0; i < this.state.draft.length; i++) {
                       // const element = this.state.draft[i];
                       this.state.draft[i].details.toLowerCase().match(v);
-                      draft.push(
-                        this.state.draft[i].details.toLowerCase().match(v),
-                      );
+                      // draft.push(
+                      //   this.state.draft[i].details.toLowerCase().match(v),
+                      // );
                     }
                     console.log(draft)
                     // console.log(

@@ -54,7 +54,7 @@ const industries = [
 
 const yourRole = ['Top Management', 'Line Management', 'Craft/Trade Employee'];
 
-var selectedRole = [];
+var selectedRole: Array<any> = [];
 const topManagementData = [
   'CEO',
   'Director',
