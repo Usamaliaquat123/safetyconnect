@@ -121,6 +121,9 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                   console.log(res);
                   console.log('with in signin functions');
                   var data: any;
+
+                  console.log(this.props.route.params.invited);
+                  console.log('this.props.route.params.');
                   if (this.props.route.params.invited != undefined) {
                     data = {
                       name: this.state.name,

@@ -167,7 +167,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
 
             var gol = d.filter((d) => d.email != this.state.user);
             // if (this.props.route.params?.users != undefined) {
-            var data = {
+            var bulkData = {
               emails: gol.map((d) => d.email),
               organization: this.state.organizationId,
               invitedBy: this.state.user,
@@ -179,18 +179,22 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
 
             api
               .createApi()
-              .inviteBulk(data)
+              .inviteBulk(bulkData)
               .then((res) => {
                 // console.log(res);
               });
             // }
-
-            // if (this.props.route.params?.users != undefined) {
-              var involvedUsers = gol.filter(
+            var involvedPersons: Array<any> = [];
+            if (this.props.route.params?.users != undefined) {
+              involvedPersons = gol.filter(
                 (d) =>
-                  this.props.route.params.users.filter((f) => d.email != f)[0],
+                  this.props.route.params.users.filter(
+                    (f: any) => d.email != f,
+                  )[0],
               );
-            // }
+            } else {
+              involvedPersons = gol;
+            }
 
             var data = {
               created_by: email,
@@ -201,7 +205,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
               secondary_leader: this.state.assignSuppervisor.map(
                 (d) => d.email,
               ),
-              involved_persons: involvedUsers.map((j) => j._id),
+              involved_persons: involvedPersons.map((j) => j._id),
               description: this.state.projectDescription,
               p_locations: this.state.assignLocations,
               organization: this.state.organizationId,
