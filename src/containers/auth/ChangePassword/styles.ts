@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   passTextContainer: {
+    marginTop: wp(3),
     fontSize: wp(3.5),
     // fontWeight: 'bold',
     fontFamily: fonts.SFuiDisplayMedium,
