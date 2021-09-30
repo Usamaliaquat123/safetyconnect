@@ -29,6 +29,7 @@ import {
   CreateSOR,
   Notification,
   AddLocation,
+  MainSettings,
   ViewAllSOr,
   ChangePassword,
 } from '@containers';
@@ -312,7 +313,13 @@ export const MainStackNavigator = (screen: route) => {
             headerShown: false,
           }}
         />
-
+        <Stack.Screen
+          name="MainSettings"
+          component={MainSettings}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="createProject"
           component={CreateProject}

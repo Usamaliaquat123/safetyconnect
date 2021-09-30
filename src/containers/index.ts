@@ -30,6 +30,7 @@ import InvitePeople from './home/InvitePeople/InvitePeople';
 import Preview from './home/SOR/Preview/Preview';
 import AddLocation from './home/AddLocation/AddLocation';
 import WelcomeHome from './home/WelcomeHome/WelcomeHome';
+import MainSettings from './home/MainSettings/MainSettings';
 export {
   Notification,
   AddLocation,
@@ -39,6 +40,7 @@ export {
   Preview,
   InvitePeople,
   Login,
+  MainSettings,
   ChangePassword,
   TellAboutYou,
   NothingFound,
