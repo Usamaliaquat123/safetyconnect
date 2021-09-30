@@ -964,13 +964,13 @@ export default class SuggestionsPop extends React.Component<
 
                 {/* Discard and save buttons */}
                 <View style={styles.btnsContainer}>
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     onPress={() => {
                       this.props.discard();
                     }}
                     style={styles.btnDiscard}>
                     <Text style={styles.btnDiscardText}>Delete</Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.AssignedTo.length != 0) {

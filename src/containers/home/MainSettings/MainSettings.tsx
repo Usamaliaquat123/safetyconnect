@@ -89,7 +89,12 @@ class MainSettings extends React.Component<MainSettingsProps, any> {
             </View>
           </View>
           <View style={styles.content}>
-            <TouchableOpacity style={{padding: wp(4), flexDirection: 'row'}}>
+            <TouchableOpacity
+              style={{
+                padding: wp(4),
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
               <Text
                 style={{fontSize: wp(3), fontFamily: fonts.SFuiDisplayBold}}>
                 Notifications
@@ -105,26 +110,28 @@ class MainSettings extends React.Component<MainSettingsProps, any> {
             {/* line height */}
             <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} />
             {/* line height */}
-            <View style={{padding: wp(4)}}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('ChangePassword')}
+              style={{padding: wp(4)}}>
               <Text
                 style={{fontSize: wp(3), fontFamily: fonts.SFuiDisplayBold}}>
                 Reset Password
               </Text>
-            </View>
+            </TouchableOpacity>
             <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} />
-            <View style={{padding: wp(4)}}>
+            <TouchableOpacity style={{padding: wp(4)}}>
               <Text
                 style={{fontSize: wp(3), fontFamily: fonts.SFuiDisplayBold}}>
                 Terms and conditions
               </Text>
-            </View>
+            </TouchableOpacity>
             <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} />
-            <View style={{padding: wp(4)}}>
+            <TouchableOpacity style={{padding: wp(4)}}>
               <Text
                 style={{fontSize: wp(3), fontFamily: fonts.SFuiDisplayBold}}>
                 Privacy Policy
               </Text>
-            </View>
+            </TouchableOpacity>
             <View style={{height: wp(1), backgroundColor: '#F6F6F6'}} />
           </View>
         </ScrollView>

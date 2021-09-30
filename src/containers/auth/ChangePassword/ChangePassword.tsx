@@ -70,6 +70,11 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
     });
   };
 
+  componentDidMount() {
+    AsyncStorage.getItem('email').then((value) => {
+      this.setState({email: value});
+    });
+  }
   setupPass = async () => {
     console.log(this.state.password);
     console.log(this.state.code);
@@ -172,7 +177,7 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
                 <Text style={styles.headingPra}>
                   You are changing password of{' '}
                   <Text style={styles.headingParaEmail}>
-                    {this.props.route.params.email}
+                    {/* {this.props.route.params.email} */}
                   </Text>
                 </Text>
               </View>
