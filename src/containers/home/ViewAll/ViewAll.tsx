@@ -296,17 +296,28 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                           (e: any) => e.title == d.data.sor_type,
                         )}
                         onPress={() => {
-                          if (this.props.route.params.data == 5) {
-                            d['closed'] = true;
-                            this.props.navigation.navigate('ViewSOR', {
-                              data: d,
+                          console.log(d);
+                          createApi
+                            .createApi()
+                            .getSors(d.projectId, d.data._id)
+                            .then((rep) => {
+                              // console.log(rep);
+                              d['closed'] = true;
+                              this.props.navigation.navigate('ViewSOR', {
+                                data: rep.data.data.report[0],
+                              });
                             });
-                          } else {
-                            d['closed'] = false;
-                            this.props.navigation.navigate('ViewSOR', {
-                              data: d,
-                            });
-                          }
+                          // if (this.props.route.params.data == 5) {
+                          //   d['closed'] = true;
+                          //   this.props.navigation.navigate('ViewSOR', {
+                          //     data: d,
+                          //   });
+                          // } else {
+                          //   d['closed'] = false;
+                          //   this.props.navigation.navigate('ViewSOR', {
+                          //     data: d,
+                          //   });
+                          // }
                         }}
                         date={d.createdAt}
                         onPressRepeated={(e) => this.getAllRepeatedSor(e)}
@@ -378,8 +389,8 @@ class ViewAll extends React.Component<ViewAllProps, any> {
                 style={{
                   marginBottom: wp(5),
                 }}
-                user1={d.user1}
-                user2={d.user2}
+                user1={undefined}
+                user2={undefined}
               />
             ))}
           </View>

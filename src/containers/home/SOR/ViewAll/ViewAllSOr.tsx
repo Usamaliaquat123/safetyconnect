@@ -512,7 +512,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       //   this.state.draft[i].details.toLowerCase().match(v),
                       // );
                     }
-                    console.log(draft)
+                    console.log(draft);
                     // console.log(
                     //   this.state.draft.filter((d) =>
                     //     d.details.toLowerCase().match(v),
@@ -1571,13 +1571,14 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                 onPress={(d: Isor) => {
                   // d['created_by'] = d.created_by.email;
                   // d['submit_to'] = [d.submit_to.email];
+                  d['closed'] = false;
                   this.props.navigation.navigate('ViewSOR', {
                     data: d,
                   });
                   this.setState({repeatedSorModal: false});
                 }}
                 onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                name={d.created_by}
+                name={d.created_by.email}
                 date={d.occurred_at}
                 risk={d.risk.severity * d.risk.likelihood}
                 viewPortWidth={80}

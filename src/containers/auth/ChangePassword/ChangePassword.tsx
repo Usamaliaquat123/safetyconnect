@@ -55,7 +55,7 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
       passMachErr: false,
       errorModal: false,
       passMatchText: '',
-      loading: true,
+      loading: false,
       name: '',
       passwordValid: false,
       isEyeOLD: true,

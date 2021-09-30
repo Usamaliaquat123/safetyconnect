@@ -1995,8 +1995,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     )}
                   </View>
                 )}
-
-                {this.state.attachments.length < 6 && (
+              {this.props.route.params.data.closed && (
+                <>
+                 {this.state.attachments.length < 6 && (
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.attachments.length < 6) {
@@ -2016,6 +2017,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     </Text>
                   </TouchableOpacity>
                 )}
+                </>
+              )}
+               
               </WalkthroughableView>
             </CopilotStep>
 
