@@ -369,28 +369,28 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         .then((res: any) => {
           console.log('res.data.data.report[0]');
           console.log(res.data.data.report[0]);
-          createApi
-            .createApi()
-            .getUser(res.data.data.report[0].created_by)
-            .then((user: any) => {
-              res.data.data.report[0].created_by = {};
-              res.data.data.report[0].created_by['email'] =
-                user.data.data.email;
-              res.data.data.report[0].created_by['img_url'] =
-                user.data.data.img_url;
-              res.data.data.report[0].created_by['name'] = user.data.data.name;
-            });
+          // createApi
+          //   .createApi()
+          //   .getUser(res.data.data.report[0].created_by)
+          //   .then((user: any) => {
+          //     res.data.data.report[0].created_by = {};
+          //     res.data.data.report[0].created_by['email'] =
+          //       user.data.data.email;
+          //     res.data.data.report[0].created_by['img_url'] =
+          //       user.data.data.img_url;
+          //     res.data.data.report[0].created_by['name'] = user.data.data.name;
+          //   });
 
-          createApi
-            .createApi()
-            .getUser(res.data.data.report[i].submit_to)
-            .then((user: any) => {
-              res.data.data.report[0].submit_to = {};
-              res.data.data.report[0].submit_to['email'] = user.data.data.email;
-              res.data.data.report[0].submit_to['img_url'] =
-                user.data.data.img_url;
-              res.data.data.report[0].submit_to['name'] = user.data.data.name;
-            });
+          // createApi
+          //   .createApi()
+          //   .getUser(res.data.data.report[i].submit_to)
+          //   .then((user: any) => {
+          //     res.data.data.report[0].submit_to = {};
+          //     res.data.data.report[0].submit_to['email'] = user.data.data.email;
+          //     res.data.data.report[0].submit_to['img_url'] =
+          //       user.data.data.img_url;
+          //     res.data.data.report[0].submit_to['name'] = user.data.data.name;
+          //   });
 
           this.state.repeatedSors.push(res.data.data.report[0]);
           this.setState({});
