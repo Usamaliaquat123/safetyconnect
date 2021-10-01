@@ -2291,11 +2291,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         key={i}
                         // type={'all'}
                         data={d}
-                        onPress={(d: actionsDashboard) =>
+                        onPress={(d: actionsDashboard) => {
+                          d['closed'] = false;
                           this.props.navigation.navigate('ViewSOR', {
                             data: d,
-                          })
-                        }
+                          });
+                        }}
                         isView={true}
                         name={d.created_by}
                         date={d.occurred_at}
@@ -2867,16 +2868,19 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 if (
                                   this.state.actionsAndRecommendations.filter(
                                     (d: any) => d.status == 'In Progress',
-                                  ).length != 0
+                                  ).length == 0
                                 ) {
                                   // Some validations is left
 
                                   if (
                                     this.state.actionsAndRecommendations.filter(
                                       (d: any) =>
-                                        d.justification.content !== '',
+                                        d.justification.content !== ' ',
                                     )
                                   ) {
+                                    console.log('completed yahoo');
+
+                                    // t
                                     console.log('justification');
                                     console.log(
                                       this.state.actionsAndRecommendations,

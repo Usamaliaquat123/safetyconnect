@@ -1578,7 +1578,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                   this.setState({repeatedSorModal: false});
                 }}
                 onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                name={d.created_by.email}
+                name={d.created_by}
                 date={d.occurred_at}
                 risk={d.risk.severity * d.risk.likelihood}
                 viewPortWidth={80}
