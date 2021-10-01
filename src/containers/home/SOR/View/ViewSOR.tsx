@@ -1863,7 +1863,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                   <TouchableOpacity
                                     onPress={() => {
                                       if (d.upload != 'self') {
-                                        this.photoAnim.play();
+                                        // this.photoAnim.play();
                                         downloadFile(d.uri, d.type)
                                           .then((res: any) => {})
                                           .catch((err) => {});
@@ -1946,7 +1946,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                         <TouchableOpacity
                                           onPress={() => {
                                             if (d.upload != 'self') {
-                                              this.photoAnim.play();
+                                              console.log(d);
+                                              // this.photoAnim.play();
                                               downloadFile(d.uri, d.type)
                                                 .then((res: any) => {})
                                                 .catch((err) => {});
@@ -1995,31 +1996,30 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     )}
                   </View>
                 )}
-              {this.props.route.params.data.closed && (
-                <>
-                 {this.state.attachments.length < 6 && (
-                  <TouchableOpacity
-                    onPress={() => {
-                      if (this.state.attachments.length < 6) {
-                        this.openDoc(this.state.attachments, false);
-                      }
-                    }}
-                    style={{marginTop: wp(3), flexDirection: 'row'}}>
-                    <Icon
-                      containerStyle={{marginRight: wp(3)}}
-                      name="plus"
-                      size={wp(4)}
-                      type="antdesign"
-                      color={colors.primary}
-                    />
-                    <Text style={styles.aaddNewAttachmentText}>
-                      Add New Attachments
-                    </Text>
-                  </TouchableOpacity>
+                {this.props.route.params.data.closed == false && (
+                  <>
+                    {this.state.attachments.length < 6 && (
+                      <TouchableOpacity
+                        onPress={() => {
+                          if (this.state.attachments.length < 6) {
+                            this.openDoc(this.state.attachments, false);
+                          }
+                        }}
+                        style={{marginTop: wp(3), flexDirection: 'row'}}>
+                        <Icon
+                          containerStyle={{marginRight: wp(3)}}
+                          name="plus"
+                          size={wp(4)}
+                          type="antdesign"
+                          color={colors.primary}
+                        />
+                        <Text style={styles.aaddNewAttachmentText}>
+                          Add New Attachments
+                        </Text>
+                      </TouchableOpacity>
+                    )}
+                  </>
                 )}
-                </>
-              )}
-               
               </WalkthroughableView>
             </CopilotStep>
 
@@ -2453,10 +2453,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               </Text>
                               <TouchableOpacity
                                 onPress={() => {
-                                  var arr = [
-                                    ...this.state.commentAttachment,
-                                  ].filter((j) => j != d);
-                                  this.setState({commentAttachment: arr});
+                                  console.log('teradata');
+                                  console.log(f.uri);
+                                  downloadFile(f.uri, f.name)
+                                    .then((res) => {})
+                                    .catch((err) => {});
+                                  // var arr = [
+                                  //   ...this.state.commentAttachment,
+                                  // ].filter((j) => j != d);
+                                  // this.setState({commentAttachment: arr});
                                 }}
                                 style={{
                                   position: 'absolute',
