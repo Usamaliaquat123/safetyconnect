@@ -60,6 +60,7 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
       name: '',
       passwordValid: false,
       isEyeOLD: true,
+      isPasswordChanged: false,
       // for testing
       email: 'defaje7099@troikos.com',
       code: '3D449672',
@@ -94,14 +95,10 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
             this.state.oldPassword,
             this.state.password,
           );
-          this.setState({passwordValid: false});
+          this.setState({passwordValid: false, isPasswordChanged: true});
 
-          showMessage({
-            message: 'Password has been changed',
-            type: 'success',
-            position: 'bottom',
-          });
           setTimeout(() => {
+            this.setState({isPasswordChanged: false});
             this.props.navigation.goBack();
           }, 1000);
         } catch (error) {
@@ -116,8 +113,6 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
   render() {
     return (
       <View style={styles.container}>
-        <FlashMessage ref="myLocalFlashMessage" />
-
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* content */}
           <View>
@@ -350,6 +345,20 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
             )}
           </View>
         </ScrollView>
+        <Modal
+          isVisible={this.state.isPasswordChanged}
+          onBackdropPress={() => this.setState({isPasswordChanged: false})}>
+          <View style={styles.modelContainer}>
+            <View>
+              <Text style={[styles.errHeadPop, {color: colors.green}]}>
+                Password Changed
+              </Text>
+              <Text style={styles.errEmailPassDesc}>
+                Your password has been changed
+              </Text>
+            </View>
+          </View>
+        </Modal>
         {/* validations error */}
         {/* Modal Container */}
         <Modal

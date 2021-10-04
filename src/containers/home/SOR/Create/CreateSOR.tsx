@@ -554,7 +554,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         email: this.state.user.email,
         _id: this.state.user._id,
       },
-    };
+    }; 
   };
 
   onCreateSor = (status: number) => {

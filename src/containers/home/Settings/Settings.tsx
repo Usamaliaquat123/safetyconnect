@@ -97,7 +97,7 @@ class Settings extends React.Component<SettingsProps, any> {
       arrayofIndustry: [],
       role: '',
       img_url: '',
-
+      isSettingsChanged: false,
       type: '',
       profileupload: false,
       loading: false,
@@ -139,12 +139,9 @@ class Settings extends React.Component<SettingsProps, any> {
           .createApi()
           .setUserInfo(data)
           .then((res: any) => {
-            showMessage({
-              message: 'Profile has been updated',
-              type: 'success',
-              position: 'bottom',
-            });
+            this.setState({isSettingsChanged: true});
             setTimeout(() => {
+              this.setState({isSettingsChanged: false});
               this.props.navigation.goBack();
             }, 1000);
             // this.props.navigation.dispatch(
@@ -666,6 +663,20 @@ class Settings extends React.Component<SettingsProps, any> {
               </View>
             </View>
           ) : null}
+        </Modal>
+        <Modal
+          isVisible={this.state.isSettingsChanged}
+          onBackdropPress={() => this.setState({isSettingsChanged: false})}>
+          <View style={styles.modelContainer}>
+            <View>
+              <Text style={[styles.errHeadPop, {color: colors.green}]}>
+                Profile updated
+              </Text>
+              <Text style={styles.errEmailPassDesc}>
+                Your profile has been updated successfully.
+              </Text>
+            </View>
+          </View>
         </Modal>
       </View>
     );
