@@ -1380,7 +1380,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     {/* {this.state.submitted.length == 0 ? null : ( */}
                     <View style={styles.boardContainer}>
                       <View style={styles.submitTextContaienr}>
-                        <Text style={styles.submitText}> Notified To</Text>
+                        <Text style={styles.submitText}> Exclated To</Text>
                       </View>
                       {this.state.submitted
                         .slice(0, 3)
@@ -1415,6 +1415,72 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           />
                         ))}
                       {this.state.submitted.length > 3 && (
+                        <TouchableOpacity
+                          onPress={() => {
+                            // this.props.reduxActions.clearAllSor();
+                            this.props.navigation.navigate('ViewAll', {
+                              data: 3,
+                              title: 'Exclated To',
+                            });
+                          }}
+                          style={{
+                            alignSelf: 'center',
+                            padding: wp(3),
+                            paddingLeft: wp(10),
+                            paddingRight: wp(10),
+                            borderRadius: wp(3),
+                            backgroundColor: colors.primary,
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: wp(3),
+                              color: colors.secondary,
+                            }}>
+                            See More
+                          </Text>
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                    {/* )} */}
+
+                    {/* {this.state.submitted.length == 0 ? null : ( */}
+                    <View style={styles.boardContainer}>
+                      <View style={styles.submitTextContaienr}>
+                        <Text style={styles.submitText}> Notified To</Text>
+                      </View>
+                      {this.state.isNotiData
+                        .slice(0, 3)
+                        .map((d: Isor, i: number) => (
+                          <Card
+                            key={i}
+                            repeated={d.repeatedSor}
+                            type={'all'}
+                            data={d}
+                            name={d.created_by}
+                            onPress={(d: Isor) => {
+                              d['closed'] = false;
+                              // d['created_by'] = d.created_by.email;
+                              // d['submit_to'] = [d.submit_to.email];
+                              this.props.navigation.navigate('ViewSOR', {
+                                data: d,
+                              });
+                            }}
+                            date={d.occurred_at}
+                            risk={d.risk.severity * d.risk.likelihood}
+                            viewPortWidth={80}
+                            user1={undefined}
+                            user2={undefined}
+                            observation={d.details}
+                            classify={d.sor_type}
+                            iconConf={classifySor.find(
+                              (e: any) => e.title == d.sor_type,
+                            )}
+                            location={d.location}
+                            style={[styles.submitCardContainer]}
+                            onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                          />
+                        ))}
+                      {this.state.isNotiData.length > 3 && (
                         <TouchableOpacity
                           onPress={() => {
                             // this.props.reduxActions.clearAllSor();
