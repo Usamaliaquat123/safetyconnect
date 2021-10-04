@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     padding: wp(1),
     paddingTop: wp(5),
     paddingBottom: wp(5),
-    backgroundColor: colors.primary,
+    // backgroundColor: colors.primary,
   },
   title: {
     fontSize: wp(4),

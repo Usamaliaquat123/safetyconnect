@@ -909,7 +909,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                           'ViewAll',
                                           {
                                             data: 3,
-                                            title: 'Notified To',
+                                            title: 'Exclated To',
                                           },
                                         );
                                       }}

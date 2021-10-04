@@ -117,6 +117,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       submitTo: '',
       selectEsclateTo: false,
       esclateTo: '',
+      actionsvalid : [],
       // repeated sor modal
       repeatedSorModal: false,
       repeatedSorData: [],
@@ -554,7 +555,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
         email: this.state.user.email,
         _id: this.state.user._id,
       },
-    }; 
+    };
   };
 
   onCreateSor = (status: number) => {
@@ -1795,14 +1796,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     <View>
                       <TouchableOpacity
                         onPress={() => {
-                          var arr = this.state.actionRecommendations;
-                          arr[i].selected = !arr[i].selected;
-
+                          var arr = [...this.state.actionRecommendations];
+                          arr[i].is_complete = true;
+                          d['status'] = 'In Progress';
                           // cons
 
-                          this.setState({actionRecommendations: arr});
-                        }}
-                        onLongPress={() => {
                           this.setState({
                             allActionsEdit: d,
                             allActionsEditIndex: i,
@@ -1811,12 +1809,16 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             submitToAndObserverEmails: [this.state.user.email],
 
                             newActions: false,
+                            actionRecommendations: arr,
                           });
                         }}
+                        // onLongPress={() => {
+
+                        // }}
                         key={i}
                         style={[
                           styles.suggestedActionsContainer,
-                          d.selected == true
+                          d.is_complete == true
                             ? {
                                 backgroundColor: colors.lightBlue,
                                 borderWidth: wp(0),
@@ -1863,7 +1865,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         if (this.state.actionsAndRecommendationText !== '') {
                           this.setState({
                             allActionsEdit: {
-                              is_complete: false,
+                              is_complete: true,
                               is_selected: false,
                               content: this.state.actionsAndRecommendationText,
                               assigned_to: this.state.user.email,
@@ -2573,19 +2575,121 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               <TouchableOpacity
                 // this.setState({repeatedSorModal: true})
                 onPress={() => {
-                  if (this.state.fiveWhytoggle == true) {
-                    if (this.state.fiveWhyQuestion.length == 5) {
-                      this.onCreateSor(5);
+                  // if (
+                  //   this.state.actionsAndRecommendations.filter(
+                  //     (d: any) => d.status == 'In Progress',
+                  //   ).length != 0
+                  // ) {
+                  //   // t
+                  //   console.log('justification');
+                  //   console.log(this.state.actionsAndRecommendations);
+                  //   this.setState({
+                  //     // loading: true,
+                  //     errorModal: true,
+                  //     errHeadingText: 'Actions validations ',
+                  //     errDesText: 'Add the justification',
+                  //   });
+                  // } else {
+                  //   this.setState({
+                  //     // loading: true,
+                  //     errorModal: true,
+                  //     errHeadingText: 'Actions validations ',
+                  //     errDesText: 'Actions should be completed or rejected',
+                  //   });
+                  // }
+
+                  // if (this.state.fiveWhytoggle == true) {
+                  //   if (this.state.fiveWhyQuestion.length == 5) {
+                  //     this.onCreateSor(5);
+                  //   } else {
+                  //     this.setState({
+                  //       errorModal: true,
+                  //       errHeadingText: 'Minimum 5 why ',
+                  //       errDesText: 'Minimum 5 why should be added..!',
+                  //     });
+                  //   }
+                  // } else {
+                  //   this.onCreateSor(5);
+                  // }
+
+                  var actionsvalid = this.state.actionRecommendations.filter(
+                    (d) => d.assignTo != undefined,
+                  );
+                  this.setState({ actionsvalid})
+                  console.log('actionsvalid');
+                  console.log(actionsvalid);
+                  AsyncStorage.getItem('email').then((email) => {
+                    console.log(this.state.actionsvalid);
+                    if (
+                      this.state.actionsvalid.filter(
+                        (d: any) => d.status == 'In Progress',
+                      ).length != 0
+                    ) {
+                      // Some validations is left
+
+                      console.log('justification');
+                      console.log(this.state.actionsvalid);
+
+                      if (
+                        this.state.actionsvalid.filter(
+                          (d: any) => d.justification.content !== ' ',
+                        )
+                      ) {
+                        console.log('completed yahoo');
+
+                        // t
+                        console.log('justification');
+                        console.log(this.state.actionsvalid);
+                        this.setState({
+                          // loading: true,
+                          errorModal: true,
+                          errHeadingText: 'Actions validations ',
+                          errDesText: 'Add the justification',
+                        });
+                      } else {
+                        this.setState({
+                          // loading: true,
+                          errorModal: true,
+                          errHeadingText: 'Actions validations ',
+                          errDesText: 'Actions should be completed or rejected',
+                        });
+                      }
                     } else {
-                      this.setState({
-                        errorModal: true,
-                        errHeadingText: 'Minimum 5 why ',
-                        errDesText: 'Minimum 5 why should be added..!',
-                      });
+                      if (email == this.state.email) {
+                        if (this.state.fiveWhytoggle == true) {
+                          if (this.state.fiveWhyQuestion.length == 5) {
+                            this.onCreateSor(5);
+                          } else {
+                            this.setState({
+                              errorModal: true,
+                              errHeadingText: 'Minimum 5 why ',
+                              errDesText: 'minimum 5 why should be added..!',
+                            });
+                          }
+                        } else {
+                          this.onCreateSor(5);
+                        }
+                      } else {
+                        if (this.state.fiveWhytoggle == true) {
+                          if (this.state.fiveWhyQuestion.length == 5) {
+                            this.onCreateSor(3);
+                          } else {
+                            this.setState({
+                              errorModal: true,
+                              errHeadingText: 'Minimum 5 why ',
+                              errDesText: 'minimum 5 why should be added..!',
+                            });
+                          }
+                        } else {
+                          this.onCreateSor(3);
+                        }
+                      }
                     }
-                  } else {
-                    this.onCreateSor(5);
-                  }
+
+                    // this.props.route.params.data.action_required.filter(
+                    //   (d) => d.justification.content === '',
+                    // );
+                  });
                 }}
                 style={[
                   styles.submitsorbtnSb,

@@ -139,7 +139,18 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
                 </Text>
               </View>
             ) : (
-              <View style={{marginTop: wp(5)}}>
+              <View style={{marginTop: wp(1)}}>
+                <View style={styles.header}>
+                  <View style={styles.headertle}>
+                    <Icon
+                      onPress={() => this.props.navigation.goBack()}
+                      size={25}
+                      name="chevron-back-outline"
+                      type="ionicon"
+                      color={colors.primary}
+                    />
+                  </View>
+                </View>
                 <View style={{marginBottom: wp(10)}}>
                   <Text style={styles.headingContainer}>Change Password</Text>
                   <Text style={styles.headingPra}>

@@ -1667,21 +1667,21 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         {this.state.actionsAndRecommendations.map(
                           (d: any, i: number) => (
                             <TouchableOpacity
-                              onPress={() => {
-                                var data = [
-                                  ...this.state.actionsAndRecommendations,
-                                ];
-                                if (d.is_complete == true) {
-                                  data[i].is_complete = false;
-                                } else {
-                                  data[i].is_complete = true;
-                                }
+                              // onPress={() => {
+                              //   var data = [
+                              //     ...this.state.actionsAndRecommendations,
+                              //   ];
+                              //   if (d.is_complete == true) {
+                              //     data[i].is_complete = false;
+                              //   } else {
+                              //     data[i].is_complete = true;
+                              //   }
 
-                                this.setState({
-                                  actionsAndRecommendations: data,
-                                });
-                              }}
-                              onLongPress={() => {
+                              //   this.setState({
+                              //     actionsAndRecommendations: data,
+                              //   });
+                              // }}
+                              onPress={() => {
                                 var submitto = this.props.route.params.data
                                   .submit_to;
                                 var created_by = this.props.route.params.data
@@ -1701,11 +1701,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 members.push(
                                   this.props.route.params.data.created_by,
                                 );
+                                var data = [
+                                  ...this.state.actionsAndRecommendations,
+                                ];
+                                data[i].is_complete = true;
 
                                 // if (this.state.user.email == d.assigned_to) {
                                 this.setState({
                                   allActionsEdit: d,
-
+                                  actionsAndRecommendations: data,
                                   SuggestionPop: true,
                                   allActionsEditIndex: i,
                                   newActions: false,
@@ -1758,9 +1762,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     <TextInput
                       onFocus={() => this.setState({notifiedAndInv: 3})}
                       maxLength={500}
-                      onChange={(e) =>
+                      onChangeText={(e) =>
                         this.setState({
-                          actionsAndRecommendationText: e.nativeEvent.text,
+                          actionsAndRecommendationText: e,
                         })
                       }
                       value={this.state.actionsAndRecommendationText}
@@ -1783,15 +1787,17 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           members.push(this.props.route.params.data.created_by);
                           this.setState({
                             allActionsEdit: {
-                              is_complete: false,
+                              is_complete: true,
                               is_selected: false,
                               content: this.state.actionsAndRecommendationText,
                               assigned_to: [],
+                              // actionsAndRecommendationText: '',
                               dueDate: moment().format('YYYY-MM-DD'),
                               status: 'InProgress',
                               category: 'Elimination',
-                              // actionsAndRecommendationText :"",
                             },
+                            actionsAndRecommendationText: '',
+                            // this.setState({})
                             submitToAndObserverEmails: members,
                             // ne
                             SuggestionPop: true,
@@ -2868,7 +2874,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 if (
                                   this.state.actionsAndRecommendations.filter(
                                     (d: any) => d.status == 'In Progress',
-                                  ).length == 0
+                                  ).length != 0
                                 ) {
                                   // Some validations is left
 
