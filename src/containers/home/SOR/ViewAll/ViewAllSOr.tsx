@@ -100,12 +100,14 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       isExclated: false,
       isCompleted: false,
       selectP: false,
+      isNoti: false,
       draft: [],
       exclated: [],
       submitted: [],
       closed: [],
       notified: [],
       inprogress: [],
+      isNotiData: [],
       pendingClosure: [],
       repeatedSorModal: false,
       isAuthenticated: false,
@@ -318,7 +320,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         // );
 
                         if (res.data.data.report[i].details != undefined) {
-                          this.state.notified.push(res.data.data.report[i]);
+                          this.state.isNotiData.push(res.data.data.report[i]);
                         }
                       }
                     }
@@ -1028,7 +1030,100 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                             </View>
                           </View>
                           {/* )} */}
-
+                          {/* {this.state.closed.length == 0 ? null : ( */}
+                          <View>
+                            <View style={styles.lineheight}></View>
+                            <View style={styles.inProgressTop}>
+                              <View style={styles.listHeader}>
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    this.setState({
+                                      isNoti: !this.state.isNoti,
+                                    });
+                                  }}
+                                  style={{flexDirection: 'row'}}>
+                                  <Icon
+                                    size={wp(3.5)}
+                                    color={colors.primary}
+                                    name={
+                                      this.state.isNoti == true ? 'down' : 'up'
+                                    }
+                                    type="antdesign"
+                                  />
+                                  <Text style={styles.listDraftText}>
+                                    Notified
+                                  </Text>
+                                </TouchableOpacity>
+                              </View>
+                              {this.state.isNoti == true ? (
+                                <View style={styles.listViewContent}>
+                                  {this.state.isNotiData
+                                    .slice(0, 3)
+                                    .map((d: Isor, i: number) => (
+                                      <ListCard
+                                        onPressRepeated={(e) =>
+                                          this.getAllRepeatedSor(e)
+                                        }
+                                        key={i}
+                                        location={d.location}
+                                        classify={d.sor_type}
+                                        styles={
+                                          this.state.isNotiData.slice(0, 3)
+                                            .length ==
+                                          i + 1
+                                            ? {borderBottomWidth: wp(0)}
+                                            : null
+                                        }
+                                        user1={undefined}
+                                        user2={undefined}
+                                        observation={d.details}
+                                        username={d.created_by}
+                                        iconconf={classifySor.find(
+                                          (e: any) => e.title == d.sor_type,
+                                        )}
+                                        repeated={d.repeatedSor}
+                                        onPress={() => {
+                                          d['closed'] = false;
+                                          // d['created_by'] = d.created_by.email;
+                                          // d['submit_to'] = [d.submit_to.email];
+                                          this.props.navigation.navigate(
+                                            'ViewSOR',
+                                            {
+                                              data: d,
+                                            },
+                                          );
+                                        }}
+                                        date={d.occurred_at}
+                                      />
+                                    ))}
+                                  {this.state.isNotiData.length > 5 && (
+                                    <TouchableOpacity
+                                      onPress={() => {
+                                        this.props.navigation.navigate(
+                                          'ViewAll',
+                                          {
+                                            data: 5,
+                                            title: 'Notified',
+                                          },
+                                        );
+                                      }}
+                                      style={{
+                                        marginLeft: wp(4),
+                                        marginTop: wp(3),
+                                      }}>
+                                      <Text
+                                        style={{
+                                          fontSize: wp(3),
+                                          color: colors.primary,
+                                        }}>
+                                        See More
+                                      </Text>
+                                    </TouchableOpacity>
+                                  )}
+                                </View>
+                              ) : null}
+                            </View>
+                          </View>
                           {/* {this.state.closed.length == 0 ? null : ( */}
                           <View>
                             <View style={styles.lineheight}></View>
