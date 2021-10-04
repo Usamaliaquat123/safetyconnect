@@ -1003,6 +1003,7 @@ export default class SuggestionsPop extends React.Component<
                           category: this.state.type,
                           hierarchy: this.state.type,
                           status: `${this.state.statuses}`,
+                          // selected: true,
                           action: this.state.observation,
                         };
 

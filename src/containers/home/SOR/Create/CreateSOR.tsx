@@ -117,7 +117,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       submitTo: '',
       selectEsclateTo: false,
       esclateTo: '',
-      actionsvalid : [],
+      actionsvalid: [],
       // repeated sor modal
       repeatedSorModal: false,
       repeatedSorData: [],
@@ -773,6 +773,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             // this
 
             if (severity.length !== 0) {
+              console.log('yahhhh h     this.state.actionRecommendations');
+              console.log(this.state.actionRecommendations);
+
               if (
                 this.state.actionRecommendations.filter(
                   (d: any) => d.selected == true,
@@ -1797,8 +1800,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       <TouchableOpacity
                         onPress={() => {
                           var arr = [...this.state.actionRecommendations];
-                          arr[i].is_complete = true;
+                          arr[i]['is_complete'] = true;
+                          arr[i]['selected'] = true;
+
                           d['status'] = 'In Progress';
+
                           // cons
 
                           this.setState({
@@ -2615,7 +2621,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   var actionsvalid = this.state.actionRecommendations.filter(
                     (d) => d.assignTo != undefined,
                   );
-                  this.setState({ actionsvalid})
+                  this.setState({actionsvalid});
                   console.log('actionsvalid');
                   console.log(actionsvalid);
                   AsyncStorage.getItem('email').then((email) => {
@@ -2946,6 +2952,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   this.state.actionRecommendations[
                     this.state.allActionsEditIndex
                   ].is_complete = true;
+                  this.state.actionRecommendations[
+                    this.state.allActionsEditIndex
+                  ].selected = true;
                 }
                 this.setState({SuggestionPop: false});
               }}
