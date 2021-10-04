@@ -104,6 +104,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
       exclated: [],
       submitted: [],
       closed: [],
+      notified: [],
       inprogress: [],
       pendingClosure: [],
       repeatedSorModal: false,
@@ -309,6 +310,15 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
                         if (res.data.data.report[i].details != undefined) {
                           this.state.closed.push(res.data.data.report[i]);
+                        }
+                      } else if (res.data.data.report[i].status == 6) {
+                        // var rep = filterAndMappingPersons(
+                        //   res.data.data.report[i],
+                        //   this.state.involvedPerson,
+                        // );
+
+                        if (res.data.data.report[i].details != undefined) {
+                          this.state.notified.push(res.data.data.report[i]);
                         }
                       }
                     }

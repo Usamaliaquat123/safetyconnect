@@ -16,6 +16,8 @@ import Modal from 'react-native-modal';
 import LottieView from 'lottie-react-native';
 import {bindActionCreators} from 'redux';
 import * as reduxActions from '@actions';
+import FlashMessage, {showMessage} from 'react-native-flash-message';
+
 import {AllSorDTO} from '@dtos';
 import {
   imagePicker,
@@ -137,7 +139,14 @@ class Settings extends React.Component<SettingsProps, any> {
           .createApi()
           .setUserInfo(data)
           .then((res: any) => {
-            this.props.navigation.goBack();
+            showMessage({
+              message: 'Profile has been updated',
+              type: 'success',
+              position: 'bottom',
+            });
+            setTimeout(() => {
+              this.props.navigation.goBack();
+            }, 1000);
             // this.props.navigation.dispatch(
             //   CommonActions.reset({
             //     index: 1,
@@ -642,7 +651,7 @@ class Settings extends React.Component<SettingsProps, any> {
             )}
           </View>
         </ScrollView>
-
+        <FlashMessage ref="myLocalFlashMessage" />
         {/* Modal Container */}
         <Modal isVisible={this.state.loading}>
           {this.state.loading == true ? (

@@ -29,6 +29,7 @@ import {createApi as api} from '@service';
 import Modal from 'react-native-modal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {loading} from '../../../store/actions/listSorActions';
+import FlashMessage, {showMessage} from 'react-native-flash-message';
 
 type ChangePasswordsNavigationProp = StackNavigationProp<
   StackNavigatorProps,
@@ -94,7 +95,15 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
             this.state.password,
           );
           this.setState({passwordValid: false});
-          this.props.navigation.goBack();
+
+          showMessage({
+            message: 'Password has been changed',
+            type: 'success',
+            position: 'bottom',
+          });
+          setTimeout(() => {
+            this.props.navigation.goBack();
+          }, 1000);
         } catch (error) {
           this.setState({loading: false});
           this.setState({passwordValid: true});
@@ -107,6 +116,8 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
   render() {
     return (
       <View style={styles.container}>
+        <FlashMessage ref="myLocalFlashMessage" />
+
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* content */}
           <View>

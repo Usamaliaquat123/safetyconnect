@@ -127,6 +127,7 @@ class Notifications extends React.Component<NotificationsProps, any> {
           .readSpecificNotification(this.state.user.email, notificationId)
           .then((res: any) => {
             this.setState({loading: false});
+            userD.data.data.report[0] =
             this.props.navigation.navigate('ViewSOR', {
               data: userD.data.data.report[0],
             });
