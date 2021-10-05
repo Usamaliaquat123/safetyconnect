@@ -82,7 +82,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
     };
   }
   componentDidMount() {
-    // this.props.start();
+    this.props.start();
     // console.log(this.props.reduxActions);
   }
 
