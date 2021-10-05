@@ -141,6 +141,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       errDesText: '',
       reportIdInvestigation: '',
       fiveWhyAnswer: [],
+      suggestionsNull: true,
       fiveWhyQuestion: [],
       SuggestionPop: false,
       fiveWhytoggle: false,
@@ -288,7 +289,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       .observationSuggestions(str, this.state.projectid)
       .then((res: any) => {
         if (res.status == 200) {
-          this.setState({suggestions: res.data.results});
+          console.log(res.data.results);
+          if (res.data.results.length != 0) {
+            this.setState({suggestionsNull: false});
+            this.setState({suggestions: res.data.results});
+          } else {
+            this.setState({suggestions: res.data.results});
+            this.setState({suggestionsNull: true});
+          }
         }
       });
   };
@@ -312,7 +320,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   }
 
   componentDidMount = () => {
-    this.props.start(false, this.scrollView);
+    // this.props.start(false, this.scrollView);
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectid: currentProj});
 
@@ -1550,6 +1558,17 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     </Text>
                   </View>
                 </View>
+                {this.state.suggestionsNull ? (
+                  <Text
+                    style={{
+                      paddingLeft: wp(3),
+                      fontSize: wp(2.5),
+                      marginTop: wp(2),
+                      opacity: 0.5,
+                    }}>
+                    No suggestions Found
+                  </Text>
+                ) : null}
                 {/* Suggestions  */}
                 {this.state.suggestions.length != 0 ? (
                   <Suggestions

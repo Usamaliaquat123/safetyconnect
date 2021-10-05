@@ -2299,7 +2299,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         data={d}
                         onPress={(d: actionsDashboard) => {
                           d['closed'] = false;
-                          this.props.navigation.navigate('ViewSOR', {
+                          this.props.navigation.push('ViewSOR', {
                             data: d,
                           });
                         }}

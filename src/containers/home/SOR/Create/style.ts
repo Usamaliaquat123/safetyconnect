@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     // color: colors.text,
     opacity: 0.5,
   },
-  obText: {fontWeight: 'bold', fontSize: 12},
+  obText: {fontWeight: 'bold', fontSize: wp(3)},
   // SUGGESTIONS
   suggHeading: {
     fontSize: wp(3.4),
@@ -727,7 +727,7 @@ const styles = StyleSheet.create({
   },
 
   textInputOfArea: {
-    marginTop: wp(-4.5),
+    marginTop: wp(-3.7),
     width: wp(20),
     borderBottomWidth: 0,
     color: colors.primary,
