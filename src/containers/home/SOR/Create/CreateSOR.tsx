@@ -837,8 +837,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           this.state.exclateToTags.length != 0
                             ? this.state.exclateToTags.map((d: any) => d.email)
                             : [],
-                        status:
-                          this.state.exclateToTags.length == 0 ? status : 3,
+                        status: 3,
                         attachments:
                           this.state.uploadedfiles.length == 0
                             ? []
