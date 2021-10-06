@@ -258,7 +258,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
         
         <TD style="font-size: 12px;" rowspan=2 class="tr4 td9">
           <div  style="${
-            this.state.prisk < 6
+            this.state.prisk < 3
               ? 'background-color: #4BA735;'
               : this.state.prisk < 14
               ? 'background-color: #FF9900;'

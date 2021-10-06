@@ -185,7 +185,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
-    this.props.start(false, this.scrollView);
+    // this.props.start(false, this.scrollView);
     if (this.props.route.params.data.esclate_to != undefined) {
       this.setState({esclate_to: this.props.route.params.data.esclate_to});
     }
@@ -367,49 +367,52 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     console.log('this.props.route.params.data.justification');
     console.log(this.props.route.params.data.justification);
 
-    if (this.props.route.params.data.justification != null) {
-      createApi
-        .createApi()
-        .getFiveWhy(this.props.route.params.data.justification)
-        .then((res: any) => {
-          if (res.data.success) {
-            console.log('Five why data');
-            console.log(res.data.data);
-            res.data.data.justification.question.map((d, i) => {
-              this.state.fiveWHYdata.push({question: d});
-            });
-            //   // Answer map and then push
-            res.data.data.justification.answer.map((d, i) => {
-              this.state.fiveWHYdata[i]['answer'] = d;
-            });
+    // if (this.props.route.params.data.justification != null) {
+    createApi
+      .createApi()
+      .getFiveWhy(this.props.route.params.data.justification)
+      .then((res: any) => {
+        if (res.data.success) {
+          console.log('Five why data');
+          console.log(res.data.data);
+          res.data.data.justification.question.map((d, i) => {
+            this.state.fiveWHYdata.push({question: d});
+          });
+          //   // Answer map and then push
+          res.data.data.justification.answer.map((d, i) => {
+            this.state.fiveWHYdata[i]['answer'] = d;
+          });
 
-            this.props.route.params.data.justification = [];
-            // this.props.route.params.data.justification.push({});
-            this.props.route.params.data.justification.push({
-              justification: res.data.data.justification,
-              keyFindings: res.data.data.keyFindings,
-              rootCauses: res.data.data.rootCauses,
-              contributoryCauses: res.data.data.contributoryCauses,
-              // date : res.data.data.date,
-            });
+          var just = [];
 
-            this.setState({
-              fiveWhyQuestion: res.data.data.justification.question,
-              fiveWhyAnswer: res.data.data.justification.answer,
-              fiveWhyKeyFindings: res.data.data.keyFindings,
-              fiveWhyKeyrootCauses: res.data.data.rootCauses,
-              fiveWhyKeycontributoryCauses: res.data.data.contributoryCauses,
-            });
-            this.setState({fiveWhytoggle: true});
-          } else {
-            this.props.route.params.data.justification = null;
-            this.setState({fiveWhytoggle: false});
-          }
-        });
-    } else {
-      // console.log('asdjaskdajskdasjkdsajkdajskjskd');
-      this.setState({fiveWhytoggle: false});
-    }
+          this.props.route.params.data.justification = [];
+          // this.props.route.params.data.justification.push({});
+          this.props.route.params.data.justification.push({
+            justification: res.data.data.justification,
+            keyFindings: res.data.data.keyFindings,
+            rootCauses: res.data.data.rootCauses,
+            contributoryCauses: res.data.data.contributoryCauses,
+            // date : res.data.data.date,
+          });
+
+          this.setState({
+            fiveWhyQuestion: res.data.data.justification.question,
+            fiveWhyAnswer: res.data.data.justification.answer,
+            fiveWhyKeyFindings: res.data.data.keyFindings,
+            fiveWhyKeyrootCauses: res.data.data.rootCauses,
+            fiveWhyKeycontributoryCauses: res.data.data.contributoryCauses,
+          });
+          this.setState({fiveWhytoggle: true});
+          console.log(this.state.fiveWhytoggle);
+        } else {
+          // this.props.route.params.data.justification = null;
+          this.setState({fiveWhytoggle: false});
+        }
+      });
+    // } else {
+    // console.log('asdjaskdajskdasjkdsajkdajskjskd');
+    // this.setState({fiveWhytoggle: false});
+    // }
   };
 
   mappingInvolved = (persons: Array<any>, person: string | undefined) => {
@@ -448,7 +451,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           likelihood: this.state.sor_type == 'positive' ? liklihood : 0,
           category:
             this.state.sor_type === 'positive'
-              ? severity * liklihood < 7
+              ? severity * liklihood < 3
                 ? `low`
                 : severity * liklihood < 14
                 ? `medium`
@@ -1542,87 +1545,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     <Text style={styles.investigationReqtext}>
                       Investigation Required
                     </Text>
-                    <TouchableOpacity
-                      onPress={() => {
-                        // if (this.state.fiveWhytoggle == true) {
-                        //   this.setState({fiveWhytoggle: false});
-                        // } else {
-                        //   if (this.state.reportIdInvestigation === '') {
-                        //     var bodyInitial = {
-                        //       report: {
-                        //         created_by: this.state.user.email,
-                        //         comments: '',
-                        //         status: 1,
-                        //       },
-                        //       project: '607820d5724677561cf67ec5',
-                        //     };
-                        //     createApi
-                        //       .createApi()
-                        //       .createSorInit(bodyInitial)
-                        //       .then((res: any) => {
-                        //         this.setState({
-                        //           reportIdInvestigation: res.data.data.report_id,
-                        //         });
-                        //         this.setState({fiveWhytoggle: true});
-                        //       })
-                        //   } else {
-                        //     this.setState({fiveWhytoggle: true});
-                        //   }
-                        // }
-                        this.setState({
-                          fiveWhytoggle: !this.state.fiveWhytoggle,
-                        });
-                      }}
-                      style={styles.fivewhyToggleContainer}>
-                      <View
-                        style={[
-                          styles.fivewhyToggeNo,
-                          this.state.fiveWhytoggle == false
-                            ? {
-                                borderColor: colors.error,
-                                backgroundColor: '#F59798',
-                              }
-                            : {
-                                borderColor: colors.text,
-                                borderRightWidth: wp(0),
-                                opacity: 0.5,
-                              },
-                        ]}>
-                        <Text
-                          style={[
-                            styles.fivewhyToggeNoText,
-                            this.state.fiveWhytoggle == false
-                              ? {color: colors.secondary}
-                              : {color: colors.text},
-                          ]}>
-                          No
-                        </Text>
-                      </View>
-                      <View
-                        style={[
-                          styles.fivewhyToggeYes,
-                          this.state.fiveWhytoggle
-                            ? {
-                                borderColor: colors.green,
-                                backgroundColor: colors.lightGreen,
-                              }
-                            : {
-                                borderColor: colors.text,
-                                borderLeftWidth: wp(0),
-                                opacity: 0.5,
-                              },
-                        ]}>
-                        <Text
-                          style={[
-                            styles.fivewhyToggeYesText,
-                            this.state.fiveWhytoggle
-                              ? {color: colors.green}
-                              : {color: colors.text},
-                          ]}>
-                          Yes
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
                   </View>
                   {this.state.fiveWhytoggle == false ? (
                     <></>
