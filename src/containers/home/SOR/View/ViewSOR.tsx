@@ -2915,7 +2915,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                       if (
                                         this.state.fiveWhyQuestion.length == 5
                                       ) {
-                                        this.onSubmitUpdateSor(5);
+                                        this.onSubmitUpdateSor(53232);
                                       } else {
                                         this.setState({
                                           errorModal: true,
