@@ -165,12 +165,12 @@ export const searchInSuggestions = (
   str: string,
   strArray: Array<any>,
 ): Array<Object> => {
-    var strArr = [];
-    for (var j = 0; j < strArray.length; j++) {
-      if (strArray[j].email.toLowerCase().match(str)) {
-        strArr.push(strArray[j]);
-      }
+  var strArr = [];
+  for (var j = 0; j < strArray.length; j++) {
+    if (strArray[j].email.toLowerCase().match(str)) {
+      strArr.push(strArray[j]);
     }
+  }
   return strArr;
 };
 
@@ -600,13 +600,18 @@ export const GOOGLE_AUTH = () => {
 };
 
 // File uploader
-export const fileuploader = (types: string, ext: string, uri: string) => {
+export const fileuploader = (
+  types: string,
+  ext: string,
+  uri: string,
+  orgId: string,
+) => {
   if (ext == 'image/png' || ext == 'image/jpeg' || ext == 'image/jpg') {
     ext = ext.split('/')[1];
   }
   console.log(ext);
   var data = {
-    bucket: 'hns-codist',
+    bucket: orgId,
     report: 'report',
     fileType: [types],
     ext: [ext],

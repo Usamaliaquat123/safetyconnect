@@ -1894,7 +1894,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               content: this.state.actionsAndRecommendationText,
                               assigned_to: this.state.user.email,
                               dueDate: moment().format('YYYY-MM-DD'),
-                              status: 'InProgress',
+                              status: 'In Progress',
                               category: 'Elimination',
                             },
                             newAct: true,
@@ -2161,7 +2161,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                   resizeMode={'cover'}
                                 />
                                 <TouchableOpacity
-                                  onPress={() => {}}
+                                  onPress={() => {
+                                    var arr = [...this.state.filename].filter(
+                                      (b) => b != d,
+                                    );
+                                    this.setState({filename: arr});
+                                  }}
                                   style={{position: 'absolute', right: wp(0)}}>
                                   <TouchableOpacity
                                     onPress={() => {

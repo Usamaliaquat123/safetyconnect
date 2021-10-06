@@ -13,7 +13,7 @@ import {Icon} from 'react-native-elements';
 import styles from './styles';
 import {Tags, Suggestions} from '@components';
 import Modal from 'react-native-modal';
-import {fileuploader} from '@utils';
+import {fileuploader, getCurrentOrganization} from '@utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {colors, fonts, animation, GlStyles, images} from '@theme';
@@ -83,6 +83,7 @@ export default class SuggestionsPop extends React.Component<
       statuses: props.suggestions.status,
       attachments: [],
       addjustificationPop: true,
+      orgId:  "",
       targetDate: props.suggestions.dueDate,
       submitToAndObserverEmailsLocal: props.submitToAndObserverEmails,
       justificationErr: false,
@@ -92,7 +93,7 @@ export default class SuggestionsPop extends React.Component<
   componentDidMount = () => {
     console.log('five why justification');
     console.log(this.props.suggestions);
-
+    getCurrentOrganization().then((orgId : any) => this.setState({orgId: orgId}))
     // if (this.state.AssignedTo[0] == this.props.currentUser.email) {
     //   this.setState({actionsChangeable: true});
     // } else {
@@ -271,7 +272,7 @@ export default class SuggestionsPop extends React.Component<
         console.log(imgData);
         this.setState({fileLoading: true});
 
-        fileuploader(res.orgType, res.orgType.split('/')[1], res.uri).then(
+        fileuploader(res.orgType, res.orgType.split('/')[1], res.uri, this.state.orgId).then(
           (filename: any) => {
             console.log('filename hai');
             console.log(filename);

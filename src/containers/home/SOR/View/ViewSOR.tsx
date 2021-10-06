@@ -49,6 +49,7 @@ import {
   getSorData,
   fileuploader,
   getCurrentProject,
+  getCurrentOrganization,
 } from '@utils';
 import {copilot, walkthroughable, CopilotStep} from 'react-native-copilot';
 
@@ -171,7 +172,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       reAssignToArrTags: [],
       projectName: '',
       commenFileLoading: true,
-
+      orgId: '',
       commentMentionReplace: '',
       projectId: '',
       closed: false,
@@ -208,6 +209,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     } else {
       this.setState({closed: false});
     }
+
+    getCurrentOrganization().then((orgId) => this.setState({orgId}));
 
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectId: currentProj});
@@ -969,7 +972,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           this.setState({fileLoading: true});
         }
 
-        fileuploader(res.orgType, res.orgType, res.uri).then(
+        fileuploader(res.orgType, res.orgType, res.uri, this.state.orgId).then(
           (filename: any) => {
             imgData['name'] = filename;
             if (commentAttach == true) {
