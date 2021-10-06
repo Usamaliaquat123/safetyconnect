@@ -93,7 +93,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       // dropdownAnim: new Animated.Value(1),
       // *****
       newAct: false,
-
+  
       selectL: false,
       projectSuggest: [],
       exclateToArr: [],
@@ -219,6 +219,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             ? res.orgType
             : res.orgType.split('/')[1],
           res.uri,
+          this.state.currentOrg
         ).then((filename: any) => {
           imgData['name'] = filename;
           this.setState({fileLoading: false});
@@ -2956,7 +2957,15 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             <SuggestionsPop
               suggestedUsers={this.state.involved_persons}
               onClose={() =>
-                this.setState({SuggestionPop: !this.state.SuggestionPop})
+               { this.setState({SuggestionPop: !this.state.SuggestionPop})
+               this.state.actionRecommendations[
+                this.state.allActionsEditIndex
+              ].is_complete = false;
+              this.state.actionRecommendations[
+                this.state.allActionsEditIndex
+              ].selected = false;
+              
+              }
               }
               isView={true}
               submitToAndObserverEmails={this.state.submitToAndObserverEmails}

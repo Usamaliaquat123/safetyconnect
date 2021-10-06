@@ -3198,9 +3198,17 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         {this.state.SuggestionPop == true && (
           <SuggestionsPop
             suggestedUsers={this.state.involved_person}
-            onClose={() =>
-              this.setState({SuggestionPop: !this.state.SuggestionPop})
-            }
+            onClose={() => {
+              this.state.actionsAndRecommendations[
+                this.state.allActionsEditIndex
+              ].selected = false;
+              this.state.actionsAndRecommendations[
+                this.state.allActionsEditIndex
+              ].is_complete = false;
+              console.log(this.state.actionsAndRecommendations);
+              console.log(this.state.allActionsEditIndex);
+              this.setState({SuggestionPop: !this.state.SuggestionPop});
+            }}
             isView={false}
             newAct={this.state.newActions}
             currentUser={this.state.user}
