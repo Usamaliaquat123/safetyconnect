@@ -89,7 +89,7 @@ class Messaging extends React.Component<MessagingProps, any> {
               <Icon
                 containerStyle={{position: 'absolute', bottom: 0, right: 0}}
                 name="add-circle"
-                size={wp(20)}
+                size={wp(15)}
                 type="Ionicons"
                 color={colors.green}
               />

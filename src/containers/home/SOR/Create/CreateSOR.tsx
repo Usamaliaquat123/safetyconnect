@@ -1565,7 +1565,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       marginTop: wp(2),
                       opacity: 0.5,
                     }}>
-                    No suggestions Found
+                    No Suggestions Found
                   </Text>
                 ) : null}
                 {/* Suggestions  */}

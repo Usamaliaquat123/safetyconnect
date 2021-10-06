@@ -423,11 +423,15 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   };
   onSubmitUpdateSor = async (status?: number) => {
     this.setState({loading: true, errorModal: true});
-    var liklihood = this.state.liklihood.filter(
-      (d: any) => d.selected == true,
-    )[0].value;
-    var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
-      .value;
+
+    if (this.state.sor_type === 'positive') {
+      var liklihood = this.state.liklihood.filter(
+        (d: any) => d.selected == true,
+      )[0].value;
+      var severity = this.state.severity.filter(
+        (d: any) => d.selected == true,
+      )[0].value;
+    }
 
     var update = {
       report: {
@@ -440,14 +444,16 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         involved_persons: this.props.route.params.data
           .involved_persons /** done */,
         risk: {
-          /** done */ severity: severity,
-          likelihood: liklihood,
+          severity: this.state.sor_type == 'positive' ? severity : 0,
+          likelihood: this.state.sor_type == 'positive' ? liklihood : 0,
           category:
-            severity * liklihood < 7
-              ? `low`
-              : severity * liklihood < 14
-              ? `medium`
-              : 'high',
+            this.state.sor_type === 'positive'
+              ? severity * liklihood < 7
+                ? `low`
+                : severity * liklihood < 14
+                ? `medium`
+                : 'high'
+              : 'low',
         },
         repeatedSor: this.props.route.params.data.repeatedSor,
         justification: this.props.route.params.data.justification,
@@ -1236,7 +1242,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               </WalkthroughableView>
             </CopilotStep>
             {/* Line  */}
-            <View style={styles.lineheight} />
+            {this.state.sor_type !== 'positive' && (
+              <View style={styles.lineheight} />
+            )}
             {/* <View style={styles.subContainer}>
               {this.state.submitted_to.length == 0 ? null : (
                 <View style={styles.submittedTo}>
@@ -1372,148 +1380,158 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               </View>
             </View> */}
             {/* Risk */}
-            <View style={styles.risk}>
-              {/* <Text style={styles.riskText}>
-                Risk{' '}
-                <Text style={styles.riskttle}>(Severity x Likelihood)</Text>
-              </Text> */}
 
-              {/* Potiential Risk */}
-              <CopilotStep
-                text="Potiential Risk (System Defined) "
-                order={4}
-                name="copPotientialRisk">
-                <WalkthroughableView>
-                  {this.state.potientialRisk == 0 ? null : (
-                    <View style={styles.potentialRiskContainer}>
-                      <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Text style={styles.potientialRiskHeading}>
-                          Potential Risk
-                        </Text>
-                        <Text style={styles.systemDefinedtext}>
-                          (System Defined)
-                        </Text>
-                      </View>
-                      <View
-                        style={[
-                          styles.badgePotientialRisk,
-                          this.state.potientialRisk < 7
-                            ? {borderColor: colors.green}
-                            : this.state.potientialRisk < 14
-                            ? {borderColor: colors.riskIcons.orrange}
-                            : {borderColor: colors.error},
-                        ]}>
-                        <Text
-                          style={[
-                            styles.potentialRiskBadgeContainerText,
-                            this.state.potientialRisk < 7
-                              ? {color: colors.green}
-                              : this.state.potientialRisk < 14
-                              ? {color: colors.riskIcons.orrange}
-                              : {color: colors.error},
-                          ]}>
-                          {this.state.potientialRisk}-{' '}
-                          {this.state.potientialRisk < 7
-                            ? 'Low'
-                            : this.state.potientialRisk < 14
-                            ? 'Medium'
-                            : 'High'}
-                        </Text>
-                      </View>
-                    </View>
-                  )}
-                </WalkthroughableView>
-              </CopilotStep>
-              {/* Actual Risk */}
+            {this.state.sor_type !== 'positive' && (
+              <View style={styles.risk}>
+                {/* <Text style={styles.riskText}>
+   Risk{' '}
+   <Text style={styles.riskttle}>(Severity x Likelihood)</Text>
+ </Text> */}
 
-              <CopilotStep text="Actual Risk " order={5} name="copActualrisk">
-                <WalkthroughableView>
-                  {this.state.selectedRisk == false ? (
-                    <View>
-                      <Chart
-                        liklihood={this.state.liklihood}
-                        severity={this.state.severity}
-                        style={{marginTop: wp(3)}}
-                        onPress={(v: object) => {}}
-                      />
-                    </View>
-                  ) : (
-                    <TouchableOpacity
-                      onPress={() => this.setState({selectedRisk: false})}>
-                      <View
-                        style={[
-                          styles.potentialRiskContainer,
-                          {marginTop: wp(3)},
-                        ]}>
+                {/* Potiential Risk */}
+
+                <CopilotStep
+                  text="Potiential Risk (System Defined) "
+                  order={4}
+                  name="copPotientialRisk">
+                  <WalkthroughableView>
+                    {this.state.potientialRisk == 0 ? null : (
+                      <View style={styles.potentialRiskContainer}>
                         <View
                           style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <Text
-                            style={[
-                              styles.actualRiskheading,
-                              {fontFamily: fonts.SFuiDisplaySemiBold},
-                            ]}>
-                            Actual Risk
+                          <Text style={styles.potientialRiskHeading}>
+                            Potential Risk
                           </Text>
                           <Text style={styles.systemDefinedtext}>
-                            (Calculated)
+                            (System Defined)
                           </Text>
                         </View>
                         <View
                           style={[
-                            styles.badgeActualRisk,
-                            this.props.route.params.data.risk.likelihood *
-                              this.props.route.params.data.risk.severity <
-                            7
-                              ? {
-                                  borderColor: colors.green,
-                                  backgroundColor: colors.green,
-                                }
-                              : this.props.route.params.data.risk.likelihood *
-                                  this.props.route.params.data.risk.severity <
-                                14
-                              ? {
-                                  borderColor: colors.riskIcons.orrange,
-                                  backgroundColor: colors.riskIcons.orrange,
-                                }
-                              : {
-                                  borderColor: colors.error,
-                                  backgroundColor: colors.error,
-                                },
+                            styles.badgePotientialRisk,
+                            this.state.potientialRisk < 7
+                              ? {borderColor: colors.green}
+                              : this.state.potientialRisk < 14
+                              ? {borderColor: colors.riskIcons.orrange}
+                              : {borderColor: colors.error},
                           ]}>
                           <Text
                             style={[
                               styles.potentialRiskBadgeContainerText,
-                              this.props.route.params.data.risk.likelihood *
-                                this.props.route.params.data.risk.severity <
-                              7
-                                ? {color: colors.secondary}
-                                : this.props.route.params.data.risk.likelihood *
-                                    this.props.route.params.data.risk.severity <
-                                  14
-                                ? {color: colors.secondary}
-                                : {color: colors.secondary},
+                              this.state.potientialRisk < 7
+                                ? {color: colors.green}
+                                : this.state.potientialRisk < 14
+                                ? {color: colors.riskIcons.orrange}
+                                : {color: colors.error},
                             ]}>
-                            {this.props.route.params.data.risk.likelihood *
-                              this.props.route.params.data.risk.severity}
-                            -{' '}
-                            {this.props.route.params.data.risk.likelihood *
-                              this.props.route.params.data.risk.severity <
-                            7
+                            {this.state.potientialRisk}-{' '}
+                            {this.state.potientialRisk < 7
                               ? 'Low'
-                              : this.props.route.params.data.risk.likelihood *
-                                  this.props.route.params.data.risk.severity <
-                                14
+                              : this.state.potientialRisk < 14
                               ? 'Medium'
                               : 'High'}
                           </Text>
                         </View>
                       </View>
-                    </TouchableOpacity>
-                  )}
-                </WalkthroughableView>
-              </CopilotStep>
-            </View>
+                    )}
+                  </WalkthroughableView>
+                </CopilotStep>
+                {/* Actual Risk */}
+
+                <CopilotStep text="Actual Risk " order={5} name="copActualrisk">
+                  <WalkthroughableView>
+                    {this.state.selectedRisk == false ? (
+                      <View>
+                        <Chart
+                          liklihood={this.state.liklihood}
+                          severity={this.state.severity}
+                          style={{marginTop: wp(3)}}
+                          onPress={(v: object) => {}}
+                        />
+                      </View>
+                    ) : (
+                      <TouchableOpacity
+                        onPress={() => this.setState({selectedRisk: false})}>
+                        <View
+                          style={[
+                            styles.potentialRiskContainer,
+                            {marginTop: wp(3)},
+                          ]}>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                            }}>
+                            <Text
+                              style={[
+                                styles.actualRiskheading,
+                                {fontFamily: fonts.SFuiDisplaySemiBold},
+                              ]}>
+                              Actual Risk
+                            </Text>
+                            <Text style={styles.systemDefinedtext}>
+                              (Calculated)
+                            </Text>
+                          </View>
+                          <View
+                            style={[
+                              styles.badgeActualRisk,
+                              this.props.route.params.data.risk.likelihood *
+                                this.props.route.params.data.risk.severity <
+                              7
+                                ? {
+                                    borderColor: colors.green,
+                                    backgroundColor: colors.green,
+                                  }
+                                : this.props.route.params.data.risk.likelihood *
+                                    this.props.route.params.data.risk.severity <
+                                  14
+                                ? {
+                                    borderColor: colors.riskIcons.orrange,
+                                    backgroundColor: colors.riskIcons.orrange,
+                                  }
+                                : {
+                                    borderColor: colors.error,
+                                    backgroundColor: colors.error,
+                                  },
+                            ]}>
+                            <Text
+                              style={[
+                                styles.potentialRiskBadgeContainerText,
+                                this.props.route.params.data.risk.likelihood *
+                                  this.props.route.params.data.risk.severity <
+                                7
+                                  ? {color: colors.secondary}
+                                  : this.props.route.params.data.risk
+                                      .likelihood *
+                                      this.props.route.params.data.risk
+                                        .severity <
+                                    14
+                                  ? {color: colors.secondary}
+                                  : {color: colors.secondary},
+                              ]}>
+                              {this.props.route.params.data.risk.likelihood *
+                                this.props.route.params.data.risk.severity}
+                              -{' '}
+                              {this.props.route.params.data.risk.likelihood *
+                                this.props.route.params.data.risk.severity <
+                              7
+                                ? 'Low'
+                                : this.props.route.params.data.risk.likelihood *
+                                    this.props.route.params.data.risk.severity <
+                                  14
+                                ? 'Medium'
+                                : 'High'}
+                            </Text>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    )}
+                  </WalkthroughableView>
+                </CopilotStep>
+              </View>
+            )}
+
             {/* five WHY Questionaries */}
             {/* Line  */}
             {this.props.route.params.data.sor_type == 'near miss' && (
@@ -2915,7 +2933,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                       if (
                                         this.state.fiveWhyQuestion.length == 5
                                       ) {
-                                        this.onSubmitUpdateSor(53232);
+                                        // if()
+                                        this.onSubmitUpdateSor(5);
                                       } else {
                                         this.setState({
                                           errorModal: true,
@@ -2932,7 +2951,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                       if (
                                         this.state.fiveWhyQuestion.length == 5
                                       ) {
-                                        this.onSubmitUpdateSor(3);
+                                        this.onSubmitUpdateSor(4);
                                       } else {
                                         this.setState({
                                           errorModal: true,
@@ -2942,7 +2961,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                         });
                                       }
                                     } else {
-                                      this.onSubmitUpdateSor(3);
+                                      this.onSubmitUpdateSor(4);
                                     }
                                   }
                                 }
