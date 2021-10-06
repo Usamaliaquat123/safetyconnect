@@ -22,7 +22,7 @@ export default class Header extends React.Component<HeaderProps, any> {
             color={colors.secondary}
           /> */}
           <View>
-            <Text style={styles.title}>Messaging</Text>
+            <Text style={styles.title}>Messages</Text>
             <View style={styles.underScrore} />
           </View>
           <View style={styles.avatarView}>

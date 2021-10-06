@@ -14,19 +14,19 @@ const styles = StyleSheet.create({
   headertle: {flexDirection: 'row'},
   underScrore: {
     backgroundColor: colors.green,
-    width: wp(6),
+    width: wp(4),
     marginLeft: wp(3),
     padding: wp(0.5),
     borderRadius: 10,
   },
   header: {
-    padding: wp(7),
+    padding: wp(5),
     paddingTop: wp(7),
-    paddingBottom: wp(7),
+    paddingBottom: wp(5),
     backgroundColor: colors.primary,
   },
   title: {
-    fontSize: wp(5),
+    fontSize: wp(4),
     marginLeft: wp(3),
     color: colors.secondary,
     fontWeight: 'bold',

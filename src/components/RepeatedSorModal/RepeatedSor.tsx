@@ -49,7 +49,7 @@ export default class RepeatedModal extends React.Component<
               alignItems: 'center',
             }}>
             <Text style={styles.headingContainer}>
-              Is your SOR same as these ?
+              Is your observation same as these ?
             </Text>
             <Icon name={'cross'} type={'entypo'} size={wp(7)} />
           </View>
