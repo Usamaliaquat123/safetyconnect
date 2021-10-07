@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   },
   conversationContainer: {
     marginTop: wp(5),
+    
   },
   ttleConversation: {
     fontFamily: fonts.SFuiDisplayBold,

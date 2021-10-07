@@ -612,7 +612,7 @@ export const fileuploader = (
   console.log(ext);
   var data = {
     bucket: orgId,
-    report: 'report',
+    report: 'old',
     fileType: [types],
     ext: [ext],
   };
