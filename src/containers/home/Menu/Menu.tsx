@@ -65,6 +65,8 @@ class Menu extends React.Component<MenuProps, any> {
       currOrganizations: {},
       peoples: [], // must be array of id's
       projects: [],
+      userEmail: '',
+      orgCreatedBy: '',
     };
   }
 
@@ -75,10 +77,18 @@ class Menu extends React.Component<MenuProps, any> {
         .createApi()
         .getUser(email)
         .then((res: any) => {
+          this.setState({userEmail: email});
           console.log(res.data.data.organizations);
           // console.log('res.data.data.organizations');
           this.setState({organizations: res.data.data.organizations});
-          getCurrentOrganization().then((orgId) => {
+          getCurrentOrganization().then((orgId: any) => {
+            createApi
+              .createApi()
+              .getOrganization(orgId)
+              .then((orgD: any) => {
+                this.setState({orgCreatedBy: orgD.data.data.created_by});
+              });
+
             this.setState({
               currOrganization: res.data.data.organizations.filter(
                 (d) => d._id == orgId,
@@ -160,8 +170,12 @@ class Menu extends React.Component<MenuProps, any> {
           {/* Create project */}
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate('createProject');
               //   this.setState({createModal: false});
+
+              if (this.state.userEmail === this.state.orgCreatedBy) {
+                this.props.navigation.navigate('createProject');
+                this.setState({createModal: false});
+              }
             }}
             style={styles.containerOfIcon}>
             <View style={styles.incidentContaineR}>
@@ -175,8 +189,14 @@ class Menu extends React.Component<MenuProps, any> {
           {/* invite user */}
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate('InvitePeople');
+              // userEmail: {},
+              // : ' ',
+
+              console.log(this.state.orgCreatedBy);
+              // if (this.state.userEmail === this.state.orgCreatedBy) {
+              //   this.props.navigation.navigate('InvitePeople');
               //   this.setState({createModal: false});
+              // }
             }}
             style={styles.containerOfIcon}>
             <View style={styles.incidentContaineR}>
@@ -245,7 +265,7 @@ class Menu extends React.Component<MenuProps, any> {
                       onPress={() => {
                         console.log('proajdhasjhd');
                         console.log(d);
-
+                        savedCurrentOrganization(d._id);
                         savedCurrentProject(d.projects[0].project_id).then(
                           () => {
                             savedCurrentOrganization(d._id).then(() => {

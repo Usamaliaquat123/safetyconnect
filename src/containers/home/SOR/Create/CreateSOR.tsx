@@ -93,7 +93,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       // dropdownAnim: new Animated.Value(1),
       // *****
       newAct: false,
-  
+
       selectL: false,
       projectSuggest: [],
       exclateToArr: [],
@@ -219,7 +219,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             ? res.orgType
             : res.orgType.split('/')[1],
           res.uri,
-          this.state.currentOrg
+          this.state.currentOrg,
         ).then((filename: any) => {
           imgData['name'] = filename;
           this.setState({fileLoading: false});
@@ -503,70 +503,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     this.setState({});
   };
 
-  // save as draft
-  onSaveAsDraft = (status: number) => {
-    var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
-    var severity = this.state.severity.filter((d: any) => d.selected == true);
-    var sorbtns = this.state.classifySorbtns.filter(
-      (d: any) => d.selected === true,
-    );
-
-    var rec = this.state.actionRecommendations.filter(
-      (d: any) => d.selected == true,
-    );
-
-    if (rec != undefined) {
-      var actions: Array<any> = [];
-      for (let i = 0; i < rec.length; i++) {
-        actions.push({
-          assigned_to: rec[i].assigned_to,
-          category: rec[i].category,
-          content: rec[i].content,
-          date: rec[i].date,
-          is_complete: rec[i].is_complete,
-          is_selected: rec[i].is_selected,
-          justification: rec[i].justification,
-          action: 'low',
-        });
-      }
-    }
-
-    // sor
-    var sor = {
-      report: {
-        _id: '',
-        created_by: this.state.email,
-        details: this.state.observationT,
-        occurred_at: this.state.currentTime,
-        involved_persons: this.state.involvePersonTags.map((d: any) => d.email),
-
-        sor_type: sorbtns[0].title,
-        risk: {
-          severity: 5,
-          likelihood: 5,
-        },
-        action_required: [],
-
-        location: this.state.observation,
-        submit_to: this.state.submitToTags.map((d: any) => d.email),
-        escalate_to:
-          this.state.exclateToTags.length != 0
-            ? this.state.exclateToTags.map((d: any) => d.email)
-            : [],
-        status: this.state.exclateToTags.length == 0 ? status : 3,
-        attachments:
-          this.state.uploadedfiles.length == 0 ? [] : this.state.uploadedfiles,
-        comments: ' ',
-      },
-      organization: this.state.currentOrg,
-      project: this.state.projectid,
-      updated_by: {
-        email: this.state.user.email,
-        _id: this.state.user._id,
-      },
-    };
-  };
-
   onCreateSor = (status: number) => {
     var uploadedfiles = [];
     var sorbtns = this.state.classifySorbtns.filter(
@@ -575,9 +511,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
     var severity = this.state.severity.filter((d: any) => d.selected == true);
 
-    if (this.state.observationT !== '') {
-      if (this.state.observation != '') {
-        if (sorbtns.length != 0) {
+    if (this.state.observationT !== '' || status == 1) {
+      if (this.state.observation != '' || status == 1) {
+        if (sorbtns.length != 0 || status == 1) {
           if (sorbtns[0].title == 'positive') {
             if (status == 1 ? true : this.state.submitToTags.length !== 0) {
               // if (this.state.exclateToTags.length !== 0) {
@@ -2956,17 +2892,15 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           {this.state.SuggestionPop == true && (
             <SuggestionsPop
               suggestedUsers={this.state.involved_persons}
-              onClose={() =>
-               { this.setState({SuggestionPop: !this.state.SuggestionPop})
-               this.state.actionRecommendations[
-                this.state.allActionsEditIndex
-              ].is_complete = false;
-              this.state.actionRecommendations[
-                this.state.allActionsEditIndex
-              ].selected = false;
-              
-              }
-              }
+              onClose={() => {
+                this.setState({SuggestionPop: !this.state.SuggestionPop});
+                this.state.actionRecommendations[
+                  this.state.allActionsEditIndex
+                ].is_complete = false;
+                this.state.actionRecommendations[
+                  this.state.allActionsEditIndex
+                ].selected = false;
+              }}
               isView={true}
               submitToAndObserverEmails={this.state.submitToAndObserverEmails}
               newAct={this.state.newAct}
