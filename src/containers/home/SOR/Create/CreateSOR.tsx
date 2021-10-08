@@ -321,7 +321,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   }
 
   componentDidMount = () => {
-    this.props.start(false, this.scrollView);
+    // this.props.start(false, this.scrollView);
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectid: currentProj});
 
