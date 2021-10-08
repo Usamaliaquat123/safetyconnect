@@ -321,7 +321,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   }
 
   componentDidMount = () => {
-    // this.props.start(false, this.scrollView);
+    this.props.start(false, this.scrollView);
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectid: currentProj});
 
@@ -511,9 +511,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
     var severity = this.state.severity.filter((d: any) => d.selected == true);
 
-    if (this.state.observationT !== '' || status == 1) {
-      if (this.state.observation != '' || status == 1) {
-        if (sorbtns.length != 0 || status == 1) {
+    if (this.state.observationT !== '') {
+      if (this.state.observation != '') {
+        if (sorbtns.length != 0) {
           if (sorbtns[0].title == 'positive') {
             if (status == 1 ? true : this.state.submitToTags.length !== 0) {
               // if (this.state.exclateToTags.length !== 0) {
@@ -774,7 +774,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           this.state.exclateToTags.length != 0
                             ? this.state.exclateToTags.map((d: any) => d.email)
                             : [],
-                        status: 3,
+                        status:
+                          this.state.exclateToTags.length == 0 ? status : 3,
+
                         attachments:
                           this.state.uploadedfiles.length == 0
                             ? []
