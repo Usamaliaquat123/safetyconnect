@@ -10,7 +10,7 @@ import {View_sor, messagingUsers, groupConversation} from '@service';
 import {connect} from 'react-redux';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
-import {searchInObjects} from '@utils';
+import {getCurrentOrganization, searchInObjects} from '@utils';
 import {Imessage} from '@typings';
 import {Search, Header, User} from '@components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -46,6 +46,18 @@ class Messaging extends React.Component<MessagingProps, any> {
         .createApi()
         .getUser(email)
         .then((res: any) => {
+          getCurrentOrganization().then((orgId) => {
+            console.log(orgId);
+            console.log(res.data.data._id);
+            createApi
+              .createApi()
+              .getAllChats(res.data.data._id, orgId)
+              .then((res: any) => {
+                console.log('resp onse aaya');
+                console.log(res);
+              })
+              .catch((err: any) => console.log(err));
+          });
           this.setState({currentUser: res.data.data});
         });
     });

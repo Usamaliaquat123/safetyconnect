@@ -8,14 +8,13 @@ import {
   observationsSug,
   country,
 } from '@typings';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // our "constructor"
-const base_uri = `https://backend_app.safetyconnect.ai`;
+const base_uri = `https://app_backend.safetyconnect.ai`;
 const createApi = (
   baseURL: string = `${base_uri}:12222/`,
   obsbaseUrl: string = `${base_uri}:5003`,
-  repBaseAi: string = `${'https://backend_app.safetyconnect.ai'}:5002/`,
+  repBaseAi: string = `${'https://app_backend.safetyconnect.ai'}:5002/`,
   baseAi: string = `${base_uri}:5004/`,
   // External aws api
   // upload files
@@ -23,6 +22,8 @@ const createApi = (
   getFileUri: string = `https://eg6gj04g91.execute-api.us-west-1.amazonaws.com/`,
   uploadFilesUri?: string,
   getPublicFiles: string = 'https://3i07qolh6j.execute-api.us-west-1.amazonaws.com',
+  getChatApis: string = 'https://app_backend.safetyconnect.ai:5007/',
+  // backendA?: string = `${backend}:5007/`,
 ) => {
   const baseapi = apisauce.create({
     baseURL,
@@ -63,6 +64,14 @@ const createApi = (
     baseURL: getPublicFiles,
     timeout: 10000,
   });
+  const getChatApi = apisauce.create({
+    baseURL: getChatApis,
+    timeout: 10000,
+  });
+  // const bAckendApp = apisauce.create({
+  //   baseURL: backendA,
+  //   timeout: 10000,
+  // });
 
   /*
    *  @apis
@@ -238,6 +247,11 @@ const createApi = (
 
   const getLocations = (data: any) =>
     baseapi.get(`/project/location?projectid=${data}`);
+  /*
+   * @getAll Chats
+   */
+  const getAllChats = (user: string, organization: string) =>
+    getChatApi.get(`chat/all?user=${user}&organization=${organization}`);
 
   return {
     searchApi,
@@ -251,7 +265,7 @@ const createApi = (
     getFilesUrl,
     uploadFile,
     actionTableUrl,
-
+    getAllChats,
     editFiveWhy,
     inviteBulk,
     getFiveWhy,
@@ -264,6 +278,7 @@ const createApi = (
     suggestiosns,
     repeatedsorsugg,
     createSorDraft,
+    // getAllChats,
     observationSuggestions,
     createSor,
     updateSor,

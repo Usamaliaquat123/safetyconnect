@@ -150,13 +150,13 @@ const AmlifyConfigure = () => {
         Auth: {
           mandatorySignIn: true,
           region: 'us-east-2',
-          userPoolId: 'us-east-2_dCVQj7g1N',
+          userPoolId: 'us-east-2_x17ZJQGxn',
           // identityPoolId: '÷',
-          userPoolWebClientId: '5n6tdp3pqcoj0q44ch83963gfp',
+          userPoolWebClientId: '6iltru1hbqg2op98f6s696p8p',
         },
         oauth: {
           scopes: ['email', 'openId'],
-          domain: 'homesafety.auth.us-east-2.amazoncognito.com',
+          domain: 'safetyconnect.auth.us-east-2.amazoncognito.com',
           redirectSignIn: 'safetyconnect://chat/Eri',
           redirectSignOut: 'safetyconnect://chat/Eri',
           urlOpener,
