@@ -192,11 +192,10 @@ class Menu extends React.Component<MenuProps, any> {
               // userEmail: {},
               // : ' ',
 
-              console.log(this.state.orgCreatedBy);
-              // if (this.state.userEmail === this.state.orgCreatedBy) {
-              //   this.props.navigation.navigate('InvitePeople');
-              //   this.setState({createModal: false});
-              // }
+              if (this.state.userEmail === this.state.orgCreatedBy) {
+                this.props.navigation.navigate('InvitePeople');
+                this.setState({createModal: false});
+              }
             }}
             style={styles.containerOfIcon}>
             <View style={styles.incidentContaineR}>
