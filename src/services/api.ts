@@ -10,11 +10,11 @@ import {
 } from '@typings';
 
 // our "constructor"
-const base_uri = `https://backend_app.safetyconnect.ai`;
+const base_uri = `https://backend.safetyconnect.ai`;
 const createApi = (
   baseURL: string = `${base_uri}:12222/`,
   obsbaseUrl: string = `${base_uri}:5003`,
-  repBaseAi: string = `${'https://backend_app.safetyconnect.ai'}:5002/`,
+  repBaseAi: string = `${'https://backend.safetyconnect.ai'}:5002/`,
   baseAi: string = `${base_uri}:5004/`,
   // External aws api
   // upload files
@@ -22,7 +22,7 @@ const createApi = (
   getFileUri: string = `https://eg6gj04g91.execute-api.us-west-1.amazonaws.com/`,
   uploadFilesUri?: string,
   getPublicFiles: string = 'https://3i07qolh6j.execute-api.us-west-1.amazonaws.com',
-  getChatApis: string = 'https://backend_app.safetyconnect.ai:5007/',
+  getChatApis: string = 'https://backend.safetyconnect.ai:5007/',
   // backendA?: string = `${backend}:5007/`,
 ) => {
   const baseapi = apisauce.create({
@@ -97,7 +97,7 @@ const createApi = (
    * @user
    */
   const createUser = (data: user) => baseapi.post('users', data);
-  const getUser = (data: string) => baseapi.get(`users/?email=${data}`);
+  const getUser = (email: string) => baseapi.get(`users/?email=${email}`);
   const setUserInfo = (data: user) => baseapi.put('users', data);
 
   /*

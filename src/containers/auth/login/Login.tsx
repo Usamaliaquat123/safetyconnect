@@ -186,10 +186,13 @@ class Login extends React.Component<LoginProps, any> {
           // console.log('user hai');
           // console.log(user);
 
+          console.log('this.state.username');
+          console.log(this.state.username);
           createApi
             .createApi()
             .getUser(this.state.username)
             .then((user: any) => {
+              console.log('line 195');
               console.log(user);
               AsyncStorage.setItem('user', JSON.stringify(user.data.data));
               // console.log(user.data.data.organizations[0]._id);
