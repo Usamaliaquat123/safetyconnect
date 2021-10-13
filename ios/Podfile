@@ -24,6 +24,10 @@ target 'SafetyConnect' do
   # post_install do |installer|
   #   flipper_post_install(installer)
   # end
+
+
+
+  
 end
 
 target 'SafetyConnect-tvOS' do

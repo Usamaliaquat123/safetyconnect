@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* SafetyConnectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* SafetyConnectTests.m */; };
+		04E394722716F1BB006EE02E /* SFuiDisplaySemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 04E3946A2716F1BA006EE02E /* SFuiDisplaySemiBold.otf */; };
+		04E394732716F1BB006EE02E /* SFuiDisplayLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 04E3946B2716F1BA006EE02E /* SFuiDisplayLight.otf */; };
+		04E394742716F1BB006EE02E /* SFuiDisplayBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 04E3946C2716F1BB006EE02E /* SFuiDisplayBold.otf */; };
+		04E394752716F1BB006EE02E /* SFuiDisplayThin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 04E3946D2716F1BB006EE02E /* SFuiDisplayThin.otf */; };
+		04E394762716F1BB006EE02E /* SFuiDisplayMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 04E3946E2716F1BB006EE02E /* SFuiDisplayMedium.otf */; };
+		04E394772716F1BB006EE02E /* SFuiDisplayUltraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 04E3946F2716F1BB006EE02E /* SFuiDisplayUltraLight.otf */; };
+		04E394782716F1BB006EE02E /* SFuiDisplayBlack.otf in Resources */ = {isa = PBXBuildFile; fileRef = 04E394702716F1BB006EE02E /* SFuiDisplayBlack.otf */; };
+		04E394792716F1BB006EE02E /* SfuiDisplayHeavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 04E394712716F1BB006EE02E /* SfuiDisplayHeavy.otf */; };
+		04E3947D2716FB45006EE02E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04E3947C2716FB45006EE02E /* GoogleService-Info.plist */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -44,6 +53,15 @@
 		00E356EE1AD99517003FC87E /* SafetyConnectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SafetyConnectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* SafetyConnectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SafetyConnectTests.m; sourceTree = "<group>"; };
+		04E3946A2716F1BA006EE02E /* SFuiDisplaySemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SFuiDisplaySemiBold.otf; path = ../src/theme/fonts/SFuiDisplaySemiBold.otf; sourceTree = "<group>"; };
+		04E3946B2716F1BA006EE02E /* SFuiDisplayLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SFuiDisplayLight.otf; path = ../src/theme/fonts/SFuiDisplayLight.otf; sourceTree = "<group>"; };
+		04E3946C2716F1BB006EE02E /* SFuiDisplayBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SFuiDisplayBold.otf; path = ../src/theme/fonts/SFuiDisplayBold.otf; sourceTree = "<group>"; };
+		04E3946D2716F1BB006EE02E /* SFuiDisplayThin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SFuiDisplayThin.otf; path = ../src/theme/fonts/SFuiDisplayThin.otf; sourceTree = "<group>"; };
+		04E3946E2716F1BB006EE02E /* SFuiDisplayMedium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SFuiDisplayMedium.otf; path = ../src/theme/fonts/SFuiDisplayMedium.otf; sourceTree = "<group>"; };
+		04E3946F2716F1BB006EE02E /* SFuiDisplayUltraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SFuiDisplayUltraLight.otf; path = ../src/theme/fonts/SFuiDisplayUltraLight.otf; sourceTree = "<group>"; };
+		04E394702716F1BB006EE02E /* SFuiDisplayBlack.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SFuiDisplayBlack.otf; path = ../src/theme/fonts/SFuiDisplayBlack.otf; sourceTree = "<group>"; };
+		04E394712716F1BB006EE02E /* SfuiDisplayHeavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SfuiDisplayHeavy.otf; path = ../src/theme/fonts/SfuiDisplayHeavy.otf; sourceTree = "<group>"; };
+		04E3947C2716FB45006EE02E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		053766EE0A854F308F7FE60D /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		096CBECCEE0F4C569297888A /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* SafetyConnect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafetyConnect.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -175,6 +193,15 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				04E3947C2716FB45006EE02E /* GoogleService-Info.plist */,
+				04E394702716F1BB006EE02E /* SFuiDisplayBlack.otf */,
+				04E3946C2716F1BB006EE02E /* SFuiDisplayBold.otf */,
+				04E394712716F1BB006EE02E /* SfuiDisplayHeavy.otf */,
+				04E3946B2716F1BA006EE02E /* SFuiDisplayLight.otf */,
+				04E3946E2716F1BB006EE02E /* SFuiDisplayMedium.otf */,
+				04E3946A2716F1BA006EE02E /* SFuiDisplaySemiBold.otf */,
+				04E3946D2716F1BB006EE02E /* SFuiDisplayThin.otf */,
+				04E3946F2716F1BB006EE02E /* SFuiDisplayUltraLight.otf */,
 				13B07FAE1A68108700A75B9A /* SafetyConnect */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* SafetyConnectTests */,
@@ -381,6 +408,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04E394722716F1BB006EE02E /* SFuiDisplaySemiBold.otf in Resources */,
+				04E394732716F1BB006EE02E /* SFuiDisplayLight.otf in Resources */,
+				04E394742716F1BB006EE02E /* SFuiDisplayBold.otf in Resources */,
+				04E394752716F1BB006EE02E /* SFuiDisplayThin.otf in Resources */,
+				04E394762716F1BB006EE02E /* SFuiDisplayMedium.otf in Resources */,
+				04E394772716F1BB006EE02E /* SFuiDisplayUltraLight.otf in Resources */,
+				04E394782716F1BB006EE02E /* SFuiDisplayBlack.otf in Resources */,
+				04E394792716F1BB006EE02E /* SfuiDisplayHeavy.otf in Resources */,
+				04E3947D2716FB45006EE02E /* GoogleService-Info.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);

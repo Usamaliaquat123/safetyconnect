@@ -112,7 +112,7 @@ class Signup extends React.Component<SignupProps, any> {
     Linking.addEventListener('url', () => {
       this.handleOpenURL(this.props.navigation);
     });
-    Linking.addEventListener('sd', (e) => {});
+    // Linking.addEventListener('sd', (e) => {});
     dynamicLinks().onLink((l) => {
       redirectDynamiclink(l, this.props.navigation);
     });

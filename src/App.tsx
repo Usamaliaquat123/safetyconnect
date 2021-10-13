@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createApi} from '@service';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 import jwtDecode from 'jwt-decode';
+import firebase from '@react-native-firebase/app';
 import {Auth} from 'aws-amplify';
 
 export interface AppProps {}
@@ -26,6 +27,16 @@ export default class App extends React.Component<AppProps, any> {
   }
 
   componentDidMount = async () => {
+    var firebaseConfig = {
+      apiKey: 'AIzaSyByLzKmGd-Z7S6gr96LmjwHuJSbediE6UQ',
+      authDomain:
+        '360928388770-eigc5j7mvi9spsr59kljb52m3s1l0689.apps.googleusercontent.com',
+      projectId: 'safetyconnect-4dbd6',
+      messagingSenderId: '360928388770',
+      appId: '1:360928388770:android:f909083c6e96684c4919fb',
+    };
+
+    firebase.initializeApp(firebaseConfig);
     configSentry().catch(
       (err) => new Error(`Error when configure sentry ${err}`),
     );

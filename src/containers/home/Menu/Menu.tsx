@@ -140,7 +140,7 @@ class Menu extends React.Component<MenuProps, any> {
                 <Image source={images.bottomTab.note} style={GlStyles.images} />
               </View>
 
-              <Text style={styles.createNewText}>New SOR</Text>
+              <Text style={styles.createNewText}>New Observation</Text>
             </TouchableOpacity>
 
             <Icon

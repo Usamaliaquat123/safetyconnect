@@ -25,6 +25,7 @@ import {
   classifySor,
   suggestInActionsRecommendations,
   getCurrentOrganization,
+  capitalizeFirstLetter,
   fileuploader,
 } from '@utils';
 import {bindActionCreators} from 'redux';
@@ -1397,7 +1398,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 color: d.selected ? '#fff' : d.color,
                               },
                             ]}>
-                            {d.title}
+                            {capitalizeFirstLetter(d.title)}
                           </Text>
                         </View>
                       </TouchableOpacity>
