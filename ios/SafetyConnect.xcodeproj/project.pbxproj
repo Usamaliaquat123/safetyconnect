@@ -194,14 +194,6 @@
 			isa = PBXGroup;
 			children = (
 				04E3947C2716FB45006EE02E /* GoogleService-Info.plist */,
-				04E394702716F1BB006EE02E /* SFuiDisplayBlack.otf */,
-				04E3946C2716F1BB006EE02E /* SFuiDisplayBold.otf */,
-				04E394712716F1BB006EE02E /* SfuiDisplayHeavy.otf */,
-				04E3946B2716F1BA006EE02E /* SFuiDisplayLight.otf */,
-				04E3946E2716F1BB006EE02E /* SFuiDisplayMedium.otf */,
-				04E3946A2716F1BA006EE02E /* SFuiDisplaySemiBold.otf */,
-				04E3946D2716F1BB006EE02E /* SFuiDisplayThin.otf */,
-				04E3946F2716F1BB006EE02E /* SFuiDisplayUltraLight.otf */,
 				13B07FAE1A68108700A75B9A /* SafetyConnect */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* SafetyConnectTests */,
@@ -244,6 +236,14 @@
 		DFAE1725E99C4A289B3B9BF7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				04E394702716F1BB006EE02E /* SFuiDisplayBlack.otf */,
+				04E3946C2716F1BB006EE02E /* SFuiDisplayBold.otf */,
+				04E394712716F1BB006EE02E /* SfuiDisplayHeavy.otf */,
+				04E3946B2716F1BA006EE02E /* SFuiDisplayLight.otf */,
+				04E3946E2716F1BB006EE02E /* SFuiDisplayMedium.otf */,
+				04E3946A2716F1BA006EE02E /* SFuiDisplaySemiBold.otf */,
+				04E3946D2716F1BB006EE02E /* SFuiDisplayThin.otf */,
+				04E3946F2716F1BB006EE02E /* SFuiDisplayUltraLight.otf */,
 				053766EE0A854F308F7FE60D /* AntDesign.ttf */,
 				812E17AA29BA4994B4C5A301 /* Entypo.ttf */,
 				D059117A11F64E62A69F3D8B /* EvilIcons.ttf */,
