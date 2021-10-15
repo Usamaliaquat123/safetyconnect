@@ -150,7 +150,6 @@ class Login extends React.Component<LoginProps, any> {
     Linking.addEventListener('url', () => {
       this.handleOpenURL(this.props.navigation);
     });
-    Linking.addEventListener('sd', (e) => {});
     // dynamicLinks().app.;
     // dynamicLinks()
     //   .getInitialLink()

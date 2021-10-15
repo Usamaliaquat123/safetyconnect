@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>360928388770-7ms317pinkp1gao481eicugfdka1mpu0.apps.googleusercontent.com</string>
+	<string>360928388770-7ve8g3tj7820utumq26fnvp0r92sn3op.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.360928388770-7ms317pinkp1gao481eicugfdka1mpu0</string>
+	<string>com.googleusercontent.apps.360928388770-7ve8g3tj7820utumq26fnvp0r92sn3op</string>
 	<key>API_KEY</key>
 	<string>AIzaSyC-nsAqTCKkGvDaKK59ghBFFFcy8Yu0njY</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.safetyconnect</string>
+	<string>com.safetyconnectai</string>
 	<key>PROJECT_ID</key>
 	<string>safetyconnect-4dbd6</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:360928388770:ios:ce02949783c042dc4919fb</string>
+	<string>1:360928388770:ios:1c06a38f95a47bcb4919fb</string>
 </dict>
 </plist>

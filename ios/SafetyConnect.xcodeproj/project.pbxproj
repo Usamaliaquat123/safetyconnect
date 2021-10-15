@@ -409,13 +409,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				04E394722716F1BB006EE02E /* SFuiDisplaySemiBold.otf in Resources */,
+				04E394792716F1BB006EE02E /* SfuiDisplayHeavy.otf in Resources */,
 				04E394732716F1BB006EE02E /* SFuiDisplayLight.otf in Resources */,
 				04E394742716F1BB006EE02E /* SFuiDisplayBold.otf in Resources */,
 				04E394752716F1BB006EE02E /* SFuiDisplayThin.otf in Resources */,
 				04E394762716F1BB006EE02E /* SFuiDisplayMedium.otf in Resources */,
 				04E394772716F1BB006EE02E /* SFuiDisplayUltraLight.otf in Resources */,
 				04E394782716F1BB006EE02E /* SFuiDisplayBlack.otf in Resources */,
-				04E394792716F1BB006EE02E /* SfuiDisplayHeavy.otf in Resources */,
 				04E3947D2716FB45006EE02E /* GoogleService-Info.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
@@ -825,6 +825,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "../src/theme/fonts/SFuiDisplayBlack.otf ../src/theme/fonts/SFuiDisplayThin.otf ../src/theme/fonts/SFuiDisplayMedium.otf ../src/theme/fonts/SFuiDisplayUltraLight.otf ../src/theme/fonts/SFuiDisplayLight.otf ../src/theme/fonts/SFuiDisplaySemiBold.otf ../src/theme/fonts/SFuiDisplayBold.otf ../src/theme/fonts/SfuiDisplayHeavy.otf";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SafetyConnect/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -849,6 +850,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "../src/theme/fonts/SFuiDisplayBlack.otf ../src/theme/fonts/SFuiDisplayThin.otf ../src/theme/fonts/SFuiDisplayMedium.otf ../src/theme/fonts/SFuiDisplayUltraLight.otf ../src/theme/fonts/SFuiDisplayLight.otf ../src/theme/fonts/SFuiDisplaySemiBold.otf ../src/theme/fonts/SFuiDisplayBold.otf ../src/theme/fonts/SfuiDisplayHeavy.otf";
 				INFOPLIST_FILE = SafetyConnect/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

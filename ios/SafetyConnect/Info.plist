@@ -38,7 +38,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -61,6 +61,7 @@
 		<string>SFuiDisplayThin.otf</string>
 		<string>SFuiDisplayLight.otf</string>
 		<string>SfuiDisplayHeavy.otf</string>
+		<string>AntDesign.ttf</string>
 		<string>SFuiDisplayBold.otf</string>
 		<string>SFuiDisplayBlack.olf</string>
 		<string>Entypo.ttf</string>

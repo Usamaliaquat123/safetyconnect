@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     borderColor: colors.textOpa,
     borderWidth: wp(0.4),
     paddingLeft: wp(3),
+    padding: wp(3),
     borderRadius: wp(1),
     flexDirection: 'row',
     alignItems: 'center',
@@ -188,14 +189,12 @@ const styles = StyleSheet.create({
     height: wp(5),
     marginRight: wp(3),
   },
-  errorloadingContent : {
-    
-      backgroundColor: colors.secondary,
-      padding: wp(5),
-      alignContent: 'center',
-      borderRadius: wp(3),
-  
-  }
+  errorloadingContent: {
+    backgroundColor: colors.secondary,
+    padding: wp(5),
+    alignContent: 'center',
+    borderRadius: wp(3),
+  },
 });
 
 export default styles;

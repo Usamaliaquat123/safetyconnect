@@ -130,6 +130,9 @@ class Signup extends React.Component<SignupProps, any> {
               profile: 'NotConfirmed',
             },
           });
+
+          console.log('signup');
+          console.log(signUpResponse);
           // signUpResponse.then((res) => {
           // });
           if (signUpResponse.userConfirmed) {
@@ -153,6 +156,7 @@ class Signup extends React.Component<SignupProps, any> {
             }
           }
         } catch (e: any) {
+          console.log(e);
           if (e.message.includes('google')) {
             this.setState({loading: false, errorModal: false});
 
