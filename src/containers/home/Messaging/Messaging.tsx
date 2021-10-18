@@ -76,6 +76,17 @@ class Messaging extends React.Component<MessagingProps, any> {
     });
   };
 
+  createGroup = () => {
+    var dta = {
+      name: '',
+      organization: '',
+      involved_persons: '',
+      roomType: 'private',
+      createdBy: user._id,
+      img_url: `https://dummyimage.com/35x35/E4FFDE/8DCD7E.jpg&text=${name[0].toUpperCase()}`,
+    };
+  };
+
   render() {
     return (
       <View style={{backgroundColor: colors.secondary}}>
