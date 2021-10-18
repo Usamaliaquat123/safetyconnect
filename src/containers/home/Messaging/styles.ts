@@ -6,8 +6,8 @@ import {
 } from 'react-native-responsive-screen';
 const styles = StyleSheet.create({
   content: {
-    flex: 2,
-
+    // flex: 2,
+    flex: 1,
     backgroundColor: colors.secondary,
     // borderTopLeftRadius: wp(8),
     // borderTopRightRadius: wp(8),
@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
   },
   conversationContainer: {
     marginTop: wp(5),
-    
   },
   ttleConversation: {
     fontFamily: fonts.SFuiDisplayBold,

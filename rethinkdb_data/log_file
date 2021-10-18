@@ -1,0 +1,20 @@
+2021-10-18T06:46:51.253015000 0.067745s notice: Recursively removing directory /Users/mac/Desktop/hns-apps/rethinkdb_data/tmp
+2021-10-18T06:46:51.255466000 0.070203s notice: Initializing directory /Users/mac/Desktop/hns-apps/rethinkdb_data
+2021-10-18T06:46:51.255617000 0.070346s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/Users/mac/Desktop/hns-apps/rethinkdb_data' did not already exist or is empty.)
+2021-10-18T06:46:51.256097000 0.070826s notice: Running rethinkdb 2.4.1 (CLANG 12.0.5 (clang-1205.0.22.9))...
+2021-10-18T06:46:51.268339000 0.083068s notice: Running on Darwin 20.6.0 x86_64
+2021-10-18T06:46:51.268447000 0.083176s notice: Loading data from directory /Users/mac/Desktop/hns-apps/rethinkdb_data
+2021-10-18T06:46:51.450241000 0.264968s info: Automatically using cache size of 130 MB
+2021-10-18T06:46:51.452067000 0.266794s notice: Listening for intracluster connections on port 29015
+2021-10-18T06:46:51.454871000 0.269597s notice: Listening for client driver connections on port 28015
+2021-10-18T06:46:51.454942000 0.269668s notice: Listening for administrative HTTP connections on port 8080
+2021-10-18T06:46:51.454950000 0.269677s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2021-10-18T06:46:51.454956000 0.269682s notice: Listening on driver addresses: 127.0.0.1, ::1
+2021-10-18T06:46:51.455073000 0.269801s notice: Listening on http addresses: 127.0.0.1, ::1
+2021-10-18T06:46:51.455095000 0.269822s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2021-10-18T06:46:51.455106000 0.269832s notice: Server ready, "Macs_MacBook_Pro_local_w59" 44a70ecd-c0fa-4110-adc0-bb56c1cb5497
+2021-10-18T06:56:00.242521000 549.051900s notice: Server got SIGINT from pid 2976, uid 501; shutting down...
+2021-10-18T06:56:00.242784000 549.052163s notice: Shutting down client connections...
+2021-10-18T06:56:00.243076000 549.052455s notice: All client connections closed.
+2021-10-18T06:56:00.243082000 549.052460s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2021-10-18T06:56:00.249752000 549.059131s notice: Storage engine shut down.

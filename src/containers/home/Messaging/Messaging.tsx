@@ -53,14 +53,21 @@ class Messaging extends React.Component<MessagingProps, any> {
               .createApi()
               .getAllChats(res.data.data._id, orgId)
               .then((res: any) => {
-                var user = {
-                  name: 'Jane doe',
-                  image:
-                    'https://media-exp1.licdn.com/dms/image/C4D03AQEL1Mw4w1qbCw/profile-displayphoto-shrink_400_400/0/1600693321867?e=1615420800&v=beta&t=hSMwwBV6Nopz6Td0oXvnQuqGWW2W926ZUaCMC9SotVk',
-                  isonline: true,
-                  userId: 4,
-                };
-                console.log(res);
+                var usr = [];
+                for (let i = 0; i < res.data.length; i++) {
+                  var user = {
+                    data: res.data[0],
+                    name: res.data[0].userA.name,
+                    image: res.data[0].userA.img_url,
+                    isonline: true,
+                    userId: res.data[0].userA._id,
+                  };
+
+                  usr.push(user);
+                }
+
+                // console.log(usr);
+                this.setState({users: usr});
               })
               .catch((err: any) => console.log(err));
           });
@@ -71,48 +78,49 @@ class Messaging extends React.Component<MessagingProps, any> {
 
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: colors.primary}}>
-        <ScrollView>
-          <Header
-            onBackPress={() => this.props.navigation.goBack()}
-            profile={this.state.currentUser.img_url}
-          />
-          <View style={styles.content}>
-            <Search
-              onChange={(e: string) => {}}
-              value={'Search messages'}
-              iconName={'search'}
-              placeHolder={'Searh messages'}
-              iconType={'evilicon'}
+      <View style={{backgroundColor: colors.secondary}}>
+        <View style={{backgroundColor: colors.primary}}>
+          <ScrollView>
+            <Header
+              onBackPress={() => this.props.navigation.goBack()}
+              profile={this.state.currentUser.img_url}
             />
-            <View style={styles.conversationContainer}>
-              <Text style={styles.ttleConversation}>Conversations</Text>
-              <View style={styles.line} />
-              {this.state.users.map((d: Imessage) => (
-                <User
-                  id={d.userId}
-                  name={d.name}
-                  pendingsms={d.notseen}
-                  image={d.image}
-                  isOnline={d.isonline}
-                  onPress={() =>
-                    this.props.navigation.navigate('Chat', {data: d})
-                  }
-                />
-              ))}
-            </View>
-            {/* Group Conversation */}
-            <View style={styles.conversationContainer}>
-              <Text style={styles.ttleConversation}>Group Conversations</Text>
-              <Icon
-                containerStyle={{position: 'absolute', bottom: 0, right: 0}}
-                name="add-circle"
-                size={wp(15)}
-                type="Ionicons"
-                color={colors.green}
+            <View style={styles.content}>
+              <Search
+                onChange={(e: string) => {}}
+                value={'Search messages'}
+                iconName={'search'}
+                placeHolder={'Searh messages'}
+                iconType={'evilicon'}
               />
+              <View style={styles.conversationContainer}>
+                <Text style={styles.ttleConversation}>Conversations</Text>
+                <View style={styles.line} />
+                {this.state.users.map((d: Imessage) => (
+                  <User
+                    id={d.userId}
+                    name={d.name}
+                    pendingsms={d.notseen}
+                    image={d.image}
+                    isOnline={d.isonline}
+                    onPress={() =>
+                      this.props.navigation.navigate('Chat', {data: d})
+                    }
+                  />
+                ))}
+              </View>
+              {/* Group Conversation */}
+              <View style={styles.conversationContainer}>
+                <Text style={styles.ttleConversation}>Group Conversations</Text>
+                <Icon
+                  containerStyle={{position: 'absolute', bottom: 0, right: 0}}
+                  name="add-circle"
+                  size={wp(15)}
+                  type="Ionicons"
+                  color={colors.green}
+                />
 
-              {/* <TouchableOpacity
+                {/* <TouchableOpacity
                 style={{
                   backgroundColor: colors.green,
                   padding: wp(3),
@@ -120,23 +128,24 @@ class Messaging extends React.Component<MessagingProps, any> {
                 }}
                 onPress={() => {}}>
                 </TouchableOpacity> */}
+                {/* <View style={styles.line} /> */}
+                {this.state.group.map((d: Imessage) => (
+                  <User
+                    id={d.userId}
+                    name={d.name}
+                    // pendingsms={d.notseen}
+                    image={d.image}
+                    isOnline={d.isonline}
+                    onPress={() =>
+                      this.props.navigation.navigate('Chat', {data: d})
+                    }
+                  />
+                ))}
+              </View>
               {/* <View style={styles.line} /> */}
-              {this.state.group.map((d: Imessage) => (
-                <User
-                  id={d.userId}
-                  name={d.name}
-                  // pendingsms={d.notseen}
-                  image={d.image}
-                  isOnline={d.isonline}
-                  onPress={() =>
-                    this.props.navigation.navigate('Chat', {data: d})
-                  }
-                />
-              ))}
             </View>
-            {/* <View style={styles.line} /> */}
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </View>
       </View>
     );
   }
