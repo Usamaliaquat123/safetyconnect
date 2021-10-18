@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     marginTop: wp(2),
     borderColor: colors.textOpa,
     // opacity: 0.5,
-    padding: wp(3),
+
     borderWidth: wp(0.4),
     paddingLeft: wp(3),
     borderRadius: wp(3),

@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   ScrollView,
+  Platform,
   TouchableOpacity,
   Image,
   TextInput,
@@ -317,29 +318,58 @@ class Login extends React.Component<LoginProps, any> {
               <View style={styles.inputsContainer}>
                 {/* Email Container */}
                 <Text style={styles.emailTextContainer}>Enter your email</Text>
-                <View
-                  style={[
-                    styles.inputContainer,
-                    this.state.selectedInput == 1
-                      ? {borderColor: colors.green}
-                      : {borderColor: colors.textOpa},
-                  ]}>
-                  <TextInput
-                    onFocus={() => this.setState({selectedInput: 1})}
-                    style={styles.authInputs}
-                    onChange={(e) => {
-                      if (validateEmail(e.nativeEvent.text) == true) {
-                        this.setState({emailError: false});
-                      } else {
-                        this.setState({emailError: true});
-                      }
 
-                      this.setState({username: e.nativeEvent.text});
-                    }}
-                    value={this.state.username}
-                    placeholder={'Enter your email'}
-                  />
-                </View>
+                {Platform.OS == 'ios' ? (
+                  <View
+                    style={[
+                      styles.inputContainer,
+                      this.state.selectedInput == 1
+                        ? {borderColor: colors.green}
+                        : {borderColor: colors.textOpa},
+                      {padding: wp(3)},
+                    ]}>
+                    <TextInput
+                      onFocus={() => this.setState({selectedInput: 1})}
+                      style={styles.authInputs}
+                      placeholderTextColor={colors.lightGrey}
+                      onChange={(e) => {
+                        if (validateEmail(e.nativeEvent.text) == true) {
+                          this.setState({emailError: false});
+                        } else {
+                          this.setState({emailError: true});
+                        }
+
+                        this.setState({username: e.nativeEvent.text});
+                      }}
+                      value={this.state.username}
+                      placeholder={'Enter your email'}
+                    />
+                  </View>
+                ) : (
+                  <View
+                    style={[
+                      styles.inputContainer,
+                      this.state.selectedInput == 1
+                        ? {borderColor: colors.green}
+                        : {borderColor: colors.textOpa},
+                    ]}>
+                    <TextInput
+                      onFocus={() => this.setState({selectedInput: 1})}
+                      style={styles.authInputs}
+                      onChange={(e) => {
+                        if (validateEmail(e.nativeEvent.text) == true) {
+                          this.setState({emailError: false});
+                        } else {
+                          this.setState({emailError: true});
+                        }
+
+                        this.setState({username: e.nativeEvent.text});
+                      }}
+                      value={this.state.username}
+                      placeholder={'Enter your email'}
+                    />
+                  </View>
+                )}
                 {this.state.emailError && (
                   <Text style={{fontSize: wp(3), color: colors.error}}>
                     Enter your valid email address
@@ -349,52 +379,105 @@ class Login extends React.Component<LoginProps, any> {
                 <Text style={styles.passTextContainer}>
                   Enter your password
                 </Text>
-                <View
-                  style={[
-                    styles.inputContainer,
-                    this.state.selectedInput == 2
-                      ? {borderColor: colors.green}
-                      : {borderColor: colors.textOpa},
+
+                {Platform.OS == 'ios' ? (
+                  <View
+                    style={[
+                      styles.inputContainer,
+                      this.state.selectedInput == 2
+                        ? {borderColor: colors.green}
+                        : {borderColor: colors.textOpa},
+                  {padding: wp(3)}
+                  
                   ]}>
-                  <TextInput
-                    secureTextEntry={this.state.isEye}
-                    onFocus={() => {
-                      // if (validateEmail(this.state.username)) {
-                      //   this.setState({emailError: false});
-                      // } else {
-                      //   this.setState({emailError: true});
-                      // }
-                      this.setState({selectedInput: 2});
-                    }}
-                    style={styles.authInputs}
-                    value={this.state.password}
-                    onChange={(e) => {
-                      this.setState({password: e.nativeEvent.text});
-                    }}
-                    placeholder={'******'}
-                  />
-                  <TouchableOpacity
-                    onPress={() => this.setState({isEye: !this.state.isEye})}
-                    style={styles.eyeIconContainer}>
-                    {this.state.isEye == true ? (
-                      <Icon
-                        containerStyle={{opacity: 0.5}}
-                        size={wp(5)}
-                        name="eye-with-line"
-                        type="entypo"
-                        color={colors.text}
-                      />
-                    ) : (
-                      <Icon
-                        containerStyle={{opacity: 0.5}}
-                        size={wp(5)}
-                        name="eye"
-                        type="antdesign"
-                        color={colors.text}
-                      />
-                    )}
-                  </TouchableOpacity>
-                </View>
+                    <TextInput
+                      secureTextEntry={this.state.isEye}
+                      onFocus={() => {
+                        // if (validateEmail(this.state.username)) {
+                        //   this.setState({emailError: false});
+                        // } else {
+                        //   this.setState({emailError: true});
+                        // }
+                        this.setState({selectedInput: 2});
+                      }}
+                      placeholderTextColor={colors.lightGrey}
+                      style={styles.authInputs}
+                      value={this.state.password}
+                      onChange={(e) => {
+                        this.setState({password: e.nativeEvent.text});
+                      }}
+                      placeholder={'******'}
+                    />
+                    <TouchableOpacity
+                      onPress={() => this.setState({isEye: !this.state.isEye})}
+                      style={styles.eyeIconContainer}>
+                      {this.state.isEye == true ? (
+                        <Icon
+                          containerStyle={{opacity: 0.5}}
+                          size={wp(5)}
+                          name="eye-with-line"
+                          type="entypo"
+                          color={colors.text}
+                        />
+                      ) : (
+                        <Icon
+                          containerStyle={{opacity: 0.5}}
+                          size={wp(5)}
+                          name="eye"
+                          type="antdesign"
+                          color={colors.text}
+                        />
+                      )}
+                    </TouchableOpacity>
+                  </View>
+                ) : (
+                  <View
+                    style={[
+                      styles.inputContainer,
+                      this.state.selectedInput == 2
+                        ? {borderColor: colors.green}
+                        : {borderColor: colors.textOpa},
+                    ]}>
+                    <TextInput
+                      secureTextEntry={this.state.isEye}
+                      onFocus={() => {
+                        // if (validateEmail(this.state.username)) {
+                        //   this.setState({emailError: false});
+                        // } else {
+                        //   this.setState({emailError: true});
+                        // }
+                        this.setState({selectedInput: 2});
+                      }}
+                      style={styles.authInputs}
+                      value={this.state.password}
+                      onChange={(e) => {
+                        this.setState({password: e.nativeEvent.text});
+                      }}
+                      placeholder={'******'}
+                    />
+                    <TouchableOpacity
+                      onPress={() => this.setState({isEye: !this.state.isEye})}
+                      style={styles.eyeIconContainer}>
+                      {this.state.isEye == true ? (
+                        <Icon
+                          containerStyle={{opacity: 0.5}}
+                          size={wp(5)}
+                          name="eye-with-line"
+                          type="entypo"
+                          color={colors.text}
+                        />
+                      ) : (
+                        <Icon
+                          containerStyle={{opacity: 0.5}}
+                          size={wp(5)}
+                          name="eye"
+                          type="antdesign"
+                          color={colors.text}
+                        />
+                      )}
+                    </TouchableOpacity>
+                  </View>
+                )}
                 {this.state.passError && (
                   <View>
                     <Text style={{fontSize: wp(3), color: colors.error}}>

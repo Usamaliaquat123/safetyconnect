@@ -53,6 +53,8 @@
 		00E356EE1AD99517003FC87E /* SafetyConnectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SafetyConnectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* SafetyConnectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SafetyConnectTests.m; sourceTree = "<group>"; };
+		04BAD774271D4A70006E7A47 /* SafetyConnectRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = SafetyConnectRelease.entitlements; path = SafetyConnect/SafetyConnectRelease.entitlements; sourceTree = "<group>"; };
+		04BAD775271D4D58006E7A47 /* SafetyConnectDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = SafetyConnectDebug.entitlements; path = SafetyConnect/SafetyConnectDebug.entitlements; sourceTree = "<group>"; };
 		04E3946A2716F1BA006EE02E /* SFuiDisplaySemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SFuiDisplaySemiBold.otf; path = ../src/theme/fonts/SFuiDisplaySemiBold.otf; sourceTree = "<group>"; };
 		04E3946B2716F1BA006EE02E /* SFuiDisplayLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SFuiDisplayLight.otf; path = ../src/theme/fonts/SFuiDisplayLight.otf; sourceTree = "<group>"; };
 		04E3946C2716F1BB006EE02E /* SFuiDisplayBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SFuiDisplayBold.otf; path = ../src/theme/fonts/SFuiDisplayBold.otf; sourceTree = "<group>"; };
@@ -159,6 +161,8 @@
 		13B07FAE1A68108700A75B9A /* SafetyConnect */ = {
 			isa = PBXGroup;
 			children = (
+				04BAD775271D4D58006E7A47 /* SafetyConnectDebug.entitlements */,
+				04BAD774271D4A70006E7A47 /* SafetyConnectRelease.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -355,6 +359,9 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					New,
+				);
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -362,6 +369,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = TY5Q85CQJT;
 						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
@@ -824,8 +832,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SafetyConnect/SafetyConnectDebug.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "../src/theme/fonts/SFuiDisplayBlack.otf ../src/theme/fonts/SFuiDisplayThin.otf ../src/theme/fonts/SFuiDisplayMedium.otf ../src/theme/fonts/SFuiDisplayUltraLight.otf ../src/theme/fonts/SFuiDisplayLight.otf ../src/theme/fonts/SFuiDisplaySemiBold.otf ../src/theme/fonts/SFuiDisplayBold.otf ../src/theme/fonts/SfuiDisplayHeavy.otf";
+				DEVELOPMENT_TEAM = TY5Q85CQJT;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SafetyConnect/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -849,8 +859,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SafetyConnect/SafetyConnectRelease.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "../src/theme/fonts/SFuiDisplayBlack.otf ../src/theme/fonts/SFuiDisplayThin.otf ../src/theme/fonts/SFuiDisplayMedium.otf ../src/theme/fonts/SFuiDisplayUltraLight.otf ../src/theme/fonts/SFuiDisplayLight.otf ../src/theme/fonts/SFuiDisplaySemiBold.otf ../src/theme/fonts/SFuiDisplayBold.otf ../src/theme/fonts/SfuiDisplayHeavy.otf";
+				DEVELOPMENT_TEAM = TY5Q85CQJT;
 				INFOPLIST_FILE = SafetyConnect/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

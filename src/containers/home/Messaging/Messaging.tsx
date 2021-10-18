@@ -46,14 +46,20 @@ class Messaging extends React.Component<MessagingProps, any> {
         .createApi()
         .getUser(email)
         .then((res: any) => {
-          getCurrentOrganization().then((orgId) => {
+          getCurrentOrganization().then((orgId: any) => {
             console.log(orgId);
             console.log(res.data.data._id);
             createApi
               .createApi()
               .getAllChats(res.data.data._id, orgId)
               .then((res: any) => {
-                console.log('resp onse aaya');
+                var user = {
+                  name: 'Jane doe',
+                  image:
+                    'https://media-exp1.licdn.com/dms/image/C4D03AQEL1Mw4w1qbCw/profile-displayphoto-shrink_400_400/0/1600693321867?e=1615420800&v=beta&t=hSMwwBV6Nopz6Td0oXvnQuqGWW2W926ZUaCMC9SotVk',
+                  isonline: true,
+                  userId: 4,
+                };
                 console.log(res);
               })
               .catch((err: any) => console.log(err));

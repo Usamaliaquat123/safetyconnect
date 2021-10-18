@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     borderColor: colors.textOpa,
     borderWidth: wp(0.4),
     paddingLeft: wp(3),
-    padding: wp(3),
+
     borderRadius: wp(1),
     flexDirection: 'row',
     alignItems: 'center',

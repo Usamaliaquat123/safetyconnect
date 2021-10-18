@@ -5,6 +5,7 @@ import {
   Text,
   ScrollView,
   TextInput,
+  Platform,
   TouchableOpacity,
   Image,
 } from 'react-native';
@@ -127,16 +128,30 @@ class Forgot extends React.Component<ForgotProps, any> {
               <View style={styles.inputsContainer}>
                 {/* Email Container */}
                 <Text style={styles.emailTextContainer}>Enter your email</Text>
-                <View style={[styles.inputContainer]}>
-                  <TextInput
-                    style={styles.authInputs}
-                    value={this.state.email}
-                    onChange={(e) => {
-                      this.setState({email: e.nativeEvent.text});
-                    }}
-                    placeholder={'Enter your email'}
-                  />
-                </View>
+
+                {Platform.OS == 'ios' ? (
+                  <View style={[styles.inputContainer, {padding: wp(3)}]}>
+                    <TextInput
+                      style={styles.authInputs}
+                      value={this.state.email}
+                      onChange={(e) => {
+                        this.setState({email: e.nativeEvent.text});
+                      }}
+                      placeholder={'Enter your email'}
+                    />
+                  </View>
+                ) : (
+                  <View style={[styles.inputContainer]}>
+                    <TextInput
+                      style={styles.authInputs}
+                      value={this.state.email}
+                      onChange={(e) => {
+                        this.setState({email: e.nativeEvent.text});
+                      }}
+                      placeholder={'Enter your email'}
+                    />
+                  </View>
+                )}
                 {this.state.error && (
                   <Text style={{fontSize: wp(3), color: colors.error}}>
                     Type your valid email address
