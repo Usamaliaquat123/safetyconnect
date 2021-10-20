@@ -18,6 +18,7 @@ export type StackNavigatorProps = {
   CreateProj: {organization?: string; users?: []};
   Home: undefined;
   ForgotEmailSend: {email: string};
+  ChatGroup: undefined;
   Verify: {email: string};
   MeetBefore: {email: string};
   CreateSOR: undefined;
@@ -65,6 +66,7 @@ export type route =
   | 'ChangePassword'
   | 'Verify'
   | 'Forgot'
+  | 'ChatGroup'
   | 'MeetBefore'
   | 'ForgotEmailSend'
   | 'Home'

@@ -6,6 +6,7 @@ import {
   Verify,
   CreatePass,
   CreateOrg,
+  ChatGroup,
   Forgot,
   CreateProject,
   Menu,
@@ -112,6 +113,13 @@ export const MainStackNavigator = (screen: route) => {
         <Stack.Screen
           name="Splash"
           component={Splash}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="ChatGroup"
+          component={ChatGroup}
           options={{
             headerShown: false,
           }}

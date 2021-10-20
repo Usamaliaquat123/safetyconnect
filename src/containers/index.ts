@@ -6,6 +6,7 @@ import Forgot from './auth/forgot/Forgot';
 import Verify from './auth/verification/Verify';
 import Settings from './home/Settings/Settings';
 import Messaging from './home/Messaging/Messaging';
+import ChatGroup from './home/Messaging/ChatGroup/ChatGroup';
 import Splash from './splash/Splash';
 import Home from './home/index';
 import ViewAll from './home/ViewAll/ViewAll';
@@ -63,5 +64,6 @@ export {
   ViewAll,
   ViewSOR,
   Menu,
+  ChatGroup,
   More,
 };
