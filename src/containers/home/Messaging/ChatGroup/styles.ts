@@ -29,6 +29,20 @@ const styles = StyleSheet.create({
     borderWidth: wp(0.1),
     borderColor: colors.textOpa,
   },
+  authInputs: {
+    fontSize: wp(3),
+    width: wp(70),
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+  inputContainer: {
+    marginTop: wp(2),
+    borderWidth: wp(0.4),
+    paddingLeft: wp(3),
+    borderRadius: wp(1),
+    borderColor: colors.textOpa,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });
 
 export default styles;

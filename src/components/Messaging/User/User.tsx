@@ -5,7 +5,8 @@ import {Avatar} from 'react-native-elements';
 import {colors} from '@theme';
 export interface UserProps {
   isOnline: boolean;
-  switch?: any;
+  switch?: boolean | undefined;
+  isSelected?: boolean;
   name: string;
   image: string;
   id: number;
@@ -37,11 +38,27 @@ export default class User extends React.Component<UserProps, any> {
           />
         </View>
         <Text style={styles.name}>{this.props.name}</Text>
-        {this.props.pendingsms ? (
-          <View style={[styles.circle]}>
-            <Text style={styles.textNumber}>{this.props.pendingsms}</Text>
+
+        {this.props.switch ? (
+          <View
+            style={[
+              styles.circleSelect,
+              {position: 'absolute', right: 0},
+              this.props.isSelected == true
+                ? {backgroundColor: colors.green}
+                : {backgroundColor: colors.secondary, borderWidth: 0.3},
+            ]}>
+            <Text style={styles.textNumber}></Text>
           </View>
-        ) : null}
+        ) : (
+          <>
+            {this.props.pendingsms ? (
+              <View style={[styles.circle]}>
+                <Text style={styles.textNumber}>{this.props.pendingsms}</Text>
+              </View>
+            ) : null}
+          </>
+        )}
       </TouchableOpacity>
     );
   }

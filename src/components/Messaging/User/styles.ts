@@ -30,6 +30,16 @@ const styles = StyleSheet.create({
     right: wp(2),
     bottom: wp(0),
   },
+  circleSelect: {
+    borderRadius: wp(5),
+    // padding: wp(2),
+    justifyContent: 'center',
+    width: wp(3.5),
+    marginTop: wp(2),
+    marginLeft: wp(5),
+    height: wp(3.5),
+    backgroundColor: colors.error,
+  },
   circle: {
     borderRadius: wp(5),
     // padding: wp(2),
