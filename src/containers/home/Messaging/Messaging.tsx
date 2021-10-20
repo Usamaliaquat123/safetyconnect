@@ -77,14 +77,7 @@ class Messaging extends React.Component<MessagingProps, any> {
   };
 
   createGroup = () => {
-    var dta = {
-      name: '',
-      organization: '',
-      involved_persons: '',
-      roomType: 'private',
-      createdBy: user._id,
-      img_url: `https://dummyimage.com/35x35/E4FFDE/8DCD7E.jpg&text=${name[0].toUpperCase()}`,
-    };
+    this.props.navigation.navigate('ChatGroup');
   };
 
   render() {
@@ -124,7 +117,8 @@ class Messaging extends React.Component<MessagingProps, any> {
               <View style={styles.conversationContainer}>
                 <Text style={styles.ttleConversation}>Group Conversations</Text>
                 <Icon
-                  containerStyle={{position: 'absolute', bottom: 0, right: 0}}
+                  onPress={() => this.createGroup()}
+                  // containerStyle={{position: 'absolute', bottom: 0, right: 0}}
                   name="add-circle"
                   size={wp(15)}
                   type="Ionicons"

@@ -34,13 +34,35 @@ class ChatGroup extends React.Component<ChatGroupProps, any> {
     super(props);
     this.state = {
       loading: false,
-      users: messagingUsers,
-      group: groupConversation,
+      users: [],
       currentUser: {},
+      org: '',
+      groupName: '',
+      roomType: '',
     };
   }
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    AsyncStorage.getItem('email').then((email: any) => {
+      getCurrentOrganization().then((currentOrg: any) => {
+        this.setState({users: currentOrg.data.data.members});
+
+        createApi
+          .createApi()
+          .getUser(email)
+          .then((user: any) => {
+            var dta = {
+              name: '',
+              organization: '',
+              involved_persons: '',
+              roomType: 'private',
+              createdBy: email,
+              img_url: `https://dummyimage.com/35x35/E4FFDE/8DCD7E.jpg&text=${name[0].toUpperCase()}`,
+            };
+          });
+      });
+    });
+  };
 
   createGroup = () => {};
 
@@ -77,39 +99,7 @@ class ChatGroup extends React.Component<ChatGroupProps, any> {
                   />
                 ))}
               </View>
-              {/* Group Conversation */}
-              <View style={styles.conversationContainer}>
-                <Text style={styles.ttleConversation}>Group Conversations</Text>
-                <Icon
-                  containerStyle={{position: 'absolute', bottom: 0, right: 0}}
-                  name="add-circle"
-                  size={wp(15)}
-                  type="Ionicons"
-                  color={colors.green}
-                />
 
-                {/* <TouchableOpacity
-                style={{
-                  backgroundColor: colors.green,
-                  padding: wp(3),
-                  borderRadius: wp(2),
-                }}
-                onPress={() => {}}>
-                </TouchableOpacity> */}
-                {/* <View style={styles.line} /> */}
-                {this.state.group.map((d: Imessage) => (
-                  <User
-                    id={d.userId}
-                    name={d.name}
-                    // pendingsms={d.notseen}
-                    image={d.image}
-                    isOnline={d.isonline}
-                    onPress={() =>
-                      this.props.navigation.navigate('Chat', {data: d})
-                    }
-                  />
-                ))}
-              </View>
               {/* <View style={styles.line} /> */}
             </View>
           </ScrollView>

@@ -5,7 +5,7 @@ import {Avatar} from 'react-native-elements';
 import {colors} from '@theme';
 export interface UserProps {
   isOnline: boolean;
-
+  switch?: any;
   name: string;
   image: string;
   id: number;
