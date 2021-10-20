@@ -23,6 +23,7 @@ type ChatGroupNavigationProp = StackNavigationProp<
 >;
 type ChatGroupRouteProp = RouteProp<StackNavigatorProps, 'ChatGroup'>;
 
+// Search in Involved Persons
 export interface ChatGroupProps {
   route: ChatGroupRouteProp;
   navigation: ChatGroupNavigationProp;
@@ -43,6 +44,15 @@ class ChatGroup extends React.Component<ChatGroupProps, any> {
     };
   }
 
+  searchInUsers = (str: string, strArray: Array<any>): Array<Object> => {
+    var strArr = [];
+    for (var j = 0; j < strArray.length; j++) {
+      if (strArray[j].email.toLowerCase().match(str)) {
+        strArr.push(strArray[j]);
+      }
+    }
+    return strArr;
+  };
   componentDidMount = () => {
     AsyncStorage.getItem('email').then((email: any) => {
       getCurrentOrganization().then((currentOrg: any) => {
@@ -95,7 +105,7 @@ class ChatGroup extends React.Component<ChatGroupProps, any> {
             />
 
             <View style={styles.content}>
-              <View style={[styles.inputContainer, {marginBottom: wp(3)}]}>
+              <View style={[styles.inputContainer, {marginBottom: wp(5)}]}>
                 <TextInput
                   style={styles.authInputs}
                   onChangeText={(e) => {
@@ -105,12 +115,19 @@ class ChatGroup extends React.Component<ChatGroupProps, any> {
                   placeholder={'Group Name'}
                 />
               </View>
-              <View style={styles.line} />
+              <View style={[styles.line, {marginBottom: wp(5)}]} />
               <Search
-                onChange={(e: string) => {}}
+                onChange={(e: string) => {
+                  this.setState({
+                    users:
+                      e != ' '
+                        ? this.searchInUsers(e, this.state.users)
+                        : this.state.user,
+                  });
+                }}
                 value={'Search messages'}
                 iconName={'search'}
-                placeHolder={'Searh messages'}
+                placeHolder={'Search Users'}
                 iconType={'evilicon'}
               />
               <View style={styles.conversationContainer}>
