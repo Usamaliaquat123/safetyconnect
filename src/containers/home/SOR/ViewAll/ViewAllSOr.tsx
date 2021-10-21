@@ -40,6 +40,8 @@ import {
   getCurrentOrganization,
 } from '@utils';
 import {Card, ListCard} from '@components';
+import io from 'socket.io-client';
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -129,6 +131,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   }
 
   componentDidMount = () => {
+
     // console.log(this.props.reduxState.allSors);
     // console.log(this.props.reduxState.loading);
 

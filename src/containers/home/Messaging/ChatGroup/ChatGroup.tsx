@@ -152,7 +152,7 @@ class ChatGroup extends React.Component<ChatGroupProps, any> {
                         : usr,
                   });
                 }}
-                value={'Search messages'}
+                value={'Search'}
                 iconName={'search'}
                 placeHolder={'Search Users'}
                 iconType={'evilicon'}

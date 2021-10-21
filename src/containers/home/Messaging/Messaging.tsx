@@ -9,7 +9,7 @@ import {RouteProp} from '@react-navigation/native';
 import {View_sor, messagingUsers, groupConversation} from '@service';
 import {connect} from 'react-redux';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
-
+import io from 'socket.io-client';
 import {getCurrentOrganization, searchInObjects} from '@utils';
 import {Imessage} from '@typings';
 import {Search, Header, User} from '@components';
@@ -37,11 +37,20 @@ class Messaging extends React.Component<MessagingProps, any> {
       users: messagingUsers,
       group: groupConversation,
       currentUser: {},
+      tokens: '',
     };
   }
 
   componentDidMount = () => {
     AsyncStorage.getItem('email').then((email: any) => {
+      AsyncStorage.getItem('token').then((token: any) => {
+        const newSocket = io.connect(process.env.REACT_APP_CHAT_API, {
+          query: {
+            token: token,
+          },
+        });
+      });
+
       createApi
         .createApi()
         .getUser(email)
@@ -53,39 +62,44 @@ class Messaging extends React.Component<MessagingProps, any> {
               .createApi()
               .getAllChats(res.data.data._id, orgId)
               .then((res: any) => {
-                console.log(res.data.allChats);
+                // console.log(res.data.allChats);
                 var usr = [];
                 var groups = [];
                 for (let i = 0; i < res.data.allChats.length; i++) {
-                  console.log(res.data.allChats[i]);
+                  // console.log(res.data.allChats[i]);
                   if (res.data.allChats[i]?.roomType != undefined) {
                     console.log('room type');
-
-                    // var user = {
-                    //   data: res.data.allChats[i],
-                    //   name: res.data.allChats[i].userA.name,
-                    //   image: res.data.allChats[i].userA.img_url,
-                    //   isonline: true,
-                    //   userId: res.data.allChats[i].userA._id,
-                    // };
-                    // groups.push(user);
+                    console.log(res.data.allChats[i]);
+                    var user = {
+                      data: res.data.allChats[i],
+                      name: res.data.allChats[i].name,
+                      image: res.data.allChats[i].img_url,
+                      isonline: true,
+                      userId: res.data.allChats[i]._id,
+                    };
+                    groups.push(user);
                   } else {
-                    console.log('user type');
-                    // var groupChat = {
-                    //   data: res.data.allChats[i],
-                    //   name: res.data.allChats[i].userA.name,
-                    //   image: res.data.allChats[i].userA.img_url,
-                    //   isonline: true,
-                    //   userId: res.data.allChats[i].userA._id,
-                    // };
-                    // usr.push(groupChat);
+                    if (res.data.allChats[i]?.userA != undefined) {
+                      console.log('user type');
+
+                      var ur = {
+                        data: res.data.allChats[i],
+                        name: res.data.allChats[i].userA.name,
+                        image: res.data.allChats[i].userA.img_url,
+                        isonline: true,
+                        userId: res.data.allChats[i].userA._id,
+                      };
+                      usr.push(ur);
+                    }
                   }
 
                   // usr.push(user);
                 }
 
+                console.log(usr);
+
                 // console.log(usr);
-                // this.setState({users: usr});
+                this.setState({users: usr, group: groups});
               })
               .catch((err: any) => console.log(err));
           });
