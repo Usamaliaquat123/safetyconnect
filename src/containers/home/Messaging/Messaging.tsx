@@ -53,21 +53,39 @@ class Messaging extends React.Component<MessagingProps, any> {
               .createApi()
               .getAllChats(res.data.data._id, orgId)
               .then((res: any) => {
+                console.log(res.data.allChats);
                 var usr = [];
-                for (let i = 0; i < res.data.length; i++) {
-                  var user = {
-                    data: res.data[0],
-                    name: res.data[0].userA.name,
-                    image: res.data[0].userA.img_url,
-                    isonline: true,
-                    userId: res.data[0].userA._id,
-                  };
+                var groups = [];
+                for (let i = 0; i < res.data.allChats.length; i++) {
+                  console.log(res.data.allChats[i]);
+                  if (res.data.allChats[i]?.roomType != undefined) {
+                    console.log('room type');
 
-                  usr.push(user);
+                    // var user = {
+                    //   data: res.data.allChats[i],
+                    //   name: res.data.allChats[i].userA.name,
+                    //   image: res.data.allChats[i].userA.img_url,
+                    //   isonline: true,
+                    //   userId: res.data.allChats[i].userA._id,
+                    // };
+                    // groups.push(user);
+                  } else {
+                    console.log('user type');
+                    // var groupChat = {
+                    //   data: res.data.allChats[i],
+                    //   name: res.data.allChats[i].userA.name,
+                    //   image: res.data.allChats[i].userA.img_url,
+                    //   isonline: true,
+                    //   userId: res.data.allChats[i].userA._id,
+                    // };
+                    // usr.push(groupChat);
+                  }
+
+                  // usr.push(user);
                 }
 
                 // console.log(usr);
-                this.setState({users: usr});
+                // this.setState({users: usr});
               })
               .catch((err: any) => console.log(err));
           });

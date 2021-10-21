@@ -43,6 +43,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  submitsorbtnSbtxt: {
+    fontSize: wp(3.5),
+    color: colors.secondary,
+    fontFamily: fonts.SFuiDisplayBold,
+  },
+  submitsorbtnSb: {
+    padding: wp(3),
+    // width: wp(45),
+    borderColor: colors.primary,
+    marginTop: wp(6),
+    alignItems: 'center',
+    backgroundColor: colors.primary,
+    borderWidth: wp(0.3),
+    borderRadius: wp(2),
+  },
 });
 
 export default styles;

@@ -251,7 +251,8 @@ const createApi = (
    * @getAll Chats
    */
   const getAllChats = (user: string, organization: string) =>
-    getChatApi.get(`chat/all?user=${user}&organization=${organization}`);
+    getChatApi.get(`chat/allchats?user=${user}&organization=${organization}`);
+  const createGroupApi = (data: any) => getChatApi.post(`chat`, data);
 
   return {
     searchApi,
@@ -260,6 +261,7 @@ const createApi = (
     taskAssignedBy,
     tableData,
     createFiveWhy,
+    createGroupApi,
     logs,
     getFileApi,
     getFilesUrl,

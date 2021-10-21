@@ -11,7 +11,7 @@ import {connect} from 'react-redux';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import {getCurrentOrganization, searchInObjects} from '@utils';
-import {user} from '@typings';
+import {user, orgnaization} from '@typings';
 import {Search, Header, User} from '@components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {allRecentActivity, createApi} from '@service';
@@ -56,14 +56,19 @@ class ChatGroup extends React.Component<ChatGroupProps, any> {
   componentDidMount = () => {
     AsyncStorage.getItem('email').then((email: any) => {
       getCurrentOrganization().then((currentOrg: any) => {
+        this.setState({org: currentOrg});
         createApi
           .createApi()
           .getOrganization(currentOrg)
           .then((orgs: any) => {
+            console.log('orgs.data.data.members');
+            console.log(orgs.data.data.members);
             orgs.data.data.members.map((d, i) => {
               if (d.email != email) {
                 orgs.data.data.members[i]['is_selected'] = false;
                 this.state.users.push(d);
+              } else {
+                this.setState({user: d});
               }
             });
             this.setState({});
@@ -74,25 +79,45 @@ class ChatGroup extends React.Component<ChatGroupProps, any> {
         // console.log('users');
         // console.log(currentOrg.data.members);
         // this.setState({users: currentOrg.data.data.members});
-
-        // createApi
-        //   .createApi()
-        //   .getUser(email)
-        //   .then((user: any) => {
-        //     var dta = {
-        //       name: '',
-        //       organization: '',
-        //       involved_persons: '',
-        //       roomType: 'private',
-        //       createdBy: email,
-        //       img_url: `https://dummyimage.com/35x35/E4FFDE/8DCD7E.jpg&text=${name[0].toUpperCase()}`,
-        //     };
-        //   });
       });
     });
   };
 
-  createGroup = () => {};
+  createGroup = () => {
+    console.log(this.state.users.filter((d) => d.is_selected == true));
+    this.state.user['is_selected'] = true;
+    this.state.users.push(this.state.user);
+    console.log(this.state.user);
+    // var dta =
+    // var ids = this.state.users
+    //   .filter((d) => d.is_selected == true)
+    //   .map((f: any) => f._id);
+    // console.log(ids);
+    // console.log()
+    var dta = {
+      name: this.state.groupName,
+      organization: this.state.org,
+      involved_persons: this.state.users
+        .filter((d) => d.is_selected == true)
+        .map((f: any) => f._id),
+      roomType: 'private',
+      createdBy: this.state.user._id,
+      img_url: `https://dummyimage.com/35x35/E4FFDE/8DCD7E.jpg&text=${this.state.groupName[0].toUpperCase()}`,
+    };
+
+    // console.log(dta);
+
+    createApi
+      .createApi()
+      .createGroupApi(dta)
+      .then((res) => {
+        console.log(res);
+
+        if (res.status == 200) {
+          this.props.navigation.goBack();
+        }
+      });
+  };
 
   render() {
     return (
@@ -111,18 +136,20 @@ class ChatGroup extends React.Component<ChatGroupProps, any> {
                   onChangeText={(e) => {
                     this.setState({groupName: e});
                   }}
-                  value={this.state.username}
+                  value={this.state.groupName}
                   placeholder={'Group Name'}
                 />
               </View>
               <View style={[styles.line, {marginBottom: wp(5)}]} />
               <Search
                 onChange={(e: string) => {
+                  console.log(e.length);
+                  var usr = this.state.users;
                   this.setState({
                     users:
-                      e != ' '
+                      e.length != 0
                         ? this.searchInUsers(e, this.state.users)
-                        : this.state.user,
+                        : usr,
                   });
                 }}
                 value={'Search messages'}
@@ -152,6 +179,17 @@ class ChatGroup extends React.Component<ChatGroupProps, any> {
                   />
                 ))}
               </View>
+              {/* Create gROUP */}
+              <TouchableOpacity
+                // this.setState({repeatedSorModal: true})
+                onPress={() => this.createGroup()}
+                style={[
+                  styles.submitsorbtnSb,
+
+                  // {backgroundColor: colors.green},
+                ]}>
+                <Text style={[styles.submitsorbtnSbtxt]}>Create Group </Text>
+              </TouchableOpacity>
 
               {/* <View style={styles.line} /> */}
             </View>
