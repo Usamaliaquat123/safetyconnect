@@ -10,7 +10,7 @@ import {View_sor, messagingUsers, groupConversation} from '@service';
 import {connect} from 'react-redux';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import io from 'socket.io-client';
-import {getCurrentOrganization, searchInObjects} from '@utils';
+import {fetchAuthToken, getCurrentOrganization, searchInObjects} from '@utils';
 import {Imessage} from '@typings';
 import {Search, Header, User} from '@components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -41,14 +41,45 @@ class Messaging extends React.Component<MessagingProps, any> {
     };
   }
 
+  // Setup Socket implementation
+  setupSocket = (token: any) => {
+    console.log(token);
+
+    const newSocket = io.connect('https://backend.safetyconnect.ai:5007', {
+      // transports: ['polling'],
+      withCredentials: true,
+      // jsonp: false,
+      // origins: '*',
+      query: {
+        token: token,
+      },
+    });
+
+    // console.log('in socket');
+    // console.log(newSocket);
+    newSocket.on('error', (data: any) => {
+      console.log(data || 'Chat: socket error');
+    });
+
+    newSocket.on('testEmit', (data: any) =>
+      console.log('Chat: testEmit', data),
+    );
+
+    newSocket.on('disconnect', (e) => {
+      // setSocket(null);
+      // setTimeout(this.setupSocket(token), 3000);
+      console.log('Chat:', 'error', 'Socket Disconnected!', e);
+    });
+
+    newSocket.on('connect', () => {
+      console.log('Chat:', 'success', 'Socket Connected!');
+    });
+  };
+
   componentDidMount = () => {
     AsyncStorage.getItem('email').then((email: any) => {
-      AsyncStorage.getItem('token').then((token: any) => {
-        const newSocket = io.connect(process.env.REACT_APP_CHAT_API, {
-          query: {
-            token: token,
-          },
-        });
+      fetchAuthToken().then((token) => {
+        this.setupSocket(token);
       });
 
       createApi
@@ -68,8 +99,8 @@ class Messaging extends React.Component<MessagingProps, any> {
                 for (let i = 0; i < res.data.allChats.length; i++) {
                   // console.log(res.data.allChats[i]);
                   if (res.data.allChats[i]?.roomType != undefined) {
-                    console.log('room type');
-                    console.log(res.data.allChats[i]);
+                    // console.log('room type');
+                    // console.log(res.data.allChats[i]);
                     var user = {
                       data: res.data.allChats[i],
                       name: res.data.allChats[i].name,
@@ -80,7 +111,7 @@ class Messaging extends React.Component<MessagingProps, any> {
                     groups.push(user);
                   } else {
                     if (res.data.allChats[i]?.userA != undefined) {
-                      console.log('user type');
+                      // console.log('user type');
 
                       var ur = {
                         data: res.data.allChats[i],

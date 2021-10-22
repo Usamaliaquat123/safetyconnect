@@ -749,35 +749,20 @@ export const APPLE_AUTH = async (navigator: any, page: string) => {
   return null;
 };
 
-export const setupSocket = (userToken: any, socket: any) => {
-  // console.log('Chat: socket', this.state);
-
-  if (userToken && !socket) {
-    const newSocket = io.connect(process.env.REACT_APP_CHAT_API, {
-      query: {
-        token: userToken,
-      },
-    });
-    console.log('Chat: New Socket Created');
-
-    newSocket.on('error', (data) => {
-      console.log(data || 'Chat: socket error');
-    });
-
-    // newSocket.on('testEmit', (data) => console.log('Chat: testEmit', data));
-
-    newSocket.on('disconnect', () => {
-      setSocket(null);
-      setTimeout(setupSocket(userToken), 3000);
-      console.log('Chat:', 'error', 'Socket Disconnected!');
-    });
-
-    newSocket.on('connect', () => {
-      console.log('Chat:', 'success', 'Socket Connected!');
-    });
-
-    setSocket(newSocket);
-  }
+export const fetchAuthToken = () => {
+  return new Promise((resolve, reject) => {
+    try {
+      Auth.currentSession().then((session: any) => {
+        if (session.idToken.jwtToken) {
+          resolve(session.idToken.jwtToken);
+        } else {
+          reject('got an error on fetching token ');
+        }
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
 };
 
 export const navigationTransition = {
