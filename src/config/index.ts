@@ -89,6 +89,10 @@ const configSentry = () => {
   });
 };
 
+
+
+
+
 // const googleSignInSetup = () => {
 //   GoogleSignin.configure({
 //     scopes:[]

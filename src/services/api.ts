@@ -253,6 +253,8 @@ const createApi = (
   const getAllChats = (user: string, organization: string) =>
     getChatApi.get(`chat/allchats?user=${user}&organization=${organization}`);
   const createGroupApi = (data: any) => getChatApi.post(`chat`, data);
+  const openGroupChat = (roomId: any) =>
+    getChatApi.get(`chat?roomId=${roomId}`);
 
   return {
     searchApi,
@@ -264,6 +266,7 @@ const createApi = (
     createGroupApi,
     logs,
     getFileApi,
+    openGroupChat,
     getFilesUrl,
     uploadFile,
     actionTableUrl,

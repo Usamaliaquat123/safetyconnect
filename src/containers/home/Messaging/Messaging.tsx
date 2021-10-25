@@ -46,9 +46,10 @@ class Messaging extends React.Component<MessagingProps, any> {
     console.log(token);
 
     const newSocket = io.connect('https://backend.safetyconnect.ai:5007', {
-      // transports: ['polling'],
+      transports: ['websocket'],
       withCredentials: true,
-      // jsonp: false,
+      jsonp: false,
+
       // origins: '*',
       query: {
         token: token,
@@ -197,16 +198,26 @@ class Messaging extends React.Component<MessagingProps, any> {
                 onPress={() => {}}>
                 </TouchableOpacity> */}
                 {/* <View style={styles.line} /> */}
-                {this.state.group.map((d: Imessage) => (
+                {this.state.group.map((d: any) => (
                   <User
                     id={d.userId}
                     name={d.name}
                     // pendingsms={d.notseen}
                     image={d.image}
                     isOnline={d.isonline}
-                    onPress={() =>
-                      this.props.navigation.navigate('Chat', {data: d})
-                    }
+                    onPress={() => {
+                      console.log(d);
+                      createApi
+                        .createApi()
+                        .openGroupChat(d.data._id)
+                        .then((res) => {
+                          // console.log(res.data.data[0]);
+
+                          this.props.navigation.navigate('Chat', {
+                            data: res.data.data[0],
+                          });
+                        });
+                    }}
                   />
                 ))}
               </View>

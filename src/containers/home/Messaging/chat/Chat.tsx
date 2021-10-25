@@ -8,7 +8,7 @@ import {
   Modal,
 } from 'react-native';
 import {connect} from 'react-redux';
-import {Create_sor} from '@service';
+import {createApi, Create_sor} from '@service';
 import {
   GiftedChat,
   InputToolbar,
@@ -39,6 +39,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {clockRunning, color} from 'react-native-reanimated';
+import {AsyncStorage} from '@aws-amplify/core';
+import {getCurrentOrganization} from '@utils/utils';
 type ChatNavigationProp = StackNavigationProp<StackNavigatorProps, 'Chat'>;
 type ChatRouteProp = RouteProp<StackNavigatorProps, 'Chat'>;
 
@@ -56,50 +58,7 @@ class Chat extends React.Component<ChatProps, any> {
       imageViewer: false,
       images: [],
       isVideoFullscreen: false,
-      messages: [
-        {
-          _id: 2,
-          // You can also add a video prop:
-          text: 'Hello usama',
-          createdAt: 1611039685053,
-
-          user: {
-            _id: 1,
-            name: 'Usaam',
-            avatar: 'https://placeimg.com/140/140/any',
-          },
-        },
-        {
-          _id: 1,
-          text: 'Hello raazia',
-          // Image props.
-          image: [
-            'https://user-images.githubusercontent.com/33973828/104999836-62342e80-59e2-11eb-8224-a2869128c350.png',
-            'https://user-images.githubusercontent.com/33973828/104999836-62342e80-59e2-11eb-8224-a2869128c350.png',
-          ],
-          // You can also add a video prop:
-          video: [
-            'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-          ],
-          createdAt: 1611039702641,
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
-          },
-        },
-        {
-          _id: 1,
-          // You can also add a video prop:
-          text: 'Hello raazias',
-          createdAt: 1611039703308,
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
-          },
-        },
-      ],
+      messages: [],
     };
   }
   renderBubble = (props: BubbleProps<IMessage>) => {
@@ -189,7 +148,83 @@ class Chat extends React.Component<ChatProps, any> {
     );
   };
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    console.log('data');
+    console.log(this.props.route.params.data);
+
+    AsyncStorage.getItem('email')
+      .then((user) => {
+        getCurrentOrganization().then((orgId: any) => {
+          createApi
+            .createApi()
+            .getOrganization(orgId)
+            .then((org: any) => {
+              console.log('members');
+              console.log(org.data.data.members);
+
+              var dta = [];
+              for (
+                let i = 0;
+                i < this.props.route.params.data.chat.length;
+                i++
+              ) {
+                if (
+                  org.data.data.members.filter(
+                    (d: any) =>
+                      d.email == this.props.route.params.data.chat[i].user,
+                  )[0].email == user
+                ) {
+                  console.log('user hai');
+                  console.log(this.props.route.params.data.chat[i].createdAt);
+                  dta.push({
+                    _id: this.props.route.params.data.chat[i]._id,
+                    // You can also add a video prop:
+                    text: this.props.route.params.data.chat[i].message,
+                    createdAt: this.props.route.params.data.chat[i].createdAt,
+                    user: {
+                      _id: 1,
+                      name: org.data.data.members.filter(
+                        (d: any) =>
+                          d.email == this.props.route.params.data.chat[i].user,
+                      )[0].name,
+                      avatar: org.data.data.members.filter(
+                        (d: any) =>
+                          d.email == this.props.route.params.data.chat[i].user,
+                      )[0].img_url,
+                    },
+                  });
+                } else {
+                  this.props.route.params.data.chat[i].createdAt;
+                  dta.push({
+                    _id: this.props.route.params.data.chat[i]._id,
+                    // You can also add a video prop:
+                    text: this.props.route.params.data.chat[i].message,
+                    createdAt: this.props.route.params.data.chat[i].createdAt,
+                    user: {
+                      _id: org.data.data.members.filter(
+                        (d: any) =>
+                          d.email == this.props.route.params.data.chat[i].user,
+                      )[0]._id,
+                      name: org.data.data.members.filter(
+                        (d: any) =>
+                          d.email == this.props.route.params.data.chat[i].user,
+                      )[0].name,
+                      avatar: org.data.data.members.filter(
+                        (d: any) =>
+                          d.email == this.props.route.params.data.chat[i].user,
+                      )[0].img_url,
+                    },
+                  });
+                }
+              }
+              this.setState({messages: dta});
+            });
+        });
+      })
+      .catch((err) => {});
+
+    // console.log(dta);
+  };
   renderInput = (props: InputToolbarProps) => (
     <InputToolbar
       {...props}
@@ -259,15 +294,15 @@ class Chat extends React.Component<ChatProps, any> {
               rounded
               containerStyle={styles.containerAvatar}
               source={{
-                uri: this.props.route.params.data.image,
+                uri: this.props.route.params.data.img_url,
               }}
             />
             <View
               style={[
                 styles.isonline,
-                this.props.route.params.data.isonline == false
-                  ? {opacity: 0.7, backgroundColor: colors.riskIcons.orrange}
-                  : null,
+                // this.props.route.params.data.isonline == false
+                //   ? {opacity: 0.7, backgroundColor: colors.riskIcons.orrange}
+                //   : null,
               ]}
             />
           </View>

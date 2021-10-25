@@ -63,6 +63,9 @@ class ChatGroup extends React.Component<ChatGroupProps, any> {
           .then((orgs: any) => {
             console.log('orgs.data.data.members');
             console.log(orgs.data.data.members);
+
+
+            
             orgs.data.data.members.map((d, i) => {
               if (d.email != email) {
                 orgs.data.data.members[i]['is_selected'] = false;
