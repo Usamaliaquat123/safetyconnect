@@ -7,6 +7,8 @@ import {colors} from '@theme';
 export interface HeaderProps {
   onBackPress: Function;
   profile: string;
+  title: string;
+  isback: boolean;
 }
 
 export default class Header extends React.Component<HeaderProps, any> {
@@ -14,15 +16,17 @@ export default class Header extends React.Component<HeaderProps, any> {
     return (
       <View style={styles.header}>
         <View style={styles.headertle}>
-          {/* <Icon
-            onPress={() => this.props.onBackPress()}
-            size={25}
-            name="arrow-back-outline"
-            type="ionicon"
-            color={colors.secondary}
-          /> */}
+          {this.props.isback == true ? (
+            <Icon
+              onPress={() => this.props.onBackPress()}
+              size={25}
+              name="arrow-back-outline"
+              type="ionicon"
+              color={colors.secondary}
+            />
+          ) : null}
           <View>
-            <Text style={styles.title}>Messages</Text>
+            <Text style={styles.title}>{this.props.title}</Text>
             <View style={styles.underScrore} />
           </View>
           <View style={styles.avatarView}>

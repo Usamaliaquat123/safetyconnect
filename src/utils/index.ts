@@ -44,12 +44,14 @@ import {
   getAllProjects,
   FiveWhySubMenus,
   navigationTransition,
+  localToUtc,
   filterInvolvedPerson,
 } from './utils';
 export {
   classifySor,
   validatePassword,
   getAllProjects,
+  localToUtc,
   filterInvolvedPerson,
   getLinkParam,
   fetchAuthToken,

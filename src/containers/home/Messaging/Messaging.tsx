@@ -17,6 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {allRecentActivity, createApi} from '@service';
 
 import styles from './styles';
+import {AnalyticsClass} from '@aws-amplify/analytics/lib-esm/Analytics';
 type MessagingNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'Messaging'
@@ -38,6 +39,7 @@ class Messaging extends React.Component<MessagingProps, any> {
       group: groupConversation,
       currentUser: {},
       tokens: '',
+      socket: null,
     };
   }
 
@@ -68,6 +70,8 @@ class Messaging extends React.Component<MessagingProps, any> {
 
     newSocket.on('disconnect', (e) => {
       // setSocket(null);
+
+      this.setState({socket: null});
       // setTimeout(this.setupSocket(token), 3000);
       console.log('Chat:', 'error', 'Socket Disconnected!', e);
     });
@@ -75,6 +79,8 @@ class Messaging extends React.Component<MessagingProps, any> {
     newSocket.on('connect', () => {
       console.log('Chat:', 'success', 'Socket Connected!');
     });
+
+    this.setState({socket: newSocket});
   };
 
   componentDidMount = () => {
@@ -150,6 +156,7 @@ class Messaging extends React.Component<MessagingProps, any> {
         <View style={{backgroundColor: colors.primary}}>
           <ScrollView>
             <Header
+              title="Messaging"
               onBackPress={() => this.props.navigation.goBack()}
               profile={this.state.currentUser.img_url}
             />
@@ -171,9 +178,13 @@ class Messaging extends React.Component<MessagingProps, any> {
                     pendingsms={d.notseen}
                     image={d.image}
                     isOnline={d.isonline}
-                    onPress={() =>
-                      this.props.navigation.navigate('Chat', {data: d})
-                    }
+                    onPress={() => {
+                      this.props.navigation.navigate('Chat', {
+                        data: d,
+                        type: 'private',
+                        socket: this.state.socket,
+                      });
+                    }}
                   />
                 ))}
               </View>
@@ -215,6 +226,8 @@ class Messaging extends React.Component<MessagingProps, any> {
 
                           this.props.navigation.navigate('Chat', {
                             data: res.data.data[0],
+                            type: 'group',
+                            socket: this.state.socket,
                           });
                         });
                     }}

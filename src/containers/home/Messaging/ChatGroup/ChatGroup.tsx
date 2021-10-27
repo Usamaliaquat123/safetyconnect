@@ -64,8 +64,6 @@ class ChatGroup extends React.Component<ChatGroupProps, any> {
             console.log('orgs.data.data.members');
             console.log(orgs.data.data.members);
 
-
-            
             orgs.data.data.members.map((d, i) => {
               if (d.email != email) {
                 orgs.data.data.members[i]['is_selected'] = false;
@@ -128,6 +126,8 @@ class ChatGroup extends React.Component<ChatGroupProps, any> {
         <View style={{backgroundColor: colors.primary}}>
           <ScrollView>
             <Header
+              isback={true}
+              title={'New Chat'}
               onBackPress={() => this.props.navigation.goBack()}
               profile={this.state.currentUser.img_url}
             />

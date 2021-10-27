@@ -40,7 +40,7 @@ import {
 } from 'react-native-responsive-screen';
 import {clockRunning, color} from 'react-native-reanimated';
 import {AsyncStorage} from '@aws-amplify/core';
-import {getCurrentOrganization} from '@utils/utils';
+import {getCurrentOrganization, localToUtc} from '@utils/utils';
 type ChatNavigationProp = StackNavigationProp<StackNavigatorProps, 'Chat'>;
 type ChatRouteProp = RouteProp<StackNavigatorProps, 'Chat'>;
 
@@ -58,7 +58,10 @@ class Chat extends React.Component<ChatProps, any> {
       imageViewer: false,
       images: [],
       isVideoFullscreen: false,
+      reciever: '',
+      organizationId: '',
       messages: [],
+      socket: props.route.params.socket,
     };
   }
   renderBubble = (props: BubbleProps<IMessage>) => {
@@ -152,9 +155,18 @@ class Chat extends React.Component<ChatProps, any> {
     console.log('data');
     console.log(this.props.route.params.data);
 
+    this.props.route.params.socket.emit('joinRoom', {
+      chatroomId: this.props.route.params.data._id,
+    });
     AsyncStorage.getItem('email')
       .then((user) => {
         getCurrentOrganization().then((orgId: any) => {
+          console.log('orgId');
+          console.log(orgId);
+          this.setState({
+            organizationId: orgId,
+            reciever: this.props.route.params.data._id,
+          });
           createApi
             .createApi()
             .getOrganization(orgId)
@@ -174,8 +186,6 @@ class Chat extends React.Component<ChatProps, any> {
                       d.email == this.props.route.params.data.chat[i].user,
                   )[0].email == user
                 ) {
-                  console.log('user hai');
-                  console.log(this.props.route.params.data.chat[i].createdAt);
                   dta.push({
                     _id: this.props.route.params.data.chat[i]._id,
                     // You can also add a video prop:
@@ -218,6 +228,34 @@ class Chat extends React.Component<ChatProps, any> {
                 }
               }
               this.setState({messages: dta});
+
+              this.props.route.params.socket.on(
+                `newMessage/${this.props.route.params.data._id}`,
+                (message: any) => {
+                  console.log(
+                    'Chat: receiving new group message',
+                    message,
+                    'state id',
+                    this.props.route.params.data._id,
+                  );
+
+                  console.log('messageasdsad');
+                  console.log(message);
+
+                  // console.log(
+                  //   org.data.data.members.filter(
+                  //     (d: any) => user == message.user,
+                  //   ).length == 0
+                  //     ? Date.now()
+                  //     : 1,
+                  // );
+
+                  console.log('data aaya h');
+                  // console.log(dta);
+                  // this.state.messages.push();
+                  // const newMessages = [...chatMessages, message];
+                },
+              );
             });
         });
       })
@@ -257,14 +295,54 @@ class Chat extends React.Component<ChatProps, any> {
         <TouchableOpacity
           onPress={() => {
             if (props.text && props.onSend) {
-              props.onSend(
-                {
-                  text: props.text?.trim(),
-                  // user: props,
-                  _id: 2,
-                },
-                true,
-              );
+              console.log(props.text?.trim());
+
+              // var message = {
+              //   receiver: this.state.reciever,
+              //   organization: this.state.organizationId,
+              //   message: props.text?.trim(),
+              //   files: [],
+              //   // this will need to converted in utc
+              //   createdAt: new Date(),
+              // };
+
+              console.log('message');
+              // console.log(message);
+
+              if (this.props.route.params.type == 'group') {
+                const message = {
+                  chatroomId: this.state.reciever,
+                  createdAt: localToUtc(),
+                  message: props.text?.trim(),
+                  files: [],
+                };
+                console.log(localToUtc());
+                this.props.route.params.socket.emit('chatroomMessage', message);
+              } else {
+                var message = {
+                  receiver: this.state.reciever,
+                  organization: this.state.organizationId,
+                  message: props.text?.trim(),
+                  files: [],
+                  // this will need to converted in utc
+                  createdAt: localToUtc(),
+                };
+                this.props.route.params.socket.emit('chatroomMessage', message);
+              }
+
+              // this.props.route.params.socket
+              //   .emit('privateMessage', message)
+              //   .then((res) => {
+              //     console.log(res);
+              //   });
+              // props.onSend(
+              //   {
+              //     text: props.text?.trim(),
+              //     // user: props,
+              //     _id: 1,
+              //   },
+              //   true,
+              // );
             }
           }}>
           <View style={{width: wp(5), height: wp(5), marginBottom: wp(2.5)}}>
@@ -280,11 +358,7 @@ class Chat extends React.Component<ChatProps, any> {
       </View>
     );
   };
-  renderFooter = () => (
-    <View>
-      <Text>sdsd</Text>
-    </View>
-  );
+
   render() {
     return (
       <View style={{flex: 1, backgroundColor: colors.secondary}}>
@@ -317,7 +391,19 @@ class Chat extends React.Component<ChatProps, any> {
               color={colors.primary}
             />
             <Icon
-              onPress={() => this.props.navigation.goBack()}
+              onPress={() => {
+                if (this.state.type == 'room') {
+                  this.props.route.params.socket.emit('leaveRoom', {
+                    chatroomId: this.state.reciever,
+                  });
+                } else {
+                  this.props.route.params.socket.emit('leaveRoom', {
+                    chatroomId: this.state.reciever,
+                  });
+                }
+
+                this.props.navigation.goBack();
+              }}
               size={wp(6)}
               name="cross"
               type="entypo"
