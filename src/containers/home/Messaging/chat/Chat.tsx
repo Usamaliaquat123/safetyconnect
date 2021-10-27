@@ -173,7 +173,7 @@ class Chat extends React.Component<ChatProps, any> {
             .then((org: any) => {
               console.log('members');
               console.log(org.data.data.members);
-
+              console.log(this.props.route.params.data);
               var dta = [];
               for (
                 let i = 0;
@@ -337,7 +337,6 @@ class Chat extends React.Component<ChatProps, any> {
                   message: props.text?.trim(),
                   files: [],
                 };
-                console.log(localToUtc());
                 this.props.route.params.socket.emit('chatroomMessage', message);
               } else {
                 var message = {
@@ -348,23 +347,8 @@ class Chat extends React.Component<ChatProps, any> {
                   // this will need to converted in utc
                   createdAt: localToUtc(),
                 };
-                console.log(localToUtc());
-                this.props.route.params.socket.emit('chatroomMessage', message);
+                this.props.route.params.socket.emit('privateMessage', message);
               }
-
-              // this.props.route.params.socket
-              //   .emit('privateMessage', message)
-              //   .then((res) => {
-              //     console.log(res);
-              //   });
-              // props.onSend(
-              //   {
-              //     text: props.text?.trim(),
-              //     // user: props,
-              //     _id: 1,
-              //   },
-              //   true,
-              // );
             }
           }}>
           <View style={{width: wp(5), height: wp(5), marginBottom: wp(2.5)}}>

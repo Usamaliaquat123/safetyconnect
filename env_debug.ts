@@ -1,4 +1,4 @@
-export const BASE_URI = 'https://dev.safetyconnect.ai:12222';
+export const BASE_URI = 'https://dev.safetyconnect.ai';
 
 // # Cognito keys
 export const REACT_APP_COGNITO_REGION = 'us-east-2';

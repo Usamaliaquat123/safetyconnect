@@ -86,6 +86,7 @@ export interface sor {
   project?: string;
   limit?: number;
   page?: number;
+  email?: string;
   query?: Object;
 }
 export interface user_location {

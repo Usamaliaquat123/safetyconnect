@@ -11,7 +11,7 @@ import {connect} from 'react-redux';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import io from 'socket.io-client';
 import {fetchAuthToken, getCurrentOrganization, searchInObjects} from '@utils';
-import {Imessage} from '@typings';
+import {Imessage, orgnaization} from '@typings';
 import {Search, Header, User} from '@components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {allRecentActivity, createApi} from '@service';
@@ -39,6 +39,7 @@ class Messaging extends React.Component<MessagingProps, any> {
       group: groupConversation,
       currentUser: {},
       tokens: '',
+      orgnaizationId: '',
       socket: null,
     };
   }
@@ -95,11 +96,16 @@ class Messaging extends React.Component<MessagingProps, any> {
         .then((res: any) => {
           getCurrentOrganization().then((orgId: any) => {
             console.log(orgId);
+
+            this.setState({orgnaizationId: orgId});
+            // this.
             console.log(res.data.data._id);
             createApi
               .createApi()
               .getAllChats(res.data.data._id, orgId)
               .then((res: any) => {
+                console.log('asdsads');
+                console.log(res.data);
                 // console.log(res.data.allChats);
                 var usr = [];
                 var groups = [];
@@ -179,11 +185,30 @@ class Messaging extends React.Component<MessagingProps, any> {
                     image={d.image}
                     isOnline={d.isonline}
                     onPress={() => {
-                      this.props.navigation.navigate('Chat', {
-                        data: d,
-                        type: 'private',
-                        socket: this.state.socket,
-                      });
+                      console.log('current data uahdsajhdjh');
+                      console.log(d);
+
+                      console.log(this.state.currentUser._id);
+                      console.log(this.state.orgnaizationId);
+                      console.log(d.data._id);
+
+                      createApi
+                        .createApi()
+                        .openPrivateChat(
+                          this.state.currentUser._id,
+                          this.state.orgnaizationId,
+                          d.data._id,
+                        )
+                        .then((res) => {
+                          console.log('res tel');
+                          console.log(res);
+
+                          // this.props.navigation.navigate('Chat', {
+                          //   data: d,
+                          //   type: 'private',
+                          //   socket: this.state.socket,
+                          // });
+                        });
                     }}
                   />
                 ))}

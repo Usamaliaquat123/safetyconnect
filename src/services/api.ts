@@ -9,20 +9,22 @@ import {
   country,
 } from '@typings';
 
+import {BASE_URI} from '../../env_debug';
+
 // our "constructor"
-const base_uri = `https://backend.safetyconnect.ai`;
+const base_uri = `${BASE_URI}`;
 const createApi = (
-  baseURL: string = `${base_uri}:12222/`,
-  obsbaseUrl: string = `${base_uri}:5003`,
-  repBaseAi: string = `${'https://backend.safetyconnect.ai'}:5002/`,
-  baseAi: string = `${base_uri}:5004/`,
+  baseURL: string = `${BASE_URI}:12222/`,
+  obsbaseUrl: string = `${BASE_URI}:5003`,
+  repBaseAi: string = `${BASE_URI}:5002/`,
+  baseAi: string = `${BASE_URI}:5004/`,
   // External aws api
   // upload files
   getFile: string = `https://v7qm45ginh.execute-api.us-west-1.amazonaws.com/`,
   getFileUri: string = `https://eg6gj04g91.execute-api.us-west-1.amazonaws.com/`,
   uploadFilesUri?: string,
   getPublicFiles: string = 'https://3i07qolh6j.execute-api.us-west-1.amazonaws.com',
-  getChatApis: string = 'https://backend.safetyconnect.ai:5007/',
+  getChatApis: string = `${BASE_URI}:5007/`,
   // backendA?: string = `${backend}:5007/`,
 ) => {
   const baseapi = apisauce.create({
@@ -255,11 +257,16 @@ const createApi = (
   const createGroupApi = (data: any) => getChatApi.post(`chat`, data);
   const openGroupChat = (roomId: any) =>
     getChatApi.get(`chat?roomId=${roomId}`);
+  const openPrivateChat = (userId: any, organization: string, chatId: string) =>
+    getChatApi.get(
+      `chat/private?organization=${organization}&userId=${userId}&receiverId=${chatId}`,
+    );
 
   return {
     searchApi,
     getLocations,
     taskAssignedTo,
+    openPrivateChat,
     taskAssignedBy,
     tableData,
     createFiveWhy,
