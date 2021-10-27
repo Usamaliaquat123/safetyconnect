@@ -788,7 +788,7 @@ export const localToUtc = () => {
     date.getUTCSeconds(),
   );
 
-  return new Date(now_utc);
+  return now_utc;
 };
 // Doc Type picker
 export const DocType = (res: any, attachments: Array<Object>) => {

@@ -5,6 +5,14 @@ import {CognitoIdentityClient} from '@aws-sdk/client-cognito-identity';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import OneSignal from 'react-native-onesignal';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
+import {
+  REACT_APP_COGNITO_REDIRECT_SIGNIN,
+  REACT_APP_COGNITO_REDIRECT_SIGNOUT,
+  REACT_APP_AWS_DOMAIN,
+  REACT_APP_COGNITO_APP_CLIENT_ID,
+  REACT_APP_COGNITO_USER_POOL_ID,
+  REACT_APP_COGNITO_REGION,
+} from '../../env_prod';
 import jwt_decode from 'jwt-decode';
 
 import {Linking} from 'react-native';
@@ -89,10 +97,6 @@ const configSentry = () => {
   });
 };
 
-
-
-
-
 // const googleSignInSetup = () => {
 //   GoogleSignin.configure({
 //     scopes:[]
@@ -153,16 +157,16 @@ const AmlifyConfigure = () => {
       Amplify.configure({
         Auth: {
           mandatorySignIn: true,
-          region: 'us-east-2',
-          userPoolId: 'us-east-2_x17ZJQGxn',
+          region: REACT_APP_COGNITO_REGION,
+          userPoolId: REACT_APP_COGNITO_USER_POOL_ID,
           // identityPoolId: '÷',
-          userPoolWebClientId: '6iltru1hbqg2op98f6s696p8p',
+          userPoolWebClientId: REACT_APP_COGNITO_APP_CLIENT_ID,
         },
         oauth: {
           scopes: ['email', 'openId'],
-          domain: 'safetyconnect.auth.us-east-2.amazoncognito.com',
-          redirectSignIn: 'safetyconnect://chat/Eri',
-          redirectSignOut: 'safetyconnect://chat/Eri',
+          domain: REACT_APP_AWS_DOMAIN,
+          redirectSignIn: REACT_APP_COGNITO_REDIRECT_SIGNIN,
+          redirectSignOut: REACT_APP_COGNITO_REDIRECT_SIGNOUT,
           urlOpener,
           responseType: 'code', // or 'token', note that REFRESH token will only be generated when the responseType is code
         },

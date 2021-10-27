@@ -249,10 +249,31 @@ class Chat extends React.Component<ChatProps, any> {
                   //     ? Date.now()
                   //     : 1,
                   // );
-
-                  console.log('data aaya h');
+                  var dta = {
+                    // _id:
+                    //   org.data.data.members.filter(
+                    //     (d: any) => user == message.user,
+                    //   ).length == 0,
+                    // You can also add a video prop:
+                    text: message.message,
+                    createdAt: message.createdAt,
+                    user: {
+                      _id: org.data.data.members.filter(
+                        (d: any) => d.email == message.user,
+                      )[0]._id,
+                      name: org.data.data.members.filter(
+                        (d: any) => d.email == message.user,
+                      )[0].name,
+                      avatar: org.data.data.members.filter(
+                        (d: any) => d.email == message.user,
+                      )[0].img_url,
+                    },
+                  };
+                  // console.log('data');
                   // console.log(dta);
-                  // this.state.messages.push();
+                  this.state.messages.push(dta);
+
+                  this.setState({});
                   // const newMessages = [...chatMessages, message];
                 },
               );
@@ -327,6 +348,7 @@ class Chat extends React.Component<ChatProps, any> {
                   // this will need to converted in utc
                   createdAt: localToUtc(),
                 };
+                console.log(localToUtc());
                 this.props.route.params.socket.emit('chatroomMessage', message);
               }
 
