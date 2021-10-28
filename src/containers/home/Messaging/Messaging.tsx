@@ -204,7 +204,7 @@ class Messaging extends React.Component<MessagingProps, any> {
                           // console.log(res);
 
                           this.props.navigation.navigate('Chat', {
-                            data: res.data.chat,
+                            data: res.data,
                             type: 'private',
                             socket: this.state.socket,
                           });

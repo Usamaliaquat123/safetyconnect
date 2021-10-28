@@ -347,6 +347,9 @@ class Chat extends React.Component<ChatProps, any> {
                   // this will need to converted in utc
                   createdAt: localToUtc(),
                 };
+
+                console.log('message');
+                console.log(message);
                 this.props.route.params.socket.emit('privateMessage', message);
               }
             }
