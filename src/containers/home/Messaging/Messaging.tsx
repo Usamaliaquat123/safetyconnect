@@ -197,17 +197,17 @@ class Messaging extends React.Component<MessagingProps, any> {
                         .openPrivateChat(
                           this.state.currentUser._id,
                           this.state.orgnaizationId,
-                          d.data._id,
+                          d.userId,
                         )
-                        .then((res) => {
-                          console.log('res tel');
-                          console.log(res);
+                        .then((res: any) => {
+                          // console.log('res tel');
+                          // console.log(res);
 
-                          // this.props.navigation.navigate('Chat', {
-                          //   data: d,
-                          //   type: 'private',
-                          //   socket: this.state.socket,
-                          // });
+                          this.props.navigation.navigate('Chat', {
+                            data: res.data.chat,
+                            type: 'private',
+                            socket: this.state.socket,
+                          });
                         });
                     }}
                   />
