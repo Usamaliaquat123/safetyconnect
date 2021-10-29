@@ -1,4 +1,4 @@
-package com.safetyconnectai;
+package com.safetyconnecta;
 import com.rnfs.RNFSPackage;
 import com.facebook.react.ReactActivity;
 

@@ -22,6 +22,7 @@ import {
 import {Auth} from 'aws-amplify';
 import {createApi} from '@service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 type MoreNavigationProp = StackNavigationProp<BottomTabNavigatorProp, 'More'>;
 type MoreRouteProp = RouteProp<BottomTabNavigatorProp, 'More'>;
@@ -199,7 +200,7 @@ export default class More extends React.Component<MoreProps, any> {
                   AsyncStorage.removeItem('email');
                   AsyncStorage.removeItem('organizationId');
                   AsyncStorage.removeItem('projectId');
-
+                  GoogleSignin.signOut();
                   this.props.navigation.dispatch(
                     CommonActions.reset({
                       index: 1,

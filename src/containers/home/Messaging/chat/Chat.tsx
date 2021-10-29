@@ -155,11 +155,19 @@ class Chat extends React.Component<ChatProps, any> {
     console.log('data');
     console.log(this.props.route.params.data);
 
-    this.props.route.params.socket.emit('joinRoom', {
-      chatroomId: this.props.route.params.data._id,
-    });
+    if (this.props.route.params.type == 'group') {
+      this.props.route.params.socket.emit('joinRoom', {
+        chatroomId: this.props.route.params.data._id,
+      });
+    }
+
     AsyncStorage.getItem('email')
       .then((user) => {
+        if (this.props.route.params.type == 'private') {
+          this.props.route.params.socket.emit('joinPrivate', {
+            email: user,
+          });
+        }
         getCurrentOrganization().then((orgId: any) => {
           console.log('orgId');
           console.log(orgId);
@@ -230,7 +238,11 @@ class Chat extends React.Component<ChatProps, any> {
               this.setState({messages: dta});
 
               this.props.route.params.socket.on(
-                `newMessage/${this.props.route.params.data._id}`,
+                `newMessage/${
+                  this.props.route.params.type == 'group'
+                    ? this.props.route.params.data._id
+                    : this.props.route.params.data._id
+                }`,
                 (message: any) => {
                   console.log(
                     'Chat: receiving new group message',
@@ -337,6 +349,8 @@ class Chat extends React.Component<ChatProps, any> {
                   message: props.text?.trim(),
                   files: [],
                 };
+                console.log('group message');
+                console.log(message);
                 this.props.route.params.socket.emit('chatroomMessage', message);
               } else {
                 var message = {

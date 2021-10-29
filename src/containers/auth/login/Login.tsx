@@ -387,9 +387,8 @@ class Login extends React.Component<LoginProps, any> {
                       this.state.selectedInput == 2
                         ? {borderColor: colors.green}
                         : {borderColor: colors.textOpa},
-                  {padding: wp(3)}
-                  
-                  ]}>
+                      {padding: wp(3)},
+                    ]}>
                     <TextInput
                       secureTextEntry={this.state.isEye}
                       onFocus={() => {
