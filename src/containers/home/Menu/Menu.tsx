@@ -168,50 +168,53 @@ class Menu extends React.Component<MenuProps, any> {
             <Text style={styles.auditReportText}>Create Organization</Text>
           </TouchableOpacity> */}
           {/* Create project */}
-          <TouchableOpacity
-            onPress={() => {
-              //   this.setState({createModal: false});
 
-              if (this.state.userEmail === this.state.orgCreatedBy) {
+          {this.state.userEmail === this.state.orgCreatedBy && (
+            <TouchableOpacity
+              onPress={() => {
+                //   this.setState({createModal: false});
                 this.props.navigation.navigate('createProject');
                 this.setState({createModal: false});
-              }
-            }}
-            style={styles.containerOfIcon}>
-            <View style={styles.incidentContaineR}>
-              <Image
-                source={images.homeIcon.incidentreporting}
-                style={GlStyles.images}
-              />
-            </View>
-            <Text style={styles.auditReportText}>Create Project</Text>
-          </TouchableOpacity>
+              }}
+              style={styles.containerOfIcon}>
+              <View style={styles.incidentContaineR}>
+                <Image
+                  source={images.homeIcon.incidentreporting}
+                  style={GlStyles.images}
+                />
+              </View>
+              <Text style={styles.auditReportText}>Create Project</Text>
+            </TouchableOpacity>
+          )}
           {/* invite user */}
-          <TouchableOpacity
-            onPress={() => {
-              // userEmail: {},
-              // : ' ',
 
-              if (this.state.userEmail === this.state.orgCreatedBy) {
+          {this.state.userEmail === this.state.orgCreatedBy && (
+            <TouchableOpacity
+              onPress={() => {
                 this.props.navigation.navigate('InvitePeople');
                 this.setState({createModal: false});
-              }
-            }}
-            style={styles.containerOfIcon}>
-            <View style={styles.incidentContaineR}>
-              {/* <Image
+                // if (this.state.userEmail === this.state.orgCreatedBy) {
+                // userEmail: {},
+                // : ' ',
+
+                // }
+              }}
+              style={styles.containerOfIcon}>
+              <View style={styles.incidentContaineR}>
+                {/* <Image
                 source={images.homeIcon.incidentreporting}
                 style={GlStyles.images}
               /> */}
-              <Icon
-                name="adduser"
-                type="antdesign"
-                color={colors.green}
-                iconStyle={{fontWeight: 'bold'}}
-              />
-            </View>
-            <Text style={styles.auditReportText}>Invite</Text>
-          </TouchableOpacity>
+                <Icon
+                  name="adduser"
+                  type="antdesign"
+                  color={colors.green}
+                  iconStyle={{fontWeight: 'bold'}}
+                />
+              </View>
+              <Text style={styles.auditReportText}>Invite</Text>
+            </TouchableOpacity>
+          )}
           {/* line height */}
           <View
             style={{

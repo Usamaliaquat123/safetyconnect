@@ -143,7 +143,7 @@ const urlOpener = async (urls: any, redirectUrl: any) => {
           .catch((err) => console.log(err));
       });
     } catch (error) {
-      console.log('sasta');
+      console.log('error on line 146');
       console.log(error);
     }
     Linking.openURL(newUrl);
