@@ -12,7 +12,7 @@ import {
   REACT_APP_COGNITO_APP_CLIENT_ID,
   REACT_APP_COGNITO_USER_POOL_ID,
   REACT_APP_COGNITO_REGION,
-} from '../../env_debug';
+} from '../../env_prod';
 import jwt_decode from 'jwt-decode';
 
 import {Linking} from 'react-native';
