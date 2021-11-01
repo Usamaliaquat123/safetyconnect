@@ -525,7 +525,7 @@ class Login extends React.Component<LoginProps, any> {
                   this.loginWithGoogle();
                 }}
                 style={styles.siginwithGoogle}>
-                <View style={{width: wp(7), height: wp(7), marginRight: wp(3)}}>
+                <View style={{width: wp(5), height: wp(5), marginRight: wp(3)}}>
                   <Image source={images.google} style={GlStyles.images} />
                 </View>
                 <Text style={styles.signinTextGoogle}>
@@ -538,17 +538,17 @@ class Login extends React.Component<LoginProps, any> {
                   this.loginWithGoogle();
                 }}
                 style={styles.siginwithGoogle}>
-                <View
-                  style={{width: wp(10), height: wp(7), marginRight: wp(3)}}>
-                  {/* <Image source={images.} style={GlStyles.images} /> */}
-                  <Icon
-                    containerStyle={{marginLeft: wp(3)}}
-                    size={wp(5)}
-                    name="apple1"
-                    type="antdesign"
-                    color={colors.text}
-                  />
-                </View>
+                {/* <View
+                  style={{width: wp(10), height: wp(7), marginRight: wp(3)}}> */}
+                {/* <Image source={images.} style={GlStyles.images} /> */}
+                <Icon
+                  containerStyle={{marginLeft: wp(3), marginRight: wp(3)}}
+                  size={wp(6)}
+                  name="apple1"
+                  type="antdesign"
+                  color={colors.text}
+                />
+                {/* </View> */}
                 <Text style={styles.signinTextGoogle}>
                   Continue with Apple ID{' '}
                 </Text>

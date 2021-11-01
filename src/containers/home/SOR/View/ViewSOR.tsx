@@ -186,7 +186,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
-    this.props.start(false, this.scrollView);
+    // this.props.start(false, this.scrollView);
     if (this.props.route.params.data.esclate_to != undefined) {
       this.setState({esclate_to: this.props.route.params.data.esclate_to});
     }
