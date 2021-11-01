@@ -86,6 +86,8 @@ class Menu extends React.Component<MenuProps, any> {
               .createApi()
               .getOrganization(orgId)
               .then((orgD: any) => {
+                console.log('orgD hai yahan');
+                console.log(orgD);
                 this.setState({orgCreatedBy: orgD.data.data.created_by});
               });
 
