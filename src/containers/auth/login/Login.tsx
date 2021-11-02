@@ -80,7 +80,7 @@ class Login extends React.Component<LoginProps, any> {
   };
 
   handleOpenURL(navigation: any) {
-    console.log('asdsadasdjagsdjasgdasjhgj ');
+    // console.log('asdsadasdjagsdjasgdasjhgj ');
     // this.setState({loading: true, errorModal: true});
     try {
       Auth.currentSession().then((user: any) => {
@@ -94,33 +94,13 @@ class Login extends React.Component<LoginProps, any> {
           .createApi()
           .getUser(user.signInUserSession.idToken.payload.email)
           .then((data: any) => {
+            // Checking if user exists or not
             if (data.data.success == false) {
               this.props.navigation.navigate('GoogleSigninOptn', {
                 data: user.signInUserSession.idToken.payload.email,
               });
-              // createApi
-              //   .createApi()
-              //   .createUser({
-              //     name: user.username,
-              //     email: user.signInUserSession.idToken.payload.email, // dynal=mic link
-              //     organization: [],
-              //     img_url:
-              //       'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
-              //   })
-              //   .then((res) => {
-              //     this.setState({loading: false, errorModal: false});
-              //     navigation.navigate('TellAboutYou', {
-              //       username: user.signInUserSession.idToken.payload.email,
-              //       isgoogle: true,
-              //     });
-              //   });
-              this.setState({loading: false, errorModal: false});
 
-              // this.setState({loading: false, errorModal: false});
-              // navigation.navigate('TellAboutYou', {
-              //   username: user.signInUserSession.idToken.payload.email,
-              //   isgoogle: true,
-              // });
+              this.setState({loading: false, errorModal: false});
             } else {
               this.setState({loading: false, errorModal: false});
               AsyncStorage.setItem(
