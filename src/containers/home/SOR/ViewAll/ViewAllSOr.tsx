@@ -82,10 +82,6 @@ export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
 const SLIDER_1_FIRST_ITEM = 1;
 
-
-
-
-
 export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   constructor(props: ViewAllProps) {
     super(props);
@@ -136,10 +132,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   }
 
   componentDidMount = () => {
-
-
-
-    
     // console.log(this.props.reduxState.allSors);
     // console.log(this.props.reduxState.loading);
 
