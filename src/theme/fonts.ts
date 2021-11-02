@@ -1,10 +1,20 @@
+import {Platform} from 'react-native';
+
 export const fonts = {
-  SFuiDisplayBlack: 'SF UI Display Black',
-  SFuiDisplayBold: 'SF UI Display Bold',
-  SfuiDisplayHeavy: 'Sf UI Display Heavy',
-  SFuiDisplayLight: 'SF UI Display Light',
-  SFuiDisplayMedium: 'SF UI Display Medium',
-  SFuiDisplaySemiBold: 'SF UI Display Semibold',
-  SFuiDisplayThin: 'SF UI Display Thin',
-  SFuiDisplayUltraLight: 'SF UI Display Ultralight',
+  SFuiDisplayBlack:
+    Platform.OS == 'ios' ? 'SF UI Display Black' : 'SFuiDisplayBlack',
+  SFuiDisplayBold:
+    Platform.OS == 'ios' ? 'SF UI Display Bold' : 'SFuiDisplayBold',
+  SfuiDisplayHeavy:
+    Platform.OS == 'ios' ? 'Sf UI Display Heavy' : 'SfuiDisplayHeavy',
+  SFuiDisplayLight:
+    Platform.OS == 'ios' ? 'SF UI Display Light' : 'SFuiDisplayLight',
+  SFuiDisplayMedium:
+    Platform.OS == 'ios' ? 'SF UI Display Medium' : 'SFuiDisplayMedium',
+  SFuiDisplaySemiBold:
+    Platform.OS == 'ios' ? 'SF UI Display Semibold' : 'SFuiDisplaySemiBold',
+  SFuiDisplayThin:
+    Platform.OS == 'ios' ? 'SF UI Display Thin' : 'SFuiDisplayThin',
+  SFuiDisplayUltraLight:
+    Platform.OS == 'ios' ? 'SF UI Display Ultralight' : 'SFuiDisplayUltraLight',
 };
