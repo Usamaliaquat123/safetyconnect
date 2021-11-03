@@ -9,7 +9,7 @@ import {
   country,
 } from '@typings';
 
-import {BASE_URI} from '../../env_prod';
+import {BASE_URI} from '../../env_debug';
 
 // our "constructor"
 const base_uri = `${BASE_URI}`;
