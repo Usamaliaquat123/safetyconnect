@@ -37,7 +37,7 @@ export type StackNavigatorProps = {
   NoInternet: undefined;
   Main: undefined;
   Filters: undefined;
-  InvitePeople: {data: string};
+  InvitePeople: {data?: string};
   Settings: {data: any};
   MainSettings: undefined;
   Notification: {data: any};

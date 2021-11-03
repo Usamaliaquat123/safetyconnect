@@ -328,21 +328,28 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     getCurrentProject().then((currentProj: any) => {
       this.setState({projectid: currentProj});
 
-      createApi
-        .createApi()
-        .getLocations(currentProj)
-        .then((res: any) => {
-          // console.log('location data');
-          // console.log(res);
-          this.setState({
-            allLocations: res.data.data.p_locations,
-            selectedLocation: res.data.data.p_locations[0],
+      AsyncStorage.getItem('location').then((location) => {
+
+
+      
+        
+        createApi
+          .createApi()
+          .getLocations(currentProj)
+          .then((res: any) => {
+            // console.log('location data');
+            // console.log(res);
+
+            // if(location.)
+            this.setState({
+              allLocations: res.data.data.p_locations,
+              selectedLocation: res.data.data.p_locations[0],
+            });
+
+            console.log('current location');
+            console.log(res.data.data.p_locations[0]);
           });
-
-          console.log('current location');
-          console.log(res.data.data.p_locations[0]);
-
-        });
+      });
     });
     getCurrentOrganization().then((currentOrg: any) => {
       this.setState({currentOrg}),
