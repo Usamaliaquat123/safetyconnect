@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, Image} from 'react-native';
 // import { connect } from 'react-redux';
 import {colors, animation} from '@theme';
 import LottieView from 'lottie-react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -14,6 +15,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
 import {organizationDTO} from '@dtos';
+import {images, GlStyles} from '@theme';
 
 export interface SplashProps {
   navigation: SplashNavigationProp;
@@ -72,21 +74,17 @@ export default class Splash extends React.Component<SplashProps, any> {
 
   render() {
     return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: colors.secondary,
-          justifyContent: 'center',
-        }}>
+      <LinearGradient
+        colors={['#4c669f', '#3b5998', '#192f6a']}
+        start={{x: 1, y: 1}}
+        end={{x: 0, y: 0}}
+        style={{flex: 1, justifyContent: 'center'}}>
         <View style={{alignItems: 'center'}}>
-          <LottieView
-            autoPlay={true}
-            style={{width: wp(90)}}
-            source={animation.loading}
-            loop={true}
-          />
+          <View style={{width: wp(70), height: wp(13)}}>
+            <Image source={images.splashLogo} style={GlStyles.images} />
+          </View>
         </View>
-      </View>
+      </LinearGradient>
     );
   }
 }
