@@ -171,6 +171,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       potientialRiskS: '',
       potientialRiskL: '',
       currentTime: Date.now(),
+
+      resubmitToSuggUsers: [],
     };
   }
 
@@ -339,6 +341,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
           console.log('current location');
           console.log(res.data.data.p_locations[0]);
+
         });
     });
     getCurrentOrganization().then((currentOrg: any) => {
