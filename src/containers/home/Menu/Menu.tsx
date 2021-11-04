@@ -264,16 +264,16 @@ class Menu extends React.Component<MenuProps, any> {
                         savedCurrentOrganization(d._id);
 
                         if (d.projects.length != 0) {
-                          savedCurrentProject(d.projects[0].project_id).then(
-                            () => {
-                              savedCurrentOrganization(d._id).then(() => {
-                                this.setState({
-                                  currOrganization: d.name,
-                                  organizationSugg: [],
-                                });
+                          savedCurrentProject(
+                            d.projects[0].project_id._id,
+                          ).then(() => {
+                            savedCurrentOrganization(d._id).then(() => {
+                              this.setState({
+                                currOrganization: d.name,
+                                organizationSugg: [],
                               });
-                            },
-                          );
+                            });
+                          });
                         }
                         // AsyncStorage.setItem('organizationId', d._id);
                       }}
