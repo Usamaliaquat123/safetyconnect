@@ -26,6 +26,9 @@ export const createOrganization = (
 ): IThunkAction => {
   return async (dispatch, getState) => {
     console.log(['orgnaization']);
+    console.log(organization);
+    console.log('users');
+    console.log(users);
     dispatch(loading(true));
     await createApi
       .createApi()

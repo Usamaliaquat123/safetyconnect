@@ -153,7 +153,7 @@ class Menu extends React.Component<MenuProps, any> {
             />
           </View>
           {/* create organization */}
-          {/* <TouchableOpacity
+          <TouchableOpacity
             onPress={() => {
               //   this.setState({createModal: xfalse});
               this.props.navigation.navigate('CreateOrganization');
@@ -166,7 +166,7 @@ class Menu extends React.Component<MenuProps, any> {
               />
             </View>
             <Text style={styles.auditReportText}>Create Organization</Text>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
           {/* Create project */}
           <TouchableOpacity
             onPress={() => {
