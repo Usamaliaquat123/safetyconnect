@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createApi} from '@service';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
-import {RouteProp} from '@react-navigation/native';
+import {RouteProp, CommonActions} from '@react-navigation/native';
 import {organizationDTO} from '@dtos';
 import {images, GlStyles} from '@theme';
 
@@ -53,20 +53,56 @@ export default class Splash extends React.Component<SplashProps, any> {
                   savedCurrentProject(
                     res.data.data.organizations[0].projects[0].project_id,
                   );
-                  this.props.navigation.navigate('Main');
+                  this.props.navigation.dispatch(
+                    CommonActions.reset({
+                      index: 1,
+                      routes: [
+                        {
+                          name: 'Main',
+                        },
+                      ],
+                    }),
+                  );
                   // console.log(res.data.data.organizations[0]);
                 } else {
-                  this.props.navigation.navigate('createProject');
+                  this.props.navigation.dispatch(
+                    CommonActions.reset({
+                      index: 1,
+                      routes: [
+                        {
+                          name: 'createProject',
+                        },
+                      ],
+                    }),
+                  );
                 }
               } else {
-                this.props.navigation.navigate('CreateOrganization');
+                this.props.navigation.dispatch(
+                  CommonActions.reset({
+                    index: 1,
+                    routes: [
+                      {
+                        name: 'CreateOrganization',
+                      },
+                    ],
+                  }),
+                );
               }
               // this.props.navigation.navigate('CreateOrganization');
             });
         }, 5000);
       } else {
         setTimeout(() => {
-          this.props.navigation.navigate('Signup');
+          this.props.navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [
+                {
+                  name: 'Welcome',
+                },
+              ],
+            }),
+          );
         }, 5000);
       }
     });

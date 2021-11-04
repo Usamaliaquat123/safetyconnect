@@ -50,12 +50,12 @@ export const Navigator = (props: any) => {
   });
 
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        {/* <WelcomeHome /> */}
-        <MainStackNavigator screen={'Splash'} />
-      </NavigationContainer>
-    </SafeAreaProvider>
+    // <SafeAreaProvider>
+    <NavigationContainer>
+      {/* <WelcomeHome /> */}
+      <MainStackNavigator screen={'Splash'} />
+    </NavigationContainer>
+    // </SafeAreaProvider>
   );
 };
 

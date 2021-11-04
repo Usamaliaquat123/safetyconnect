@@ -29,6 +29,7 @@ import Notification from './home/Notification/Notifications';
 import ChangePassword from './auth/ChangePassword/ChangePassword';
 import InvitePeople from './home/InvitePeople/InvitePeople';
 import Preview from './home/SOR/Preview/Preview';
+import Welcome from './auth/Welcome/Welcome';
 import AddLocation from './home/AddLocation/AddLocation';
 import WelcomeHome from './home/WelcomeHome/WelcomeHome';
 import MainSettings from './home/MainSettings/MainSettings';
@@ -36,6 +37,7 @@ export {
   Notification,
   AddLocation,
   Chat,
+  Welcome,
   WelcomeHome,
   GoogleSigninOptn,
   Preview,

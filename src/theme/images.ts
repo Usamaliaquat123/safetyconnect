@@ -1,6 +1,7 @@
 export const images = {
   send: require('./images/send.png'),
   splashLogo: require('./images/splashLogo.png'),
+  welcomeBackground: require('./images/welcomeBackground.jpg'),
   google: require('./images/googleicon.png'),
   word: require('./images/word.png'),
   // files

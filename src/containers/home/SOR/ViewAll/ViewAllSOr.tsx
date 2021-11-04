@@ -316,15 +316,6 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         if (res.data.data.report[i].details != undefined) {
                           this.state.closed.push(res.data.data.report[i]);
                         }
-                      } else if (res.data.data.report[i].status == 6) {
-                        // var rep = filterAndMappingPersons(
-                        //   res.data.data.report[i],
-                        //   this.state.involvedPerson,
-                        // );
-
-                        if (res.data.data.report[i].details != undefined) {
-                          this.state.isNotiData.push(res.data.data.report[i]);
-                        }
                       }
                     }
                   }
@@ -1034,7 +1025,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           </View>
                           {/* )} */}
                           {/* {this.state.closed.length == 0 ? null : ( */}
-                          <View>
+                          {/* <View>
                             <View style={styles.lineheight}></View>
                             <View style={styles.inProgressTop}>
                               <View style={styles.listHeader}>
@@ -1126,7 +1117,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                                 </View>
                               ) : null}
                             </View>
-                          </View>
+                          </View> */}
                           {/* {this.state.closed.length == 0 ? null : ( */}
                           <View>
                             <View style={styles.lineheight}></View>
@@ -1447,7 +1438,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                     {/* )} */}
 
                     {/* {this.state.submitted.length == 0 ? null : ( */}
-                    <View style={styles.boardContainer}>
+                    {/* <View style={styles.boardContainer}>
                       <View style={styles.submitTextContaienr}>
                         <Text style={styles.submitText}> Notified To</Text>
                       </View>
@@ -1509,7 +1500,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                           </Text>
                         </TouchableOpacity>
                       )}
-                    </View>
+                    </View> */}
                     {/* )} */}
 
                     {/* )} */}

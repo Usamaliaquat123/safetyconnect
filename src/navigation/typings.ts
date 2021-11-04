@@ -18,6 +18,7 @@ export type StackNavigatorProps = {
   CreateProj: {organization?: string; users?: []};
   Home: undefined;
   ForgotEmailSend: {email: string};
+  Welcome: undefined;
   ChatGroup: undefined;
   Verify: {email: string};
   MeetBefore: {email: string};

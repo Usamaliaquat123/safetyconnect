@@ -25,6 +25,7 @@ import {
   Splash,
   ViewAll,
   InvitePeople,
+  Welcome,
   ViewSOR,
   Preview,
   CreateSOR,
@@ -120,6 +121,13 @@ export const MainStackNavigator = (screen: route) => {
         <Stack.Screen
           name="ChatGroup"
           component={ChatGroup}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Welcome"
+          component={Welcome}
           options={{
             headerShown: false,
           }}

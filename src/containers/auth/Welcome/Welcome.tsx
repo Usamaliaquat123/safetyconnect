@@ -1,0 +1,416 @@
+import * as React from 'react';
+import {
+  View,
+  StyleSheet,
+  Text,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  Linking,
+  ImageBackground,
+  Platform,
+} from 'react-native';
+import {connect} from 'react-redux';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import jwt_decode from 'jwt-decode';
+import {Icon, Avatar} from 'react-native-elements';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
+import InAppBrowser from 'react-native-inappbrowser-reborn';
+import {CognitoAuth} from 'amazon-cognito-auth-js';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigatorProps} from '@nav';
+import {colors, images, GlStyles} from '@theme';
+import LottieView from 'lottie-react-native';
+import {validateEmail} from '@utils';
+import {RouteProp} from '@react-navigation/native';
+import {animation} from '@theme';
+import styles from './styles';
+
+import {validatePassword, mainPass, redirectDynamiclink} from '@utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Modal from 'react-native-modal';
+import {Auth, Hub} from 'aws-amplify';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
+import {Create_sor, createApi} from '@service';
+
+type WelcomeNavigationProp = StackNavigationProp<
+  StackNavigatorProps,
+  'Welcome'
+>;
+type WelcomeRouteProp = RouteProp<StackNavigatorProps, 'Welcome'>;
+
+export interface WelcomeProps {
+  navigation: WelcomeNavigationProp;
+  route: WelcomeRouteProp;
+  reduxActions: any;
+  reduxState: any;
+}
+
+class Welcome extends React.Component<WelcomeProps, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      username: '',
+      loading: false,
+      conentLoading: '',
+      error: false,
+      errorModal: false,
+      user: {},
+    };
+  }
+  handleOpenURL(navigation: any) {
+    console.log('handle open url');
+    console.log(navigation);
+    this.setState({loading: true, errorModal: true});
+    try {
+      Auth.currentAuthenticatedUser().then((user) => {
+        createApi
+          .createApi()
+          .getUser(user.signInUserSession.idToken.payload.email)
+          .then((data: any) => {
+            if (data.data.success == false) {
+              this.props.navigation.navigate('GoogleSigninOptn', {
+                data: user.signInUserSession.idToken.payload.email,
+              });
+              // createApi
+              //   .createApi()
+              //   .createUser({
+              //     name: user.username,
+              //     email: user.signInUserSession.idToken.payload.email, // dynal=mic link
+              //     organization: [],
+              //     img_url:
+              //       'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+              //   })
+              //   .then((res) => {
+              //     this.setState({loading: false, errorModal: false});
+              //     navigation.navigate('TellAboutYou', {
+              //       username: user.signInUserSession.idToken.payload.email,
+              //       isgoogle: true,
+              //     });
+              //   });
+              this.setState({loading: false, errorModal: false});
+            } else {
+              this.setState({loading: false, errorModal: false});
+              AsyncStorage.setItem(
+                'email',
+                user.signInUserSession.idToken.payload.email,
+              );
+              navigation.navigate('Main');
+            }
+          })
+          .catch((err) => console.log(err));
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  componentDidMount = () => {
+    Linking.addEventListener('url', () => {
+      this.handleOpenURL(this.props.navigation);
+    });
+    // Linking.addEventListener('sd', (e) => {});
+    dynamicLinks().onLink((l) => {
+      redirectDynamiclink(l, this.props.navigation);
+    });
+  };
+  //   async Welcome() {
+  //     if (this.state.username !== '') {
+  //       if (validateEmail(this.state.username)) {
+  //         this.setState({loading: true, errorModal: true});
+
+  //         try {
+  //           let signUpResponse: any = await Auth.signUp({
+  //             username: this.state.username,
+  //             password: mainPass,
+  //             attributes: {
+  //               profile: 'NotConfirmed',
+  //             },
+  //           });
+
+  //           console.log('signup');
+  //           console.log(signUpResponse);
+  //           // signUpResponse.then((res) => {
+  //           // });
+  //           if (signUpResponse.userConfirmed) {
+  //             // check if limit is not reached else send email for forgot password
+  //             const sendEmail = await Auth.forgotPassword(
+  //               this.state.username,
+  //             ).catch((error) => {
+  //               if (error.message.includes('limit')) {
+  //                 this.setState({
+  //                   loading: false,
+  //                   conentLoading: 'Attempt limit Reached!',
+  //                 });
+  //               }
+  //             });
+  //             if (sendEmail) {
+  //               this.setState({loading: false, errorModal: false});
+  //               // Redirect => TO Forgot Password
+  //               this.props.navigation.navigate('Verify', {
+  //                 email: this.state.username,
+  //               });
+  //             }
+  //           }
+  //         } catch (e: any) {
+  //           console.log(e);
+  //           if (e.message.includes('google')) {
+  //             this.setState({loading: false, errorModal: false});
+
+  //             // Redirect to => Alredy met screen
+  //             // Auth.federatedSignIn({})
+  //             this.props.navigation.navigate('MeetBefore', {
+  //               email: this.state.username,
+  //             });
+  //           }
+
+  //           Auth.signIn(this.state.username, mainPass)
+  //             .then()
+  //             .catch(async (err) => {
+  //               if (err.message.includes('Incorrect')) {
+  //                 // Toast Account Already exist
+  //                 this.setState({loading: false, errorModal: false});
+  //                 this.props.navigation.navigate('MeetBefore', {
+  //                   email: this.state.username,
+  //                 });
+  //               }
+
+  //               if (err.message.includes('NotConfirmed')) {
+  //                 const sendEmail = await Auth.forgotPassword(
+  //                   this.state.username,
+  //                 ).catch((error) => {
+  //                   // this.setState({loading: false, errorModal: false});
+
+  //                   if (error.message.includes('limit')) {
+  //                     this.setState({
+  //                       loading: false,
+  //                       conentLoading: 'Attempt limit Reached!',
+  //                     });
+  //                   }
+  //                 });
+  //                 if (sendEmail) {
+  //                   this.setState({loading: false, errorModal: false});
+  //                   this.props.navigation.navigate('Verify', {
+  //                     email: this.state.username,
+  //                   });
+  //                 }
+  //               }
+  //             });
+  //         }
+  //       } else {
+  //         this.setState({error: true});
+  //       }
+  //     } else {
+  //       this.setState({error: true});
+  //     }
+  //   }
+
+  continuewithgoogle = async () => {
+    try {
+      let user = await Auth.federatedSignIn({provider: 'Google'});
+      console.log(user);
+      // this.props.navigation.navigate('Main');
+    } catch (err) {
+      console.log('user error');
+      console.log(err);
+    }
+
+    // try {
+    //   await GoogleSignin.hasPlayServices();
+    //   const userInfo = await GoogleSignin.signIn();
+    //   // this.setState({userInfo});
+
+    //   console.log('userInfo');
+    //   console.log(userInfo);
+    // } catch (error) {
+    //   if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+    //     // user cancelled the login flow
+    //     console.log('User cancelled login');
+    //   } else if (error.code === statusCodes.IN_PROGRESS) {
+    //     // operation (e.g. sign in) is in progress already
+    //     console.log('Operation already in progress');
+    //   } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+    //     // play services not available or outdated
+    //     console.log('Play services not available');
+    //   } else {
+    //     console.log(error);
+    //     // some other error happened
+    //   }
+    // }
+  };
+  render() {
+    return (
+      <View style={styles.container}>
+        <ImageBackground
+          source={images.welcomeBackground}
+          style={{flex: 1, justifyContent: 'center'}}>
+          <View style={{backgroundColor: 'rgba(62, 62, 62, 0.6)'}}>
+            <View style={{padding: wp(5)}}>
+              <ScrollView showsVerticalScrollIndicator={false}>
+                {/* content */}
+                <View>
+                  <View style={{marginTop: wp(10)}}>
+                    <Text style={styles.headingContainer}>
+                      Welcome to Safety Connect
+                    </Text>
+                    <Text style={styles.headingContent}>
+                      Create your account and get started with SafetyConnect to
+                      ensure the safety and well-being of workplaces
+                    </Text>
+                    {/* inputs container */}
+                    <View style={styles.inputsContainer}>
+                      {/* Email Container */}
+                      <Text style={styles.emailTextContainer}>
+                        Enter your email
+                      </Text>
+
+                      {Platform.OS == 'ios' ? (
+                        <View style={[styles.inputContainer, {padding: wp(3)}]}>
+                          <TextInput
+                            style={styles.authInputs}
+                            placeholderTextColor={colors.lightGrey}
+                            value={this.state.username}
+                            onChangeText={(e) => {
+                              this.setState({username: e});
+                            }}
+                            placeholder={'Enter your email'}
+                          />
+                        </View>
+                      ) : (
+                        <View style={[styles.inputContainer]}>
+                          <TextInput
+                            style={styles.authInputs}
+                            value={this.state.username}
+                            onChangeText={(e) => {
+                              this.setState({username: e});
+                            }}
+                            placeholder={'Enter your email'}
+                          />
+                        </View>
+                      )}
+
+                      {this.state.error && (
+                        <Text style={{fontSize: wp(3), color: colors.error}}>
+                          Type your valid email address
+                        </Text>
+                      )}
+                    </View>
+                    <TouchableOpacity
+                      onPress={() => this.signup()}
+                      style={styles.siginBtnContainer}>
+                      <Text style={styles.signinText}>Continue</Text>
+                      <View style={{marginLeft: wp(1)}}>
+                        <Icon
+                          size={wp(4)}
+                          name="arrowright"
+                          type="antdesign"
+                          color={colors.secondary}
+                        />
+                      </View>
+                    </TouchableOpacity>
+
+                    {/* Or */}
+                    <View style={styles.orContainer}>
+                      <View style={styles.line} />
+                      <Text style={styles.orText}>OR</Text>
+                      <View style={styles.line} />
+                    </View>
+                    {/* Google Signin */}
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.continuewithgoogle();
+                      }}
+                      style={styles.siginwithGoogle}>
+                      <View style={styles.imgContainerOfSocialAccounts}>
+                        <Image source={images.google} style={GlStyles.images} />
+                      </View>
+                      <Text style={styles.signinTextGoogle}>
+                        Continue with Google{' '}
+                      </Text>
+                    </TouchableOpacity>
+                    {/* Apple  Signin */}
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.continuewithgoogle();
+                      }}
+                      style={styles.signUpWithApple}>
+                      <View style={styles.imgContainerOfSocialAccounts}>
+                        <Icon
+                          size={wp(5)}
+                          name="apple1"
+                          type="antdesign"
+                          color={colors.text}
+                        />
+                      </View>
+                      <Text style={styles.signinWithApple}>
+                        Continue with Apple ID
+                      </Text>
+                    </TouchableOpacity>
+                    {/* Don't have a Acctouny */}
+                    <View style={{marginTop: wp(25)}}>
+                      <Text style={styles.dontHaveAccount}>
+                        Already have a account ?{' '}
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('Login')}
+                        style={styles.createnewaccountContainer}>
+                        <Text style={styles.createNewAccount}>
+                          Sign in here
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </ScrollView>
+            </View>
+          </View>
+        </ImageBackground>
+
+        <Modal
+          isVisible={this.state.errorModal}
+          onBackdropPress={() =>
+            this.setState({
+              errorModal: false,
+              loading: false,
+              conentLoading: '',
+            })
+          }>
+          {this.state.loading == true && (
+            <View style={{alignSelf: 'center'}}>
+              <LottieView
+                autoPlay={true}
+                style={{width: wp(90)}}
+                source={animation.loading}
+                loop={true}
+              />
+            </View>
+          )}
+
+          {this.state.conentLoading !== '' && (
+            <View style={styles.errorloadingContent}>
+              <Text style={{fontSize: wp(3)}}>{this.state.conentLoading}</Text>
+            </View>
+          )}
+        </Modal>
+      </View>
+    );
+  }
+}
+
+const mapStateToProps = (state: any) => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
