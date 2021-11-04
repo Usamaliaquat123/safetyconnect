@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, Image} from 'react-native';
 // import { connect } from 'react-redux';
 import {colors, animation} from '@theme';
@@ -16,6 +16,7 @@ import {StackNavigatorProps} from '@nav';
 import {RouteProp, CommonActions} from '@react-navigation/native';
 import {organizationDTO} from '@dtos';
 import {images, GlStyles} from '@theme';
+// import Splash from './Splash';
 
 export interface SplashProps {
   navigation: SplashNavigationProp;
@@ -27,20 +28,17 @@ export interface SplashProps {
 type SplashNavigationProp = StackNavigationProp<StackNavigatorProps, 'Splash'>;
 type SplashRouteProp = RouteProp<StackNavigatorProps, 'Splash'>;
 
-export default class Splash extends React.Component<SplashProps, any> {
-  constructor(props: any) {
-    super(props);
-    this.state = {};
-  }
-
-  componentDidMount() {
-    AsyncStorage.getItem('email').then((res: any) => {
-      this.setState({user: res});
-      if (res != null) {
+export const Splash: React.FC<{props: SplashProps}> = async (
+  props: SplashProps,
+) => {
+  // Initial Render
+  useEffect(() => {
+    AsyncStorage.getItem('email').then((email: any) => {
+      if (email != null) {
         setTimeout(() => {
           createApi
             .createApi()
-            .getUser(res)
+            .getUser(email)
             .then((res: any) => {
               // console.log(res);
               AsyncStorage.setItem('user', JSON.stringify(res.data.data));
@@ -53,7 +51,7 @@ export default class Splash extends React.Component<SplashProps, any> {
                   savedCurrentProject(
                     res.data.data.organizations[0].projects[0].project_id,
                   );
-                  this.props.navigation.dispatch(
+                  props.navigation.dispatch(
                     CommonActions.reset({
                       index: 1,
                       routes: [
@@ -65,7 +63,7 @@ export default class Splash extends React.Component<SplashProps, any> {
                   );
                   // console.log(res.data.data.organizations[0]);
                 } else {
-                  this.props.navigation.dispatch(
+                  props.navigation.dispatch(
                     CommonActions.reset({
                       index: 1,
                       routes: [
@@ -77,7 +75,7 @@ export default class Splash extends React.Component<SplashProps, any> {
                   );
                 }
               } else {
-                this.props.navigation.dispatch(
+                props.navigation.dispatch(
                   CommonActions.reset({
                     index: 1,
                     routes: [
@@ -93,7 +91,7 @@ export default class Splash extends React.Component<SplashProps, any> {
         }, 5000);
       } else {
         setTimeout(() => {
-          this.props.navigation.dispatch(
+          props.navigation.dispatch(
             CommonActions.reset({
               index: 1,
               routes: [
@@ -106,24 +104,48 @@ export default class Splash extends React.Component<SplashProps, any> {
         }, 5000);
       }
     });
-  }
+  }, []);
 
-  render() {
-    return (
-      <LinearGradient
-        colors={['#4c669f', '#3b5998', '#192f6a']}
-        start={{x: 1, y: 1}}
-        end={{x: 0, y: 0}}
-        style={{flex: 1, justifyContent: 'center'}}>
-        <View style={{alignItems: 'center'}}>
-          <View style={{width: wp(70), height: wp(13)}}>
-            <Image source={images.splashLogo} style={GlStyles.images} />
-          </View>
+  return (
+    <LinearGradient
+      colors={['#4c669f', '#3b5998', '#192f6a']}
+      start={{x: 1, y: 1}}
+      end={{x: 0, y: 0}}
+      style={{flex: 1, justifyContent: 'center'}}>
+      <View style={{alignItems: 'center'}}>
+        <View style={{width: wp(70), height: wp(13)}}>
+          <Image source={images.splashLogo} style={GlStyles.images} />
         </View>
-      </LinearGradient>
-    );
-  }
-}
+      </View>
+    </LinearGradient>
+  );
+};
+// export default class Splash extends React.Component<SplashProps, any> {
+//   constructor(props: any) {
+//     super(props);
+//     this.state = {};
+//   }
+
+//   componentDidMount() {
+
+//   }
+
+//   render() {
+//     return (
+//       <LinearGradient
+//         colors={['#4c669f', '#3b5998', '#192f6a']}
+//         start={{x: 1, y: 1}}
+//         end={{x: 0, y: 0}}
+//         style={{flex: 1, justifyContent: 'center'}}>
+//         <View style={{alignItems: 'center'}}>
+//           <View style={{width: wp(70), height: wp(13)}}>
+//             <Image source={images.splashLogo} style={GlStyles.images} />
+//           </View>
+//         </View>
+//       </LinearGradient>
+//     );
+//   }
+// }
 
 // const mapStateToProps = state => {
 //   return {
