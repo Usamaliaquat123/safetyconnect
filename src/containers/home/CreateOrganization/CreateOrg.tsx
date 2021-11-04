@@ -175,6 +175,7 @@ class CreateOrg extends React.Component<CreateOrgProps, any> {
           // );
 
           console.log(data);
+          console.log('this.state.selectedEmails');
           console.log(this.state.selectedEmails);
 
           this.props.reduxActions.createOrganization(

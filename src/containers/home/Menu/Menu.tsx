@@ -262,16 +262,19 @@ class Menu extends React.Component<MenuProps, any> {
                         console.log('proajdhasjhd');
                         console.log(d);
                         savedCurrentOrganization(d._id);
-                        savedCurrentProject(d.projects[0].project_id).then(
-                          () => {
-                            savedCurrentOrganization(d._id).then(() => {
-                              this.setState({
-                                currOrganization: d.name,
-                                organizationSugg: [],
+
+                        if (d.projects.length != 0) {
+                          savedCurrentProject(d.projects[0].project_id).then(
+                            () => {
+                              savedCurrentOrganization(d._id).then(() => {
+                                this.setState({
+                                  currOrganization: d.name,
+                                  organizationSugg: [],
+                                });
                               });
-                            });
-                          },
-                        );
+                            },
+                          );
+                        }
                         // AsyncStorage.setItem('organizationId', d._id);
                       }}
                       style={[

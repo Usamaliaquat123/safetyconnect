@@ -83,7 +83,7 @@ export default class SuggestionsPop extends React.Component<
       statuses: props.suggestions.status,
       attachments: [],
       addjustificationPop: true,
-      orgId:  "",
+      orgId: '',
       targetDate: props.suggestions.dueDate,
       submitToAndObserverEmailsLocal: props.submitToAndObserverEmails,
       justificationErr: false,
@@ -93,7 +93,9 @@ export default class SuggestionsPop extends React.Component<
   componentDidMount = () => {
     console.log('five why justification');
     console.log(this.props.suggestions);
-    getCurrentOrganization().then((orgId : any) => this.setState({orgId: orgId}))
+    getCurrentOrganization().then((orgId: any) =>
+      this.setState({orgId: orgId}),
+    );
     // if (this.state.AssignedTo[0] == this.props.currentUser.email) {
     //   this.setState({actionsChangeable: true});
     // } else {
@@ -272,16 +274,19 @@ export default class SuggestionsPop extends React.Component<
         console.log(imgData);
         this.setState({fileLoading: true});
 
-        fileuploader(res.orgType, res.orgType.split('/')[1], res.uri, this.state.orgId).then(
-          (filename: any) => {
-            console.log('filename hai');
-            console.log(filename);
-            imgData['name'] = filename;
-            this.setState({fileLoading: false});
-            attach.splice(0, 0, imgData);
-            this.setState({});
-          },
-        );
+        fileuploader(
+          res.orgType,
+          res.orgType.split('/')[1],
+          res.uri,
+          this.state.orgId,
+        ).then((filename: any) => {
+          console.log('filename hai');
+          console.log(filename);
+          imgData['name'] = filename;
+          this.setState({fileLoading: false});
+          attach.splice(0, 0, imgData);
+          this.setState({});
+        });
         // this.state.filename.push(imgData);
       }
 
@@ -369,7 +374,11 @@ export default class SuggestionsPop extends React.Component<
                 Target Date
               </Text>
               <TouchableOpacity
-                onPress={() => this.setState({openCalendar: true})}
+                onPress={() => {
+                  if (this.state.matched) {
+                    this.setState({openCalendar: true});
+                  }
+                }}
                 style={[styles.commentTextInput, {marginLeft: wp(4)}]}>
                 <TextInput
                   editable={false}
