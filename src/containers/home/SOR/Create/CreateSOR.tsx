@@ -329,11 +329,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       this.setState({projectid: currentProj});
 
       AsyncStorage.getItem('location').then((location) => {
+        console.log('location');
+        console.log(location);
 
-
-        console.log('location')
-        console.log(location)
-        
         createApi
           .createApi()
           .getLocations(currentProj)

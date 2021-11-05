@@ -169,7 +169,7 @@ class Menu extends React.Component<MenuProps, any> {
           </TouchableOpacity>
           {/* Create project */}
           <TouchableOpacity
-            onPress={() => {
+            onPress={() => {  
               //   this.setState({createModal: false});
 
               if (this.state.userEmail === this.state.orgCreatedBy) {

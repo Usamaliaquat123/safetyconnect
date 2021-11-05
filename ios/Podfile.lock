@@ -41,9 +41,6 @@ PODS:
     - boost-for-react-native
     - DoubleConversion
     - glog
-  - GCDWebServer (3.5.4):
-    - GCDWebServer/Core (= 3.5.4)
-  - GCDWebServer/Core (3.5.4)
   - glog (0.3.5)
   - GoogleDataTransport (8.4.0):
     - GoogleUtilities/Environment (~> 7.2)
@@ -331,9 +328,6 @@ PODS:
     - React-jsi (= 0.63.4)
   - ReactNativeART (1.2.0):
     - React
-  - RealmJS (10.2.0):
-    - GCDWebServer
-    - React
   - rn-fetch-blob (0.12.0):
     - React-Core
   - RNAWSCognito (4.5.12):
@@ -417,7 +411,6 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "ReactNativeART (from `../node_modules/@react-native-community/art`)"
-  - RealmJS (from `../node_modules/realm`)
   - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
   - RNAWSCognito (from `../node_modules/amazon-cognito-identity-js`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
@@ -444,7 +437,6 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseDynamicLinks
-    - GCDWebServer
     - GoogleDataTransport
     - GoogleSignIn
     - GoogleUtilities
@@ -530,8 +522,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   ReactNativeART:
     :path: "../node_modules/@react-native-community/art"
-  RealmJS:
-    :path: "../node_modules/realm"
   rn-fetch-blob:
     :path: "../node_modules/rn-fetch-blob"
   RNAWSCognito:
@@ -579,7 +569,6 @@ SPEC CHECKSUMS:
   FirebaseCoreDiagnostics: 68ad972f99206cef818230f3f3179d52ccfb7f8c
   FirebaseDynamicLinks: 1ba27bcead0c55cb3fa48db7e1ca75005f8123d0
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
-  GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
   GoogleDataTransport: cd9db2180fcecd8da1b561aea31e3e56cf834aa7
   GoogleSignIn: fd381840dbe7c1137aa6dc30849a5c3e070c034a
@@ -620,7 +609,6 @@ SPEC CHECKSUMS:
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
   ReactNativeART: 78edc68dd4a1e675338cd0cd113319cf3a65f2ab
-  RealmJS: 5195064e9aeccf94ae3756bd9d0f2301b9074b07
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNAWSCognito: 33038dcfd16bd804d3d7de783aa2ab6525e87266
   RNCAsyncStorage: fe58eec522885718d6b297b7b658bf87d7ca557b
@@ -642,4 +630,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 54ae8c592cc7c0c25693f672509cb063210edc14
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.11.2
