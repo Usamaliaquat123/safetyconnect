@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     marginLeft: wp(5),
     color: colors.secondary,
     // fontWeight: 'bold',
-    fontFamily: 'SFuiDisplayBlack',
+    fontFamily: fonts.SFuiDisplayBlack,
   },
   orgLogo: {
     backgroundColor: colors.secondary,

@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   listUserTimeDate: {
     fontSize: wp(2.5),
     opacity: 0.5,
-    fontFamily: 'SFuiDisplayLight',
+    fontFamily: fonts.SFuiDisplayLight,
   },
   listMomentLT: {
     // marginLeft: wp(3),
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     marginLeft: wp(3),
     fontSize: wp(3.4),
 
-    fontFamily: 'SFuiDisplayMedium',
+    fontFamily: fonts.SFuiDisplayMedium,
   },
 });
 
