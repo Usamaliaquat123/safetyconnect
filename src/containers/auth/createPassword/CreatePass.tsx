@@ -30,7 +30,7 @@ import {createApi as api} from '@service';
 import {animation, fonts} from '@theme';
 import Modal from 'react-native-modal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+var CustomIcon: any = Icon;
 type CreatePassNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'CreatePass'
@@ -247,23 +247,13 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                   <TouchableOpacity
                     onPress={() => this.setState({isEye: !this.state.isEye})}
                     style={styles.eyeIconContainer}>
-                    {this.state.isEye == true ? (
-                      <Icon
-                        containerStyle={{opacity: 0.5}}
-                        size={wp(5)}
-                        name="eye-with-line"
-                        type="entypo"
-                        color={colors.text}
-                      />
-                    ) : (
-                      <Icon
-                        containerStyle={{opacity: 0.5}}
-                        size={wp(5)}
-                        name="eye"
-                        type="antdesign"
-                        color={colors.text}
-                      />
-                    )}
+                    <CustomIcon
+                      containerStyle={{opacity: 0.5}}
+                      size={wp(5)}
+                      name={this.state.isEye ? 'eye-with-line' : 'eye'}
+                      type={this.state.isEye ? 'entypo' : 'antdesign'}
+                      color={colors.text}
+                    />
                   </TouchableOpacity>
                 </View>
                 {this.state.error == true && (
@@ -314,23 +304,13 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                       this.setState({isEyeConfirm: !this.state.isEyeConfirm})
                     }
                     style={styles.eyeIconContainer}>
-                    {this.state.isEyeConfirm == true ? (
-                      <Icon
-                        containerStyle={{opacity: 0.5}}
-                        size={wp(5)}
-                        name="eye-with-line"
-                        type="entypo"
-                        color={colors.text}
-                      />
-                    ) : (
-                      <Icon
-                        containerStyle={{opacity: 0.5}}
-                        size={wp(5)}
-                        name="eye"
-                        type="antdesign"
-                        color={colors.text}
-                      />
-                    )}
+                    <CustomIcon
+                      containerStyle={{opacity: 0.5}}
+                      size={wp(5)}
+                      name={this.state.isEyeConfirm ? 'eye-with-line' : 'eye'}
+                      type={this.state.isEyeConfirm ? 'entypo' : 'antdesign'}
+                      color={colors.text}
+                    />
                   </TouchableOpacity>
                 </View>
                 {this.state.passMachErr == true && (
@@ -349,7 +329,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                 onPress={() => this.setupPass()}
                 style={styles.siginBtnContainer}>
                 <Text style={styles.signinText}>Continue</Text>
-                <Icon
+                <CustomIcon
                   containerStyle={{marginLeft: wp(3)}}
                   size={wp(5)}
                   name="arrowright"
@@ -387,7 +367,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                   padding: wp(5),
                 }}>
                 <View style={{flexDirection: 'row', alignSelf: 'center'}}>
-                  <Icon
+                  <CustomIcon
                     name={'warning'}
                     type={'entypo'}
                     size={wp(8)}
@@ -443,7 +423,7 @@ class CreatePass extends React.Component<CreatePassProps, any> {
                     }}>
                     Resend Email
                   </Text>
-                  <Icon
+                  <CustomIcon
                     name={'redo'}
                     type={'evilicon'}
                     size={wp(7)}

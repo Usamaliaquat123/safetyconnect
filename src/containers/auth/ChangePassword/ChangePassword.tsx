@@ -31,6 +31,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {loading} from '../../../store/actions/listSorActions';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 
+var CustomIcon: any = Icon;
 type ChangePasswordsNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'ChangePassword'
@@ -142,7 +143,7 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
               <View style={{marginTop: wp(1)}}>
                 <View style={styles.header}>
                   <View style={styles.headertle}>
-                    <Icon
+                    <CustomIcon
                       onPress={() => this.props.navigation.goBack()}
                       size={25}
                       name="chevron-back-outline"
@@ -182,23 +183,13 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
                       this.setState({isEyeOLD: !this.state.isEyeOLD})
                     }
                     style={styles.eyeIconContainer}>
-                    {this.state.isEyeOLD == true ? (
-                      <Icon
-                        containerStyle={{opacity: 0.5}}
-                        size={wp(5)}
-                        name="eye-with-line"
-                        type="entypo"
-                        color={colors.text}
-                      />
-                    ) : (
-                      <Icon
-                        containerStyle={{opacity: 0.5}}
-                        size={wp(5)}
-                        name="eye"
-                        type="antdesign"
-                        color={colors.text}
-                      />
-                    )}
+                    <CustomIcon
+                      containerStyle={{opacity: 0.5}}
+                      size={wp(5)}
+                      name={this.state.isEyeOLD ? 'eye-with-line' : 'eye'}
+                      type={this.state.isEyeOLD ? 'entypo' : 'antdesign'}
+                      color={colors.text}
+                    />
                   </TouchableOpacity>
                 </View>
                 {this.state.oldPasswordError == true && (
@@ -233,23 +224,13 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
                     <TouchableOpacity
                       onPress={() => this.setState({isEye: !this.state.isEye})}
                       style={styles.eyeIconContainer}>
-                      {this.state.isEye == true ? (
-                        <Icon
-                          containerStyle={{opacity: 0.5}}
-                          size={wp(5)}
-                          name="eye-with-line"
-                          type="entypo"
-                          color={colors.text}
-                        />
-                      ) : (
-                        <Icon
-                          containerStyle={{opacity: 0.5}}
-                          size={wp(5)}
-                          name="eye"
-                          type="antdesign"
-                          color={colors.text}
-                        />
-                      )}
+                      <CustomIcon
+                        containerStyle={{opacity: 0.5}}
+                        size={wp(5)}
+                        name={this.state.isEye ? 'eye-with-line' : 'eye'}
+                        type={this.state.isEye ? 'entypo' : 'antdesign'}
+                        color={colors.text}
+                      />
                     </TouchableOpacity>
                   </View>
                   {this.state.error == true && (
@@ -298,23 +279,13 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
                     <TouchableOpacity
                       onPress={() => this.setState({isEye: !this.state.isEye})}
                       style={styles.eyeIconContainer}>
-                      {this.state.isEye == true ? (
-                        <Icon
-                          containerStyle={{opacity: 0.5}}
-                          size={wp(5)}
-                          name="eye-with-line"
-                          type="entypo"
-                          color={colors.text}
-                        />
-                      ) : (
-                        <Icon
-                          containerStyle={{opacity: 0.5}}
-                          size={wp(5)}
-                          name="eye"
-                          type="antdesign"
-                          color={colors.text}
-                        />
-                      )}
+                      <CustomIcon
+                        containerStyle={{opacity: 0.5}}
+                        size={wp(5)}
+                        name={this.state.isEye ? 'eye-with-line' : 'eye'}
+                        type={this.state.isEye ? 'entypo' : 'antdesign'}
+                        color={colors.text}
+                      />
                     </TouchableOpacity>
                   </View>
                   {this.state.passMachErr == true && (
@@ -344,7 +315,7 @@ class ChangePassword extends React.Component<ChangePasswordProps, any> {
                   onPress={() => this.setupPass()}
                   style={styles.siginBtnContainer}>
                   <Text style={styles.signinText}>Continue</Text>
-                  <Icon
+                  <CustomIcon
                     containerStyle={{marginLeft: wp(3)}}
                     size={wp(5)}
                     name="arrowright"
