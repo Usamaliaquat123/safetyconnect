@@ -8,6 +8,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {colors} from '@theme';
+var CustomIcon: any = Icon;
+
 export interface SuggestionsAvatarProps {
   text: string;
   locations?: Array<any>;
@@ -41,7 +43,7 @@ class SuggestionsAvatar extends React.Component<SuggestionsAvatarProps, any> {
                             <TouchableOpacity
                               onPress={() => this.props.onSelect(d.name)}
                               style={{flexDirection: 'row', padding: wp(1)}}>
-                              <Icon
+                              <CustomIcon
                                 //   onPress={() => this.props.navigation.goBack()}
                                 size={wp(7)}
                                 containerStyle={{opacity: 0.6}}
@@ -79,7 +81,7 @@ class SuggestionsAvatar extends React.Component<SuggestionsAvatarProps, any> {
             <TouchableOpacity
               onPress={() => this.props.onSelect(this.props.text)}
               style={[styles.involvePsuggCont, {borderBottomWidth: wp(0)}]}>
-              <Icon
+              <CustomIcon
                 //   onPress={() => this.props.navigation.goBack()}
                 size={wp(6)}
                 containerStyle={{opacity: 0.6}}

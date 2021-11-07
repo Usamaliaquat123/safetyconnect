@@ -17,6 +17,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import moment from 'moment';
+var CustomIcon: any = Icon;
 export interface ListCardProps {
   observation: string;
   user1?: string;
@@ -55,7 +56,7 @@ export default class ListCard extends React.Component<ListCardProps, any> {
               ) : (
                 <View>
                   {this.props.iconconf == undefined ? null : (
-                    <Icon
+                    <CustomIcon
                       size={wp(5)}
                       name={this.props.iconconf.icon}
                       type={this.props.iconconf.type}

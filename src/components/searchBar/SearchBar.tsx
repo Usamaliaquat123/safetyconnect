@@ -4,6 +4,7 @@ import styles from './styles';
 import {colors} from '@theme';
 
 import {Icon, Avatar} from 'react-native-elements';
+var CustomIcon: any = Icon;
 export interface SearchProps {
   onChange: Function;
   value: string;
@@ -17,7 +18,7 @@ export default class Search extends React.Component<SearchProps, any> {
     return (
       <View style={styles.containerSearch}>
         {this.props.iconName ? (
-          <Icon
+          <CustomIcon
             containerStyle={styles.iconStyle}
             size={25}
             name={this.props.iconName}

@@ -14,6 +14,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Icon} from 'react-native-elements';
+var CustomIcon: any = Icon;
 export interface TagsProps {
   tags: Array<string>;
   onClose: Function;
@@ -30,7 +31,7 @@ class Tags extends React.Component<TagsProps, any> {
           <TouchableOpacity
             onPress={() => this.props.onClose(d)}
             style={styles.containerIcon}>
-            <Icon
+            <CustomIcon
               style={styles.crossIcon}
               onPress={() => this.props.onClose(d)}
               size={wp(3)}
@@ -48,7 +49,7 @@ class Tags extends React.Component<TagsProps, any> {
           <TouchableOpacity
             onPress={() => this.props.onClose(d)}
             style={styles.containerIcon}>
-            <Icon
+            <CustomIcon
               style={styles.crossIcon}
               onPress={() => this.props.onClose(d)}
               size={wp(3)}
@@ -66,7 +67,7 @@ class Tags extends React.Component<TagsProps, any> {
           <TouchableOpacity
             onPress={() => this.props.onClose(d)}
             style={styles.containerIcon}>
-            <Icon
+            <CustomIcon
               style={styles.crossIcon}
               onPress={() => this.props.onClose(d)}
               size={wp(3)}
@@ -84,7 +85,7 @@ class Tags extends React.Component<TagsProps, any> {
           <TouchableOpacity
             onPress={() => this.props.onClose(d)}
             style={styles.containerIcon}>
-            <Icon
+            <CustomIcon
               style={styles.crossIcon}
               onPress={() => this.props.onClose(d)}
               size={wp(3)}
@@ -103,7 +104,7 @@ class Tags extends React.Component<TagsProps, any> {
           <TouchableOpacity
             onPress={() => this.props.onClose(d)}
             style={styles.containerIcon}>
-            <Icon
+            <CustomIcon
               style={styles.crossIcon}
               onPress={() => this.props.onClose(d)}
               size={wp(3)}
@@ -121,7 +122,7 @@ class Tags extends React.Component<TagsProps, any> {
           <TouchableOpacity
             onPress={() => this.props.onClose(d)}
             style={styles.containerIcon}>
-            <Icon
+            <CustomIcon
               style={styles.crossIcon}
               onPress={() => this.props.onClose(d)}
               size={wp(3)}
@@ -139,7 +140,7 @@ class Tags extends React.Component<TagsProps, any> {
           <TouchableOpacity
             onPress={() => this.props.onClose(d)}
             style={styles.containerIcon}>
-            <Icon
+            <CustomIcon
               style={styles.crossIcon}
               onPress={() => this.props.onClose(d)}
               size={wp(3)}
@@ -161,7 +162,7 @@ class Tags extends React.Component<TagsProps, any> {
                   <TouchableOpacity
                     onPress={() => this.props.onClose(d)}
                     style={styles.containerIcon}>
-                    <Icon
+                    <CustomIcon
                       style={styles.crossIcon}
                       onPress={() => this.props.onClose(d)}
                       size={wp(3)}
@@ -183,7 +184,7 @@ class Tags extends React.Component<TagsProps, any> {
           <TouchableOpacity
             onPress={() => this.props.onClose(d)}
             style={styles.containerIcon}>
-            <Icon
+            <CustomIcon
               style={styles.crossIcon}
               onPress={() => this.props.onClose(d)}
               size={wp(3)}

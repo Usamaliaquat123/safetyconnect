@@ -11,7 +11,7 @@ import {colors} from '@theme';
 export interface CalendarsProps {
   currentDate: number;
 }
-  
+
 class Calendars extends React.Component<CalendarsProps, any> {
   render() {
     return (

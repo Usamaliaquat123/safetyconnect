@@ -26,10 +26,12 @@ import {involved_persons} from '@typings';
 import moment from 'moment';
 
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+
+var CustomIcon: any = Icon;
 export interface SuggestionsPopProps {
   onClose: Function;
   isOpen: boolean;
-  suggestions: Array<any>;
+  suggestions: Array<any> | any;
   currentUser: any;
   newAct: Boolean;
   isView: Boolean;
@@ -171,7 +173,7 @@ export default class SuggestionsPop extends React.Component<
           createApi
             .createApi()
             .getPublicPhotos(dataa)
-            .then((res) => {
+            .then((res: any) => {
               console.log(res.data);
 
               this.state.files.push({
@@ -236,7 +238,7 @@ export default class SuggestionsPop extends React.Component<
 
   openDoc = async (attach: Array<Object>) => {
     try {
-      var res = await DocumentPicker.pick({
+      var res: any = await DocumentPicker.pick({
         type: [DocumentPicker.types.allFiles],
       });
       // DocType(res, this.state.attachments).then((res) => {
@@ -291,7 +293,7 @@ export default class SuggestionsPop extends React.Component<
       }
 
       this.setState({});
-    } catch (err) {
+    } catch (err: any) {
       if (DocumentPicker.isCancel(err)) {
         // User cancelled the picker, exit any dialogs or menus and move on
       } else {
@@ -316,7 +318,7 @@ export default class SuggestionsPop extends React.Component<
                 <Text style={styles.containerTextString}>
                   Action / Recommendation
                 </Text>
-                <Icon
+                <CustomIcon
                   containerStyle={{
                     position: 'absolute',
                     right: wp(-15),
@@ -392,7 +394,7 @@ export default class SuggestionsPop extends React.Component<
                 />
 
                 <View style={styles.arrowRightAssigners}>
-                  <Icon
+                  <CustomIcon
                     size={wp(5)}
                     name="calendar"
                     type="antdesign"
@@ -468,7 +470,7 @@ export default class SuggestionsPop extends React.Component<
                             this.setState({actionsText: ''});
                           }}
                           style={styles.arrowRightAssigners}>
-                          <Icon
+                          <CustomIcon
                             size={wp(5)}
                             name="arrowright"
                             type="antdesign"
@@ -564,7 +566,7 @@ export default class SuggestionsPop extends React.Component<
                       }
                     }}
                     style={{marginLeft: wp(2), marginRight: wp(2)}}>
-                    <Icon
+                    <CustomIcon
                       //@ts-ignore
                       size={wp(7)}
                       name="progress-clock"
@@ -590,7 +592,7 @@ export default class SuggestionsPop extends React.Component<
                       }
                     }}
                     style={{marginLeft: wp(2), marginRight: wp(2)}}>
-                    <Icon
+                    <CustomIcon
                       //@ts-ignore
                       size={wp(7)}
                       name="progress-check"
@@ -616,7 +618,7 @@ export default class SuggestionsPop extends React.Component<
                       }
                     }}
                     style={{marginLeft: wp(2), marginRight: wp(2)}}>
-                    <Icon
+                    <CustomIcon
                       //@ts-ignore
                       size={wp(7)}
                       name="progress-alert"
@@ -665,7 +667,7 @@ export default class SuggestionsPop extends React.Component<
                               style={styles.textInputPopup}
                               placeholder={'Add your justification'}
                             />
-                            <Icon
+                            <CustomIcon
                               onPress={() => this.openDoc(this.state.files)}
                               name={'attachment'}
                               type={'entypo'}
@@ -749,7 +751,7 @@ export default class SuggestionsPop extends React.Component<
                                                 ].filter((b) => b != d);
                                                 this.setState({files: arr});
                                               }}>
-                                              <Icon
+                                              <CustomIcon
                                                 containerStyle={{
                                                   marginRight: wp(2),
                                                   marginTop: wp(2),
@@ -826,7 +828,7 @@ export default class SuggestionsPop extends React.Component<
                                                 ].filter((b) => b != d);
                                                 this.setState({files: arr});
                                               }}>
-                                              <Icon
+                                              <CustomIcon
                                                 containerStyle={{
                                                   marginRight: wp(2),
                                                   marginTop: wp(2),
@@ -869,7 +871,7 @@ export default class SuggestionsPop extends React.Component<
                       }
                     }}
                     style={{marginLeft: wp(2), marginRight: wp(2)}}>
-                    <Icon
+                    <CustomIcon
                       //@ts-ignore
                       size={wp(7)}
                       name="team"
@@ -895,7 +897,7 @@ export default class SuggestionsPop extends React.Component<
                       }
                     }}
                     style={{marginLeft: wp(2), marginRight: wp(2)}}>
-                    <Icon
+                    <CustomIcon
                       size={wp(7)}
                       name="admin-panel-settings"
                       type="material"
@@ -918,7 +920,7 @@ export default class SuggestionsPop extends React.Component<
                       }
                     }}
                     style={{marginLeft: wp(2), marginRight: wp(2)}}>
-                    <Icon
+                    <CustomIcon
                       size={wp(7)}
                       name="unlink"
                       type="font-awesome"
@@ -943,7 +945,7 @@ export default class SuggestionsPop extends React.Component<
                       }
                     }}
                     style={{marginLeft: wp(2), marginRight: wp(2)}}>
-                    <Icon
+                    <CustomIcon
                       size={wp(7)}
                       name="engineering"
                       type="material"
@@ -968,7 +970,7 @@ export default class SuggestionsPop extends React.Component<
                       }
                     }}
                     style={{marginLeft: wp(2), marginRight: wp(2)}}>
-                    <Icon
+                    <CustomIcon
                       size={wp(7)}
                       name="engineering"
                       type="material"
@@ -1001,7 +1003,7 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.AssignedTo.length != 0) {
-                        var sugg = {
+                        var sugg: any = {
                           // status: this.state.status,
                           content: this.state.observation,
                           createdBy: this.props.currentUser.email,
@@ -1093,7 +1095,7 @@ export default class SuggestionsPop extends React.Component<
                   {this.state.currMonth}
                 </Text>
               </View>
-              <Icon
+              <CustomIcon
                 onPress={() => this.setState({openCalendar: false})}
                 containerStyle={{
                   position: 'absolute',
@@ -1164,10 +1166,12 @@ export default class SuggestionsPop extends React.Component<
                 // Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates
                 disableAllTouchEventsForDisabledDays={true}
                 // Replace default month and year title with custom one. the function receive a date as parameter.
-                renderHeader={(date) => {
+                renderHeader={(dte: any) => {
                   /*Return JSX*/
 
-                  this.setState({currMonth: moment(date[0]).format('MMMM')});
+                  this.setState({
+                    currMonth: moment(dte[0]).format('MMMM'),
+                  });
                 }}
                 // Enable the option to swipe between months. Default = false
                 enableSwipeMonths={true}

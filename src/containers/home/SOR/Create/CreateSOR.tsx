@@ -612,7 +612,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         .getAllRepeatedSugg(
                           this.state.observationT,
                           this.state.projectid,
-                          sors.report._id,
+                          sors.report._id,  
                         )
                         .then(async (sugg: any) => {
                           this.setState({

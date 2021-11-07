@@ -13,6 +13,8 @@ import {
 import {Isor} from '@typings';
 import {classifySor} from '@utils';
 import {ScrollView} from 'react-native-gesture-handler';
+
+var CustomIcon: any = Icon;
 export interface RepeatedModalProps {
   onSubmit: Function;
   onSkip: Function;
@@ -51,7 +53,7 @@ export default class RepeatedModal extends React.Component<
             <Text style={styles.headingContainer}>
               Is your observation same as these ?
             </Text>
-            <Icon name={'cross'} type={'entypo'} size={wp(7)} />
+            <CustomIcon name={'cross'} type={'entypo'} size={wp(7)} />
           </View>
           {/* SUbmitted */}
           {/* <View style={[styles.containerCard, {marginTop: wp(2)}]}> */}
@@ -66,14 +68,14 @@ export default class RepeatedModal extends React.Component<
                   <View style={{marginBottom: wp(3)}}>
                     <Card
                       data={res}
-                      onPress={(d: Isor) => {
+                      onPress={(d: Isor | any) => {
                         var data = [...this.state.repeatedSor];
                         data[i].selected = !d.selected;
 
                         this.setState({repeatedSor: data});
                         this.props.onViewSor(
                           this.state.repeatedSor.filter(
-                            (d) => d.selected == true,
+                            (d: any) => d.selected == true,
                           ),
                         );
                       }}
@@ -111,12 +113,12 @@ export default class RepeatedModal extends React.Component<
             <TouchableOpacity
               onPress={() =>
                 this.props.onSubmit(
-                  this.state.repeatedSor.filter((d) => d.selected == true),
+                  this.state.repeatedSor.filter((d: any) => d.selected == true),
                 )
               }
               style={[
                 styles.submitBtn,
-                this.state.repeatedSor.filter((d) => d.selected == true)
+                this.state.repeatedSor.filter((d: any) => d.selected == true)
                   .length == 0
                   ? {backgroundColor: colors.lightGrey}
                   : {backgroundColor: colors.primary},

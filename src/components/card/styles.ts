@@ -40,6 +40,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
+  cardContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // alignItems: 'center',
+    marginBottom: wp(3),
+  },
   cardBottom: {
     // justifyContent: ,
     // flexDirection: 'row',

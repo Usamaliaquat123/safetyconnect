@@ -9,9 +9,11 @@ import {
 import {fonts} from '@theme';
 import {Icon} from 'react-native-elements';
 // import {chartTy} from '@typings';
+var CustomIcon: any = Icon;
+
 interface Props {
-  severity: Array<Object>;
-  liklihood: Array<Object>;
+  severity: Array<Object> | any;
+  liklihood: Array<Object> | any;
   style?: Object;
   onPress: Function;
 }
@@ -55,7 +57,7 @@ const Chart = (props: Props) => {
             }}>
             View Risk Matrix{' '}
           </Text>
-          <Icon
+          <CustomIcon
             iconStyle={{opacity: 0.5, marginTop: wp(1), marginLeft: wp(1)}}
             size={wp(4)}
             name="infocirlceo"
@@ -227,7 +229,7 @@ const Chart = (props: Props) => {
             }}>
             View Risk Matrix{' '}
           </Text>
-          <Icon
+          <CustomIcon
             iconStyle={{opacity: 0.5, marginTop: wp(1), marginLeft: wp(1)}}
             size={wp(4)}
             name="infocirlceo"
@@ -238,7 +240,7 @@ const Chart = (props: Props) => {
 
         <View style={{flexDirection: 'row'}}>
           <View style={{flexDirection: 'row'}}>
-            {severity.map((d: any, i) => {
+            {severity.map((d: any, i: number) => {
               return (
                 <View key={i}>
                   <TouchableOpacity

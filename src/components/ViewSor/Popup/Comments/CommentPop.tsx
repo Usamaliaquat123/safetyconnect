@@ -13,6 +13,7 @@ import {colors, GlStyles, images} from '@theme';
 import {Icon} from 'react-native-elements';
 import styles from './styles';
 import {default as Model} from 'react-native-modal';
+var CustomIcon: any = Icon;
 export interface CommentPopProps {
   openDoc: Function;
   onClose: Function;
@@ -109,7 +110,7 @@ export default class CommentPop extends React.Component<CommentPopProps, any> {
                             );
                             this.props.deleteAttachment(arr);
                           }}>
-                          <Icon
+                          <CustomIcon
                             containerStyle={styles.iconWithCircle}
                             name="circle-with-cross"
                             size={wp(5)}
@@ -152,7 +153,7 @@ export default class CommentPop extends React.Component<CommentPopProps, any> {
                               this.props.deleteAttachment(arr);
                             }}
                             style={styles.circleWithCrossFile}>
-                            <Icon
+                            <CustomIcon
                               size={wp(5)}
                               name="circle-with-cross"
                               type="entypo"

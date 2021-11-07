@@ -16,14 +16,15 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+var CustomIcon: any = Icon;
 export interface CardProps {
   data?: any;
   date?: number;
-  risk?: number;
-  isView: boolean;
+  risk?: number | any;
+  isView?: boolean;
   observation?: string;
   classify?: any;
-  location?: string;
+  location?: string | any;
   even?: boolean;
   iconConf?: any;
   user1: string;
@@ -36,9 +37,9 @@ export interface CardProps {
   type?: string;
   containerStyle?: any;
   selection?: boolean;
-  repeated: Array<any>;
-  onPressRepeated?: Function;
-  name?: string;
+  repeated?: Array<any> | any;
+  onPressRepeated?: Function | any;
+  name?: string | any;
 }
 function dp(percentage: any) {
   const value = (percentage * viewportWidth) / 100;
@@ -115,16 +116,9 @@ export default class Card extends React.Component<CardProps, any> {
 
                 {/* Card Bottom view */}
                 <View style={[styles.cardBottom, {width: wp(70)}]}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      // alignItems: 'center',
-                      marginBottom: wp(3),
-                    }}>
+                  <View style={styles.cardContainer}>
                     <View style={styles.cardRisk}>
-                      <Icon
+                      <CustomIcon
                         style={{padding: 3}}
                         size={wp(3)}
                         name={this.props.iconConf.icon}
@@ -210,7 +204,7 @@ export default class Card extends React.Component<CardProps, any> {
                     )}
 
                     <View style={styles.cardLocation}>
-                      <Icon
+                      <CustomIcon
                         style={{paddingRight: 3, opacity: 0.5}}
                         size={wp(5)}
                         name="location"
@@ -270,7 +264,7 @@ export default class Card extends React.Component<CardProps, any> {
                       </Text>
 
                       {this.props.isView == undefined && (
-                        <Icon
+                        <CustomIcon
                           containerStyle={{marginLeft: wp(7)}}
                           name={
                             this.props.selection
@@ -316,7 +310,7 @@ export default class Card extends React.Component<CardProps, any> {
                       alignItems: 'center',
                     }}>
                     <View style={styles.cardRisk}>
-                      <Icon
+                      <CustomIcon
                         style={{padding: 3}}
                         size={wp(3)}
                         name={this.props.iconConf.icon}
@@ -374,7 +368,7 @@ export default class Card extends React.Component<CardProps, any> {
                       </Text>
                     </View>
                     <View style={styles.cardLocation}>
-                      <Icon
+                      <CustomIcon
                         style={{paddingRight: 3, opacity: 0.5}}
                         size={wp(5)}
                         name="location"
