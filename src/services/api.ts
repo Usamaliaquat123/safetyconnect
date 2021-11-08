@@ -12,6 +12,7 @@ import {
 import {BASE_URI} from '../../env_debug';
 
 // our "constructor"
+
 const base_uri = `${BASE_URI}`;
 const createApi = (
   baseURL: string = `${BASE_URI}:12222/`,
@@ -269,6 +270,7 @@ const createApi = (
     openPrivateChat,
     taskAssignedBy,
     tableData,
+    base_uri,
     createFiveWhy,
     createGroupApi,
     logs,

@@ -49,48 +49,56 @@ class Messaging extends React.Component<MessagingProps, any> {
 
   // Setup Socket implementation
   setupSocket = (token: any) => {
-    console.log(token);
+    return new Promise((resolve, reject) => {
+      console.log(token);
 
-    const newSocket = io.connect('https://backend.safetyconnect.ai:5007', {
-      transports: ['websocket'],
-      withCredentials: true,
-      jsonp: false,
+      const newSocket = io.connect('https://backend.safetyconnect.ai:5007', {
+        transports: ['websocket'],
+        withCredentials: true,
+        jsonp: false,
 
-      // origins: '*',
-      query: {
-        token: token,
-      },
+        // origins: '*',
+        query: {
+          token: token,
+        },
+      });
+
+      // console.log('in socket');
+      // console.log(newSocket);
+      newSocket.on('error', (data: any) => {
+        reject(data);
+        console.log(data || 'Chat: socket error');
+      });
+
+      newSocket.on('testEmit', (data: any) => {
+        resolve(data);
+        console.log('Chat: testEmit', data);
+      });
+
+      newSocket.on('disconnect', (e: any) => {
+        // setSocket(null);
+        reject(e);
+        this.setState({socket: null});
+        // setTimeout(this.setupSocket(token), 3000);
+        console.log('Chat:', 'error', 'Socket Disconnected!', e);
+      });
+
+      newSocket.on('connect', () => {
+        resolve('connect');
+        console.log('Chat:', 'success', 'Socket Connected!');
+      });
+
+      this.setState({socket: newSocket});
     });
-
-    // console.log('in socket');
-    // console.log(newSocket);
-    newSocket.on('error', (data: any) => {
-      console.log(data || 'Chat: socket error');
-    });
-
-    newSocket.on('testEmit', (data: any) =>
-      console.log('Chat: testEmit', data),
-    );
-
-    newSocket.on('disconnect', (e) => {
-      // setSocket(null);
-
-      this.setState({socket: null});
-      // setTimeout(this.setupSocket(token), 3000);
-      console.log('Chat:', 'error', 'Socket Disconnected!', e);
-    });
-
-    newSocket.on('connect', () => {
-      console.log('Chat:', 'success', 'Socket Connected!');
-    });
-
-    this.setState({socket: newSocket});
   };
 
   componentDidMount = () => {
     AsyncStorage.getItem('email').then((email: any) => {
       fetchAuthToken().then((token) => {
-        this.setupSocket(token);
+        this.setupSocket(token).then((res) => {
+          console.log('res yahan h');
+          console.log(res);
+        });
       });
 
       createApi
