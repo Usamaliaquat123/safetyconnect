@@ -51,7 +51,7 @@ class Messaging extends React.Component<MessagingProps, any> {
     return new Promise((resolve, reject) => {
       console.log(token);
 
-      const newSocket = io.connect(`${createApi.base_uri}:5007`, {
+      const newSocket = io.connect(`${createApi.createApi().base_uri}:5007`, {
         transports: ['websocket'],
         withCredentials: true,
         jsonp: false,

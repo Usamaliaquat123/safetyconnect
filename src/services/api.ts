@@ -316,5 +316,4 @@ const createApi = (
 
 export default {
   createApi,
-  base_uri,
 };
