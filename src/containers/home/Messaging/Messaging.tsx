@@ -226,14 +226,19 @@ class Messaging extends React.Component<MessagingProps, any> {
               {/* Group Conversation */}
               <View style={styles.conversationContainer}>
                 <Text style={styles.ttleConversation}>Group Conversations</Text>
-                <CustomIcon
-                  onPress={() => this.createGroup()}
-                  // containerStyle={{position: 'absolute', bottom: 0, right: 0}}
-                  name="add-circle"
-                  size={wp(15)}
-                  type="Ionicons"
-                  color={colors.green}
-                />
+
+                <TouchableOpacity
+                  style={{}}
+                  onPress={() => {
+                    this.createGroup();
+                  }}>
+                  <CustomIcon
+                    name="add-circle"
+                    size={wp(15)}
+                    type="Ionicons"
+                    color={colors.green}
+                  />
+                </TouchableOpacity>
 
                 {/* <TouchableOpacity
                 style={{

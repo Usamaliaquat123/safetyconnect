@@ -41,6 +41,8 @@ import {
 import {clockRunning, color} from 'react-native-reanimated';
 import {AsyncStorage} from '@aws-amplify/core';
 import {getCurrentOrganization, localToUtc} from '@utils/utils';
+
+var CustomIcon: any = Icon;
 type ChatNavigationProp = StackNavigationProp<StackNavigatorProps, 'Chat'>;
 type ChatRouteProp = RouteProp<StackNavigatorProps, 'Chat'>;
 
@@ -317,7 +319,7 @@ class Chat extends React.Component<ChatProps, any> {
   renderSend = (props: SendProps<IMessage>) => {
     return (
       <View style={{flexDirection: 'row'}}>
-        <Icon
+        <CustomIcon
           onPress={() => {}}
           containerStyle={{marginRight: wp(3)}}
           size={wp(4)}
@@ -391,7 +393,10 @@ class Chat extends React.Component<ChatProps, any> {
               rounded
               containerStyle={styles.containerAvatar}
               source={{
-                uri: this.props.route.params.data.img_url,
+                uri:
+                  this.props.route.params.type == 'private'
+                    ? this.props.route.params.data.userB.img_url
+                    : null,
               }}
             />
             <View
@@ -404,18 +409,20 @@ class Chat extends React.Component<ChatProps, any> {
             />
           </View>
           <Text style={styles.userNameText}>
-            {this.props.route.params.data.name}
+            {this.props.route.params.type == 'private'
+              ? this.props.route.params.data.userB.name
+              : null}
           </Text>
           <View style={styles.headRightIcon}>
-            <Icon
+            <CustomIcon
               size={wp(6)}
               name="adduser"
               type="antdesign"
               color={colors.primary}
             />
-            <Icon
+            <CustomIcon
               onPress={() => {
-                if (this.state.type == 'room') {
+                if (this.props.route.params.type === 'group') {
                   this.props.route.params.socket.emit('leaveRoom', {
                     chatroomId: this.state.reciever,
                   });
@@ -461,7 +468,7 @@ class Chat extends React.Component<ChatProps, any> {
           <TouchableOpacity
             onPress={() => this.setState({imageViewer: false})}
             style={{backgroundColor: colors.secondary, alignItems: 'flex-end'}}>
-            <Icon
+            <CustomIcon
               containerStyle={{marginTop: wp(3), marginRight: wp(3)}}
               name={'cross'}
               type={'entypo'}
