@@ -5,10 +5,10 @@ import {Avatar, Icon} from 'react-native-elements';
 import {colors} from '@theme';
 var CustomIcon: any = Icon;
 export interface HeaderProps {
-  onBackPress: Function;
-  profile: string;
-  title: string;
-  isback: boolean;
+  onBackPress?: Function;
+  profile?: string;
+  title?: string;
+  isback?: boolean;
 }
 
 export default class Header extends React.Component<HeaderProps, any> {

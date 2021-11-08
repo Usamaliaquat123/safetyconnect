@@ -17,7 +17,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {allRecentActivity, createApi} from '@service';
 
 import styles from './styles';
+
 import {AnalyticsClass} from '@aws-amplify/analytics/lib-esm/Analytics';
+
+var CustomIcon: any = Icon;
 type MessagingNavigationProp = StackNavigationProp<
   StackNavigatorProps,
   'Messaging'
@@ -177,7 +180,7 @@ class Messaging extends React.Component<MessagingProps, any> {
               <View style={styles.conversationContainer}>
                 <Text style={styles.ttleConversation}>Conversations</Text>
                 <View style={styles.line} />
-                {this.state.users.map((d: Imessage) => (
+                {this.state.users.map((d: Imessage | any) => (
                   <User
                     id={d.userId}
                     name={d.name}
@@ -216,7 +219,7 @@ class Messaging extends React.Component<MessagingProps, any> {
               {/* Group Conversation */}
               <View style={styles.conversationContainer}>
                 <Text style={styles.ttleConversation}>Group Conversations</Text>
-                <Icon
+                <CustomIcon
                   onPress={() => this.createGroup()}
                   // containerStyle={{position: 'absolute', bottom: 0, right: 0}}
                   name="add-circle"
@@ -246,7 +249,7 @@ class Messaging extends React.Component<MessagingProps, any> {
                       createApi
                         .createApi()
                         .openGroupChat(d.data._id)
-                        .then((res) => {
+                        .then((res: any) => {
                           // console.log(res.data.data[0]);
 
                           this.props.navigation.navigate('Chat', {
