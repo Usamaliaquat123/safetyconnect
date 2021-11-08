@@ -5,6 +5,7 @@ import {
   Text,
   Image,
   TouchableOpacity,
+  BackHandler,
   Modal,
 } from 'react-native';
 import {connect} from 'react-redux';
@@ -157,11 +158,20 @@ class Chat extends React.Component<ChatProps, any> {
     console.log('data');
     console.log(this.props.route.params.data);
 
-    if (this.props.route.params.type == 'group') {
-      this.props.route.params.socket.emit('joinRoom', {
-        chatroomId: this.props.route.params.data._id,
-      });
-    }
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      // console.log('asds');
+  
+
+      if (this.props.route.params.type === 'group') {
+        this.props.route.params.socket.emit('leaveRoom', {
+          chatroomId: this.state.reciever,
+        });
+      } else {
+        this.props.route.params.socket.emit('leaveRoom', {
+          chatroomId: this.state.reciever,
+        });
+      }
+    });
 
     AsyncStorage.getItem('email')
       .then((user) => {
