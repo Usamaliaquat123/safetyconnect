@@ -13,7 +13,6 @@ import {BASE_URI} from '../../env_debug';
 
 // our "constructor"
 
-const base_uri = `${BASE_URI}`;
 const createApi = (
   baseURL: string = `${BASE_URI}:12222/`,
   obsbaseUrl: string = `${BASE_URI}:5003`,
@@ -75,7 +74,7 @@ const createApi = (
   //   baseURL: backendA,
   //   timeout: 10000,
   // });
-
+  const base_uri = `${BASE_URI}`;
   /*
    *  @apis
    */
@@ -317,4 +316,5 @@ const createApi = (
 
 export default {
   createApi,
+  base_uri,
 };
