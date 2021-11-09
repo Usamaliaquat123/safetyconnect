@@ -160,25 +160,32 @@ class Chat extends React.Component<ChatProps, any> {
 
     BackHandler.addEventListener('hardwareBackPress', () => {
       // console.log('asds');
-  
 
       if (this.props.route.params.type === 'group') {
-        this.props.route.params.socket.emit('leaveRoom', {
+        this.state.socket.emit('leaveRoom', {
           chatroomId: this.state.reciever,
         });
       } else {
-        this.props.route.params.socket.emit('leaveRoom', {
-          chatroomId: this.state.reciever,
+        console.log('this.state.reciever');
+        console.log(this.state.reciever);
+        this.state.socket.emit('leavePrivate', {
+          email: this.state.reciever,
         });
       }
     });
 
     AsyncStorage.getItem('email')
-      .then((user) => {
+      .then((user: any) => {
+        // console.log(this.props.route.params.data.userA.
         if (this.props.route.params.type == 'private') {
-          this.props.route.params.socket.emit('joinPrivate', {
-            email: user,
-          });
+          console.log;
+          // this.props.route.params.socket.emit('joinPrivate', {
+          //   email: this.props.rout,
+          // });
+        } else if (this.props.route.params.type == 'group') {
+          // this.props.route.params.socket.emit('joinRoom', {
+          //   chatroomId: chatId,
+          // });
         }
         getCurrentOrganization().then((orgId: any) => {
           console.log('orgId');
@@ -293,11 +300,11 @@ class Chat extends React.Component<ChatProps, any> {
                       )[0].img_url,
                     },
                   };
-                  // console.log('data');
-                  // console.log(dta);
-                  this.state.messages.push(dta);
+                  console.log('data aaya hai on 297');
+                  console.log(dta);
+                  // this.state.messages.push(dta);
 
-                  this.setState({});
+                  // this.setState({});
                   // const newMessages = [...chatMessages, message];
                 },
               );
