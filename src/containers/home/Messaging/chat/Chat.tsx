@@ -153,6 +153,12 @@ class Chat extends React.Component<ChatProps, any> {
       </View>
     );
   };
+  // filter out user from data array
+  // filterUsers = (users: any) => {
+  //   return new Promise((resolve , reject) => {
+
+  //   })
+  // };
 
   componentDidMount = () => {
     console.log('data');
@@ -176,11 +182,16 @@ class Chat extends React.Component<ChatProps, any> {
 
     AsyncStorage.getItem('email')
       .then((user: any) => {
-        // console.log(this.props.route.params.data.userA.
+        console.log('this.props.route.params.data on line 179');
+        console.log(this.props.route.params.data);
+        console.log('this.props.route.params.socket');
+
         if (this.props.route.params.type == 'private') {
-          console.log;
+          console.log('get in line 183');
+          console.log(this.props.route.params.socket);
+          // console.log();
           // this.props.route.params.socket.emit('joinPrivate', {
-          //   email: this.props.rout,
+          //   // email: this.props.rout,
           // });
         } else if (this.props.route.params.type == 'group') {
           // this.props.route.params.socket.emit('joinRoom', {
@@ -255,63 +266,62 @@ class Chat extends React.Component<ChatProps, any> {
                 }
               }
               this.setState({messages: dta});
-
-              this.props.route.params.socket.on(
-                `newMessage/${
-                  this.props.route.params.type == 'group'
-                    ? this.props.route.params.data._id
-                    : this.props.route.params.data._id
-                }`,
-                (message: any) => {
-                  console.log(
-                    'Chat: receiving new group message',
-                    message,
-                    'state id',
-                    this.props.route.params.data._id,
-                  );
-
-                  console.log('messageasdsad');
-                  console.log(message);
-
-                  // console.log(
-                  //   org.data.data.members.filter(
-                  //     (d: any) => user == message.user,
-                  //   ).length == 0
-                  //     ? Date.now()
-                  //     : 1,
-                  // );
-                  var dta = {
-                    // _id:
-                    //   org.data.data.members.filter(
-                    //     (d: any) => user == message.user,
-                    //   ).length == 0,
-                    // You can also add a video prop:
-                    text: message.message,
-                    createdAt: message.createdAt,
-                    user: {
-                      _id: org.data.data.members.filter(
-                        (d: any) => d.email == message.user,
-                      )[0]._id,
-                      name: org.data.data.members.filter(
-                        (d: any) => d.email == message.user,
-                      )[0].name,
-                      avatar: org.data.data.members.filter(
-                        (d: any) => d.email == message.user,
-                      )[0].img_url,
-                    },
-                  };
-                  console.log('data aaya hai on 297');
-                  console.log(dta);
-                  // this.state.messages.push(dta);
-
-                  // this.setState({});
-                  // const newMessages = [...chatMessages, message];
-                },
-              );
             });
         });
       })
       .catch((err) => {});
+
+    console.log('this.props.route.params.data yahann ai');
+    console.log(this.props.route.params.data);
+
+    this.state.socket.on(
+      `newMessage/${this.props.route.params.data._id}`,
+      (message: any) => {
+        console.log(
+          'Chat: receiving new group message',
+          message,
+          'state id',
+          this.props.route.params.data._id,
+        );
+
+        console.log('messageasdsad');
+        console.log(message);
+
+        // console.log(
+        //   org.data.data.members.filter(
+        //     (d: any) => user == message.user,
+        //   ).length == 0
+        //     ? Date.now()
+        //     : 1,
+        // );
+        // var dta = {
+        //   // _id:
+        //   //   org.data.data.members.filter(
+        //   //     (d: any) => user == message.user,
+        //   //   ).length == 0,
+        //   // You can also add a video prop:
+        //   text: message.message,
+        //   createdAt: message.createdAt,
+        //   user: {
+        //     _id: org.data.data.members.filter(
+        //       (d: any) => d.email == message.user,
+        //     )[0]._id,
+        //     name: org.data.data.members.filter(
+        //       (d: any) => d.email == message.user,
+        //     )[0].name,
+        //     avatar: org.data.data.members.filter(
+        //       (d: any) => d.email == message.user,
+        //     )[0].img_url,
+        //   },
+        // };
+        console.log('data aaya hai on 297');
+        console.log(dta);
+        // this.state.messages.push(dta);
+
+        // this.setState({});
+        // const newMessages = [...chatMessages, message];
+      },
+    );
 
     // console.log(dta);
   };
@@ -364,7 +374,7 @@ class Chat extends React.Component<ChatProps, any> {
               if (this.props.route.params.type == 'group') {
                 const message = {
                   chatroomId: this.state.reciever,
-                  createdAt: localToUtc(),
+                  createdAt: Date.now(),
                   message: props.text?.trim(),
                   files: [],
                 };
@@ -378,7 +388,7 @@ class Chat extends React.Component<ChatProps, any> {
                   message: props.text?.trim(),
                   files: [],
                   // this will need to converted in utc
-                  createdAt: localToUtc(),
+                  createdAt: Date.now(),
                 };
 
                 console.log('message');

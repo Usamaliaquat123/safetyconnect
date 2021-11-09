@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -82,52 +82,66 @@ export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
 const SLIDER_1_FIRST_ITEM = 1;
 
+
+
+
+
+const ViewAllSor  = (props : ViewAllProps) => {
+
+// states of this view all sors
+  const [AnimatedDownDraft, setAnimatedDownDraft] = useState<any>(new Animated.Value(0))
+  const [AnimatedOpacDraft, setAnimatedOpacDraft] = useState<any>(new Animated.Value(0))
+  const [AnimatedDownNotify, setAnimatedDownNotify] = useState<any>(new Animated.Value(0))
+  const [AnimatedOpacNotify, setAnimatedOpacNotify] = useState<any>(new Animated.Value(0))
+  const [AnimatedDownSubmitted, setAnimatedDownSubmitted] = useState(new Animated.Value(0))
+  const [AnimatedOpacSubmitted, setAnimatedOpacSubmitted] = useState(new Animated.Value(0))
+  const [currentlocation, setcurrentlocation] = useState(Create_sor.Observation.locations[0])
+  const [project, setproject] = useState('List View')
+  const [isInProgress, setisInProgress] = useState(false)
+  const [isDraft, setisDraft] = useState(false)
+  const [isSubmited, setisSubmited] = useState(false)
+  const [isExclated, setisExclated] = useState(false)
+  const [isCompleted, setisCompleted] = useState(false)
+  const [selectP, setselectP] = useState(false)
+  const [isNoti, setisNoti] = useState(false)
+  const [draft, setdraft] = useState([])
+  const [exclated, setexclated] = useState([])
+  const [submitted, setsubmitted] = useState([])
+const [closed, setclosed] = useState([])
+const [notified, setnotified] = useState([])
+const [inprogress, setinprogress] = useState([])
+const [isNotiData, setisNotiData] = useState([])
+const [pendingClosure, setpendingClosure] = useState([])
+const [repeatedSorModal, setrepeatedSorModal] = useState(false)
+const [isAuthenticated, setisAuthenticated] = useState(false)
+const [slider1ActiveSlide, setSlider1ActiveSlide] = useState(SLIDER_1_FIRST_ITEM)
+const [bottomWidth, setBottomWidth] = useState(wp(100))
+const [setUser, setsetUser] = useState('')
+const [newsorModal, setnewsorModal] = useState(false)
+const [refreshing, setRefreshing] = useState(false)
+const [involvedPerson, setInvolvedPerson] = useState([])
+const [searchValue, setsearchValue] = useState('')
+const [repeatedSors, setrepeatedSors] = useState([])
+const [projectSelectors, setprojectSelectors] = useState(false)
+const [loading, setloading] = useState(false)
+const [projects, setprojects] = useState([])
+const [projectId, setprojectId] = useState('')
+const [projectName, setprojectName] = useState('')
+
+
+   
+
+
+
+
+
+}
+
 export class ViewAllSOr extends React.Component<ViewAllProps, any> {
   constructor(props: ViewAllProps) {
     super(props);
     this.state = {
-      // animation of drafts
-      AnimatedDownDraft: new Animated.Value(0),
-      AnimatedOpacDraft: new Animated.Value(0),
-      // animation of notified
-      AnimatedDownNotify: new Animated.Value(0),
-      AnimatedOpacNotify: new Animated.Value(0),
-      // animation of submitted
-      AnimatedDownSubmitted: new Animated.Value(0),
-      AnimatedOpacSubmitted: new Animated.Value(0),
-      currentlocation: Create_sor.Observation.locations[0],
-      project: 'List View',
-      isInProgress: false,
-      isDraft: false,
-      isSubmited: false,
-      isExclated: false,
-      isCompleted: false,
-      selectP: false,
-      isNoti: false,
-      draft: [],
-      exclated: [],
-      submitted: [],
-      closed: [],
-      notified: [],
-      inprogress: [],
-      isNotiData: [],
-      pendingClosure: [],
-      repeatedSorModal: false,
-      isAuthenticated: false,
-      slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
-      bottomWidth: wp(100),
-      setUser: '',
-      // New sor modal popup
-      newsorModal: false,
-      refreshing: false,
-      involvedPerson: [],
-      searchValue: '',
-      repeatedSors: [],
-      projectSelectors: false,
-      loading: false,
-      projects: [],
-      projectId: '',
-      projectName: '',
+    
     };
   }
 

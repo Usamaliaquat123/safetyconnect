@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, BackHandler} from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {Icon, Avatar} from 'react-native-elements';
@@ -32,22 +32,25 @@ export interface MessagingProps {
   reduxActions: any;
   reduxState: any;
 }
-class Messaging extends React.Component<MessagingProps, any> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      loading: false,
-      users: messagingUsers,
-      group: groupConversation,
-      currentUser: {},
-      tokens: '',
-      orgnaizationId: '',
-      socket: null,
-    };
-  }
+
+export type MessagingPropsT = {
+  route: MessagingRouteProp;
+  navigation: MessagingNavigationProp;
+  reduxActions: any;
+  reduxState: any;
+};
+
+const Messaging = (props: MessagingProps) => {
+  const [Loading, setLoading] = useState<Boolean>(false);
+  const [users, setUsers] = useState<Array<any>>([]);
+  const [groupUsers, setGroupUsers] = useState<Array<any>>([]);
+  const [currentUser, setcurrentUser] = useState<any>({});
+  const [token, setToken] = useState<string>();
+  const [orgnaizationId, setOrgnaizationId] = useState<string>('');
+  const [socket, setSocket] = useState<null>();
 
   // Setup Socket implementation
-  setupSocket = (token: any) => {
+  const setupSocket = (token: any) => {
     return new Promise((resolve, reject) => {
       console.log(token);
 
@@ -62,7 +65,7 @@ class Messaging extends React.Component<MessagingProps, any> {
         },
       });
 
-      // console.log('in socket');
+      // console.log('in socket');d
       // console.log(newSocket);
       newSocket.on('error', (data: any) => {
         reject(data);
@@ -77,24 +80,27 @@ class Messaging extends React.Component<MessagingProps, any> {
       newSocket.on('disconnect', (e: any) => {
         // setSocket(null);
         reject(e);
-        this.setState({socket: null});
+        setSocket(null);
         // setTimeout(this.setupSocket(token), 3000);
         console.log('Chat:', 'error', 'Socket Disconnected!', e);
       });
 
       newSocket.on('connect', () => {
         resolve('connect');
+        setSocket(newSocket);
         console.log('Chat:', 'success', 'Socket Connected!');
       });
-
-      this.setState({socket: newSocket});
     });
   };
 
-  componentDidMount = () => {
+  const createGroup = () => {
+    // this.props.navigation.navigate('ChatGroup');
+  };
+
+  useEffect(() => {
     AsyncStorage.getItem('email').then((email: any) => {
       fetchAuthToken().then((token) => {
-        this.setupSocket(token).then((res) => {
+        setupSocket(token).then((res) => {
           console.log('res yahan h');
           console.log(res);
         });
@@ -107,9 +113,8 @@ class Messaging extends React.Component<MessagingProps, any> {
           getCurrentOrganization().then((orgId: any) => {
             console.log(orgId);
 
-            this.setState({orgnaizationId: orgId});
+            setOrgnaizationId(orgId);
             // this.
-            console.log(res.data.data._id);
             createApi
               .createApi()
               .getAllChats(res.data.data._id, orgId)
@@ -151,96 +156,92 @@ class Messaging extends React.Component<MessagingProps, any> {
                 }
 
                 console.log(usr);
-
+                setUsers(usr);
+                setGroupUsers(groups);
                 // console.log(usr);
-                this.setState({users: usr, group: groups});
+                // this.setState({users: usr, group: groups});
               })
               .catch((err: any) => console.log(err));
           });
-          this.setState({currentUser: res.data.data});
+
+          setcurrentUser(res.data.data);
         });
     });
-  };
+  }, []);
 
-  createGroup = () => {
-    this.props.navigation.navigate('ChatGroup');
-  };
-
-  render() {
-    return (
-      <View style={{backgroundColor: colors.secondary}}>
-        <View style={{backgroundColor: colors.primary}}>
-          <ScrollView>
-            <Header
-              title="Messaging"
-              onBackPress={() => this.props.navigation.goBack()}
-              profile={this.state.currentUser.img_url}
+  return (
+    <View style={{backgroundColor: colors.secondary}}>
+      <View style={{backgroundColor: colors.primary}}>
+        <ScrollView>
+          <Header
+            title="Messaging"
+            onBackPress={() => props.navigation.goBack()}
+            profile={currentUser.img_url}
+          />
+          <View style={styles.content}>
+            <Search
+              onChange={(e: string) => {}}
+              value={'Search messages'}
+              iconName={'search'}
+              placeHolder={'Searh messages'}
+              iconType={'evilicon'}
             />
-            <View style={styles.content}>
-              <Search
-                onChange={(e: string) => {}}
-                value={'Search messages'}
-                iconName={'search'}
-                placeHolder={'Searh messages'}
-                iconType={'evilicon'}
-              />
-              <View style={styles.conversationContainer}>
-                <Text style={styles.ttleConversation}>Conversations</Text>
-                <View style={styles.line} />
-                {this.state.users.map((d: Imessage | any) => (
-                  <User
-                    id={d.userId}
-                    name={d.name}
-                    pendingsms={d.notseen}
-                    image={d.image}
-                    isOnline={d.isonline}
-                    onPress={() => {
-                      console.log('current data uahdsajhdjh');
-                      console.log(d);
-
-                      console.log(this.state.currentUser._id);
-                      console.log(this.state.orgnaizationId);
-                      console.log(d.data._id);
-
-                      createApi
-                        .createApi()
-                        .openPrivateChat(
-                          this.state.currentUser._id,
-                          this.state.orgnaizationId,
-                          d.userId,
-                        )
-                        .then((res: any) => {
-                          // console.log('res tel');
-                          // console.log(res);
-
-                          this.props.navigation.navigate('Chat', {
-                            data: res.data,
-                            type: 'private',
-                            socket: this.state.socket,
-                          });
-                        });
-                    }}
-                  />
-                ))}
-              </View>
-              {/* Group Conversation */}
-              <View style={styles.conversationContainer}>
-                <Text style={styles.ttleConversation}>Group Conversations</Text>
-
-                <TouchableOpacity
-                  style={{}}
+            <View style={styles.conversationContainer}>
+              <Text style={styles.ttleConversation}>Conversations</Text>
+              <View style={styles.line} />
+              {users.map((d: Imessage | any) => (
+                <User
+                  id={d.userId}
+                  name={d.name}
+                  pendingsms={d.notseen}
+                  image={d.image}
+                  isOnline={d.isonline}
                   onPress={() => {
-                    this.createGroup();
-                  }}>
-                  <CustomIcon
-                    name="add-circle"
-                    size={wp(15)}
-                    type="Ionicons"
-                    color={colors.green}
-                  />
-                </TouchableOpacity>
+                    console.log('current data uahdsajhdjh');
+                    console.log(d);
 
-                {/* <TouchableOpacity
+                    console.log(currentUser._id);
+                    console.log(orgnaizationId);
+                    console.log(d.data._id);
+
+                    createApi
+                      .createApi()
+                      .openPrivateChat(
+                        currentUser._id,
+                        orgnaizationId,
+                        d.userId,
+                      )
+                      .then((res: any) => {
+                        // console.log(res);
+
+                        props.navigation.navigate('Chat', {
+                          data: res.data,
+                          type: 'private',
+                          socket: socket,
+                        });
+                      });
+                  }}
+                />
+              ))}
+            </View>
+            {/* Group Conversation */}
+            <View style={styles.conversationContainer}>
+              <Text style={styles.ttleConversation}>Group Conversations</Text>
+
+              <TouchableOpacity
+                style={{}}
+                onPress={() => {
+                  createGroup();
+                }}>
+                <CustomIcon
+                  name="add-circle"
+                  size={wp(15)}
+                  type="Ionicons"
+                  color={colors.green}
+                />
+              </TouchableOpacity>
+
+              {/* <TouchableOpacity
                 style={{
                   backgroundColor: colors.green,
                   padding: wp(3),
@@ -248,47 +249,42 @@ class Messaging extends React.Component<MessagingProps, any> {
                 }}
                 onPress={() => {}}>
                 </TouchableOpacity> */}
-                {/* <View style={styles.line} /> */}
-                {this.state.group.map((d: any) => (
-                  <User
-                    id={d.userId}
-                    name={d.name}
-                    // pendingsms={d.notseen}
-                    image={d.image}
-                    isOnline={d.isonline}
-                    onPress={() => {
-                      console.log(d);
-                      createApi
-                        .createApi()
-                        .openGroupChat(d.data._id)
-                        .then((res: any) => {
-                          // console.log(res.data.data[0]);
-
-                          this.props.navigation.navigate('Chat', {
-                            data: res.data.data[0],
-                            type: 'group',
-                            socket: this.state.socket,
-                          });
-                        });
-                    }}
-                  />
-                ))}
-              </View>
               {/* <View style={styles.line} /> */}
+              {groupUsers.map((d: any) => (
+                <User
+                  id={d.userId}
+                  name={d.name}
+                  // pendingsms={d.notseen}
+                  image={d.image}
+                  isOnline={d.isonline}
+                  onPress={() => {
+                    console.log(d);
+                    createApi
+                      .createApi()
+                      .openGroupChat(d.data._id)
+                      .then((res: any) => {
+                        // console.log(res.data.data[0]);
+                        // console.log(res);
+                        // console.log(this.state.socket);
+
+                        props.navigation.navigate('Chat', {
+                          data: res.data.data[0],
+                          type: 'group',
+                          socket: socket,
+                        });
+                      });
+                  }}
+                />
+              ))}
             </View>
-          </ScrollView>
-        </View>
+            {/* <View style={styles.line} /> */}
+          </View>
+        </ScrollView>
       </View>
-    );
-  }
-}
+    </View>
+  );
 
-const mapStateToProps = (state: any) => {
-  return {};
+  // await AsyncStorage.getItem("")
 };
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Messaging);
+export default Messaging;
