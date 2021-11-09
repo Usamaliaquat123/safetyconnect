@@ -1,4 +1,4 @@
-import  React, {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -82,80 +82,72 @@ export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
 const SLIDER_1_FIRST_ITEM = 1;
 
+const ViewAllSor = (props: ViewAllProps) => {
+  // states of this view all sors
+  const [AnimatedDownDraft, setAnimatedDownDraft] = useState<any>(
+    new Animated.Value(0),
+  );
+  const [AnimatedOpacDraft, setAnimatedOpacDraft] = useState<any>(
+    new Animated.Value(0),
+  );
+  const [AnimatedDownNotify, setAnimatedDownNotify] = useState<any>(
+    new Animated.Value(0),
+  );
+  const [AnimatedOpacNotify, setAnimatedOpacNotify] = useState<any>(
+    new Animated.Value(0),
+  );
+  const [AnimatedDownSubmitted, setAnimatedDownSubmitted] = useState(
+    new Animated.Value(0),
+  );
+  const [AnimatedOpacSubmitted, setAnimatedOpacSubmitted] = useState(
+    new Animated.Value(0),
+  );
+  const [currentlocation, setcurrentlocation] = useState(
+    Create_sor.Observation.locations[0],
+  );
+  const [project, setproject] = useState('List View');
+  const [isInProgress, setisInProgress] = useState(false);
+  const [isDraft, setisDraft] = useState(false);
+  const [isSubmited, setisSubmited] = useState(false);
+  const [isExclated, setisExclated] = useState(false);
+  const [isCompleted, setisCompleted] = useState(false);
+  const [selectP, setselectP] = useState(false);
+  const [isNoti, setisNoti] = useState(false);
+  const [draft, setdraft] = useState([]);
+  const [exclated, setexclated] = useState([]);
+  const [submitted, setsubmitted] = useState([]);
+  const [closed, setclosed] = useState([]);
+  const [notified, setnotified] = useState([]);
+  const [inprogress, setinprogress] = useState([]);
+  const [isNotiData, setisNotiData] = useState([]);
+  const [pendingClosure, setpendingClosure] = useState([]);
+  const [repeatedSorModal, setrepeatedSorModal] = useState(false);
+  const [isAuthenticated, setisAuthenticated] = useState(false);
+  const [slider1ActiveSlide, setSlider1ActiveSlide] = useState(
+    SLIDER_1_FIRST_ITEM,
+  );
+  const [bottomWidth, setBottomWidth] = useState(wp(100));
+  const [setUser, setsetUser] = useState('');
+  const [newsorModal, setnewsorModal] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [involvedPerson, setInvolvedPerson] = useState([]);
+  const [searchValue, setsearchValue] = useState('');
+  const [repeatedSors, setrepeatedSors] = useState([]);
+  const [projectSelectors, setprojectSelectors] = useState(false);
+  const [loading, setloading] = useState(false);
+  const [projects, setprojects] = useState([]);
+  const [projectId, setprojectId] = useState('');
+  const [projectName, setprojectName] = useState('');
+  const [nosorOrSorMessage, setnosorOrSorMessage] = useState('');
 
-
-
-
-const ViewAllSor  = (props : ViewAllProps) => {
-
-// states of this view all sors
-  const [AnimatedDownDraft, setAnimatedDownDraft] = useState<any>(new Animated.Value(0))
-  const [AnimatedOpacDraft, setAnimatedOpacDraft] = useState<any>(new Animated.Value(0))
-  const [AnimatedDownNotify, setAnimatedDownNotify] = useState<any>(new Animated.Value(0))
-  const [AnimatedOpacNotify, setAnimatedOpacNotify] = useState<any>(new Animated.Value(0))
-  const [AnimatedDownSubmitted, setAnimatedDownSubmitted] = useState(new Animated.Value(0))
-  const [AnimatedOpacSubmitted, setAnimatedOpacSubmitted] = useState(new Animated.Value(0))
-  const [currentlocation, setcurrentlocation] = useState(Create_sor.Observation.locations[0])
-  const [project, setproject] = useState('List View')
-  const [isInProgress, setisInProgress] = useState(false)
-  const [isDraft, setisDraft] = useState(false)
-  const [isSubmited, setisSubmited] = useState(false)
-  const [isExclated, setisExclated] = useState(false)
-  const [isCompleted, setisCompleted] = useState(false)
-  const [selectP, setselectP] = useState(false)
-  const [isNoti, setisNoti] = useState(false)
-  const [draft, setdraft] = useState([])
-  const [exclated, setexclated] = useState([])
-  const [submitted, setsubmitted] = useState([])
-const [closed, setclosed] = useState([])
-const [notified, setnotified] = useState([])
-const [inprogress, setinprogress] = useState([])
-const [isNotiData, setisNotiData] = useState([])
-const [pendingClosure, setpendingClosure] = useState([])
-const [repeatedSorModal, setrepeatedSorModal] = useState(false)
-const [isAuthenticated, setisAuthenticated] = useState(false)
-const [slider1ActiveSlide, setSlider1ActiveSlide] = useState(SLIDER_1_FIRST_ITEM)
-const [bottomWidth, setBottomWidth] = useState(wp(100))
-const [setUser, setsetUser] = useState('')
-const [newsorModal, setnewsorModal] = useState(false)
-const [refreshing, setRefreshing] = useState(false)
-const [involvedPerson, setInvolvedPerson] = useState([])
-const [searchValue, setsearchValue] = useState('')
-const [repeatedSors, setrepeatedSors] = useState([])
-const [projectSelectors, setprojectSelectors] = useState(false)
-const [loading, setloading] = useState(false)
-const [projects, setprojects] = useState([])
-const [projectId, setprojectId] = useState('')
-const [projectName, setprojectName] = useState('')
-
-
-   
-
-
-
-
-
-}
-
-export class ViewAllSOr extends React.Component<ViewAllProps, any> {
-  constructor(props: ViewAllProps) {
-    super(props);
-    this.state = {
-    
-    };
-  }
-
-  componentDidMount = () => {
-    // console.log(this.props.reduxState.allSors);
-    // console.log(this.props.reduxState.loading);
-
+  useEffect(() => {
     AsyncStorage.getItem('email').then((email: any) => {
       createApi
         .createApi()
         .getUser(email)
         .then((user: any) => {
           getCurrentProject().then((currentProj: any) => {
-            this.setState({projectId: currentProj});
+            setprojectId(currentProj);
 
             // this.props.reduxActions.getAllSors(currentProj, [1, 2, 3, 4, 5]);
 
@@ -165,9 +157,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
               .then((involvedPerson: any) => {
                 console.log(involvedPerson);
                 console.log('involvedPerson.data');
-                this.setState({
-                  projectName: involvedPerson.data.data.project_name,
-                });
+                setprojectName(involvedPerson.data.data.project_name);
                 var j = {};
                 var arr = [];
                 for (
@@ -183,18 +173,18 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                       writable: false,
                     },
                   );
-                  this.state.involvedPerson.push(
+                  involvedPerson.push(
                     involvedPerson.data.data.involved_persons[i],
                   );
                 }
 
                 AsyncStorage.setItem(
                   'involved_person',
-                  JSON.stringify(this.state.involvedPerson),
+                  JSON.stringify(involvedPerson),
                 );
               });
 
-            AsyncStorage.getItem('filters').then((filtersObj) => {
+            AsyncStorage.getItem('filters').then((filtersObj: any) => {
               console.log('filtersObj');
               console.log(JSON.parse(filtersObj));
               var dta = JSON.parse(filtersObj);
@@ -233,24 +223,21 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         type: 'danger',
                         position: 'bottom',
                       });
-                      this.setState({
-                        nosorOrSorMessage:
-                          'try the different filter or create the',
-                      });
+                      setnosorOrSorMessage(
+                        'try the different filter or create the',
+                      );
                       // this.setState({loading: false});
-                      this.props.reduxActions.setLoading(false);
+                      props.reduxActions.setLoading(false);
                     } else {
-                      this.setState({
-                        nosorOrSorMessage: 'would you like to create the ',
-                      });
-                      this.props.reduxActions.setLoading(false);
+                      setnosorOrSorMessage('would you like to create the ');
+                      props.reduxActions.setLoading(false);
                       // this.setState({loading: false});
                     }
                   }
                   // console.log('gaye mutheda');
                   // console.log(res.data);
                   if (res.data.data == undefined) {
-                    this.setState({loading: false});
+                    setloading(false);
                   } else {
                     res.data.data.report.reverse();
                     for (let i = 0; i < res.data.data.report.length; i++) {
@@ -288,7 +275,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
 
                         if (res.data.data.report[i].details != undefined) {
                           if (res.data.data.report[i].created_by == email) {
-                            this.state.draft.push(res.data.data.report[i]);
+                            draft.push(res.data.data.report[i]);
                           }
                         }
                       } else if (res.data.data.report[i].status == 2) {
@@ -298,7 +285,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         // );
 
                         if (res.data.data.report[i].details != undefined) {
-                          this.state.inprogress.push(res.data.data.report[i]);
+                          inprogress.push(res.data.data.report[i]);
                           // this.state.submitted.push(rep);
                         }
                       } else if (res.data.data.report[i].status == 3) {
@@ -308,7 +295,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         // );
 
                         if (res.data.data.report[i].details != undefined) {
-                          this.state.exclated.push(res.data.data.report[i]);
+                          exclated.push(res.data.data.report[i]);
                         }
                       } else if (res.data.data.report[i].status == 4) {
                         // var rep = filterAndMappingPersons(
@@ -317,9 +304,7 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         // );
 
                         if (res.data.data.report[i].details != undefined) {
-                          this.state.pendingClosure.push(
-                            res.data.data.report[i],
-                          );
+                          pendingClosure.push(res.data.data.report[i]);
                         }
                       } else if (res.data.data.report[i].status == 5) {
                         // var rep = filterAndMappingPersons(
@@ -328,14 +313,15 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
                         // );
 
                         if (res.data.data.report[i].details != undefined) {
-                          this.state.closed.push(res.data.data.report[i]);
+                          closed.push(res.data.data.report[i]);
                         }
                       }
                     }
                   }
 
                   // setTimeout(() => {
-                  this.setState({loading: false});
+
+                  setloading(false);
                   // }, 10000);
                 })
                 .catch((err) => console.log(err));
@@ -353,9 +339,21 @@ export class ViewAllSOr extends React.Component<ViewAllProps, any> {
         .createApi()
         .getOrganization(orgId)
         .then((org: any) => {
-          this.setState({projects: org.data.data.projects});
+          setproject(org.data.data.projects);
         });
     });
+  }, []);
+};
+
+export class ViewAllSOr extends React.Component<ViewAllProps, any> {
+  constructor(props: ViewAllProps) {
+    super(props);
+    this.state = {};
+  }
+
+  componentDidMount = () => {
+    // console.log(this.props.reduxState.allSors);
+    // console.log(this.props.reduxState.loading);
   };
   selecteProj = async (d: any) => {
     this.setState({
