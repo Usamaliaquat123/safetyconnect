@@ -327,7 +327,7 @@ const Chat = (props: ChatProps) => {
       }}
     />
   );
-
+  // Render send component
   const renderSend = (prop: SendProps<IMessage>) => {
     return (
       <View style={{flexDirection: 'row'}}>
@@ -395,31 +395,9 @@ const Chat = (props: ChatProps) => {
       </View>
     );
   };
-};
 
-class Chat extends React.Component<ChatProps, any> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      imageViewer: false,
-      images: [],
-      isVideoFullscreen: false,
-      reciever: '',
-      organizationId: '',
-      messages: [],
-      socket: props.route.params.socket,
-    };
-  }
-  // filter out user from data array
-  // filterUsers = (users: any) => {
-  //   return new Promise((resolve , reject) => {
 
-  //   })
-  // };
 
-  componentDidMount = () => {
-    // console.log(dta);
-  };
 
   render() {
     return (
@@ -431,8 +409,8 @@ class Chat extends React.Component<ChatProps, any> {
               containerStyle={styles.containerAvatar}
               source={{
                 uri:
-                  this.props.route.params.type == 'private'
-                    ? this.props.route.params.data.userB.img_url
+                  props.route.params.type == 'private'
+                    ?props.route.params.data.userB.img_url
                     : null,
               }}
             />
@@ -446,8 +424,8 @@ class Chat extends React.Component<ChatProps, any> {
             />
           </View>
           <Text style={styles.userNameText}>
-            {this.props.route.params.type == 'private'
-              ? this.props.route.params.data.userB.name
+            {props.route.params.type == 'private'
+              ? props.route.params.data.userB.name
               : null}
           </Text>
           <View style={styles.headRightIcon}>
@@ -479,19 +457,19 @@ class Chat extends React.Component<ChatProps, any> {
           </View>
         </View>
         {/* content */}
-        <GiftedChat
+        <GiftedChatq
           renderBubble={(container: BubbleProps<IMessage>) =>
-            this.renderBubble(container)
+            renderBubble(container)
           }
           renderSend={(sendIcon: SendProps<IMessage>) =>
-            this.renderSend(sendIcon)
+            renderSend(sendIcon)
           }
           messages={this.state.messages}
           renderInputToolbar={(Input: InputToolbarProps) =>
-            this.renderInput(Input)
+            renderInput(Input)
           }
           renderComposer={(composer: ComposerProps) =>
-            this.renderComposer(composer)
+            renderComposer(composer)
           }
           user={{
             _id: 1,
@@ -523,6 +501,41 @@ class Chat extends React.Component<ChatProps, any> {
       </View>
     );
   }
+
+
+
+
+
+
+
+
+};
+
+class Chat extends React.Component<ChatProps, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      imageViewer: false,
+      images: [],
+      isVideoFullscreen: false,
+      reciever: '',
+      organizationId: '',
+      messages: [],
+      socket: props.route.params.socket,
+    };
+  }
+  // filter out user from data array
+  // filterUsers = (users: any) => {
+  //   return new Promise((resolve , reject) => {
+
+  //   })
+  // };
+
+  componentDidMount = () => {
+    // console.log(dta);
+  };
+
+ 
 }
 
 const mapStateToProps = (state: any) => {
