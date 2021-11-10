@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -54,135 +54,32 @@ export interface ChatProps {
   reduxState: any;
 }
 
-// const Chat = (props: ChatProps) => {
-//   const [imageViewer, setimageViewer] = useState(false);
-//   const [images, setimages] = useState([]);
-//   const [isVideoFullscreen, setisVideoFullscreen] = useState(false);
-//   const [reciever, setreciever] = useState('');
-// };
+const Chat = (props: ChatProps) => {
+  const [imageViewer, setimageViewer] = useState(false);
+  const [images, setimages] = useState([]);
+  const [isVideoFullscreen, setisVideoFullscreen] = useState(false);
+  const [reciever, setreciever] = useState('');
+  const [organizationId, setorganizationId] = useState('');
+  const [messages, setMessages] = useState([]);
 
-class Chat extends React.Component<ChatProps, any> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      imageViewer: false,
-      images: [],
-      isVideoFullscreen: false,
-      reciever: '',
-      organizationId: '',
-      messages: [],
-      socket: props.route.params.socket,
-    };
-  }
-  renderBubble = (props: BubbleProps<IMessage>) => {
-    var sameUserInPrevMessage = false;
-    if (
-      props.previousMessage?.user !== undefined &&
-      props.previousMessage?.user
-    ) {
-      props.previousMessage?.user._id === props.currentMessage?.user._id
-        ? (sameUserInPrevMessage = true)
-        : (sameUserInPrevMessage = false);
-    }
+  const [socket, setSocket] = useState(props.route.params.socket);
 
-    var messageBelongsToCurrentUser = 2 == props.currentMessage?.user._id;
-
-    return (
-      <View>
-        {messageBelongsToCurrentUser == true ? (
-          <View>
-            <View style={styles.containerOfText}>
-              <View style={styles.containerOfArrow}></View>
-              <Text>{props.currentMessage?.text}</Text>
-            </View>
-            <Text style={styles.containerOfDate}>
-              {moment(props.currentMessage?.createdAt).format('LT')}
-            </Text>
-            <View style={styles.containerOfImage}>
-              {props.currentMessage?.image != undefined ? (
-                <View style={{flexDirection: 'row'}}>
-                  {props.currentMessage.image.map((d: any, i: number) => (
-                    <TouchableOpacity
-                      onPress={() => {
-                        this.state.images.push({url: d});
-                        this.setState({
-                          imageViewer: true,
-                        });
-                      }}>
-                      <Image style={styles.imageTag} source={{uri: d}} />
-                    </TouchableOpacity>
-                  ))}
-                </View>
-              ) : null}
-              {props.currentMessage?.video != undefined ? (
-                <View style={{flexDirection: 'row'}}>
-                  {props.currentMessage.video.map((d: any, i: number) => (
-                    <TouchableOpacity
-                      style={{backgroundColor: 'black', borderRadius: wp(3)}}
-                      onPress={() => {
-                        // this.state.images.push({url: d});
-                        // this.setState({
-                        //   imageViewer: true,
-                        // });
-                      }}>
-                      <View>
-                        <Text>{d}</Text>
-                        <Video
-                          source={{uri: d}} // Can be a URL or a local file.
-                          ref={(ref) => {
-                            this.player = ref;
-                          }} // Store reference
-                          // onBuffer={this.onBuffer} // Callback when remote video is buffering
-                          // onError={this.videoError} // Callback when video cannot be loaded
-                          // onVideoLoad={this.onVideoLoad} //callback when video loaded
-                          // onVideoProgress={this.onVideoProcess} //Callback on video progress
-                          // onVideoLoadStart={this.onVideoLoadStart} // Callback when video is loading start
-                          // fullscreen={true} // Boolean | is video is full screen
-                        />
-                      </View>
-                    </TouchableOpacity>
-                  ))}
-                </View>
-              ) : null}
-            </View>
-          </View>
-        ) : (
-          <View style={{marginBottom: wp(5)}}>
-            <View style={styles.leftContainer}>
-              <View style={styles.LeftcontainerOfArrow}></View>
-              <Text>{props.currentMessage?.text}</Text>
-            </View>
-            <Text style={styles.LeftContainerOfDate}>
-              {moment(props.currentMessage?.createdAt).format('LT')}
-            </Text>
-          </View>
-        )}
-      </View>
-    );
-  };
-  // filter out user from data array
-  // filterUsers = (users: any) => {
-  //   return new Promise((resolve , reject) => {
-
-  //   })
-  // };
-
-  componentDidMount = () => {
+  useEffect(() => {
     console.log('data');
-    console.log(this.props.route.params.data);
+    // console.log(props.data);
+
+    // console.log()
 
     BackHandler.addEventListener('hardwareBackPress', () => {
       // console.log('asds');
 
-      if (this.props.route.params.type === 'group') {
-        this.state.socket.emit('leaveRoom', {
-          chatroomId: this.state.reciever,
+      if (props.route.params.type === 'group') {
+        props.route.params.socket.emit('leaveRoom', {
+          chatroomId: reciever,
         });
       } else {
-        console.log('this.state.reciever');
-        console.log(this.state.reciever);
-        this.state.socket.emit('leavePrivate', {
-          email: this.state.reciever,
+        props.route.params.socket.emit('leavePrivate', {
+          email: reciever,
         });
       }
     });
@@ -190,30 +87,27 @@ class Chat extends React.Component<ChatProps, any> {
     AsyncStorage.getItem('email')
       .then((user: any) => {
         console.log('this.props.route.params.data on line 179');
-        console.log(this.props.route.params.data);
         console.log('this.props.route.params.socket');
 
-        if (this.props.route.params.type == 'private') {
+        if (props.route.params.type == 'private') {
           console.log('get in line 183');
-          console.log(this.props.route.params.socket);
+          console.log(props.route.params.socket);
           // console.log();
           // this.props.route.params.socket.emit('joinPrivate', {
           //   // email: this.props.rout,
           // });
-        } else if (this.props.route.params.type == 'group') {
+        } else if (props.route.params.type == 'group') {
           // this.props.route.params.socket.emit('joinRoom', {
           //   chatroomId: chatId,
           // });
         }
         getCurrentOrganization().then((orgId: any) => {
           console.log('orgId');
-          console.log(orgId);
-          this.setState({
-            organizationId: orgId,
-            reciever: this.props.route.params.data._id,
-          });
+          setorganizationId(orgId);
+          setreciever(props.route.params.data._id);
+
           createApi
-            .createApi()
+            .createApi()s
             .getOrganization(orgId)
             .then((org: any) => {
               console.log('members');
@@ -329,7 +223,116 @@ class Chat extends React.Component<ChatProps, any> {
         // const newMessages = [...chatMessages, message];
       },
     );
+  }, []);
+};
 
+class Chat extends React.Component<ChatProps, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      imageViewer: false,
+      images: [],
+      isVideoFullscreen: false,
+      reciever: '',
+      organizationId: '',
+      messages: [],
+      socket: props.route.params.socket,
+    };
+  }
+  renderBubble = (props: BubbleProps<IMessage>) => {
+    var sameUserInPrevMessage = false;
+    if (
+      props.previousMessage?.user !== undefined &&
+      props.previousMessage?.user
+    ) {
+      props.previousMessage?.user._id === props.currentMessage?.user._id
+        ? (sameUserInPrevMessage = true)
+        : (sameUserInPrevMessage = false);
+    }
+
+    var messageBelongsToCurrentUser = 2 == props.currentMessage?.user._id;
+
+    return (
+      <View>
+        {messageBelongsToCurrentUser == true ? (
+          <View>
+            <View style={styles.containerOfText}>
+              <View style={styles.containerOfArrow}></View>
+              <Text>{props.currentMessage?.text}</Text>
+            </View>
+            <Text style={styles.containerOfDate}>
+              {moment(props.currentMessage?.createdAt).format('LT')}
+            </Text>
+            <View style={styles.containerOfImage}>
+              {props.currentMessage?.image != undefined ? (
+                <View style={{flexDirection: 'row'}}>
+                  {props.currentMessage.image.map((d: any, i: number) => (
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.state.images.push({url: d});
+                        this.setState({
+                          imageViewer: true,
+                        });
+                      }}>
+                      <Image style={styles.imageTag} source={{uri: d}} />
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              ) : null}
+              {props.currentMessage?.video != undefined ? (
+                <View style={{flexDirection: 'row'}}>
+                  {props.currentMessage.video.map((d: any, i: number) => (
+                    <TouchableOpacity
+                      style={{backgroundColor: 'black', borderRadius: wp(3)}}
+                      onPress={() => {
+                        // this.state.images.push({url: d});
+                        // this.setState({
+                        //   imageViewer: true,
+                        // });
+                      }}>
+                      <View>
+                        <Text>{d}</Text>
+                        <Video
+                          source={{uri: d}} // Can be a URL or a local file.
+                          ref={(ref) => {
+                            this.player = ref;
+                          }} // Store reference
+                          // onBuffer={this.onBuffer} // Callback when remote video is buffering
+                          // onError={this.videoError} // Callback when video cannot be loaded
+                          // onVideoLoad={this.onVideoLoad} //callback when video loaded
+                          // onVideoProgress={this.onVideoProcess} //Callback on video progress
+                          // onVideoLoadStart={this.onVideoLoadStart} // Callback when video is loading start
+                          // fullscreen={true} // Boolean | is video is full screen
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              ) : null}
+            </View>
+          </View>
+        ) : (
+          <View style={{marginBottom: wp(5)}}>
+            <View style={styles.leftContainer}>
+              <View style={styles.LeftcontainerOfArrow}></View>
+              <Text>{props.currentMessage?.text}</Text>
+            </View>
+            <Text style={styles.LeftContainerOfDate}>
+              {moment(props.currentMessage?.createdAt).format('LT')}
+            </Text>
+          </View>
+        )}
+      </View>
+    );
+  };
+  // filter out user from data array
+  // filterUsers = (users: any) => {
+  //   return new Promise((resolve , reject) => {
+
+  //   })
+  // };
+
+  componentDidMount = () => {
     // console.log(dta);
   };
   renderInput = (props: InputToolbarProps) => (
