@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import * as React from 'react';
 import {
   View,
   Text,
@@ -82,73 +82,66 @@ export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
 const SLIDER_1_FIRST_ITEM = 1;
 
-const ViewAllSor = (props: ViewAllProps) => {
-  // states of this view all sors
-  const [AnimatedDownDraft, setAnimatedDownDraft] = useState<any>(
-    new Animated.Value(0),
-  );
-  const [AnimatedOpacDraft, setAnimatedOpacDraft] = useState<any>(
-    new Animated.Value(0),
-  );
-  const [AnimatedDownNotify, setAnimatedDownNotify] = useState<any>(
-    new Animated.Value(0),
-  );
-  const [AnimatedOpacNotify, setAnimatedOpacNotify] = useState<any>(
-    new Animated.Value(0),
-  );
-  const [AnimatedDownSubmitted, setAnimatedDownSubmitted] = useState(
-    new Animated.Value(0),
-  );
-  const [AnimatedOpacSubmitted, setAnimatedOpacSubmitted] = useState(
-    new Animated.Value(0),
-  );
-  const [currentlocation, setcurrentlocation] = useState(
-    Create_sor.Observation.locations[0],
-  );
-  const [project, setproject] = useState('List View');
-  const [isInProgress, setisInProgress] = useState(false);
-  const [isDraft, setisDraft] = useState(false);
-  const [isSubmited, setisSubmited] = useState(false);
-  const [isExclated, setisExclated] = useState(false);
-  const [isCompleted, setisCompleted] = useState(false);
-  const [selectP, setselectP] = useState(false);
-  const [isNoti, setisNoti] = useState(false);
-  const [draft, setdraft] = useState([]);
-  const [exclated, setexclated] = useState([]);
-  const [submitted, setsubmitted] = useState([]);
-  const [closed, setclosed] = useState([]);
-  const [notified, setnotified] = useState([]);
-  const [inprogress, setinprogress] = useState([]);
-  const [isNotiData, setisNotiData] = useState([]);
-  const [pendingClosure, setpendingClosure] = useState([]);
-  const [repeatedSorModal, setrepeatedSorModal] = useState(false);
-  const [isAuthenticated, setisAuthenticated] = useState(false);
-  const [slider1ActiveSlide, setSlider1ActiveSlide] = useState(
-    SLIDER_1_FIRST_ITEM,
-  );
-  const [bottomWidth, setBottomWidth] = useState(wp(100));
-  const [setUser, setsetUser] = useState('');
-  const [newsorModal, setnewsorModal] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
-  const [involvedPerson, setInvolvedPerson] = useState([]);
-  const [searchValue, setsearchValue] = useState('');
-  const [repeatedSors, setrepeatedSors] = useState([]);
-  const [projectSelectors, setprojectSelectors] = useState(false);
-  const [loading, setloading] = useState(false);
-  const [projects, setprojects] = useState([]);
-  const [projectId, setprojectId] = useState('');
-  const [projectName, setprojectName] = useState('');
-  const [nosorOrSorMessage, setnosorOrSorMessage] = useState('');
+export class ViewAllSOr extends React.Component<ViewAllProps, any> {
+  constructor(props: ViewAllProps) {
+    super(props);
+    this.state = {
+      // animation of drafts
+      AnimatedDownDraft: new Animated.Value(0),
+      AnimatedOpacDraft: new Animated.Value(0),
+      // animation of notified
+      AnimatedDownNotify: new Animated.Value(0),
+      AnimatedOpacNotify: new Animated.Value(0),
+      // animation of submitted
+      AnimatedDownSubmitted: new Animated.Value(0),
+      AnimatedOpacSubmitted: new Animated.Value(0),
+      currentlocation: Create_sor.Observation.locations[0],
+      project: 'List View',
+      isInProgress: false,
+      isDraft: false,
+      isSubmited: false,
+      isExclated: false,
+      isCompleted: false,
+      selectP: false,
+      isNoti: false,
+      draft: [],
+      exclated: [],
+      submitted: [],
+      closed: [],
+      notified: [],
+      inprogress: [],
+      isNotiData: [],
+      pendingClosure: [],
+      repeatedSorModal: false,
+      isAuthenticated: false,
+      slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
+      bottomWidth: wp(100),
+      setUser: '',
+      // New sor modal popup
+      newsorModal: false,
+      refreshing: false,
+      involvedPerson: [],
+      searchValue: '',
+      repeatedSors: [],
+      projectSelectors: false,
+      loading: false,
+      projects: [],
+      projectId: '',
+      projectName: '',
+    };
+  }
 
-  // Getting all view sors
-  const getallViewSors = () => {
+  componentDidMount = () => {
+    // console.log(this.props.reduxState.allSors);
+    // console.log(this.props.reduxState.loading);
+
     AsyncStorage.getItem('email').then((email: any) => {
       createApi
         .createApi()
         .getUser(email)
         .then((user: any) => {
           getCurrentProject().then((currentProj: any) => {
-            setprojectId(currentProj);
+            this.setState({projectId: currentProj});
 
             // this.props.reduxActions.getAllSors(currentProj, [1, 2, 3, 4, 5]);
 
@@ -158,7 +151,9 @@ const ViewAllSor = (props: ViewAllProps) => {
               .then((involvedPerson: any) => {
                 console.log(involvedPerson);
                 console.log('involvedPerson.data');
-                setprojectName(involvedPerson.data.data.project_name);
+                this.setState({
+                  projectName: involvedPerson.data.data.project_name,
+                });
                 var j = {};
                 var arr = [];
                 for (
@@ -174,18 +169,18 @@ const ViewAllSor = (props: ViewAllProps) => {
                       writable: false,
                     },
                   );
-                  involvedPerson.push(
+                  this.state.involvedPerson.push(
                     involvedPerson.data.data.involved_persons[i],
                   );
                 }
 
                 AsyncStorage.setItem(
                   'involved_person',
-                  JSON.stringify(involvedPerson),
+                  JSON.stringify(this.state.involvedPerson),
                 );
               });
 
-            AsyncStorage.getItem('filters').then((filtersObj: any) => {
+            AsyncStorage.getItem('filters').then((filtersObj) => {
               console.log('filtersObj');
               console.log(JSON.parse(filtersObj));
               var dta = JSON.parse(filtersObj);
@@ -224,21 +219,24 @@ const ViewAllSor = (props: ViewAllProps) => {
                         type: 'danger',
                         position: 'bottom',
                       });
-                      setnosorOrSorMessage(
-                        'try the different filter or create the',
-                      );
+                      this.setState({
+                        nosorOrSorMessage:
+                          'try the different filter or create the',
+                      });
                       // this.setState({loading: false});
-                      props.reduxActions.setLoading(false);
+                      this.props.reduxActions.setLoading(false);
                     } else {
-                      setnosorOrSorMessage('would you like to create the ');
-                      props.reduxActions.setLoading(false);
+                      this.setState({
+                        nosorOrSorMessage: 'would you like to create the ',
+                      });
+                      this.props.reduxActions.setLoading(false);
                       // this.setState({loading: false});
                     }
                   }
                   // console.log('gaye mutheda');
                   // console.log(res.data);
                   if (res.data.data == undefined) {
-                    setloading(false);
+                    this.setState({loading: false});
                   } else {
                     res.data.data.report.reverse();
                     for (let i = 0; i < res.data.data.report.length; i++) {
@@ -276,7 +274,7 @@ const ViewAllSor = (props: ViewAllProps) => {
 
                         if (res.data.data.report[i].details != undefined) {
                           if (res.data.data.report[i].created_by == email) {
-                            draft.push(res.data.data.report[i]);
+                            this.state.draft.push(res.data.data.report[i]);
                           }
                         }
                       } else if (res.data.data.report[i].status == 2) {
@@ -286,7 +284,7 @@ const ViewAllSor = (props: ViewAllProps) => {
                         // );
 
                         if (res.data.data.report[i].details != undefined) {
-                          inprogress.push(res.data.data.report[i]);
+                          this.state.inprogress.push(res.data.data.report[i]);
                           // this.state.submitted.push(rep);
                         }
                       } else if (res.data.data.report[i].status == 3) {
@@ -296,7 +294,7 @@ const ViewAllSor = (props: ViewAllProps) => {
                         // );
 
                         if (res.data.data.report[i].details != undefined) {
-                          exclated.push(res.data.data.report[i]);
+                          this.state.exclated.push(res.data.data.report[i]);
                         }
                       } else if (res.data.data.report[i].status == 4) {
                         // var rep = filterAndMappingPersons(
@@ -305,7 +303,9 @@ const ViewAllSor = (props: ViewAllProps) => {
                         // );
 
                         if (res.data.data.report[i].details != undefined) {
-                          pendingClosure.push(res.data.data.report[i]);
+                          this.state.pendingClosure.push(
+                            res.data.data.report[i],
+                          );
                         }
                       } else if (res.data.data.report[i].status == 5) {
                         // var rep = filterAndMappingPersons(
@@ -314,15 +314,14 @@ const ViewAllSor = (props: ViewAllProps) => {
                         // );
 
                         if (res.data.data.report[i].details != undefined) {
-                          closed.push(res.data.data.report[i]);
+                          this.state.closed.push(res.data.data.report[i]);
                         }
                       }
                     }
                   }
 
                   // setTimeout(() => {
-
-                  setloading(false);
+                  this.setState({loading: false});
                   // }, 10000);
                 })
                 .catch((err) => console.log(err));
@@ -330,11 +329,6 @@ const ViewAllSor = (props: ViewAllProps) => {
           });
         });
     });
-  };
-
-  useEffect(() => {
-    getallViewSors();
-
     // this.props.
 
     // console.log(this.props.reduxActions.)
@@ -345,510 +339,320 @@ const ViewAllSor = (props: ViewAllProps) => {
         .createApi()
         .getOrganization(orgId)
         .then((org: any) => {
-          setproject(org.data.data.projects);
+          this.setState({projects: org.data.data.projects});
         });
     });
-  }, []);
-
-  // Select project selection
-  const selecteProj = async (d: any) => {
-    // this.setState({
-    //   selectedProject: d,
-    //   projectSelectors: false,
-    // });
+  };
+  selecteProj = async (d: any) => {
+    this.setState({
+      selectedProject: d,
+      projectSelectors: false,
+    });
 
     // console.log('d');
     // console.log(d);
 
-    setprojectSelectors(false);
-
-    setdraft([]);
-    setinprogress([]);
-    setexclated([]);
-    setpendingClosure([]);
-    setclosed([]);
+    this.setState({
+      draft: [],
+      inprogress: [],
+      exclated: [],
+      pendingClosure: [],
+      closed: [],
+    });
 
     await savedCurrentProject(d.project_id._id);
-    // this.componentDidMount();
+    this.componentDidMount();
   };
-  // Get all repeated sors
-  const getAllRepeatedSor = (e: any) => {
-    setrepeatedSors([]);
+
+  getAllRepeatedSor = (e: any) => {
+    console.log(e);
+    console.log(this.state.projectId);
+    this.setState({repeatedSors: []});
     for (let i = 0; i < e.length; i++) {
       createApi
         .createApi()
-        .getSors(projectId, e[i])
+        .getSors(this.state.projectId, e[i])
         .then((res: any) => {
-          repeatedSors.push(res.data.data.report[0]);
-          setrepeatedSorModal(true);
+          console.log('res.data.data.report[0]');
+          console.log(res.data.data.report[0]);
+          // createApi
+          //   .createApi()
+          //   .getUser(res.data.data.report[0].created_by)
+          //   .then((user: any) => {
+          //     res.data.data.report[0].created_by = {};
+          //     res.data.data.report[0].created_by['email'] =
+          //       user.data.data.email;
+          //     res.data.data.report[0].created_by['img_url'] =
+          //       user.data.data.img_url;
+          //     res.data.data.report[0].created_by['name'] = user.data.data.name;
+          //   });
+
+          // createApi
+          //   .createApi()
+          //   .getUser(res.data.data.report[i].submit_to)
+          //   .then((user: any) => {
+          //     res.data.data.report[0].submit_to = {};
+          //     res.data.data.report[0].submit_to['email'] = user.data.data.email;
+          //     res.data.data.report[0].submit_to['img_url'] =
+          //       user.data.data.img_url;
+          //     res.data.data.report[0].submit_to['name'] = user.data.data.name;
+          //   });
+
+          this.state.repeatedSors.push(res.data.data.report[0]);
+          this.setState({});
         });
     }
+
+    setTimeout(() => {
+      this.setState({repeatedSorModal: true});
+    }, 2000);
+  };
+  _onRefresh = () => {
+    this.setState({
+      involvedPerson: [],
+      draft: [],
+      inprogress: [],
+      exclated: [],
+      pendingClosure: [],
+      closed: [],
+    });
+    this.componentDidMount();
   };
 
-  // on refresh view all sors
-  const _onRefresh = () => {
-    // this.setState({
-    //   involvedPerson: [],
-    //   draft: [],
-    //   inprogress: [],
-    //   exclated: [],
-    //   pendingClosure: [],
-    //   closed: [],
-    // });
-    setInvolvedPerson([]);
-    setdraft([]);
-    setinprogress([]);
-    setexclated([]);
-    setpendingClosure([]);
-    setclosed([]);
-
-    getallViewSors();
-    // this.componentDidMount();
-  };
-
-  return (
-    <View style={{backgroundColor: colors.secondary, flex: 1}}>
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            onRefresh={() => this._onRefresh()}
-            refreshing={refreshing}
-          />
-        }
-        showsVerticalScrollIndicator={false}>
-        <View style={styles.header}>
-          <View style={styles.headertle}>
-            <Icon
-              onPress={() => this.props.navigation.navigate('Home')}
-              size={25}
-              name="arrow-back-outline"
-              type="ionicon"
-              color={colors.secondary}
+  render() {
+    return (
+      <View style={{backgroundColor: colors.secondary, flex: 1}}>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              onRefresh={() => this._onRefresh()}
+              refreshing={this.state.refreshing}
             />
-            <View>
-              <Text style={styles.title}>Observations and Feedback</Text>
-            </View>
-          </View>
-          <View style={styles.headerSelect}>
-            <TouchableOpacity
-              onPress={() => this.setState({projectSelectors: true})}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
-              <Text
-                style={{
-                  fontSize: wp(3),
-                  marginRight: wp(3),
-                  color: colors.secondary,
-
-                  fontFamily: fonts.SFuiDisplayMedium,
-                }}>
-                {this.state.projectName}
-              </Text>
+          }
+          showsVerticalScrollIndicator={false}>
+          <View style={styles.header}>
+            <View style={styles.headertle}>
               <Icon
-                name={'down'}
-                type={'antdesign'}
-                size={wp(3)}
+                onPress={() => this.props.navigation.navigate('Home')}
+                size={25}
+                name="arrow-back-outline"
+                type="ionicon"
                 color={colors.secondary}
               />
-            </TouchableOpacity>
+              <View>
+                <Text style={styles.title}>Observations and Feedback</Text>
+              </View>
+            </View>
+            <View style={styles.headerSelect}>
+              <TouchableOpacity
+                onPress={() => this.setState({projectSelectors: true})}
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <Text
+                  style={{
+                    fontSize: wp(3),
+                    marginRight: wp(3),
+                    color: colors.secondary,
 
-            {/* list viw and board view */}
-            <View style={styles.leftSelector}>
-              <TouchableOpacity
-                onPress={() => this.setState({project: 'List View'})}
-                style={{width: wp(5), height: wp(5)}}>
-                <Image
-                  source={images.listview}
-                  style={[
-                    GlStyles.images,
-                    this.state.project == 'List View'
-                      ? {tintColor: colors.green}
-                      : {tintColor: colors.lightGrey},
-                  ]}
+                    fontFamily: fonts.SFuiDisplayMedium,
+                  }}>
+                  {this.state.projectName}
+                </Text>
+                <Icon
+                  name={'down'}
+                  type={'antdesign'}
+                  size={wp(3)}
+                  color={colors.secondary}
                 />
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => this.setState({project: 'Board View'})}
-                style={{width: wp(5), height: wp(5), marginLeft: wp(5)}}>
-                <Image
-                  source={images.boardView}
-                  style={[
-                    GlStyles.images,
-                    this.state.project != 'List View'
-                      ? {tintColor: colors.green}
-                      : {tintColor: colors.lightGrey},
-                  ]}
-                />
-              </TouchableOpacity>
+
+              {/* list viw and board view */}
+              <View style={styles.leftSelector}>
+                <TouchableOpacity
+                  onPress={() => this.setState({project: 'List View'})}
+                  style={{width: wp(5), height: wp(5)}}>
+                  <Image
+                    source={images.listview}
+                    style={[
+                      GlStyles.images,
+                      this.state.project == 'List View'
+                        ? {tintColor: colors.green}
+                        : {tintColor: colors.lightGrey},
+                    ]}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.setState({project: 'Board View'})}
+                  style={{width: wp(5), height: wp(5), marginLeft: wp(5)}}>
+                  <Image
+                    source={images.boardView}
+                    style={[
+                      GlStyles.images,
+                      this.state.project != 'List View'
+                        ? {tintColor: colors.green}
+                        : {tintColor: colors.lightGrey},
+                    ]}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
 
-        <View style={styles.content}>
-          {/* Search bar  */}
-          <View style={styles.searchbarContainer}>
-            <View style={styles.searchContainer}>
-              <TextInput
-                // onFocus={() => this.setState({selectedInputIndex: 5})}
-                underlineColorAndroid="transparent"
-                onChangeText={(v: any) => {
-                  // console.log(t.draft);
-                  // var drafti = [];
-                  for (let i = 0; i < draft.length; i++) {
-                    // const element = this.state.draft[i];
-                    draft[i].details.toLowerCase().match(v);
-                    // draft.push(
-                    //   this.state.draft[i].details.toLowerCase().match(v),
+          <View style={styles.content}>
+            {/* Search bar  */}
+            <View style={styles.searchbarContainer}>
+              <View style={styles.searchContainer}>
+                <TextInput
+                  onFocus={() => this.setState({selectedInputIndex: 5})}
+                  underlineColorAndroid="transparent"
+                  onChangeText={(v: any) => {
+                    console.log(this.state.draft);
+                    var draft = [];
+                    for (let i = 0; i < this.state.draft.length; i++) {
+                      // const element = this.state.draft[i];
+                      this.state.draft[i].details.toLowerCase().match(v);
+                      // draft.push(
+                      //   this.state.draft[i].details.toLowerCase().match(v),
+                      // );
+                    }
+                    console.log(draft);
+                    // console.log(
+                    //   this.state.draft.filter((d) =>
+                    //     d.details.toLowerCase().match(v),
+                    //   ),
                     // );
-                  }
-                  console.log(draft);
-                  // console.log(
-                  //   this.state.draft.filter((d) =>
-                  //     d.details.toLowerCase().match(v),
-                  //   ),
-                  // );
-                  this.setState({searchValue: v});
-                }}
-                placeholder={'Search'}
-                style={styles.optnselectorText}
-                value={searchValue}></TextInput>
-              <Icon
-                onPress={() => {
-                  AsyncStorage.setItem(
-                    'filters',
-                    JSON.stringify({details: searchValue}),
-                  );
+                    this.setState({searchValue: v});
+                  }}
+                  placeholder={'Search'}
+                  style={styles.optnselectorText}
+                  value={this.state.searchValue}></TextInput>
+                <Icon
+                  onPress={() => {
+                    AsyncStorage.setItem(
+                      'filters',
+                      JSON.stringify({details: this.state.searchValue}),
+                    );
 
-                  // this.componentDidMount();
-                }}
-                containerStyle={{
-                  paddingLeft: wp(4),
-                  opacity: 0.5,
-                  // marginRight: wp(-),
-                }}
-                size={wp(6)}
-                name="search1"
-                type="antdesign"
-                color={colors.primary}
-              />
+                    this.componentDidMount();
+                  }}
+                  containerStyle={{
+                    paddingLeft: wp(4),
+                    opacity: 0.5,
+                    // marginRight: wp(-),
+                  }}
+                  size={wp(6)}
+                  name="search1"
+                  type="antdesign"
+                  color={colors.primary}
+                />
+              </View>
+
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Filters')}
+                style={{flexDirection: 'row'}}>
+                <Icon
+                  style={{padding: 3}}
+                  size={wp(7)}
+                  name="filter-variant"
+                  type="material-community"
+                  color={colors.primary}
+                />
+                <Text style={styles.filerText}>Filters </Text>
+              </TouchableOpacity>
             </View>
-
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Filters')}
-              style={{flexDirection: 'row'}}>
-              <Icon
-                style={{padding: 3}}
-                size={wp(7)}
-                name="filter-variant"
-                type="material-community"
-                color={colors.primary}
-              />
-              <Text style={styles.filerText}>Filters </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.lineheight}></View>
-          {this.state.loading == true ? (
-            <View style={styles.lottiefilesLoading}>
-              <LottieView
-                // ref={(animation) => {
-                //   this.photoAnim = animation;
-                // }}
-                autoPlay={true}
-                style={{width: wp(90)}}
-                source={animation.loading}
-                loop={true}
-              />
-              <Text style={styles.loadingtext}>loading...</Text>
-            </View>
-          ) : (
-            <>
-              {this.state.project == 'List View' ? (
-                <View>
-                  <ScrollView
-                    style={styles.scrollViewContainerList}
-                    showsVerticalScrollIndicator={false}>
-                    {/* when you have 0 reports */}
-                    {this.state.draft.length == 0 &&
-                    this.state.inprogress.length == 0 &&
-                    this.state.exclated.length == 0 &&
-                    this.state.closed.length == 0 &&
-                    this.state.pendingClosure.length == 0 ? (
-                      <View style={styles.nonReport}>
-                        <Text style={styles.nonReportText}>
-                          You don't have any reports yet...
-                        </Text>
-                        <View
-                          style={{flexDirection: 'row', alignSelf: 'center'}}>
-                          <Text style={styles.noncreate}>
-                            {this.state.nosorOrSorMessage}
+            <View style={styles.lineheight}></View>
+            {this.state.loading == true ? (
+              <View style={styles.lottiefilesLoading}>
+                <LottieView
+                  // ref={(animation) => {
+                  //   this.photoAnim = animation;
+                  // }}
+                  autoPlay={true}
+                  style={{width: wp(90)}}
+                  source={animation.loading}
+                  loop={true}
+                />
+                <Text style={styles.loadingtext}>loading...</Text>
+              </View>
+            ) : (
+              <>
+                {this.state.project == 'List View' ? (
+                  <View>
+                    <ScrollView
+                      style={styles.scrollViewContainerList}
+                      showsVerticalScrollIndicator={false}>
+                      {/* when you have 0 reports */}
+                      {this.state.draft.length == 0 &&
+                      this.state.inprogress.length == 0 &&
+                      this.state.exclated.length == 0 &&
+                      this.state.closed.length == 0 &&
+                      this.state.pendingClosure.length == 0 ? (
+                        <View style={styles.nonReport}>
+                          <Text style={styles.nonReportText}>
+                            You don't have any reports yet...
                           </Text>
-                          <Text
-                            onPress={() =>
-                              this.props.navigation.navigate('CreateSOR')
-                            }
-                            style={styles.noneCreatetext}>
-                            {' '}
-                            new one
-                          </Text>
-                        </View>
-                      </View>
-                    ) : (
-                      <>
-                        {/* List View */}
-                        {/* {this.state.draft.length == 0 ? null : ( */}
-                        <View
-                          style={{
-                            paddingBottom: wp(5),
-                            paddingLeft: wp(3),
-                            paddingRight: wp(3),
-                          }}>
-                          <View style={styles.listHeader}>
-                            <TouchableOpacity
-                              onPress={() => {
-                                if (this.state.isDraft == true) {
-                                  this.setState({isDraft: false});
-                                  // this.closeDropDown(this.state.isDraft);
-                                } else {
-                                  this.setState({isDraft: true});
-                                  // this.dropdownAnimated(this.state.isDraft);
-                                }
-                              }}
-                              style={{flexDirection: 'row'}}>
-                              <Icon
-                                size={wp(3.5)}
-                                color={colors.primary}
-                                name={
-                                  this.state.isDraft == true ? 'down' : 'up'
-                                }
-                                type="antdesign"
-                              />
-                              <Text style={styles.listDraftText}>Drafts</Text>
-                            </TouchableOpacity>
-                          </View>
-
-                          {this.state.isDraft == true ? (
-                            <View style={[styles.listViewContent]}>
-                              {this.state.draft
-                                .slice(0, 3)
-                                .map((d: Isor, i: number) => (
-                                  <ListCard
-                                    key={i}
-                                    classify={d.sor_type}
-                                    styles={
-                                      this.state.draft.slice(0, 3).length ==
-                                      i + 1
-                                        ? {borderBottomWidth: wp(0)}
-                                        : null
-                                    }
-                                    user1={undefined}
-                                    user2={undefined}
-                                    observation={d.details}
-                                    repeated={d.repeatedSor}
-                                    username={d.created_by}
-                                    iconconf={classifySor.find(
-                                      (e: any) =>
-                                        e.title == d.sor_type.toString(),
-                                    )}
-                                    onPress={
-                                      () => {
-                                        // d['created_by'] = d.created_by.email;
-                                        // d['submit_to'] = [d.submit_to.email];
-                                        d['closed'] = false;
-                                        this.props.navigation.navigate(
-                                          'ViewSOR',
-                                          {
-                                            data: d,
-                                          },
-                                        );
-                                      }
-                                      // this.props.navigation.navigate('home')
-                                    }
-                                    location={d.location}
-                                    date={d.occurred_at}
-                                    onPressRepeated={(e) =>
-                                      this.getAllRepeatedSor(e)
-                                    }
-                                  />
-                                ))}
-                              {this.state.draft.length > 3 && (
-                                <TouchableOpacity
-                                  onPress={() => {
-                                    this.props.navigation.navigate('ViewAll', {
-                                      data: 1,
-                                      title: 'Draft',
-                                    });
-                                  }}
-                                  style={{marginLeft: wp(4)}}>
-                                  <Text
-                                    style={{
-                                      fontSize: wp(3),
-                                      color: colors.primary,
-                                    }}>
-                                    See More
-                                  </Text>
-                                </TouchableOpacity>
-                              )}
-                            </View>
-                          ) : null}
-                        </View>
-                        {/* )} */}
-                        {/* {this.state.inprogress.length == 0 ? null : ( */}
-                        <View>
-                          <View style={styles.lineheight}></View>
-                          <View style={styles.inProgressTop}>
-                            <View style={styles.listHeader}>
-                              <TouchableOpacity
-                                onPress={() => {
-                                  this.setState({
-                                    isInProgress: !this.state.isInProgress,
-                                  });
-                                }}
-                                style={{flexDirection: 'row'}}>
-                                <Icon
-                                  size={wp(3.5)}
-                                  name={
-                                    this.state.isInProgress == true
-                                      ? 'down'
-                                      : 'up'
-                                  }
-                                  type="antdesign"
-                                  color={colors.primary}
-                                />
-                                <Text style={styles.listDraftText}>
-                                  In Progress
-                                </Text>
-                              </TouchableOpacity>
-                            </View>
-                            {/* <View style={{width:120,height:125}, item.status==='1' ?{display: "block"}: {display:'none'}}> */}
-                            {this.state.isInProgress == true ? (
-                              <View style={styles.listViewContent}>
-                                {this.state.inprogress
-                                  .slice(0, 3)
-                                  .map((d: Isor, i: number) => (
-                                    <ListCard
-                                      onPressRepeated={(e) =>
-                                        this.getAllRepeatedSor(e)
-                                      }
-                                      key={i}
-                                      classify={d.sor_type}
-                                      styles={
-                                        this.state.inprogress.slice(0, 3)
-                                          .length ==
-                                        i + 1
-                                          ? {borderBottomWidth: wp(0)}
-                                          : null
-                                      }
-                                      user1={undefined}
-                                      user2={undefined}
-                                      observation={d.details}
-                                      username={d.created_by}
-                                      repeated={d.repeatedSor}
-                                      iconconf={classifySor.find(
-                                        (e: any) => e.title == d.sor_type,
-                                      )}
-                                      onPress={() => {
-                                        // d['stat'];
-                                        d['closed'] = false;
-                                        // d['created_by'] = d.created_by.email;
-                                        // d['submit_to'] = [d.submit_to.email];
-                                        this.props.navigation.navigate(
-                                          'ViewSOR',
-                                          {
-                                            data: d,
-                                          },
-                                        );
-                                      }}
-                                      location={d.location}
-                                      date={d.occurred_at}
-                                    />
-                                  ))}
-                                {this.state.inprogress.length > 3 && (
-                                  <TouchableOpacity
-                                    onPress={() => {
-                                      this.props.navigation.navigate(
-                                        'ViewAll',
-                                        {
-                                          data: 2,
-                                          title: 'In Progress',
-                                        },
-                                      );
-                                    }}
-                                    style={{
-                                      marginLeft: wp(4),
-                                      marginTop: wp(3),
-                                    }}>
-                                    <Text
-                                      style={{
-                                        fontSize: wp(3),
-                                        color: colors.primary,
-                                      }}>
-                                      See More
-                                    </Text>
-                                  </TouchableOpacity>
-                                )}
-                              </View>
-                            ) : null}
-                          </View>
-                        </View>
-                        {/* )} */}
-
-                        {/* {this.state.submitted.length == 0 ? null : ( */}
-                        <View>
-                          <View style={styles.lineheight}></View>
                           <View
-                            style={[
-                              {
-                                paddingBottom: wp(3),
-                              },
-                              styles.closedTop,
-                            ]}>
+                            style={{flexDirection: 'row', alignSelf: 'center'}}>
+                            <Text style={styles.noncreate}>
+                              {this.state.nosorOrSorMessage}
+                            </Text>
+                            <Text
+                              onPress={() =>
+                                this.props.navigation.navigate('CreateSOR')
+                              }
+                              style={styles.noneCreatetext}>
+                              {' '}
+                              new one
+                            </Text>
+                          </View>
+                        </View>
+                      ) : (
+                        <>
+                          {/* List View */}
+                          {/* {this.state.draft.length == 0 ? null : ( */}
+                          <View
+                            style={{
+                              paddingBottom: wp(5),
+                              paddingLeft: wp(3),
+                              paddingRight: wp(3),
+                            }}>
                             <View style={styles.listHeader}>
                               <TouchableOpacity
                                 onPress={() => {
-                                  this.setState({
-                                    isSubmited: !this.state.isSubmited,
-                                  });
-                                  if (!this.state.isSubmited) {
-                                    this.setState({bottomWidth: wp(40)});
+                                  if (this.state.isDraft == true) {
+                                    this.setState({isDraft: false});
+                                    // this.closeDropDown(this.state.isDraft);
                                   } else {
-                                    this.setState({bottomWidth: wp(100)});
+                                    this.setState({isDraft: true});
+                                    // this.dropdownAnimated(this.state.isDraft);
                                   }
                                 }}
                                 style={{flexDirection: 'row'}}>
                                 <Icon
                                   size={wp(3.5)}
-                                  name={
-                                    this.state.isSubmited == true
-                                      ? 'down'
-                                      : 'up'
-                                  }
                                   color={colors.primary}
+                                  name={
+                                    this.state.isDraft == true ? 'down' : 'up'
+                                  }
                                   type="antdesign"
                                 />
-                                <Text style={styles.listDraftText}>
-                                  Escalated to
-                                </Text>
+                                <Text style={styles.listDraftText}>Drafts</Text>
                               </TouchableOpacity>
                             </View>
-                            {this.state.isSubmited == true ? (
-                              <View style={styles.listViewContent}>
-                                {this.state.exclated
+
+                            {this.state.isDraft == true ? (
+                              <View style={[styles.listViewContent]}>
+                                {this.state.draft
                                   .slice(0, 3)
                                   .map((d: Isor, i: number) => (
                                     <ListCard
-                                      onPressRepeated={(e) =>
-                                        this.getAllRepeatedSor(e)
-                                      }
                                       key={i}
-                                      location={d.location}
-                                      repeated={d.repeatedSor}
                                       classify={d.sor_type}
                                       styles={
-                                        this.state.exclated.slice(0, 3)
-                                          .length ==
+                                        this.state.draft.slice(0, 3).length ==
                                         i + 1
                                           ? {borderBottomWidth: wp(0)}
                                           : null
@@ -856,20 +660,17 @@ const ViewAllSor = (props: ViewAllProps) => {
                                       user1={undefined}
                                       user2={undefined}
                                       observation={d.details}
+                                      repeated={d.repeatedSor}
                                       username={d.created_by}
                                       iconconf={classifySor.find(
-                                        (e: any) => e.title == d.sor_type,
+                                        (e: any) =>
+                                          e.title == d.sor_type.toString(),
                                       )}
-                                      onPress={() =>
-                                        //  console.log(d)
-
-                                        {
+                                      onPress={
+                                        () => {
+                                          // d['created_by'] = d.created_by.email;
+                                          // d['submit_to'] = [d.submit_to.email];
                                           d['closed'] = false;
-                                          // d['created_by'] =
-                                          //   d.created_by.email;
-                                          // d['submit_to'] = [
-                                          //   d.submit_to.email,
-                                          // ];
                                           this.props.navigation.navigate(
                                             'ViewSOR',
                                             {
@@ -877,122 +678,27 @@ const ViewAllSor = (props: ViewAllProps) => {
                                             },
                                           );
                                         }
+                                        // this.props.navigation.navigate('home')
                                       }
+                                      location={d.location}
                                       date={d.occurred_at}
-                                    />
-                                  ))}
-                                {this.state.exclated.length > 3 && (
-                                  <TouchableOpacity
-                                    onPress={() => {
-                                      this.props.navigation.navigate(
-                                        'ViewAll',
-                                        {
-                                          data: 3,
-                                          title: 'Exclated To',
-                                        },
-                                      );
-                                    }}
-                                    style={{
-                                      marginLeft: wp(4),
-                                      marginTop: wp(3),
-                                    }}>
-                                    <Text
-                                      style={{
-                                        fontSize: wp(3),
-                                        color: colors.primary,
-                                      }}>
-                                      See More
-                                    </Text>
-                                  </TouchableOpacity>
-                                )}
-                              </View>
-                            ) : null}
-                          </View>
-                        </View>
-                        {/* )} */}
-                        {/* {this.state.exclated.length == 0 ? null : ( */}
-                        <View>
-                          <View style={styles.lineheight}></View>
-                          <View style={styles.inProgressTop}>
-                            <View style={styles.listHeader}>
-                              <TouchableOpacity
-                                onPress={() => {
-                                  this.setState({
-                                    isNotified: !this.state.isNotified,
-                                  });
-                                }}
-                                style={{flexDirection: 'row'}}>
-                                <Icon
-                                  size={wp(3.5)}
-                                  name={
-                                    this.state.isNotified == true
-                                      ? 'down'
-                                      : 'up'
-                                  }
-                                  color={colors.primary}
-                                  type="antdesign"
-                                />
-                                <Text style={styles.listDraftText}>
-                                  Pending Closure
-                                </Text>
-                              </TouchableOpacity>
-                            </View>
-                            {this.state.isNotified == true ? (
-                              <View style={styles.listViewContent}>
-                                {this.state.pendingClosure
-                                  .slice(0, 3)
-                                  .map((d: Isor, i: number) => (
-                                    <ListCard
                                       onPressRepeated={(e) =>
                                         this.getAllRepeatedSor(e)
                                       }
-                                      key={i}
-                                      location={d.location}
-                                      repeated={d.repeatedSor}
-                                      classify={d.sor_type}
-                                      styles={
-                                        this.state.pendingClosure.slice(0, 3)
-                                          .length ==
-                                        i + 1
-                                          ? {borderBottomWidth: wp(0)}
-                                          : null
-                                      }
-                                      user1={undefined}
-                                      user2={undefined}
-                                      observation={d.details}
-                                      username={d.created_by}
-                                      iconconf={classifySor.find(
-                                        (e: any) => e.title == d.sor_type,
-                                      )}
-                                      onPress={() => {
-                                        d['closed'] = false;
-                                        // d['created_by'] = d.created_by.email;
-                                        // d['submit_to'] = [d.submit_to.email];
-                                        this.props.navigation.navigate(
-                                          'ViewSOR',
-                                          {
-                                            data: d,
-                                          },
-                                        );
-                                      }}
-                                      date={d.occurred_at}
                                     />
                                   ))}
-                                {this.state.pendingClosure.length > 3 && (
+                                {this.state.draft.length > 3 && (
                                   <TouchableOpacity
                                     onPress={() => {
                                       this.props.navigation.navigate(
                                         'ViewAll',
                                         {
-                                          data: 4,
-                                          title: 'Pending Closure',
+                                          data: 1,
+                                          title: 'Draft',
                                         },
                                       );
                                     }}
-                                    style={{
-                                      marginLeft: wp(4),
-                                      marginTop: wp(3),
-                                    }}>
+                                    style={{marginLeft: wp(4)}}>
                                     <Text
                                       style={{
                                         fontSize: wp(3),
@@ -1005,10 +711,321 @@ const ViewAllSor = (props: ViewAllProps) => {
                               </View>
                             ) : null}
                           </View>
-                        </View>
-                        {/* )} */}
-                        {/* {this.state.closed.length == 0 ? null : ( */}
-                        {/* <View>
+                          {/* )} */}
+                          {/* {this.state.inprogress.length == 0 ? null : ( */}
+                          <View>
+                            <View style={styles.lineheight}></View>
+                            <View style={styles.inProgressTop}>
+                              <View style={styles.listHeader}>
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    this.setState({
+                                      isInProgress: !this.state.isInProgress,
+                                    });
+                                  }}
+                                  style={{flexDirection: 'row'}}>
+                                  <Icon
+                                    size={wp(3.5)}
+                                    name={
+                                      this.state.isInProgress == true
+                                        ? 'down'
+                                        : 'up'
+                                    }
+                                    type="antdesign"
+                                    color={colors.primary}
+                                  />
+                                  <Text style={styles.listDraftText}>
+                                    In Progress
+                                  </Text>
+                                </TouchableOpacity>
+                              </View>
+                              {/* <View style={{width:120,height:125}, item.status==='1' ?{display: "block"}: {display:'none'}}> */}
+                              {this.state.isInProgress == true ? (
+                                <View style={styles.listViewContent}>
+                                  {this.state.inprogress
+                                    .slice(0, 3)
+                                    .map((d: Isor, i: number) => (
+                                      <ListCard
+                                        onPressRepeated={(e) =>
+                                          this.getAllRepeatedSor(e)
+                                        }
+                                        key={i}
+                                        classify={d.sor_type}
+                                        styles={
+                                          this.state.inprogress.slice(0, 3)
+                                            .length ==
+                                          i + 1
+                                            ? {borderBottomWidth: wp(0)}
+                                            : null
+                                        }
+                                        user1={undefined}
+                                        user2={undefined}
+                                        observation={d.details}
+                                        username={d.created_by}
+                                        repeated={d.repeatedSor}
+                                        iconconf={classifySor.find(
+                                          (e: any) => e.title == d.sor_type,
+                                        )}
+                                        onPress={() => {
+                                          // d['stat'];
+                                          d['closed'] = false;
+                                          // d['created_by'] = d.created_by.email;
+                                          // d['submit_to'] = [d.submit_to.email];
+                                          this.props.navigation.navigate(
+                                            'ViewSOR',
+                                            {
+                                              data: d,
+                                            },
+                                          );
+                                        }}
+                                        location={d.location}
+                                        date={d.occurred_at}
+                                      />
+                                    ))}
+                                  {this.state.inprogress.length > 3 && (
+                                    <TouchableOpacity
+                                      onPress={() => {
+                                        this.props.navigation.navigate(
+                                          'ViewAll',
+                                          {
+                                            data: 2,
+                                            title: 'In Progress',
+                                          },
+                                        );
+                                      }}
+                                      style={{
+                                        marginLeft: wp(4),
+                                        marginTop: wp(3),
+                                      }}>
+                                      <Text
+                                        style={{
+                                          fontSize: wp(3),
+                                          color: colors.primary,
+                                        }}>
+                                        See More
+                                      </Text>
+                                    </TouchableOpacity>
+                                  )}
+                                </View>
+                              ) : null}
+                            </View>
+                          </View>
+                          {/* )} */}
+
+                          {/* {this.state.submitted.length == 0 ? null : ( */}
+                          <View>
+                            <View style={styles.lineheight}></View>
+                            <View
+                              style={[
+                                {
+                                  paddingBottom: wp(3),
+                                },
+                                styles.closedTop,
+                              ]}>
+                              <View style={styles.listHeader}>
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    this.setState({
+                                      isSubmited: !this.state.isSubmited,
+                                    });
+                                    if (!this.state.isSubmited) {
+                                      this.setState({bottomWidth: wp(40)});
+                                    } else {
+                                      this.setState({bottomWidth: wp(100)});
+                                    }
+                                  }}
+                                  style={{flexDirection: 'row'}}>
+                                  <Icon
+                                    size={wp(3.5)}
+                                    name={
+                                      this.state.isSubmited == true
+                                        ? 'down'
+                                        : 'up'
+                                    }
+                                    color={colors.primary}
+                                    type="antdesign"
+                                  />
+                                  <Text style={styles.listDraftText}>
+                                    Escalated to
+                                  </Text>
+                                </TouchableOpacity>
+                              </View>
+                              {this.state.isSubmited == true ? (
+                                <View style={styles.listViewContent}>
+                                  {this.state.exclated
+                                    .slice(0, 3)
+                                    .map((d: Isor, i: number) => (
+                                      <ListCard
+                                        onPressRepeated={(e) =>
+                                          this.getAllRepeatedSor(e)
+                                        }
+                                        key={i}
+                                        location={d.location}
+                                        repeated={d.repeatedSor}
+                                        classify={d.sor_type}
+                                        styles={
+                                          this.state.exclated.slice(0, 3)
+                                            .length ==
+                                          i + 1
+                                            ? {borderBottomWidth: wp(0)}
+                                            : null
+                                        }
+                                        user1={undefined}
+                                        user2={undefined}
+                                        observation={d.details}
+                                        username={d.created_by}
+                                        iconconf={classifySor.find(
+                                          (e: any) => e.title == d.sor_type,
+                                        )}
+                                        onPress={() =>
+                                          //  console.log(d)
+
+                                          {
+                                            d['closed'] = false;
+                                            // d['created_by'] =
+                                            //   d.created_by.email;
+                                            // d['submit_to'] = [
+                                            //   d.submit_to.email,
+                                            // ];
+                                            this.props.navigation.navigate(
+                                              'ViewSOR',
+                                              {
+                                                data: d,
+                                              },
+                                            );
+                                          }
+                                        }
+                                        date={d.occurred_at}
+                                      />
+                                    ))}
+                                  {this.state.exclated.length > 3 && (
+                                    <TouchableOpacity
+                                      onPress={() => {
+                                        this.props.navigation.navigate(
+                                          'ViewAll',
+                                          {
+                                            data: 3,
+                                            title: 'Exclated To',
+                                          },
+                                        );
+                                      }}
+                                      style={{
+                                        marginLeft: wp(4),
+                                        marginTop: wp(3),
+                                      }}>
+                                      <Text
+                                        style={{
+                                          fontSize: wp(3),
+                                          color: colors.primary,
+                                        }}>
+                                        See More
+                                      </Text>
+                                    </TouchableOpacity>
+                                  )}
+                                </View>
+                              ) : null}
+                            </View>
+                          </View>
+                          {/* )} */}
+                          {/* {this.state.exclated.length == 0 ? null : ( */}
+                          <View>
+                            <View style={styles.lineheight}></View>
+                            <View style={styles.inProgressTop}>
+                              <View style={styles.listHeader}>
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    this.setState({
+                                      isNotified: !this.state.isNotified,
+                                    });
+                                  }}
+                                  style={{flexDirection: 'row'}}>
+                                  <Icon
+                                    size={wp(3.5)}
+                                    name={
+                                      this.state.isNotified == true
+                                        ? 'down'
+                                        : 'up'
+                                    }
+                                    color={colors.primary}
+                                    type="antdesign"
+                                  />
+                                  <Text style={styles.listDraftText}>
+                                    Pending Closure
+                                  </Text>
+                                </TouchableOpacity>
+                              </View>
+                              {this.state.isNotified == true ? (
+                                <View style={styles.listViewContent}>
+                                  {this.state.pendingClosure
+                                    .slice(0, 3)
+                                    .map((d: Isor, i: number) => (
+                                      <ListCard
+                                        onPressRepeated={(e) =>
+                                          this.getAllRepeatedSor(e)
+                                        }
+                                        key={i}
+                                        location={d.location}
+                                        repeated={d.repeatedSor}
+                                        classify={d.sor_type}
+                                        styles={
+                                          this.state.pendingClosure.slice(0, 3)
+                                            .length ==
+                                          i + 1
+                                            ? {borderBottomWidth: wp(0)}
+                                            : null
+                                        }
+                                        user1={undefined}
+                                        user2={undefined}
+                                        observation={d.details}
+                                        username={d.created_by}
+                                        iconconf={classifySor.find(
+                                          (e: any) => e.title == d.sor_type,
+                                        )}
+                                        onPress={() => {
+                                          d['closed'] = false;
+                                          // d['created_by'] = d.created_by.email;
+                                          // d['submit_to'] = [d.submit_to.email];
+                                          this.props.navigation.navigate(
+                                            'ViewSOR',
+                                            {
+                                              data: d,
+                                            },
+                                          );
+                                        }}
+                                        date={d.occurred_at}
+                                      />
+                                    ))}
+                                  {this.state.pendingClosure.length > 3 && (
+                                    <TouchableOpacity
+                                      onPress={() => {
+                                        this.props.navigation.navigate(
+                                          'ViewAll',
+                                          {
+                                            data: 4,
+                                            title: 'Pending Closure',
+                                          },
+                                        );
+                                      }}
+                                      style={{
+                                        marginLeft: wp(4),
+                                        marginTop: wp(3),
+                                      }}>
+                                      <Text
+                                        style={{
+                                          fontSize: wp(3),
+                                          color: colors.primary,
+                                        }}>
+                                        See More
+                                      </Text>
+                                    </TouchableOpacity>
+                                  )}
+                                </View>
+                              ) : null}
+                            </View>
+                          </View>
+                          {/* )} */}
+                          {/* {this.state.closed.length == 0 ? null : ( */}
+                          {/* <View>
                             <View style={styles.lineheight}></View>
                             <View style={styles.inProgressTop}>
                               <View style={styles.listHeader}>
@@ -1101,321 +1118,327 @@ const ViewAllSor = (props: ViewAllProps) => {
                               ) : null}
                             </View>
                           </View> */}
-                        {/* {this.state.closed.length == 0 ? null : ( */}
-                        <View>
-                          <View style={styles.lineheight}></View>
-                          <View style={styles.inProgressTop}>
-                            <View style={styles.listHeader}>
-                              <TouchableOpacity
-                                onPress={() => {
-                                  this.setState({
-                                    isCompleted: !this.state.isCompleted,
-                                  });
-                                }}
-                                style={{flexDirection: 'row'}}>
-                                <Icon
-                                  size={wp(3.5)}
-                                  color={colors.primary}
-                                  name={
-                                    this.state.isCompleted == true
-                                      ? 'down'
-                                      : 'up'
-                                  }
-                                  type="antdesign"
-                                />
-                                <Text style={styles.listDraftText}>Closed</Text>
-                              </TouchableOpacity>
-                            </View>
-                            {this.state.isCompleted == true ? (
-                              <View style={styles.listViewContent}>
-                                {this.state.closed
-                                  .slice(0, 3)
-                                  .map((d: Isor, i: number) => (
-                                    <ListCard
-                                      onPressRepeated={(e) =>
-                                        this.getAllRepeatedSor(e)
-                                      }
-                                      key={i}
-                                      location={d.location}
-                                      classify={d.sor_type}
-                                      styles={
-                                        this.state.closed.slice(0, 3).length ==
-                                        i + 1
-                                          ? {borderBottomWidth: wp(0)}
-                                          : null
-                                      }
-                                      user1={undefined}
-                                      user2={undefined}
-                                      observation={d.details}
-                                      username={d.created_by}
-                                      iconconf={classifySor.find(
-                                        (e: any) => e.title == d.sor_type,
-                                      )}
-                                      repeated={d.repeatedSor}
+                          {/* {this.state.closed.length == 0 ? null : ( */}
+                          <View>
+                            <View style={styles.lineheight}></View>
+                            <View style={styles.inProgressTop}>
+                              <View style={styles.listHeader}>
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    this.setState({
+                                      isCompleted: !this.state.isCompleted,
+                                    });
+                                  }}
+                                  style={{flexDirection: 'row'}}>
+                                  <Icon
+                                    size={wp(3.5)}
+                                    color={colors.primary}
+                                    name={
+                                      this.state.isCompleted == true
+                                        ? 'down'
+                                        : 'up'
+                                    }
+                                    type="antdesign"
+                                  />
+                                  <Text style={styles.listDraftText}>
+                                    Closed
+                                  </Text>
+                                </TouchableOpacity>
+                              </View>
+                              {this.state.isCompleted == true ? (
+                                <View style={styles.listViewContent}>
+                                  {this.state.closed
+                                    .slice(0, 3)
+                                    .map((d: Isor, i: number) => (
+                                      <ListCard
+                                        onPressRepeated={(e) =>
+                                          this.getAllRepeatedSor(e)
+                                        }
+                                        key={i}
+                                        location={d.location}
+                                        classify={d.sor_type}
+                                        styles={
+                                          this.state.closed.slice(0, 3)
+                                            .length ==
+                                          i + 1
+                                            ? {borderBottomWidth: wp(0)}
+                                            : null
+                                        }
+                                        user1={undefined}
+                                        user2={undefined}
+                                        observation={d.details}
+                                        username={d.created_by}
+                                        iconconf={classifySor.find(
+                                          (e: any) => e.title == d.sor_type,
+                                        )}
+                                        repeated={d.repeatedSor}
+                                        onPress={() => {
+                                          d['closed'] = true;
+                                          // d['created_by'] = d.created_by.email;
+                                          // d['submit_to'] = [d.submit_to.email];
+                                          this.props.navigation.navigate(
+                                            'ViewSOR',
+                                            {
+                                              data: d,
+                                            },
+                                          );
+                                        }}
+                                        date={d.occurred_at}
+                                      />
+                                    ))}
+                                  {this.state.closed.length > 5 && (
+                                    <TouchableOpacity
                                       onPress={() => {
-                                        d['closed'] = true;
-                                        // d['created_by'] = d.created_by.email;
-                                        // d['submit_to'] = [d.submit_to.email];
                                         this.props.navigation.navigate(
-                                          'ViewSOR',
+                                          'ViewAll',
                                           {
-                                            data: d,
+                                            data: 5,
+                                            title: 'Closed',
                                           },
                                         );
                                       }}
-                                      date={d.occurred_at}
-                                    />
-                                  ))}
-                                {this.state.closed.length > 5 && (
-                                  <TouchableOpacity
-                                    onPress={() => {
-                                      this.props.navigation.navigate(
-                                        'ViewAll',
-                                        {
-                                          data: 5,
-                                          title: 'Closed',
-                                        },
-                                      );
-                                    }}
-                                    style={{
-                                      marginLeft: wp(4),
-                                      marginTop: wp(3),
-                                    }}>
-                                    <Text
                                       style={{
-                                        fontSize: wp(3),
-                                        color: colors.primary,
+                                        marginLeft: wp(4),
+                                        marginTop: wp(3),
                                       }}>
-                                      See More
-                                    </Text>
-                                  </TouchableOpacity>
-                                )}
-                              </View>
-                            ) : null}
+                                      <Text
+                                        style={{
+                                          fontSize: wp(3),
+                                          color: colors.primary,
+                                        }}>
+                                        See More
+                                      </Text>
+                                    </TouchableOpacity>
+                                  )}
+                                </View>
+                              ) : null}
+                            </View>
                           </View>
+                          {/* )} */}
+                        </>
+                      )}
+                    </ScrollView>
+                  </View>
+                ) : (
+                  <ScrollView
+                    style={styles.scrollViewBoardContainer}
+                    showsHorizontalScrollIndicator={false}
+                    snapToInterval={wp(83)}
+                    decelerationRate="fast"
+                    horizontal={true}>
+                    {/* when you have 0 reports */}
+                    {this.state.draft.length == 0 &&
+                    this.state.inprogress.length == 0 &&
+                    this.state.exclated.length == 0 &&
+                    this.state.closed.length == 0 &&
+                    this.state.pendingClosure.length == 0 ? (
+                      <View style={[styles.nonReport, {padding: wp(25)}]}>
+                        <Text style={styles.nonReportText}>
+                          You don't have any reports yet...
+                        </Text>
+                        <View
+                          style={{flexDirection: 'row', alignSelf: 'center'}}>
+                          <Text style={styles.noncreate}>
+                            Would you like to create the
+                          </Text>
+                          <Text
+                            onPress={() =>
+                              this.props.navigation.navigate('CreateSOR')
+                            }
+                            style={styles.noneCreatetext}>
+                            {' '}
+                            new one
+                          </Text>
                         </View>
-                        {/* )} */}
-                      </>
-                    )}
-                  </ScrollView>
-                </View>
-              ) : (
-                <ScrollView
-                  style={styles.scrollViewBoardContainer}
-                  showsHorizontalScrollIndicator={false}
-                  snapToInterval={wp(83)}
-                  decelerationRate="fast"
-                  horizontal={true}>
-                  {/* when you have 0 reports */}
-                  {this.state.draft.length == 0 &&
-                  this.state.inprogress.length == 0 &&
-                  this.state.exclated.length == 0 &&
-                  this.state.closed.length == 0 &&
-                  this.state.pendingClosure.length == 0 ? (
-                    <View style={[styles.nonReport, {padding: wp(25)}]}>
-                      <Text style={styles.nonReportText}>
-                        You don't have any reports yet...
-                      </Text>
-                      <View style={{flexDirection: 'row', alignSelf: 'center'}}>
-                        <Text style={styles.noncreate}>
-                          Would you like to create the
-                        </Text>
-                        <Text
-                          onPress={() =>
-                            this.props.navigation.navigate('CreateSOR')
-                          }
-                          style={styles.noneCreatetext}>
-                          {' '}
-                          new one
-                        </Text>
                       </View>
+                    ) : null}
+                    {/* {this.state.draft.length == 0 ? null : ( */}
+                    <View style={styles.boardContainer}>
+                      <View>
+                        <View style={styles.draftTextContainer}>
+                          <Text style={styles.draftText}>Drafts</Text>
+                        </View>
+                      </View>
+
+                      {this.state.draft
+                        .slice(0, 3)
+                        .map((d: Isor, i: number) => (
+                          <Card
+                            key={i}
+                            type={'all'}
+                            data={d}
+                            onPress={(d: Isor) => {
+                              // d['created_by'] = d.created_by.email;
+                              // d['submit_to'] = [d.submit_to.email];
+                              d['closed'] = false;
+                              this.props.navigation.navigate('ViewSOR', {
+                                data: d,
+                              });
+                            }}
+                            name={d.created_by}
+                            date={d.occurred_at}
+                            risk={d.risk.severity * d.risk.likelihood}
+                            viewPortWidth={80}
+                            observation={d.details}
+                            classify={d.sor_type}
+                            repeated={d.repeatedSor}
+                            iconConf={classifySor.find(
+                              (e: any) => e.title == d.sor_type,
+                            )}
+                            location={d.location}
+                            style={[
+                              styles.draftCardContainer,
+                              // {marginBottom: wp()},
+                            ]}
+                            user1={undefined}
+                            user2={undefined}
+                            onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                          />
+                        ))}
+                      {this.state.draft.length > 3 && (
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.props.navigation.navigate('ViewAll', {
+                              data: 1,
+                              title: 'Draft',
+                            });
+                          }}
+                          style={styles.draftSeeMorecontainer}>
+                          <Text style={styles.seeMoretextDraft}>See More</Text>
+                        </TouchableOpacity>
+                      )}
                     </View>
-                  ) : null}
-                  {/* {this.state.draft.length == 0 ? null : ( */}
-                  <View style={styles.boardContainer}>
-                    <View>
+
+                    {/* )} */}
+                    {/* {this.state.inprogress.length == 0 ? null : ( */}
+                    <View style={styles.boardContainer}>
                       <View style={styles.draftTextContainer}>
-                        <Text style={styles.draftText}>Drafts</Text>
+                        <Text style={styles.draftText}>In Progress</Text>
                       </View>
-                    </View>
-
-                    {this.state.draft.slice(0, 3).map((d: Isor, i: number) => (
-                      <Card
-                        key={i}
-                        type={'all'}
-                        data={d}
-                        onPress={(d: Isor) => {
-                          // d['created_by'] = d.created_by.email;
-                          // d['submit_to'] = [d.submit_to.email];
-                          d['closed'] = false;
-                          this.props.navigation.navigate('ViewSOR', {
-                            data: d,
-                          });
-                        }}
-                        name={d.created_by}
-                        date={d.occurred_at}
-                        risk={d.risk.severity * d.risk.likelihood}
-                        viewPortWidth={80}
-                        observation={d.details}
-                        classify={d.sor_type}
-                        repeated={d.repeatedSor}
-                        iconConf={classifySor.find(
-                          (e: any) => e.title == d.sor_type,
-                        )}
-                        location={d.location}
-                        style={[
-                          styles.draftCardContainer,
-                          // {marginBottom: wp()},
-                        ]}
-                        user1={undefined}
-                        user2={undefined}
-                        onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                      />
-                    ))}
-                    {this.state.draft.length > 3 && (
-                      <TouchableOpacity
-                        onPress={() => {
-                          this.props.navigation.navigate('ViewAll', {
-                            data: 1,
-                            title: 'Draft',
-                          });
-                        }}
-                        style={styles.draftSeeMorecontainer}>
-                        <Text style={styles.seeMoretextDraft}>See More</Text>
-                      </TouchableOpacity>
-                    )}
-                  </View>
-
-                  {/* )} */}
-                  {/* {this.state.inprogress.length == 0 ? null : ( */}
-                  <View style={styles.boardContainer}>
-                    <View style={styles.draftTextContainer}>
-                      <Text style={styles.draftText}>In Progress</Text>
-                    </View>
-                    {this.state.inprogress
-                      .slice(0, 3)
-                      .map((d: Isor, i: number) => (
-                        <Card
-                          repeated={d.repeatedSor}
-                          key={i}
-                          type={'all'}
-                          name={d.created_by}
-                          data={d}
-                          onPress={(d: Isor) => {
-                            d['closed'] = false;
-                            // d['created_by'] = d.created_by.email;
-                            // d['submit_to'] = [d.submit_to.email];
-                            this.props.navigation.navigate('ViewSOR', {
-                              data: d,
+                      {this.state.inprogress
+                        .slice(0, 3)
+                        .map((d: Isor, i: number) => (
+                          <Card
+                            repeated={d.repeatedSor}
+                            key={i}
+                            type={'all'}
+                            name={d.created_by}
+                            data={d}
+                            onPress={(d: Isor) => {
+                              d['closed'] = false;
+                              // d['created_by'] = d.created_by.email;
+                              // d['submit_to'] = [d.submit_to.email];
+                              this.props.navigation.navigate('ViewSOR', {
+                                data: d,
+                              });
+                            }}
+                            date={d.occurred_at}
+                            risk={d.risk.severity * d.risk.likelihood}
+                            viewPortWidth={80}
+                            observation={d.details}
+                            classify={d.sor_type}
+                            iconConf={classifySor.find(
+                              (e: any) => e.title == d.sor_type,
+                            )}
+                            location={d.location}
+                            style={[styles.draftCardContainer]}
+                            user1={undefined}
+                            user2={undefined}
+                            onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                          />
+                        ))}
+                      {this.state.inprogress.length > 3 && (
+                        <TouchableOpacity
+                          onPress={() => {
+                            // this.props.reduxActions.getAllSors(
+                            //   '6038cf8472762b29b1bed1f3',
+                            //   [this.props.route.params.data],
+                            // );
+                            this.props.navigation.navigate('ViewAll', {
+                              data: 2,
+                              title: 'In Progress',
                             });
                           }}
-                          date={d.occurred_at}
-                          risk={d.risk.severity * d.risk.likelihood}
-                          viewPortWidth={80}
-                          observation={d.details}
-                          classify={d.sor_type}
-                          iconConf={classifySor.find(
-                            (e: any) => e.title == d.sor_type,
-                          )}
-                          location={d.location}
-                          style={[styles.draftCardContainer]}
-                          user1={undefined}
-                          user2={undefined}
-                          onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                        />
-                      ))}
-                    {this.state.inprogress.length > 3 && (
-                      <TouchableOpacity
-                        onPress={() => {
-                          // this.props.reduxActions.getAllSors(
-                          //   '6038cf8472762b29b1bed1f3',
-                          //   [this.props.route.params.data],
-                          // );
-                          this.props.navigation.navigate('ViewAll', {
-                            data: 2,
-                            title: 'In Progress',
-                          });
-                        }}
-                        style={styles.seeMoreContainerInProgress}>
-                        <Text
-                          style={{
-                            fontSize: wp(3),
-                            color: colors.secondary,
-                          }}>
-                          See More
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                  </View>
-
-                  {/* {this.state.submitted.length == 0 ? null : ( */}
-                  <View style={styles.boardContainer}>
-                    <View style={styles.submitTextContaienr}>
-                      <Text style={styles.submitText}> Exclated To</Text>
+                          style={styles.seeMoreContainerInProgress}>
+                          <Text
+                            style={{
+                              fontSize: wp(3),
+                              color: colors.secondary,
+                            }}>
+                            See More
+                          </Text>
+                        </TouchableOpacity>
+                      )}
                     </View>
-                    {this.state.submitted
-                      .slice(0, 3)
-                      .map((d: Isor, i: number) => (
-                        <Card
-                          key={i}
-                          repeated={d.repeatedSor}
-                          type={'all'}
-                          data={d}
-                          name={d.created_by}
-                          onPress={(d: Isor) => {
-                            d['closed'] = false;
-                            // d['created_by'] = d.created_by.email;
-                            // d['submit_to'] = [d.submit_to.email];
-                            this.props.navigation.navigate('ViewSOR', {
-                              data: d,
+
+                    {/* {this.state.submitted.length == 0 ? null : ( */}
+                    <View style={styles.boardContainer}>
+                      <View style={styles.submitTextContaienr}>
+                        <Text style={styles.submitText}> Exclated To</Text>
+                      </View>
+                      {this.state.submitted
+                        .slice(0, 3)
+                        .map((d: Isor, i: number) => (
+                          <Card
+                            key={i}
+                            repeated={d.repeatedSor}
+                            type={'all'}
+                            data={d}
+                            name={d.created_by}
+                            onPress={(d: Isor) => {
+                              d['closed'] = false;
+                              // d['created_by'] = d.created_by.email;
+                              // d['submit_to'] = [d.submit_to.email];
+                              this.props.navigation.navigate('ViewSOR', {
+                                data: d,
+                              });
+                            }}
+                            date={d.occurred_at}
+                            risk={d.risk.severity * d.risk.likelihood}
+                            viewPortWidth={80}
+                            user1={undefined}
+                            user2={undefined}
+                            observation={d.details}
+                            classify={d.sor_type}
+                            iconConf={classifySor.find(
+                              (e: any) => e.title == d.sor_type,
+                            )}
+                            location={d.location}
+                            style={[styles.submitCardContainer]}
+                            onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                          />
+                        ))}
+                      {this.state.submitted.length > 3 && (
+                        <TouchableOpacity
+                          onPress={() => {
+                            // this.props.reduxActions.clearAllSor();
+                            this.props.navigation.navigate('ViewAll', {
+                              data: 3,
+                              title: 'Exclated To',
                             });
                           }}
-                          date={d.occurred_at}
-                          risk={d.risk.severity * d.risk.likelihood}
-                          viewPortWidth={80}
-                          user1={undefined}
-                          user2={undefined}
-                          observation={d.details}
-                          classify={d.sor_type}
-                          iconConf={classifySor.find(
-                            (e: any) => e.title == d.sor_type,
-                          )}
-                          location={d.location}
-                          style={[styles.submitCardContainer]}
-                          onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                        />
-                      ))}
-                    {this.state.submitted.length > 3 && (
-                      <TouchableOpacity
-                        onPress={() => {
-                          // this.props.reduxActions.clearAllSor();
-                          this.props.navigation.navigate('ViewAll', {
-                            data: 3,
-                            title: 'Exclated To',
-                          });
-                        }}
-                        style={{
-                          alignSelf: 'center',
-                          padding: wp(3),
-                          paddingLeft: wp(10),
-                          paddingRight: wp(10),
-                          borderRadius: wp(3),
-                          backgroundColor: colors.primary,
-                        }}>
-                        <Text
                           style={{
-                            fontSize: wp(3),
-                            color: colors.secondary,
+                            alignSelf: 'center',
+                            padding: wp(3),
+                            paddingLeft: wp(10),
+                            paddingRight: wp(10),
+                            borderRadius: wp(3),
+                            backgroundColor: colors.primary,
                           }}>
-                          See More
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                  </View>
-                  {/* )} */}
+                          <Text
+                            style={{
+                              fontSize: wp(3),
+                              color: colors.secondary,
+                            }}>
+                            See More
+                          </Text>
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                    {/* )} */}
 
-                  {/* {this.state.submitted.length == 0 ? null : ( */}
-                  {/* <View style={styles.boardContainer}>
+                    {/* {this.state.submitted.length == 0 ? null : ( */}
+                    {/* <View style={styles.boardContainer}>
                       <View style={styles.submitTextContaienr}>
                         <Text style={styles.submitText}> Notified To</Text>
                       </View>
@@ -1478,315 +1501,312 @@ const ViewAllSor = (props: ViewAllProps) => {
                         </TouchableOpacity>
                       )}
                     </View> */}
-                  {/* )} */}
+                    {/* )} */}
 
-                  {/* )} */}
-                  {/* {this.state.exclated.length == 0 ? null : ( */}
-                  <View style={styles.boardContainer}>
-                    <View style={styles.draftTextContainer}>
-                      <Text style={styles.draftText}> Pending Closure</Text>
-                    </View>
-                    {this.state.exclated
-                      .slice(0, 3)
-                      .map((d: Isor, i: number) => (
-                        <Card
-                          key={i}
-                          repeated={d.repeatedSor}
-                          type={'all'}
-                          name={d.created_by}
-                          data={d}
-                          onPress={(d: Isor) => {
-                            d['closed'] = false;
-                            // d['created_by'] = d.created_by.email;
-                            // d['submit_to'] = [d.submit_to.email];
-                            this.props.navigation.navigate('ViewSOR', {
-                              data: d,
+                    {/* )} */}
+                    {/* {this.state.exclated.length == 0 ? null : ( */}
+                    <View style={styles.boardContainer}>
+                      <View style={styles.draftTextContainer}>
+                        <Text style={styles.draftText}> Pending Closure</Text>
+                      </View>
+                      {this.state.exclated
+                        .slice(0, 3)
+                        .map((d: Isor, i: number) => (
+                          <Card
+                            key={i}
+                            repeated={d.repeatedSor}
+                            type={'all'}
+                            name={d.created_by}
+                            data={d}
+                            onPress={(d: Isor) => {
+                              d['closed'] = false;
+                              // d['created_by'] = d.created_by.email;
+                              // d['submit_to'] = [d.submit_to.email];
+                              this.props.navigation.navigate('ViewSOR', {
+                                data: d,
+                              });
+                            }}
+                            date={d.occurred_at}
+                            risk={d.risk.severity * d.risk.likelihood}
+                            viewPortWidth={80}
+                            observation={d.details}
+                            classify={d.sor_type}
+                            onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                            iconConf={classifySor.find(
+                              (e: any) => e.title == d.sor_type,
+                            )}
+                            location={d.location}
+                            style={[styles.draftCardContainer]}
+                            user1={undefined}
+                            user2={undefined}
+                          />
+                        ))}
+                      {this.state.exclated.length > 3 && (
+                        <TouchableOpacity
+                          onPress={() => {
+                            // this.props.reduxActions.clearAllSor();
+                            this.props.navigation.navigate('ViewAll', {
+                              data: 4,
+                              title: 'Pending Closure',
                             });
                           }}
-                          date={d.occurred_at}
-                          risk={d.risk.severity * d.risk.likelihood}
-                          viewPortWidth={80}
-                          observation={d.details}
-                          classify={d.sor_type}
-                          onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                          iconConf={classifySor.find(
-                            (e: any) => e.title == d.sor_type,
-                          )}
-                          location={d.location}
-                          style={[styles.draftCardContainer]}
-                          user1={undefined}
-                          user2={undefined}
-                        />
-                      ))}
-                    {this.state.exclated.length > 3 && (
-                      <TouchableOpacity
-                        onPress={() => {
-                          // this.props.reduxActions.clearAllSor();
-                          this.props.navigation.navigate('ViewAll', {
-                            data: 4,
-                            title: 'Pending Closure',
-                          });
-                        }}
-                        style={{
-                          alignSelf: 'center',
-                          padding: wp(3),
-                          paddingLeft: wp(10),
-                          paddingRight: wp(10),
-                          borderRadius: wp(3),
-                          backgroundColor: colors.primary,
-                        }}>
-                        <Text
                           style={{
-                            fontSize: wp(3),
-                            color: colors.secondary,
+                            alignSelf: 'center',
+                            padding: wp(3),
+                            paddingLeft: wp(10),
+                            paddingRight: wp(10),
+                            borderRadius: wp(3),
+                            backgroundColor: colors.primary,
                           }}>
-                          See More
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                  </View>
-                  {/* )} */}
-                  {/* {this.state.closed.length == 0 ? null : ( */}
-                  <View style={styles.boardContainer}>
-                    <View style={styles.draftTextContainer}>
-                      <Text style={styles.draftText}>Closed</Text>
+                          <Text
+                            style={{
+                              fontSize: wp(3),
+                              color: colors.secondary,
+                            }}>
+                            See More
+                          </Text>
+                        </TouchableOpacity>
+                      )}
                     </View>
-                    {this.state.closed.slice(0, 3).map((d: Isor, i: number) => (
-                      <Card
-                        key={i}
-                        type={'all'}
-                        repeated={d.repeatedSor}
-                        data={d}
-                        name={d.created_by}
-                        onPress={(d: Isor) => {
-                          d['closed'] = true;
-                          // d['created_by'] = d.created_by.email;
-                          // d['submit_to'] = [d.submit_to.email];
-                          this.props.navigation.navigate('ViewSOR', {
-                            data: d,
-                          });
-                        }}
-                        date={d.occurred_at}
-                        risk={d.risk.severity * d.risk.likelihood}
-                        viewPortWidth={80}
-                        observation={d.details}
-                        classify={d.sor_type}
-                        iconConf={classifySor.find(
-                          (e: any) => e.title == d.sor_type,
-                        )}
-                        location={d.location}
-                        style={[styles.draftCardContainer]}
-                        user1={undefined}
-                        user2={undefined}
-                        onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-                      />
-                    ))}
-                    {this.state.closed.length > 3 && (
-                      <TouchableOpacity
-                        onPress={() => {
-                          // this.props.reduxActions.clearAllSor();
-                          this.props.navigation.navigate('ViewAll', {
-                            data: 5,
-                            title: 'Closed',
-                          });
-                        }}
-                        style={{
-                          alignSelf: 'center',
-                          padding: wp(3),
-                          paddingLeft: wp(10),
-                          paddingRight: wp(10),
-                          borderRadius: wp(3),
-                          backgroundColor: colors.primary,
-                        }}>
-                        <Text
+                    {/* )} */}
+                    {/* {this.state.closed.length == 0 ? null : ( */}
+                    <View style={styles.boardContainer}>
+                      <View style={styles.draftTextContainer}>
+                        <Text style={styles.draftText}>Closed</Text>
+                      </View>
+                      {this.state.closed
+                        .slice(0, 3)
+                        .map((d: Isor, i: number) => (
+                          <Card
+                            key={i}
+                            type={'all'}
+                            repeated={d.repeatedSor}
+                            data={d}
+                            name={d.created_by}
+                            onPress={(d: Isor) => {
+                              d['closed'] = true;
+                              // d['created_by'] = d.created_by.email;
+                              // d['submit_to'] = [d.submit_to.email];
+                              this.props.navigation.navigate('ViewSOR', {
+                                data: d,
+                              });
+                            }}
+                            date={d.occurred_at}
+                            risk={d.risk.severity * d.risk.likelihood}
+                            viewPortWidth={80}
+                            observation={d.details}
+                            classify={d.sor_type}
+                            iconConf={classifySor.find(
+                              (e: any) => e.title == d.sor_type,
+                            )}
+                            location={d.location}
+                            style={[styles.draftCardContainer]}
+                            user1={undefined}
+                            user2={undefined}
+                            onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                          />
+                        ))}
+                      {this.state.closed.length > 3 && (
+                        <TouchableOpacity
+                          onPress={() => {
+                            // this.props.reduxActions.clearAllSor();
+                            this.props.navigation.navigate('ViewAll', {
+                              data: 5,
+                              title: 'Closed',
+                            });
+                          }}
                           style={{
-                            fontSize: wp(3),
-                            color: colors.secondary,
+                            alignSelf: 'center',
+                            padding: wp(3),
+                            paddingLeft: wp(10),
+                            paddingRight: wp(10),
+                            borderRadius: wp(3),
+                            backgroundColor: colors.primary,
                           }}>
-                          See More
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                  </View>
-                  {/* )} */}
-                </ScrollView>
-              )}
-            </>
-          )}
-        </View>
+                          <Text
+                            style={{
+                              fontSize: wp(3),
+                              color: colors.secondary,
+                            }}>
+                            See More
+                          </Text>
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                    {/* )} */}
+                  </ScrollView>
+                )}
+              </>
+            )}
+          </View>
 
-        {/* when you don't have any sors  */}
-        {/* Modal Container */}
+          {/* when you don't have any sors  */}
+          {/* Modal Container */}
+          <Modal
+            isVisible={this.state.newsorModal}
+            onBackdropPress={() => this.setState({newsorModal: false})}>
+            <View style={styles.modelContainer}>
+              <View>
+                <Text style={styles.errHeadPop}>
+                  looks like you don't have any sors yet
+                </Text>
+                <TouchableOpacity
+                  style={{
+                    flexDirection: 'row',
+                    padding: wp(3),
+                    alignItems: 'center',
+                  }}
+                  onPress={() => {
+                    this.props.navigation.navigate('CreateSOR');
+
+                    this.setState({newsorModal: false});
+                  }}>
+                  <Icon
+                    size={wp(5)}
+                    name="add-outline"
+                    type="ionicon"
+                    color={colors.primary}
+                  />
+                  <Text style={styles.errEmailPassDesc}>Create New SOR</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={{
+                    flexDirection: 'row',
+                    padding: wp(3),
+                    alignItems: 'center',
+                  }}
+                  onPress={() => {
+                    this.props.navigation.navigate('createProject');
+
+                    this.setState({newsorModal: false});
+                  }}>
+                  {/* <Image source={images.} /> */}
+                  <Icon
+                    size={wp(5)}
+                    name="add-outline"
+                    type="ionicon"
+                    color={colors.primary}
+                  />
+                  <Text style={styles.plzTryAgain}>Create New Project</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+        </ScrollView>
+
+        {/* Repeated sor modal */}
+
         <Modal
-          isVisible={this.state.newsorModal}
-          onBackdropPress={() => this.setState({newsorModal: false})}>
+          animationInTiming={1000}
+          animationIn={'bounceInUp'}
+          animationOut={'bounceOutDown'}
+          animationOutTiming={1000}
+          useNativeDriver={true}
+          onBackdropPress={() => this.setState({repeatedSorModal: false})}
+          isVisible={this.state.repeatedSorModal}>
+          <View
+            style={{
+              padding: wp(5),
+              backgroundColor: colors.secondary,
+              borderRadius: wp(2),
+            }}>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text
+                style={{
+                  fontSize: wp(4),
+                  fontFamily: fonts.SFuiDisplayBold,
+                  marginBottom: wp(3),
+                }}>
+                Repeated SOR
+              </Text>
+              <Icon
+                onPress={() => this.setState({repeatedSorModal: false})}
+                name={'cross'}
+                size={wp(5)}
+                type={'entypo'}
+              />
+            </View>
+            {this.state.repeatedSors.map((d: Isor, i: number) => (
+              <Card
+                key={i}
+                // type={'all'}
+                data={d}
+                onPress={(d: Isor) => {
+                  // d['created_by'] = d.created_by.email;
+                  // d['submit_to'] = [d.submit_to.email];
+                  d['closed'] = false;
+                  this.props.navigation.navigate('ViewSOR', {
+                    data: d,
+                  });
+                  this.setState({repeatedSorModal: false});
+                }}
+                onPressRepeated={(e) => this.getAllRepeatedSor(e)}
+                name={d.created_by}
+                date={d.occurred_at}
+                risk={d.risk.severity * d.risk.likelihood}
+                viewPortWidth={80}
+                observation={d.details}
+                classify={d.sor_type}
+                iconConf={classifySor.find((e: any) => e.title == d.sor_type)}
+                location={d.location}
+                style={[
+                  styles.draftCardContainer,
+                  // {marginBottom: wp()},
+                ]}
+                user1={undefined}
+                user2={undefined}
+              />
+            ))}
+          </View>
+        </Modal>
+        <FlashMessage ref="myLocalFlashMessage" />
+
+        <Modal
+          onBackdropPress={() => {
+            this.setState({projectSelectors: !this.state.projectSelectors});
+          }}
+          isVisible={this.state.projectSelectors}>
           <View style={styles.modelContainer}>
             <View>
-              <Text style={styles.errHeadPop}>
-                looks like you don't have any sors yet
-              </Text>
-              <TouchableOpacity
-                style={{
-                  flexDirection: 'row',
-                  padding: wp(3),
-                  alignItems: 'center',
-                }}
-                onPress={() => {
-                  this.props.navigation.navigate('CreateSOR');
+              <Text style={styles.errHeadPop}>Select your Project</Text>
 
-                  this.setState({newsorModal: false});
-                }}>
-                <Icon
-                  size={wp(5)}
-                  name="add-outline"
-                  type="ionicon"
-                  color={colors.primary}
-                />
-                <Text style={styles.errEmailPassDesc}>Create New SOR</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={{
-                  flexDirection: 'row',
-                  padding: wp(3),
-                  alignItems: 'center',
-                }}
-                onPress={() => {
-                  this.props.navigation.navigate('createProject');
-
-                  this.setState({newsorModal: false});
-                }}>
-                {/* <Image source={images.} /> */}
-                <Icon
-                  size={wp(5)}
-                  name="add-outline"
-                  type="ionicon"
-                  color={colors.primary}
-                />
-                <Text style={styles.plzTryAgain}>Create New Project</Text>
-              </TouchableOpacity>
+              <>
+                <ScrollView
+                  showsVerticalScrollIndicator={false}
+                  style={{
+                    backgroundColor: colors.secondary,
+                    borderWidth: wp(0.2),
+                    alignSelf: 'center',
+                    width: wp(50),
+                    borderRadius: wp(2),
+                    borderColor: colors.textOpa,
+                  }}>
+                  <>
+                    {this.state.projects.map((d: any) => (
+                      <TouchableOpacity
+                        onPress={() => this.selecteProj(d)}
+                        style={{padding: wp(3), flexDirection: 'row'}}>
+                        <Icon
+                          name={'stats-chart-sharp'}
+                          type={'ionicon'}
+                          size={wp(3)}
+                          color={colors.text}
+                        />
+                        <Text style={{fontSize: wp(3), marginLeft: wp(3)}}>
+                          {d.project_name}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </>
+                </ScrollView>
+              </>
             </View>
           </View>
         </Modal>
-      </ScrollView>
-
-      {/* Repeated sor modal */}
-
-      <Modal
-        animationInTiming={1000}
-        animationIn={'bounceInUp'}
-        animationOut={'bounceOutDown'}
-        animationOutTiming={1000}
-        useNativeDriver={true}
-        onBackdropPress={() => this.setState({repeatedSorModal: false})}
-        isVisible={this.state.repeatedSorModal}>
-        <View
-          style={{
-            padding: wp(5),
-            backgroundColor: colors.secondary,
-            borderRadius: wp(2),
-          }}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text
-              style={{
-                fontSize: wp(4),
-                fontFamily: fonts.SFuiDisplayBold,
-                marginBottom: wp(3),
-              }}>
-              Repeated SOR
-            </Text>
-            <Icon
-              onPress={() => this.setState({repeatedSorModal: false})}
-              name={'cross'}
-              size={wp(5)}
-              type={'entypo'}
-            />
-          </View>
-          {this.state.repeatedSors.map((d: Isor, i: number) => (
-            <Card
-              key={i}
-              // type={'all'}
-              data={d}
-              onPress={(d: Isor) => {
-                // d['created_by'] = d.created_by.email;
-                // d['submit_to'] = [d.submit_to.email];
-                d['closed'] = false;
-                this.props.navigation.navigate('ViewSOR', {
-                  data: d,
-                });
-                this.setState({repeatedSorModal: false});
-              }}
-              onPressRepeated={(e) => this.getAllRepeatedSor(e)}
-              name={d.created_by}
-              date={d.occurred_at}
-              risk={d.risk.severity * d.risk.likelihood}
-              viewPortWidth={80}
-              observation={d.details}
-              classify={d.sor_type}
-              iconConf={classifySor.find((e: any) => e.title == d.sor_type)}
-              location={d.location}
-              style={[
-                styles.draftCardContainer,
-                // {marginBottom: wp()},
-              ]}
-              user1={undefined}
-              user2={undefined}
-            />
-          ))}
-        </View>
-      </Modal>
-      <FlashMessage ref="myLocalFlashMessage" />
-
-      <Modal
-        onBackdropPress={() => {
-          this.setState({projectSelectors: !this.state.projectSelectors});
-        }}
-        isVisible={this.state.projectSelectors}>
-        <View style={styles.modelContainer}>
-          <View>
-            <Text style={styles.errHeadPop}>Select your Project</Text>
-
-            <>
-              <ScrollView
-                showsVerticalScrollIndicator={false}
-                style={{
-                  backgroundColor: colors.secondary,
-                  borderWidth: wp(0.2),
-                  alignSelf: 'center',
-                  width: wp(50),
-                  borderRadius: wp(2),
-                  borderColor: colors.textOpa,
-                }}>
-                <>
-                  {this.state.projects.map((d: any) => (
-                    <TouchableOpacity
-                      onPress={() => this.selecteProj(d)}
-                      style={{padding: wp(3), flexDirection: 'row'}}>
-                      <Icon
-                        name={'stats-chart-sharp'}
-                        type={'ionicon'}
-                        size={wp(3)}
-                        color={colors.text}
-                      />
-                      <Text style={{fontSize: wp(3), marginLeft: wp(3)}}>
-                        {d.project_name}
-                      </Text>
-                    </TouchableOpacity>
-                  ))}
-                </>
-              </ScrollView>
-            </>
-          </View>
-        </View>
-      </Modal>
-    </View>
-  );
-};
-
-export class ViewAllSOr extends React.Component<ViewAllProps, any> {
-  constructor(props: ViewAllProps) {
-    super(props);
-    this.state = {};
+      </View>
+    );
   }
 }
 

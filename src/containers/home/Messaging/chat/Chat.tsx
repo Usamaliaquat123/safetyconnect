@@ -54,6 +54,13 @@ export interface ChatProps {
   reduxState: any;
 }
 
+// const Chat = (props: ChatProps) => {
+//   const [imageViewer, setimageViewer] = useState(false);
+//   const [images, setimages] = useState([]);
+//   const [isVideoFullscreen, setisVideoFullscreen] = useState(false);
+//   const [reciever, setreciever] = useState('');
+// };
+
 class Chat extends React.Component<ChatProps, any> {
   constructor(props: any) {
     super(props);
