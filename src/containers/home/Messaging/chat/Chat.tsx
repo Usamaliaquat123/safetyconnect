@@ -396,154 +396,99 @@ const Chat = (props: ChatProps) => {
     );
   };
 
-
-
-
-  render() {
-    return (
-      <View style={{flex: 1, backgroundColor: colors.secondary}}>
-        <View style={styles.header}>
-          <View>
-            <Avatar
-              rounded
-              containerStyle={styles.containerAvatar}
-              source={{
-                uri:
-                  props.route.params.type == 'private'
-                    ?props.route.params.data.userB.img_url
-                    : null,
-              }}
-            />
-            <View
-              style={[
-                styles.isonline,
-                // this.props.route.params.data.isonline == false
-                //   ? {opacity: 0.7, backgroundColor: colors.riskIcons.orrange}
-                //   : null,
-              ]}
-            />
-          </View>
-          <Text style={styles.userNameText}>
-            {props.route.params.type == 'private'
-              ? props.route.params.data.userB.name
-              : null}
-          </Text>
-          <View style={styles.headRightIcon}>
-            <CustomIcon
-              size={wp(6)}
-              name="adduser"
-              type="antdesign"
-              color={colors.primary}
-            />
-            <CustomIcon
-              onPress={() => {
-                if (this.props.route.params.type === 'group') {
-                  this.props.route.params.socket.emit('leaveRoom', {
-                    chatroomId: this.state.reciever,
-                  });
-                } else {
-                  this.props.route.params.socket.emit('leaveRoom', {
-                    chatroomId: this.state.reciever,
-                  });
-                }
-
-                this.props.navigation.goBack();
-              }}
-              size={wp(6)}
-              name="cross"
-              type="entypo"
-              color={colors.text}
-            />
-          </View>
-        </View>
-        {/* content */}
-        <GiftedChatq
-          renderBubble={(container: BubbleProps<IMessage>) =>
-            renderBubble(container)
-          }
-          renderSend={(sendIcon: SendProps<IMessage>) =>
-            renderSend(sendIcon)
-          }
-          messages={this.state.messages}
-          renderInputToolbar={(Input: InputToolbarProps) =>
-            renderInput(Input)
-          }
-          renderComposer={(composer: ComposerProps) =>
-            renderComposer(composer)
-          }
-          user={{
-            _id: 1,
-          }}
-        />
-
-        <Modal
-          visible={this.state.imageViewer}
-          transparent={true}
-          style={{backgroundColor: colors.secondary}}>
-          <TouchableOpacity
-            onPress={() => this.setState({imageViewer: false})}
-            style={{backgroundColor: colors.secondary, alignItems: 'flex-end'}}>
-            <CustomIcon
-              containerStyle={{marginTop: wp(3), marginRight: wp(3)}}
-              name={'cross'}
-              type={'entypo'}
-              color={colors.lightGrey}
-              size={wp(5)}
-            />
-          </TouchableOpacity>
-          <ImageViewer
-            style={{backgroundColor: colors.secondary}}
-            flipThreshold={100}
-            onCancel={() => {}}
-            imageUrls={this.state.images}
+  return (
+    <View style={{flex: 1, backgroundColor: colors.secondary}}>
+      <View style={styles.header}>
+        <View>
+          <Avatar
+            rounded
+            containerStyle={styles.containerAvatar}
+            source={{
+              uri:
+                props.route.params.type == 'private'
+                  ? props.route.params.data.userB.img_url
+                  : null,
+            }}
           />
-        </Modal>
+          <View
+            style={[
+              styles.isonline,
+              // this.props.route.params.data.isonline == false
+              //   ? {opacity: 0.7, backgroundColor: colors.riskIcons.orrange}
+              //   : null,
+            ]}
+          />
+        </View>
+        <Text style={styles.userNameText}>
+          {props.route.params.type == 'private'
+            ? props.route.params.data.userB.name
+            : null}
+        </Text>
+        <View style={styles.headRightIcon}>
+          <CustomIcon
+            size={wp(6)}
+            name="adduser"
+            type="antdesign"
+            color={colors.primary}
+          />
+          <CustomIcon
+            onPress={() => {
+              if (props.route.params.type === 'group') {
+                props.route.params.socket.emit('leaveRoom', {
+                  chatroomId: reciever,
+                });
+              } else {
+                props.route.params.socket.emit('leaveRoom', {
+                  chatroomId: reciever,
+                });
+              }
+
+              props.navigation.goBack();
+            }}
+            size={wp(6)}
+            name="cross"
+            type="entypo"
+            color={colors.text}
+          />
+        </View>
       </View>
-    );
-  }
+      {/* content */}
+      <GiftedChatq
+        renderBubble={(container: BubbleProps<IMessage>) =>
+          renderBubble(container)
+        }
+        renderSend={(sendIcon: SendProps<IMessage>) => renderSend(sendIcon)}
+        messages={messages}
+        renderInputToolbar={(Input: InputToolbarProps) => renderInput(Input)}
+        renderComposer={(composer: ComposerProps) => renderComposer(composer)}
+        user={{
+          _id: 1,
+        }}
+      />
 
-
-
-
-
-
-
-
+      <Modal
+        visible={imageViewer}
+        transparent={true}
+        style={{backgroundColor: colors.secondary}}>
+        <TouchableOpacity
+          onPress={() => setimageViewer(false)}
+          style={{backgroundColor: colors.secondary, alignItems: 'flex-end'}}>
+          <CustomIcon
+            containerStyle={{marginTop: wp(3), marginRight: wp(3)}}
+            name={'cross'}
+            type={'entypo'}
+            color={colors.lightGrey}
+            size={wp(5)}
+          />
+        </TouchableOpacity>
+        <ImageViewer
+          style={{backgroundColor: colors.secondary}}
+          flipThreshold={100}
+          onCancel={() => {}}
+          imageUrls={images}
+        />
+      </Modal>
+    </View>
+  );
 };
-
-class Chat extends React.Component<ChatProps, any> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      imageViewer: false,
-      images: [],
-      isVideoFullscreen: false,
-      reciever: '',
-      organizationId: '',
-      messages: [],
-      socket: props.route.params.socket,
-    };
-  }
-  // filter out user from data array
-  // filterUsers = (users: any) => {
-  //   return new Promise((resolve , reject) => {
-
-  //   })
-  // };
-
-  componentDidMount = () => {
-    // console.log(dta);
-  };
-
- 
-}
-
-const mapStateToProps = (state: any) => {
-  return {};
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Chat);
+export default Chat;
