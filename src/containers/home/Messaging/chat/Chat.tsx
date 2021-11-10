@@ -107,82 +107,77 @@ const Chat = (props: ChatProps) => {
           setreciever(props.route.params.data._id);
 
           createApi
-            .createApi()s
+            .createApi()
             .getOrganization(orgId)
             .then((org: any) => {
               console.log('members');
               console.log(org.data.data.members);
-              console.log(this.props.route.params.data);
               var dta = [];
-              for (
-                let i = 0;
-                i < this.props.route.params.data.chat.length;
-                i++
-              ) {
+              for (let i = 0; i < props.route.params.data.chat.length; i++) {
                 if (
                   org.data.data.members.filter(
-                    (d: any) =>
-                      d.email == this.props.route.params.data.chat[i].user,
+                    (d: any) => d.email == props.route.params.data.chat[i].user,
                   )[0].email == user
                 ) {
                   dta.push({
-                    _id: this.props.route.params.data.chat[i]._id,
+                    _id: props.route.params.data.chat[i]._id,
                     // You can also add a video prop:
-                    text: this.props.route.params.data.chat[i].message,
-                    createdAt: this.props.route.params.data.chat[i].createdAt,
+                    text: props.route.params.data.chat[i].message,
+                    createdAt: props.route.params.data.chat[i].createdAt,
                     user: {
                       _id: 1,
                       name: org.data.data.members.filter(
                         (d: any) =>
-                          d.email == this.props.route.params.data.chat[i].user,
+                          d.email == props.route.params.data.chat[i].user,
                       )[0].name,
                       avatar: org.data.data.members.filter(
                         (d: any) =>
-                          d.email == this.props.route.params.data.chat[i].user,
+                          d.email == props.route.params.data.chat[i].user,
                       )[0].img_url,
                     },
                   });
                 } else {
-                  this.props.route.params.data.chat[i].createdAt;
+                  props.route.params.data.chat[i].createdAt;
                   dta.push({
-                    _id: this.props.route.params.data.chat[i]._id,
+                    _id: props.route.params.data.chat[i]._id,
                     // You can also add a video prop:
-                    text: this.props.route.params.data.chat[i].message,
-                    createdAt: this.props.route.params.data.chat[i].createdAt,
+                    text: props.route.params.data.chat[i].message,
+                    createdAt: props.route.params.data.chat[i].createdAt,
                     user: {
                       _id: org.data.data.members.filter(
                         (d: any) =>
-                          d.email == this.props.route.params.data.chat[i].user,
+                          d.email == props.route.params.data.chat[i].user,
                       )[0]._id,
                       name: org.data.data.members.filter(
                         (d: any) =>
-                          d.email == this.props.route.params.data.chat[i].user,
+                          d.email == props.route.params.data.chat[i].user,
                       )[0].name,
                       avatar: org.data.data.members.filter(
                         (d: any) =>
-                          d.email == this.props.route.params.data.chat[i].user,
+                          d.email == props.route.params.data.chat[i].user,
                       )[0].img_url,
                     },
                   });
                 }
               }
-              this.setState({messages: dta});
+
+              setMessages(dta);
             });
         });
       })
       .catch((err) => {});
 
-    console.log('this.props.route.params.data yahann ai');
-    console.log(this.props.route.params.data);
+    // console.log('this.props.route.params.data yahann ai');
+    // console.log(this.props.route.params.data);
 
-    this.state.socket.on(
-      `newMessage/${this.props.route.params.data._id}`,
+    props.route.params.socket.on(
+      `newMessage/${props.route.params.data._id}`,
       (message: any) => {
         console.log(
           'Chat: receiving new group message',
           message,
           'state id',
-          this.props.route.params.data._id,
+          props.route.params.data._id,
         );
 
         console.log('messageasdsad');
@@ -224,22 +219,9 @@ const Chat = (props: ChatProps) => {
       },
     );
   }, []);
-};
 
-class Chat extends React.Component<ChatProps, any> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      imageViewer: false,
-      images: [],
-      isVideoFullscreen: false,
-      reciever: '',
-      organizationId: '',
-      messages: [],
-      socket: props.route.params.socket,
-    };
-  }
-  renderBubble = (props: BubbleProps<IMessage>) => {
+  // renderbubble component
+  const renderBubble = (props: BubbleProps<IMessage>) => {
     var sameUserInPrevMessage = false;
     if (
       props.previousMessage?.user !== undefined &&
@@ -325,17 +307,16 @@ class Chat extends React.Component<ChatProps, any> {
       </View>
     );
   };
-  // filter out user from data array
-  // filterUsers = (users: any) => {
-  //   return new Promise((resolve , reject) => {
-
-  //   })
-  // };
-
-  componentDidMount = () => {
-    // console.log(dta);
-  };
-  renderInput = (props: InputToolbarProps) => (
+  // Render composer
+  const renderComposer = (props: ComposerProps) => (
+    <Composer
+      {...props}
+      textInputStyle={{fontSize: wp(3.5), fontWeight: 'bold'}}
+      placeholder={'Write a message...'}
+    />
+  );
+  // Render input component
+  const renderInput = (props: InputToolbarProps) => (
     <InputToolbar
       {...props}
       containerStyle={{
@@ -346,14 +327,8 @@ class Chat extends React.Component<ChatProps, any> {
       }}
     />
   );
-  renderComposer = (props: ComposerProps) => (
-    <Composer
-      {...props}
-      textInputStyle={{fontSize: wp(3.5), fontWeight: 'bold'}}
-      placeholder={'Write a message...'}
-    />
-  );
-  renderSend = (props: SendProps<IMessage>) => {
+
+  const renderSend = (prop: SendProps<IMessage>) => {
     return (
       <View style={{flexDirection: 'row'}}>
         <CustomIcon
@@ -366,8 +341,8 @@ class Chat extends React.Component<ChatProps, any> {
         />
         <TouchableOpacity
           onPress={() => {
-            if (props.text && props.onSend) {
-              console.log(props.text?.trim());
+            if (prop.text && prop.onSend) {
+              console.log(prop.text?.trim());
 
               // var message = {
               //   receiver: this.state.reciever,
@@ -381,21 +356,21 @@ class Chat extends React.Component<ChatProps, any> {
               console.log('message');
               // console.log(message);
 
-              if (this.props.route.params.type == 'group') {
+              if (props.route.params.type == 'group') {
                 const message = {
-                  chatroomId: this.state.reciever,
+                  chatroomId: reciever,
                   createdAt: Date.now(),
-                  message: props.text?.trim(),
+                  message: prop.text?.trim(),
                   files: [],
                 };
                 console.log('group message');
                 console.log(message);
-                this.props.route.params.socket.emit('chatroomMessage', message);
+                props.route.params.socket.emit('chatroomMessage', message);
               } else {
                 var message = {
-                  receiver: this.state.reciever,
-                  organization: this.state.organizationId,
-                  message: props.text?.trim(),
+                  receiver: reciever,
+                  organization: organizationId,
+                  message: prop.text?.trim(),
                   files: [],
                   // this will need to converted in utc
                   createdAt: Date.now(),
@@ -403,7 +378,7 @@ class Chat extends React.Component<ChatProps, any> {
 
                 console.log('message');
                 console.log(message);
-                this.props.route.params.socket.emit('privateMessage', message);
+                props.route.params.socket.emit('privateMessage', message);
               }
             }
           }}>
@@ -419,6 +394,31 @@ class Chat extends React.Component<ChatProps, any> {
         </TouchableOpacity>
       </View>
     );
+  };
+};
+
+class Chat extends React.Component<ChatProps, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      imageViewer: false,
+      images: [],
+      isVideoFullscreen: false,
+      reciever: '',
+      organizationId: '',
+      messages: [],
+      socket: props.route.params.socket,
+    };
+  }
+  // filter out user from data array
+  // filterUsers = (users: any) => {
+  //   return new Promise((resolve , reject) => {
+
+  //   })
+  // };
+
+  componentDidMount = () => {
+    // console.log(dta);
   };
 
   render() {
