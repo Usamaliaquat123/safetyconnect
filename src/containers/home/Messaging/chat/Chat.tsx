@@ -56,7 +56,7 @@ export interface ChatProps {
 
 const Chat = (props: ChatProps) => {
   const [imageViewer, setimageViewer] = useState(false);
-  const [images, setimages] = useState([]);
+  const [image, setimages] = useState([]);
   const [isVideoFullscreen, setisVideoFullscreen] = useState(false);
   const [reciever, setreciever] = useState('');
   const [organizationId, setorganizationId] = useState('');
@@ -251,10 +251,8 @@ const Chat = (props: ChatProps) => {
                   {props.currentMessage.image.map((d: any, i: number) => (
                     <TouchableOpacity
                       onPress={() => {
-                        this.state.images.push({url: d});
-                        this.setState({
-                          imageViewer: true,
-                        });
+                        image.push({url: d});
+                        setimageViewer(true);
                       }}>
                       <Image style={styles.imageTag} source={{uri: d}} />
                     </TouchableOpacity>
@@ -327,6 +325,11 @@ const Chat = (props: ChatProps) => {
       }}
     />
   );
+
+  const getGroupMessages = () => {
+    
+
+  };
   // Render send component
   const renderSend = (prop: SendProps<IMessage>) => {
     return (
@@ -366,6 +369,8 @@ const Chat = (props: ChatProps) => {
                 console.log('group message');
                 console.log(message);
                 props.route.params.socket.emit('chatroomMessage', message);
+
+                getGroupMessages()
               } else {
                 var message = {
                   receiver: reciever,
@@ -376,8 +381,8 @@ const Chat = (props: ChatProps) => {
                   createdAt: Date.now(),
                 };
 
-                console.log('message');
-                console.log(message);
+                // console.log('message');
+                // console.log(message);
                 props.route.params.socket.emit('privateMessage', message);
               }
             }
@@ -453,7 +458,7 @@ const Chat = (props: ChatProps) => {
         </View>
       </View>
       {/* content */}
-      <GiftedChatq
+      <GiftedChat
         renderBubble={(container: BubbleProps<IMessage>) =>
           renderBubble(container)
         }
@@ -485,7 +490,7 @@ const Chat = (props: ChatProps) => {
           style={{backgroundColor: colors.secondary}}
           flipThreshold={100}
           onCancel={() => {}}
-          imageUrls={images}
+          imageUrls={image}
         />
       </Modal>
     </View>
