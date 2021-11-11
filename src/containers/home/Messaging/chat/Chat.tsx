@@ -8,7 +8,7 @@ import {
   BackHandler,
   Modal,
 } from 'react-native';
-import {connect} from 'react-redux';
+import {connect} from 'rekct-redux';
 import {createApi, Create_sor} from '@service';
 import {
   GiftedChat,
@@ -63,6 +63,42 @@ const Chat = (props: ChatProps) => {
   const [messages, setMessages] = useState([]);
 
   const [socket, setSocket] = useState(props.route.params.socket);
+
+  // Receive Group Messages
+  useEffect(() => {
+    if (socket && chatId && joinGroup) {
+      socket.on(`newMessage/${chatId}`, (message) => {
+        console.log(
+          'Chat: receiving new group message',
+          message,
+          'state id',
+          chatId,
+        );
+        const newMessages = [...chatMessages, message];
+        setChatMessages([...newMessages]);
+      });
+    }
+  }, [chatMessages, chatId, joinGroup]);
+
+  // Send Direct Message
+  const sendDirectMessage = (type, files) => {
+    if (
+      socket &&
+      ((type === 'text' && inputRef.current.value) ||
+        (type === 'file' && files.length))
+    ) {
+      console.log('Chat: sending', inputRef.current.value, 'to room', chatId);
+      const message = {
+        receiver: chatId,
+        organization: organizationID,
+        message: type === 'text' ? inputRef.current.value : '',
+        files: type === 'file' ? files : [],
+      };
+      console.log(message);
+      socket.emit('privateMessage', message);
+    }
+    inputRef.current.value = '';
+  };
 
   useEffect(() => {
     console.log('data');
@@ -326,10 +362,7 @@ const Chat = (props: ChatProps) => {
     />
   );
 
-  const getGroupMessages = () => {
-    
-
-  };
+  const getGroupMessages = () => {};
   // Render send component
   const renderSend = (prop: SendProps<IMessage>) => {
     return (
@@ -370,7 +403,7 @@ const Chat = (props: ChatProps) => {
                 console.log(message);
                 props.route.params.socket.emit('chatroomMessage', message);
 
-                getGroupMessages()
+                getGroupMessages();
               } else {
                 var message = {
                   receiver: reciever,
