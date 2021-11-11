@@ -81,7 +81,7 @@ const Chat = (props: ChatProps) => {
   }, [chatMessages, chatId, joinGroup]);
 
   // Send Direct Message
-  const sendDirectMessage = (type, files) => {
+  const sendDirectMessage = (type: any, files: any) => {
     if (
       socket &&
       ((type === 'text' && inputRef.current.value) ||
@@ -99,6 +99,7 @@ const Chat = (props: ChatProps) => {
     }
     inputRef.current.value = '';
   };
+  // send Group messages
 
   useEffect(() => {
     console.log('data');
