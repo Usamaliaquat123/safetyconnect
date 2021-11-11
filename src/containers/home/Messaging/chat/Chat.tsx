@@ -100,6 +100,74 @@ const Chat = (props: ChatProps) => {
     inputRef.current.value = '';
   };
   // send Group messages
+  const sendGroupMessage = (type: any, files: any) => {
+    if (
+      socket &&
+      ((type === 'text' && inputRef.current.value) ||
+        (type === 'file' && files.length))
+    ) {
+      console.log('Chat: sending', inputRef.current.value, 'to room', chatId);
+      const message = {
+        chatroomId: chatId,
+        message: type === 'text' ? inputRef.current.value : '',
+        files: type === 'file' ? files : [],
+      };
+      console.log(message);
+      socket.emit('chatroomMessage', message);
+    }
+    inputRef.current.value = '';
+  };
+
+  // send message
+  const sendMessage = (type: any, files: any) => {
+    console.log(type, files);
+    chat?.type === 4
+      ? sendGroupMessage(type, files)
+      : sendDirectMessage(type, files);
+  };
+
+  // Join Direct Chat
+  useEffect(() => {
+    if (user._id && joinDirect && socket) {
+      console.log('Chat: join private', joinDirect, 'room id', user._id);
+      socket.emit('joinPrivate', {
+        email: user._id,
+      });
+    }
+
+    return () => {
+      if (socket) {
+        socket.emit('leavePrivate', {
+          email: user._id,
+        });
+      }
+    };
+  }, [joinDirect]);
+
+  // Join Group Chat
+  useEffect(() => {
+    if (chatId && joinGroup && socket) {
+      console.log('Chat: join room', joinGroup, 'room id', chatId);
+      socket.emit('joinRoom', {
+        chatroomId: chatId,
+      });
+    }
+
+    return () => {
+      if (socket) {
+        socket.emit('leaveRoom', {
+          chatroomId: chatId,
+        });
+      }
+    };
+  }, [joinGroup]);
+
+  // Decide Group or Private to Fetch
+  useEffect(() => {
+    setChatMessagesLoaded(false);
+    console.log('Chat: message type', chat.type);
+    chat?.type === 4 ? fetchGroupChat() : fetchDirectChat();
+  }, [chat.id]);
 
   useEffect(() => {
     console.log('data');
