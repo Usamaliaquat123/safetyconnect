@@ -8,7 +8,7 @@ import {
   BackHandler,
   Modal,
 } from 'react-native';
-import {connect} from 'rekct-redux';
+import {connect} from 'react-redux';
 import {createApi, Create_sor} from '@service';
 import {
   GiftedChat,
@@ -64,110 +64,54 @@ const Chat = (props: ChatProps) => {
 
   const [socket, setSocket] = useState(props.route.params.socket);
 
-  // Receive Group Messages
-  useEffect(() => {
-    if (socket && chatId && joinGroup) {
-      socket.on(`newMessage/${chatId}`, (message) => {
-        console.log(
-          'Chat: receiving new group message',
-          message,
-          'state id',
-          chatId,
-        );
-        const newMessages = [...chatMessages, message];
-        setChatMessages([...newMessages]);
-      });
-    }
-  }, [chatMessages, chatId, joinGroup]);
+  props.route.params.socket.on(
+    `newMessage/${props.route.params.data._id}`,
+    (message: any) => {
+      console.log(
+        'Chat: receiving new group message',
+        message,
+        'state id',
+        props.route.params.data._id,
+      );
 
-  // Send Direct Message
-  const sendDirectMessage = (type: any, files: any) => {
-    if (
-      socket &&
-      ((type === 'text' && inputRef.current.value) ||
-        (type === 'file' && files.length))
-    ) {
-      console.log('Chat: sending', inputRef.current.value, 'to room', chatId);
-      const message = {
-        receiver: chatId,
-        organization: organizationID,
-        message: type === 'text' ? inputRef.current.value : '',
-        files: type === 'file' ? files : [],
-      };
+      console.log('messageasdsad');
       console.log(message);
-      socket.emit('privateMessage', message);
-    }
-    inputRef.current.value = '';
-  };
-  // send Group messages
-  const sendGroupMessage = (type: any, files: any) => {
-    if (
-      socket &&
-      ((type === 'text' && inputRef.current.value) ||
-        (type === 'file' && files.length))
-    ) {
-      console.log('Chat: sending', inputRef.current.value, 'to room', chatId);
-      const message = {
-        chatroomId: chatId,
-        message: type === 'text' ? inputRef.current.value : '',
-        files: type === 'file' ? files : [],
-      };
-      console.log(message);
-      socket.emit('chatroomMessage', message);
-    }
-    inputRef.current.value = '';
-  };
 
-  // send message
-  const sendMessage = (type: any, files: any) => {
-    console.log(type, files);
-    chat?.type === 4
-      ? sendGroupMessage(type, files)
-      : sendDirectMessage(type, files);
-  };
+      // console.log(
+      //   org.data.data.members.filter(
+      //     (d: any) => user == message.user,
+      //   ).length == 0
+      //     ? Date.now()
+      //     : 1,
+      // );
+      // var dta = {
+      //   // _id:
+      //   //   org.data.data.members.filter(
+      //   //     (d: any) => user == message.user,
+      //   //   ).length == 0,
+      //   // You can also add a video prop:
+      //   text: message.message,
+      //   createdAt: message.createdAt,
+      //   user: {
+      //     _id: org.data.data.members.filter(
+      //       (d: any) => d.email == message.user,
+      //     )[0]._id,
+      //     name: org.data.data.members.filter(
+      //       (d: any) => d.email == message.user,
+      //     )[0].name,
+      //     avatar: org.data.data.members.filter(
+      //       (d: any) => d.email == message.user,
+      //     )[0].img_url,
+      //   },
+      // };
+      console.log('data aaya hai on 297');
+      console.log(dta);
+      // this.state.messages.push(dta);
 
-  // Join Direct Chat
-  useEffect(() => {
-    if (user._id && joinDirect && socket) {
-      console.log('Chat: join private', joinDirect, 'room id', user._id);
-      socket.emit('joinPrivate', {
-        email: user._id,
-      });
-    }
-
-    return () => {
-      if (socket) {
-        socket.emit('leavePrivate', {
-          email: user._id,
-        });
-      }
-    };
-  }, [joinDirect]);
-
-  // Join Group Chat
-  useEffect(() => {
-    if (chatId && joinGroup && socket) {
-      console.log('Chat: join room', joinGroup, 'room id', chatId);
-      socket.emit('joinRoom', {
-        chatroomId: chatId,
-      });
-    }
-
-    return () => {
-      if (socket) {
-        socket.emit('leaveRoom', {
-          chatroomId: chatId,
-        });
-      }
-    };
-  }, [joinGroup]);
-
-  // Decide Group or Private to Fetch
-  useEffect(() => {
-    setChatMessagesLoaded(false);
-    console.log('Chat: message type', chat.type);
-    chat?.type === 4 ? fetchGroupChat() : fetchDirectChat();
-  }, [chat.id]);
+      // this.setState({});
+      // const newMessages = [...chatMessages, message];
+    },
+  );
 
   useEffect(() => {
     console.log('data');
@@ -272,57 +216,8 @@ const Chat = (props: ChatProps) => {
       })
       .catch((err) => {});
 
-    // console.log('this.props.route.params.data yahann ai');
-    // console.log(this.props.route.params.data);
-
-    props.route.params.socket.on(
-      `newMessage/${props.route.params.data._id}`,
-      (message: any) => {
-        console.log(
-          'Chat: receiving new group message',
-          message,
-          'state id',
-          props.route.params.data._id,
-        );
-
-        console.log('messageasdsad');
-        console.log(message);
-
-        // console.log(
-        //   org.data.data.members.filter(
-        //     (d: any) => user == message.user,
-        //   ).length == 0
-        //     ? Date.now()
-        //     : 1,
-        // );
-        // var dta = {
-        //   // _id:
-        //   //   org.data.data.members.filter(
-        //   //     (d: any) => user == message.user,
-        //   //   ).length == 0,
-        //   // You can also add a video prop:
-        //   text: message.message,
-        //   createdAt: message.createdAt,
-        //   user: {
-        //     _id: org.data.data.members.filter(
-        //       (d: any) => d.email == message.user,
-        //     )[0]._id,
-        //     name: org.data.data.members.filter(
-        //       (d: any) => d.email == message.user,
-        //     )[0].name,
-        //     avatar: org.data.data.members.filter(
-        //       (d: any) => d.email == message.user,
-        //     )[0].img_url,
-        //   },
-        // };
-        console.log('data aaya hai on 297');
-        console.log(dta);
-        // this.state.messages.push(dta);
-
-        // this.setState({});
-        // const newMessages = [...chatMessages, message];
-      },
-    );
+    console.log('this.props.route.params.data yahann ai');
+    console.log(props.route.params.data);
   }, []);
 
   // renderbubble component
