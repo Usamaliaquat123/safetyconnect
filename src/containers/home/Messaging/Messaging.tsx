@@ -229,6 +229,7 @@ const Messaging = (props: MessagingProps) => {
                   id={d.userId}
                   name={d.name}
                   type={'user'}
+                  date={Date.now()}
                   pendingsms={d.notseen}
                   latestMsgs={[
                     'Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing... ',

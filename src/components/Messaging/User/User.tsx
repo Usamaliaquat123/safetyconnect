@@ -2,8 +2,8 @@ import * as React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import {Avatar, Icon, Image} from 'react-native-elements';
-
-import {GlStyles, images} from '@theme';
+import moment from 'moment';
+import {GlStyles, images, fonts} from '@theme';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import {colors} from '@theme';
@@ -15,6 +15,7 @@ export interface UserProps {
   name: string;
   image: string;
   latestMsgs: Array<string>;
+  date?: any;
   id: number;
   type: string;
   userImages?: Array<string>;
@@ -143,6 +144,18 @@ export default class User extends React.Component<UserProps, any> {
             }}></View>
         </View>
 
+        {this.props.date ? (
+          <View style={{position: 'absolute', right: wp(0)}}>
+            <Text
+              style={{
+                fontSize: wp(2),
+                fontFamily: fonts.SFuiDisplayMedium,
+                opacity: 0.5,
+              }}>
+              {moment(this.props.date).fromNow()}
+            </Text>
+          </View>
+        ) : null}
         {this.props.switch ? (
           <View
             style={[
