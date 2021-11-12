@@ -15,11 +15,11 @@ const styles = StyleSheet.create({
     marginRight: wp(2),
   },
   name: {
-    justifyContent: 'center',
-    marginTop: wp(2),
+    // justifyContent: 'center',
+    // marginTop: wp(2),
     fontSize: wp(3),
-
-    fontFamily: fonts.SFuiDisplayMedium,
+    // fon
+    fontFamily: fonts.SFuiDisplayBold,
     color: colors.text,
   },
   isonline: {

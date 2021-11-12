@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
   },
   containerSearch: {
     borderColor: colors.textOpa,
+    borderRadius: wp(3),
     borderWidth: wp(0.3),
     flexDirection: 'row',
     // padding: wp(1),
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
     // borderRadius: wp(4),
   },
   iconStyle: {
-    marginRight: wp(2),
+    marginRight: wp(1),
     justifyContent: 'center',
     //   marginTop: wp(2),
   },

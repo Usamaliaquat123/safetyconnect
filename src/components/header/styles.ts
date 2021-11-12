@@ -11,14 +11,14 @@ const styles = StyleSheet.create({
     padding: wp(5),
     // paddingTop: wp
     paddingRight: wp(7),
-    paddingLeft: wp(7),
+    paddingLeft: wp(1),
     flex: 1,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.secondary,
   },
   title: {
-    fontSize: wp(4),
+    fontSize: wp(3.8),
     marginLeft: wp(5),
-    color: colors.secondary,
+    color: colors.primary,
     fontWeight: 'bold',
   },
   underScrore: {
@@ -29,7 +29,15 @@ const styles = StyleSheet.create({
     // borderRadius: 10,
   },
   avatarView: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingLeft: wp(3),
+    paddingRight: wp(3),
+    paddingBottom: wp(1),
+    borderRadius: wp(2),
+    paddingTop: wp(1),
     position: 'absolute',
+    backgroundColor: colors.green,
     right: 0,
   },
 });
