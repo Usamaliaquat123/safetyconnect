@@ -13,7 +13,7 @@ export interface UserProps {
   image: string;
   id: number;
   type: string;
-  userImages: Array<string>;
+  userImages?: Array<string>;
   pendingsms?: number | undefined;
   onPress: Function;
 }
@@ -26,8 +26,13 @@ export default class User extends React.Component<UserProps, any> {
         style={styles.userContainer}>
         <View>
           {this.props.type == 'group' ? (
-            <>
-              {/* {this.props.userImages.length > 2()} */}
+            <View
+              style={{
+                padding: wp(2),
+                justifyContent: 'center',
+                borderRadius: wp(10),
+                // backgroundColor: colors.primary,
+              }}>
               <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
                 {this.props.userImages.slice(0, 2).map((d, i) => (
                   <Avatar
@@ -43,13 +48,35 @@ export default class User extends React.Component<UserProps, any> {
                   />
                 ))}
               </View>
-              <Avatar
+              {this.props.userImages.length > 2 && (
+                <>
+                  {this.props.userImages.slice(0, 1).map((d, i) => (
+                    <Avatar
+                      size={wp(3)}
+                      rounded
+                      containerStyle={[
+                        styles.containerAvatar,
+                        {
+                          marginRight: wp(0.5),
+                          marginTop: wp(1),
+                          marginLeft: wp(2),
+                        },
+                      ]}
+                      source={{
+                        uri: d,
+                      }}
+                    />
+                  ))}
+                </>
+              )}
+
+              {/* <Avatar
                 rounded
                 containerStyle={styles.containerAvatar}
                 source={{
                   uri: this.props.image,
                 }}
-              />
+              /> */}
               <View
                 style={[
                   styles.isonline,
@@ -58,7 +85,7 @@ export default class User extends React.Component<UserProps, any> {
                     : null,
                 ]}
               />
-            </>
+            </View>
           ) : (
             <>
               <Avatar

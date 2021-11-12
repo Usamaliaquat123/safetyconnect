@@ -7,6 +7,7 @@ import {
 const styles = StyleSheet.create({
   content: {
     // flex: 2,
+
     flex: 1,
     backgroundColor: colors.secondary,
     // borderTopLeftRadius: wp(8),
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
     paddingRight: wp(5),
   },
   conversationContainer: {
-    marginTop: wp(5),
+    // marginTop: wp(5),
   },
   ttleConversation: {
     fontFamily: fonts.SFuiDisplayBold,
