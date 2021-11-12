@@ -3,6 +3,7 @@ export const images = {
   splashLogo: require('./images/splashLogo.png'),
   welcomeBackground: require('./images/welcomeBackground.jpg'),
   google: require('./images/googleicon.png'),
+  messagereply: require('./images/messagereply.png'),
   word: require('./images/word.png'),
   // files
   pdf: require('./images/pdf.png'),

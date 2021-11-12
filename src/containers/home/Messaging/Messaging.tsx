@@ -221,7 +221,7 @@ const Messaging = (props: MessagingProps) => {
               placeHolder={'Search messages...'}
               iconType={'evilicon'}
             />
-            <View style={styles.conversationContainer}>
+            <View style={{marginTop: wp(4)}}>
               {/* <Text style={styles.ttleConversation}>Conversations</Text> */}
               {/* <View style={styles.line} /> */}
               {users.map((d: Imessage | any) => (
@@ -230,6 +230,11 @@ const Messaging = (props: MessagingProps) => {
                   name={d.name}
                   type={'user'}
                   pendingsms={d.notseen}
+                  latestMsgs={[
+                    'Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing... ',
+                    'Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing... ',
+                    'Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing... ',
+                  ]}
                   image={d.image}
                   isOnline={d.isonline}
                   onPress={() => {

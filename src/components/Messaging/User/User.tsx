@@ -1,16 +1,20 @@
 import * as React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
-import {Avatar} from 'react-native-elements';
+import {Avatar, Icon, Image} from 'react-native-elements';
+
+import {GlStyles, images} from '@theme';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import {colors} from '@theme';
+var CustomIcon: any = Icon;
 export interface UserProps {
   isOnline: boolean;
   switch?: boolean | undefined;
   isSelected?: boolean;
   name: string;
   image: string;
+  latestMsgs: Array<string>;
   id: number;
   type: string;
   userImages?: Array<string>;
@@ -34,7 +38,7 @@ export default class User extends React.Component<UserProps, any> {
                 // backgroundColor: colors.primary,
               }}>
               <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                {this.props.userImages.slice(0, 2).map((d, i) => (
+                {this.props.userImages?.slice(0, 2).map((d, i) => (
                   <Avatar
                     size={wp(4 - i)}
                     rounded
@@ -48,9 +52,9 @@ export default class User extends React.Component<UserProps, any> {
                   />
                 ))}
               </View>
-              {this.props.userImages.length > 2 && (
+              {this.props.userImages?.length > 2 && (
                 <>
-                  {this.props.userImages.slice(0, 1).map((d, i) => (
+                  {this.props.userImages?.slice(0, 1).map((d, i) => (
                     <Avatar
                       size={wp(3)}
                       rounded
@@ -106,7 +110,38 @@ export default class User extends React.Component<UserProps, any> {
             </>
           )}
         </View>
-        <Text style={styles.name}>{this.props.name}</Text>
+
+        {/* <Image  /> */}
+        <View>
+          <Text style={styles.name}>{this.props.name}</Text>
+          <View style={{flexDirection: 'row'}}>
+            <View
+              style={{
+                width: wp(3),
+                height: wp(1),
+                opacity: 0.5,
+                marginRight: wp(1),
+                marginTop: wp(2),
+              }}>
+              <Image
+                source={images.messagereply}
+                style={[GlStyles.images, {tintColor: colors.text}]}
+              />
+            </View>
+            <Text style={styles.messages}>
+              Lorem ipsum, or lipsum as it is sometimes known, is dummy text
+              used in laying out print, graphic or web designs.
+            </Text>
+          </View>
+          <View
+            style={{
+              borderWidth: wp(0.1),
+              marginTop: wp(3),
+              opacity: 0.2,
+              borderColor: colors.text,
+              width: wp(70),
+            }}></View>
+        </View>
 
         {this.props.switch ? (
           <View

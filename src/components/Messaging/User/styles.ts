@@ -14,6 +14,13 @@ const styles = StyleSheet.create({
   containerAvatar: {
     marginRight: wp(2),
   },
+  messages: {
+    fontFamily: fonts.SFuiDisplayMedium,
+    opacity: 0.5,
+    flexWrap: 'wrap',
+    width: wp(75),
+    fontSize: wp(2.5),
+  },
   name: {
     // justifyContent: 'center',
     // marginTop: wp(2),
