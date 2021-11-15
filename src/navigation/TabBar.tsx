@@ -93,6 +93,8 @@ export default class TabBar extends React.Component<TabBarProps, any> {
         d['icon'] = images.bottomTab.home;
       } else if (d.name == 'MyTasks') {
         d['icon'] = images.bottomTab.sors;
+      } else if (d.name == 'addNew') {
+        d['icon'] = images.bottomTab.addnew;
       } else if (d.name == 'Inbox') {
         d['icon'] = images.bottomTab.message;
       } else if (d.name == 'More') {
@@ -171,66 +173,45 @@ export default class TabBar extends React.Component<TabBarProps, any> {
                   {
                     alignItems: 'center',
                   },
-                  route.name != 'addNew'
-                    ? {
-                        paddingTop: wp(3),
-                        marginLeft: wp(3),
-                        paddingBottom: wp(3),
-                      }
-                    : null,
+
+                  {
+                    paddingTop: wp(3),
+                    marginLeft: wp(3),
+                    paddingBottom: wp(3),
+                  },
+                  route.name === 'addNew' && {paddingTop: wp(1.5)},
                 ]}>
-                {route.name != 'addNew' && (
-                  <View
+                <View
+                  style={[
+                    route.name === 'Inbox'
+                      ? {width: wp(5.5), height: wp(5)}
+                      : route.name === 'addNew'
+                      ? {width: wp(6.5), height: wp(6.5)}
+                      : {width: wp(5), height: wp(5)},
+                  ]}>
+                  <Image
+                    source={route.icon}
                     style={[
-                      route.name === 'Inbox'
-                        ? {width: wp(5.5), height: wp(5)}
-                        : {width: wp(5), height: wp(5)},
-                    ]}>
-                    <Image
-                      source={route.icon}
-                      style={[
-                        GlStyles.images,
-                        isFocused
+                      GlStyles.images,
+                      isFocused
+                        ? route.name != 'addNew'
                           ? {tintColor: '#4BA735'}
-                          : {tintColor: colors.text},
-                      ]}
-                      resizeMode={'cover'}
-                    />
-                  </View>
-                )}
+                          : null
+                        : route.name != 'addNew'
+                        ? {tintColor: colors.text}
+                        : null,
+                    ]}
+                    resizeMode={'cover'}
+                  />
+                </View>
 
-                {route.name == 'addNew' ? (
-                  <View>
-                    <View
-                      // onPress={() => this.setState({createModal: true})}
-                      style={styles.addNewContainer}>
-                      <Icon
-                        size={30}
-                        name="pluscircleo"
-                        type="antdesign"
-                        color={colors.secondary}
-                      />
-                    </View>
-
-                    <Text
-                      style={[
-                        {
-                          color: isFocused ? '#4BA735' : '#6C6C6C',
-                        },
-                        styles.addNewText,
-                      ]}>
-                      Add New
-                    </Text>
-                  </View>
-                ) : (
-                  <Text
-                    style={{
-                      color: isFocused ? '#4BA735' : '#6C6C6C',
-                      fontSize: wp(3),
-                    }}>
-                    {label}
-                  </Text>
-                )}
+                <Text
+                  style={{
+                    color: isFocused ? '#4BA735' : '#6C6C6C',
+                    fontSize: wp(3),
+                  }}>
+                  {label}
+                </Text>
               </TouchableOpacity>
               {/* Create Modal  */}
               {/* 

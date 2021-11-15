@@ -55,12 +55,12 @@ export interface ChatProps {
 }
 
 const Chat = (props: ChatProps) => {
-  const [imageViewer, setimageViewer] = useState(false);
-  const [image, setimages] = useState([]);
-  const [isVideoFullscreen, setisVideoFullscreen] = useState(false);
-  const [reciever, setreciever] = useState('');
-  const [organizationId, setorganizationId] = useState('');
-  const [messages, setMessages] = useState([]);
+  const [imageViewer, setimageViewer] = useState<Boolean>(false);
+  const [image, setimages] = useState<Array<any>>([]);
+  const [isVideoFullscreen, setisVideoFullscreen] = useState<Boolean>(false);
+  const [reciever, setreciever] = useState<string>('');
+  const [organizationId, setorganizationId] = useState<string>('');
+  const [messages, setMessages] = useState<Array<any>>([]);
 
   const [socket, setSocket] = useState(props.route.params.socket);
 

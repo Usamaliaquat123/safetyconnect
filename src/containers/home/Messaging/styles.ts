@@ -30,6 +30,29 @@ const styles = StyleSheet.create({
     borderWidth: wp(0.1),
     borderColor: colors.textOpa,
   },
+
+  wrap: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    // marginHorizontal: 15,
+    overflow: 'hidden',
+  },
+  buttonStack: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  topPart: {
+    paddingVertical: 50,
+    alignItems: 'center',
+    padding: 20,
+  },
+  bottomPart: {
+    paddingVertical: 20,
+    padding: 20,
+    backgroundColor: colors.lightGray,
+  },
 });
 
 export default styles;

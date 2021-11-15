@@ -14,7 +14,7 @@ export interface UserProps {
   isSelected?: boolean;
   name: string;
   image: string;
-  latestMsgs: Array<string>;
+  latestMsgs?: Array<string>;
   date?: any;
   id: number;
   type: string;

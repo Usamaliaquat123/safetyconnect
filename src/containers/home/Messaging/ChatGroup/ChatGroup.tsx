@@ -143,23 +143,7 @@ class ChatGroup extends React.Component<ChatGroupProps, any> {
                   placeholder={'Group Name'}
                 />
               </View>
-              {/* <View style={[styles.line, {marginBottom: wp(5)}]} />
-              <Search
-                onChange={(e: string) => {
-                  console.log(e.length);
-                  var usr = this.state.users;
-                  this.setState({
-                    users:
-                      e.length != 0
-                        ? this.searchInUsers(e, this.state.users)
-                        : usr,
-                  });
-                }}
-                value={'Search'}
-                iconName={'search'}
-                placeHolder={'Search Users'}
-                iconType={'evilicon'}
-              /> */}
+
               <View style={styles.conversationContainer}>
                 <Text style={styles.ttleConversation}>Select a Users</Text>
                 <View style={styles.line} />

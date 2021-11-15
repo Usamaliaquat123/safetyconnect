@@ -1,15 +1,24 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, BackHandler} from 'react-native';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import {
+  View,
+  StyleSheet,
+  Text,
+  BackHandler,
+  ActivityIndicator,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import {Icon, Avatar} from 'react-native-elements';
-import {colors} from '@theme';
+import {colors, fonts} from '@theme';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
+import {ChatGroup} from '@containers';
 import {View_sor, messagingUsers, groupConversation} from '@service';
 import {connect} from 'react-redux';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import io from 'socket.io-client';
+import Modal from 'react-native-modal';
 import {fetchAuthToken, getCurrentOrganization, searchInObjects} from '@utils';
 import {Imessage, orgnaization} from '@typings';
 import {Search, Header, User} from '@components';
@@ -48,6 +57,10 @@ const Messaging = (props: MessagingProps) => {
   const [token, setToken] = useState<string>();
   const [orgnaizationId, setOrgnaizationId] = useState<string>('');
   const [socket, setSocket] = useState<null>();
+  const [addNewModal, setAddNewModal] = useState(true);
+  //  Group popup
+  const [isGroupModal, setisGroupModal] = useState(false);
+  // Single popup
 
   // Setup Socket implementation
 
@@ -127,8 +140,26 @@ const Messaging = (props: MessagingProps) => {
   //   });
   // };
 
-  const createGroup = () => {
-    // this.props.navigation.navigate('ChatGroup');
+  const onCreateGroup = (data: any) => {
+    var dta = {
+      name: data.groupName,
+      organization: orgnaizationId,
+      involved_persons: users
+        .filter((d) => d.is_selected == true)
+        .map((f: any) => f._id),
+      roomType: 'private',
+      createdBy: currentUser._id,
+      img_url: `https://dummyimage.com/35x35/E4FFDE/8DCD7E.jpg&text=${data.groupName[0].toUpperCase()}`,
+    };
+
+    createApi
+      .createApi()
+      .createGroupApi(dta)
+      .then((res) => {
+        if (res.status == 200) {
+          setisGroupModal(false);
+        }
+      });
   };
 
   useEffect(() => {
@@ -159,7 +190,8 @@ const Messaging = (props: MessagingProps) => {
                 var usr = [];
                 var groups = [];
                 for (let i = 0; i < res.data.allChats.length; i++) {
-                  // console.log(res.data.allChats[i]);
+                  console.log('all data up here');
+                  console.log(res.data.allChats[i]);
                   if (res.data.allChats[i]?.roomType != undefined) {
                     console.log('room type');
 
@@ -209,6 +241,7 @@ const Messaging = (props: MessagingProps) => {
       <View style={{backgroundColor: colors.secondary}}>
         <ScrollView>
           <Header
+            onCreate={() => setAddNewModal(true)}
             title="Messages"
             onBackPress={() => props.navigation.goBack()}
             profile={currentUser.img_url}
@@ -329,6 +362,125 @@ const Messaging = (props: MessagingProps) => {
           </View>
         </ScrollView>
       </View>
+
+      {/* Modal Opener */}
+      <Modal
+        isVisible={addNewModal}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        animationInTiming={500}
+        animationOutTiming={500}
+        backdropOpacity={0.25}
+        backdropTransitionOutTiming={0}
+        useNativeDriver
+        avoidKeyboard
+        onBackdropPress={() => setAddNewModal(false)}
+        style={{padding: 0, margin: 0}}>
+        {/* <Provider> */}
+        <View
+          // {...props.scrollViewProps}
+          style={{
+            flex: 1,
+            backgroundColor: 'white',
+            position: 'absolute',
+            bottom: wp(18),
+            left: wp(4),
+            right: wp(4),
+            // margin: wp(10),
+            // width: wp(99),
+            paddingHorizontal: 22,
+            paddingVertical: wp(5),
+            borderRadius: 10,
+          }}>
+          {/* {props.children} */}
+
+          <View
+            style={{
+              padding: wp(3),
+              backgroundColor: colors.lightBlue,
+              borderRadius: wp(3),
+              marginBottom: wp(3),
+            }}>
+            <View
+              style={{
+                margin: wp(3),
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}>
+              <Text
+                style={{
+                  fontSize: wp(3),
+                  fontFamily: fonts.SFuiDisplayMedium,
+                  color: colors.text,
+                  opacity: 0.7,
+                }}>
+                Single Chat
+              </Text>
+              <CustomIcon
+                name="user"
+                size={wp(5)}
+                type="antdesign"
+                color={colors.text}
+              />
+            </View>
+
+            <View style={{borderWidth: wp(0.1), opacity: 0.1}} />
+
+            <TouchableOpacity
+              onPress={() => {
+                setAddNewModal(false);
+                setisGroupModal(true);
+              }}
+              style={{
+                margin: wp(3),
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}>
+              <Text
+                style={{
+                  fontFamily: fonts.SFuiDisplayMedium,
+                  fontSize: wp(3),
+                  color: colors.text,
+                  opacity: 0.7,
+                }}>
+                Create Group
+              </Text>
+              <CustomIcon
+                name="users"
+                size={wp(5)}
+                type="feather"
+                color={colors.text}
+              />
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity onPress={() => setAddNewModal(false)}>
+            <Text
+              onPress={() => setAddNewModal(false)}
+              style={{
+                textAlign: 'center',
+                fontFamily: fonts.SFuiDisplayMedium,
+                color: colors.text,
+                // opacity: 0.7,
+                fontSize: wp(3),
+                marginTop: wp(2),
+              }}>
+              Cancel
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {/* {props.flashMessageInstance || null} */}
+        {/* </Provider> */}
+      </Modal>
+
+      {/* Create GroupChat Modal */}
+      <ChatGroup
+        isGroupModal={isGroupModal}
+        setisGroupModal={() => setisGroupModal(false)}
+        createGroup={(d: any) => onCreateGroup(d)}
+        users={users}
+      />
     </View>
   );
 

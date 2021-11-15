@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {fonts} from '@theme';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import {Avatar, Icon} from 'react-native-elements';
 import {colors} from '@theme';
@@ -13,6 +13,7 @@ export interface HeaderProps {
   onBackPress?: Function;
   profile?: string;
   title?: string;
+  onCreate?: Function;
   newChat?: boolean;
   isback?: boolean;
 }
@@ -35,9 +36,11 @@ export default class Header extends React.Component<HeaderProps, any> {
             <Text style={styles.title}>{this.props.title}</Text>
             {/* <View style={styles.underScrore} /> */}
           </View>
-          <View style={styles.avatarView}>
+          <TouchableOpacity
+            onPress={() => this.props.onCreate()}
+            style={styles.avatarView}>
             <CustomIcon
-              onPress={() => this.props.onBackPress()}
+              // onPress={() => this.props.onCreate()}
               size={15}
               name="plus"
               type="antdesign"
@@ -58,7 +61,7 @@ export default class Header extends React.Component<HeaderProps, any> {
                 uri: this.props.profile,
               }}
             /> */}
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     );
