@@ -61,7 +61,7 @@ const ChatGroup = (props: ChatGroupProps) => {
   };
 
   useEffect(() => {
-    // setusers(users);
+    setusers(users);
     console.log(users);
   }, [users]);
 
@@ -172,14 +172,29 @@ const ChatGroup = (props: ChatGroupProps) => {
               </Text>
               <TouchableOpacity
                 onPress={() => {
-                  props.createGroup(props);
+                  console.log();
+
+                  if (users.filter((d) => d.isSelected).length != 0) {
+                    if (groupName) {
+                      props.createGroup(props);
+                    }
+                  }
                 }}>
                 <Text
-                  style={{
-                    fontSize: wp(3),
-                    fontFamily: fonts.SFuiDisplayBold,
-                    color: colors.green,
-                  }}>
+                  style={[
+                    {
+                      fontSize: wp(3),
+                      fontFamily: fonts.SFuiDisplayBold,
+
+                      color: colors.green,
+                    },
+
+                    users.filter((d) => d.isSelected).length != 0
+                      ? groupName
+                        ? {color: colors.green}
+                        : {color: colors.textOpa}
+                      : {color: colors.textOpa},
+                  ]}>
                   Create
                 </Text>
               </TouchableOpacity>
@@ -240,7 +255,7 @@ const ChatGroup = (props: ChatGroupProps) => {
                     <TouchableOpacity
                       onPress={() => {
                         var b: any = [...users];
-                        users[i].isSelected = true;
+                        users[i].isSelected = !users[i].isSelected;
                         setusers(b);
                         console.log(b);
                       }}
@@ -272,7 +287,7 @@ const ChatGroup = (props: ChatGroupProps) => {
                         style={[
                           styles.circleSelect,
                           {position: 'absolute', right: 0},
-                          props.users.isSelected == true
+                          d.isSelected == true
                             ? {backgroundColor: colors.green}
                             : {
                                 backgroundColor: colors.secondary,
