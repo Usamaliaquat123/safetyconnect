@@ -140,28 +140,95 @@ const Messaging = (props: MessagingProps) => {
   //   });
   // };
 
-  const onCreateGroup = (data: any) => {
+  const onCreateGroup = (groupName: any, users: any) => {
+    console.log(users);
     var dta = {
-      name: data.groupName,
+      name: groupName,
       organization: orgnaizationId,
-      involved_persons: users
-        .filter((d) => d.is_selected == true)
-        .map((f: any) => f._id),
+      involved_persons: users.map((f: any) => f._id),
       roomType: 'private',
       createdBy: currentUser._id,
-      img_url: `https://dummyimage.com/35x35/E4FFDE/8DCD7E.jpg&text=${data.groupName[0].toUpperCase()}`,
+      img_url: `https://dummyimage.com/35x35/E4FFDE/8DCD7E.jpg&text=${groupName[0].toUpperCase()}`,
     };
-
     createApi
       .createApi()
       .createGroupApi(dta)
       .then((res) => {
+        console.log('res');
+        console.log(res);
         if (res.status == 200) {
+          getAllUsers(currentUser._id);
           setisGroupModal(false);
         }
       });
   };
 
+  const getAllUsers = (email: any) => {
+    createApi
+      .createApi()
+      .getUser(email)
+      .then((res: any) => {
+        getCurrentOrganization().then((orgId: any) => {
+          console.log(orgId);
+
+          setOrgnaizationId(orgId);
+          // this.
+          createApi
+            .createApi()
+            .getAllChats(res.data.data._id, orgId)
+            .then((res: any) => {
+              console.log('asdsads');
+              console.log(res.data);
+              // console.log(res.data.allChats);
+              var usr = [];
+              var groups = [];
+              for (let i = 0; i < res.data.allChats.length; i++) {
+                console.log('all data up here');
+                console.log(res.data.allChats[i]);
+                if (res.data.allChats[i]?.roomType != undefined) {
+                  console.log('room type');
+
+                  console.log(res.data.allChats[i]);
+                  var user = {
+                    isSelected: false,
+                    data: res.data.allChats[i],
+                    name: res.data.allChats[i].name,
+                    image: res.data.allChats[i].img_url,
+                    isonline: true,
+                    userId: res.data.allChats[i]._id,
+                  };
+                  groups.push(user);
+                } else {
+                  if (res.data.allChats[i]?.userA != undefined) {
+                    // console.log('user type');
+
+                    var ur = {
+                      isSelected: false,
+                      data: res.data.allChats[i],
+                      name: res.data.allChats[i].userA.name,
+                      image: res.data.allChats[i].userA.img_url,
+                      isonline: true,
+                      userId: res.data.allChats[i].userA._id,
+                    };
+                    usr.push(ur);
+                  }
+                }
+
+                // usr.push(user);
+              }
+
+              console.log(usr);
+              setUsers(usr);
+              setGroupUsers(groups);
+              // console.log(usr);
+              // this.setState({users: usr, group: groups});
+            })
+            .catch((err: any) => console.log(err));
+        });
+
+        setcurrentUser(res.data.data);
+      });
+  };
   useEffect(() => {
     AsyncStorage.getItem('email').then((email: any) => {
       fetchAuthToken().then((token) => {
@@ -171,68 +238,7 @@ const Messaging = (props: MessagingProps) => {
         });
       });
 
-      createApi
-        .createApi()
-        .getUser(email)
-        .then((res: any) => {
-          getCurrentOrganization().then((orgId: any) => {
-            console.log(orgId);
-
-            setOrgnaizationId(orgId);
-            // this.
-            createApi
-              .createApi()
-              .getAllChats(res.data.data._id, orgId)
-              .then((res: any) => {
-                console.log('asdsads');
-                console.log(res.data);
-                // console.log(res.data.allChats);
-                var usr = [];
-                var groups = [];
-                for (let i = 0; i < res.data.allChats.length; i++) {
-                  console.log('all data up here');
-                  console.log(res.data.allChats[i]);
-                  if (res.data.allChats[i]?.roomType != undefined) {
-                    console.log('room type');
-
-                    console.log(res.data.allChats[i]);
-                    var user = {
-                      data: res.data.allChats[i],
-                      name: res.data.allChats[i].name,
-                      image: res.data.allChats[i].img_url,
-                      isonline: true,
-                      userId: res.data.allChats[i]._id,
-                    };
-                    groups.push(user);
-                  } else {
-                    if (res.data.allChats[i]?.userA != undefined) {
-                      // console.log('user type');
-
-                      var ur = {
-                        data: res.data.allChats[i],
-                        name: res.data.allChats[i].userA.name,
-                        image: res.data.allChats[i].userA.img_url,
-                        isonline: true,
-                        userId: res.data.allChats[i].userA._id,
-                      };
-                      usr.push(ur);
-                    }
-                  }
-
-                  // usr.push(user);
-                }
-
-                console.log(usr);
-                setUsers(usr);
-                setGroupUsers(groups);
-                // console.log(usr);
-                // this.setState({users: usr, group: groups});
-              })
-              .catch((err: any) => console.log(err));
-          });
-
-          setcurrentUser(res.data.data);
-        });
+      getAllUsers(email);
     });
   }, []);
 
@@ -244,7 +250,7 @@ const Messaging = (props: MessagingProps) => {
             onCreate={() => setAddNewModal(true)}
             title="Messages"
             onBackPress={() => props.navigation.goBack()}
-            profile={currentUser.img_url}
+            profile={currentUser?.img_url}
           />
           <View style={styles.content}>
             <Search
@@ -476,9 +482,10 @@ const Messaging = (props: MessagingProps) => {
 
       {/* Create GroupChat Modal */}
       <ChatGroup
+        updateUsers={(d) => setUsers(d)}
         isGroupModal={isGroupModal}
         setisGroupModal={() => setisGroupModal(false)}
-        createGroup={(d: any) => onCreateGroup(d)}
+        createGroup={onCreateGroup}
         users={users}
       />
     </View>

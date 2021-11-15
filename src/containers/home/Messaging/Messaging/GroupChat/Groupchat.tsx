@@ -36,6 +36,7 @@ export interface ChatGroupProps {
   reduxActions: any;
   reduxState: any;
   isGroupModal: Boolean;
+  updateUsers: Function;
   createGroup: Function;
   setisGroupModal: Function;
   users: Array<any>;
@@ -59,47 +60,6 @@ const ChatGroup = (props: ChatGroupProps) => {
     }
     return strArr;
   };
-
-  useEffect(() => {
-    setusers(users);
-    console.log(users);
-  }, [users]);
-
-  useEffect(() => {
-    console.log('props.users');
-    console.log(props.users);
-    props.users.map((d) => (d['isSelected'] = false));
-    setusers(props.users);
-    // AsyncStorage.getItem('email').then((email: any) => {
-    //   createApi
-    //     .createApi()
-    //     .getUser(email)
-    //     .then((user: any) => setcurrentUser(user.data.data));
-    //   getCurrentOrganization().then((currentOrg: any) => {
-    //     setorg(currentOrg);
-    //     createApi
-    //       .createApi()
-    //       .getOrganization(currentOrg)
-    //       .then((orgs: any) => {
-    //         console.log('orgs.data.data.members');
-    //         console.log(orgs.data.data.members);
-    //         orgs.data.data.members.map((d: any, i: number) => {
-    //           if (d.email != email) {
-    //             orgs.data.data.members[i]['is_selected'] = false;
-    //             setusers(d);
-    //           } else {
-    //             setusers(d);
-    //           }
-    //         });
-    //         // console.log(orgs.data.data.members);
-    //         // this.setState({users: orgs.data.data.members});
-    //       });
-    //     // console.log('users');
-    //     // console.log(currentOrg.data.members);
-    //     // this.setState({users: currentOrg.data.data.members});
-    //   });
-    // });
-  }, []);
 
   const createGroup = () => {
     // console.log(this.state.users.filter((d) => d.is_selected == true));
@@ -172,11 +132,14 @@ const ChatGroup = (props: ChatGroupProps) => {
               </Text>
               <TouchableOpacity
                 onPress={() => {
-                  console.log();
+                  //   console.log();
 
-                  if (users.filter((d) => d.isSelected).length != 0) {
+                  if (props.users.filter((d) => d.isSelected).length != 0) {
                     if (groupName) {
-                      props.createGroup(props);
+                      props.createGroup(
+                        groupName,
+                        props.users.filter((d) => d.isSelected),
+                      );
                     }
                   }
                 }}>
@@ -189,7 +152,7 @@ const ChatGroup = (props: ChatGroupProps) => {
                       color: colors.green,
                     },
 
-                    users.filter((d) => d.isSelected).length != 0
+                    props.users.filter((d) => d.isSelected).length != 0
                       ? groupName
                         ? {color: colors.green}
                         : {color: colors.textOpa}
@@ -250,14 +213,15 @@ const ChatGroup = (props: ChatGroupProps) => {
                     placeholder={'Search peoples...'}
                   />
                 </View>
-                {users?.map((d: any, i: number) => (
+                {props.users?.map((d: any, i: number) => (
                   <>
                     <TouchableOpacity
                       onPress={() => {
-                        var b: any = [...users];
-                        users[i].isSelected = !users[i].isSelected;
-                        setusers(b);
-                        console.log(b);
+                        var b: any = [...props.users];
+                        b[i].isSelected = !b[i].isSelected;
+                        // setusers(b);
+                        props.updateUsers(b);
+                        // props.users = b;
                       }}
                       style={{
                         flexDirection: 'row',
