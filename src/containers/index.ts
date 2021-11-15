@@ -7,6 +7,7 @@ import Verify from './auth/verification/Verify';
 import Settings from './home/Settings/Settings';
 import Messaging from './home/Messaging/Messaging';
 import ChatGroup from './home/Messaging/Messaging/GroupChat/Groupchat';
+import SingleChat from './home/Messaging/Messaging/SingleChat/Singlechat';
 import Splash from './splash/Splash';
 import Home from './home/index';
 import ViewAll from './home/ViewAll/ViewAll';
@@ -68,4 +69,5 @@ export {
   Menu,
   ChatGroup,
   More,
+  SingleChat,
 };

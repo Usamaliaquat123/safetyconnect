@@ -61,20 +61,6 @@ const ChatGroup = (props: ChatGroupProps) => {
     return strArr;
   };
 
-  const createGroup = () => {
-    // console.log(this.state.users.filter((d) => d.is_selected == true));
-    //  currentUser['is_selected'] = true;
-    // users.push(this.state.user);
-    // console.log(this.state.user);
-    // var dta =
-    // var ids = this.state.users
-    //   .filter((d) => d.is_selected == true)
-    //   .map((f: any) => f._id);
-    // console.log(ids);
-    // console.log()
-    // console.log(dta);
-  };
-
   return (
     <Modal
       isVisible={props.isGroupModal}

@@ -13,7 +13,7 @@ import {colors, fonts} from '@theme';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp} from '@react-navigation/native';
-import {ChatGroup} from '@containers';
+import {ChatGroup, SingleChat} from '@containers';
 import {View_sor, messagingUsers, groupConversation} from '@service';
 import {connect} from 'react-redux';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
@@ -61,6 +61,7 @@ const Messaging = (props: MessagingProps) => {
   //  Group popup
   const [isGroupModal, setisGroupModal] = useState(false);
   // Single popup
+  const [isChatModal, setisChatModal] = useState(false);
 
   // Setup Socket implementation
 
@@ -145,11 +146,13 @@ const Messaging = (props: MessagingProps) => {
     var dta = {
       name: groupName,
       organization: orgnaizationId,
-      involved_persons: users.map((f: any) => f._id),
+      involved_persons: users.map((f: any) => f.userId),
       roomType: 'private',
       createdBy: currentUser._id,
       img_url: `https://dummyimage.com/35x35/E4FFDE/8DCD7E.jpg&text=${groupName[0].toUpperCase()}`,
     };
+
+    console.log(dta);
     createApi
       .createApi()
       .createGroupApi(dta)
@@ -157,9 +160,80 @@ const Messaging = (props: MessagingProps) => {
         console.log('res');
         console.log(res);
         if (res.status == 200) {
-          getAllUsers(currentUser._id);
+          // getAllUsers(currentUser._id);
           setisGroupModal(false);
+
+          createApi
+            .createApi()
+            .getAllChats(currentUser._id, orgnaizationId)
+            .then((res: any) => {
+              console.log('asdsads');
+              console.log(res.data);
+              // console.log(res.data.allChats);
+              var usr = [];
+              var groups = [];
+              for (let i = 0; i < res.data.allChats.length; i++) {
+                console.log('all data up here');
+                console.log(res.data.allChats[i]);
+                if (res.data.allChats[i]?.roomType != undefined) {
+                  console.log('room type');
+
+                  console.log(res.data.allChats[i]);
+                  var user = {
+                    isSelected: false,
+                    data: res.data.allChats[i],
+                    name: res.data.allChats[i].name,
+                    image: res.data.allChats[i].img_url,
+                    isonline: true,
+                    userId: res.data.allChats[i]._id,
+                  };
+                  groups.push(user);
+                } else {
+                  if (res.data.allChats[i]?.userA != undefined) {
+                    // console.log('user type');
+
+                    var ur = {
+                      isSelected: false,
+                      data: res.data.allChats[i],
+                      name: res.data.allChats[i].userA.name,
+                      image: res.data.allChats[i].userA.img_url,
+                      isonline: true,
+                      userId: res.data.allChats[i].userA._id,
+                    };
+                    usr.push(ur);
+                  }
+                }
+
+                // usr.push(user);
+              }
+
+              console.log(usr);
+              setUsers(usr);
+              setGroupUsers(groups);
+              // console.log(usr);
+              // this.setState({users: usr, group: groups});
+            })
+            .catch((err: any) => console.log(err));
         }
+      });
+  };
+
+  const onCreateChat = (user: any) => {
+    console.log('user');
+    console.log(user);
+
+    createApi
+      .createApi()
+      .openPrivateChat(currentUser._id, orgnaizationId, user.userId)
+      .then((res: any) => {
+        // console.log(res);
+        setisChatModal(false);
+
+        props.navigation.navigate('Chat', {
+          data: res.data,
+          type: 'private',
+          socket: socket,
+        });
       });
   };
 
@@ -173,6 +247,7 @@ const Messaging = (props: MessagingProps) => {
 
           setOrgnaizationId(orgId);
           // this.
+
           createApi
             .createApi()
             .getAllChats(res.data.data._id, orgId)
@@ -245,7 +320,7 @@ const Messaging = (props: MessagingProps) => {
   return (
     <View style={{backgroundColor: colors.secondary, flex: 1}}>
       <View style={{backgroundColor: colors.secondary}}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Header
             onCreate={() => setAddNewModal(true)}
             title="Messages"
@@ -407,7 +482,11 @@ const Messaging = (props: MessagingProps) => {
               borderRadius: wp(3),
               marginBottom: wp(3),
             }}>
-            <View
+            <TouchableOpacity
+              onPress={() => {
+                setAddNewModal(false);
+                setisChatModal(true);
+              }}
               style={{
                 margin: wp(3),
                 flexDirection: 'row',
@@ -429,7 +508,7 @@ const Messaging = (props: MessagingProps) => {
                 type="antdesign"
                 color={colors.text}
               />
-            </View>
+            </TouchableOpacity>
 
             <View style={{borderWidth: wp(0.1), opacity: 0.1}} />
 
@@ -486,6 +565,14 @@ const Messaging = (props: MessagingProps) => {
         isGroupModal={isGroupModal}
         setisGroupModal={() => setisGroupModal(false)}
         createGroup={onCreateGroup}
+        users={users}
+      />
+      {/* Create single chat Modal */}
+      <SingleChat
+        updateUsers={(d: any) => setUsers(d)}
+        isChatModal={isChatModal}
+        setisChatModal={() => setisChatModal(false)}
+        createChat={onCreateChat}
         users={users}
       />
     </View>

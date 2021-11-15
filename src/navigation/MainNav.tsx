@@ -11,6 +11,7 @@ import {
   CreateProject,
   Menu,
   More,
+  SingleChat,
   ForgotEmailSend,
   MeetBefore,
   Home,
@@ -121,6 +122,13 @@ export const MainStackNavigator = (screen: route) => {
         <Stack.Screen
           name="ChatGroup"
           component={ChatGroup}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="SingleChat"
+          component={SingleChat}
           options={{
             headerShown: false,
           }}
