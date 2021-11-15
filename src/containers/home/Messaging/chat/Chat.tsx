@@ -115,7 +115,7 @@ const Chat = (props: ChatProps) => {
 
   useEffect(() => {
     console.log('data');
-    // console.log(props.data);
+    console.log(props.route.params.data);
 
     // console.log()
 

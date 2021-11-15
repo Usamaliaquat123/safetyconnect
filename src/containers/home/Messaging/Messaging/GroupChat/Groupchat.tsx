@@ -126,6 +126,8 @@ const ChatGroup = (props: ChatGroupProps) => {
                         groupName,
                         props.users.filter((d) => d.isSelected),
                       );
+
+                      setgroupName('');
                     }
                   }
                 }}>
@@ -248,7 +250,9 @@ const ChatGroup = (props: ChatGroupProps) => {
                       </View>
                     </TouchableOpacity>
 
-                    {users.length != i + 1 && <View style={styles.line} />}
+                    {props.users.length != i + 1 && (
+                      <View style={styles.line} />
+                    )}
                   </>
                 ))}
               </View>
