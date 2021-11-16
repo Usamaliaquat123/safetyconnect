@@ -1,7 +1,6 @@
 import {colors} from '@theme/colors';
 import * as ImagePicker from 'react-native-image-picker/src';
 import {Auth} from 'aws-amplify';
-
 import {createApi as api, createApi} from '@service';
 import RNFetchBlob from 'rn-fetch-blob';
 import {

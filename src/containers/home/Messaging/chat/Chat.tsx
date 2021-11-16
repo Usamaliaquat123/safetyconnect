@@ -77,7 +77,7 @@ const Chat = (props: ChatProps) => {
 
   useEffect(() => {
     console.log('data');
-    console.log(props.route.params.data);
+    // console.log(props.route.params.data);
     setSocket(props.route.params.socket);
     // console.log()
 
@@ -102,16 +102,11 @@ const Chat = (props: ChatProps) => {
           .getUser(user)
           .then((usr: any) => setcurrentUser(usr.data.data));
         setreciever(props.route.params.data._id);
-        // console.log('this.props.route.params.data on line 179');
-        // console.log('this.props.route.params.socket');
 
         if (props.route.params.type == 'private') {
-          // console.log('get in line 183');
-          // console.log(props.route.params.socket);
-          // console.log();
-          // this.props.route.params.socket.emit('joinPrivate', {
-          //   // email: this.props.rout,
-          // });
+          socket.emit('joinPrivate', {
+            email: props.route.params.data.email,
+          });
         } else if (props.route.params.type == 'group') {
           socket.emit('joinRoom', {
             chatroomId: reciever,
@@ -176,8 +171,19 @@ const Chat = (props: ChatProps) => {
                   });
                 }
               }
+              // socket.on(`newMessage/${reciever}`, (message: any) => {
+              //   console.log(
+              //     'Chat: receiving new group message',
+              //     message,
+              //     'state id',
+              //     props.route.params.data._id,
+              //   );
 
-              setMessages(dta);
+              //   console.log('data aaya hai on 88');
+              // });
+
+              var dd = generateItems(dta);
+              setMessages(dd);
             });
         });
       })
@@ -333,81 +339,6 @@ const Chat = (props: ChatProps) => {
                 console.log('group message');
                 console.log(message);
                 socket.emit('chatroomMessage', message);
-
-                socket.on(`newMessage/${reciever}`, (message: any) => {
-                  console.log(
-                    'Chat: receiving new group message',
-                    message,
-                    'state id',
-                    props.route.params.data._id,
-                  );
-
-                  // console.log('messageasdsad');
-                  console.log(message);
-
-                  // console.log(
-                  //   org.data.data.members.filter(
-                  //     (d: any) => user == message.user,
-                  //   ).length == 0
-                  //     ? Date.now()
-                  //     : 1,
-                  // );
-
-                  var dta = {
-                    _id: orgMembers.filter(
-                      (d: any) => d.email == message.user,
-                    )[0]._id,
-
-                    // You can also add a video prop:
-                    text: message.message,
-                    createdAt: message.createdAt,
-                    user: {
-                      _id:
-                        orgMembers.filter(
-                          (d: any) => d.email == message.user,
-                        )[0].email == currentUser.email
-                          ? 1
-                          : orgMembers.filter(
-                              (d: any) => d.email == message.user,
-                            )[0].email,
-                      name: orgMembers.filter(
-                        (d: any) => d.email == message.user,
-                      )[0].name,
-                      avatar: orgMembers.filter(
-                        (d: any) => d.email == message.user,
-                      )[0].img_url,
-                    },
-                  };
-
-                  console.log(dta);
-
-                  // _id: props.route.params.data.chat[i]._id,
-                  //   // You can also add a video prop:
-                  //   text: props.route.params.data.chat[i].message,
-                  //   createdAt: props.route.params.data.chat[i].createdAt,
-                  //   user: {
-                  //     _id: 1,
-                  //     name: org.data.data.members.filter(
-                  //       (d: any) =>
-                  //         d.email == props.route.params.data.chat[i].user,
-                  //     )[0].name,
-                  //     avatar: org.data.data.members.filter(
-                  //       (d: any) =>
-                  //         d.email == props.route.params.data.chat[i].user,
-                  //     )[0].img_url,
-                  //   },
-                  console.log('data aaya hai on 297');
-                  // console.log(dta);
-                  // messages.push(dta);
-
-                  var msgs = [...messages];
-                  msgs.push(dta);
-
-                  setMessages(msgs);
-
-                  // this.setState({});
-                  // const newMessages = [...chatMessages, message];
-                });
 
                 // getGroupMessages();
               } else {

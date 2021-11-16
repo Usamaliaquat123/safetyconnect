@@ -35,7 +35,6 @@ import {Icon, Avatar} from 'react-native-elements';
 import {colors, images, GlStyles, fonts, animation} from '@theme';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
-
 import DocumentPicker from 'react-native-document-picker';
 import {
   Chart,
@@ -612,7 +611,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         .getAllRepeatedSugg(
                           this.state.observationT,
                           this.state.projectid,
-                          sors.report._id,  
+                          sors.report._id,
                         )
                         .then(async (sugg: any) => {
                           this.setState({
