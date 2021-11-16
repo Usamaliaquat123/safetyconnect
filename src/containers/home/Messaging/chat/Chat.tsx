@@ -62,103 +62,70 @@ const Chat = (props: ChatProps) => {
   const [organizationId, setorganizationId] = useState<string>('');
   const [messages, setMessages] = useState<Array<any>>([]);
 
+  const [orgMembers, setorgMembers] = useState([]);
   const [socket, setSocket] = useState(props.route.params.socket);
 
-  props.route.params.socket.on(
-    `newMessage/${props.route.params.data._id}`,
-    (message: any) => {
-      console.log(
-        'Chat: receiving new group message',
-        message,
-        'state id',
-        props.route.params.data._id,
-      );
+  // current user
+  const [currentUser, setcurrentUser] = useState({});
 
-      console.log('messageasdsad');
-      console.log(message);
+  // useEffect(() => {
 
-      // console.log(
-      //   org.data.data.members.filter(
-      //     (d: any) => user == message.user,
-      //   ).length == 0
-      //     ? Date.now()
-      //     : 1,
-      // );
-      // var dta = {
-      //   // _id:
-      //   //   org.data.data.members.filter(
-      //   //     (d: any) => user == message.user,
-      //   //   ).length == 0,
-      //   // You can also add a video prop:
-      //   text: message.message,
-      //   createdAt: message.createdAt,
-      //   user: {
-      //     _id: org.data.data.members.filter(
-      //       (d: any) => d.email == message.user,
-      //     )[0]._id,
-      //     name: org.data.data.members.filter(
-      //       (d: any) => d.email == message.user,
-      //     )[0].name,
-      //     avatar: org.data.data.members.filter(
-      //       (d: any) => d.email == message.user,
-      //     )[0].img_url,
-      //   },
-      // };
-      console.log('data aaya hai on 297');
-      console.log(dta);
-      // this.state.messages.push(dta);
+  //   return () => {
 
-      // this.setState({});
-      // const newMessages = [...chatMessages, message];
-    },
-  );
+  //   };
+  // }, [messages, reciever]);
 
   useEffect(() => {
     console.log('data');
     console.log(props.route.params.data);
-
+    setSocket(props.route.params.socket);
     // console.log()
 
-    BackHandler.addEventListener('hardwareBackPress', () => {
-      // console.log('asds');
+    // BackHandler.addEventListener('hardwareBackPress', () => {
+    //   // console.log('asds');
 
-      if (props.route.params.type === 'group') {
-        props.route.params.socket.emit('leaveRoom', {
-          chatroomId: reciever,
-        });
-      } else {
-        props.route.params.socket.emit('leavePrivate', {
-          email: reciever,
-        });
-      }
-    });
+    //   if (props.route.params.type === 'group') {
+    //     socket.emit('leaveRoom', {
+    //       chatroomId: reciever,
+    //     });
+    //   } else {
+    //     socket.emit('leavePrivate', {
+    //       email: reciever,
+    //     });
+    //   }
+    // });
 
     AsyncStorage.getItem('email')
       .then((user: any) => {
-        console.log('this.props.route.params.data on line 179');
-        console.log('this.props.route.params.socket');
+        createApi
+          .createApi()
+          .getUser(user)
+          .then((usr: any) => setcurrentUser(usr.data.data));
+        setreciever(props.route.params.data._id);
+        // console.log('this.props.route.params.data on line 179');
+        // console.log('this.props.route.params.socket');
 
         if (props.route.params.type == 'private') {
-          console.log('get in line 183');
-          console.log(props.route.params.socket);
+          // console.log('get in line 183');
+          // console.log(props.route.params.socket);
           // console.log();
           // this.props.route.params.socket.emit('joinPrivate', {
           //   // email: this.props.rout,
           // });
         } else if (props.route.params.type == 'group') {
-          // this.props.route.params.socket.emit('joinRoom', {
-          //   chatroomId: chatId,
-          // });
+          socket.emit('joinRoom', {
+            chatroomId: reciever,
+          });
         }
         getCurrentOrganization().then((orgId: any) => {
           console.log('orgId');
           setorganizationId(orgId);
-          setreciever(props.route.params.data._id);
 
           createApi
             .createApi()
             .getOrganization(orgId)
             .then((org: any) => {
+              setorgMembers(org.data.data.members);
               console.log('members');
               console.log(org.data.data.members);
               var dta = [];
@@ -359,15 +326,90 @@ const Chat = (props: ChatProps) => {
               if (props.route.params.type == 'group') {
                 const message = {
                   chatroomId: reciever,
-                  createdAt: Date.now(),
                   message: prop.text?.trim(),
+                  createdAt: Date.now(),
                   files: [],
                 };
                 console.log('group message');
                 console.log(message);
-                props.route.params.socket.emit('chatroomMessage', message);
+                socket.emit('chatroomMessage', message);
 
-                getGroupMessages();
+                socket.on(`newMessage/${reciever}`, (message: any) => {
+                  console.log(
+                    'Chat: receiving new group message',
+                    message,
+                    'state id',
+                    props.route.params.data._id,
+                  );
+
+                  // console.log('messageasdsad');
+                  console.log(message);
+
+                  // console.log(
+                  //   org.data.data.members.filter(
+                  //     (d: any) => user == message.user,
+                  //   ).length == 0
+                  //     ? Date.now()
+                  //     : 1,
+                  // );
+
+                  var dta = {
+                    _id: orgMembers.filter(
+                      (d: any) => d.email == message.user,
+                    )[0]._id,
+
+                    // You can also add a video prop:
+                    text: message.message,
+                    createdAt: message.createdAt,
+                    user: {
+                      _id:
+                        orgMembers.filter(
+                          (d: any) => d.email == message.user,
+                        )[0].email == currentUser.email
+                          ? 1
+                          : orgMembers.filter(
+                              (d: any) => d.email == message.user,
+                            )[0].email,
+                      name: orgMembers.filter(
+                        (d: any) => d.email == message.user,
+                      )[0].name,
+                      avatar: orgMembers.filter(
+                        (d: any) => d.email == message.user,
+                      )[0].img_url,
+                    },
+                  };
+
+                  console.log(dta);
+
+                  // _id: props.route.params.data.chat[i]._id,
+                  //   // You can also add a video prop:
+                  //   text: props.route.params.data.chat[i].message,
+                  //   createdAt: props.route.params.data.chat[i].createdAt,
+                  //   user: {
+                  //     _id: 1,
+                  //     name: org.data.data.members.filter(
+                  //       (d: any) =>
+                  //         d.email == props.route.params.data.chat[i].user,
+                  //     )[0].name,
+                  //     avatar: org.data.data.members.filter(
+                  //       (d: any) =>
+                  //         d.email == props.route.params.data.chat[i].user,
+                  //     )[0].img_url,
+                  //   },
+                  console.log('data aaya hai on 297');
+                  // console.log(dta);
+                  // messages.push(dta);
+
+                  var msgs = [...messages];
+                  msgs.push(dta);
+
+                  setMessages(msgs);
+
+                  // this.setState({});
+                  // const newMessages = [...chatMessages, message];
+                });
+
+                // getGroupMessages();
               } else {
                 var message = {
                   receiver: reciever,
@@ -380,7 +422,7 @@ const Chat = (props: ChatProps) => {
 
                 // console.log('message');
                 // console.log(message);
-                props.route.params.socket.emit('privateMessage', message);
+                socket.emit('privateMessage', message);
               }
             }
           }}>

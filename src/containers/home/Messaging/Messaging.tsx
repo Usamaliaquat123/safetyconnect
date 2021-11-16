@@ -57,7 +57,7 @@ const Messaging = (props: MessagingProps) => {
   const [token, setToken] = useState<string>();
   const [orgnaizationId, setOrgnaizationId] = useState<string>('');
   const [socket, setSocket] = useState<null>();
-  const [addNewModal, setAddNewModal] = useState(true);
+  const [addNewModal, setAddNewModal] = useState(false);
   //  Group popup
   const [isGroupModal, setisGroupModal] = useState(false);
   // Single popup
