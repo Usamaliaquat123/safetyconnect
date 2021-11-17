@@ -41,7 +41,7 @@ import {
 } from 'react-native-responsive-screen';
 import {clockRunning, color} from 'react-native-reanimated';
 import {AsyncStorage} from '@aws-amplify/core';
-import {getCurrentOrganization, localToUtc} from '@utils/utils';
+import {getCurrentOrganization, localToUtc, generateItems} from '@utils/utils';
 
 var CustomIcon: any = Icon;
 type ChatNavigationProp = StackNavigationProp<StackNavigatorProps, 'Chat'>;
@@ -65,15 +65,35 @@ const Chat = (props: ChatProps) => {
   const [orgMembers, setorgMembers] = useState([]);
   const [socket, setSocket] = useState(props.route.params.socket);
 
+  // join group or private chat
+  const [joinGroup, setjoinGroup] = useState<Boolean>(false);
+  const [singleChat, setsingleChat] = useState<Boolean>(false);
+
   // current user
   const [currentUser, setcurrentUser] = useState({});
 
-  // useEffect(() => {
+  // receiving single messages
+  useEffect(() => {
+    // console.log('on line 73');
+  }, [messages, reciever, singleChat]);
 
-  //   return () => {
+  // receiving new group messages
+  useEffect(() => {
+    // console.log('');
 
-  //   };
-  // }, [messages, reciever]);
+    if (socket && reciever && joinGroup) {
+      socket.on(`newMessage/${reciever}`, (message: any) => {
+        console.log(
+          'Chat: receiving new group message',
+          message,
+          'state id',
+          reciever,
+        );
+
+        console.log('data aaya hai on 93 crea');
+      });
+    }
+  }, [joinGroup, reciever, messages]);
 
   useEffect(() => {
     console.log('data');
@@ -81,37 +101,25 @@ const Chat = (props: ChatProps) => {
     setSocket(props.route.params.socket);
     // console.log()
 
-    // BackHandler.addEventListener('hardwareBackPress', () => {
-    //   // console.log('asds');
-
-    //   if (props.route.params.type === 'group') {
-    //     socket.emit('leaveRoom', {
-    //       chatroomId: reciever,
-    //     });
-    //   } else {
-    //     socket.emit('leavePrivate', {
-    //       email: reciever,
-    //     });
-    //   }
-    // });
-
     AsyncStorage.getItem('email')
       .then((user: any) => {
         createApi
           .createApi()
           .getUser(user)
           .then((usr: any) => setcurrentUser(usr.data.data));
-        setreciever(props.route.params.data._id);
 
-        if (props.route.params.type == 'private') {
-          socket.emit('joinPrivate', {
-            email: props.route.params.data.email,
-          });
-        } else if (props.route.params.type == 'group') {
-          socket.emit('joinRoom', {
-            chatroomId: reciever,
-          });
-        }
+        // if (props.route.params.type == 'private') {
+        //   socket.emit('joinPrivate', {
+        //     email: props.route.params.data.email,
+        //   });
+        //   setsingleChat(true);
+        // } else if (props.route.params.type == 'group') {
+        //   socket.emit('joinRoom', {
+        //     chatroomId: reciever,
+        //   });
+        //   setjoinGroup(true);
+        // }
+        setreciever(props.route.params.data._id);
         getCurrentOrganization().then((orgId: any) => {
           console.log('orgId');
           setorganizationId(orgId);
@@ -121,8 +129,6 @@ const Chat = (props: ChatProps) => {
             .getOrganization(orgId)
             .then((org: any) => {
               setorgMembers(org.data.data.members);
-              console.log('members');
-              console.log(org.data.data.members);
               var dta = [];
               for (let i = 0; i < props.route.params.data.chat.length; i++) {
                 if (
@@ -171,16 +177,6 @@ const Chat = (props: ChatProps) => {
                   });
                 }
               }
-              // socket.on(`newMessage/${reciever}`, (message: any) => {
-              //   console.log(
-              //     'Chat: receiving new group message',
-              //     message,
-              //     'state id',
-              //     props.route.params.data._id,
-              //   );
-
-              //   console.log('data aaya hai on 88');
-              // });
 
               var dd = generateItems(dta);
               setMessages(dd);
@@ -188,9 +184,6 @@ const Chat = (props: ChatProps) => {
         });
       })
       .catch((err) => {});
-
-    console.log('this.props.route.params.data yahann ai');
-    console.log(props.route.params.data);
   }, []);
 
   // renderbubble component
@@ -228,36 +221,6 @@ const Chat = (props: ChatProps) => {
                         setimageViewer(true);
                       }}>
                       <Image style={styles.imageTag} source={{uri: d}} />
-                    </TouchableOpacity>
-                  ))}
-                </View>
-              ) : null}
-              {props.currentMessage?.video != undefined ? (
-                <View style={{flexDirection: 'row'}}>
-                  {props.currentMessage.video.map((d: any, i: number) => (
-                    <TouchableOpacity
-                      style={{backgroundColor: 'black', borderRadius: wp(3)}}
-                      onPress={() => {
-                        // this.state.images.push({url: d});
-                        // this.setState({
-                        //   imageViewer: true,
-                        // });
-                      }}>
-                      <View>
-                        <Text>{d}</Text>
-                        <Video
-                          source={{uri: d}} // Can be a URL or a local file.
-                          ref={(ref) => {
-                            this.player = ref;
-                          }} // Store reference
-                          // onBuffer={this.onBuffer} // Callback when remote video is buffering
-                          // onError={this.videoError} // Callback when video cannot be loaded
-                          // onVideoLoad={this.onVideoLoad} //callback when video loaded
-                          // onVideoProgress={this.onVideoProcess} //Callback on video progress
-                          // onVideoLoadStart={this.onVideoLoadStart} // Callback when video is loading start
-                          // fullscreen={true} // Boolean | is video is full screen
-                        />
-                      </View>
                     </TouchableOpacity>
                   ))}
                 </View>

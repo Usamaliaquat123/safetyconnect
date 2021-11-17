@@ -56,7 +56,7 @@ const Messaging = (props: MessagingProps) => {
   const [currentUser, setcurrentUser] = useState<any>({});
   const [token, setToken] = useState<string>();
   const [orgnaizationId, setOrgnaizationId] = useState<string>('');
-  const [socket, setSocket] = useState<null>();
+  const [socket, setSocket] = useState<any>();
   const [addNewModal, setAddNewModal] = useState(false);
   //  Group popup
   const [isGroupModal, setisGroupModal] = useState(false);
@@ -428,12 +428,19 @@ const Messaging = (props: MessagingProps) => {
                         // console.log(res.data.data[0]);
                         // console.log(res);
                         // console.log(this.state.socket);
-
-                        props.navigation.navigate('Chat', {
-                          data: res.data.data[0],
-                          type: 'group',
-                          socket: socket,
+                        console.log('socket');
+                        console.log(socket);
+                        socket.emit('joinRoom', {
+                          chatroomId: res.data.data[0]._id,
                         });
+
+                        setTimeout(() => {
+                          props.navigation.navigate('Chat', {
+                            data: res.data.data[0],
+                            type: 'group',
+                            socket: socket,
+                          });
+                        }, 50000);
                       });
                   }}
                 />

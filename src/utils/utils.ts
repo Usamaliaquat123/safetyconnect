@@ -3,11 +3,14 @@ import * as ImagePicker from 'react-native-image-picker/src';
 import {Auth} from 'aws-amplify';
 import {createApi as api, createApi} from '@service';
 import RNFetchBlob from 'rn-fetch-blob';
+
+import moment from 'moment';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {PermissionsAndroid} from 'react-native';
 import {resolvePlugin} from '@babel/core';
 import {involved_persons, report, orgnaization} from '@typings';
@@ -792,4 +795,29 @@ export const localToUtc = () => {
 // Doc Type picker
 export const DocType = (res: any, attachments: Array<Object>) => {
   return new Promise((resolve, reject) => {});
+};
+
+// Messagging  side
+export const groupedDays = (messages: any) => {
+  return messages.reduce((acc, el, i) => {
+    const messageDay = moment(el.created_at).format('YYYY-MM-DD');
+    if (acc[messageDay]) {
+      return {...acc, [messageDay]: acc[messageDay].concat([el])};
+    }
+    return {...acc, [messageDay]: [el]};
+  }, {});
+};
+
+export const generateItems = (messages: any) => {
+  const days = groupedDays(messages);
+  const sortedDays = Object.keys(days).sort(
+    (x, y) => moment(y, 'YYYY-MM-DD').unix() - moment(x, 'YYYY-MM-DD').unix(),
+  );
+  const items = sortedDays.reduce((acc, date) => {
+    const sortedMessages = days[date].sort(
+      (x, y) => new Date(y.created_at) - new Date(x.created_at),
+    );
+    return acc.concat([...sortedMessages, {type: 'day', date, id: date}]);
+  }, []);
+  return items;
 };
