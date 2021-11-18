@@ -9,6 +9,7 @@ import {
   Modal,
 } from 'react-native';
 import {connect} from 'react-redux';
+import io from 'socket.io-client';
 import {createApi, Create_sor} from '@service';
 import {
   GiftedChat,
@@ -41,7 +42,12 @@ import {
 } from 'react-native-responsive-screen';
 import {clockRunning, color} from 'react-native-reanimated';
 import {AsyncStorage} from '@aws-amplify/core';
-import {getCurrentOrganization, localToUtc, generateItems} from '@utils/utils';
+import {
+  getCurrentOrganization,
+  localToUtc,
+  generateItems,
+  fetchAuthToken,
+} from '@utils/utils';
 
 var CustomIcon: any = Icon;
 type ChatNavigationProp = StackNavigationProp<StackNavigatorProps, 'Chat'>;
@@ -56,12 +62,13 @@ export interface ChatProps {
 
 const Chat = (props: ChatProps) => {
   const [imageViewer, setimageViewer] = useState<Boolean>(false);
+
   const [image, setimages] = useState<Array<any>>([]);
   const [isVideoFullscreen, setisVideoFullscreen] = useState<Boolean>(false);
   const [reciever, setreciever] = useState<string>('');
   const [organizationId, setorganizationId] = useState<string>('');
   const [messages, setMessages] = useState<Array<any>>([]);
-
+  const [chatMessagesLoaded, setChatMessagesLoaded] = useState(false);
   const [orgMembers, setorgMembers] = useState([]);
   const [socket, setSocket] = useState(props.route.params.socket);
 
@@ -107,83 +114,32 @@ const Chat = (props: ChatProps) => {
           .createApi()
           .getUser(user)
           .then((usr: any) => setcurrentUser(usr.data.data));
-
-        // if (props.route.params.type == 'private') {
-        //   socket.emit('joinPrivate', {
-        //     email: props.route.params.data.email,
-        //   });
-        //   setsingleChat(true);
-        // } else if (props.route.params.type == 'group') {
-        //   socket.emit('joinRoom', {
-        //     chatroomId: reciever,
-        //   });
-        //   setjoinGroup(true);
-        // }
+        if (joinGroup == false || singleChat == false) {
+          if (props.route.params.type == 'private') {
+            setsingleChat(true);
+          } else if (props.route.params.type == 'group') {
+            setjoinGroup(true);
+          }
+        }
         setreciever(props.route.params.data._id);
         getCurrentOrganization().then((orgId: any) => {
           console.log('orgId');
           setorganizationId(orgId);
-
-          createApi
-            .createApi()
-            .getOrganization(orgId)
-            .then((org: any) => {
-              setorgMembers(org.data.data.members);
-              var dta = [];
-              for (let i = 0; i < props.route.params.data.chat.length; i++) {
-                if (
-                  org.data.data.members.filter(
-                    (d: any) => d.email == props.route.params.data.chat[i].user,
-                  )[0].email == user
-                ) {
-                  dta.push({
-                    _id: props.route.params.data.chat[i]._id,
-                    // You can also add a video prop:
-                    text: props.route.params.data.chat[i].message,
-                    createdAt: props.route.params.data.chat[i].createdAt,
-                    user: {
-                      _id: 1,
-                      name: org.data.data.members.filter(
-                        (d: any) =>
-                          d.email == props.route.params.data.chat[i].user,
-                      )[0].name,
-                      avatar: org.data.data.members.filter(
-                        (d: any) =>
-                          d.email == props.route.params.data.chat[i].user,
-                      )[0].img_url,
-                    },
-                  });
-                } else {
-                  props.route.params.data.chat[i].createdAt;
-                  dta.push({
-                    _id: props.route.params.data.chat[i]._id,
-                    // You can also add a video prop:
-                    text: props.route.params.data.chat[i].message,
-                    createdAt: props.route.params.data.chat[i].createdAt,
-                    user: {
-                      _id: org.data.data.members.filter(
-                        (d: any) =>
-                          d.email == props.route.params.data.chat[i].user,
-                      )[0]._id,
-                      name: org.data.data.members.filter(
-                        (d: any) =>
-                          d.email == props.route.params.data.chat[i].user,
-                      )[0].name,
-                      avatar: org.data.data.members.filter(
-                        (d: any) =>
-                          d.email == props.route.params.data.chat[i].user,
-                      )[0].img_url,
-                    },
-                  });
-                }
-              }
-
-              var dd = generateItems(dta);
-              setMessages(dd);
-            });
         });
       })
       .catch((err) => {});
+
+    return () => {
+      if (props.route.params.type === 'group') {
+        props.route.params.socket.emit('leaveRoom', {
+          chatroomId: reciever,
+        });
+      } else {
+        props.route.params.socket.emit('leaveRoom', {
+          chatroomId: reciever,
+        });
+      }
+    };
   }, []);
 
   // renderbubble component
@@ -333,6 +289,180 @@ const Chat = (props: ChatProps) => {
       </View>
     );
   };
+
+  // Fecting group chat
+  const fetchGroupChat = (
+    id: any,
+    orgnaizationId: string,
+    currentUser: string,
+  ) => {
+    createApi
+      .createApi()
+      .openGroupChat(id)
+      .then((res: any) => {
+        createApi
+          .createApi()
+          .getOrganization(orgnaizationId)
+          .then((org: any) => {
+            setorgMembers(org.data.data.members);
+            var dta = [];
+            var chati = res.data.data[0];
+            console.log(chati);
+            for (let i = 0; i < chati.chat.length; i++) {
+              if (
+                org.data.data.members.filter(
+                  (d: any) => d.email == chati.chat[i].user,
+                )[0].email == currentUser
+              ) {
+                dta.push({
+                  _id: chati.chat[i]._id,
+                  // You can also add a video prop:
+                  text: chati.chat[i].message,
+                  createdAt: chati.chat[i].createdAt,
+                  user: {
+                    _id: 1,
+                    name: org.data.data.members.filter(
+                      (d: any) => d.email == chati.chat[i].user,
+                    )[0].name,
+                    avatar: org.data.data.members.filter(
+                      (d: any) => d.email == res.data.chat[i].user,
+                    )[0].img_url,
+                  },
+                });
+              } else {
+                dta.push({
+                  _id: chati.chat[i]._id,
+                  // You can also add a video prop:
+                  text: chati.chat[i].message,
+                  createdAt: chati.chat[i].createdAt,
+                  user: {
+                    _id: org.data.data.members.filter(
+                      (d: any) => d.email == res.data.chat[i].user,
+                    )[0]._id,
+                    name: org.data.data.members.filter(
+                      (d: any) => d.email == res.data.chat[i].user,
+                    )[0].name,
+                    avatar: org.data.data.members.filter(
+                      (d: any) => d.email == res.data.chat[i].user,
+                    )[0].img_url,
+                  },
+                });
+              }
+
+              console.log('dta');
+              console.log(dta);
+            }
+
+            var dd = generateItems(dta);
+            setMessages(dd);
+          });
+      });
+  };
+
+  // Fetching direct chat
+  const fetchDirectChat = (
+    id: any,
+    organizationId: string,
+    currentUser: string,
+  ) => {
+    createApi
+      .createApi()
+      .openPrivateChat(currentUser, organizationId, id)
+      .then((res: any) => {
+        createApi
+          .createApi()
+          .getOrganization(organizationId)
+          .then((org: any) => {
+            setorgMembers(org.data.data.members);
+            var dta = [];
+
+            for (let i = 0; i < res.data.chat.length; i++) {
+              if (
+                org.data.data.members.filter(
+                  (d: any) => d.email == res.data.chat[i].user,
+                )[0].email == currentUser
+              ) {
+                dta.push({
+                  _id: res.data.chat[i]._id,
+                  // You can also add a video prop:
+                  text: res.data.chat[i].message,
+                  createdAt: res.data.chat[i].createdAt,
+                  user: {
+                    _id: 1,
+                    name: org.data.data.members.filter(
+                      (d: any) => d.email == chati.chat[i].user,
+                    )[0].name,
+                    avatar: org.data.data.members.filter(
+                      (d: any) => d.email == res.data.chat[i].user,
+                    )[0].img_url,
+                  },
+                });
+              } else {
+                dta.push({
+                  _id: res.data.chat[i]._id,
+                  // You can also add a video prop:
+                  text: res.data.chat[i].message,
+                  createdAt: res.data.chat[i].createdAt,
+                  user: {
+                    _id: org.data.data.members.filter(
+                      (d: any) => d.email == res.data.chat[i].user,
+                    )[0]._id,
+                    name: org.data.data.members.filter(
+                      (d: any) => d.email == res.data.chat[i].user,
+                    )[0].name,
+                    avatar: org.data.data.members.filter(
+                      (d: any) => d.email == res.data.chat[i].user,
+                    )[0].img_url,
+                  },
+                });
+              }
+
+              console.log('dta');
+              console.log(dta);
+            }
+
+            var dd = generateItems(dta);
+            setMessages(dd);
+          });
+      });
+  };
+
+  // fetching direct chat
+
+  // decider for fetchng group and direct messages
+  useEffect(() => {
+    AsyncStorage.getItem('email').then((currentUser: any) => {
+      createApi
+        .createApi()
+        .getUser(currentUser)
+        .then((usr: any) => setcurrentUser(usr.data.data));
+      getCurrentOrganization().then((orgId: any) => {
+        setChatMessagesLoaded(false);
+        console.log('Chat: message type', props.route.params.type);
+        props.route.params.type === 'group'
+          ? fetchGroupChat(props.route.params.data, orgId)
+          : fetchDirectChat(props.route.params.data, orgId, currentUser);
+      });
+    });
+  }, [props.route.params.data]);
+
+  // Join Group Chat
+  useEffect(() => {
+    if (reciever && joinGroup && socket) {
+      console.log('Chat: join room', joinGroup, 'room id', reciever);
+      socket.emit('joinRoom', {
+        chatroomId: reciever,
+      });
+    }
+
+    return () => {
+      if (socket) {
+        socket.emit('leaveRoom', {
+          chatroomId: reciever,
+        });
+      }
+    };
+  }, [joinGroup]);
 
   return (
     <View style={{flex: 1, backgroundColor: colors.secondary}}>

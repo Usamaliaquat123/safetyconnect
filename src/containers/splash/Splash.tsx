@@ -106,7 +106,7 @@ export default class Splash extends React.Component<SplashProps, any> {
               index: 1,
               routes: [
                 {
-                  name: 'Welcome',
+                  name: 'Signup',
                 },
               ],
             }),
