@@ -71,6 +71,19 @@ const TabBar = (props: TabBarProps) => {
 
   const [routes, setroutes] = useState(props.state.routes);
 
+  props.state.routes.map((d: any, i: number) => {
+    if (d.name == 'Home') {
+      d['icon'] = images.bottomTab.home;
+    } else if (d.name == 'MyTasks') {
+      d['icon'] = images.bottomTab.sors;
+    } else if (d.name == 'addNew') {
+      d['icon'] = images.bottomTab.addnew;
+    } else if (d.name == 'Inbox') {
+      d['icon'] = images.bottomTab.message;
+    } else if (d.name == 'More') {
+      d['icon'] = images.bottomTab.menu;
+    }
+  });
   useEffect(() => {
     const focusedOptions =
       props.descriptors[props.state.routes[props.state.index].key].options;
@@ -78,20 +91,6 @@ const TabBar = (props: TabBarProps) => {
       return null;
       ``;
     }
-
-    routes.map((d: any, i: number) => {
-      if (d.name == 'Home') {
-        d['icon'] = images.bottomTab.home;
-      } else if (d.name == 'MyTasks') {
-        d['icon'] = images.bottomTab.sors;
-      } else if (d.name == 'addNew') {
-        d['icon'] = images.bottomTab.addnew;
-      } else if (d.name == 'Inbox') {
-        d['icon'] = images.bottomTab.message;
-      } else if (d.name == 'More') {
-        d['icon'] = images.bottomTab.menu;
-      }
-    });
   }, []);
 
   return (
