@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Platform,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {RouteProp, CommonActions} from '@react-navigation/native';
@@ -161,6 +162,8 @@ class MeetBefore extends React.Component<MeetBeforeProps, any> {
                     this.state.selectedInput == 2
                       ? {borderColor: colors.primary}
                       : {borderColor: colors.textOpa},
+
+                    Platform.OS === 'ios' && {padding: wp(3)},
                   ]}>
                   <TextInput
                     secureTextEntry={this.state.isEye}

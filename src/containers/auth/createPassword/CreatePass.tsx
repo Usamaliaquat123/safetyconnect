@@ -15,7 +15,7 @@ import {
 import {Auth} from 'aws-amplify';
 import {connect} from 'react-redux';
 import {Icon} from 'react-native-elements';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigatiomessnProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {
   validatePassword,

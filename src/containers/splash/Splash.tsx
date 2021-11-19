@@ -15,7 +15,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
 import {RouteProp, CommonActions} from '@react-navigation/native';
 import {organizationDTO} from '@dtos';
-import {images, GlStyles} from '@theme';
+import {images, GlStyles, fonts} from '@theme';
 // import Splash from './Splash';
 
 export interface SplashProps {
@@ -127,6 +127,14 @@ export default class Splash extends React.Component<SplashProps, any> {
           <View style={{width: wp(70), height: wp(13)}}>
             <Image source={images.splashLogo} style={GlStyles.images} />
           </View>
+          <Text
+            style={{
+              marginLeft: wp(9),
+              color: colors.secondary,
+              fontFamily: fonts.SFuiDisplayMedium,
+            }}>
+            Ensure Workplace Wellbeing.
+          </Text>
         </View>
       </LinearGradient>
     );

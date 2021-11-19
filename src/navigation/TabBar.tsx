@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {
@@ -62,33 +62,20 @@ export interface TabBarProps {
   reduxActions: any;
   reduxState: AllSorDTO;
 }
-export default class TabBar extends React.Component<TabBarProps, any> {
-  constructor(props: any) {
-    super(props);
 
-    this.state = {
-      createModal: false,
-      icons: [],
-    };
-  }
+const TabBar = (props: TabBarProps) => {
+  const [createModal, setCreateModal] = useState(false);
+  const [icons, setIcons] = useState([]);
 
-  componentDidMount = () => {
-    // this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
-    //   1,
-    //   2,
-    //   3,
-    //   4,
-    //   5,
-    // ]);
-    const focusedOptions = this.props.descriptors[
-      this.props.state.routes[this.props.state.index].key
-    ].options;
+  useEffect(() => {
+    const focusedOptions =
+      props.descriptors[props.state.routes[props.state.index].key].options;
     if (focusedOptions.tabBarVisible === false) {
       return null;
       ``;
     }
 
-    this.props.state.routes.map((d: any, i: number) => {
+    props.state.routes.map((d: any, i: number) => {
       if (d.name == 'Home') {
         d['icon'] = images.bottomTab.home;
       } else if (d.name == 'MyTasks') {
@@ -101,132 +88,144 @@ export default class TabBar extends React.Component<TabBarProps, any> {
         d['icon'] = images.bottomTab.menu;
       }
     });
-  };
+  }, []);
 
-  render() {
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-          //   borderTopWidth: wp(0.1),
-          borderWidth: wp(0.1),
-          borderColor: colors.textOpa,
-          //   borderColor: ""
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 30,
-          },
-          shadowOpacity: 0.5,
-          shadowRadius: 2.22,
-        }}>
-        {this.props.state.routes.map((route: any, index: number) => {
-          const {options} = this.props.descriptors[route.key];
-          const label =
-            options.tabBarLabel !== undefined
-              ? options.tabBarLabel
-              : options.title !== undefined
-              ? options.title
-              : route.name;
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        //   borderTopWidth: wp(0.1),
+        borderWidth: wp(0.1),
+        borderColor: colors.textOpa,
+        //   borderColor: ""
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 30,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 2.22,
+      }}>
+      {props.state.routes.map((route: any, index: number) => {
+        const {options} = props.descriptors[route.key];
+        const label =
+          options.tabBarLabel !== undefined
+            ? options.tabBarLabel
+            : options.title !== undefined
+            ? options.title
+            : route.name;
 
-          const isFocused = this.props.state.index === index;
+        const isFocused = props.state.index === index;
 
-          const onPress = () => {
-            const event = this.props.navigation.emit({
-              type: 'tabPress',
-              target: route.key,
-              canPreventDefault: true,
-            });
+        const onPress = () => {
+          const event = props.navigation.emit({
+            type: 'tabPress',
+            target: route.key,
+            canPreventDefault: true,
+          });
 
-            if (!isFocused && !event.defaultPrevented) {
-              this.props.navigation.navigate(route.name);
-            }
-          };
+          if (!isFocused && !event.defaultPrevented) {
+            props.navigation.navigate(route.name);
+          }
+        };
 
-          const onLongPress = () => {
-            this.props.navigation.emit({
-              type: 'tabLongPress',
-              target: route.key,
-            });
-          };
+        const onLongPress = () => {
+          props.navigation.emit({
+            type: 'tabLongPress',
+            target: route.key,
+          });
+        };
 
-          return (
-            <View key={index} style={{flex: 1, height: wp(15)}}>
-              <TouchableOpacity
-                accessibilityRole="button"
-                accessibilityState={isFocused ? {selected: true} : {}}
-                accessibilityLabel={options.tabBarAccessibilityLabel}
-                testID={options.tabBarTestID}
-                onPress={() => {
-                  // if (route.name == 'addNew') {
-                  //   // return this.setState({
-                  //   //   createModal: !this.state.createModal,
-                  //   // });
-                  // } else {
-                  //   return onPress();
-                  // }
+        return (
+          <View key={index} style={{flex: 1, height: wp(15)}}>
+            <TouchableOpacity
+              accessibilityRole="button"
+              accessibilityState={isFocused ? {selected: true} : {}}
+              accessibilityLabel={options.tabBarAccessibilityLabel}
+              testID={options.tabBarTestID}
+              onPress={() => {
+                onPress();
+              }}
+              onLongPress={onLongPress}
+              style={[
+                {
+                  alignItems: 'center',
+                },
 
-                  onPress();
-                }}
-                onLongPress={onLongPress}
+                {
+                  paddingTop: wp(3),
+                  marginLeft: wp(3),
+                  paddingBottom: wp(3),
+                },
+                route.name === 'addNew' && {paddingTop: wp(1.5)},
+              ]}>
+              <View
                 style={[
-                  {
-                    alignItems: 'center',
-                  },
-
-                  {
-                    paddingTop: wp(3),
-                    marginLeft: wp(3),
-                    paddingBottom: wp(3),
-                  },
-                  route.name === 'addNew' && {paddingTop: wp(1.5)},
+                  route.name === 'Inbox'
+                    ? {width: wp(5.5), height: wp(5)}
+                    : route.name === 'addNew'
+                    ? {width: wp(6.5), height: wp(6.5)}
+                    : {width: wp(5), height: wp(5)},
                 ]}>
-                <View
+                <Image
+                  source={route.icon}
                   style={[
-                    route.name === 'Inbox'
-                      ? {width: wp(5.5), height: wp(5)}
-                      : route.name === 'addNew'
-                      ? {width: wp(6.5), height: wp(6.5)}
-                      : {width: wp(5), height: wp(5)},
-                  ]}>
-                  <Image
-                    source={route.icon}
-                    style={[
-                      GlStyles.images,
-                      isFocused
-                        ? route.name != 'addNew'
-                          ? {tintColor: '#4BA735'}
-                          : null
-                        : route.name != 'addNew'
-                        ? {tintColor: colors.text}
-                        : null,
-                    ]}
-                    resizeMode={'cover'}
-                  />
-                </View>
+                    GlStyles.images,
+                    isFocused
+                      ? route.name != 'addNew'
+                        ? {tintColor: '#4BA735'}
+                        : null
+                      : route.name != 'addNew'
+                      ? {tintColor: colors.text}
+                      : null,
+                  ]}
+                  resizeMode={'cover'}
+                />
+              </View>
 
-                <Text
-                  style={{
-                    color: isFocused ? '#4BA735' : '#6C6C6C',
-                    fontSize: wp(3),
-                  }}>
-                  {label}
-                </Text>
-              </TouchableOpacity>
-              {/* Create Modal  */}
-              {/* 
+              <Text
+                style={{
+                  color: isFocused ? '#4BA735' : '#6C6C6C',
+                  fontSize: wp(3),
+                }}>
+                {label}
+              </Text>
+            </TouchableOpacity>
+            {/* Create Modal  */}
+            {/* 
               <Model
                 isVisible={this.state.createModal}
                 onBackdropPress={() => {
                   this.setState({createModal: false, loading: false});
                 }}></Model> */}
-            </View>
-          );
-        })}
-      </View>
-    );
-  }
-}
+          </View>
+        );
+      })}
+    </View>
+  );
+};
+// export default class TabBar extends React.Component<TabBarProps, any> {
+//   constructor(props: any) {
+//     super(props);
+
+//     this.state = {
+//       createModal: false,
+//       icons: [],
+//     };
+//   }
+
+//   componentDidMount = () => {
+//     // this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
+//     //   1,
+//     //   2,
+//     //   3,
+//     //   4,
+//     //   5,
+//     // ]);
+//   };
+
+//   render() {}
+// }
 
 // const mapStateToProps = (state: AllSorDTO) => ({
 //   reduxState: state.allSors,
