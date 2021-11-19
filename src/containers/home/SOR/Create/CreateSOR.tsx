@@ -340,12 +340,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
             // if(location.)
             this.setState({
-              allLocations: res.data.data.p_locations,
-              selectedLocation: res.data.data.p_locations[0],
+              allLocations: res.data.data[0].p_locations,
+              selectedLocation: res.data.data[0].p_locations[0],
             });
 
-            console.log('current location');
-            console.log(res.data.data.p_locations[0]);
+            // console.log('current location');
+            // console.log(res.data.data.p_locations[0]);
           });
       });
     });

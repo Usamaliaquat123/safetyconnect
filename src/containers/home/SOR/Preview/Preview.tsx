@@ -457,7 +457,7 @@ export class Preview extends React.Component<ViewAllProps, any> {
     // this.props.route.
     console.log('this.props.route.params.data');
     console.log(this.props.route.params.data);
-    var data = [];
+    var data: Array<any> = [];
 
     if (this.props.route.params.data.justification != null) {
       if (this.props.route.params.data?.justification.length != 0) {

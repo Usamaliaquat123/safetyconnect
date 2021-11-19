@@ -64,8 +64,12 @@ export interface TabBarProps {
 }
 
 const TabBar = (props: TabBarProps) => {
+  console.log('propsjahdjsahdjsahdjashdjsa s');
+  console.log(props);
   const [createModal, setCreateModal] = useState(false);
   const [icons, setIcons] = useState([]);
+
+  const [routes, setroutes] = useState(props.state.routes);
 
   useEffect(() => {
     const focusedOptions =
@@ -75,7 +79,7 @@ const TabBar = (props: TabBarProps) => {
       ``;
     }
 
-    props.state.routes.map((d: any, i: number) => {
+    routes.map((d: any, i: number) => {
       if (d.name == 'Home') {
         d['icon'] = images.bottomTab.home;
       } else if (d.name == 'MyTasks') {
@@ -106,7 +110,7 @@ const TabBar = (props: TabBarProps) => {
         shadowOpacity: 0.5,
         shadowRadius: 2.22,
       }}>
-      {props.state.routes.map((route: any, index: number) => {
+      {routes.map((route: any, index: number) => {
         const {options} = props.descriptors[route.key];
         const label =
           options.tabBarLabel !== undefined
