@@ -194,47 +194,9 @@ const TabBar = (props: TabBarProps) => {
                 {label}
               </Text>
             </TouchableOpacity>
-            {/* Create Modal  */}
-            {/* 
-              <Model
-                isVisible={this.state.createModal}
-                onBackdropPress={() => {
-                  this.setState({createModal: false, loading: false});
-                }}></Model> */}
           </View>
         );
       })}
     </View>
   );
 };
-// export default class TabBar extends React.Component<TabBarProps, any> {
-//   constructor(props: any) {
-//     super(props);
-
-//     this.state = {
-//       createModal: false,
-//       icons: [],
-//     };
-//   }
-
-//   componentDidMount = () => {
-//     // this.props.reduxActions.getAllSors('6038cf8472762b29b1bed1f3', [
-//     //   1,
-//     //   2,
-//     //   3,
-//     //   4,
-//     //   5,
-//     // ]);
-//   };
-
-//   render() {}
-// }
-
-// const mapStateToProps = (state: AllSorDTO) => ({
-//   reduxState: state.allSors,
-// });
-
-// const mapDispatchToProps = (dispatch: any) => ({
-//   reduxActions: bindActionCreators(reduxActions, dispatch),
-// });
-// export default connect(mapStateToProps, mapDispatchToProps)(TabBar);

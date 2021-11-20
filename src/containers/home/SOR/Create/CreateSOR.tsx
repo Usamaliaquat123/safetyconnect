@@ -77,6 +77,15 @@ export interface CreateSORProps {
   reduxState: any;
 }
 
+// const CreateSOR  = () => {
+
+
+
+
+// }
+
+
+
 class CreateSOR extends React.Component<CreateSORProps, any> {
   constructor(props: any) {
     super(props);
@@ -396,7 +405,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           getCurrentProject().then((currentProj: any) => {
             this.setState({projectid: currentProj});
 
-            // this.props.reduxActions.createApi
             createApi
               .createApi()
               .getProject(currentProj, user.data.data._id)
