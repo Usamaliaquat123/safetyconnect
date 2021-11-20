@@ -86,6 +86,8 @@ const Menu = (props: MenuProps) => {
         });
     });
   }, []);
+
+  // change organization
   const changeOrganizationName = (e: any) => {
     var strArr = [];
     for (var j = 0; j < organizations.length; j++) {
@@ -133,10 +135,10 @@ const Menu = (props: MenuProps) => {
 
           <Icon
             onPress={() => props.navigation.goBack()}
-            containerStyle={{marginLeft: wp(2)}}
+            containerStyle={{marginLeft: 10}}
             name={'cross'}
             type={'entypo'}
-            size={wp(4.6)}
+            size={10}
             iconStyle={{opacity: 0.5}}
           />
         </View>
@@ -215,7 +217,7 @@ const Menu = (props: MenuProps) => {
             style={[styles.inputContainer]}>
             <TextInput
               editable={false}
-              value={currOrganization}
+              value={currOrganizations}
               style={{
                 fontSize: wp(3),
                 width: wp(80),
