@@ -181,6 +181,22 @@ const ViewSOR = (props: ViewSORProps) => {
   const [reAssignToArrTags, setreAssignToArrTags] = useState([]);
   const [projectName, setProjectName] = useState('');
   const [commenFileLoading, setcommenFileLoading] = useState(true);
+  const [orgId, setorgId] = useState('');
+  const [commentMentionReplace, setcommentMentionReplace] = useState('');
+  const [projectId, setprojectId] = useState('');
+  const [closed, setclosed] = useState(false);
+  const [
+    excludingSubmitCreatedByUsers,
+    setexcludingSubmitCreatedByUsers,
+  ] = useState([]);
+
+
+
+
+
+  
+
+
 };
 
 class ViewSOR extends React.Component<ViewSORProps, any> {
