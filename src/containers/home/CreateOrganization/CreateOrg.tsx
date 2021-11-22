@@ -154,6 +154,9 @@ const createOrg = (props: CreateOrgProps) => {
     }
   };
 
+
+
+  
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>

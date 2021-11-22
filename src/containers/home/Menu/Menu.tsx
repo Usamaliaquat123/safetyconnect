@@ -140,6 +140,8 @@ const Menu = (props: MenuProps) => {
             type={'entypo'}
             size={10}
             iconStyle={{opacity: 0.5}}
+            // accessibilityComponentType={undefined}
+            // accessibilityTraits={undefined}
           />
         </View>
         {/* create organization */}
@@ -193,6 +195,8 @@ const Menu = (props: MenuProps) => {
               type="antdesign"
               color={colors.green}
               iconStyle={{fontWeight: 'bold'}}
+              accessibilityComponentType={undefined}
+              accessibilityTraits={undefined}
             />
           </View>
           <Text style={styles.auditReportText}>Invite</Text>
@@ -236,6 +240,8 @@ const Menu = (props: MenuProps) => {
               type={'antdesign'}
               size={wp(3)}
               iconStyle={{opacity: 0.5}}
+              accessibilityComponentType={undefined}
+              accessibilityTraits={undefined}
             />
           </TouchableOpacity>
           {/* Suggestions of organization */}
@@ -274,6 +280,8 @@ const Menu = (props: MenuProps) => {
                       iconStyle={{opacity: 0.5}}
                       size={wp(3)}
                       containerStyle={{marginRight: wp(3)}}
+                      accessibilityComponentType={undefined}
+                      accessibilityTraits={undefined}
                     />
                     <View style={{alignItems: 'center'}}>
                       <Text

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -58,85 +58,115 @@ export interface CreateProjectProps {
   reduxState: any;
 }
 
-class CreateProject extends React.Component<CreateProjectProps, any> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      teamMembers: [],
-      teamMembersText: '',
-      assignSuppervisor: [],
-      assignSuppervisorText: [],
-      allAssignSuppervisorText: [],
-
-      assignLeaderss: [],
-      assignLeaderssText: [],
-      allAssignLeaders: [],
-      assignLeaderssT: '',
-      assignSuppervisorT: '',
-      assignLocations: [],
-      assignLocationsText: '',
-      projectName: '',
-      loading: false,
-      projects: [],
-      // errors popup
-      errorProjectName: false,
-      locations: [],
-      errorTeamMem: false,
-      projectDescription: '',
-      // suggestions
-      locationSugg: [],
-      involvedPersons: [],
-      createModal: false,
-
-      // location
-      locationName: '',
-      locationNameErr: false,
-      locationSupervisor: '',
-      locationSupervisorErr: false,
-      additionalSuppervisors: '',
-      // Location : suggestion
-      locationSuppervisorsTags: [],
-      locationSuppervisorsSugg: [],
-      user: '',
-      organizationId: '',
-      orgName: '',
-      additionalSuppervisorsSugg: [],
-      additionalSuppervisorsTags: [],
-    };
-  }
-  // Filter All countries
-  filterContries = (contries: string) => {
-    this.setState({assignLocationsText: contries});
+const CreateProject = (props: CreateProjectProps) => {
+  const [teamMembers, setteamMembers] = useState([]);
+  const [teamMembersText, setteamMembersText] = useState('');
+  const [assignSuppervisor, setassignSuppervisor] = useState([]);
+  const [assignSuppervisorText, setassignSuppervisorText] = useState([]);
+  const [allAssignSuppervisorText, setallAssignSuppervisorText] = useState([]);
+  const [assignLeaderss, setassignLeaderss] = useState([]);
+  const [assignLeaderssText, setassignLeaderssText] = useState([]);
+  const [allAssignLeaders, setallAssignLeaders] = useState([]);
+  const [assignLeaderssT, setassignLeaderssT] = useState('');
+  const [assignSuppervisorT, setassignSuppervisorT] = useState('');
+  const [assignLocations, setassignLocations] = useState([]);
+  const [assignLocationsText, setassignLocationsText] = useState('');
+  const [projectName, setprojectName] = useState('');
+  const [loading, setloading] = useState(false);
+  const [projects, setprojects] = useState([]);
+  // Errors popup
+  const [errorProjectName, seterrorProjectName] = useState(false);
+  const [locations, setlocations] = useState([]);
+  const [errorTeamMem, seterrorTeamMem] = useState(false);
+  const [projectDescription, setprojectDescription] = useState('');
+  // suggestions
+  const [locationSugg, setlocationSugg] = useState([]);
+  const [involvedPersons, setinvolvedPersons] = useState([]);
+  const [createModal, setcreateModal] = useState(false);
+  // location
+  const [locationName, setlocationName] = useState('');
+  const [locationNameErr, setlocationNameErr] = useState(false);
+  const [locationSupervisor, setlocationSupervisor] = useState('');
+  const [locationSupervisorErr, setlocationSupervisorErr] = useState(false);
+  const [additionalSuppervisors, setadditionalSuppervisors] = useState('');
+  // Location : suggestion
+  const [locationSuppervisorsTags, setlocationSuppervisorsTags] = useState([]);
+  const [locationSuppervisorsSugg, setlocationSuppervisorsSugg] = useState([]);
+  const [user, setuser] = useState('');
+  const [organizationId, setorganizationId] = useState('');
+  const [orgName, setorgName] = useState('');
+  const [additionalSuppervisorsSugg, setadditionalSuppervisorsSugg] = useState(
+    [],
+  );
+  const [additionalSuppervisorsTags, setadditionalSuppervisorsTags] = useState(
+    [],
+  );
+  const filterContries = (contries: string) => {
+    setassignLocationsText(contries);
   };
-  componentWillUnmount() {
-    this.setState({
-      allAssignSuppervisorText: [],
 
-      allAssignLeaders: [],
-    });
-  }
+  // Add Location
+  const addLocation = async () => {
+    if (locationName !== '') {
+      // var loca = JSON.parse(location);
+      // this.state.locations.push();
+      setcreateModal(false);
+      setlocationName('');
+      setlocationSuppervisorsTags([]);
+      setadditionalSuppervisorsTags([]);
+      setadditionalSuppervisorsSugg([]);
+      setlocationSuppervisorsSugg([]);
 
-  createProject = async () => {
-    if (this.state.projectName !== '') {
-      this.setState({errorProjectName: false});
-      if (this.state.assignLocations.length > 0) {
+      if (props.route.params?.users != undefined) {
+        var supervisor = locationSuppervisorsTags.filter(
+          (d) => props.route.params.users.filter((f: any) => d.email != f)[0],
+        );
+        var additional_supervisor = additionalSuppervisorsTags.filter(
+          (d) => props.route.params.users.filter((f: any) => d.email != f)[0],
+        );
+        assignLocations.push({
+          name: locationName,
+          supervisor: supervisor.map((d: any) => d._id)[0],
+          additional_supervisor: additional_supervisor.map(
+            (d: any) => d._id,
+          )[0],
+        });
+      } else {
+        assignLocations.push({
+          name: locationName,
+          supervisor: locationSuppervisorsTags.map((d: any) => d._id)[0],
+          additional_supervisor: additionalSuppervisorsTags.map(
+            (d: any) => d._id,
+          )[0],
+        });
+      }
+
+      // await AsyncStorage.setItem('locations', this.state.locationName);
+      // this.props.navigation.goBack();
+    } else {
+      setlocationNameErr(false);
+    }
+  };
+  // Create Project
+  const createProject = async () => {
+    if (projectName !== '') {
+      seterrorProjectName(false);
+      if (assignLocations.length > 0) {
         // if (this.state.assignLeaderss.length != 0) {
         // if (this.state.assignSuppervisor.length != 0) {
 
         // this.setState({loading: true});
         await AsyncStorage.getItem('email')
           .then((email: any) => {
-            this.setState({errorTeamMem: false});
+            seterrorTeamMem(false);
             // this.props.route.params.suggestedUsers?.map((d  :any) => )
 
             var members = [];
 
-            if (this.state.assignSuppervisor.length != 0) {
-              members = this.state.assignLeaderss.concat(
-                this.state.assignSuppervisor,
-              );
+            if (assignSuppervisor.length != 0) {
+              members = assignLeaderss.concat(assignSuppervisor);
             } else {
-              members = this.state.assignLeaderss;
+              members = assignLeaderss;
             }
 
             for (var i = 0; i < members.length; i++) {
@@ -165,7 +195,7 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
 
             // if( gol.map((j) => j._id == this.state))
 
-            var gol = d.filter((d) => d.email != this.state.user);
+            var gol = d.filter((d) => d.email != user);
             // if (this.props.route.params?.users != undefined) {
             // var bulkData = {
             //   emails: gol.map((d) => d.email),
@@ -185,12 +215,10 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
             //   });
             // }
             var involvedPersons: Array<any> = [];
-            if (this.props.route.params?.users != undefined) {
+            if (props.route.params?.users != undefined) {
               involvedPersons = gol.filter(
                 (d) =>
-                  this.props.route.params.users.filter(
-                    (f: any) => d.email != f,
-                  )[0],
+                  props.route.params.users.filter((f: any) => d.email != f)[0],
               );
             } else {
               involvedPersons = gol;
@@ -198,36 +226,35 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
 
             var data = {
               created_by: email,
-              project_name: this.state.projectName,
+              project_name: projectName,
               // involved_persons: members.map((d: any) => d._id),
-              locations: this.state.assignLocations.map((d) => d.name),
-              project_leader: this.state.assignLeaderss.map((d) => d.email),
-              secondary_leader: this.state.assignSuppervisor.map(
-                (d) => d.email,
-              ),
+              locations: assignLocations.map((d) => d.name),
+              project_leader: assignLeaderss.map((d) => d.email),
+              secondary_leader: assignSuppervisor.map((d) => d.email),
               involved_persons: involvedPersons.map((j) => j._id),
-              description: this.state.projectDescription,
-              p_locations: this.state.assignLocations,
-              organization: this.state.organizationId,
+              description: projectDescription,
+              p_locations: assignLocations,
+              organization: organizationId,
             };
-            this.setState({loading: false});
 
-            if (this.props.route.params?.users != undefined) {
-              this.props.reduxActions.createProject(
+            setloading(false);
+
+            if (props.route.params?.users != undefined) {
+              props.reduxActions.createProject(
                 data,
-                this.state.organizationId,
-                this.props.navigation,
+                organizationId,
+                props.navigation,
                 gol.map((d) => d.email),
-                this.state.orgName,
+                orgName,
                 true,
               );
             } else {
-              this.props.reduxActions.createProject(
+              props.reduxActions.createProject(
                 data,
-                this.state.organizationId,
-                this.props.navigation,
+                organizationId,
+                props.navigation,
                 gol.map((d) => d.email),
-                this.state.orgName,
+                orgName,
                 false,
               );
             }
@@ -238,80 +265,32 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
         //   this.setState({errorTeamMem: true});
         // }
       } else {
-        this.setState({loading: false});
-        this.setState({errorLocationName: true});
+        setloading(false);
+        seterrorLocationName(true);
       }
     } else {
-      this.setState({loading: false});
-
-      this.setState({errorProjectName: true});
+      setloading(false);
+      seterrorProjectName(true);
     }
   };
-  addLocation = async () => {
-    if (this.state.locationName !== '') {
-      // var loca = JSON.parse(location);
-      // this.state.locations.push();
-      this.setState({createModal: false});
-      this.setState({
-        locationName: '',
-        locationSuppervisorsTags: [],
-        additionalSuppervisorsTags: [],
-        additionalSuppervisorsSugg: [],
-        locationSuppervisorsSugg: [],
-      });
 
-      if (this.props.route.params?.users != undefined) {
-        var supervisor = this.state.locationSuppervisorsTags.filter(
-          (d) => this.props.route.params.users.filter((f) => d.email != f)[0],
-        );
-        var additional_supervisor = this.state.additionalSuppervisorsTags.filter(
-          (d) => this.props.route.params.users.filter((f) => d.email != f)[0],
-        );
-        this.state.assignLocations.push({
-          name: this.state.locationName,
-          supervisor: supervisor.map((d: any) => d._id)[0],
-          additional_supervisor: additional_supervisor.map(
-            (d: any) => d._id,
-          )[0],
-        });
-      } else {
-        this.state.assignLocations.push({
-          name: this.state.locationName,
-          supervisor: this.state.locationSuppervisorsTags.map(
-            (d: any) => d._id,
-          )[0],
-          additional_supervisor: this.state.additionalSuppervisorsTags.map(
-            (d: any) => d._id,
-          )[0],
-        });
-      }
-
-      // await AsyncStorage.setItem('locations', this.state.locationName);
-      // this.props.navigation.goBack();
-    } else {
-      this.setState({locationNameErr: true});
-    }
-  };
-  componentDidMount = async () => {
-    // this.props.start();
-    // api
-
+  useEffect(() => {
     AsyncStorage.getItem('email').then((email: any) => {
-      this.setState({user: email});
+      setuser(email);
     });
 
     getCurrentOrganization().then((orgid: any) => {
-      this.setState({organizationId: orgid});
+      setorganizationId(orgid);
 
       api
         .createApi()
         .getOrganization(orgid)
         .then((org: any) => {
-          this.setState({orgName: org.data.data.name});
+          setorgName(org.data.data.name);
 
-          if (this.props.route.params?.users != undefined) {
-            var dta = [];
-            this.props.route.params.users.map((d: any) => {
+          if (props.route.params?.users != undefined) {
+            var dta: any = [];
+            props.route.params.users.map((d: any) => {
               dta.push({
                 img_url:
                   'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
@@ -320,20 +299,33 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                 email: d,
               });
             });
-            this.setState({
-              allAssignSuppervisorText: dta,
-              allAssignLeaders: dta,
-            });
+
+            setallAssignSuppervisorText(dta);
+            setallAssignLeaders(dta);
           } else {
-            this.setState({
-              allAssignSuppervisorText: org.data.data.members,
-              allAssignLeaders: org.data.data.members,
-            });
+            setallAssignSuppervisorText(org.data.data.members);
+            setallAssignLeaders(org.data.data.members);
           }
         })
         .catch((err: any) => {});
       // this.props.reduxActions.getOrganization(orgid).then((res: any) => {});
     });
+    return () => {
+      setallAssignSuppervisorText([]);
+      setallAssignLeaders([]);
+    };
+  }, []);
+};
+
+class CreateProject extends React.Component<CreateProjectProps, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {};
+  }
+
+  componentDidMount = async () => {
+    // this.props.start();
+    // api
   };
 
   render() {
