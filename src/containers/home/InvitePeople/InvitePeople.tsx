@@ -451,14 +451,6 @@ const InvitePeople = (props: InvitePeopleProps) => {
   );
 };
 
-// const mapStateToProps = (state: any) => {
-//   return {};
-// };
-
-// const mapDispatchToProps = (dispatch: any) => {
-//   return {};
-// };
-
 const mapStateToProps = (state: AllSorDTO) => ({
   reduxState: state.allSors,
 });
