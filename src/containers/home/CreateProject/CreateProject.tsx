@@ -89,6 +89,7 @@ const CreateProject = (props: CreateProjectProps) => {
   const [locationSupervisor, setlocationSupervisor] = useState('');
   const [locationSupervisorErr, setlocationSupervisorErr] = useState(false);
   const [additionalSuppervisors, setadditionalSuppervisors] = useState('');
+  const [errorLocationName, seterrorLocationName] = useState(false);
   // Location : suggestion
   const [locationSuppervisorsTags, setlocationSuppervisorsTags] = useState([]);
   const [locationSuppervisorsSugg, setlocationSuppervisorsSugg] = useState([]);
@@ -315,108 +316,201 @@ const CreateProject = (props: CreateProjectProps) => {
       setallAssignLeaders([]);
     };
   }, []);
-};
 
-class CreateProject extends React.Component<CreateProjectProps, any> {
-  constructor(props: any) {
-    super(props);
-    this.state = {};
-  }
-
-  componentDidMount = async () => {
-    // this.props.start();
-    // api
-  };
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {/* content */}
-          <View style={[styles.content]}>
-            {this.props.reduxState.loading == true ? (
+  return (
+    <View style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* content */}
+        <View style={[styles.content]}>
+          {props.reduxState.loading == true ? (
+            <View
+              style={{
+                alignSelf: 'center',
+                marginTop: wp(4),
+                marginBottom: wp(40),
+              }}>
+              <LottieView
+                autoPlay={true}
+                style={{width: wp(90)}}
+                source={animation.loading}
+                loop={true}
+              />
+            </View>
+          ) : (
+            <View>
               <View
                 style={{
-                  alignSelf: 'center',
-                  marginTop: wp(4),
-                  marginBottom: wp(40),
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
                 }}>
-                <LottieView
-                  autoPlay={true}
-                  style={{width: wp(90)}}
-                  source={animation.loading}
-                  loop={true}
+                <Text style={styles.headingContainer}>Add New Project</Text>
+                <Icon
+                  onPress={() => props.navigation.goBack()}
+                  containerStyle={{marginLeft: wp(2)}}
+                  name={'cross'}
+                  type={'entypo'}
+                  size={wp(4.6)}
+                  iconStyle={{opacity: 0.5}}
                 />
               </View>
-            ) : (
-              <View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <Text style={styles.headingContainer}>Add New Project</Text>
-                  <Icon
-                    onPress={() => this.props.navigation.goBack()}
-                    containerStyle={{marginLeft: wp(2)}}
-                    name={'cross'}
-                    type={'entypo'}
-                    size={wp(4.6)}
-                    iconStyle={{opacity: 0.5}}
-                  />
-                </View>
-                {/* inputs container */}
+              {/* inputs container */}
 
-                <View style={styles.inputsContainer}>
-                  <CopilotStep
-                    text="Your project name"
-                    order={1}
-                    name="openApp">
-                    {/* Email Container */}
-                    <WalkthroughableView>
-                      <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <Text style={styles.emailTextContainer}>
-                          Project Name
-                        </Text>
-                        <Text
-                          style={[
-                            styles.emailTextContainer,
-                            {opacity: 0.5, marginLeft: wp(1), marginTop: wp(2)},
-                          ]}>
-                          (Mandatory)
-                        </Text>
-                      </View>
+              <View style={styles.inputsContainer}>
+                <CopilotStep text="Your project name" order={1} name="openApp">
+                  {/* Email Container */}
+                  <WalkthroughableView>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Text style={styles.emailTextContainer}>
+                        Project Name
+                      </Text>
+                      <Text
+                        style={[
+                          styles.emailTextContainer,
+                          {opacity: 0.5, marginLeft: wp(1), marginTop: wp(2)},
+                        ]}>
+                        (Mandatory)
+                      </Text>
+                    </View>
 
-                      <View style={[styles.inputContainer]}>
-                        <TextInput
-                          style={styles.authInputs}
-                          value={this.state.projectName}
-                          onChangeText={(e) => {
-                            this.setState({projectName: e});
-                          }}
-                          placeholder={'Enter Project Name'}
-                        />
-                      </View>
-                    </WalkthroughableView>
-                  </CopilotStep>
+                    <View style={[styles.inputContainer]}>
+                      <TextInput
+                        style={styles.authInputs}
+                        value={projectName}
+                        onChangeText={(e) => {
+                          setprojectName(e);
+                        }}
+                        placeholder={'Enter Project Name'}
+                      />
+                    </View>
+                  </WalkthroughableView>
+                </CopilotStep>
 
-                  {this.state.errorProjectName && (
-                    <Text style={{fontSize: wp(3), color: colors.error}}>
-                      Enter your project name{' '}
+                {errorProjectName && (
+                  <Text style={{fontSize: wp(3), color: colors.error}}>
+                    Enter your project name{' '}
+                  </Text>
+                )}
+                {/* Descriptions */}
+                <View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginTop: wp(2),
+                    }}>
+                    <Text style={[styles.emailTextContainer]}>
+                      {' '}
+                      Project Description
                     </Text>
-                  )}
-                  {/* Descriptions */}
+                    <Icon
+                      name={'info'}
+                      type={'feather'}
+                      size={wp(3.5)}
+                      color={colors.textOpa}
+                    />
+                  </View>
                   <View>
+                    <View style={[styles.inputContainer]}>
+                      <TextInput
+                        placeholder={'Enter project description here'}
+                        style={styles.authInputs}
+                        value={projectDescription}
+                        onChangeText={(e) => setprojectDescription(e)}
+                      />
+                    </View>
+                  </View>
+                </View>
+
+                {/* Assign Locations */}
+
+                {/* Locations */}
+                <CopilotStep
+                  text="Your project name"
+                  order={2}
+                  name="locationCop">
+                  <WalkthroughableView>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text
+                        style={[styles.emailTextContainer, {marginTop: wp(2)}]}>
+                        {' '}
+                        Locations
+                      </Text>
+                      <Text
+                        style={[
+                          styles.emailTextContainer,
+                          {opacity: 0.5, marginLeft: wp(1), marginTop: wp(2)},
+                        ]}>
+                        (Mandatory)
+                      </Text>
+                    </View>
+
+                    {errorLocationName && (
+                      <Text style={{fontSize: wp(3), color: colors.error}}>
+                        * Add your location
+                      </Text>
+                    )}
+                    <View
+                      style={{
+                        flexWrap: 'wrap',
+                        alignContent: 'center',
+                        flexDirection: 'row',
+                        marginTop: wp(2),
+                      }}>
+                      <Tags
+                        type={'location'}
+                        onClose={(d: any) => {
+                          setassignLocations(
+                            assignLocations.filter((v: any) => v !== d),
+                          );
+                        }}
+                        tags={assignLocations}
+                      />
+                    </View>
+
+                    {/* add new location */}
+                    {assignLocations.length < 3 && (
+                      <TouchableOpacity
+                        onPress={() => setcreateModal(true)}
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Icon
+                          containerStyle={{marginRight: wp(3)}}
+                          name={'plus'}
+                          type={'antdesign'}
+                          size={wp(4)}
+                          color={colors.primary}
+                        />
+                        <Text
+                          style={{
+                            fontSize: wp(3.4),
+                            color: colors.primary,
+                            fontFamily: fonts.SFuiDisplayMedium,
+                          }}>
+                          Add New Location
+                        </Text>
+                      </TouchableOpacity>
+                    )}
+                  </WalkthroughableView>
+                </CopilotStep>
+
+                {/* Asssign Leaders */}
+                <CopilotStep
+                  text="Add the invited project leaders"
+                  order={3}
+                  name="projectLeadersCop">
+                  <WalkthroughableView>
                     <View
                       style={{
                         flexDirection: 'row',
                         alignItems: 'center',
-                        marginTop: wp(2),
+                        marginTop: wp(3),
                       }}>
                       <Text style={[styles.emailTextContainer]}>
                         {' '}
-                        Project Description
+                        Project Leaders
                       </Text>
                       <Icon
                         name={'info'}
@@ -425,115 +519,93 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                         color={colors.textOpa}
                       />
                     </View>
-                    <View>
+                    {assignLeaderss.length < 1 ? (
                       <View style={[styles.inputContainer]}>
                         <TextInput
-                          placeholder={'Enter project description here'}
-                          style={styles.authInputs}
-                          value={this.state.projectDescription}
-                          onChangeText={(e) =>
-                            this.setState({projectDescription: e})
-                          }
-                        />
-                      </View>
-                    </View>
-                  </View>
-
-                  {/* Assign Locations */}
-
-                  {/* Locations */}
-                  <CopilotStep
-                    text="Your project name"
-                    order={2}
-                    name="locationCop">
-                    <WalkthroughableView>
-                      <View style={{flexDirection: 'row'}}>
-                        <Text
-                          style={[
-                            styles.emailTextContainer,
-                            {marginTop: wp(2)},
-                          ]}>
-                          {' '}
-                          Locations
-                        </Text>
-                        <Text
-                          style={[
-                            styles.emailTextContainer,
-                            {opacity: 0.5, marginLeft: wp(1), marginTop: wp(2)},
-                          ]}>
-                          (Mandatory)
-                        </Text>
-                      </View>
-
-                      {this.state.errorLocationName && (
-                        <Text style={{fontSize: wp(3), color: colors.error}}>
-                          * Add your location
-                        </Text>
-                      )}
-                      <View
-                        style={{
-                          flexWrap: 'wrap',
-                          alignContent: 'center',
-                          flexDirection: 'row',
-                          marginTop: wp(2),
-                        }}>
-                        <Tags
-                          type={'location'}
-                          onClose={(d: any) => {
-                            this.setState({
-                              assignLocations: this.state.assignLocations.filter(
-                                (v: any) => v !== d,
-                              ),
-                            });
+                          onFocus={() => {
+                            setassignLeaderssText(
+                              searchInSuggestions('', allAssignLeaders),
+                            );
                           }}
-                          tags={this.state.assignLocations}
+                          placeholder={'Add Leaders that you already invited'}
+                          style={styles.authInputs}
+                          value={assignLeaderssT}
+                          onChangeText={(e) => {
+                            if (e !== '') {
+                              var arr: any = searchInSuggestions(
+                                e.toLowerCase(),
+                                allAssignLeaders,
+                              );
+
+                              setassignLeaderssText(arr);
+                              setassignLeaderssT(e);
+                            } else {
+                              setassignLeaderssText([]);
+                              setassignLeaderssT(e);
+                            }
+                          }}
                         />
                       </View>
+                    ) : null}
+                  </WalkthroughableView>
+                </CopilotStep>
 
-                      {/* add new location */}
-                      {this.state.assignLocations.length < 3 && (
-                        <TouchableOpacity
-                          onPress={() => this.setState({createModal: true})}
-                          style={{
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                          }}>
-                          <Icon
-                            containerStyle={{marginRight: wp(3)}}
-                            name={'plus'}
-                            type={'antdesign'}
-                            size={wp(4)}
-                            color={colors.primary}
-                          />
-                          <Text
-                            style={{
-                              fontSize: wp(3.4),
-                              color: colors.primary,
-                              fontFamily: fonts.SFuiDisplayMedium,
-                            }}>
-                            Add New Location
-                          </Text>
-                        </TouchableOpacity>
-                      )}
-                    </WalkthroughableView>
-                  </CopilotStep>
+                {/* Suggestions of projectEmail  */}
+                {assignLeaderssText.length != 0 ? (
+                  <View style={styles.involveSuggestCont}>
+                    {assignLeaderssText.map((d: any, i: number) => (
+                      <TouchableOpacity
+                        key={i}
+                        onPress={() => {
+                          setassignLeaderssT('');
+                          setassignLeaderssText([]);
 
-                  {/* Asssign Leaders */}
-                  <CopilotStep
-                    text="Add the invited project leaders"
-                    order={3}
-                    name="projectLeadersCop">
-                    <WalkthroughableView>
+                          assignLeaderss.push(d);
+                        }}
+                        style={[
+                          styles.involvePsuggCont,
+                          assignLeaderssText.length == i + 1
+                            ? {borderBottomWidth: wp(0)}
+                            : null,
+                        ]}>
+                        <Text style={styles.involvePSt}>{d.email}</Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                ) : null}
+                {/* Tags or project leaders */}
+                <View
+                  style={{
+                    flexWrap: 'wrap',
+                    flexDirection: 'row',
+                    marginTop: wp(2),
+                  }}>
+                  <Tags
+                    type={'addTeamMem'}
+                    onClose={(d: any) => {
+                      setassignLeaderss(
+                        assignLeaderss.filter((v: any) => v !== d),
+                      );
+                    }}
+                    tags={assignLeaderss}
+                  />
+                </View>
+
+                {/* Asssign Supervisor */}
+                <CopilotStep
+                  text="Add the invited secondary project leaders"
+                  order={4}
+                  name="SecprojectLeadersCop">
+                  <WalkthroughableView>
+                    <View>
                       <View
                         style={{
                           flexDirection: 'row',
                           alignItems: 'center',
-                          marginTop: wp(3),
                         }}>
                         <Text style={[styles.emailTextContainer]}>
                           {' '}
-                          Project Leaders
+                          Secondary Project leaders
                         </Text>
                         <Icon
                           name={'info'}
@@ -542,71 +614,286 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                           color={colors.textOpa}
                         />
                       </View>
-                      {this.state.assignLeaderss.length < 1 ? (
+                      {assignSuppervisor.length < 15 ? (
                         <View style={[styles.inputContainer]}>
                           <TextInput
-                            onFocus={() => {
-                              this.setState({
-                                assignLeaderssText: searchInSuggestions(
-                                  '',
-                                  this.state.allAssignLeaders,
-                                ),
-                              });
-                            }}
-                            placeholder={'Add Leaders that you already invited'}
                             style={styles.authInputs}
-                            value={this.state.assignLeaderssT}
+                            placeholder={'Enter name'}
+                            onFocus={() => {
+                              setassignSuppervisorText(
+                                setassignSuppervisorText(
+                                  searchInSuggestions(
+                                    '',
+                                    allAssignSuppervisorText,
+                                  ),
+                                ),
+                              );
+                            }}
+                            value={assignSuppervisorT}
                             onChangeText={(e) => {
                               if (e !== '') {
-                                var arr = searchInSuggestions(
-                                  e.toLowerCase(),
-                                  this.state.allAssignLeaders,
+                                setassignSuppervisorText(
+                                  searchInSuggestions(
+                                    e.toLowerCase(),
+                                    allAssignSuppervisorText,
+                                  ),
                                 );
-
-                                this.setState({
-                                  assignLeaderssText: arr,
-                                  assignLeaderssT: e,
-                                });
+                                setassignSuppervisorT(e);
                               } else {
-                                this.setState({
-                                  assignLeaderssText: [],
-                                  assignLeaderssT: e,
-                                });
+                                setassignSuppervisorText([]);
+                                setassignSuppervisorT(e);
                               }
                             }}
                           />
                         </View>
                       ) : null}
-                    </WalkthroughableView>
-                  </CopilotStep>
 
-                  {/* Suggestions of projectEmail  */}
-                  {this.state.assignLeaderssText.length != 0 ? (
-                    <View style={styles.involveSuggestCont}>
-                      {this.state.assignLeaderssText.map(
-                        (d: any, i: number) => (
-                          <TouchableOpacity
-                            key={i}
-                            onPress={() => {
-                              this.setState({
-                                assignLeaderssT: '',
-                                assignLeaderssText: [],
-                              });
+                      {/* {this.state.assignSuppervisorText != '' ? (
+                    <SuggestionsAvatar
+                      onSelect={(d: string) => {
+                        this.state.assignSuppervisor.push(d);
+                        this.setState({
+                          assignSuppervisorText: '',
+                        });
+                      }}
+                      text={this.state.assignSuppervisorText}
+                    />
+                  ) : null} */}
 
-                              this.state.assignLeaderss.push(d);
-                            }}
-                            style={[
-                              styles.involvePsuggCont,
-                              this.state.assignLeaderssText.length == i + 1
-                                ? {borderBottomWidth: wp(0)}
-                                : null,
-                            ]}>
-                            <Text style={styles.involvePSt}>{d.email}</Text>
-                          </TouchableOpacity>
-                        ),
-                      )}
+                      {/* Suggestions of emails  */}
+                      {assignSuppervisorText.length != 0 ? (
+                        <View style={styles.involveSuggestCont}>
+                          {assignSuppervisorText.map((d: any, i: number) => (
+                            <TouchableOpacity
+                              key={i}
+                              onPress={() => {
+                                setassignSuppervisorT('');
+                                setassignSuppervisorText(
+                                  assignSuppervisorText.filter(
+                                    (b: any) => b != d,
+                                  ),
+                                );
+                                setassignSuppervisor;
+
+                                assignSuppervisor.push(d);
+                              }}
+                              style={[
+                                styles.involvePsuggCont,
+                                assignSuppervisorText.length == i + 1
+                                  ? {borderBottomWidth: wp(0)}
+                                  : null,
+                              ]}>
+                              <Text style={styles.involvePSt}>{d.email}</Text>
+                            </TouchableOpacity>
+                          ))}
+                        </View>
+                      ) : null}
+
+                      <View
+                        style={{
+                          flexWrap: 'wrap',
+                          flexDirection: 'row',
+                          marginTop: wp(2),
+                        }}>
+                        <Tags
+                          type={'addTeamMem'}
+                          onClose={(d: any) => {
+                            setassignSuppervisor(
+                              assignSuppervisor.filter((v: any) => v !== d),
+                            );
+                          }}
+                          tags={assignSuppervisor}
+                        />
+                      </View>
                     </View>
-                  ) : null}
+                  </WalkthroughableView>
+                </CopilotStep>
+              </View>
+
+              {/* Invite people */}
+
+              {/* 
+
+              <TouchableOpacity
+                onPress={() =>
+                  this.props.navigation.navigate('InvitePeople', {
+                    data: 'organization',
+                  })
+                }
+                style={{
+                  marginTop: wp(3),
+                  flexDirection: 'row',
+                  alignSelf: 'center',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Icon
+                  containerStyle={{marginRight: wp(1)}}
+                  name={'plus'}
+                  type={'antdesign'}
+                  color={colors.primary}
+                  size={wp(3.5)}
+                />
+                <Text
+                  style={{
+                    fontSize: wp(3),
+                    textAlign: 'center',
+                    color: colors.primary,
+                    fontFamily: fonts.SFuiDisplayBold,
+                  }}>
+                  Invite new People
+                </Text>
+              </TouchableOpacity>
+
+*/}
+
+              <TouchableOpacity
+                onPress={() => createProject()}
+                style={styles.siginBtnContainer}>
+                <Text style={styles.signinText}>Add Project</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
+      </ScrollView>
+
+      {/* //////////// */}
+      {/* //////////// */}
+      {/* //////////// */}
+      {/* //////////// */}
+      {/* //////////// */}
+      {/* @location */}
+      {/* //////////// */}
+      {/* //////////// */}
+      {/* //////////// */}
+      {/* //////////// */}
+
+      <Model isVisible={createModal}>
+        <View>
+          {/* content */}
+          <View style={styles.contentLocations}>
+            <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <Text style={styles.headingContainer}>Add New Location</Text>
+                <Icon
+                  onPress={() => setcreateModal(false)}
+                  containerStyle={{marginLeft: wp(2)}}
+                  name={'cross'}
+                  type={'entypo'}
+                  size={wp(4.6)}
+                  iconStyle={{opacity: 0.5}}
+                />
+              </View>
+              {/* inputs container */}
+              <View style={styles.inputsContainer}>
+                {/* Email Container */}
+                <View>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.emailTextContainer}>Location Name</Text>
+                    <Text
+                      style={[
+                        styles.emailTextContainer,
+                        {opacity: 0.5, marginLeft: wp(3)},
+                      ]}>
+                      (Mandatory)
+                    </Text>
+                  </View>
+                  <View style={[styles.inputContainer]}>
+                    <TextInput
+                      value={locationName}
+                      style={styles.authInputs}
+                      onChangeText={(e) => setlocationName(e)}
+                      placeholder={'Enter your new location'}
+                    />
+                  </View>
+                  {locationNameErr && (
+                    <Text style={{fontSize: wp(3), color: colors.error}}>
+                      Type your location name
+                    </Text>
+                  )}
+                </View>
+
+                {/* Location Supervisor */}
+                <View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginTop: wp(3),
+                      alignItems: 'center',
+                    }}>
+                    <Text style={styles.emailTextContainer}>
+                      Location Supervisor
+                    </Text>
+                    <Icon
+                      containerStyle={{marginLeft: wp(2)}}
+                      name={'info'}
+                      type={'feather'}
+                      size={wp(3)}
+                      iconStyle={{opacity: 0.5}}
+                    />
+                  </View>
+
+                  {locationSuppervisorsTags.length == 0 && (
+                    <>
+                      <View style={[styles.inputContainer]}>
+                        <TextInput
+                          onFocus={() => {
+                            setlocationSuppervisorsSugg(
+                              searchInSuggestions('', allAssignLeaders),
+                            );
+                          }}
+                          value={locationSupervisor}
+                          style={styles.authInputs}
+                          onChangeText={(e) => {
+                            if (e !== '') {
+                              var arr: any = searchInSuggestions(
+                                e.toLowerCase(),
+                                allAssignLeaders,
+                              );
+                              setlocationSuppervisorsSugg(arr);
+                            } else {
+                              setlocationSuppervisorsSugg([]);
+                            }
+                            setlocationSupervisor(e);
+                          }}
+                          placeholder={'Enter Name'}
+                        />
+                      </View>
+
+                      {/* Suggestions of projectEmail  */}
+                      {locationSuppervisorsSugg.length != 0 ? (
+                        <View style={styles.involveSuggestCont}>
+                          {locationSuppervisorsSugg.map((d: any, i: number) => (
+                            <TouchableOpacity
+                              key={i}
+                              onPress={() => {
+                                setlocationSupervisor('');
+                                setlocationSuppervisorsSugg(
+                                  locationSuppervisorsSugg.filter(
+                                    (b: any) => b != d,
+                                  ),
+                                );
+
+                                locationSuppervisorsTags.push(d);
+                              }}
+                              style={[
+                                styles.involvePsuggCont,
+                                locationSuppervisorsSugg.length == i + 1
+                                  ? {borderBottomWidth: wp(0)}
+                                  : null,
+                              ]}>
+                              <Text style={styles.involvePSt}>{d.email}</Text>
+                            </TouchableOpacity>
+                          ))}
+                        </View>
+                      ) : null}
+                    </>
+                  )}
+
                   {/* Tags or project leaders */}
                   <View
                     style={{
@@ -615,487 +902,132 @@ class CreateProject extends React.Component<CreateProjectProps, any> {
                       marginTop: wp(2),
                     }}>
                     <Tags
-                      type={'addTeamMem'}
+                      type={'attachments'}
                       onClose={(d: any) => {
-                        this.setState({
-                          assignLeaderss: this.state.assignLeaderss.filter(
-                            (v: any) => v !== d,
-                          ),
-                        });
+                        setlocationSuppervisorsTags(
+                          locationSuppervisorsTags.filter((v: any) => v !== d),
+                        );
                       }}
-                      tags={this.state.assignLeaderss}
+                      tags={locationSuppervisorsTags}
                     />
                   </View>
 
-                  {/* Asssign Supervisor */}
-                  <CopilotStep
-                    text="Add the invited secondary project leaders"
-                    order={4}
-                    name="SecprojectLeadersCop">
-                    <WalkthroughableView>
-                      <View>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}>
-                          <Text style={[styles.emailTextContainer]}>
-                            {' '}
-                            Secondary Project leaders
-                          </Text>
-                          <Icon
-                            name={'info'}
-                            type={'feather'}
-                            size={wp(3.5)}
-                            color={colors.textOpa}
-                          />
-                        </View>
-                        {this.state.assignSuppervisor.length < 15 ? (
-                          <View style={[styles.inputContainer]}>
-                            <TextInput
-                              style={styles.authInputs}
-                              placeholder={'Enter name'}
-                              onFocus={() => {
-                                this.setState({
-                                  assignSuppervisorText: searchInSuggestions(
-                                    '',
-                                    this.state.allAssignSuppervisorText,
-                                  ),
-                                });
-                              }}
-                              value={this.state.assignSuppervisorT}
-                              onChangeText={(e) => {
-                                if (e !== '') {
-                                  this.setState({
-                                    assignSuppervisorText: searchInSuggestions(
-                                      e.toLowerCase(),
-                                      this.state.allAssignSuppervisorText,
-                                    ),
-                                    assignSuppervisorT: e,
-                                  });
-                                } else {
-                                  this.setState({
-                                    assignSuppervisorText: [],
-                                    assignSuppervisorT: e,
-                                  });
-                                }
-                              }}
-                            />
-                          </View>
-                        ) : null}
+                  {locationSupervisorErr && (
+                    <Text style={{fontSize: wp(3), color: colors.error}}>
+                      Assign your location supervisor
+                    </Text>
+                  )}
+                </View>
 
-                        {/* {this.state.assignSuppervisorText != '' ? (
-                      <SuggestionsAvatar
-                        onSelect={(d: string) => {
-                          this.state.assignSuppervisor.push(d);
-                          this.setState({
-                            assignSuppervisorText: '',
-                          });
-                        }}
-                        text={this.state.assignSuppervisorText}
-                      />
-                    ) : null} */}
-
-                        {/* Suggestions of emails  */}
-                        {this.state.assignSuppervisorText.length != 0 ? (
-                          <View style={styles.involveSuggestCont}>
-                            {this.state.assignSuppervisorText.map(
-                              (d: any, i: number) => (
-                                <TouchableOpacity
-                                  key={i}
-                                  onPress={() => {
-                                    this.setState({
-                                      assignSuppervisorT: '',
-                                    });
-                                    this.setState({
-                                      assignSuppervisorText: this.state.assignSuppervisorText.filter(
-                                        (b: any) => b != d,
-                                      ),
-                                    });
-                                    this.state.assignSuppervisor.push(d);
-                                  }}
-                                  style={[
-                                    styles.involvePsuggCont,
-                                    this.state.assignSuppervisorText.length ==
-                                    i + 1
-                                      ? {borderBottomWidth: wp(0)}
-                                      : null,
-                                  ]}>
-                                  <Text style={styles.involvePSt}>
-                                    {d.email}
-                                  </Text>
-                                </TouchableOpacity>
-                              ),
-                            )}
-                          </View>
-                        ) : null}
-
-                        <View
-                          style={{
-                            flexWrap: 'wrap',
-                            flexDirection: 'row',
-                            marginTop: wp(2),
-                          }}>
-                          <Tags
-                            type={'addTeamMem'}
-                            onClose={(d: any) => {
-                              this.setState({
-                                assignSuppervisor: this.state.assignSuppervisor.filter(
-                                  (v: any) => v !== d,
-                                ),
-                              });
-                            }}
-                            tags={this.state.assignSuppervisor}
-                          />
-                        </View>
+                {/* Additional Suppervisors */}
+                <View>
+                  <View style={{flexDirection: 'row', marginTop: wp(3)}}>
+                    <Text style={styles.emailTextContainer}>
+                      Additional Suppervisors
+                    </Text>
+                    <Icon
+                      containerStyle={{marginTop: wp(1), marginLeft: wp(2)}}
+                      name={'info'}
+                      type={'feather'}
+                      size={wp(3)}
+                      iconStyle={{opacity: 0.5}}
+                    />
+                  </View>
+                  {additionalSuppervisorsTags.length == 0 && (
+                    <>
+                      <View style={[styles.inputContainer]}>
+                        <TextInput
+                          onFocus={() => {
+                            setadditionalSuppervisorsSugg(
+                              searchInSuggestions('', allAssignLeaders),
+                            );
+                          }}
+                          value={additionalSuppervisors}
+                          style={styles.authInputs}
+                          onChangeText={(e: any) => {
+                            if (e !== '') {
+                              var arr: any = searchInSuggestions(
+                                e.toLowerCase(),
+                                allAssignLeaders,
+                              );
+                              setadditionalSuppervisorsSugg(arr);
+                            } else {
+                              setadditionalSuppervisorsSugg([]);
+                            }
+                            setadditionalSuppervisors(e);
+                          }}
+                          placeholder={'Enter name'}
+                        />
                       </View>
-                    </WalkthroughableView>
-                  </CopilotStep>
-                </View>
 
-                {/* Invite people */}
+                      {/* Suggestions of projectEmail  */}
+                      {additionalSuppervisorsSugg.length != 0 ? (
+                        <View style={styles.involveSuggestCont}>
+                          {additionalSuppervisorsSugg.map(
+                            (d: any, i: number) => (
+                              <TouchableOpacity
+                                key={i}
+                                onPress={() => {
+                                  setadditionalSuppervisorsSugg(
+                                    additionalSuppervisorsSugg.filter(
+                                      (b: any) => b != d,
+                                    ),
+                                  );
+                                  setadditionalSuppervisors('');
 
-                {/* 
+                                  additionalSuppervisorsTags.push(d);
+                                }}
+                                style={[
+                                  styles.involvePsuggCont,
+                                  additionalSuppervisorsSugg.length == i + 1
+                                    ? {borderBottomWidth: wp(0)}
+                                    : null,
+                                ]}>
+                                <Text style={styles.involvePSt}>{d.email}</Text>
+                              </TouchableOpacity>
+                            ),
+                          )}
+                        </View>
+                      ) : null}
+                    </>
+                  )}
 
-                <TouchableOpacity
-                  onPress={() =>
-                    this.props.navigation.navigate('InvitePeople', {
-                      data: 'organization',
-                    })
-                  }
-                  style={{
-                    marginTop: wp(3),
-                    flexDirection: 'row',
-                    alignSelf: 'center',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <Icon
-                    containerStyle={{marginRight: wp(1)}}
-                    name={'plus'}
-                    type={'antdesign'}
-                    color={colors.primary}
-                    size={wp(3.5)}
-                  />
-                  <Text
+                  {/* Tags or project leaders */}
+                  <View
                     style={{
-                      fontSize: wp(3),
-                      textAlign: 'center',
-                      color: colors.primary,
-                      fontFamily: fonts.SFuiDisplayBold,
+                      flexWrap: 'wrap',
+                      flexDirection: 'row',
+                      marginTop: wp(2),
                     }}>
-                    Invite new People
-                  </Text>
-                </TouchableOpacity>
-
- */}
-
-                <TouchableOpacity
-                  onPress={() => this.createProject()}
-                  style={styles.siginBtnContainer}>
-                  <Text style={styles.signinText}>Add Project</Text>
-                </TouchableOpacity>
-              </View>
-            )}
-          </View>
-        </ScrollView>
-
-        {/* //////////// */}
-        {/* //////////// */}
-        {/* //////////// */}
-        {/* //////////// */}
-        {/* //////////// */}
-        {/* @location */}
-        {/* //////////// */}
-        {/* //////////// */}
-        {/* //////////// */}
-        {/* //////////// */}
-
-        <Model isVisible={this.state.createModal}>
-          <View>
-            {/* content */}
-            <View style={styles.contentLocations}>
-              <View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <Text style={styles.headingContainer}>Add New Location</Text>
-                  <Icon
-                    onPress={() => this.setState({createModal: false})}
-                    containerStyle={{marginLeft: wp(2)}}
-                    name={'cross'}
-                    type={'entypo'}
-                    size={wp(4.6)}
-                    iconStyle={{opacity: 0.5}}
-                  />
-                </View>
-                {/* inputs container */}
-                <View style={styles.inputsContainer}>
-                  {/* Email Container */}
-                  <View>
-                    <View style={{flexDirection: 'row'}}>
-                      <Text style={styles.emailTextContainer}>
-                        Location Name
-                      </Text>
-                      <Text
-                        style={[
-                          styles.emailTextContainer,
-                          {opacity: 0.5, marginLeft: wp(3)},
-                        ]}>
-                        (Mandatory)
-                      </Text>
-                    </View>
-                    <View style={[styles.inputContainer]}>
-                      <TextInput
-                        value={this.state.locationName}
-                        style={styles.authInputs}
-                        onChangeText={(e) => this.setState({locationName: e})}
-                        placeholder={'Enter your new location'}
-                      />
-                    </View>
-                    {this.state.locationNameErr && (
-                      <Text style={{fontSize: wp(3), color: colors.error}}>
-                        Type your location name
-                      </Text>
-                    )}
-                  </View>
-
-                  {/* Location Supervisor */}
-                  <View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        marginTop: wp(3),
-                        alignItems: 'center',
-                      }}>
-                      <Text style={styles.emailTextContainer}>
-                        Location Supervisor
-                      </Text>
-                      <Icon
-                        containerStyle={{marginLeft: wp(2)}}
-                        name={'info'}
-                        type={'feather'}
-                        size={wp(3)}
-                        iconStyle={{opacity: 0.5}}
-                      />
-                    </View>
-
-                    {this.state.locationSuppervisorsTags.length == 0 && (
-                      <>
-                        <View style={[styles.inputContainer]}>
-                          <TextInput
-                            onFocus={() => {
-                              this.setState({
-                                locationSuppervisorsSugg: searchInSuggestions(
-                                  '',
-                                  this.state.allAssignLeaders,
-                                ),
-                              });
-                            }}
-                            value={this.state.locationSupervisor}
-                            style={styles.authInputs}
-                            onChangeText={(e) => {
-                              if (e !== '') {
-                                var arr = searchInSuggestions(
-                                  e.toLowerCase(),
-                                  this.state.allAssignLeaders,
-                                );
-                                this.setState({locationSuppervisorsSugg: arr});
-                              } else {
-                                this.setState({locationSuppervisorsSugg: []});
-                              }
-
-                              this.setState({locationSupervisor: e});
-                            }}
-                            placeholder={'Enter Name'}
-                          />
-                        </View>
-
-                        {/* Suggestions of projectEmail  */}
-                        {this.state.locationSuppervisorsSugg.length != 0 ? (
-                          <View style={styles.involveSuggestCont}>
-                            {this.state.locationSuppervisorsSugg.map(
-                              (d: any, i: number) => (
-                                <TouchableOpacity
-                                  key={i}
-                                  onPress={() => {
-                                    this.setState({
-                                      locationSupervisor: '',
-                                      locationSuppervisorsSugg: this.state.locationSuppervisorsSugg.filter(
-                                        (b: any) => b != d,
-                                      ),
-                                    });
-
-                                    this.state.locationSuppervisorsTags.push(d);
-                                  }}
-                                  style={[
-                                    styles.involvePsuggCont,
-                                    this.state.locationSuppervisorsSugg
-                                      .length ==
-                                    i + 1
-                                      ? {borderBottomWidth: wp(0)}
-                                      : null,
-                                  ]}>
-                                  <Text style={styles.involvePSt}>
-                                    {d.email}
-                                  </Text>
-                                </TouchableOpacity>
-                              ),
-                            )}
-                          </View>
-                        ) : null}
-                      </>
-                    )}
-
-                    {/* Tags or project leaders */}
-                    <View
-                      style={{
-                        flexWrap: 'wrap',
-                        flexDirection: 'row',
-                        marginTop: wp(2),
-                      }}>
-                      <Tags
-                        type={'attachments'}
-                        onClose={(d: any) => {
-                          this.setState({
-                            locationSuppervisorsTags: this.state.locationSuppervisorsTags.filter(
-                              (v: any) => v !== d,
-                            ),
-                          });
-                        }}
-                        tags={this.state.locationSuppervisorsTags}
-                      />
-                    </View>
-
-                    {this.state.locationSupervisorErr && (
-                      <Text style={{fontSize: wp(3), color: colors.error}}>
-                        Assign your location supervisor
-                      </Text>
-                    )}
-                  </View>
-
-                  {/* Additional Suppervisors */}
-                  <View>
-                    <View style={{flexDirection: 'row', marginTop: wp(3)}}>
-                      <Text style={styles.emailTextContainer}>
-                        Additional Suppervisors
-                      </Text>
-                      <Icon
-                        containerStyle={{marginTop: wp(1), marginLeft: wp(2)}}
-                        name={'info'}
-                        type={'feather'}
-                        size={wp(3)}
-                        iconStyle={{opacity: 0.5}}
-                      />
-                    </View>
-                    {this.state.additionalSuppervisorsTags.length == 0 && (
-                      <>
-                        <View style={[styles.inputContainer]}>
-                          <TextInput
-                            onFocus={() => {
-                              this.setState({
-                                additionalSuppervisorsSugg: searchInSuggestions(
-                                  '',
-                                  this.state.allAssignLeaders,
-                                ),
-                              });
-                            }}
-                            value={this.state.additionalSuppervisors}
-                            style={styles.authInputs}
-                            onChangeText={(e) => {
-                              if (e !== '') {
-                                var arr = searchInSuggestions(
-                                  e.toLowerCase(),
-                                  this.state.allAssignLeaders,
-                                );
-                                this.setState({
-                                  additionalSuppervisorsSugg: arr,
-                                });
-                              } else {
-                                this.setState({additionalSuppervisorsSugg: []});
-                              }
-                              this.setState({additionalSuppervisors: e});
-                            }}
-                            placeholder={'Enter name'}
-                          />
-                        </View>
-
-                        {/* Suggestions of projectEmail  */}
-                        {this.state.additionalSuppervisorsSugg.length != 0 ? (
-                          <View style={styles.involveSuggestCont}>
-                            {this.state.additionalSuppervisorsSugg.map(
-                              (d: any, i: number) => (
-                                <TouchableOpacity
-                                  key={i}
-                                  onPress={() => {
-                                    this.setState({
-                                      additionalSuppervisors: '',
-                                      additionalSuppervisorsSugg: this.state.additionalSuppervisorsSugg.filter(
-                                        (b: any) => b != d,
-                                      ),
-                                    });
-
-                                    this.state.additionalSuppervisorsTags.push(
-                                      d,
-                                    );
-                                  }}
-                                  style={[
-                                    styles.involvePsuggCont,
-                                    this.state.additionalSuppervisorsSugg
-                                      .length ==
-                                    i + 1
-                                      ? {borderBottomWidth: wp(0)}
-                                      : null,
-                                  ]}>
-                                  <Text style={styles.involvePSt}>
-                                    {d.email}
-                                  </Text>
-                                </TouchableOpacity>
-                              ),
-                            )}
-                          </View>
-                        ) : null}
-                      </>
-                    )}
-
-                    {/* Tags or project leaders */}
-                    <View
-                      style={{
-                        flexWrap: 'wrap',
-                        flexDirection: 'row',
-                        marginTop: wp(2),
-                      }}>
-                      <Tags
-                        type={'attachments'}
-                        onClose={(d: any) => {
-                          this.setState({
-                            additionalSuppervisorsTags: this.state.additionalSuppervisorsTags.filter(
-                              (v: any) => v !== d,
-                            ),
-                          });
-                        }}
-                        tags={this.state.additionalSuppervisorsTags}
-                      />
-                    </View>
+                    <Tags
+                      type={'attachments'}
+                      onClose={(d: any) => {
+                        setadditionalSuppervisorsTags(
+                          additionalSuppervisorsTags.filter(
+                            (v: any) => v !== d,
+                          ),
+                        );
+                      }}
+                      tags={additionalSuppervisorsTags}
+                    />
                   </View>
                 </View>
-
-                <TouchableOpacity
-                  onPress={() => this.addLocation()}
-                  style={styles.siginBtnContainer}>
-                  <Text style={styles.signinText}>Add Location</Text>
-                </TouchableOpacity>
               </View>
-              {/* )} */}
+
+              <TouchableOpacity
+                onPress={() => addLocation()}
+                style={styles.siginBtnContainer}>
+                <Text style={styles.signinText}>Add Location</Text>
+              </TouchableOpacity>
             </View>
+            {/* )} */}
           </View>
-        </Model>
-      </View>
-    );
-  }
-}
+        </View>
+      </Model>
+    </View>
+  );
+};
+
 const mapStateToProps = (state: any) => ({
   reduxState: state.projects,
 });
