@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {
   View,
@@ -73,6 +73,116 @@ export interface ViewSORProps {
   reduxActions: any;
   reduxState: any;
 }
+
+const ViewSOR = (props: ViewSORProps) => {
+  const [sor, setSor] = useState({});
+  const [user, setuser] = useState({});
+  const [time, settime] = useState(props.route.params.data.occurred_at);
+  const [imageViewer, setimageViewer] = useState(false);
+  const [images, setimages] = useState([]);
+  const [photoArr, setphotoArr] = useState([]);
+  const [selectedInput, setselectedInput] = useState(0);
+  const [commentText, setcommentText] = useState('');
+  const [sor_type, setsor_type] = useState(props.route.params.data.sor_type);
+  const [observation, setobservation] = useState(
+    props.route.params.data.details,
+  );
+  const [date, setdate] = useState(props.route.params.data.occurred_at);
+  const [comments, setcomments] = useState([]);
+  const [suggestedUsers, setsuggestedUsers] = useState([]);
+  const [involvedPerson, setinvolvedPerson] = useState([]);
+  const [notifiedPerson, setnotifiedPerson] = useState([]);
+  const [commentsSugg, setcommentsSugg] = useState([]);
+  const [attachments, setattachments] = useState([]);
+  const [allBtnsEnabled, setallBtnsEnabled] = useState(true);
+
+  const [actionsAndRecommendations, setactionsAndRecommendations] = useState(
+    props.route.params.data.action_required,
+  );
+  const [addAssigners, setaddAssigners] = useState(false);
+  const [isMarkAsComplete, setisMarkAsComplete] = useState(false);
+
+  const [
+    involveAndNotifiedUsersName,
+    setinvolveAndNotifiedUsersName,
+  ] = useState('');
+  const [IsaddInvAndNotifiedUser, setIsaddInvAndNotifiedUser] = useState(false);
+  const [
+    involvedAndNotifiedUserType,
+    setinvolvedAndNotifiedUserType,
+  ] = useState('involved');
+  const [fileloading, setfileloading] = useState(false);
+  const [commentAttachment, setcommentAttachment] = useState([]);
+  const [
+    addInvolvedandNotifiedUsers,
+    setaddInvolvedandNotifiedUsers,
+  ] = useState([]);
+  const [errorModal, seterrorModal] = useState(false);
+  const [selectedRisk, setselectedRisk] = useState(true);
+  const [liklihood, setliklihood] = useState(riskxSeverityxliklihood.liklihood);
+  const [severity, setseverity] = useState(riskxSeverityxliklihood.severity);
+  const [invPhoto, setinvPhoto] = useState('');
+  const [notifiedAndInv, setnotifiedAndInv] = useState(0);
+
+  const [editDelComment, seteditDelComment] = useState(false);
+  const [editAttachedCommentArr, seteditAttachedCommentArr] = useState([]);
+  const [EditcommentText, setEditcommentText] = useState('');
+  const [editDiscardComment, seteditDiscardComment] = useState('');
+  const [editDiscardCommentIndex, seteditDiscardCommentIndex] = useState(0);
+
+  const [SuggestionPop, setSuggestionPop] = useState(false);
+  const [allActionsEdit, setallActionsEdit] = useState([]);
+  const [newActions, setnewActions] = useState(false);
+  const [allActionsEditIndex, setallActionsEditIndex] = useState(0);
+  const [
+    actionsAndRecommendationText,
+    setactionsAndRecommendationText,
+  ] = useState('');
+  const [submitted_to, setsubmitted_to] = useState(
+    props.route.params.data.submit_to,
+  );
+
+  const [esclate_to, setesclate_to] = useState([]);
+  const [
+    editInvolvedAndEsclatedPersons,
+    seteditInvolvedAndEsclatedPersons,
+  ] = useState(false);
+  const [involvePersonsSelected, setinvolvePersonsSelected] = useState(false);
+  const [loading, setloading] = useState(false);
+  const [AllUsers, setAllUsers] = useState([]);
+
+  const [isCounterInvolved, setisCounterInvolved] = useState(false);
+  const [fiveWhytoggle, setfiveWhytoggle] = useState(false);
+  const [reportIdInvestigation, setreportIdInvestigation] = useState('');
+  const [fiveWhyKeyFindings, setfiveWhyKeyFindings] = useState('');
+  const [fiveWhyKeyrootCauses, setfiveWhyKeyrootCauses] = useState([]);
+  const [
+    fiveWhyKeycontributoryCauses,
+    setfiveWhyKeycontributoryCauses,
+  ] = useState([]);
+  const [potientialRisk, setpotientialRisk] = useState(9);
+
+  const [exclateToArr, setexclateToArr] = useState([]);
+  const [fiveWhyQuestion, setfiveWhyQuestion] = useState([]);
+  const [fiveWhyAnswer, setfiveWhyAnswer] = useState([]);
+  const [repeatedSors, setrepeatedSors] = useState([]);
+  const [fiveWHYdata, setfiveWHYdata] = useState([]);
+  const [contributoryCauses, setcontributoryCauses] = useState('');
+
+  const [rootCauses, setrootCauses] = useState('');
+  const [keyFindingss, setkeyFindingss] = useState('');
+  const [keyFindings, setkeyFindings] = useState('');
+  const [commentAttachmentLoading, setcommentAttachmentLoading] = useState(
+    false,
+  );
+  const [reAssignToArr, setreAssignToArr] = useState([]);
+
+  const [exclateToTags, setexclateToTags] = useState([]);
+  const [reAssignToArrTags, setreAssignToArrTags] = useState([]);
+  const [projectName, setProjectName] = useState('');
+  const [commenFileLoading, setcommenFileLoading] = useState(true);
+};
+
 class ViewSOR extends React.Component<ViewSORProps, any> {
   public animation: any;
   public photoAnim: any;
@@ -80,92 +190,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      sor: {},
-      user: {},
-      time: this.props.route.params.data.occurred_at,
-      imageViewer: false,
-      images: [],
-      photoArr: [],
-      selectedInput: 0,
-      commentText: '',
-      // custom data
-      sor_type: this.props.route.params.data.sor_type,
-      observation: this.props.route.params.data.details,
-      date: this.props.route.params.data.occurred_at,
-      comments: [],
-      suggestedUsers: [],
-      involvedPerson: [],
-      involved_person: this.props.route.params.data.involved_persons,
-      notifiedPerson: this.props.route.params.data.involved_persons,
-
-      commentsSugg: [],
-      attachments: [],
-      allBtnsEnabled: true,
-      actionsAndRecommendations: this.props.route.params.data.action_required,
-      // popup Assigners
-      addAssigners: false,
-      isMarkAsComplete: false,
-      involveAndNotifiedUsersName: '',
-      IsaddInvAndNotifiedUser: false,
-      involvedAndNotifiedUserType: 'involved',
-      fileloading: false,
-      commentAttachment: [],
-      addInvolvedandNotifiedUsers: [],
-      errorModal: false,
-      selectedRisk: true,
-      // Risk Array
-      liklihood: riskxSeverityxliklihood.liklihood,
-      severity: riskxSeverityxliklihood.severity,
-      invPhoto: '',
-      // for selection
-      notifiedAndInv: 0,
-      // comments edit
-      editDelComment: false,
-      editAttachedCommentArr: [],
-      EditcommentText: '',
-      editDiscardComment: '',
-      editDiscardCommentIndex: 0,
-      // actions and recommendation
-
-      SuggestionPop: false,
-      allActionsEdit: [],
-      newActions: false,
-      allActionsEditIndex: 0,
-      // actions and recommendations
-      actionsAndRecommendationText: '',
-      // Submited to
-      submitted_to: this.props.route.params.data.submit_to,
-      esclate_to: [],
-
-      editInvolvedAndEsclatedPersons: false,
-      involvePersonsSelected: false,
-
-      // Loading
-      loading: false,
-
-      AllUsers: [],
-      isCounterInvolved: false,
-      // Five WHY
-      fiveWhytoggle: false,
-      reportIdInvestigation: '',
-
-      fiveWhyKeyFindings: '',
-      fiveWhyKeyrootCauses: [],
-      fiveWhyKeycontributoryCauses: [],
-
-      // Potiential Risk
-      potientialRisk: 9,
-      // Esclated to
-      exclateToArr: [],
-      fiveWhyQuestion: [],
-      fiveWhyAnswer: [],
-      repeatedSors: [],
-      fiveWHYdata: [],
-      contributoryCauses: '',
-      rootCauses: '',
-      keyFindingss: '',
-      keyFindings: '',
-      commentAttachmentLoading: false,
       // Reassign to
       reAssignToArr: [],
       exclateToTags: [],
