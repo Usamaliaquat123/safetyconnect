@@ -359,7 +359,10 @@ const ViewSOR = (props: ViewSORProps) => {
       const {data}: any = await createApi.createApi().getSors(projectid, e[i]);
       const {data: res} = data;
 
-      setrepeatedSors((prevState) => {
+      console.log('props.route.params.data');
+      console.log(props.route.params.data);
+      setrepeatedSors((prevState: any) => {
+        // console.log('prevState state hahdadhja on line 363');
         console.log(prevState);
         // return {...prevState.repeatedSors.concat(res.report[0])};
       });
@@ -809,7 +812,7 @@ const ViewSOR = (props: ViewSORProps) => {
           setfileloading(true);
         }
 
-        fileuploader(res.orgType, res.orgType, res.uri, this.state.orgId).then(
+        fileuploader(res.orgType, res.orgType, res.uri, orgId).then(
           (filename: any) => {
             imgData['name'] = filename;
             if (commentAttach == true) {
@@ -2195,22 +2198,20 @@ const ViewSOR = (props: ViewSORProps) => {
                     style={{fontSize: wp(3), width: wp(50)}}
                     multiline={true}
                     value={commentText}
-                    onChange={(e) => {
+                    onChangeText={(e) => {
                       // mentionComment
 
-                      if (filterLocation(e.nativeEvent.text) != null) {
+                      if (filterLocation(e) != null) {
                         setcommentsSugg(
                           searchInSuggestions(
-                            filterLocation(e.nativeEvent.text)[0].split('@')[1],
+                            filterLocation(e)[0].split('@')[1],
                             involvedPerson,
                           ),
                         );
-                        setcommentMentionReplace(
-                          filterLocation(e.nativeEvent.text)[0],
-                        );
+                        setcommentMentionReplace(filterLocation(e)[0]);
                       }
 
-                      this.setState({commentText: e.nativeEvent.text});
+                      setcommentText(e);
                     }}
                     placeholder={'Your comment here '}
                   />
@@ -2222,9 +2223,7 @@ const ViewSOR = (props: ViewSORProps) => {
                       flexDirection: 'row',
                     }}>
                     <TouchableOpacity
-                      onPress={() =>
-                        this.openDoc(this.state.commentAttachment, true)
-                      }
+                      onPress={() => openDoc(commentAttachment, true)}
                       style={{
                         backgroundColor: colors.lightBlue,
                         padding: wp(2),
@@ -2348,12 +2347,11 @@ const ViewSOR = (props: ViewSORProps) => {
                                   />
                                   <TouchableOpacity
                                     onPress={() => {
-                                      var arr = [
-                                        ...this.state.commentAttachment,
-                                      ].filter((j) => j != d);
-                                      this.setState({
-                                        commentAttachment: arr,
-                                      });
+                                      var arr = [...commentAttachment].filter(
+                                        (j) => j != d,
+                                      );
+
+                                      setcommentAttachment(arr);
                                     }}
                                     style={{
                                       position: 'absolute',
@@ -2415,12 +2413,10 @@ const ViewSOR = (props: ViewSORProps) => {
 
                                     <TouchableOpacity
                                       onPress={() => {
-                                        var arr = [
-                                          ...this.state.commentAttachment,
-                                        ].filter((j) => j != d);
-                                        this.setState({
-                                          commentAttachment: arr,
-                                        });
+                                        var arr = [...commentAttachment].filter(
+                                          (j) => j != d,
+                                        );
+                                          setcommentAttachment(arr);,
                                       }}
                                       style={{
                                         position: 'absolute',
@@ -2769,10 +2765,7 @@ const ViewSOR = (props: ViewSORProps) => {
               value={involveAndNotifiedUsersName}
               onChange={(v: any) => {
                 setaddInvolvedandNotifiedUsers(
-                  searchInSuggestions(
-                    v.nativeEvent.text,
-                    this.state.involvedPerson,
-                  ),
+                  searchInSuggestions(v.nativeEvent.text, involvedPerson),
                 );
                 setinvolveAndNotifiedUsersName(v.nativeEvent.text);
               }}
