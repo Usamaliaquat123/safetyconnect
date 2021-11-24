@@ -77,15 +77,6 @@ export interface CreateSORProps {
   reduxState: any;
 }
 
-// const CreateSOR  = () => {
-
-
-
-
-// }
-
-
-
 class CreateSOR extends React.Component<CreateSORProps, any> {
   constructor(props: any) {
     super(props);
@@ -409,8 +400,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               .createApi()
               .getProject(currentProj, user.data.data._id)
               .then((res: any) => {
-                console.log('res of involved users');
+                console.log('res of PROJECT USERS');
                 console.log(res);
+
                 this.setState({
                   involved_persons: res.data.data.involved_persons,
                 });
@@ -736,9 +728,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             // this
 
             if (severity.length !== 0) {
-              console.log('yahhhh h     this.state.actionRecommendations');
-              console.log(this.state.actionRecommendations);
-
               if (
                 this.state.actionRecommendations.filter(
                   (d: any) => d.selected == true,
