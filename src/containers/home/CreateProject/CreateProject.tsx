@@ -240,6 +240,8 @@ const CreateProject = (props: CreateProjectProps) => {
 
             setloading(false);
 
+            console.log(gol);
+
             if (props.route.params?.users != undefined) {
               props.reduxActions.createProject(
                 data,

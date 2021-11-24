@@ -85,7 +85,7 @@ class MeetBefore extends React.Component<MeetBeforeProps, any> {
                   user.data.data.organizations[0].projects[0].project_id,
                 );
                 savedCurrentProject(
-                  user.data.data.organizations[0].projects[0].project_id,
+                  user.data.data.organizations[0].projects[0].project_id._id,
                 );
                 AsyncStorage.setItem('email', this.props.route.params.email);
                 this.setState({errorModal: false, loading: false});

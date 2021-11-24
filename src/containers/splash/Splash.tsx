@@ -59,7 +59,7 @@ export default class Splash extends React.Component<SplashProps, any> {
                 savedCurrentOrganization(res.data.data.organizations[0]._id);
                 if (res.data.data.organizations[0].projects.length != 0) {
                   savedCurrentProject(
-                    res.data.data.organizations[0].projects[0].project_id,
+                    res.data.data.organizations[0].projects[0].project_id._id,
                   );
                   this.props.navigation.dispatch(
                     CommonActions.reset({
