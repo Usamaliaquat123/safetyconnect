@@ -170,8 +170,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       potientialRiskS: '',
       potientialRiskL: '',
       currentTime: Date.now(),
-
       resubmitToSuggUsers: [],
+      projectLeaders: [],
+      secondaryProjectL: [],
     };
   }
 
@@ -401,8 +402,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               .getProject(currentProj, user.data.data._id)
               .then((res: any) => {
                 console.log('res of PROJECT USERS');
-                console.log(res);
+                console.log(res.data.data);
 
+                this.setState({
+                  projectLeaders: res.data.data.project_leader,
+                  secondaryProjectL: res.data.data.secondary_leader,
+                });
+
+                //
                 this.setState({
                   involved_persons: res.data.data.involved_persons,
                 });
