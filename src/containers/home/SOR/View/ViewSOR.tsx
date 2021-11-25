@@ -186,6 +186,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   }
 
   componentDidMount = () => {
+    console.log('this.props.route.params.data.created_by[0]');
+    console.log(this.props.route.params.data);
     // this.props.start(false, this.scrollView);
     if (this.props.route.params.data.esclate_to != undefined) {
       this.setState({esclate_to: this.props.route.params.data.esclate_to});
@@ -1186,7 +1188,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   <TextInput
                     editable={
                       this.state.user.email ==
-                      this.props.route.params.data.created_by[0]
+                      this.props.route.params.data.created_by
                         ? true
                         : false
                     }
@@ -1457,7 +1459,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         <Chart
                           isEditable={
                             this.state.user.email ==
-                            this.props.route.params.data.created_by[0]
+                            this.props.route.params.data.created_by
                               ? true
                               : false
                           }
@@ -1724,9 +1726,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       }}
                       editable={
                         this.state.user.email ==
-                          this.props.route.params.data.created_by[0] ||
+                          this.props.route.params.data.created_by ||
                         this.state.user.email ==
-                          this.props.route.params.data.submit_to
+                          this.props.route.params.data.submit_to[0]
                           ? true
                           : false
                       }
@@ -2836,10 +2838,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 console.log();
 
                                 if (
-                                  email ===
+                                  email ==
                                     this.props.route.params.data.created_by ||
-                                  email ===
-                                    this.props.route.params.data.submit_to
+                                  email ==
+                                    this.props.route.params.data.submit_to[0]
                                 ) {
                                   if (
                                     this.state.actionsAndRecommendations.filter(
