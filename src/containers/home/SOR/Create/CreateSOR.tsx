@@ -404,6 +404,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 console.log('res of PROJECT USERS');
                 console.log(res.data.data);
 
+                console.log('line 409');
+
                 this.setState({
                   projectLeaders: res.data.data.project_leader,
                   secondaryProjectL: res.data.data.secondary_leader,
@@ -2267,13 +2269,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       ]}>
                       <TextInput
                         onFocus={() => {
-                          this.setState({
-                            selectedInputIndex: 4,
-                            submitToArr: searchInSuggestions(
-                              '',
-                              this.state.involved_persons,
-                            ),
-                          });
+                          console.log(this.state.involved_persons);
+                          // this.setState({
+                          //   selectedInputIndex: 4,
+                          //   submitToArr: searchInSuggestions(
+                          //     '',
+                          //     this.state.involved_persons,
+                          //   ),
+                          // });
 
                           // if (this.state.actionsTags.length == 0) {
                           //   this.state.actionsTags.push(
@@ -2288,13 +2291,31 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           if (v === '') {
                             this.setState({submitToArr: [], submitTo: v});
                           } else {
-                            this.setState({
-                              submitToArr: searchInSuggestions(
-                                v.toLowerCase(),
-                                this.state.involved_persons,
-                              ),
-                              submitTo: v,
-                            });
+                            console.log('damahsjdhsj');
+
+                            // if(this.state.projectLeaders.length != 0 ){
+                            //   this.state.involved_persons.map((i: any) =>
+                            //   this.state.projectLeaders.filter(
+                            //     (d) => d.email == i.email,
+                            //   ),
+                            // ),
+                            // }else{
+
+                            // }
+                            console.log(v);
+                            // this.state.involved_persons.map(
+                            //   (d) =>
+                            //     d.email == this.state.projectLeaders.map(d),
+                            // );
+                            // console.log(this.state.involved_persons);
+
+                            // this.setState({
+                            //   submitToArr: searchInSuggestions(
+                            //     v.toLowerCase(),
+                            //     this.state.involved_persons,
+                            //   ),
+                            //   submitTo: v,
+                            // });
                           }
                         }}
                         value={this.state.submitTo}
@@ -2302,6 +2323,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     </View>
                   )}
 
+                  {/* submitted to suggested users  */}
                   {this.state.submitToArr.length != 0 ? (
                     <View style={styles.involveSuggestCont}>
                       {this.state.submitToArr.map(

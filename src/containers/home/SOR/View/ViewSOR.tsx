@@ -2814,83 +2814,83 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             onPress={() => {
                               AsyncStorage.getItem('email').then((email) => {
                                 console.log();
-                                if (
-                                  this.state.actionsAndRecommendations.filter(
-                                    (d: any) => d.status == 'In Progress',
-                                  ).length != 0
-                                ) {
-                                  // Some validations is left
 
+                                if (
+                                  email ==
+                                    this.props.route.params.data.created_by ||
+                                  email ==
+                                    this.props.route.params.data.submit_to
+                                ) {
                                   if (
                                     this.state.actionsAndRecommendations.filter(
-                                      (d: any) =>
-                                        d.justification.content !== ' ',
-                                    )
+                                      (d: any) => d.status == 'In Progress',
+                                    ).length != 0
                                   ) {
-                                    console.log('completed yahoo');
+                                    // Some validations is left
 
-                                    // t
-                                    console.log('justification');
-                                    console.log(
-                                      this.state.actionsAndRecommendations,
-                                    );
-                                    this.setState({
-                                      // loading: true,
-                                      errorModal: true,
-                                      errHeadingText: 'Actions validations ',
-                                      errDesText: 'Add the justification',
-                                    });
-                                  } else {
-                                    this.setState({
-                                      // loading: true,
-                                      errorModal: true,
-                                      errHeadingText: 'Actions validations ',
-                                      errDesText:
-                                        'Actions should be completed or rejected',
-                                    });
-                                  }
-                                } else {
-                                  if (
-                                    email ==
-                                    this.props.route.params.data.created_by
-                                  ) {
-                                    if (this.state.fiveWhytoggle == true) {
-                                      if (
-                                        this.state.fiveWhyQuestion.length == 5
-                                      ) {
-                                        // if()
-                                        this.onSubmitUpdateSor(5);
-                                      } else {
-                                        this.setState({
-                                          errorModal: true,
-                                          errHeadingText: 'Minimum 5 why ',
-                                          errDesText:
-                                            'minimum 5 why should be added..!',
-                                        });
-                                      }
+                                    if (
+                                      this.state.actionsAndRecommendations.filter(
+                                        (d: any) =>
+                                          d.justification.content !== ' ',
+                                      )
+                                    ) {
+                                      this.setState({
+                                        // loading: true,
+                                        errorModal: true,
+                                        errHeadingText: 'Actions validations ',
+                                        errDesText: 'Add the justification',
+                                      });
                                     } else {
-                                      this.onSubmitUpdateSor(5);
+                                      this.setState({
+                                        // loading: true,
+                                        errorModal: true,
+                                        errHeadingText: 'Actions validations ',
+                                        errDesText:
+                                          'Actions should be completed or rejected',
+                                      });
                                     }
                                   } else {
-                                    if (this.state.fiveWhytoggle == true) {
-                                      if (
-                                        this.state.fiveWhyQuestion.length == 5
-                                      ) {
-                                        this.onSubmitUpdateSor(4);
+                                    if (
+                                      email ==
+                                      this.props.route.params.data.created_by
+                                    ) {
+                                      if (this.state.fiveWhytoggle == true) {
+                                        if (
+                                          this.state.fiveWhyQuestion.length == 5
+                                        ) {
+                                          // if()
+                                          this.onSubmitUpdateSor(5);
+                                        } else {
+                                          this.setState({
+                                            errorModal: true,
+                                            errHeadingText: 'Minimum 5 why ',
+                                            errDesText:
+                                              'minimum 5 why should be added..!',
+                                          });
+                                        }
                                       } else {
-                                        this.setState({
-                                          errorModal: true,
-                                          errHeadingText: 'Minimum 5 why ',
-                                          errDesText:
-                                            'minimum 5 why should be added..!',
-                                        });
+                                        this.onSubmitUpdateSor(5);
                                       }
                                     } else {
-                                      this.onSubmitUpdateSor(4);
+                                      if (this.state.fiveWhytoggle == true) {
+                                        if (
+                                          this.state.fiveWhyQuestion.length == 5
+                                        ) {
+                                          this.onSubmitUpdateSor(4);
+                                        } else {
+                                          this.setState({
+                                            errorModal: true,
+                                            errHeadingText: 'Minimum 5 why ',
+                                            errDesText:
+                                              'minimum 5 why should be added..!',
+                                          });
+                                        }
+                                      } else {
+                                        this.onSubmitUpdateSor(4);
+                                      }
                                     }
                                   }
                                 }
-
                                 // this.props.route.params.data.action_required.filter(
                                 //   (d) => d.justification.content === '',
                                 // );
