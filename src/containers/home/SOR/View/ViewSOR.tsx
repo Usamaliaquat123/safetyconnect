@@ -676,7 +676,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
         this.setState({comments: sortedActivities});
         // this.setState({});
-        // this.openDoc();
+        // this.openDoc()
 
         this.state.comments.map((comment: any, i: number) => {
           console.log('comment hai ye');
@@ -1184,6 +1184,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </Text>
                 <View>
                   <TextInput
+                    editable={
+                      this.state.user.email ==
+                      this.props.route.params.data.created_by[0]
+                        ? true
+                        : false
+                    }
                     multiline={true}
                     value={this.state.observation}
                     onChange={(e) => {
@@ -1449,6 +1455,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     {this.state.selectedRisk == false ? (
                       <View>
                         <Chart
+                          isEditable= {     this.state.user.email ==
+                            this.props.route.params.data.created_by[0]  ? true : false}
                           liklihood={this.state.liklihood}
                           severity={this.state.severity}
                           style={{marginTop: wp(3)}}
@@ -2816,9 +2824,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                 console.log();
 
                                 if (
-                                  email ==
+                                  email ===
                                     this.props.route.params.data.created_by ||
-                                  email ==
+                                  email ===
                                     this.props.route.params.data.submit_to
                                 ) {
                                   if (

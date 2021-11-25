@@ -1632,6 +1632,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     </View>
 
                     <Chart
+                    isEditable={true}
                       liklihood={this.state.liklihood}
                       severity={this.state.severity}
                       // style={{marginTop: wp(1)}}

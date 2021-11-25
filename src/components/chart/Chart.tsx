@@ -15,6 +15,7 @@ interface Props {
   severity: Array<Object> | any;
   liklihood: Array<Object> | any;
   style?: Object;
+  isEditable: Boolean;
   onPress: Function;
 }
 
@@ -72,18 +73,21 @@ const Chart = (props: Props) => {
               <View key={i}>
                 <TouchableOpacity
                   onPress={() => {
-                    var likelihoodarr: Array<any> = [...liklihood];
-                    likelihoodarr.map((b: object, j: number) => {
-                      if (likelihoodarr[j] == d) {
-                        likelihoodarr[j].selected = !likelihoodarr[j].selected;
-                      } else {
-                        likelihoodarr[j].selected = false;
-                      }
-                    });
-                    setliklihood(likelihoodarr);
+                    if (props.isEditable == true) {
+                      var likelihoodarr: Array<any> = [...liklihood];
+                      likelihoodarr.map((b: object, j: number) => {
+                        if (likelihoodarr[j] == d) {
+                          likelihoodarr[j].selected = !likelihoodarr[j]
+                            .selected;
+                        } else {
+                          likelihoodarr[j].selected = false;
+                        }
+                      });
+                      setliklihood(likelihoodarr);
 
-                    console.log(likelihoodarr);
-                    props.onPress({liklihood: d});
+                      console.log(likelihoodarr);
+                      props.onPress({liklihood: d});
+                    }
                   }}
                   style={[
                     {
@@ -245,16 +249,18 @@ const Chart = (props: Props) => {
                 <View key={i}>
                   <TouchableOpacity
                     onPress={() => {
-                      var severityArr: Array<any> = [...severity];
-                      severityArr.map((b: object, j: number) => {
-                        if (severityArr[j] == d) {
-                          severityArr[j].selected = !severityArr[j].selected;
-                        } else {
-                          severityArr[j].selected = false;
-                        }
-                      });
-                      setseverity(severityArr);
-                      props.onPress({severity: d});
+                      if (props.isEditable == true) {
+                        var severityArr: Array<any> = [...severity];
+                        severityArr.map((b: object, j: number) => {
+                          if (severityArr[j] == d) {
+                            severityArr[j].selected = !severityArr[j].selected;
+                          } else {
+                            severityArr[j].selected = false;
+                          }
+                        });
+                        setseverity(severityArr);
+                        props.onPress({severity: d});
+                      }
                     }}
                     style={[
                       {
