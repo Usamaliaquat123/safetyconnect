@@ -1972,8 +1972,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     {this.state.attachments.length < 6 && (
                       <TouchableOpacity
                         onPress={() => {
-                          if (this.state.attachments.length < 6) {
-                            this.openDoc(this.state.attachments, false);
+                          if (
+                            this.props.route.params.data.created_by ==
+                            this.state.user.email
+                          ) {
+                            if (this.state.attachments.length < 6) {
+                              this.openDoc(this.state.attachments, false);
+                            }
                           }
                         }}
                         style={{marginTop: wp(3), flexDirection: 'row'}}>
@@ -2046,6 +2051,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               ),
                             });
                           }}
+                          editable={
+                            this.props.route.params.data.created_by ==
+                            this.state.user.email
+                              ? true
+                              : false
+                          }
                           underlineColorAndroid="transparent"
                           onChangeText={(v: any) => {
                             if (v === '') {
@@ -2158,6 +2169,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             this.state.involved_person,
                           ),
                         })
+                      }
+                      editable={
+                        this.props.route.params.data.created_by ==
+                        this.state.user.email
+                          ? true
+                          : false
                       }
                       underlineColorAndroid="transparent"
                       onChangeText={(v: any) => {
