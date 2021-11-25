@@ -1455,8 +1455,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     {this.state.selectedRisk == false ? (
                       <View>
                         <Chart
-                          isEditable= {     this.state.user.email ==
-                            this.props.route.params.data.created_by[0]  ? true : false}
+                          isEditable={
+                            this.state.user.email ==
+                            this.props.route.params.data.created_by[0]
+                              ? true
+                              : false
+                          }
                           liklihood={this.state.liklihood}
                           severity={this.state.severity}
                           style={{marginTop: wp(3)}}
@@ -1713,10 +1717,18 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     <TextInput
                       onFocus={() => this.setState({notifiedAndInv: 3})}
                       maxLength={500}
-                      onChangeText={(e) =>
+                      onChangeText={(e) => {
                         this.setState({
                           actionsAndRecommendationText: e,
-                        })
+                        });
+                      }}
+                      editable={
+                        this.state.user.email ==
+                          this.props.route.params.data.created_by[0] ||
+                        this.state.user.email ==
+                          this.props.route.params.data.submit_to
+                          ? true
+                          : false
                       }
                       value={this.state.actionsAndRecommendationText}
                       multiline={true}
