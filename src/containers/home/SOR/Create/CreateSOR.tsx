@@ -414,13 +414,21 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 // location supervisors
 
                 console.log('lcoations ');
-                console.log(
-                  res.data.data.p_locations.map(
-                    (l) => l.name == this.state.selectedProject.project_name,
+                console.log(this.state.selectedLocation);
+                // console.log(
+                res.data.data.p_locations
+                  .filter((l) => l.name == this.state.selectedLocation.name)[0]
+                  .supervisor.map((ll) =>
+                    createApi
+                      .createApi()
+                      .getUser(ll)
+                      .then((u) => {
+                        this.state.subAndEsclatedU.push(u.data.data);
+                      }),
                   ),
-                );
+                  // );
 
-                console.log('res of PROJECT USERS');
+                  console.log('res of PROJECT USERS');
                 console.log(res.data.data);
 
                 console.log('line 409');
@@ -2289,14 +2297,14 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       ]}>
                       <TextInput
                         onFocus={() => {
-                          console.log(this.state.involved_persons);
-                          // this.setState({
-                          //   selectedInputIndex: 4,
-                          //   submitToArr: searchInSuggestions(
-                          //     '',
-                          //     this.state.involved_persons,
-                          //   ),
-                          // });
+                          console.log(this.state.subAndEsclatedU);
+                          this.setState({
+                            selectedInputIndex: 4,
+                            submitToArr: searchInSuggestions(
+                              '',
+                              this.state.subAndEsclatedU,
+                            ),
+                          });
 
                           // if (this.state.actionsTags.length == 0) {
                           //   this.state.actionsTags.push(
@@ -2323,19 +2331,19 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                             // }
                             console.log(v);
-                            // this.state.involved_persons.map(
-                            //   (d) =>
-                            //     d.email == this.state.projectLeaders.map(d),
-                            // );
-                            // console.log(this.state.involved_persons);
+                            this.state.involved_persons.map(
+                              (d) =>
+                                d.email == this.state.projectLeaders.map(d),
+                            );
+                            console.log(this.state.involved_persons);
 
-                            // this.setState({
-                            //   submitToArr: searchInSuggestions(
-                            //     v.toLowerCase(),
-                            //     this.state.involved_persons,
-                            //   ),
-                            //   submitTo: v,
-                            // });
+                            this.setState({
+                              submitToArr: searchInSuggestions(
+                                v.toLowerCase(),
+                                this.state.involved_persons,
+                              ),
+                              submitTo: v,
+                            });
                           }
                         }}
                         value={this.state.submitTo}
@@ -2412,7 +2420,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 order={10}
                 name="copNotifiedTo">
                 <WalkthroughableView>
-                  <Text style={styles.sbBtnText}>Notified only </Text>
+                  <Text style={styles.sbBtnText}>Esclated To </Text>
                   <View
                     style={[
                       styles.optnselector,
@@ -2426,7 +2434,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           selectedInputIndex: 5,
                           exclateToArr: searchInSuggestions(
                             '',
-                            this.state.involved_persons,
+                            this.state.subAndEsclatedU,
                           ),
                         })
                       }
