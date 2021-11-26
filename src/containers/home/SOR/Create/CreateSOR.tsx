@@ -171,8 +171,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       potientialRiskL: '',
       currentTime: Date.now(),
       resubmitToSuggUsers: [],
-      projectLeaders: [],
-      secondaryProjectL: [],
+      subAndEsclatedU: [],
     };
   }
 
@@ -401,6 +400,26 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               .createApi()
               .getProject(currentProj, user.data.data._id)
               .then((res: any) => {
+                // Add Admin
+                this.state.subAndEsclatedU.push(user.data.data);
+                // Add all project leaders
+                res.data.data.project_leader.map((d: any) => {
+                  createApi
+                    .createApi()
+                    .getUser(d)
+                    .then((usr: any) => {
+                      this.state.subAndEsclatedU.push(usr.data.data);
+                    });
+                });
+                // location supervisors
+
+                console.log('lcoations ');
+                console.log(
+                  res.data.data.p_locations.map(
+                    (l) => l.name == this.state.selectedProject.project_name,
+                  ),
+                );
+
                 console.log('res of PROJECT USERS');
                 console.log(res.data.data);
 
@@ -1632,7 +1651,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     </View>
 
                     <Chart
-                    isEditable={true}
+                      isEditable={true}
                       liklihood={this.state.liklihood}
                       severity={this.state.severity}
                       // style={{marginTop: wp(1)}}

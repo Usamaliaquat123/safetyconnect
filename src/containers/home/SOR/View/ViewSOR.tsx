@@ -200,8 +200,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         this.props.route.params.data.potential_risk.severity,
     });
 
-    console.log('this.props.route.params.data');
-    console.log(this.props.route.params.data);
 
     if (
       this.props.route.params.data.submit_to[0] == this.state.user.email &&
@@ -247,7 +245,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               .getProject(currentProj, user.data.data._id)
               .then((res: any) => {
                 this.setState({projectName: res.data.data.project_name});
+                console.log(res.data.data)
 
+
+                
                 //     var data: Array<any> = [];
                 //     this.props.route.params.data.involved_persons.map((d: any) => {
                 //       if (
