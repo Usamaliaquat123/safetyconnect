@@ -201,7 +201,7 @@ class Signup extends React.Component<SignupProps, any> {
               }
             });
         }
-      } else {
+    } else {
         this.setState({error: true});
       }
     } else {
@@ -209,7 +209,7 @@ class Signup extends React.Component<SignupProps, any> {
     }
   }
 
-  continuewithgoogle = async () => {
+  continuewithgoogle = async () => {\
     try {
       let user = await Auth.federatedSignIn({provider: 'Google'});
       console.log(user);
