@@ -2426,32 +2426,28 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         : null,
                     ]}>
                     <TextInput
-                      onFocus={() =>
-                      {
-                        
-
-
-                      
-                        
+                      onFocus={() => {
                         this.setState({
                           selectedInputIndex: 5,
                           exclateToArr: searchInSuggestions(
                             '',
-                            this.state.subAndEsclatedU.filter((d) => d != "locationsupervisor")
+                            this.state.subAndEsclatedU.filter(
+                              (d) => d.type != 'locationsupervisor',
+                            ),
                           ),
-                        })}
-                      }
+                        });
+                      }}
                       underlineColorAndroid="transparent"
                       onChangeText={(v: any) => {
                         if (v === '') {
                           this.setState({exclateToArr: [], esclateTo: v});
                         } else {
-
-
                           this.setState({
                             exclateToArr: searchInSuggestions(
                               v.toLowerCase(),
-                              this.state.subAndEsclatedU.filter((d) => d != "locationsupervisor"),
+                              this.state.subAndEsclatedU.filter(
+                                (d) => d.type != 'locationsupervisor',
+                              ),
                             ),
                             esclateTo: v,
                           });

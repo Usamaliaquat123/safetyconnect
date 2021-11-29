@@ -2033,7 +2033,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                             this.setState({
                               reAssignToArr: searchInSuggestions(
                                 '',
-                                this.state.involved_person,
+                                this.state.subAndEsclatedU,
                               ),
                             });
                           }}
@@ -2054,7 +2054,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               this.setState({
                                 reAssignToArr: searchInSuggestions(
                                   v.toLowerCase(),
-                                  this.state.involved_person,
+                                  this.state.subAndEsclatedU,
                                 ),
                                 reassignToText: v,
                               });
@@ -2152,7 +2152,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           selectedInputIndex: 5,
                           exclateToArr: searchInSuggestions(
                             '',
-                            this.state.involved_person,
+                            this.state.subAndEsclatedU.filter(
+                              (d) => d.type != 'locationsupervisor',
+                            ),
                           ),
                         })
                       }
@@ -2170,7 +2172,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           this.setState({
                             exclateToArr: searchInSuggestions(
                               v.toLowerCase(),
-                              this.state.involved_person,
+                              this.state.subAndEsclatedU.filter(
+                                (d) => d.type != 'locationsupervisor',
+                              ),
                             ),
                             esclateTo: v,
                           });
