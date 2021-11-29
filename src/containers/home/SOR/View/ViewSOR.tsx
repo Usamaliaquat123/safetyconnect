@@ -3239,8 +3239,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               this.state.actionsAndRecommendations[
                 this.state.allActionsEditIndex
               ].is_complete = false;
-              console.log(this.state.actionsAndRecommendations);
-              console.log(this.state.allActionsEditIndex);
+
+               
               this.setState({SuggestionPop: !this.state.SuggestionPop});
             }}
             isView={false}
@@ -3248,7 +3248,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             currentUser={this.state.user}
             allSuggestions={this.state.actionsAndRecommendations}
             submitToAndObserverEmails={this.state.submitToAndObserverEmails}
-            isOpen={this.state.SuggestionPop}
+            isOpen={this.state.SuggestionPop} 
             suggestions={this.state.allActionsEdit}
             save={(d: any) => {
               if (this.state.newActions == true) {
