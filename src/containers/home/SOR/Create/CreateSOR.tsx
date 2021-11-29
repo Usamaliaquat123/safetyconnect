@@ -384,7 +384,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               .then((res: any) => {
                 // Add Admin
 
-                user.data.data['type'] = "current"
+                user.data.data['type'] = 'current';
                 this.state.subAndEsclatedU.push(user.data.data);
                 // Add all project leaders
                 res.data.data.project_leader.map((d: any) => {
@@ -2247,13 +2247,50 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           // All Users
                           var validatedData = [...this.state.subAndEsclatedU];
 
-                          this.setState({
-                            selectedInputIndex: 4,
-                            submitToArr: searchInSuggestions(
-                              '',
-                              this.state.subAndEsclatedU,
-                            ),
-                          });
+                          console.log('line 2250');
+                          console.log(validatedData);
+
+                          if (
+                            validatedData.filter(
+                              (d) => d.type == 'locationsupervisor',
+                            ).length == 0
+                          ) {
+                            if (
+                              validatedData.filter(
+                                (d) => d.type == 'projectleader',
+                              ).length == 0
+                            ) {
+                              this.setState({
+                                selectedInputIndex: 4,
+                                submitToArr: searchInSuggestions(
+                                  '',
+                                  validatedData.filter(
+                                    (d) => d.type == 'current',
+                                  ),
+                                ),
+                              });
+                            } else {
+                              this.setState({
+                                selectedInputIndex: 4,
+                                submitToArr: searchInSuggestions(
+                                  '',
+                                  validatedData.filter(
+                                    (d) => d.type == 'projectleader',
+                                  ),
+                                ),
+                              });
+                            }
+                          } else {
+                            this.setState({
+                              selectedInputIndex: 4,
+                              submitToArr: searchInSuggestions(
+                                '',
+                                validatedData.filter(
+                                  (d) => d.type == 'locationsupervisor',
+                                ),
+                              ),
+                            });
+                          }
                         }}
                         style={styles.optnselectorText}
                         placeholder={'Select or Type Name'}
@@ -2262,13 +2299,49 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           if (v === '') {
                             this.setState({submitToArr: [], submitTo: v});
                           } else {
-                            this.setState({
-                              submitToArr: searchInSuggestions(
-                                v.toLowerCase(),
-                                this.state.subAndEsclatedU,
-                              ),
-                              submitTo: v,
-                            });
+                            // All Users
+                            var validatedData = [...this.state.subAndEsclatedU];
+                            if (
+                              validatedData.filter(
+                                (d) => d.type == 'locationsupervisor',
+                              ).length == 0
+                            ) {
+                              if (
+                                validatedData.filter(
+                                  (d) => d.type == 'projectleader',
+                                ).length == 0
+                              ) {
+                                this.setState({
+                                  selectedInputIndex: 4,
+                                  submitToArr: searchInSuggestions(
+                                    v.toLowerCase(),
+                                    validatedData.filter(
+                                      (d) => d.type == 'current',
+                                    ),
+                                  ),
+                                });
+                              } else {
+                                this.setState({
+                                  selectedInputIndex: 4,
+                                  submitToArr: searchInSuggestions(
+                                    v.toLowerCase(),
+                                    validatedData.filter(
+                                      (d) => d.type == 'projectleader',
+                                    ),
+                                  ),
+                                });
+                              }
+                            } else {
+                              this.setState({
+                                selectedInputIndex: 4,
+                                submitToArr: searchInSuggestions(
+                                  v.toLowerCase(),
+                                  validatedData.filter(
+                                    (d) => d.type == 'locationsupervisor',
+                                  ),
+                                ),
+                              });
+                            }
                           }
                         }}
                         value={this.state.submitTo}
@@ -2288,7 +2361,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                                 submitToArr: [],
                                 submitTo: '',
                               });
-
                               if (
                                 this.state.submitToTags.filter(
                                   (v: involved_persons) => v == d,
@@ -2355,23 +2427,31 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     ]}>
                     <TextInput
                       onFocus={() =>
+                      {
+                        
+
+
+                      
+                        
                         this.setState({
                           selectedInputIndex: 5,
                           exclateToArr: searchInSuggestions(
                             '',
-                            this.state.subAndEsclatedU,
+                            this.state.subAndEsclatedU.filter((d) => d != "locationsupervisor")
                           ),
-                        })
+                        })}
                       }
                       underlineColorAndroid="transparent"
                       onChangeText={(v: any) => {
                         if (v === '') {
                           this.setState({exclateToArr: [], esclateTo: v});
                         } else {
+
+
                           this.setState({
                             exclateToArr: searchInSuggestions(
                               v.toLowerCase(),
-                              this.state.subAndEsclatedU,
+                              this.state.subAndEsclatedU.filter((d) => d != "locationsupervisor"),
                             ),
                             esclateTo: v,
                           });

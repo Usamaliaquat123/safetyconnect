@@ -176,7 +176,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       commentMentionReplace: '',
       projectId: '',
       closed: false,
-      excludingSubmitCreatedByUsers: [],
+      subAndEsclatedU: [],
     };
 
     this.animation = React.createRef();
@@ -192,14 +192,12 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     if (this.props.route.params.data.esclate_to != undefined) {
       this.setState({esclate_to: this.props.route.params.data.esclate_to});
     }
-    // var excludingSubmitCreatedByUsers = [];
 
     this.setState({
       potientialRisk:
         this.props.route.params.data.potential_risk.likelihood *
         this.props.route.params.data.potential_risk.severity,
     });
-
 
     if (
       this.props.route.params.data.submit_to[0] == this.state.user.email &&
@@ -244,49 +242,36 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               .createApi()
               .getProject(currentProj, user.data.data._id)
               .then((res: any) => {
-                this.setState({projectName: res.data.data.project_name});
-                console.log(res.data.data)
+                // current user
+                user.data.data['type'] = 'current';
+                this.state.subAndEsclatedU.push(user.data.data);
+                // Add all project leaders
+                res.data.data.project_leader.map((d: any) => {
+                  createApi
+                    .createApi()
+                    .getUser(d)
+                    .then((usr: any) => {
+                      usr.data.data['type'] = 'projectleader';
+                      this.state.subAndEsclatedU.push(usr.data.data);
+                    });
+                });
 
-
-                
-                //     var data: Array<any> = [];
-                //     this.props.route.params.data.involved_persons.map((d: any) => {
-                //       if (
-                //         res.data.data.involved_persons.filter((i: any) => i.email == d)
-                //           .length == 0
-                //       ) {
-                //         createApi
-                //           .createApi()
-                //           .getUser(d)
-                //           .then((res: any) => {
-                //             if (res.data.message === 'no user exists') {
-                //               this.state.involvedPerson.push({
-                //                 name: d,
-                //                 email: d,
-                //                 img_url:
-                //                   'https://dummyimage.com/600x400/ffffff/000000&text=@',
-                //               });
-                //             } else {
-                //               this.state.involvedPerson.push({
-                //                 name: res.data.data.name,
-                //                 img_url: res.data.data.img_url,
-                //                 email: res.data.data.email,
-                //               });
-                //             }
-                //           })
-                //           .catch((err: any) => {});
-                //       } else {
-                //         this.state.involvedPerson.push(
-                //           res.data.data.involved_persons.filter(
-                //             (i: any) => i.email == d,
-                //           )[0],
-                //         );
-                //       }
-                //     });
-
-                //     for (let i = 0; i < res.data.data.involved_persons.length; i++) {
-                //       res.data.data.involved_persons[i]['selected'] = false;
-                //     }
+                // location  supervisors
+                res.data.data.p_locations
+                  .filter(
+                    (l: any) => l.name == this.state.selectedLocation.name,
+                  )[0]
+                  .supervisor.map((ll: any) =>
+                    createApi
+                      .createApi()
+                      .getUser(ll)
+                      .then((u: any) => {
+                        u.data.data['type'] = 'locationsupervisor';
+                        this.state.subAndEsclatedU.push(u.data.data);
+                      }),
+                  ),
+                  this.setState({projectName: res.data.data.project_name});
+                console.log(res.data.data);
 
                 this.setState({
                   involved_person: res.data.data.involved_persons,
