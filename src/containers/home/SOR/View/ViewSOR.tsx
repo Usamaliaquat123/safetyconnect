@@ -1730,30 +1730,35 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         //   this.state.actionsAndRecommendationText,
                         // );
                         if (this.state.actionsAndRecommendationText !== '') {
-                          var members = [];
-                          members.push(
-                            this.props.route.params.data.submit_to[0],
-                          );
 
-                          members.push(this.props.route.params.data.created_by);
-                          this.setState({
-                            allActionsEdit: {
-                              is_complete: true,
-                              is_selected: false,
-                              content: this.state.actionsAndRecommendationText,
-                              assigned_to: [],
-                              // actionsAndRecommendationText: '',
-                              dueDate: moment().format('YYYY-MM-DD'),
-                              status: 'InProgress',
-                              category: 'Elimination',
-                            },
-                            actionsAndRecommendationText: '',
-                            // this.setState({})
-                            submitToAndObserverEmails: members,
-                            // ne
-                            SuggestionPop: true,
-                            newActions: true,
-                          });
+
+                          if(this.state.user.email == this.props.route.params.data.created_by || this.state.user.email  == this.props.route.params.data.submit_to[0]){
+                            var members = [];
+                            members.push(
+                              this.props.route.params.data.submit_to[0],
+                            );
+  
+                            members.push(this.props.route.params.data.created_by);
+                            this.setState({
+                              allActionsEdit: {
+                                is_complete: true,
+                                is_selected: false,
+                                content: this.state.actionsAndRecommendationText,
+                                assigned_to: [],
+                                // actionsAndRecommendationText: '',
+                                dueDate: moment().format('YYYY-MM-DD'),
+                                status: 'InProgress',
+                                category: 'Elimination',
+                              },
+                              actionsAndRecommendationText: '',
+                              // this.setState({})
+                              submitToAndObserverEmails: members,
+                              // ne
+                              SuggestionPop: true,
+                              newActions: true,
+                            });
+                          }
+                         
                         }
                       }}
                       style={styles.arrowRightActionsAndRecommendations}>
