@@ -383,6 +383,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               .getProject(currentProj, user.data.data._id)
               .then((res: any) => {
                 // Add Admin
+
+                user.data.data['type'] = "current"
                 this.state.subAndEsclatedU.push(user.data.data);
                 // Add all project leaders
                 res.data.data.project_leader.map((d: any) => {
@@ -390,6 +392,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     .createApi()
                     .getUser(d)
                     .then((usr: any) => {
+                      usr.data.data['type'] = 'projectleader';
                       this.state.subAndEsclatedU.push(usr.data.data);
                     });
                 });
@@ -405,6 +408,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       .createApi()
                       .getUser(ll)
                       .then((u) => {
+                        u.data.data['type'] = 'locationsupervisor';
                         this.state.subAndEsclatedU.push(u.data.data);
                       }),
                   ),
@@ -2240,6 +2244,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       ]}>
                       <TextInput
                         onFocus={() => {
+                          // All Users
+                          var validatedData = [...this.state.subAndEsclatedU];
+
                           this.setState({
                             selectedInputIndex: 4,
                             submitToArr: searchInSuggestions(
@@ -2247,7 +2254,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               this.state.subAndEsclatedU,
                             ),
                           });
-
                         }}
                         style={styles.optnselectorText}
                         placeholder={'Select or Type Name'}
@@ -2256,9 +2262,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           if (v === '') {
                             this.setState({submitToArr: [], submitTo: v});
                           } else {
-
- 
-
                             this.setState({
                               submitToArr: searchInSuggestions(
                                 v.toLowerCase(),
@@ -2656,7 +2659,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </TouchableOpacity>
             </View>
           </Animated.View>
-        
 
           <FlashMessage ref="myLocalFlashMessage" />
 
@@ -2745,7 +2747,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 }}>
                 Select Your Date
               </Text>
-              <View style={{}}>
+              <View>
                 <Text
                   style={{
                     position: 'absolute',
