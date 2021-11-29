@@ -304,24 +304,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       });
   };
 
-  processStorageList(result: any) {
-    let files: any = [];
-    let folders = new Set();
-    result.forEach((res: any) => {
-      if (res.size) {
-        files.push(res);
-        // sometimes files declare a folder with a / within then
-        let possibleFolder = res.key.split('/').slice(0, -1).join('/');
-        if (possibleFolder) {
-          folders.add(possibleFolder);
-        }
-      } else {
-        folders.add(res.key);
-      }
-    });
-    return {files, folders};
-  }
-
   componentDidMount = () => {
     // this.props.start(false, this.scrollView);
     getCurrentProject().then((currentProj: any) => {
@@ -478,6 +460,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     this.setState({repeatedSorModal: false});
     // this.props.navigation.navigate('ViewAllSOr');
   };
+  // Preview sor
   preview = () => {
     var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
     var severity = this.state.severity.filter((d: any) => d.selected == true);
@@ -531,6 +514,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
     this.props.navigation.navigate('Preview', {data});
   };
+  // severuty and liklihood
   mappingMapping = (sev: number, lik: number) => {
     this.state.liklihood.map((d: any, i: number) => {
       if (sev == d.value) {
@@ -548,7 +532,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     });
     this.setState({});
   };
-
+  // on create sor
   onCreateSor = (status: number) => {
     var uploadedfiles = [];
     var sorbtns = this.state.classifySorbtns.filter(
@@ -1206,6 +1190,22 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     }
   };
 
+  // select Project and get locations
+  selectProjGetLocation = (projId: any) => {
+    createApi
+      .createApi()
+      .getLocations(projId._id)
+      .then((resp: any) => {
+        this.setState({
+          selectedProject: projId.project_id,
+          selectedLocation: resp.data.data.p_locations[0],
+          allLocations: resp.data.data.p_locations,
+          allProjectsSugg: [],
+          projectid: projId._id,
+        });
+      });
+  };
+
   render() {
     return (
       <Animated.View style={[styles.container]}>
@@ -1257,45 +1257,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 </TouchableOpacity>
 
                 {this.state.allProjectsSugg.length != 0 && (
-                  <ScrollView
-                    style={{
-                      // top: wp(20),
-                      borderRadius: wp(1),
-                      borderColor: colors.textOpa,
-                      width: wp(42),
-                      borderWidth: wp(0.2),
-                      // position: 'absolute',
-                      // paddingTop: 60,
-                      // marginTop: 0,
-
-                      backgroundColor: colors.secondary,
-                      maxHeight: wp(40),
-                    }}>
+                  <ScrollView style={styles.containerAllProjects}>
                     {this.state.allProjectsSugg.map((d: any) => (
                       <TouchableOpacity
-                        style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          padding: wp(3),
-                        }}
-                        onPress={() => {
-                          createApi
-                            .createApi()
-                            .getLocations(d.project_id._id)
-                            .then((resp: any) => {
-                              console.log('resp');
-                              console.log(resp);
-
-                              console.log(d);
-                              this.setState({
-                                selectedProject: d.project_id,
-                                selectedLocation: resp.data.data.p_locations[0],
-                                allLocations: resp.data.data.p_locations,
-                                allProjectsSugg: [],
-                                projectid: d.project_id._id,
-                              });
-                            });
-                        }}>
+                        style={styles.selectProjectC}
+                        onPress={() =>
+                          this.selectProjGetLocation(d.project_id)
+                        }>
                         <Icon
                           name={'stats-chart-sharp'}
                           type={'ionicon'}
@@ -1303,11 +1271,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           size={wp(3)}
                           containerStyle={{marginRight: wp(3)}}
                         />
-                        <Text
-                          style={{
-                            fontSize: wp(3),
-                            fontFamily: fonts.SFuiDisplayMedium,
-                          }}>
+                        <Text style={styles.selectedProjName}>
                           {d.project_name}
                         </Text>
                       </TouchableOpacity>
@@ -1344,27 +1308,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 </TouchableOpacity>
 
                 {this.state.allLocationsSugg.length != 0 && (
-                  <ScrollView
-                    style={{
-                      // top: wp(20),
-                      borderRadius: wp(1),
-                      borderColor: colors.textOpa,
-                      width: wp(42),
-                      borderWidth: wp(0.2),
-                      // position: 'absolute',
-                      // paddingTop: 60,
-                      // marginTop: 0,
-
-                      backgroundColor: colors.secondary,
-                      maxHeight: wp(40),
-                    }}>
+                  <ScrollView style={styles.containerLocation}>
                     {this.state.allLocationsSugg.map((d: any) => (
                       <TouchableOpacity
-                        style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          padding: wp(3),
-                        }}
+                        style={styles.selectLocationC}
                         onPress={() => {
                           this.setState({
                             allLocationsSugg: [],
@@ -1378,11 +1325,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           size={wp(3)}
                           containerStyle={{marginRight: wp(3)}}
                         />
-                        <Text
-                          style={{
-                            fontSize: wp(3),
-                            fontFamily: fonts.SFuiDisplayMedium,
-                          }}>
+                        <Text style={styles.selectedLocationName}>
                           {d.name}
                         </Text>
                       </TouchableOpacity>
@@ -2297,7 +2240,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       ]}>
                       <TextInput
                         onFocus={() => {
-                          console.log(this.state.subAndEsclatedU);
                           this.setState({
                             selectedInputIndex: 4,
                             submitToArr: searchInSuggestions(
@@ -2306,11 +2248,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                             ),
                           });
 
-                          // if (this.state.actionsTags.length == 0) {
-                          //   this.state.actionsTags.push(
-                          //     this.state.actionRecommendations[0],
-                          //   );
-                          // }
                         }}
                         style={styles.optnselectorText}
                         placeholder={'Select or Type Name'}
@@ -2319,28 +2256,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           if (v === '') {
                             this.setState({submitToArr: [], submitTo: v});
                           } else {
-                            console.log('damahsjdhsj');
 
-                            // if(this.state.projectLeaders.length != 0 ){
-                            //   this.state.involved_persons.map((i: any) =>
-                            //   this.state.projectLeaders.filter(
-                            //     (d) => d.email == i.email,
-                            //   ),
-                            // ),
-                            // }else{
-
-                            // }
-                            console.log(v);
-                            this.state.involved_persons.map(
-                              (d) =>
-                                d.email == this.state.projectLeaders.map(d),
-                            );
-                            console.log(this.state.involved_persons);
+ 
 
                             this.setState({
                               submitToArr: searchInSuggestions(
                                 v.toLowerCase(),
-                                this.state.involved_persons,
+                                this.state.subAndEsclatedU,
                               ),
                               submitTo: v,
                             });
@@ -2416,7 +2338,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               {/* notified only */}
 
               <CopilotStep
-                text="Report you want to Notified to"
+                text="Report you want to Esclated  to"
                 order={10}
                 name="copNotifiedTo">
                 <WalkthroughableView>
@@ -2446,7 +2368,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           this.setState({
                             exclateToArr: searchInSuggestions(
                               v.toLowerCase(),
-                              this.state.involved_persons,
+                              this.state.subAndEsclatedU,
                             ),
                             esclateTo: v,
                           });
@@ -2734,17 +2656,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </TouchableOpacity>
             </View>
           </Animated.View>
-          {/* 
-          <Modal isVisible={this.state.sucessModal}>
-            <View style={styles.modelContainer}>
-              <View>
-                <Text style={styles.errHeadPop}>SOR submitted</Text>
-                <Text style={styles.errEmailPassDesc}>
-                  sor has been sucessfully created
-                </Text>
-              </View>
-            </View>
-          </Modal> */}
+        
 
           <FlashMessage ref="myLocalFlashMessage" />
 

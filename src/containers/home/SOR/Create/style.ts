@@ -745,6 +745,56 @@ const styles = StyleSheet.create({
     marginTop: wp(3),
     fontSize: wp(3),
   },
+
+  // Select Locations
+  containerLocation: {
+    // top: wp(20),
+    borderRadius: wp(1),
+    borderColor: colors.textOpa,
+    width: wp(42),
+    borderWidth: wp(0.2),
+    // position: 'absolute',
+    // paddingTop: 60,
+    // marginTop: 0,
+
+    backgroundColor: colors.secondary,
+    maxHeight: wp(40),
+  },
+
+  selectLocationC: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: wp(3),
+  },
+
+  selectedLocationName: {
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
+
+  // Select project
+  containerAllProjects: {
+    // top: wp(20),
+    borderRadius: wp(1),
+    borderColor: colors.textOpa,
+    width: wp(42),
+    borderWidth: wp(0.2),
+    // position: 'absolute',
+    // paddingTop: 60,
+    // marginTop: 0,
+
+    backgroundColor: colors.secondary,
+    maxHeight: wp(40),
+  },
+  selectProjectC: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: wp(3),
+  },
+  selectedProjName: {
+    fontSize: wp(3),
+    fontFamily: fonts.SFuiDisplayMedium,
+  },
 });
 
 export default styles;
