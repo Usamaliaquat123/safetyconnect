@@ -52,6 +52,7 @@ export type MessagingPropsT = {
 const Messaging = (props: MessagingProps) => {
   const [Loading, setLoading] = useState<Boolean>(false);
   const [users, setUsers] = useState<Array<any>>([]);
+  const [allUsers, setallUsers] = useState([]);
   const [groupUsers, setGroupUsers] = useState<Array<any>>([]);
   const [currentUser, setcurrentUser] = useState<any>({});
   const [token, setToken] = useState<string>();
@@ -252,14 +253,13 @@ const Messaging = (props: MessagingProps) => {
             .createApi()
             .getAllChats(res.data.data._id, orgId)
             .then((res: any) => {
-              console.log('asdsads');
+              console.log('line 265');
               console.log(res.data);
               // console.log(res.data.allChats);
+
               var usr = [];
               var groups = [];
               for (let i = 0; i < res.data.allChats.length; i++) {
-                console.log('all data up here');
-                console.log(res.data.allChats[i]);
                 if (res.data.allChats[i]?.roomType != undefined) {
                   console.log('room type');
 
@@ -286,13 +286,14 @@ const Messaging = (props: MessagingProps) => {
                       userId: res.data.allChats[i].userA._id,
                     };
                     usr.push(ur);
+                  } else {
+                    allUsers.push(res.data.allChats[i]);
                   }
                 }
 
                 // usr.push(user);
               }
 
-              console.log(usr);
               setUsers(usr);
               setGroupUsers(groups);
               // console.log(usr);
@@ -562,7 +563,7 @@ const Messaging = (props: MessagingProps) => {
         isGroupModal={isGroupModal}
         setisGroupModal={() => setisGroupModal(false)}
         createGroup={onCreateGroup}
-        users={users}
+        users={allUsers}
       />
       {/* Create single chat Modal */}
       <SingleChat
@@ -570,7 +571,7 @@ const Messaging = (props: MessagingProps) => {
         isChatModal={isChatModal}
         setisChatModal={() => setisChatModal(false)}
         createChat={onCreateChat}
-        users={users}
+        users={allUsers}
       />
     </View>
   );
