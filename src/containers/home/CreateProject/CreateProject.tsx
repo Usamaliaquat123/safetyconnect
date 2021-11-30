@@ -227,6 +227,7 @@ const CreateProject = (props: CreateProjectProps) => {
 
             var data = {
               created_by: email,
+              sors: [],
               project_name: projectName,
               // involved_persons: members.map((d: any) => d._id),
               locations: assignLocations.map((d) => d.name),

@@ -291,6 +291,9 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       .createApi()
       .observationSuggestions(str, this.state.projectid)
       .then((res: any) => {
+        console.log('res');
+        console.log(res);
+        console.log(res);
         if (res.status == 200) {
           console.log(res.data.results);
           if (res.data.results.length != 0) {

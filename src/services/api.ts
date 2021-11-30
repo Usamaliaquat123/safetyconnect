@@ -15,7 +15,7 @@ import {BASE_URI} from '../../env_debug';
 
 const createApi = (
   baseURL: string = `${BASE_URI}:12222/`,
-  obsbaseUrl: string = `${BASE_URI}:5003`,
+  obsbaseUrl: string = `${BASE_URI}:5003/`,
   repBaseAi: string = `${BASE_URI}:5002/`,
   baseAi: string = `${BASE_URI}:5004/`,
   // External aws api
