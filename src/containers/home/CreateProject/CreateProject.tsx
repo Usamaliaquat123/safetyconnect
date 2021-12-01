@@ -243,6 +243,10 @@ const CreateProject = (props: CreateProjectProps) => {
 
             console.log(gol);
 
+            console.log(data);
+            console.log(organizationId);
+            console.log(gol.map((d) => d.email));
+
             if (props.route.params?.users != undefined) {
               props.reduxActions.createProject(
                 data,
