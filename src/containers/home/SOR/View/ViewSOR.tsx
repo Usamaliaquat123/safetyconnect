@@ -177,6 +177,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       projectId: '',
       closed: false,
       subAndEsclatedU: [],
+      actionvalidUsers: [],
     };
 
     this.animation = React.createRef();
@@ -223,6 +224,17 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           .createApi()
           .getUser(d)
           .then((res: any) => {
+            createApi
+              .createApi()
+              .getUser(this.props.route.params.data.created_by)
+              .then((cb: any) => {
+                this.state.actionvalidUsers.push({
+                  name: cb.data.data.name,
+                  img_url: cb.data.data.img_url,
+                  email: cb.data.data.email,
+                });
+              });
+
             this.state.involvedPerson.push({
               name: res.data.data.name,
               img_url: res.data.data.img_url,
@@ -246,6 +258,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
                 // current user
                 user.data.data['type'] = 'current';
+
                 this.state.subAndEsclatedU.push(user.data.data);
                 // Add all project leaders
                 res.data.data.project_leader.map((d: any) => {
@@ -269,6 +282,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       .getUser(ll)
                       .then((u: any) => {
                         u.data.data['type'] = 'locationsupervisor';
+                        this.state.actionvalidUsers.push(u.data.data);
                         this.state.subAndEsclatedU.push(u.data.data);
                       }),
                   ),
@@ -1621,86 +1635,91 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     )}
                   </View>
 
-                  <View
-                    style={[
-                      styles.addActionAndRecommendation,
-                      this.state.notifiedAndInv == 3
-                        ? {borderColor: colors.green}
-                        : {borderColor: colors.lightGrey},
-                    ]}>
-                    <TextInput
-                      onFocus={() => this.setState({notifiedAndInv: 3})}
-                      maxLength={500}
-                      onChangeText={(e) => {
-                        this.setState({
-                          actionsAndRecommendationText: e,
-                        });
-                      }}
-                      editable={
-                        this.state.user.email ==
-                          this.props.route.params.data.created_by ||
-                        this.state.user.email ==
-                          this.props.route.params.data.submit_to[0]
-                          ? true
-                          : false
-                      }
-                      value={this.state.actionsAndRecommendationText}
-                      multiline={true}
-                      style={styles.textaddActionContainer}
-                      placeholder={'Add action / recommendation here'}
-                    />
-
-                    <TouchableOpacity
-                      onPress={() => {
-                        // this.submitActionsAndRecommendations(
-                        //   this.state.actionsAndRecommendationText,
-                        // );
-                        if (this.state.actionsAndRecommendationText !== '') {
-                          if (
-                            this.state.user.email ==
-                              this.props.route.params.data.created_by ||
-                            this.state.user.email ==
-                              this.props.route.params.data.submit_to[0]
-                          ) {
-                            var members = [];
-                            members.push(
-                              this.props.route.params.data.submit_to[0],
-                            );
-
-                            members.push(
-                              this.props.route.params.data.created_by,
-                            );
-                            this.setState({
-                              allActionsEdit: {
-                                is_complete: true,
-                                is_selected: false,
-                                content: this.state
-                                  .actionsAndRecommendationText,
-                                assigned_to: [],
-                                // actionsAndRecommendationText: '',
-                                dueDate: moment().format('YYYY-MM-DD'),
-                                status: 'InProgress',
-                                category: 'Elimination',
-                              },
-                              actionsAndRecommendationText: '',
-                              // this.setState({})
-                              submitToAndObserverEmails: members,
-                              // ne
-                              SuggestionPop: true,
-                              newActions: true,
-                            });
-                          }
+                  {this.state.user.email ==
+                    this.props.route.params.data.created_by ||
+                  this.state.user.email ==
+                    this.props.route.params.data.submit_to[0] ? (
+                    <View
+                      style={[
+                        styles.addActionAndRecommendation,
+                        this.state.notifiedAndInv == 3
+                          ? {borderColor: colors.green}
+                          : {borderColor: colors.lightGrey},
+                      ]}>
+                      <TextInput
+                        onFocus={() => this.setState({notifiedAndInv: 3})}
+                        maxLength={500}
+                        onChangeText={(e) => {
+                          this.setState({
+                            actionsAndRecommendationText: e,
+                          });
+                        }}
+                        editable={
+                          this.state.user.email ==
+                            this.props.route.params.data.created_by ||
+                          this.state.user.email ==
+                            this.props.route.params.data.submit_to[0]
+                            ? true
+                            : false
                         }
-                      }}
-                      style={styles.arrowRightActionsAndRecommendations}>
-                      <Icon
-                        size={wp(4)}
-                        name="arrowright"
-                        type="antdesign"
-                        color={colors.primary}
+                        value={this.state.actionsAndRecommendationText}
+                        multiline={true}
+                        style={styles.textaddActionContainer}
+                        placeholder={'Add action / recommendation here'}
                       />
-                    </TouchableOpacity>
-                  </View>
+
+                      <TouchableOpacity
+                        onPress={() => {
+                          // this.submitActionsAndRecommendations(
+                          //   this.state.actionsAndRecommendationText,
+                          // );
+                          if (this.state.actionsAndRecommendationText !== '') {
+                            if (
+                              this.state.user.email ==
+                                this.props.route.params.data.created_by ||
+                              this.state.user.email ==
+                                this.props.route.params.data.submit_to[0]
+                            ) {
+                              var members = [];
+                              members.push(
+                                this.props.route.params.data.submit_to[0],
+                              );
+
+                              members.push(
+                                this.props.route.params.data.created_by,
+                              );
+                              this.setState({
+                                allActionsEdit: {
+                                  is_complete: true,
+                                  is_selected: false,
+                                  content: this.state
+                                    .actionsAndRecommendationText,
+                                  assigned_to: [],
+                                  // actionsAndRecommendationText: '',
+                                  dueDate: moment().format('YYYY-MM-DD'),
+                                  status: 'InProgress',
+                                  category: 'Elimination',
+                                },
+                                actionsAndRecommendationText: '',
+                                // this.setState({})
+                                submitToAndObserverEmails: members,
+                                // ne
+                                SuggestionPop: true,
+                                newActions: true,
+                              });
+                            }
+                          }
+                        }}
+                        style={styles.arrowRightActionsAndRecommendations}>
+                        <Icon
+                          size={wp(4)}
+                          name="arrowright"
+                          type="antdesign"
+                          color={colors.primary}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  ) : null}
                 </WalkthroughableView>
               </CopilotStep>
             ) : null}
@@ -1955,237 +1974,250 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 </WalkthroughableView>
               </CopilotStep>
               {/* REASSIGNED to  */}
-              <CopilotStep
-                text="Report want to resassign someone "
-                order={10}
-                name="copReportReAssignedTo">
-                <WalkthroughableView style={{marginTop: wp(4)}}>
-                  <Text style={styles.sbBtnText}>Re-assign to </Text>
-                  {this.state.reAssignToArrTags.length < 1 ? (
-                    <>
-                      <View style={[styles.optnselector]}>
-                        <TextInput
-                          onFocus={() => {
-                            this.setState({
-                              reAssignToArr: searchInSuggestions(
-                                '',
-                                this.state.subAndEsclatedU,
-                              ),
-                            });
-                          }}
-                          editable={
-                            this.props.route.params.data.created_by ==
-                            this.state.user.email
-                              ? true
-                              : false
-                          }
-                          underlineColorAndroid="transparent"
-                          onChangeText={(v: any) => {
-                            if (v === '') {
-                              this.setState({
-                                reAssignToArr: [],
-                                reassignToText: v,
-                              });
-                            } else {
+
+              {this.props.route.params.data.submit_to[0] ==
+              this.state.user.email ? (
+                <CopilotStep
+                  text="Report want to resassign someone "
+                  order={10}
+                  name="copReportReAssignedTo">
+                  <WalkthroughableView style={{marginTop: wp(4)}}>
+                    <Text style={styles.sbBtnText}>Resubmit to </Text>
+                    {this.state.reAssignToArrTags.length < 1 ? (
+                      <>
+                        <View style={[styles.optnselector]}>
+                          <TextInput
+                            onFocus={() => {
                               this.setState({
                                 reAssignToArr: searchInSuggestions(
-                                  v.toLowerCase(),
+                                  '',
                                   this.state.subAndEsclatedU,
                                 ),
-                                reassignToText: v,
                               });
+                            }}
+                            editable={
+                              this.props.route.params.data.submit_to[0] ==
+                              this.state.user.email
+                                ? true
+                                : false
                             }
-                          }}
-                          placeholder={'Select or Type Name'}
-                          style={styles.optnselectorText}
-                          value={this.state.reassignToText}
-                        />
-                      </View>
-
-                      {this.state.reAssignToArr.length != 0 ? (
-                        <View>
-                          <View style={styles.involveSuggestCont}>
-                            {this.state.reAssignToArr.map(
-                              (d: involved_persons, i: number) => (
-                                <TouchableOpacity
-                                  key={i}
-                                  onPress={() => {
-                                    this.setState({
-                                      reassignToText: '',
-                                      reAssignToArr: [],
-                                    });
-
-                                    if (
-                                      this.state.reAssignToArr.filter(
-                                        (v: involved_persons) => v == d,
-                                      ).length != 0
-                                    ) {
-                                      this.state.reAssignToArrTags.push(d);
-                                    } else {
-                                      return null;
-                                    }
-                                  }}
-                                  style={[
-                                    styles.involvePsuggCont,
-                                    this.state.reAssignToArr.length == i + 1
-                                      ? {borderBottomWidth: wp(0)}
-                                      : null,
-                                  ]}>
-                                  <Avatar
-                                    containerStyle={{marginRight: wp(3)}}
-                                    rounded
-                                    source={{
-                                      uri: d.img_url,
-                                    }}
-                                  />
-                                  <View>
-                                    <Text style={styles.involvePSt}>
-                                      {d.name}
-                                    </Text>
-                                    <Text style={{fontSize: wp(2)}}>
-                                      {d.email}
-                                    </Text>
-                                  </View>
-                                </TouchableOpacity>
-                              ),
-                            )}
-                          </View>
+                            underlineColorAndroid="transparent"
+                            onChangeText={(v: any) => {
+                              if (v === '') {
+                                this.setState({
+                                  reAssignToArr: [],
+                                  reassignToText: v,
+                                });
+                              } else {
+                                this.setState({
+                                  reAssignToArr: searchInSuggestions(
+                                    v.toLowerCase(),
+                                    this.state.subAndEsclatedU,
+                                  ),
+                                  reassignToText: v,
+                                });
+                              }
+                            }}
+                            placeholder={'Select or Type Name'}
+                            style={styles.optnselectorText}
+                            value={this.state.reassignToText}
+                          />
                         </View>
-                      ) : null}
-                    </>
-                  ) : null}
-                  <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                    <Tags
-                      onClose={(d: any) => {
-                        this.setState({
-                          reAssignToArrTags: this.state.reAssignToArrTags.filter(
-                            (v: any) => v !== d,
-                          ),
-                        });
-                      }}
-                      tags={this.state.reAssignToArrTags}
-                    />
-                  </View>
-                </WalkthroughableView>
-              </CopilotStep>
-              {/* ESCLATED TO  */}
-              <CopilotStep
-                text="Esclated to report "
-                order={11}
-                name="copEsclatedTo">
-                <WalkthroughableView>
-                  <Text style={styles.sbBtnText}>Esclated to </Text>
-                  <View
-                    style={[
-                      styles.optnselector,
-                      this.state.selectedInputIndex == 5
-                        ? {borderColor: colors.green}
-                        : null,
-                    ]}>
-                    <TextInput
-                      onFocus={() =>
-                        this.setState({
-                          selectedInputIndex: 5,
-                          exclateToArr: searchInSuggestions(
-                            '',
-                            this.state.subAndEsclatedU.filter(
-                              (d) => d.type != 'locationsupervisor',
-                            ),
-                          ),
-                        })
-                      }
-                      editable={
-                        this.props.route.params.data.created_by ==
-                        this.state.user.email
-                          ? true
-                          : false
-                      }
-                      underlineColorAndroid="transparent"
-                      onChangeText={(v: any) => {
-                        if (v === '') {
-                          this.setState({esclateTo: v, exclateToArr: []});
-                        } else {
+
+                        {this.state.reAssignToArr.length != 0 ? (
+                          <View>
+                            <View style={styles.involveSuggestCont}>
+                              {this.state.reAssignToArr.map(
+                                (d: involved_persons, i: number) => (
+                                  <TouchableOpacity
+                                    key={i}
+                                    onPress={() => {
+                                      this.setState({
+                                        reassignToText: '',
+                                        reAssignToArr: [],
+                                      });
+
+                                      if (
+                                        this.state.reAssignToArr.filter(
+                                          (v: involved_persons) => v == d,
+                                        ).length != 0
+                                      ) {
+                                        this.state.reAssignToArrTags.push(d);
+                                      } else {
+                                        return null;
+                                      }
+                                    }}
+                                    style={[
+                                      styles.involvePsuggCont,
+                                      this.state.reAssignToArr.length == i + 1
+                                        ? {borderBottomWidth: wp(0)}
+                                        : null,
+                                    ]}>
+                                    <Avatar
+                                      containerStyle={{marginRight: wp(3)}}
+                                      rounded
+                                      source={{
+                                        uri: d.img_url,
+                                      }}
+                                    />
+                                    <View>
+                                      <Text style={styles.involvePSt}>
+                                        {d.name}
+                                      </Text>
+                                      <Text style={{fontSize: wp(2)}}>
+                                        {d.email}
+                                      </Text>
+                                    </View>
+                                  </TouchableOpacity>
+                                ),
+                              )}
+                            </View>
+                          </View>
+                        ) : null}
+                      </>
+                    ) : null}
+                    <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                      <Tags
+                        onClose={(d: any) => {
                           this.setState({
+                            reAssignToArrTags: this.state.reAssignToArrTags.filter(
+                              (v: any) => v !== d,
+                            ),
+                          });
+                        }}
+                        tags={this.state.reAssignToArrTags}
+                      />
+                    </View>
+                  </WalkthroughableView>
+                </CopilotStep>
+              ) : null}
+
+              {/* ESCLATED TO  */}
+              {this.props.route.params.data.submit_to[0] ==
+              this.state.user.email ? (
+                <CopilotStep
+                  text="Esclated to report "
+                  order={11}
+                  name="copEsclatedTo">
+                  <WalkthroughableView>
+                    <Text style={styles.sbBtnText}>Esclated to </Text>
+                    <View
+                      style={[
+                        styles.optnselector,
+                        this.state.selectedInputIndex == 5
+                          ? {borderColor: colors.green}
+                          : null,
+                      ]}>
+                      <TextInput
+                        onFocus={() =>
+                          this.setState({
+                            selectedInputIndex: 5,
                             exclateToArr: searchInSuggestions(
-                              v.toLowerCase(),
+                              '',
                               this.state.subAndEsclatedU.filter(
                                 (d) => d.type != 'locationsupervisor',
                               ),
                             ),
-                            esclateTo: v,
-                          });
+                          })
                         }
-                      }}
-                      placeholder={'Select or Type Name'}
-                      style={styles.optnselectorText}
-                      value={this.state.esclateTo}
-                    />
-                  </View>
-
-                  {this.state.exclateToArr.length != 0 ? (
-                    <View>
-                      <View style={styles.involveSuggestCont}>
-                        {this.state.exclateToArr.map(
-                          (d: involved_persons, i: number) => (
-                            <TouchableOpacity
-                              key={i}
-                              onPress={() => {
-                                this.setState({
-                                  esclateTo: '',
-                                  exclateToArr: this.state.exclateToArr.filter(
-                                    (item: any) => {
-                                      return item !== d;
-                                    },
-                                  ),
-                                });
-                                if (
-                                  this.state.exclateToArr.filter(
-                                    (v: involved_persons) => v == d,
-                                  ).length != 0
-                                ) {
-                                  this.state.esclate_to.push(d.email);
-                                } else {
-                                  return null;
-                                }
-                              }}
-                              style={[
-                                styles.involvePsuggCont,
-                                this.state.exclateToArr.length == i + 1
-                                  ? {borderBottomWidth: wp(0)}
-                                  : null,
-                              ]}>
-                              <Avatar
-                                containerStyle={{marginRight: wp(3)}}
-                                rounded
-                                source={{
-                                  uri: d.img_url,
-                                }}
-                              />
-                              <View>
-                                <Text style={styles.involvePSt}>{d.name}</Text>
-                                <Text style={{fontSize: wp(2)}}>{d.email}</Text>
-                              </View>
-                            </TouchableOpacity>
-                          ),
-                        )}
-                      </View>
+                        editable={
+                          this.props.route.params.data.submit_to[0] ==
+                          this.state.user.email
+                            ? true
+                            : false
+                        }
+                        underlineColorAndroid="transparent"
+                        onChangeText={(v: any) => {
+                          if (v === '') {
+                            this.setState({esclateTo: v, exclateToArr: []});
+                          } else {
+                            this.setState({
+                              exclateToArr: searchInSuggestions(
+                                v.toLowerCase(),
+                                this.state.subAndEsclatedU.filter(
+                                  (d) => d.type != 'locationsupervisor',
+                                ),
+                              ),
+                              esclateTo: v,
+                            });
+                          }
+                        }}
+                        placeholder={'Select or Type Name'}
+                        style={styles.optnselectorText}
+                        value={this.state.esclateTo}
+                      />
                     </View>
-                  ) : null}
-                  <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
-                    <Tags
-                      type={'esclatedTotags'}
-                      onClose={(d: any) => {
-                        this.setState({
-                          esclate_to: this.state.esclate_to.filter(
-                            (v: any) => v !== d,
-                          ),
-                        });
-                      }}
-                      tags={this.state.esclate_to}
-                    />
-                  </View>
-                </WalkthroughableView>
-              </CopilotStep>
+
+                    {this.state.exclateToArr.length != 0 ? (
+                      <View>
+                        <View style={styles.involveSuggestCont}>
+                          {this.state.exclateToArr.map(
+                            (d: involved_persons, i: number) => (
+                              <TouchableOpacity
+                                key={i}
+                                onPress={() => {
+                                  this.setState({
+                                    esclateTo: '',
+                                    exclateToArr: this.state.exclateToArr.filter(
+                                      (item: any) => {
+                                        return item !== d;
+                                      },
+                                    ),
+                                  });
+                                  if (
+                                    this.state.exclateToArr.filter(
+                                      (v: involved_persons) => v == d,
+                                    ).length != 0
+                                  ) {
+                                    this.state.esclate_to.push(d.email);
+                                  } else {
+                                    return null;
+                                  }
+                                }}
+                                style={[
+                                  styles.involvePsuggCont,
+                                  this.state.exclateToArr.length == i + 1
+                                    ? {borderBottomWidth: wp(0)}
+                                    : null,
+                                ]}>
+                                <Avatar
+                                  containerStyle={{marginRight: wp(3)}}
+                                  rounded
+                                  source={{
+                                    uri: d.img_url,
+                                  }}
+                                />
+                                <View>
+                                  <Text style={styles.involvePSt}>
+                                    {d.name}
+                                  </Text>
+                                  <Text style={{fontSize: wp(2)}}>
+                                    {d.email}
+                                  </Text>
+                                </View>
+                              </TouchableOpacity>
+                            ),
+                          )}
+                        </View>
+                      </View>
+                    ) : null}
+                    <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+                      <Tags
+                        type={'esclatedTotags'}
+                        onClose={(d: any) => {
+                          this.setState({
+                            esclate_to: this.state.esclate_to.filter(
+                              (v: any) => v !== d,
+                            ),
+                          });
+                        }}
+                        tags={this.state.esclate_to}
+                      />
+                    </View>
+                  </WalkthroughableView>
+                </CopilotStep>
+              ) : null}
+
               {/* Repeated sors */}
 
               {this.state.repeatedSors.length != 0 && (
@@ -3162,6 +3194,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
          */}
         {this.state.SuggestionPop == true && (
           <SuggestionsPop
+            actionvalidUsers={this.state.actionvalidUsers}
             suggestedUsers={this.state.involvedPerson}
             onClose={() => {
               this.state.actionsAndRecommendations[

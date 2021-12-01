@@ -39,6 +39,7 @@ export interface SuggestionsPopProps {
   discard: Function;
   suggestedUsers: Array<involved_persons>;
   allSuggestions: Array<any>;
+  actionvalidUsers?: Array<any>;
   submitToAndObserverEmails?: Array<string>;
 }
 
