@@ -68,7 +68,7 @@ export const createOrganization = (
             dispatch(loading(false));
             dispatch(error(false));
             navigation.navigate('createProject', {
-              users: unregisteredUser,
+              users: users,
             });
             // await createApi
             //   .createApi()

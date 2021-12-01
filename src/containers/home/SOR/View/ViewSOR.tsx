@@ -271,6 +271,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                       }),
                   ),
                   this.setState({projectName: res.data.data.project_name});
+                console.log('res.data.data on line 274');
                 console.log(res.data.data);
 
                 this.setState({
@@ -1730,20 +1731,26 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         //   this.state.actionsAndRecommendationText,
                         // );
                         if (this.state.actionsAndRecommendationText !== '') {
-
-
-                          if(this.state.user.email == this.props.route.params.data.created_by || this.state.user.email  == this.props.route.params.data.submit_to[0]){
+                          if (
+                            this.state.user.email ==
+                              this.props.route.params.data.created_by ||
+                            this.state.user.email ==
+                              this.props.route.params.data.submit_to[0]
+                          ) {
                             var members = [];
                             members.push(
                               this.props.route.params.data.submit_to[0],
                             );
-  
-                            members.push(this.props.route.params.data.created_by);
+
+                            members.push(
+                              this.props.route.params.data.created_by,
+                            );
                             this.setState({
                               allActionsEdit: {
                                 is_complete: true,
                                 is_selected: false,
-                                content: this.state.actionsAndRecommendationText,
+                                content: this.state
+                                  .actionsAndRecommendationText,
                                 assigned_to: [],
                                 // actionsAndRecommendationText: '',
                                 dueDate: moment().format('YYYY-MM-DD'),
@@ -1758,7 +1765,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               newActions: true,
                             });
                           }
-                         
                         }
                       }}
                       style={styles.arrowRightActionsAndRecommendations}>
@@ -3240,7 +3246,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                 this.state.allActionsEditIndex
               ].is_complete = false;
 
-               
               this.setState({SuggestionPop: !this.state.SuggestionPop});
             }}
             isView={false}
@@ -3248,7 +3253,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             currentUser={this.state.user}
             allSuggestions={this.state.actionsAndRecommendations}
             submitToAndObserverEmails={this.state.submitToAndObserverEmails}
-            isOpen={this.state.SuggestionPop} 
+            isOpen={this.state.SuggestionPop}
             suggestions={this.state.allActionsEdit}
             save={(d: any) => {
               if (this.state.newActions == true) {

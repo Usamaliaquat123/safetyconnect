@@ -617,18 +617,16 @@ const CreateProject = (props: CreateProjectProps) => {
                           color={colors.textOpa}
                         />
                       </View>
-                      {assignSuppervisor.length < 15 ? (
+                      {allAssignLeaders.length < 15 ? (
                         <View style={[styles.inputContainer]}>
                           <TextInput
                             style={styles.authInputs}
                             placeholder={'Enter name'}
                             onFocus={() => {
                               setassignSuppervisorText(
-                                setassignSuppervisorText(
-                                  searchInSuggestions(
-                                    '',
-                                    allAssignSuppervisorText,
-                                  ),
+                                searchInSuggestions(
+                                  '',
+                                  allAssignSuppervisorText,
                                 ),
                               );
                             }}
