@@ -242,6 +242,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
               .createApi()
               .getProject(currentProj, user.data.data._id)
               .then((res: any) => {
+                this.setState({projectName: res.data.data.project_name});
+
                 // current user
                 user.data.data['type'] = 'current';
                 this.state.subAndEsclatedU.push(user.data.data);
@@ -270,13 +272,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                         this.state.subAndEsclatedU.push(u.data.data);
                       }),
                   ),
-                  this.setState({projectName: res.data.data.project_name});
-                console.log('res.data.data on line 274');
-                console.log(res.data.data);
-
-                this.setState({
-                  involved_person: res.data.data.involved_persons,
-                });
+                  this.setState({
+                    involved_person: res.data.data.involved_persons,
+                  });
               })
               .catch((err) => {});
           });
@@ -536,79 +534,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
           }
         });
     }
-    // createApi
-    //   .createApi()
-    //   .updateSor(update)
-    //   .then((res) => {
-    //     if (res.status == 200) {
-    //       // add five why
-    //       if (this.state.fiveWhytoggle == true) {
-    //         this.setState({loading: false, errorModal: false});
-    //         // if five is not added previosly
-
-    //         if (this.props.route.params.data.justification.length == 0) {
-    //           // create five why
-
-    //           createApi
-    //             .createApi()
-    //             .createFiveWhy(obj)
-    //             .then((res: any) => {
-    //               setTimeout(() => {
-    //                 this.props.navigation.goBack();
-    //               }, 3000);
-    //               showMessage({
-    //                 message: 'SOR Report is sucessfully updated',
-    //                 type: 'success',
-    //                 position: 'bottom',
-    //               });
-    //             });
-    //         } else {
-    //           //update five why
-    //           var updatefiveWhy = {
-    //             justification: {
-    //               question: this.state.fiveWhyQuestion,
-    //               answer: this.state.fiveWhyAnswer,
-    //             },
-    //             project: this.state.projectId,
-    //             contributoryCauses: this.state.contributoryCauses,
-    //             rootCauses: this.state.rootCauses,
-    //             keyFindings: this.state.keyFindingss,
-    //             report: this.props.route.params.data._id,
-    //             user: this.state.user._id,
-    //             date: moment().format('MM-DD-YYYY'),
-    //           };
-
-    //           createApi
-    //             .createApi()
-    //             .createFiveWhy(updatefiveWhy)
-    //             .then((res) => {
-    //               showMessage({
-    //                 message: 'SOR Report is sucessfully updated',
-    //                 type: 'success',
-    //                 position: 'bottom',
-    //               });
-    //               setTimeout(() => {
-    //                 this.props.navigation.goBack();
-    //               }, 3000);
-    //             });
-    //         }
-
-    //         //   fiveWhyQuestion:
-    //         // fiveWhyAnswer:
-    //       } else {
-    //         this.setState({loading: false, errorModal: false});
-    //         setTimeout(() => {
-    //           showMessage({
-    //             message: 'SOR Report is sucessfully updated',
-    //             type: 'success',
-    //             position: 'bottom',
-    //           });
-    //         }, 3000);
-    //         this.props.navigation.goBack();
-    //       }
-    //     }
-    //   })
-    //   .catch((err) => {});
   };
 
   // delete comment through commentId
