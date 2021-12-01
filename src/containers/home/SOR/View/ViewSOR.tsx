@@ -3162,7 +3162,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
          */}
         {this.state.SuggestionPop == true && (
           <SuggestionsPop
-            suggestedUsers={this.state.involved_person}
+            suggestedUsers={this.state.involvedPerson}
             onClose={() => {
               this.state.actionsAndRecommendations[
                 this.state.allActionsEditIndex

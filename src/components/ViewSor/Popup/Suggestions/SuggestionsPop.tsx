@@ -47,6 +47,7 @@ export const searchInSuggestions = (
   strArray: Array<involved_persons>,
 ): Array<Object> => {
   var strArr = [];
+
   for (var j = 0; j < strArray.length; j++) {
     if (strArray[j].email.toLowerCase().match(str.toLowerCase())) {
       strArr.push(strArray[j]);

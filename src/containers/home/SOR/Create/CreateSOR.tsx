@@ -501,10 +501,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               (d: any) => d.selected === true,
             )[0]?.title,
       submit_to: this.state.submitToTags.map((d: any) => d.email),
-      escalate_to:
-        this.state.exclateToTags.length != 0
-          ? this.state.exclateToTags.map((d: any) => d.email)
-          : [],
+      // escalate_to:
+      //   this.state.exclateToTags.length != 0
+      //     ? this.state.exclateToTags.map((d: any) => d.email)
+      //     : [],
+      escalate_to: [],
       attachments:
         this.state.uploadedfiles.length == 0 ? [] : this.state.uploadedfiles,
       justification: [],
@@ -576,10 +577,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
 
                   location: this.state.observation,
                   submit_to: this.state.submitToTags.map((d: any) => d.email),
-                  escalate_to:
-                    this.state.exclateToTags.length != 0
-                      ? this.state.exclateToTags.map((d: any) => d.email)
-                      : [],
+                  // escalate_to:
+                  //   this.state.exclateToTags.length != 0
+                  //     ? this.state.exclateToTags.map((d: any) => d.email)
+                  //     : [],
+                  escalate_to: [],
                   status: this.state.exclateToTags.length == 0 ? status : 3,
                   attachments:
                     this.state.uploadedfiles.length == 0
@@ -2415,7 +2417,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               </CopilotStep>
               {/* notified only */}
 
-              <CopilotStep
+              {/* <CopilotStep
                 text="Report you want to Esclated  to"
                 order={10}
                 name="copNotifiedTo">
@@ -2522,7 +2524,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     />
                   </View>
                 </WalkthroughableView>
-              </CopilotStep>
+              </CopilotStep> */}
             </View>
 
             {/* Line  */}

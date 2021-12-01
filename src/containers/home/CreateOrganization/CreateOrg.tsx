@@ -153,10 +153,6 @@ const createOrg = (props: CreateOrgProps) => {
       setorgError(true);
     }
   };
-
-
-
-  
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
