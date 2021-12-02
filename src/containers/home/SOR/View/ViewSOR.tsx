@@ -320,6 +320,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
 
     this.getFiveWHY();
+    console.log();
     this.mappingMapping(
       this.props.route.params.data.risk.severity,
       this.props.route.params.data.risk.likelihood,
@@ -433,14 +434,25 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   onSubmitUpdateSor = async (status?: number) => {
     this.setState({loading: true, errorModal: true});
 
-    if (this.state.sor_type === 'positive') {
-      var liklihood = this.state.liklihood.filter(
-        (d: any) => d.selected == true,
-      )[0].value;
-      var severity = this.state.severity.filter(
-        (d: any) => d.selected == true,
-      )[0].value;
-    }
+    // if (this.state.sor_type === 'positive') {
+    //   var liklihood = this.state.liklihood.filter(
+    //     (d: any) => d.selected == true,
+    //   )[0].value;
+    //   var severity = this.state.severity.filter(
+    //     (d: any) => d.selected == true,
+    //   )[0].value;
+    // }
+
+    // console.log(this.state.actionsAndRecommendation);
+    // this.setState({loading: true, errorModal: true});
+    var liklihood = this.state.liklihood.filter(
+      (d: any) => d.selected == true,
+    )[0].value;
+    var severity = this.state.severity.filter((d: any) => d.selected == true)[0]
+      .value;
+
+    console.log(liklihood);
+    console.log(severity);
 
     var update = {
       report: {
@@ -453,10 +465,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         involved_persons: this.props.route.params.data
           .involved_persons /** done */,
         risk: {
-          severity: this.state.sor_type == 'positive' ? severity : 0,
-          likelihood: this.state.sor_type == 'positive' ? liklihood : 0,
+          severity: this.state.sor_type != 'positive' ? severity : 0,
+          likelihood: this.state.sor_type != 'positive' ? liklihood : 0,
           category:
-            this.state.sor_type === 'positive'
+            this.state.sor_type != 'positive'
               ? severity * liklihood < 3
                 ? `low`
                 : severity * liklihood < 14
@@ -488,6 +500,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         _id: this.state.user._id,
       },
     };
+
+    console.log(update);
 
     if (this.state.fiveWhytoggle == true) {
       var obj = {
@@ -1394,7 +1408,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                           liklihood={this.state.liklihood}
                           severity={this.state.severity}
                           style={{marginTop: wp(3)}}
-                          onPress={(v: object) => {}}
+                          onPress={(v: object) => {
+                            console.log(v);
+                          }}
                         />
                       </View>
                     ) : (

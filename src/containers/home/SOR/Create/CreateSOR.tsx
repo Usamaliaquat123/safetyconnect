@@ -2962,6 +2962,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                   this.state.allActionsEditIndex
                 ].selected = false;
               }}
+              actionvalidUsers={[]}
               isView={true}
               submitToAndObserverEmails={this.state.submitToAndObserverEmails}
               newAct={this.state.newAct}
