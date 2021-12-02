@@ -100,6 +100,9 @@ const Preview = (props: ViewAllProps) => {
       }
     }
 
+    console.log('line 103');
+    console.log(props.route.params.data);
+
     setquestionAndAnswers(data);
 
     createApi
@@ -640,7 +643,7 @@ const Preview = (props: ViewAllProps) => {
                   fontFamily: fonts.SFuiDisplayMedium,
                   fontSize: wp(3),
                 }}>
-                {state.projectName}
+                {projectName}
               </Text>
             </View>
             {/* Location */}
@@ -978,13 +981,14 @@ const Preview = (props: ViewAllProps) => {
                               }}>
                               Root Causes
                             </Text>
-                            {props.route.params.data.justification[0].rootCauses.map(
+                            {/* {props.route.params.data.justification[0].rootCauses.map(
                               (d: any) => (
                                 <>
                                   <Text
                                     style={{
                                       fontSize: wp(3),
                                       fontFamily: fonts.SFuiDisplayMedium,
+
                                     }}>
                                     * {d.category}
                                   </Text>
@@ -999,7 +1003,7 @@ const Preview = (props: ViewAllProps) => {
                                   </Text>
                                 </>
                               ),
-                            )}
+                            )} */}
                           </View>
                           {/* Contributory Causes */}
                           <View style={{marginBottom: wp(5)}}>

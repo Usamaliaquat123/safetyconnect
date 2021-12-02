@@ -91,6 +91,7 @@ export default class SuggestionsPop extends React.Component<
       targetDate: props.suggestions.dueDate,
       submitToAndObserverEmailsLocal: props.submitToAndObserverEmails,
       justificationErr: false,
+      actionsValid :false
     };
   }
 
@@ -108,6 +109,15 @@ export default class SuggestionsPop extends React.Component<
 
     // if()
 
+
+    if(this.props.actionvalidUsers.map((d  : any) =>  d.email == this.state.AssignedTo).length != 0) { 
+      this.setState({actionsValid : true})
+    }else{
+      this.setState({actionsValid : false})
+
+    }
+
+    
     AsyncStorage.getItem('email').then((e) => {
       // this.state.submitToAndObserverEmailsLocal.concat(e);
       this.setState({});
@@ -558,11 +568,15 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.matched) {
+
+                        if(this.state.actionsValid){
+                          this.setState({statuses: 'In Progress'});
+
+                        }
                         // if (this.props.isView) {
                         //   this.setState({statuses: 'In Progress'});
                         // }
 
-                        this.setState({statuses: 'In Progress'});
                         // if (this.state.newAct) {
                         // }
                       }
@@ -586,7 +600,10 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.matched) {
-                        this.setState({statuses: 'Completed'});
+                        if(this.state.actionsValid){
+                          this.setState({statuses: 'Completed'});
+
+                        }
                         // if (this.props.isView) {
                         //   this.setState({statuses: 'Completed'});
                         // } else if (this.state.newAct) {
@@ -612,7 +629,11 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.matched) {
-                        this.setState({statuses: 'Rejected'});
+
+                        if(this.state.actionsValid){
+                          this.setState({statuses: 'Rejected'});
+
+                        }
                         // if (this.props.isView) {
                         //   this.setState({statuses: 'Rejected'});
                         // } else if (this.state.newAct) {

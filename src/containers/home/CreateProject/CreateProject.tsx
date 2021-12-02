@@ -266,6 +266,7 @@ const CreateProject = (props: CreateProjectProps) => {
                 false,
               );
             }
+  
           })
           .catch((err) => {});
         // } else {
