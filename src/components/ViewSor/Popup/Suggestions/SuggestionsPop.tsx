@@ -26,6 +26,7 @@ import {involved_persons} from '@typings';
 import moment from 'moment';
 
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {getUser} from '../../../../store/actions/userActions';
 
 var CustomIcon: any = Icon;
 export interface SuggestionsPopProps {
@@ -91,6 +92,7 @@ export default class SuggestionsPop extends React.Component<
       targetDate: props.suggestions.dueDate,
       submitToAndObserverEmailsLocal: props.submitToAndObserverEmails,
       justificationErr: false,
+      actionStatus: false,
     };
   }
 
@@ -100,6 +102,38 @@ export default class SuggestionsPop extends React.Component<
     getCurrentOrganization().then((orgId: any) =>
       this.setState({orgId: orgId}),
     );
+
+    this.props.actionvalidUsers?.push();
+
+    if (this.props.actionvalidUsers.length != 0) {
+      if (this.state.AssignedTo.length != 0) {
+        createApi
+          .createApi()
+          .getUser(this.state.AssignedTo[0])
+          .then((assUser: any) => {
+            this.props.actionvalidUsers?.push({
+              name: assUser.data.data.name,
+              email: assUser.data.data.email,
+              img_url: assUser.data.data.img_url,
+            });
+          });
+      }
+
+      console.log(this.props.actionvalidUsers);
+      console.log('on line 110');
+      console.log();
+
+      if (
+        this.props.actionvalidUsers?.filter(
+          (d) => d.email == this.props.currentUser.email,
+        ).length == 0
+      ) {
+        this.setState({actionStatus: true});
+      } else {
+        this.setState({actionStatus: false});
+      }
+    }
+
     // if (this.state.AssignedTo[0] == this.props.currentUser.email) {
     //   this.setState({actionsChangeable: true});
     // } else {
@@ -558,7 +592,9 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.matched) {
-                        this.setState({statuses: 'In Progress'});
+                        if (this.state.actionStatus) {
+                          this.setState({statuses: 'In Progress'});
+                        }
 
                         // if (this.props.isView) {
                         //   this.setState({statuses: 'In Progress'});
@@ -587,7 +623,9 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.matched) {
-                        this.setState({statuses: 'Completed'});
+                        if (this.state.actionStatus) {
+                          this.setState({statuses: 'Completed'});
+                        }
 
                         // if (this.props.isView) {
                         //   this.setState({statuses: 'Completed'});
@@ -614,8 +652,9 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.matched) {
-                        this.setState({statuses: 'Rejected'});
-
+                        if (this.state.actionStatus) {
+                          this.setState({statuses: 'Rejected'});
+                        }
                         // if (this.props.isView) {
                         //   this.setState({statuses: 'Rejected'});
                         // } else if (this.state.newAct) {

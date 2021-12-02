@@ -220,13 +220,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         currentProj,
       );
 
-      // New Involved usersSuggestions
-      this.props.route.params.data.involved_persons.map((d: any) => {
-        createApi
-          .createApi()
-          .getUser(d)
-          .then((res: any) => {
-            createApi
+
+      createApi
               .createApi()
               .getUser(this.props.route.params.data.created_by)
               .then((cb: any) => {
@@ -236,6 +231,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                   email: cb.data.data.email,
                 });
               });
+      // New Involved usersSuggestions
+      this.props.route.params.data.involved_persons.map((d: any) => {
+        createApi
+          .createApi()
+          .getUser(d)
+          .then((res: any) => {
+            
 
             this.state.involvedPerson.push({
               name: res.data.data.name,
@@ -270,6 +272,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     .then((usr: any) => {
                       usr.data.data['type'] = 'projectleader';
                       this.state.subAndEsclatedU.push(usr.data.data);
+
                     });
                 });
 
