@@ -46,6 +46,7 @@ import {
   filterAndMappingPersons,
   downloadFile,
   filterLocation,
+  getAllUserInfo,
   getSorData,
   fileuploader,
   getCurrentProject,
@@ -189,6 +190,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   componentDidMount = () => {
     console.log('this.props.route.params.data.created_by[0]');
     console.log(this.props.route.params.data);
+
     // this.props.start(false, this.scrollView);
     if (this.props.route.params.data.esclate_to != undefined) {
       this.setState({esclate_to: this.props.route.params.data.esclate_to});

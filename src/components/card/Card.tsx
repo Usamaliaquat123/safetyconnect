@@ -9,7 +9,7 @@ import {
 import {colors, fonts} from '@theme';
 import {Icon, Avatar} from 'react-native-elements';
 import moment from 'moment';
-import {mapChart} from '@service';
+import {createApi, mapChart} from '@service';
 import {capitalizeFirstLetter} from '@utils';
 import styles from './styles';
 import {
@@ -51,6 +51,7 @@ export default class Card extends React.Component<CardProps, any> {
     super(props);
     this.state = {
       itemWidth: 80,
+      user: {},
     };
   }
 
@@ -60,6 +61,19 @@ export default class Card extends React.Component<CardProps, any> {
     const itemHorizontalMargin = dp(2);
     const itemWidth = slideWidth + itemHorizontalMargin * 2;
     this.setState({itemWidth});
+
+    createApi
+      .createApi()
+      .getUser(this.props.name)
+      .then((res: any) => {
+        this.setState({
+          user: {
+            name: res.data.data.name,
+            email: res.data.data.email,
+            img_url: res.data.data.img_url,
+          },
+        });
+      });
   };
 
   render() {
@@ -364,7 +378,7 @@ export default class Card extends React.Component<CardProps, any> {
                           opacity: 0.5,
                           fontFamily: fonts.SFuiDisplayMedium,
                         }}>
-                        {capitalizeFirstLetter(this.props.name.split('@')[0])}
+                        {this.state.user.name}
                       </Text>
                     </View>
                     <View style={styles.cardLocation}>
