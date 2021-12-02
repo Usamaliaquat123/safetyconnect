@@ -856,11 +856,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         .createSor(sors)
                         .then((res: any) => {
                           if (this.state.fiveWhytoggle == true) {
-                            // if(this.state.fiveWhyQuestion.length < 5){
-
-                            // }else{
-
-                            // }
+                          
 
                             this.setState({
                               loading: true,
