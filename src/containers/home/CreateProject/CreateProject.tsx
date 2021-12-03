@@ -252,7 +252,7 @@ const CreateProject = (props: CreateProjectProps) => {
                 data,
                 organizationId,
                 props.navigation,
-                gol.map((d) => d.email),
+                props.route.params.users,
                 orgName,
                 true,
               );
@@ -266,7 +266,6 @@ const CreateProject = (props: CreateProjectProps) => {
                 false,
               );
             }
-  
           })
           .catch((err) => {});
         // } else {
