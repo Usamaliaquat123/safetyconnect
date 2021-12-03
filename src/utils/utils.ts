@@ -453,8 +453,11 @@ export const writeHtmlToPdf = (pdf: string, docName: string) => {
   return new Promise((resolve, reject) => {
     checkPermission('pdf').then((res) => {
       try {
-        let file = RNHTMLtoPDF.convert(options);
-        resolve(file);
+        RNHTMLtoPDF.convert(options)
+          .then((res) => {
+            resolve(res);
+          })
+          .catch((err) => reject(err));
       } catch (e) {
         reject(e);
       }
