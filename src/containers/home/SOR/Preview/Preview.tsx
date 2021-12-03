@@ -476,7 +476,7 @@ const Preview = (props: ViewAllProps) => {
     
     `;
 
-    writeHtmlToPdf(pdf, 'test').then((res) => {
+    writeHtmlToPdf(pdf, `${props.route.params.data._id}`).then((res) => {
       console.log(res);
     });
     // console.log(file.filePath);
