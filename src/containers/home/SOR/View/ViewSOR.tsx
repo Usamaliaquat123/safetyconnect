@@ -220,25 +220,22 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         currentProj,
       );
 
-
       createApi
-              .createApi()
-              .getUser(this.props.route.params.data.created_by)
-              .then((cb: any) => {
-                this.state.actionvalidUsers.push({
-                  name: cb.data.data.name,
-                  img_url: cb.data.data.img_url,
-                  email: cb.data.data.email,
-                });
-              });
+        .createApi()
+        .getUser(this.props.route.params.data.created_by)
+        .then((cb: any) => {
+          this.state.actionvalidUsers.push({
+            name: cb.data.data.name,
+            img_url: cb.data.data.img_url,
+            email: cb.data.data.email,
+          });
+        });
       // New Involved usersSuggestions
       this.props.route.params.data.involved_persons.map((d: any) => {
         createApi
           .createApi()
           .getUser(d)
           .then((res: any) => {
-            
-
             this.state.involvedPerson.push({
               name: res.data.data.name,
               img_url: res.data.data.img_url,
@@ -272,7 +269,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                     .then((usr: any) => {
                       usr.data.data['type'] = 'projectleader';
                       this.state.subAndEsclatedU.push(usr.data.data);
-
                     });
                 });
 
@@ -2849,13 +2845,13 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                     if (
                                       this.state.actionsAndRecommendations.filter(
                                         (d: any) =>
-                                          d.justification.content !== ' ',
+                                          d.justification.content !== '',
                                       )
                                     ) {
                                       this.setState({
                                         // loading: true,
                                         errorModal: true,
-                                        errHeadingText: 'Actions validations ',
+                                        errHeadingText: 'Actions validations',
                                         errDesText: 'Add the justification',
                                       });
                                     } else {
