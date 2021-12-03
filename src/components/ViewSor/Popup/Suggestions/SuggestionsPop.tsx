@@ -103,9 +103,13 @@ export default class SuggestionsPop extends React.Component<
       this.setState({orgId: orgId}),
     );
 
-    this.props.actionvalidUsers?.push();
+    // this.props.actionvalidUsers?.push();
 
     if (this.props.actionvalidUsers.length != 0) {
+      // console.log(this.props.actionvalidUsers);
+      // console.log('on line 110');
+      // console.log();
+
       if (this.state.AssignedTo.length != 0) {
         createApi
           .createApi()
@@ -118,10 +122,6 @@ export default class SuggestionsPop extends React.Component<
             });
           });
       }
-
-      console.log(this.props.actionvalidUsers);
-      console.log('on line 110');
-      console.log();
 
       if (
         this.props.actionvalidUsers?.filter(
@@ -146,13 +146,6 @@ export default class SuggestionsPop extends React.Component<
       // this.state.submitToAndObserverEmailsLocal.concat(e);
       this.setState({});
 
-      // console.log('this.state.submitToAndObserverEmailsLocal');
-      console.log(this.state.submitToAndObserverEmailsLocal);
-      console.log('this.state.submitToAndObserverEmailsLocal');
-      console.log(
-        this.state.submitToAndObserverEmailsLocal.filter((d: any) => d == e)
-          .length == 0,
-      );
       // if (
       //   this.state.submitToAndObserverEmailsLocal.filter((d: any) => d == e)
       //     .length == 0
@@ -592,7 +585,7 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.matched) {
-                        if (this.state.actionStatus) {
+                        if (!this.state.actionStatus) {
                           this.setState({statuses: 'In Progress'});
                         }
 
@@ -623,7 +616,7 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.matched) {
-                        if (this.state.actionStatus) {
+                        if (!this.state.actionStatus) {
                           this.setState({statuses: 'Completed'});
                         }
 
@@ -652,7 +645,7 @@ export default class SuggestionsPop extends React.Component<
                   <TouchableOpacity
                     onPress={() => {
                       if (this.state.matched) {
-                        if (this.state.actionStatus) {
+                        if (!this.state.actionStatus) {
                           this.setState({statuses: 'Rejected'});
                         }
                         // if (this.props.isView) {
