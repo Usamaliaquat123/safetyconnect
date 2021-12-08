@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   ScrollView,
+  RefreshControl,
 } from 'react-native';
 import {Icon, Avatar} from 'react-native-elements';
 import {colors, fonts} from '@theme';
@@ -63,6 +64,8 @@ const Messaging = (props: MessagingProps) => {
   const [isGroupModal, setisGroupModal] = useState(false);
   // Single popup
   const [isChatModal, setisChatModal] = useState(false);
+
+  const [refreshing, setrefreshing] = useState(false);
 
   // Setup Socket implementation
 
@@ -147,7 +150,7 @@ const Messaging = (props: MessagingProps) => {
     var dta = {
       name: groupName,
       organization: orgnaizationId,
-      involved_persons: users.map((f: any) => f.userId),
+      involved_persons: users.map((f: any) => f._id),
       roomType: 'private',
       createdBy: currentUser._id,
       img_url: `https://dummyimage.com/35x35/E4FFDE/8DCD7E.jpg&text=${groupName[0].toUpperCase()}`,
@@ -219,15 +222,12 @@ const Messaging = (props: MessagingProps) => {
       });
   };
 
+  // on create single chat
   const onCreateChat = (user: any) => {
-    console.log('user');
-    console.log(user);
-
     createApi
       .createApi()
-      .openPrivateChat(currentUser._id, orgnaizationId, user.userId)
+      .openPrivateChat(currentUser._id, orgnaizationId, user._id)
       .then((res: any) => {
-        // console.log(res);
         setisChatModal(false);
 
         props.navigation.navigate('Chat', {
@@ -236,6 +236,22 @@ const Messaging = (props: MessagingProps) => {
           socket: socket,
         });
       });
+  };
+
+  const _onRefresh = () => {
+    setallUsers([]);
+    setGroupUsers([]);
+    setcurrentUser({});
+    // setrefreshing(true);
+
+    AsyncStorage.getItem('email').then((email: any) => {
+      fetchAuthToken().then((token) => {
+        setupSocket(token);
+      });
+
+      getAllUsers(email);
+    });
+    setrefreshing(false);
   };
 
   const getAllUsers = (email: any) => {
@@ -255,6 +271,8 @@ const Messaging = (props: MessagingProps) => {
             .then((res: any) => {
               console.log('line 265');
               console.log(res.data);
+
+              setallUsers(res.data.allChats);
               // console.log(res.data.allChats);
 
               var usr = [];
@@ -268,9 +286,9 @@ const Messaging = (props: MessagingProps) => {
                     isSelected: false,
                     data: res.data.allChats[i],
                     name: res.data.allChats[i].name,
-                    image: res.data.allChats[i].img_url,
+                    img_url: res.data.allChats[i].img_url,
                     isonline: true,
-                    userId: res.data.allChats[i]._id,
+                    _id: res.data.allChats[i]._id,
                   };
                   groups.push(user);
                 } else {
@@ -286,17 +304,15 @@ const Messaging = (props: MessagingProps) => {
                       userId: res.data.allChats[i].userA._id,
                     };
                     usr.push(ur);
-                  } else {
-                    allUsers.push(res.data.allChats[i]);
                   }
                 }
 
-                // usr.push(user);
+                //   // usr.push(user);
               }
 
               setUsers(usr);
               setGroupUsers(groups);
-              // console.log(usr);
+              console.log(usr);
               // this.setState({users: usr, group: groups});
             })
             .catch((err: any) => console.log(err));
@@ -318,7 +334,14 @@ const Messaging = (props: MessagingProps) => {
   return (
     <View style={{backgroundColor: colors.secondary, flex: 1}}>
       <View style={{backgroundColor: colors.secondary}}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              onRefresh={() => _onRefresh()}
+              refreshing={refreshing}
+            />
+          }
+          showsVerticalScrollIndicator={false}>
           <Header
             onCreate={() => setAddNewModal(true)}
             title="Messages"
@@ -382,28 +405,6 @@ const Messaging = (props: MessagingProps) => {
             <View style={styles.conversationContainer}>
               {/* <Text style={styles.ttleConversation}>Group Conversations</Text> */}
 
-              {/* <TouchableOpacity
-                style={{}}
-                onPress={() => {
-                  createGroup();
-                }}>
-                <CustomIcon
-                  name="add-circle"
-                  size={wp(15)}
-                  type="Ionicons"
-                  color={colors.green}
-                />
-              </TouchableOpacity> */}
-
-              {/* <TouchableOpacity
-                style={{
-                  backgroundColor: colors.green,
-                  padding: wp(3),
-                  borderRadius: wp(2),
-                }}
-                onPress={() => {}}>
-                </TouchableOpacity> */}
-              {/* <View style={styles.line} /> */}
               {groupUsers.map((d: any) => (
                 <User
                   type={'group'}

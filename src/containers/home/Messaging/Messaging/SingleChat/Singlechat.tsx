@@ -176,7 +176,7 @@ const SingleChat = (props: SingleChatProps) => {
                         size={wp(10)}
                         rounded
                         source={{
-                          uri: d.image,
+                          uri: d.img_url,
                         }}
                       />
 

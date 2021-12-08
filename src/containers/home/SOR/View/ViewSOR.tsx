@@ -430,7 +430,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       }
     });
   };
-  onSubmitUpdateSor = async (status?: number, actions  : any) => {
+  onSubmitUpdateSor = async (status?: number) => {
     this.setState({loading: true, errorModal: true});
 
     // if (this.state.sor_type === 'positive') {
@@ -482,7 +482,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         },
         repeatedSor: this.props.route.params.data.repeatedSor,
         justification: this.props.route.params.data.justification,
-        action_required: actions, /** done */
+        action_required: this.state.actionsAndRecommendation.filter((d : any) => d.selected != false), /** done */
         location: this.props.route.params.data.location /** done */,
         submit_to:
           this.state.reAssignToArrTags.length == 0

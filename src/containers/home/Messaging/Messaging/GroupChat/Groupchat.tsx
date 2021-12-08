@@ -223,7 +223,7 @@ const ChatGroup = (props: ChatGroupProps) => {
                         size={wp(10)}
                         rounded
                         source={{
-                          uri: d.image,
+                          uri: d.img_url,
                         }}
                       />
 
