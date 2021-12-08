@@ -430,7 +430,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
       }
     });
   };
-  onSubmitUpdateSor = async (status?: number) => {
+  onSubmitUpdateSor = async (status?: number, actions  : any) => {
     this.setState({loading: true, errorModal: true});
 
     // if (this.state.sor_type === 'positive') {
@@ -444,6 +444,11 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
 
     // console.log(this.state.actionsAndRecommendation);
     // this.setState({loading: true, errorModal: true});
+
+
+
+
+    
     var liklihood = this.state.liklihood.filter(
       (d: any) => d.selected == true,
     )[0].value;
@@ -477,7 +482,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         },
         repeatedSor: this.props.route.params.data.repeatedSor,
         justification: this.props.route.params.data.justification,
-        action_required: this.state.actionsAndRecommendations /** done */,
+        action_required: actions, /** done */
         location: this.props.route.params.data.location /** done */,
         submit_to:
           this.state.reAssignToArrTags.length == 0
@@ -550,6 +555,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         .createApi()
         .updateSor(update)
         .then((res) => {
+          console.log(res)
           if (res.status == 200) {
             this.setState({loading: false, errorModal: false});
             setTimeout(() => {
@@ -2758,7 +2764,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               onPress={() => {
                                 if (this.state.fiveWhytoggle == true) {
                                   if (this.state.fiveWhyQuestion.length == 5) {
-                                    this.onSubmitUpdateSor(1);
+                                    this.onSubmitUpdateSor(1, );
                                   } else {
                                     this.setState({
                                       errorModal: true,
@@ -2768,7 +2774,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                     });
                                   }
                                 } else {
-                                  this.onSubmitUpdateSor(1);
+                                  this.onSubmitUpdateSor(1,);
                                 }
                               }}
                               style={styles.saveAsDraftContainer}>
@@ -2841,12 +2847,29 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                     ).length != 0
                                   ) {
                                     // Some validations is left
+                                    console.log('line 2844');
+                                    console.log(
+                                      this.state.actionsAndRecommendations,
+                                    );
 
-                                    if (
-                                      this.state.actionsAndRecommendations.filter(
+                                    var selectedActions = this.state.actionsAndRecommendations.filter(
+                                      (d) => d.selected != false,
+                                    );
+
+                                    console.log('line 2856');
+                                    console.log(selectedActions);
+                                    console.log(
+                                      selectedActions.filter(
                                         (d: any) =>
                                           d.justification.content !== '',
-                                      )
+                                      ).length != 0,
+                                    );
+
+                                    if (
+                                      selectedActions.filter(
+                                        (d: any) =>
+                                          d.justification.content !== '',
+                                      ) == 0
                                     ) {
                                       this.setState({
                                         // loading: true,
@@ -2855,13 +2878,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                         errDesText: 'Add the justification',
                                       });
                                     } else {
-                                      this.setState({
-                                        // loading: true,
-                                        errorModal: true,
-                                        errHeadingText: 'Actions validations ',
-                                        errDesText:
-                                          'Actions should be completed or rejected',
-                                      });
+                                        this.onSubmitUpdateSor(5)
                                     }
                                   } else {
                                     if (
@@ -3214,9 +3231,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
             actionvalidUsers={this.state.actionvalidUsers}
             suggestedUsers={this.state.involvedPerson}
             onClose={() => {
-              this.state.actionsAndRecommendations[
-                this.state.allActionsEditIndex
-              ].selected = false;
+              // this.state.actionsAndRecommendations[
+              //   this.state.allActionsEditIndex
+              // ].selected = false;
               this.state.actionsAndRecommendations[
                 this.state.allActionsEditIndex
               ].is_complete = false;

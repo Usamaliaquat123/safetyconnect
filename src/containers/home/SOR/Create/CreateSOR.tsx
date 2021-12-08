@@ -472,9 +472,11 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
     var liklihood = this.state.liklihood.filter((d: any) => d.selected == true);
     var severity = this.state.severity.filter((d: any) => d.selected == true);
 
-    var rec = this.state.actionRecommendations.filter(
-      (d: any) => d.selected == true,
-    );
+    // Only the selected actions is showing
+    // var rec = this.state.actionRecommendations.filter(
+    //   (d: any) => d.is_selected == true,
+    // );
+
     var data = {
       risk: {
         severity: liklihood[0].value,
@@ -514,7 +516,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
       created_by: this.state.user.email,
       details: this.state.observationT,
       occurred_at: this.state.currentTime,
-      action_required: rec,
+      action_required: this.state.actionRecommendations,
       status: 2,
       // comments: '613f2987c635900e7e1ce23b',
       location: this.state.observation,
@@ -856,8 +858,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         .createSor(sors)
                         .then((res: any) => {
                           if (this.state.fiveWhytoggle == true) {
-                          
-
                             this.setState({
                               loading: true,
                               errorModal: true,
@@ -1821,7 +1821,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                           this.setState({
                             allActionsEdit: {
                               is_complete: true,
-                              is_selected: false,
+                              is_selected: true,
                               content: this.state.actionsAndRecommendationText,
                               assigned_to: this.state.user.email,
                               dueDate: moment().format('YYYY-MM-DD'),
