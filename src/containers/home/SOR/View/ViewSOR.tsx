@@ -708,6 +708,10 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
   };
 
+
+
+  // 
+
   mapViewSorPhoto = () => {
     View_sor.user.Attachments.map((d, i) => {
       if (d.type == 'photo') {

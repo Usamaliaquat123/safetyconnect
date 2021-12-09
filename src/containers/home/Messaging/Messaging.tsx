@@ -213,6 +213,7 @@ const Messaging = (props: MessagingProps) => {
 
               console.log(usr);
               setUsers(usr);
+              setallUsers(usr);
               setGroupUsers(groups);
               // console.log(usr);
               // this.setState({users: usr, group: groups});
@@ -272,7 +273,7 @@ const Messaging = (props: MessagingProps) => {
               console.log('line 265');
               console.log(res.data);
 
-              setallUsers(res.data.allChats);
+              // setallUsers(res.data.allChats);
               // console.log(res.data.allChats);
 
               var usr = [];
@@ -299,9 +300,9 @@ const Messaging = (props: MessagingProps) => {
                       isSelected: false,
                       data: res.data.allChats[i],
                       name: res.data.allChats[i].userA.name,
-                      image: res.data.allChats[i].userA.img_url,
+                      img_url: res.data.allChats[i].userA.img_url,
                       isonline: true,
-                      userId: res.data.allChats[i].userA._id,
+                      _id: res.data.allChats[i].userA._id,
                     };
                     usr.push(ur);
                   }
@@ -311,7 +312,9 @@ const Messaging = (props: MessagingProps) => {
               }
 
               setUsers(usr);
+              setallUsers(usr);
               setGroupUsers(groups);
+              console.log('usr');
               console.log(usr);
               // this.setState({users: usr, group: groups});
             })

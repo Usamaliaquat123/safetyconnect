@@ -84,21 +84,24 @@ const Preview = (props: ViewAllProps) => {
     // this.props.route.
     var data: Array<any> = [];
 
-    if (props.route.params.data.justification != null) {
-      if (props.route.params.data?.justification.length != 0) {
-        props.route.params.data.justification[0].justification.question.map(
-          (d: any) => {
-            data.push({question: d});
-          },
-        );
+    console.log('line 87');
+    console.log(props.route.params.data);
 
-        props.route.params.data.justification[0].justification.answer.map(
-          (d: any, i: number) => {
-            data[i]['answer'] = d;
-          },
-        );
-      }
-    }
+    // if (props.route.params.data.justification != null) {
+    //   if (props.route.params.data?.justification.length != 0) {
+    //     props.route.params.data.justification[0].justification.question.map(
+    //       (d: any) => {
+    //         data.push({question: d});
+    //       },
+    //     );
+
+    //     props.route.params.data.justification[0].justification.answer.map(
+    //       (d: any, i: number) => {
+    //         data[i]['answer'] = d;
+    //       },
+    //     );
+    //   }
+    // }
 
     console.log('line 103');
     console.log(props.route.params.data);
@@ -1014,7 +1017,7 @@ const Preview = (props: ViewAllProps) => {
                               }}>
                               Contributory Causes
                             </Text>
-                            {props.route.params.data.justification[0].contributoryCauses.map(
+                            {/* {props.route.params.data.justification[0].contributoryCauses.map(
                               (d: any) => (
                                 <>
                                   <Text
@@ -1035,7 +1038,7 @@ const Preview = (props: ViewAllProps) => {
                                   </Text>
                                 </>
                               ),
-                            )}
+                            )} */}
                           </View>
                         </>
                       )}

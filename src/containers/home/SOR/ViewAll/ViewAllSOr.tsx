@@ -24,7 +24,6 @@ import {Auth} from 'aws-amplify';
 import LottieView from 'lottie-react-native';
 import Modal from 'react-native-modal';
 import {bindActionCreators} from 'redux';
-import OneSignal from 'react-native-onesignal';
 import * as reduxActions from '../../../../store/actions/listSorActions';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {StackNavigatorProps} from '@nav';
