@@ -368,7 +368,7 @@ const Preview = (props: ViewAllProps) => {
 
 
     ${
-      props.route.params.data.justification != null &&
+      typeof props.route.params.data.justification != 'string' &&
       `
   ${
     props.route.params.data.justification.length != 0 &&
@@ -984,14 +984,13 @@ const Preview = (props: ViewAllProps) => {
                               }}>
                               Root Causes
                             </Text>
-                            {/* {props.route.params.data.justification[0].rootCauses.map(
+                            {props.route.params.data.justification[0].rootCauses.map(
                               (d: any) => (
                                 <>
                                   <Text
                                     style={{
                                       fontSize: wp(3),
                                       fontFamily: fonts.SFuiDisplayMedium,
-
                                     }}>
                                     * {d.category}
                                   </Text>
@@ -1006,7 +1005,7 @@ const Preview = (props: ViewAllProps) => {
                                   </Text>
                                 </>
                               ),
-                            )} */}
+                            )}
                           </View>
                           {/* Contributory Causes */}
                           <View style={{marginBottom: wp(5)}}>
@@ -1017,7 +1016,7 @@ const Preview = (props: ViewAllProps) => {
                               }}>
                               Contributory Causes
                             </Text>
-                            {/* {props.route.params.data.justification[0].contributoryCauses.map(
+                            {props.route.params.data.justification[0].contributoryCauses.map(
                               (d: any) => (
                                 <>
                                   <Text
@@ -1038,7 +1037,7 @@ const Preview = (props: ViewAllProps) => {
                                   </Text>
                                 </>
                               ),
-                            )} */}
+                            )}
                           </View>
                         </>
                       )}
