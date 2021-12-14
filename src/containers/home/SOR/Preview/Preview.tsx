@@ -84,30 +84,6 @@ const Preview = (props: ViewAllProps) => {
     // this.props.route.
     var data: Array<any> = [];
 
-    console.log('line 87');
-    console.log(props.route.params.data);
-
-    // if (props.route.params.data.justification != null) {
-    //   if (props.route.params.data?.justification.length != 0) {
-    //     props.route.params.data.justification[0].justification.question.map(
-    //       (d: any) => {
-    //         data.push({question: d});
-    //       },
-    //     );
-
-    //     props.route.params.data.justification[0].justification.answer.map(
-    //       (d: any, i: number) => {
-    //         data[i]['answer'] = d;
-    //       },
-    //     );
-    //   }
-    // }
-
-    console.log('line 103');
-    console.log(props.route.params.data);
-
-    setquestionAndAnswers(data);
-
     createApi
       .createApi()
       .getUser(props.route.params.data.created_by)
@@ -126,6 +102,30 @@ const Preview = (props: ViewAllProps) => {
             });
         });
       });
+
+    console.log('line 87');
+    console.log(props.route.params.data);
+    console.log(typeof props.route.params.data.justification);
+    if (typeof props.route.params.data.justification != 'string') {
+      if (props.route.params.data?.justification.length != 0) {
+        props.route.params.data.justification[0].justification.question.map(
+          (d: any) => {
+            data.push({question: d});
+          },
+        );
+
+        props.route.params.data.justification[0].justification.answer.map(
+          (d: any, i: number) => {
+            data[i]['answer'] = d;
+          },
+        );
+      }
+    }
+
+    console.log('line 103');
+    console.log(props.route.params.data);
+
+    setquestionAndAnswers(data);
   }, []);
 
   // Print observations
@@ -905,7 +905,7 @@ const Preview = (props: ViewAllProps) => {
                 </>
               )}
 
-              {props.route.params.data.justification != null && (
+              {typeof props.route.params.data.justification != 'string' && (
                 <>
                   {props.route.params.data.justification.length != 0 && (
                     <>
