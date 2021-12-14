@@ -433,6 +433,8 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
   onSubmitUpdateSor = async (status?: number) => {
     this.setState({loading: true, errorModal: true});
 
+    // cons
+
     // if (this.state.sor_type === 'positive') {
     //   var liklihood = this.state.liklihood.filter(
     //     (d: any) => d.selected == true,
@@ -445,10 +447,6 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     // console.log(this.state.actionsAndRecommendation);
     // this.setState({loading: true, errorModal: true});
 
-
-
-
-    
     var liklihood = this.state.liklihood.filter(
       (d: any) => d.selected == true,
     )[0].value;
@@ -482,7 +480,9 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         },
         repeatedSor: this.props.route.params.data.repeatedSor,
         justification: this.props.route.params.data.justification,
-        action_required: this.state.actionsAndRecommendation.filter((d : any) => d.selected != false), /** done */
+        action_required: this.state.actionsAndRecommendations.filter(
+          (d: any) => d.is_complete != false,
+        ) /** done */,
         location: this.props.route.params.data.location /** done */,
         submit_to:
           this.state.reAssignToArrTags.length == 0
@@ -555,7 +555,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
         .createApi()
         .updateSor(update)
         .then((res) => {
-          console.log(res)
+          console.log(res);
           if (res.status == 200) {
             this.setState({loading: false, errorModal: false});
             setTimeout(() => {
@@ -708,9 +708,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
     });
   };
 
-
-
-  // 
+  //
 
   mapViewSorPhoto = () => {
     View_sor.user.Attachments.map((d, i) => {
@@ -2768,7 +2766,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                               onPress={() => {
                                 if (this.state.fiveWhytoggle == true) {
                                   if (this.state.fiveWhyQuestion.length == 5) {
-                                    this.onSubmitUpdateSor(1, );
+                                    this.onSubmitUpdateSor(1);
                                   } else {
                                     this.setState({
                                       errorModal: true,
@@ -2778,7 +2776,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                     });
                                   }
                                 } else {
-                                  this.onSubmitUpdateSor(1,);
+                                  this.onSubmitUpdateSor(1);
                                 }
                               }}
                               style={styles.saveAsDraftContainer}>
@@ -2882,7 +2880,7 @@ class ViewSOR extends React.Component<ViewSORProps, any> {
                                         errDesText: 'Add the justification',
                                       });
                                     } else {
-                                        this.onSubmitUpdateSor(5)
+                                      this.onSubmitUpdateSor(5);
                                     }
                                   } else {
                                     if (

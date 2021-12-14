@@ -739,7 +739,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                     this.setState({loading: true, errorModal: true});
 
                     var rec = this.state.actionRecommendations.filter(
-                      (d: any) => d.selected == true,
+                      (d: any) => d.is_selected == true,
                     );
                     console.log(rec);
                     console.log('==================Actions=');
@@ -1788,7 +1788,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                               is_selected: true,
                               content: this.state.actionsAndRecommendationText,
                               assigned_to: this.state.user.email,
-                              dueDate: moment().format('YYYY-MM-DD'),
+                              dueDate: Date.now(),
                               status: 'In Progress',
                               category: 'Elimination',
                             },
