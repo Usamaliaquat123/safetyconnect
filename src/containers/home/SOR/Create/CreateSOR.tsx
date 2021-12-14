@@ -320,17 +320,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           .createApi()
           .getLocations(currentProj)
           .then((res: any) => {
-            // console.log('location data');
-            // console.log(res);
-
-            // if(location.)
             this.setState({
               allLocations: res.data.data[0].p_locations,
               selectedLocation: res.data.data[0].p_locations[0],
             });
-
-            // console.log('current location');
-            // console.log(res.data.data.p_locations[0]);
           });
       });
     });
@@ -340,9 +333,6 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
           .createApi()
           .getOrganization(currentOrg)
           .then((res: any) => {
-            console.log('res.data.data.projects');
-            console.log(res.data.data.projects);
-
             this.setState({
               projectName: res.data.data.projects.filter(
                 (d: any) => d.project_id._id == this.state.projectid,
@@ -353,25 +343,8 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               )[0],
               currentOrgName: res.data.data.name,
             });
-
-            console.log('res.data.data');
-            console.log(res.data.data);
-
-            console.log('this.state.selectedProject');
-            console.log(this.state.selectedProject);
           });
     });
-    // {key: "test.txt"} .catch(err => conso.le.log(err)});
-    // const result = Storage.put('test.txt', 'Hello');
-    // this.upoadFiles('602b81d95878d33f1081800e');
-    // get involved users
-    // AsyncStorage.getItem('involved_persons').then((res: any) =>
-    // );
-
-    // Get User info
-    // AsyncStorage.getItem('user').then((user: any) => {
-    //   this.setState({user: JSON.parse(user)});
-    // });
 
     AsyncStorage.getItem('email').then((email: any) => {
       createApi
@@ -399,14 +372,12 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                       this.state.subAndEsclatedU.push(usr.data.data);
                     });
                 });
-                // location supervisors
 
-                console.log('lcoations ');
-                console.log(this.state.selectedLocation);
-                // console.log(
                 res.data.data.p_locations
-                  .filter((l) => l.name == this.state.selectedLocation.name)[0]
-                  .supervisor.map((ll) =>
+                  .filter(
+                    (l: any) => l.name == this.state.selectedLocation.name,
+                  )[0]
+                  .supervisor.map((ll: any) =>
                     createApi
                       .createApi()
                       .getUser(ll)
@@ -415,17 +386,10 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         this.state.subAndEsclatedU.push(u.data.data);
                       }),
                   ),
-                  // );
-
-                  console.log('res of PROJECT USERS');
-                console.log(res.data.data);
-
-                console.log('line 409');
-
-                this.setState({
-                  projectLeaders: res.data.data.project_leader,
-                  secondaryProjectL: res.data.data.secondary_leader,
-                });
+                  this.setState({
+                    projectLeaders: res.data.data.project_leader,
+                    secondaryProjectL: res.data.data.secondary_leader,
+                  });
 
                 //
                 this.setState({
@@ -766,7 +730,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
               ) {
                 if (
                   this.state.actionRecommendations
-                    .filter((d: any) => d.selected == true)
+                    .filter((d: any) => d.is_selected == true)
                     .filter((d: any) => d.assigned_to.length != 0).length != 0
                 ) {
                   if (
@@ -1750,7 +1714,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                         onPress={() => {
                           var arr = [...this.state.actionRecommendations];
                           arr[i]['is_complete'] = true;
-                          arr[i]['selected'] = true;
+                          arr[i]['is_selected'] = true;
 
                           d['status'] = 'In Progress';
 
@@ -2956,7 +2920,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
                 ].is_complete = false;
                 this.state.actionRecommendations[
                   this.state.allActionsEditIndex
-                ].selected = false;
+                ].is_selected = false;
               }}
               actionvalidUsers={[]}
               isView={true}
