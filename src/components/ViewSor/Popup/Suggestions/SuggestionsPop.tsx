@@ -1048,6 +1048,7 @@ export default class SuggestionsPop extends React.Component<
                           assigned_to: this.state.AssignedTo[0],
                           dueDate: this.state.targetDate,
                           is_complete: this.state.is_complete,
+                          is_selected : this.state.is_selected,
                           // is_complete: true,
                           category: this.state.type,
                           hierarchy: this.state.type,

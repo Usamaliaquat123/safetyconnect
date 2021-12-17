@@ -509,6 +509,13 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
   // on create sor
   onCreateSor = (status: number) => {
     var uploadedfiles = [];
+
+    console.log('line 513');
+    console.log(
+      this.state.actionRecommendations.filter(
+        (d: any) => d.is_selected == true,
+      ),
+    );
     var sorbtns = this.state.classifySorbtns.filter(
       (d: any) => d.selected === true,
     );
@@ -725,7 +732,7 @@ class CreateSOR extends React.Component<CreateSORProps, any> {
             if (severity.length !== 0) {
               if (
                 this.state.actionRecommendations.filter(
-                  (d: any) => d.selected == true,
+                  (d: any) => d.is_selected == true,
                 ).length != 0
               ) {
                 if (
