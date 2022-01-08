@@ -1,17 +1,3 @@
-set -xeo pipefail
-
-source $(dirname $0)/config.sh
-
-$(dirname $0)/update-release.sh
-
-cd ./android
-
-export FORCE_BUNDLING=true
-
-./gradlew clean assembleDebug
-
-cd ..
-
-cp ./android/app/build/outputs/apk/debug/app-debug.apk ./build/app-debug.apk
-
-echo -e '\n ==> ./build/app-debug.apk'
+version https://git-lfs.github.com/spec/v1
+oid sha256:402c7c5294c65de1850f93d5475c926bf7f05c1117f4bec599bd6c0ed695009f
+size 280
